@@ -652,18 +652,21 @@
       })      
     }
     $scope.commentValue = function(comment,Id,req_id){
-
-      B2BDashboardService.commentValueDetails(comment,Id,req_id)
+      B2BDashboardService.commentValueDetails(comment.comment,Id,req_id)
       .then(function onSuccess(response){
+      $scope.mymodel["comment"]="";
+      swal("Successfull", "comment added sucessfully", "success");
       })
-      $scope.commentCheck=comment;
+      $scope.viewComments($scope.id_basic,$scope.req_id_basic);
      }
      $scope.commentValueDetails = function(comment,Id,req_id){
 
-       B2BDashboardService.basicInternalComment(comment,Id,req_id)
+       B2BDashboardService.basicInternalComment(comment.comment,Id,req_id)
        .then(function onSuccess(response){
+        $scope.mymodel["comment"]="";
+        swal("Successfull", "comment added sucessfully", "success");
       })
-      $scope.commentCheck=comment;
+      $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
      }
     $scope.valuechange=function(value1,status,id,req_id){
       $scope.clientComment=value1;
