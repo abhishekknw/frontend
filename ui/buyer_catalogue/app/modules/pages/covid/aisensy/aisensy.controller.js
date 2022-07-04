@@ -35,14 +35,17 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         };
     })
     .controller('aisensyCtrl',
-        ['$scope', '$rootScope', '$window', '$sce', '$location', 'AuthService','releaseCampaignService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
-            function ($scope, $rootScope, $window, $sce, $location, AuthService,releaseCampaignService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
+        ['$scope', '$rootScope', '$window', '$sce', '$location', 'AuthService', 'machadaloHttp','releaseCampaignService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
+            function ($scope, $rootScope, $window, $sce, $location, AuthService, machadaloHttp, releaseCampaignService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
                 // AuthService.Clear();
 
                 $scope.isCollapsed = true;
                 $scope.$on('$routeChangeSuccess', function () {
                     $scope.isCollapsed = true;
                 });
+
+                var apiHost = APIBaseUrl;
+                var interveneApiHost = Config.interveneMeaAPIBaseUrl;
 
                 $scope.ckeckdUserAisensy = [];
                 $scope.ckeckdUserAisensy1 = [];
@@ -293,7 +296,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         phone: data.phone_number,
                         username: data.whatsapp_name
                     }
-                    AuthService.addUserToIntervene(param)
+                    $scope.addUserToIntervene(param)
                         .then(function onSuccess(response) {
                             if (response.data.status) {
                                 if (tabValue == 'active') {
@@ -327,6 +330,23 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         })
 
                 }
+
+                $scope.addUserToIntervene = function (param,meaType) {
+                  let url = "v0/ui/b2c-bot/action-status-intervene/?intervene=True&phone_number=" + param.phone + "&username=" + param.username;
+                  // apiHost = APIBaseUrl;
+                  if(meaType){
+                     url = "v0/ui/mea-bot/action-status-intervene/?intervene=True&phone_number=" + param.phone + "&username=" + param.username;
+                    //  apiHost = interveneApiHost;
+                  }
+                  return machadaloHttp.get(url)
+                     .then(function onSuccess(response) {
+                        return response
+                     })
+                     .catch(function onError(response) {
+                        return response
+                     });
+                };
+
                 $scope.messageBox = false;
                 $scope.resolveButton = false;
 
