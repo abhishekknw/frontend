@@ -639,9 +639,8 @@
       $('#viewComments').modal('show');
        B2BDashboardService.viewCommentsBasic(Id)
       .then(function onSuccess(response) {
-       console.log(response.data.data)
+       $scope.internalComment=response.data.data.internal_comments;
       })
-      $scope.commentsData=response.data.data;
     }
     $scope.viewCommentsLeadDetails = function (Id,req_id) {
       $scope.id_detail=Id;
@@ -649,17 +648,13 @@
       $('#viewCommentsLeadDetails').modal('show');
       B2BDashboardService.viewCommentsDetails(Id)
       .then(function onSuccess(response) {
-       console.log(response.data.data)
-      })
-     // $scope.commentsData=[{'general': "User11111","comment":"commen1111","timestamp":"june 8, 2020 6:14:00 PM"},{'general':"User2222","comment":"comment2222","timestamp":"july 10, 2020 12:54:00 PM"}];
-      //$scope.externalComment=[{'general': "Aman Patidar","comment":"newcomment","timestamp":"august 8, 2020 6:14:00 PM"},{'general':"AAAAAA","comment":"CCCCCCC","timestamp":"december 10, 2020 12:54:00 PM"}];
-      
+        $scope.externalComment=response.data.data.external_comments;
+      })      
     }
     $scope.commentValue = function(comment,Id,req_id){
 
-      B2BDashboardService.basicInternalComment(comment,Id,req_id)
+      B2BDashboardService.commentValueDetails(comment,Id,req_id)
       .then(function onSuccess(response){
-        console.log(response.data);
       })
       $scope.commentCheck=comment;
      }
@@ -667,7 +662,6 @@
 
        B2BDashboardService.basicInternalComment(comment,Id,req_id)
        .then(function onSuccess(response){
-        console.log(response.data);
       })
       $scope.commentCheck=comment;
      }
@@ -733,8 +727,16 @@
           }            
         });
     }
-    
-
+    $scope.getFormDetails=function(campaign_id,leads_type){
+      $scope.campaign=campaign_id;
+      $scope.leads=leads_type;
+      $scope.supplier_code="all";
+    }
+    $scope.sendBookingEmails=function(email){
+      B2BDashboardService.sendBookingEmails($scope.leads,$scope.supplier_code,$scope.campaign,email)
+      .then(function onSuccess(response){
+      });
+    }
     $scope.getNotPurchasedLead = function (CampaignId, campaignName) {
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = true;
@@ -777,7 +779,6 @@
           $scope.purchasedNotPurchasedLeadCurrent = page;
           $scope.purchasedNotPurchasedLeadPerPage = 20;
           $scope.cityListDetails=$scope.purchasedNotPurchasedLead.city_list;
-          console.log("viewleadDetails=",$scope.purchasedNotPurchasedLead);
           // $scope.all_values = [];
           // for (let i in values) {
           //     let row = {};

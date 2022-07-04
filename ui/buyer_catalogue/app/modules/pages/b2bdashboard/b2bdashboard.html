@@ -468,7 +468,6 @@
                               </textarea>
                             </td>                -->
                             <td class="alignment">
-                                <span>comment2</span>
                                 <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewComments(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
                             </td>
 
@@ -1109,7 +1108,7 @@
                               <a><i class="icon-sort" style="color:white;"></i></a> -->
                             </th>
                             <!-- <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th> -->
-                            <th class="btn_box_lead_survey_th">view {{filterType}}</th>
+                            <th class="btn_box_lead_survey_th">View {{filterType}}</th>
                             <th class="btn_box_lead_survey_th">Email {{filterType}}</th>
                             <th class="btn_box_lead_survey_th">Download {{filterType}}</th>
 
@@ -1168,7 +1167,7 @@
                               </button> -->
                             </td>
                             <td class="btn_box_lead_survey">
-                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id, 'email')"
+                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id,filterType)"
                                 data-target="#sendEmailModal" data-toggle="modal">
                                 <p ng-if="filterType == 'Leads' && filterType != 'Survey' && filterType != 'Feedback'">Email Leads</p>
                                 <p ng-if="filterType != 'Leads' && filterType == 'Survey' && filterType !='Feedback'">Email Survey</p>
@@ -1397,7 +1396,6 @@
                               <span style="display: none;">{{value8=value8?value8:lead[0].macchadalo_client_status}}
                             </td>
                             <td class="alignment">
-                              <span>comment2</span>
                               <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(lead[0]._id,lead[0].requirement_id)">View / Add</button>
                           </td>
                             <!-- <td class="alignment">
@@ -2726,27 +2724,27 @@
               <option value="prehype">Prehype Email</option>
             </select>
             <div class="sendEmail1">
-              <!-- <input type="email" class="field"  placeholder="Enter Email Id to test" ng-model="emailModel.email"> -->
-               <div layout="column" ng-cloak>
+              <input type="email" class="field"  placeholder="Enter Multiple User's Email To Send Mail " ng-model="emailModel.email">
+               <!-- <div layout="column" ng-cloak>
                 <md-content class="md-padding" layout="column">
                     <md-chips
                     md-type="email"
                     md-on-add="validateEmail($chip)"
-                    ng-model="emailModel.email" input-aria-label="Emails"
+                    ng-model="emailModel.email" value="{{ng-model}}" input-aria-label="Emails"
                     md-separator-keys="customKeys" placeholder="Enter Multiple User's Email To Send Mail "
                     secondary-placeholder="Enter Email Id"
                     input-aria-describedby="customSeparatorKeyDescription">
                     </md-chips>
-                </md-content>
+                </md-content> -->
                </div>
 
                <div>
                   <label>Note :- Use comma separation between emails to send multiple emails to users at the same time</label>
                 </div>
                 <div class="buttons buttons-flex">
-                  <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="smallBtn" ng-disabled="isEmailButton || emailBtnDisabled || !emailModel.selected">Sendt email for given user</button>
+                  <button type="button" name="button" ng-Click="sendBookingEmails(emailModel.email)" class="smallBtn" ng-disabled="isEmailButton || emailBtnDisabled || !emailModel.selected">Send email for given user</button>
                   <span>OR</span>
-                  <button type="button" name="button" class="smallBtn" ng-click="sendBookingEmails(proposalDetail.proposal_id, 'confirmed')" ng-disabled="emailBtnDisabled || !emailModel.selected">Send email to all (Default)</button>
+                  <button type="button" name="button" class="smallBtn" ng-click="sendBookingEmails(emailModel.email)" ng-disabled="emailBtnDisabled || !emailModel.selected">Send email to all (Default)</button>
                 
               </div>
             </div>
@@ -2795,15 +2793,15 @@
         <div class="modalBodyBox">
           <table class="table-data">
             <h3>Internal Comments</h3>
-            <tr ng-repeat="item in commentsData">
+            <tr ng-repeat="item in internalComment">
               <td>
                 <div>
-                  <p>{{item.internal_comments}}</p>
+                  <p>{{item.comment}}</p>
                 </div>
                 <div>
                   <img ng-src="{{userIcon}}">
-                  <b>{{item.general}}:</b> 
-                  <span><small>{{item.timestamp|date:'medium'}}</small></span>
+                  <b>{{item.created_by}}:</b> 
+                  <span><small>{{item.created_at|date:'medium'}}</small></span>
                 </div>
               </td>
             </tr>
@@ -2833,15 +2831,15 @@
         <div class="modalBodyBox">
           <table class="table-data">
             <h3>Internal Comments</h3>
-            <tr ng-repeat="item in commentsData">
+            <tr ng-repeat="item in internalComment">
               <td>
                 <div>
                   <p>{{item.comment}}</p>
                 </div>
                 <div>
                   <img ng-src="{{userIcon}}">
-                  <b>{{item.general}}:</b> 
-                  <span><small>{{item.timestamp|date:'medium'}}</small></span>
+                  <b>{{item.created_by}}:</b> 
+                  <span><small>{{item.created_at|date:'medium'}}</small></span>
                 </div>
               </td>
             </tr>
@@ -2855,8 +2853,8 @@
                 </div>
                 <div>
                   <img ng-src="{{userIcon}}">
-                  <b>{{item.general}}:</b> 
-                  <span><small>{{item.timestamp|date:'medium'}}</small></span>
+                  <b>{{item.created_by}}:</b> 
+                  <span><small>{{item.created_at|date:'medium'}}</small></span>
                 </div>
               </td>
             </tr>
