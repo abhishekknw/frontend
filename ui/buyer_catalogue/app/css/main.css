@@ -1077,3 +1077,34 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
 .table-data{
   background-color: #fff;
 }
+.b2b-table-style .table > tbody > tr > td{
+  padding-top: 2px;
+  padding-bottom: 2px;
+  line-height: 1.4;
+}
+/* Responsive */
+
+@media screen and (max-width: 1024px) {
+  div.dashboard-tab .uib-tab{
+    min-width: 100px;
+  }
+  .al-main.b2b-dash{
+    padding: 0;
+  }
+  .b2b-table-style{
+    
+  }
+}
+@media screen and (max-width: 400px) {
+  div.dashboard-tab .uib-tab{
+    width: 100%;
+  }
+  ul.licence_detail_bx li:nth-child(1),ul.licence_detail_bx li:nth-last-child(1){
+    width: 100%;
+    margin: 0;
+    margin-bottom: 5px;
+  }
+  .dashboard-tab .tab-content{
+    padding: 15px;
+  }
+}
