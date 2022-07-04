@@ -334,6 +334,38 @@ angular.module('catalogueApp')
         var url = url_root + "campaign/user-cities/";
         return machadaloHttp.get(url);
       }
+      DashboardService.viewCommentsBasic = function (id) {
+        var url = url_root + "b2b/basic-client-comment/?_id=" + id;
+        return machadaloHttp.get(url);
+      }
+      DashboardService.viewCommentsDetails = function (id) {
+        var url = url_root + "b2b/detail-client-comment/?_id=" + id;
+        return machadaloHttp.get(url);
+      }
+      DashboardService.basicInternalComment=function(comment,Id,req_id){
+          var param={};
+          var payload=[];
+          var payload_param={};
+          payload_param['comment']=comment;
+          payload_param['_id']=Id;
+          payload_param['requirement_id']=req_id;
+          payload.push(payload_param);
+          param['data']=payload;
+        var url = url_root + "b2b/md-client-external-comment/";
+        return machadaloHttp.post(url,param);
+      }
+      DashboardService.commentValueDetails=function(comment,Id,req_id){
+        var param={};
+        var payload=[];
+        var payload_param={};
+        payload_param['comment']=comment;
+        payload_param['_id']=Id;
+        payload_param['requirement_id']=req_id;
+        payload.push(payload_param);
+        param['data']=payload;
+      var url = url_root + "b2b/md-client-internal-comment/";
+      return machadaloHttp.post(url,param);
+    }
 
       DashboardService.downloadSheet = function (formId) {
         var url = url_root + "leads/" + formId + "/generate_lead_data_excel";
@@ -485,6 +517,10 @@ angular.module('catalogueApp')
           var url = url_root + "b2b/update-client-decision-status/";
      //   } 
         return machadaloHttp.post(url,param);
+      }
+      DashboardService.sendBookingEmails= function(leads,supplier_code,campaign,email){
+        var url = url_root + "b2b/email-leads-summary/?lead_type=" + leads + "&supplier_code="+supplier_code+"&campaign_id="+campaign+"&emails="+email;
+        return machadaloHttp.get(url);
       }
 
       DashboardService.updateLeadClientStatus = function (status, comment, id,req_id) {

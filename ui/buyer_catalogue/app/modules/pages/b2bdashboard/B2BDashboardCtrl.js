@@ -633,9 +633,38 @@
       $scope.selectFlag=false;
       $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id,$scope.requirement_id);
     }
-    $scope.commentValue = function(comment){
-      $scope.commentCheck=comment;
+    $scope.viewComments = function (Id,req_id) {
+      $scope.id_basic=Id;
+      $scope.req_id_basic=req_id;
+      $('#viewComments').modal('show');
+       B2BDashboardService.viewCommentsBasic(Id)
+      .then(function onSuccess(response) {
+       $scope.internalComment=response.data.data.internal_comments;
+      })
     }
+    $scope.viewCommentsLeadDetails = function (Id,req_id) {
+      $scope.id_detail=Id;
+      $scope.req_id_detail=req_id;
+      $('#viewCommentsLeadDetails').modal('show');
+      B2BDashboardService.viewCommentsDetails(Id)
+      .then(function onSuccess(response) {
+        $scope.externalComment=response.data.data.external_comments;
+      })      
+    }
+    $scope.commentValue = function(comment,Id,req_id){
+
+      B2BDashboardService.commentValueDetails(comment,Id,req_id)
+      .then(function onSuccess(response){
+      })
+      $scope.commentCheck=comment;
+     }
+     $scope.commentValueDetails = function(comment,Id,req_id){
+
+       B2BDashboardService.basicInternalComment(comment,Id,req_id)
+       .then(function onSuccess(response){
+      })
+      $scope.commentCheck=comment;
+     }
     $scope.valuechange=function(value1,status,id,req_id){
       $scope.clientComment=value1;
       $scope.requirement_id=req_id;
@@ -698,8 +727,16 @@
           }            
         });
     }
-    
-
+    $scope.getFormDetails=function(campaign_id,leads_type){
+      $scope.campaign=campaign_id;
+      $scope.leads=leads_type;
+      $scope.supplier_code="all";
+    }
+    $scope.sendBookingEmails=function(email){
+      B2BDashboardService.sendBookingEmails($scope.leads,$scope.supplier_code,$scope.campaign,email)
+      .then(function onSuccess(response){
+      });
+    }
     $scope.getNotPurchasedLead = function (CampaignId, campaignName) {
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = true;
@@ -742,7 +779,6 @@
           $scope.purchasedNotPurchasedLeadCurrent = page;
           $scope.purchasedNotPurchasedLeadPerPage = 20;
           $scope.cityListDetails=$scope.purchasedNotPurchasedLead.city_list;
-          console.log("viewleadDetails=",$scope.purchasedNotPurchasedLead);
           // $scope.all_values = [];
           // for (let i in values) {
           //     let row = {};
