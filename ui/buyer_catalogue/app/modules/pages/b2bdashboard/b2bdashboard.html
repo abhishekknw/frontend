@@ -2702,15 +2702,17 @@
     </div>
   </div>
   <!--sendEmailModal start  -->
-  <div id="sendEmailModal" class="modal fade modal-styles">
+  <div id="sendEmailModal" class="modal fade modal-styles theme-modal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-body">
-          <div class="modalBodyBox">
-            <h3>Send Emails for {{ proposalDetail.name }}</h3>
+        <div class="modal-header">
+          <h3>Send Emails {{ proposalDetail.name }}</h3>
             <button type="button" class="close" ng-click="closeModel()" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
+        </div>
+        <div class="modal-body">
+          <div class="modalBodyBox">
             <label>Select Email Type:</label>
             <select class="field" name="" ng-model="emailModel.selected">
               <option value="" disabled selected hidden>Email Type</option>
@@ -2819,7 +2821,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>View Comments {{campaignDataForComment.name}}</h2>
+        <h4>View Comments {{campaignDataForComment.name}}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>

@@ -3525,13 +3525,19 @@
                       <span ng-if="!subrequirement.current_patner_feedback_reason">Reason:NA</span>
                     </td>
                     <td class="alignment">
-                      {{companyData(subrequirement.sector)}}
-                      <span style="width:150px;"
+                      <!-- {{companyData(subrequirement.sector)}} -->
+                      <!-- <span style="width:150px;"
                         class="multiselectDropdown multiselectDropdown-style style="color:red;width:100%;margin-left:20px;"
                         ng-dropdown-multiselect="" options="companiesDetailDataArray" extra-settings="settings"
                         selected-model="subrequirement.selected_preferred_company_sub_sector"
                         ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
-                        events="events"></span>
+                        events="events">
+                      </span> -->
+                      <span style="width:150px;"
+                        class="multiselectDropdown multiselectDropdown-style" style="color:red;width:100%;margin-left:20px;"
+                        ng-dropdown-multiselect="" options="companiesDetailDataArray" extra-settings="settings"
+                        selected-model="subrequirement.selected_preferred_company_sub_sector">
+                      </span>
                         <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector" style="text-align: left; display: inline-block">
                           {{selectedName.name}}
                           <span ng-if="!$last">,</span>
@@ -3550,10 +3556,10 @@
                         </span> -->
                       <select class="form-control" name="lead_L4" id="lead_L4" ng-model="subrequirement.L4"
                         style="width:150px;">
-                        <option ng-repeat="lead_L4 in leads_Data.L4" value="{{lead_L4}}">
+                        <option ng-repeat="lead_L4 in leads_Data_1.L4" value="{{lead_L4}}">
                           {{lead_L4}}
                         </option>
-                        <option ng-if="leads_Data.L4.length==0" selected="true" value="NA">NA</option>
+                        <option ng-if="leads_Data_1.L4.length==0" selected="true" value="NA">NA</option>
 
                       </select>
                     </td>
@@ -3575,10 +3581,10 @@
                       <!-- <span ng-if="!subrequirement.l1_answer_2">NA</span> -->
                       <select class="form-control" name="lead_L5" id="lead_L5" ng-model="subrequirement.L5"
                         style="width:150px;">
-                        <option ng-repeat="lead_L5 in leads_Data.L5" value="{{lead_L5}}">
+                        <option ng-repeat="lead_L5 in leads_Data_1.L5" value="{{lead_L5}}">
                           {{lead_L5}}
                         </option>
-                        <option ng-if="leads_Data.L5.length==0" selected="true" value="NA">NA</option>
+                        <option ng-if="leads_Data_1.L5.length==0" selected="true" value="NA">NA</option>
 
                       </select>
                     </td>
@@ -3592,10 +3598,10 @@
                         </span> -->
                       <select class="form-control" name="lead_L6" id="lead_L6" ng-model="subrequirement.L6"
                         style="width:150px;">
-                        <option ng-repeat="lead_L6 in leads_Data.L6" value="{{lead_L6}}">
+                        <option ng-repeat="lead_L6 in leads_Data_1.L6" value="{{lead_L6}}">
                           {{lead_L6}}
                         </option>
-                        <option ng-if="leads_Data.L6.length==0" selected="true" value="NA">NA</option>
+                        <option ng-if="leads_Data_1.L6.length==0" selected="true" value="NA">NA</option>
                       </select>
 
 
@@ -3610,10 +3616,10 @@
                         </span> -->
                       <select class="form-control" name="lead_L4_1" id="lead_L4_1" ng-model="subrequirement['L4.1']"
                         style="width:150px;">
-                        <option ng-repeat="lead_L4_1 in leads_Data.L4_1" value="{{lead_L4_1}}">
+                        <option ng-repeat="lead_L4_1 in leads_Data_1.L4_1" value="{{lead_L4_1}}">
                           {{lead_L4_1}}
                         </option>
-                        <option ng-if="leads_Data.L4_1.length==0" selected="true" value="NA">NA</option>
+                        <option ng-if="leads_Data_1.L4_1.length==0" selected="true" value="NA">NA</option>
                       </select>
                     </td>
 
@@ -3626,10 +3632,10 @@
                         </span> -->
                       <select class="form-control" name="lead_L5_1" id="lead_L5_1" ng-model="subrequirement['L5.1']"
                         style="width:150px;">
-                        <option ng-repeat="lead_L5_1 in leads_Data.L5_1" value="{{lead_L5_1}}">
+                        <option ng-repeat="lead_L5_1 in leads_Data_1.L5_1" value="{{lead_L5_1}}">
                           {{lead_L5_1}}
                         </option>
-                        <option ng-if="leads_Data.L5_1.length==0" selected="true" value="NA">NA</option>
+                        <option ng-if="leads_Data_1.L5_1.length==0" selected="true" value="NA">NA</option>
 
                       </select>
                     </td>
@@ -3643,10 +3649,10 @@
                         </span> -->
                       <select class="form-control" name="lead_L6_1" id="lead_L6_1" ng-model="subrequirement['L6.1']"
                         style="width:150px;">
-                        <option ng-repeat="lead_L6_1 in leads_Data.L6_1" value="{{lead_L6_1}}">
+                        <option ng-repeat="lead_L6_1 in leads_Data_1.L6_1" value="{{lead_L6_1}}">
                           {{lead_L6_1}}
                         </option>
-                        <option ng-if="leads_Data.L6_1.length==0" selected="true" value="NA">NA</option>
+                        <option ng-if="leads_Data_1.L6_1.length==0" selected="true" value="NA">NA</option>
                       </select>
                     </td>
 

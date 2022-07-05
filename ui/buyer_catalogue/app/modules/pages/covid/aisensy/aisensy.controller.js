@@ -289,7 +289,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 }
 
                 $scope.writeMessage = function (data, tabValue) {
-                    console.log('1111111111111111111', data);
                     $scope.messageBox = true;
                     $scope.tab = { name: 'tabC' };
                     let param = {
@@ -1070,17 +1069,22 @@ $scope.selectLeadData=function(data){
     for(let i in $scope.leads_Data){
       for (let j in $scope.leads_Data[i]){
         if(data === j){
-          $scope.leads_Data=$scope.leads_Data[i][data];
-          console.log($scope.leads_Data)
+          $scope.leads_Data_1=$scope.leads_Data[i][data];
           break;
         }
       }
     }
   }
+  $scope.settings= {
+    scrollableHeight: '200px',
+    scrollable: false,
+    enableSearch: false
+};
   
 $scope.detailedShow = [];
 $scope.sector_name="";
 $scope.ShowDetailed = function (index,sector) {
+  $scope.companyData(sector);
     $scope.sector_name = $scope.sectorName(sector);
     $scope.selectLeadData($scope.sector_name.toLowerCase())
     $scope.oldIndex = index;
@@ -1106,9 +1110,8 @@ $scope.ShowDetailed = function (index,sector) {
         $scope.updateDisable = true;
       }
     }
-
-    $scope.subSectorCheck = true;
   }
+  $scope.subSectorCheck = true;
   $scope.checkBoxAutoCheck = function (key, index) {
     $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
     $scope.checkbooxCheck(key);
@@ -1125,7 +1128,7 @@ $scope.ShowDetailed = function (index,sector) {
           }
         }
 $scope.companiesDetailDataArray=[];
-$scope.companyData=function(){
+$scope.companyData=function(id){
           while ($scope.companiesDetailDataArray.length) {
             $scope.companiesDetailDataArray.pop(); 
           }
@@ -1134,7 +1137,7 @@ $scope.companyData=function(){
           for (let k in $scope.companiesDetailData) {
             
             if($scope.companiesDetailData[k].business_type!==undefined){
-              if($scope.sectorId==$scope.companiesDetailData[k].business_type[0]){
+              if(id==$scope.companiesDetailData[k].business_type[0]){
                 $scope.companiesDetailDataArray[i]=$scope.companiesDetailData[k];
                 $scope.companiesDetailDataArray[i].id = $scope.companiesDetailData[k].organisation_id;
                 $scope.companiesDetailDataArray[i].label = $scope.companiesDetailData[k].name;
@@ -1144,8 +1147,10 @@ $scope.companyData=function(){
             }
           }
         }
-$scope.otherPreferredCompany = false;
-$scope.subSectorPreferredMulticheck = function (key, index) { 
+
+
+        $scope.otherPreferredCompany = false;
+        $scope.subSectorPreferredMulticheck = function (key, index) {
           // $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
           if ($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector.length > 0) {
             $scope.requirementDetailData[key].requirements[index].preferred_company = [];
@@ -1163,7 +1168,7 @@ $scope.subSectorPreferredMulticheck = function (key, index) {
             $scope.requirementDetailData[key].requirements[index].preferred_company = [];
             $scope.requirementDetailData[key].requirements[index].otherPreferredCompany = false
           }
-        } 
+        }
 
 $scope.updateSubSectorRow = function (data,l4,l5,l6) {
             let updateData = [];

@@ -1091,9 +1091,7 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
   .al-main.b2b-dash{
     padding: 0;
   }
-  .b2b-table-style{
-    
-  }
+
 }
 @media screen and (max-width: 400px) {
   div.dashboard-tab .uib-tab{
