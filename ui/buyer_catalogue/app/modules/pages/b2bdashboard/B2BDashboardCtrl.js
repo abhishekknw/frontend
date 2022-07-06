@@ -656,17 +656,19 @@
       .then(function onSuccess(response){
       $scope.mymodel["comment"]="";
       swal("Successfull", "comment added sucessfully", "success");
-      })
       $scope.viewComments($scope.id_basic,$scope.req_id_basic);
+      })
      }
+
+
      $scope.commentValueDetails = function(comment,Id,req_id){
 
        B2BDashboardService.basicInternalComment(comment.comment,Id,req_id)
        .then(function onSuccess(response){
         $scope.mymodel["comment"]="";
         swal("Successfull", "comment added sucessfully", "success");
+        $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
       })
-      $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
      }
     $scope.valuechange=function(value1,status,id,req_id){
       $scope.clientComment=value1;
