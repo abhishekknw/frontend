@@ -649,6 +649,7 @@
       B2BDashboardService.viewCommentsDetails(Id)
       .then(function onSuccess(response) {
         $scope.externalComment=response.data.data.external_comments;
+        $scope.internalComment=response.data.data.internal_comments;
       })      
     }
     $scope.commentValue = function(comment,Id,req_id){

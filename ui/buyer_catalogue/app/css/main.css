@@ -1082,6 +1082,11 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
   padding-bottom: 2px;
   line-height: 1.4;
 }
+
+.table-h-scroll{
+  max-height:150px;
+  overflow-x: auto;
+}
 /* Responsive */
 
 @media screen and (max-width: 1024px) {
