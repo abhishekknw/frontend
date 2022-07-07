@@ -1036,25 +1036,30 @@ $scope.addPoc = function(){
       }
     }
 
-
 $scope.opsVerified=function(phone,supplier_id){
-        userService.getSector()
-            .then(function onSuccess(response) {
-              $scope.sectorList = response.data;
-            })
-        releaseCampaignService.selectLeads()
-        .then(function onSuccess(response) { 
-         $scope.leads_time=response.data;
-         $scope.lastIndex=$scope.leads_time.data.length-1;  
-         $scope.leads_Data=response.data.data;
-            })    
-        releaseCampaignService.requirementDetail("",phone,supplier_id)
-        .then(function onSuccess(response) {
-        $scope.requirementDetailData = response.data.data.requirements;
-        $scope.companiesDetailData = response.data.data.companies;
-       })
-       $scope.getRequirementBrowsedData("",phone,supplier_id);
-    }
+    $scope.detailedShow=[];
+    userService.getSector()
+    .then(function onSuccess(response) {
+      $scope.sectorList = response.data;
+    })
+
+    releaseCampaignService.selectLeads()
+    .then(function onSuccess(response) { 
+      $scope.leads_time=response.data;
+      $scope.lastIndex=$scope.leads_time.data.length-1;  
+      $scope.leads_Data=response.data.data;
+    }) 
+
+    releaseCampaignService.requirementDetail("",phone,supplier_id)
+    .then(function onSuccess(response) {
+      $scope.requirementDetailData = response.data.data.requirements;
+      console.log($scope.requirementDetailData[8].requirements[0].is_deleted)
+      $scope.companiesDetailData = response.data.data.companies;
+    })
+    
+    $scope.getRequirementBrowsedData("",phone,supplier_id);
+
+}
 
 $scope.sectorName = function(sectorName)  {
     $scope.sectorId=sectorName;
@@ -1084,7 +1089,7 @@ $scope.selectLeadData=function(data){
 $scope.detailedShow = [];
 $scope.sector_name="";
 $scope.ShowDetailed = function (index,sector) {
-  $scope.companyData(sector);
+    $scope.companyData(sector);
     $scope.sector_name = $scope.sectorName(sector);
     $scope.selectLeadData($scope.sector_name.toLowerCase())
     $scope.oldIndex = index;
@@ -1127,8 +1132,8 @@ $scope.ShowDetailed = function (index,sector) {
 
           }
         }
-$scope.companiesDetailDataArray=[];
-$scope.companyData=function(id){
+       $scope.companiesDetailDataArray=[];
+       $scope.companyData=function(id){
           while ($scope.companiesDetailDataArray.length) {
             $scope.companiesDetailDataArray.pop(); 
           }
@@ -1170,7 +1175,7 @@ $scope.companyData=function(id){
           }
         }
 
-$scope.updateSubSectorRow = function (data,l4,l5,l6) {
+        $scope.updateSubSectorRow = function (data,l4,l5,l6) {
             let updateData = [];
             if (data.current_company == "") {
               data.current_company = null
@@ -1233,7 +1238,7 @@ $scope.updateSubSectorRow = function (data,l4,l5,l6) {
             }
           }
 
- $scope.singleRemoveSubSector = function (id, key, index) {
+        $scope.singleRemoveSubSector = function (id, key, index) {
             let deleteSubSectorId = [];
             deleteSubSectorId.push(id);
             if (deleteSubSectorId.length > 0) {
@@ -1276,13 +1281,13 @@ $scope.updateSubSectorRow = function (data,l4,l5,l6) {
                            else if (response.data.data.list_color_code == 5) {
                             color_class = 'red';
                           }
-                            var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                              return el.id;
-                            }).indexOf($scope.shortlisted_spaces_id);
-                            if (localindex_index != -1) {
-                              $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
-                                $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
-                              }
+                            //  var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                            //   return el.id;
+                            // }).indexOf($scope.shortlisted_spaces_id);
+                            // if (localindex_index != -1) {
+                            //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
+                            //     $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
+                            //   }
                           }
                            swal(constants.name, constants.delete_success, constants.success);
                         }
@@ -1299,7 +1304,7 @@ $scope.updateSubSectorRow = function (data,l4,l5,l6) {
           }
 
 
-$scope.singleRestoreSubSector = function (id, key, index) {
+        $scope.singleRestoreSubSector = function (id, key, index) {
             let restoreSubSectorId = [];
             restoreSubSectorId.push(id);
             if (restoreSubSectorId.length > 0) {
@@ -1325,7 +1330,6 @@ $scope.singleRestoreSubSector = function (id, key, index) {
                         } else {
                           if(response && response.data && response.data.data && response.data.data.list_color_code != 'null'){
                             let color_class = '';
-                            // swal(constants.name, 'Recovered Successfully', constants.success);
                             if (response.data.data.list_color_code == 1) {
                              color_class =  'yellow';;
                            }
@@ -1341,13 +1345,13 @@ $scope.singleRestoreSubSector = function (id, key, index) {
                            else if (response.data.data.list_color_code == 5) {
                             color_class = 'red';
                           }
-                            var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                              return el.id;
-                            }).indexOf($scope.shortlisted_spaces_id);
-                            if (localindex_index != -1) {
-                              $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
-                                $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
-                              }
+                            // var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                            //   return el.id;
+                            // }).indexOf($scope.shortlisted_spaces_id);
+                            // if (localindex_index != -1) {
+                            //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
+                            //     $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
+                            //   }
                           }
                           swal(constants.name, 'Recovered Successfully', constants.success);
                         }
@@ -1367,7 +1371,7 @@ $scope.singleRestoreSubSector = function (id, key, index) {
                 });
             }
           }
- $scope.checkOpsVerifyRequirement = function (data) {
+         $scope.checkOpsVerifyRequirement = function (data) {
             let verifyId = [];
             for (let i in data) {
               if (data[i].requirementCheck && data[i].varified_ops == 'no') {
@@ -1380,7 +1384,7 @@ $scope.singleRestoreSubSector = function (id, key, index) {
               swal(constants.name, 'Already Verified', constants.error);
             }
           }
-$scope.verifyRequirement = function (verifyId) {
+         $scope.verifyRequirement = function (verifyId) {
             swal({
               title: 'Are you sure ?',
               text: 'Do you want to proceed with sector level verification?',
@@ -1470,7 +1474,7 @@ $scope.verifyRequirement = function (verifyId) {
   
           }  
 
-$scope.updateSubSector = function (data) {
+        $scope.updateSubSector = function (data) {
             let updateData = [];
             for (let i in data) {
               if (data[i].current_company == "") {
@@ -1543,7 +1547,7 @@ $scope.updateSubSector = function (data) {
                 })
             }
           }
-$scope.restoreMultiRequirement = function (data, key) {
+          $scope.restoreMultiRequirement = function (data, key) {
             let restoreSubSectorId = [];
             $scope.disableRestore = true
             for (let i in $scope.requirementDetailData[key].requirements) {
@@ -1590,13 +1594,13 @@ $scope.restoreMultiRequirement = function (data, key) {
                            else if (response.data.data.list_color_code == 5) {
                             color_class = 'red';
                           }
-                            var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                              return el.id;
-                            }).indexOf($scope.shortlisted_spaces_id);
-                            if (localindex_index != -1) {
-                              $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
-                                $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
-                              }
+                            // var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                            //   return el.id;
+                            // }).indexOf($scope.shortlisted_spaces_id);
+                            // if (localindex_index != -1) {
+                            //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
+                            //     $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
+                            //   }
                           }
                           swal(constants.name, 'Recovered Successfully', constants.success);
                         }
@@ -1622,7 +1626,7 @@ $scope.restoreMultiRequirement = function (data, key) {
                 });
             }
           }
-   $scope.removeSubSectorRequirement = function (data, key) {
+         $scope.removeSubSectorRequirement = function (data, key) {
             let deleteSubSectorId = [];
             for (let i in $scope.requirementDetailData[key].requirements) {
               if ($scope.requirementDetailData[key].requirements[i].requirementCheck == true && $scope.requirementDetailData[key].requirements[i].is_deleted == 'no') {
@@ -1667,13 +1671,13 @@ $scope.restoreMultiRequirement = function (data, key) {
                            else if (response.data.data.list_color_code == 5) {
                             color_class = 'red';
                           }
-                            var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                              return el.id;
-                            }).indexOf($scope.shortlisted_spaces_id);
-                            if (localindex_index != -1) {
-                              $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
-                                $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
-                              }
+                            // var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                            //   return el.id;
+                            // }).indexOf($scope.shortlisted_spaces_id);
+                            // if (localindex_index != -1) {
+                            //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
+                            //     $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
+                            //   }
                           }
                           swal(constants.name, constants.delete_success, constants.success);
                         }
@@ -1695,7 +1699,7 @@ $scope.restoreMultiRequirement = function (data, key) {
                 });
             }
           }
-$scope.getRequirementBrowsedData = function (id,phone,supplierId) {
+         $scope.getRequirementBrowsedData = function (id,phone,supplierId) {
             releaseCampaignService.requirementBrowsedData(id,phone,supplierId)
               .then(function onSuccess(response) {
                 $scope.browsedDetailData = response.data.data.browsed;
@@ -1777,7 +1781,7 @@ $scope.getRequirementBrowsedData = function (id,phone,supplierId) {
               })
           }
           
-$scope.singleOpsVerifyRequirement = function (id) {
+         $scope.singleOpsVerifyRequirement = function (id) {
             let verifyId = [];
             verifyId.push(id);
             if (verifyId.length > 0) {

@@ -1263,6 +1263,12 @@
               <li>
                 <a href="/#/intervene/mea">Intervene MEA</a>
               </li>
+              <li >
+                <a href="/#/templateDashboard" >Template Dashboard MCA</a>
+              </li>
+              <li >
+                <a href="/#/templateDashboardMea" >Template Dashboard MEA</a>
+              </li>
 
             </ul>
           </div>
@@ -3533,8 +3539,7 @@
                         ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
                         events="events">
                       </span> -->
-                      <span style="width:150px;"
-                        class="multiselectDropdown multiselectDropdown-style" style="color:red;width:100%;margin-left:20px;"
+                      <span
                         ng-dropdown-multiselect="" options="companiesDetailDataArray" extra-settings="settings"
                         selected-model="subrequirement.selected_preferred_company_sub_sector">
                       </span>
@@ -3818,7 +3823,7 @@
                         ng-click="removeSubSectorRequirement(requirement.requirements,key)">Remove</button>
 
                       <button style="margin-bottom:2px" id="restore_{{key}}" type="button" name="button"
-                        ng-disabled="subSectorCheck || disableRestore" class="btn btn-success"
+                         class="btn btn-success"
                         ng-click="restoreMultiRequirement(requirement.requirements,key)">Restore</button>
 
                       <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
@@ -4087,7 +4092,7 @@
                         <option ng-repeat="option in sectorName">{{option}}</option>
                        </select>
                     </td>
-                  <tr ng-show="detailedShow[key]" id="detailedSho_{{key}}" ng-repeat-end
+                  <tr ng-if="detailedShow[key]" id="detailedSho_{{key}}" ng-repeat-end
                     ng-repeat-start="subrequirement in requirements">
                     <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req11"> </td>
                     <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req">
