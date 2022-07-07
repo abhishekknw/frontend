@@ -1466,7 +1466,7 @@ angular.module('catalogueApp')
                     $scope.browsedDetailData[i].otherPreferredCompanyBrowsed = true;
                     $scope.browsedDetailData[i].prefered_patners.push("");
                  }
-                if ($scope.browsedDetailData[i].prefered_patners.length > 0) {
+                if ($scope.browsedDetailData[i].prefered_patners && $scope.browsedDetailData[i].prefered_patners.length > 0) {
                   for (let j in $scope.browsedDetailData[i].prefered_patners) {
                     var localindex_index = $scope.companiesDetailDataBrowsed.map(function (el) {
                       return el.organisation_id;
