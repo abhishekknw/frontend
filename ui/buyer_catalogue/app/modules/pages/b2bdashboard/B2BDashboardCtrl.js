@@ -948,6 +948,9 @@
           }
         });
     }
+    $scope.viewLeadsPopup = function(){
+      $('#viewLeadsPopup').modal('show');
+    }
 
     $scope.acceptDeclineMultiple = function (value) {
       let data = [];
@@ -1666,7 +1669,24 @@
     }
     /** /Sort funtionality */
 
+    
+    $scope.arrowIcon=0;
+    $scope.showLeads = function(row){
+      if($scope.id==row && $scope.id!=""){
+        $scope.id="";
+      }
+      else if($scope.arrowIcon==0){
+        $scope.arrowIcon=1;
+        $scope.id = row;
+      }
+      else{
+        $scope.arrowIcon=0;
+      }
+    }
+
   })
+
+
 })();
 app.factory('Excel', function ($window) {
   var uri = 'data:application/vnd.ms-excel;base64,',
