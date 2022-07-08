@@ -1672,15 +1672,14 @@
     
     $scope.arrowIcon=0;
     $scope.showLeads = function(row){
-      if($scope.id==row && $scope.id!=""){
+      if($scope.id==row){
         $scope.id="";
-      }
-      else if($scope.arrowIcon==0){
-        $scope.arrowIcon=1;
-        $scope.id = row;
-      }
-      else{
         $scope.arrowIcon=0;
+      }
+      else if($scope.id!=row){
+        $scope.id=row;
+        $scope.arrowIcon=1;
+
       }
     }
 
