@@ -410,11 +410,10 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>Select Multiple</th>
+                          <th>Select</th>
                           <th>Entity Name</th>
                           <th>TOE</th>
-                          <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">Primary
-                            Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                          <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">PC<a><i class="icon-sort" style="color:white;"></i></a></th>
                           <th>Area</th>
                           <th>City</th>
                           <th>Lead Timestamp</th>
@@ -439,46 +438,14 @@
                       <tbody class="data-list" pagination-id="paginate1"
                         dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord"
                         total-items="totalrecord" current-page="currentPage" track by "$index">
-                        <tr>
-                          <tr id="{{id}}" ng-if="arrowIcon==1 && decisionPanding.requirement_id==id">
-                            <td></td>
-                            <td class="alignment text-center">{{id}}</td>
-                            <td class="alignment text-center" >entity_type</td>
-                            <td class="alignment text-center">.primary_count</td>
-                            <td class="alignment text-center">.area</td>
-                            <td class="alignment text-center">.city</td>
-                            <td class="alignment text-center">.lead_timestamp</td>
-                            <td class="alignment text-center">
-                              <select class="form-control client-status">
-                                <option>SELECT</option>
-                              </select>
-                              <span style="display: none;">value8</span>
-                              <span>.updated_at</span>
-                            </td>
-                            <td class="alignment">
-                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewComments(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
-                            </td>
-  
-                            <td class="alignment text-center">
-                              .phone_number
-                            </td>
-                            <td class="alignment text-center">
-                              <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
-                              <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id)"
-                                ng-if="decisionPanding.client_status!='Decline'">Decline</button>
-                              <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
-                            </td>
-                          </tr>
+                        
                           <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
                               ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus">
-                              <span ng-if="decisionPanding.requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id)">
+                              <span ng-if="decisionPanding.requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
                               </span>
-                              <span ng-if="decisionPanding.requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id)">
+                              <span ng-if="decisionPanding.requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
                               </span>
-                          </td>
+                          </td>                          
                           <td class="alignment text-center">{{decisionPanding.entity_name}}</td>
                           <td class="alignment text-center" >{{decisionPanding.entity_type}}</td>
                           <td class="alignment text-center">{{decisionPanding.primary_count}}</td>
@@ -504,13 +471,12 @@
                                         <span>{{mymodel=mymodel ? mymodel:mymodel==""?"":decisionPanding.macchadalo_client_comment}}</span>
                               </textarea>
                             </td>                -->
+                            <td class="alignment text-center">
+                              {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
+                            </td>
                             <td class="alignment">
                                 <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewComments(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
                             </td>
-
-                          <td class="alignment text-center">
-                            {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
-                          </td>
                           <!-- <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td> -->
                           <td class="alignment text-center">
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
@@ -523,13 +489,50 @@
                               disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
                           </td>
                         </tr>
+                        <tr>
+                          <tr style="background-color: yellow;" id="{{id}}"
+                              ng-if="arrowIcon==1 && decisionPanding.requirement_id==id"
+                              ng-repeat="data in supplier_leads">
+                            <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
+                              ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus"></td>
+                            <td class="alignment text-center">{{data.entity_name}}</td>
+                            <td class="alignment text-center" >{{data.entity_name}}</td>
+                            <td class="alignment text-center">{{data.primary_count}}</td>
+                            <td class="alignment text-center">{{data.area}}</td>
+                            <td class="alignment text-center">{{data.city}}</td>
+                            <td class="alignment text-center">{{data.lead_timestamp}}</td>
+                            <td class="alignment text-center">
+                              <select ng-change="setValue(value8,data.client_comment,data._id,data.requirement_id)"
+                                class="form-control client-status" ng-model="value8">
+                                <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
+                              </select>
+                              <span style="display: none;">{{value8=value8==null?value8:data.macchadalo_client_status}}</span>
+                              <span>{{data.updated_at?data.updated_at:"NA"}}</span>
+                            </td>
+                            <td class="alignment text-center">
+                              {{data.phone_number}}
+                            </td>
+                            <td class="alignment">
+                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewComments(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
+                            </td>
+                            <td class="alignment text-center">
+                              <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
+                              <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id)"
+                                ng-if="decisionPanding.client_status!='Decline'">Decline</button>
+                              <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
+                            </td>
+                          </tr>
                       </tbody>
                     </table>
                     <div style="padding: 8px 0px;color:#000000;">
                       <b>*TOE = Type of Entity </b><br>
                       <b>Int Comment = Internal Comment </b><br>
                       <b>Int Status = Internal Status</b><br>
-                      <b>Primary count = Flat count (for RS)</b>                      </b>
+                      <b>Primary count = Flat count (for RS)</b><br>
+                      <b>PC = Primary Count</b>
                     </div>
                     <dir-pagination-controls max-size="7" directionlinks="true" boundary-links="true"
                       on-page-change="pageChanged(newPageNumber-1)" pagination-id="paginate1">
@@ -1387,7 +1390,12 @@
                           total-items="purchasedNotPurchasedLeadTotal" current-page="purchasedNotPurchasedLeadCurrent"
                           track by "$index">
                           <tr>
-                            <td style="width: 60px;min-width: 60px;">{{$index + 1}}</td>
+                            <td style="width: 60px;min-width: 60px;">{{$index + 1}}
+                              <!-- <span ng-if="lead.requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
+                              </span>
+                              <span ng-if="lead.requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
+                              </span> -->
+                            </td>
                             <td class="col-md-2" ng-repeat="leadDetail in lead" ng-hide="$first">
                               <span ng-if="leadDetail.value">{{leadDetail.value}}</span>
                               <span ng-if="!leadDetail.value">NA</span>

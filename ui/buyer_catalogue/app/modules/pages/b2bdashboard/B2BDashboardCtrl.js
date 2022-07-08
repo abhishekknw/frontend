@@ -1671,7 +1671,8 @@
 
     
     $scope.arrowIcon=0;
-    $scope.showLeads = function(row){
+    $scope.showLeads = function(row,supplier_id){
+      $scope.supp_id=supplier_id;
       if($scope.id==row){
         $scope.id="";
         $scope.arrowIcon=0;
@@ -1679,6 +1680,11 @@
       else if($scope.id!=row){
         $scope.id=row;
         $scope.arrowIcon=1;
+        B2BDashboardService.showLeads(supplier_id)
+        .then(function onSuccess(response) {
+          $scope.supplier_leads=response.data.data.lead;
+          console.log($scope.supplier_leads);
+        })
 
       }
     }
