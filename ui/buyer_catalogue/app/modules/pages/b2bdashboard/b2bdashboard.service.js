@@ -342,7 +342,7 @@ angular.module('catalogueApp')
         var url = url_root + "b2b/detail-client-comment/?_id=" + id;
         return machadaloHttp.get(url);
       }
-      DashboardService.basicInternalComment=function(comment,Id,req_id){
+      DashboardService.basicExternalComment=function(comment,Id,req_id){
           var param={};
           var payload=[];
           var payload_param={};
@@ -354,18 +354,18 @@ angular.module('catalogueApp')
         var url = url_root + "b2b/md-client-external-comment/";
         return machadaloHttp.post(url,param);
       }
-      DashboardService.commentValueDetails=function(comment,Id,req_id){
-        var param={};
-        var payload=[];
-        var payload_param={};
-        payload_param['comment']=comment;
-        payload_param['_id']=Id;
-        payload_param['requirement_id']=req_id;
-        payload.push(payload_param);
-        param['data']=payload;
-      var url = url_root + "b2b/md-client-internal-comment/";
-      return machadaloHttp.post(url,param);
-    }
+    //   DashboardService.commentValueDetails=function(comment,Id,req_id){
+    //     var param={};
+    //     var payload=[];
+    //     var payload_param={};
+    //     payload_param['comment']=comment;
+    //     payload_param['_id']=Id;
+    //     payload_param['requirement_id']=req_id;
+    //     payload.push(payload_param);
+    //     param['data']=payload;
+    //   var url = url_root + "b2b/md-client-internal-comment/";
+    //   return machadaloHttp.post(url,param);
+    // }
 
       DashboardService.downloadSheet = function (formId) {
         var url = url_root + "leads/" + formId + "/generate_lead_data_excel";
@@ -535,7 +535,6 @@ angular.module('catalogueApp')
           payload_param['requirement_id']=req_id;
           payload.push(payload_param);
           param['data']=payload;
-          console.log(param);
           var url = url_root + "b2b/update-machadalo-client-status/";
      //   } 
         return machadaloHttp.post(url,param);

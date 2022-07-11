@@ -633,15 +633,15 @@
       $scope.selectFlag=false;
       $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id,$scope.requirement_id);
     }
-    $scope.viewComments = function (Id,req_id) {
-      $scope.id_basic=Id;
-      $scope.req_id_basic=req_id;
-      $('#viewComments').modal('show');
-       B2BDashboardService.viewCommentsBasic(Id)
-      .then(function onSuccess(response) {
-       $scope.internalComment=response.data.data.internal_comments;
-      })
-    }
+    // $scope.viewComments = function (Id,req_id) {
+    //   $scope.id_basic=Id;
+    //   $scope.req_id_basic=req_id;
+    //   $('#viewComments').modal('show');
+    //    B2BDashboardService.viewCommentsBasic(Id)
+    //   .then(function onSuccess(response) {
+    //    $scope.internalComment=response.data.data.internal_comments;
+    //   })
+    // }
     $scope.viewCommentsLeadDetails = function (Id,req_id) {
       $scope.id_detail=Id;
       $scope.req_id_detail=req_id;
@@ -649,22 +649,22 @@
       B2BDashboardService.viewCommentsDetails(Id)
       .then(function onSuccess(response) {
         $scope.externalComment=response.data.data.external_comments;
-        $scope.internalComment=response.data.data.internal_comments;
+        // $scope.internalComment=response.data.data.internal_comments;
       })      
     }
-    $scope.commentValue = function(comment,Id,req_id){
-      B2BDashboardService.commentValueDetails(comment.comment,Id,req_id)
-      .then(function onSuccess(response){
-      $scope.mymodel["comment"]="";
-      swal("Successfull", "comment added sucessfully", "success");
-      $scope.viewComments($scope.id_basic,$scope.req_id_basic);
-      })
-     }
+    // $scope.commentValue = function(comment,Id,req_id){
+    //   B2BDashboardService.commentValueDetails(comment.comment,Id,req_id)
+    //   .then(function onSuccess(response){
+    //   $scope.mymodel["comment"]="";
+    //   swal("Successfull", "comment added sucessfully", "success");
+    //   $scope.viewComments($scope.id_basic,$scope.req_id_basic);
+    //   })
+    //  }
 
 
      $scope.commentValueDetails = function(comment,Id,req_id){
 
-       B2BDashboardService.basicInternalComment(comment.comment,Id,req_id)
+       B2BDashboardService.basicExternalComment(comment.comment,Id,req_id)
        .then(function onSuccess(response){
         $scope.mymodel["comment"]="";
         swal("Successfull", "comment added sucessfully", "success");
@@ -702,6 +702,10 @@
           $scope.clientStatus="";
           $scope.clientComment="";
         });
+      B2BDashboardService.showLeads($scope.supp_id)
+        .then(function onSuccess(response) {
+          $scope.supplier_leads=response.data.data.lead;
+        })  
     }
 
     $scope.updateClientStatus = function (clentId,id,status,comment,type) {
@@ -1683,11 +1687,24 @@
         B2BDashboardService.showLeads(supplier_id)
         .then(function onSuccess(response) {
           $scope.supplier_leads=response.data.data.lead;
-          console.log($scope.supplier_leads);
         })
 
       }
     }
+
+    // $scope.icon=0;
+    // $scope.showLeadDetail = function(row,supplier_id){
+    //   alert(row)
+    //   $scope.supp_id=supplier_id;
+    //   if($scope.id==row){
+    //     $scope.id="";
+    //     $scope.icon=0;
+    //   }
+    //   else if($scope.id!=row){
+    //     $scope.id=row;
+    //     $scope.icon=1;
+    //   }
+    // }
 
   })
 
