@@ -475,7 +475,7 @@
                               {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
                             </td>
                             <td class="alignment">
-                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">Client Comment</button>
+                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
                             </td>
                           <!-- <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td> -->
                           <td class="alignment text-center">
@@ -513,7 +513,7 @@
                               {{data.phone_number}}
                             </td>
                             <td class="alignment">
-                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">Client Comment</button>
+                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
                             </td>
                             <td class="alignment text-center">
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
@@ -2765,7 +2765,20 @@
                   </td>
                 </tr> -->
               </table>
-              <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(idForComment,lead_id)">View / Add</button>
+            </div><br>
+            <div>
+              <table class="table">
+                <tr>
+                  <th style="background-color: #8e1921; color: #fff;">
+                    <h4>Client Comments :</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(idForComment,lead_id)">View / Add</button>
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
@@ -2918,7 +2931,7 @@
             </tr>
           </table>
           </div><br> -->
-        <h3>External Comments</h3>
+        <h3>Client Comments</h3>
         <div class="table-h-scroll">
           <table class="table-data">
             <tr ng-repeat="item in externalComment">
