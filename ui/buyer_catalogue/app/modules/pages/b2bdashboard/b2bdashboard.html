@@ -2631,15 +2631,15 @@
                 </tr>
                 <tr>
                   <td>
-                    <h4>Sector : {{leadDetailDataList.sector.sector}}</h4>
+                    <h4>{{leadDetailDataList.sector.sector}} ({{leadDetailDataList.sector.subsector}})</h4>
                   </td>
                 </tr>
-                <tr>
-                  <!-- <td></td> -->
+                <!-- <tr>
+                   <td></td>
                   <td>
                     <h4>Sub-Sector : {{leadDetailDataList.sector.subsector}}</h4>
                   </td>
-                </tr>
+                </tr> -->
               </table>
             </div><br>
             <div>
@@ -2703,15 +2703,15 @@
                   </th>
                 </tr>
                 <td>
-                  <h4>Name : {{leadDetailDataList.user_info.name}}</h4>
+                  <h4>{{leadDetailDataList.user_info.name}}, {{leadDetailDataList.user_info.number}} , {{leadDetailDataList.user_info.designation}}</h4>
                 </td>
                 </tr>
-                <tr>
-                  <!-- <td></td> -->
+                <!-- <tr>
+                   <td></td> 
                   <td>
                     <h4>Contact No. : {{leadDetailDataList.user_info.number}} , {{leadDetailDataList.user_info.designation}}</h4>
                   </td>
-                </tr>
+                </tr> -->
                 <tr>
                   <!-- <td></td> -->
                   <!-- <td>
@@ -2729,40 +2729,43 @@
                 </tr>
                 <tr>
                   <td>
-                    <h4 style="line-height:1.5;">{{leadDetailDataList.adress_details.address}}</h4>
+                    <h4 style="line-height:1.5;">{{leadDetailDataList.adress_details.address}},{{leadDetailDataList.adress_details.area}},{{leadDetailDataList.adress_details.city}}
+                      {{leadDetailDataList.adress_details.state}},{{leadDetailDataList.adress_details.country}},{{leadDetailDataList.adress_details.pincode}}
+                    </h4>
                   </td>
                 </tr>
-                <tr>
-                  <!-- <td></td> -->
+                <!-- <tr>
+                  <td></td>
                   <td>
                     <h4>Area : {{leadDetailDataList.adress_details.area}}</h4>
                   </td>
-                </tr>
-                <tr>
-                  <!-- <td></td> -->
+                </tr> -->
+                <!-- <tr>
+                  <td></td>
                   <td>
                     <h4>City : {{leadDetailDataList.adress_details.city}}</h4>
                   </td>
-                </tr>
-                <tr>
-                  <!-- <td></td> -->
+                </tr> -->
+                <!-- <tr>
+                  <td></td>
                   <td>
                     <h4>State : {{leadDetailDataList.adress_details.state}}</h4>
                   </td>
                 </tr>
                 <tr>
-                  <!-- <td></td> -->
+                  <td></td>
                   <td>
                     <h4>Country : {{leadDetailDataList.adress_details.country}}</h4>
                   </td>
                 </tr>
                 <tr>
-                  <!-- <td></td> -->
+                  <td></td>
                   <td>
                     <h4>Pin Code : {{leadDetailDataList.adress_details.pincode}}</h4>
                   </td>
-                </tr>
+                </tr> -->
               </table>
+              <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(idForComment,lead_id)">View / Add</button>
             </div>
           </div>
         </div>

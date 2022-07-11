@@ -681,6 +681,7 @@
     }
     $scope.leadDetailDataList="";
     $scope.showLeadDetail = function (_id,req_id) {
+      $scope.idForComment=_id
       $scope.lead_id=req_id;
       B2BDashboardService.showLeadDetail(_id)
         .then(function onSuccess(response) {
