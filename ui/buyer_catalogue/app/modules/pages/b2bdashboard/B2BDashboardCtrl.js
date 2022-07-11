@@ -1693,19 +1693,18 @@
       }
     }
 
-    // $scope.icon=0;
-    // $scope.showLeadDetail = function(row,supplier_id){
-    //   alert(row)
-    //   $scope.supp_id=supplier_id;
-    //   if($scope.id==row){
-    //     $scope.id="";
-    //     $scope.icon=0;
-    //   }
-    //   else if($scope.id!=row){
-    //     $scope.id=row;
-    //     $scope.icon=1;
-    //   }
-    // }
+    $scope.icon=0;
+    $scope.showSubLeadDetail = function(row,supplier_id){
+      $scope.supp_id=supplier_id;
+      if($scope.id==row){
+        $scope.id="";
+        $scope.icon=0;
+      }
+      else if($scope.id!=row){
+        $scope.id=row;
+        $scope.icon=1;
+      }
+    }
 
   })
 

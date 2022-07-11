@@ -1391,10 +1391,10 @@
                           track by "$index">
                           <tr>
                             <td style="width: 60px;min-width: 60px;">{{$index + 1}}
-                              <!-- <span ng-if="lead[0].requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showLeadDetail(lead[0].requirement_id,decisionPanding.supplier_id)">
+                              <span ng-if="lead[0].requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,decisionPanding.supplier_id)">
                               </span>
-                              <span ng-if="lead[0].requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showLeadDetail(lead[0].requirement_id,decisionPanding.supplier_id)">
-                              </span> -->
+                              <span ng-if="lead[0].requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,decisionPanding.supplier_id)">
+                              </span>
                             </td>
                             <td class="col-md-2" ng-repeat="leadDetail in lead" ng-hide="$first">
                               <span ng-if="leadDetail.value">{{leadDetail.value}}</span>
@@ -1461,7 +1461,7 @@
                             </td>
                     </div>
                     </tr>
-                    <!-- <tr style="background-color: yellow;" id="{{id}}"
+                    <tr style="background-color: yellow;" id="{{id}}"
                     ng-if="icon==1 && lead[0].requirement_id==id">
                       <td></td>
                       <td class="col-md-2" ng-repeat="leadDetail in lead" ng-hide="$first">
@@ -1484,7 +1484,7 @@
                           ng-click="showLeadDetail(lead[0]._id,lead[0].requirement_id)" data-toggle="modal"
                           data-target="#myModal">Detail</button>
                       </td>
-                    </tr> -->
+                    </tr>
 
                     </tbody>
                     </table>
