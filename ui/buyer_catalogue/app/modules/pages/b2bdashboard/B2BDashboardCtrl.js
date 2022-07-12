@@ -702,7 +702,6 @@
       B2BDashboardService.viewCommentsDetails(_id)
       .then(function onSuccess(response) {
         $scope.externalComment=response.data.data.external_comments;
-        console.log($scope.externalComment);
       })  
        }
 

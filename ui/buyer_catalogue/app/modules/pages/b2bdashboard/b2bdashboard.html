@@ -2634,7 +2634,8 @@
                 </tr>
                 <tr>
                   <td>
-                    <h4>{{leadDetailDataList.sector.sector}} ({{leadDetailDataList.sector.subsector}})</h4>
+                    <h4 ng-if="leadDetailDataList.sector.subsector==null">{{leadDetailDataList.sector.sector}}</h4>
+                    <h4 ng-if="leadDetailDataList.sector.subsector!=null">{{leadDetailDataList.sector.sector}} ({{leadDetailDataList.sector.subsector}})</h4>
                   </td>
                 </tr>
                 <!-- <tr>
