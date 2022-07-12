@@ -661,14 +661,24 @@
     //   })
     //  }
 
-
-     $scope.commentValueDetails = function(comment,Id,req_id){
-
+    $scope.condition="";
+     $scope.commentValueDetails = function(comment,Id,req_id,check){
+      $scope.condition=check;
        B2BDashboardService.basicExternalComment(comment.comment,Id,req_id)
        .then(function onSuccess(response){
         $scope.mymodel["comment"]="";
         swal("Successfull", "comment added sucessfully", "success");
-        $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
+        if($scope.condition==true){
+          $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
+        }
+        
+        else{
+          B2BDashboardService.viewCommentsDetails(Id)
+           .then(function onSuccess(response) {
+           $scope.externalComment=response.data.data.external_comments;
+      }) 
+
+        }
       })
      }
     $scope.valuechange=function(value1,status,id,req_id){
@@ -688,6 +698,12 @@
         $scope.leadDetailDataList = response.data.data;  
         //console.log($scope.leadDetailDataList);               
         });
+
+      B2BDashboardService.viewCommentsDetails(_id)
+      .then(function onSuccess(response) {
+        $scope.externalComment=response.data.data.external_comments;
+        console.log($scope.externalComment);
+      })  
        }
 
     $scope.updateLeadClientStatus = function (status,comment,id) {
@@ -707,6 +723,10 @@
         .then(function onSuccess(response) {
           $scope.supplier_leads=response.data.data.lead;
         })  
+      B2BDashboardService.showSubLeadDetail($scope.campaignId,$scope.selectedSupplierType.code,$scope.page,$scope.supp_id)
+        .then(function onSuccess(response) {
+          $scope.detail_supplier_leads=response.data.data.lead;
+        })
     }
 
     $scope.updateClientStatus = function (clentId,id,status,comment,type) {
@@ -763,6 +783,7 @@
     }
 
     $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus,page,startDate,endDate,city) {
+      $scope.page=page;
       if(!page){
         page=0;
       }
@@ -1695,6 +1716,10 @@
 
     $scope.icon=0;
     $scope.showSubLeadDetail = function(row,supplier_id){
+      // alert($scope.campaignId)
+      // alert($scope.selectedSupplierType.code)
+      // alert($scope.page)
+      // alert(supplier_id)
       $scope.supp_id=supplier_id;
       if($scope.id==row){
         $scope.id="";
@@ -1703,6 +1728,10 @@
       else if($scope.id!=row){
         $scope.id=row;
         $scope.icon=1;
+        B2BDashboardService.showSubLeadDetail($scope.campaignId,$scope.selectedSupplierType.code,$scope.page,supplier_id)
+        .then(function onSuccess(response) {
+          $scope.detail_supplier_leads=response.data.data.lead;
+        })
       }
     }
 

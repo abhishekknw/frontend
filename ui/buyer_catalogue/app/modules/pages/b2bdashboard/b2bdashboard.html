@@ -1391,9 +1391,9 @@
                           track by "$index">
                           <tr>
                             <td style="width: 60px;min-width: 60px;">{{$index + 1}}
-                              <span ng-if="lead[0].requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,decisionPanding.supplier_id)">
+                              <span ng-if="lead[0].requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,lead[0].supplier_id)">
                               </span>
-                              <span ng-if="lead[0].requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,decisionPanding.supplier_id)">
+                              <span ng-if="lead[0].requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,lead[0].supplier_id)">
                               </span>
                             </td>
                             <td class="col-md-2" ng-repeat="leadDetail in lead" ng-hide="$first">
@@ -1462,26 +1462,29 @@
                     </div>
                     </tr>
                     <tr style="background-color: yellow;" id="{{id}}"
-                    ng-if="icon==1 && lead[0].requirement_id==id">
+                        ng-if="icon==1 && lead[0].requirement_id==id"
+                        ng-repeat="data in detail_supplier_leads">
                       <td></td>
-                      <td class="col-md-2" ng-repeat="leadDetail in lead" ng-hide="$first">
-                        <span ng-if="leadDetail.value">{{leadDetail.value}}</span>
-                        <span ng-if="!leadDetail.value">NA</span>
-                      </td>
+                      <td class="col-md-2">{{data.entity_name}}</td>
+                      <td class="col-md-2">{{data.entity_type}}</td>
+                      <td class="col-md-2">{{data.area}}</td>
+                      <td class="col-md-2">{{data.city}}</td>
+                      <td class="col-md-2">{{data.primary_count}}</td>
+                      <td class="col-md-2">{{data.lead_timestamp}}</td>
                       <td class="col-md-2">
-                        <select ng-change="setValue(value8,lead[0].macchadalo_client_comment,lead[0]._id,lead[0].requirement_id)"
+                        <select ng-change="setValue(value8,data.macchadalo_client_comment,data._id,data.requirement_id)"
                           class="form-control client-status" ng-model="value8">
                           <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
                         </select>
-                        <span>{{lead[0].updated_at}}</span>
-                        <span style="display: none;">{{value8=value8?value8:lead[0].macchadalo_client_status}}
+                        <span>{{data.updated_at}}</span>
+                        <span style="display: none;">{{value8=value8==null?value8:data.macchadalo_client_status}}
                       </td>
                       <td class="alignment">
-                        <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(lead[0]._id,lead[0].requirement_id)">View / Add</button>
+                        <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(data._id,data.requirement_id)">View / Add</button>
                       </td>
                       <td><button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;"
                           type="button" name="button" class="btn btn-danger"
-                          ng-click="showLeadDetail(lead[0]._id,lead[0].requirement_id)" data-toggle="modal"
+                          ng-click="showLeadDetail(data._id,data.requirement_id)" data-toggle="modal"
                           data-target="#myModal">Detail</button>
                       </td>
                     </tr>
@@ -2775,8 +2778,31 @@
                 </tr>
                 <tr>
                   <td>
-                    <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(idForComment,lead_id)">View / Add</button>
-                  </td>
+                <div class="modal-body">
+                  <div class="modalBodyBox">
+                    <div class="table-h-scroll">
+                     <table class="table-data">
+                      <tr ng-repeat="item in externalComment">
+                        <td>
+                          <div>
+                            <p>{{item.comment}}</p>
+                          </div>
+                          <div>
+                            <img ng-src="{{userIcon}}">
+                            <b>{{item.created_by}}:</b> 
+                            <span><small>{{item.created_at|date:'medium'}}</small></span>
+                          </div>
+                        </td>
+                      </tr>
+                     </table>
+                    </div>
+                    <div  style="margin-top: 15px;">
+                      <textarea class="field"  rows="2" cols="200" ng-model="mymodel.comment" value="" placeholder="Write here.."></textarea>
+                      <button class="smallBtn" type="button" ng-click="commentValueDetails(mymodel,id_detail,req_id_detail,false)" ng-click="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
+                    </div>
+                  </div>
+                </div>
+              </td>
                 </tr>
               </table>
             </div>
@@ -2950,7 +2976,7 @@
         </div>
           <div  style="margin-top: 15px;">
             <textarea class="field"  rows="8" cols="200" ng-model="mymodel.comment" value="" placeholder="Write here.."></textarea>
-            <button class="smallBtn" type="button" ng-click="commentValueDetails(mymodel,id_detail,req_id_detail)" ng-click="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
+            <button class="smallBtn" type="button" ng-click="commentValueDetails(mymodel,id_detail,req_id_detail,true)">Add Comment</button>
           </div>
         </div>
       </div>

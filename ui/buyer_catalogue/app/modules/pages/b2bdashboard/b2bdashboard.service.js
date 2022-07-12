@@ -613,6 +613,12 @@ angular.module('catalogueApp')
       }
 
 
+      DashboardService.showSubLeadDetail = function (campaignId,supplier_code,page,supp_id) {
+        var url = url_root + "b2b/supplier-leads-details-page/?campaign_id="+ campaignId + "&supplier_type="+ supplier_code +"&next_page="+page+"&supplier_id="+supp_id;
+        return machadaloHttp.get(url);
+      }
+
+
       return DashboardService;
 
     }]);
