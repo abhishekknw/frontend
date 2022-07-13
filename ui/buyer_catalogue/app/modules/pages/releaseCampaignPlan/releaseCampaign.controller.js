@@ -1,8 +1,8 @@
 
 angular.module('catalogueApp')
   .controller('ReleaseCampaignCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'releaseCampaignService', 'userService', 'createProposalService', 'auditReleasePlanService', '$stateParams', 'permissions', 'Upload', 'cfpLoadingBar', 'constants', 'mapViewService', '$timeout', 'commonDataShare',
-      function ($scope, $rootScope, $window, $location, releaseCampaignService, userService, createProposalService, auditReleasePlanService, $stateParams, permissions, Upload, cfpLoadingBar, constants, mapViewService, $timeout, commonDataShare) {
+    ['$scope', '$rootScope', '$window', '$location', 'releaseCampaignService','B2BDashboardService', 'userService', 'createProposalService', 'auditReleasePlanService', '$stateParams', 'permissions', 'Upload', 'cfpLoadingBar', 'constants', 'mapViewService', '$timeout', 'commonDataShare',
+      function ($scope, $rootScope, $window, $location, releaseCampaignService,B2BDashboardService, userService, createProposalService, auditReleasePlanService, $stateParams, permissions, Upload, cfpLoadingBar, constants, mapViewService, $timeout, commonDataShare) {
         $scope.campaign_id = $stateParams.proposal_id;
         $scope.positiveNoError = constants.positive_number_error;
         $scope.campaign_manager = constants.campaign_manager;
@@ -4080,5 +4080,26 @@ angular.module('catalogueApp')
             }
           }
         }
+
+
+      $scope.viewCommentsLeadDetails = function (Id,req_id) {
+          $scope.id_detail=Id;
+          $scope.req_id_detail=req_id;
+          $('#viewCommentsLeadDetails').modal('show');
+          // B2BDashboardService.viewCommentsDetails(Id)
+          // .then(function onSuccess(response) {
+          //   $scope.externalComment=response.data.data.external_comments;
+          //   // $scope.internalComment=response.data.data.internal_comments;
+          // })      
+        }
+        $scope.commentValueDetails = function(comment,Id,req_id){
+          // B2BDashboardService.basicExternalComment(comment.comment,Id,req_id)
+           //.then(function onSuccess(response){
+            //$scope.mymodel["comment"]="";
+            swal("Successfull", "comment added sucessfully", "success");
+              $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
+            // }) 
+    
+          }
 
       }]);//Controller function ends here

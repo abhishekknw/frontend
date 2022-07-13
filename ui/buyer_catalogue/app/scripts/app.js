@@ -595,6 +595,18 @@ angular
           permission: 'dashboard_page_access'
         }
       })
+      .state('dashboard_businessMca', {
+        url: '/dashboard_Business',
+        controller: 'dashboardBusinessCtrl',
+        templateUrl: 'modules/pages/dashboard_businessMca/dashboardBusiness.html',
+        sidebarMeta: {
+          icon: 'ion-android-home',
+          order: 0,
+        },
+        data: {
+          permission: 'dashboard_page_access'
+        }
+      })
       .state('templateDashboard', {
         url: '/templateDashboard',
         controller: 'TemplateDashboardCtrl',
