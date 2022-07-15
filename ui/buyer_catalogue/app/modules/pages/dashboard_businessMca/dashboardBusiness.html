@@ -1055,7 +1055,7 @@
   
   
                 <!-- <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="1"> -->
-                  <uib-tab id="uib-tabs-width"  ng-click="getCampaigns()" index="1">
+                  <uib-tab id="uib-tabs-width"  ng-click="optionNewTab()" index="1">
                     <uib-tab-heading>
                       <h5>View Leads</h5>
                     </uib-tab-heading>
@@ -1088,39 +1088,30 @@
                                 <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType('viewLeads')">
                                     <option value="">Select Supplier Type</option>
                                     <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
-                                  </select>
-                              </h4>
-                            </div>
-  
-                      </div><br /><br />
-                      <div class="viewLeadstable" ng-if="showCampaigns">
-                        <br /><br /><br /><br />
-                        <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
-                          <div class="table-responsive">
-                          <table class="table">
+                                </select>
+                             </h4>
+                          </div>
+                      </div>
+                      <uib-tab id="uib-tabs-width"  ng-click="getCampaigns()" index="1">
+                        <uib-tab-heading>
+                          <h5>Leads Details</h5>
+                        </uib-tab-heading>
+                      </uib-tab> 
+                      <br /><br />
+                  <div class="viewLeadstable" ng-if="showTable">
+                        <!-- <br /><br /><br /><br /> -->
+                        <!-- <input type="text" class="form-control" ng-model="searchQuery" placeholder="search"> -->
+                    <div class="table-responsive">
+                      <table class="table">
                         <thead>
                             <tr>
                               <th>Index</th>
                               <th style="width:200px;" class="col-md-2">Campaign Name</th>
                               <th ng-click="Sort('start_date')">Start Date <a><i class="icon-sort" style="color:white;"></i></a></th>
-                              <th>End Date</th>
-                              <!-- <th>Phase</br>Completed</th> -->
-                              <th>Campaign Status</th>
                               <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br> Count <a><i class="icon-sort" style="color:white;"></i></a></th>
-                              <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">{{flat_count_header}}<a><i class="icon-sort" style="color:white;"></i></a></th>
-                              <th style="width:120px;" class="col-md-2" ng-click="Sort('total_leads')">Total Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
-                              <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
                               <th>View Leads</th>
                               <th>Email Leads</th>
                               <th>Download Leads</th>
-  
-                            </tr>
-                            <tr colspan="9">
-                              <td></td>
-                              <td><input ng-model="f.name" class="form-control" placeholder="Search"><hr></td>
-                              <td></td>
-                              <td></td>
-                              <td><input ng-model="f.campaign_status" class="form-control" placeholder="Search"><hr></td>
   
                             </tr>
                           </thead>
@@ -1129,15 +1120,7 @@
                               <td>{{$index + 1}}</td>
                               <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
                               <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
-                              <td ng-if="campaign.campaign_status == 'completed'" style="text-transform:capitalize">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
-                              <td ng-if="campaign.campaign_status != 'completed'">NA</td>
-                              <!-- <td>{{campaign.phase_complete}}</td> -->
-                              <td ng-if="campaign.campaign_status == 'on_hold'" style="text-transform:capitalize">OnHold</td>
-                              <td ng-if="campaign.campaign_status != 'on_hold'" style="text-transform:capitalize">{{campaign.campaign_status}}</td>
                               <td style="width:100px;" class="col-md-2" >{{campaign.supplier_count}}</td>
-                              <td style="width:100px;" class="col-md-2" >{{campaign.flat_count}}</td>
-                              <td style="width:100px;" class="col-md-2" >{{campaign.total_leads}}</td>
-                              <td style="width:100px;" class="col-md-2" >{{campaign.hot_leads}}</td>
                               <td>
                                 <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View Leads</button>
                               </td>
@@ -1157,28 +1140,76 @@
                       <div class="viewLeadstable" ng-if="!showCampaigns">
                         <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
                       </br><br>
-                        <input type="text" class="form-control" ng-model="searchData" placeholder="search">
+                        <!-- <input type="text" class="form-control" ng-model="searchData" placeholder="search"> -->
                         <div class="table-responsive">
-                          <div class="panel-heading content-title" style="height:70px">
-                            <h3 style="background:'red'">Leads of {{CampaignNameofLeads}}</h3>
-                            <div class="row">
-                              <span class="pull-left"><label for="heading"><small>Campaign Owner :  </small><span><small>{{campaignOwner}}</small> </span></label></span>
-                              <span class="pull-right"><label for="heading"><small>Principal Vendor :  </small><span><small>{{principalVendor}}</small></span></label></span>
-                              </div>
-                          </div>
-                          <br />
                           <table class="table">
                             <thead>
                               <tr>
                                 <th>Index</th>
-                                <th ng-repeat="header in selectedCampaignLeads.headers">{{header.key_name}}</th>
+                                <th ng-repeat="(key,filter) in selectedCampaignLeads.header track by $index">
+                                  <span>{{key}}</span></th>
+                                <th>Current Status</th>
+                                <th>Client Comment</th>
+                                <th>Action</th>
                               </tr>
                             </thead>
-                            <tbody>
-                              <tr dir-paginate="lead in selectedCampaignLeads.values | filter : searchData | filter : Code | itemsPerPage:20 track by $index">
-                                <td>{{$index + 1}}</td>
-                                <td ng-repeat="alias in lead">{{alias.value}}</td>
+                            <tbody dir-paginate="lead in selectedCampaignLeads.values | filter : searchData
+                                                 | filter : Code | itemsPerPage:20 track by $index">
+                              <tr>
+                                <td>{{$index + 1}}
+                                  <span ng-if="lead[0].requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,lead[0].supplier_id)">
+                                  </span>
+                                  <span ng-if="lead[0].requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,lead[0].supplier_id)">
+                                  </span>
+                                </td>
+                                <td ng-repeat="leadDetail in lead" ng-hide="$first">
+                                  <span>{{leadDetail.value}}</span>
+                                </td>
+                                <td>
+                                  <select ng-change="setValue(value8,lead[0].macchadalo_client_comment,lead[0]._id,lead[0].requirement_id)"
+                                          class="form-control client-status" ng-model="value8">
+                                          <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
+                                  </select>
+                                   <span>{{lead[0].updated_at}}</span>
+                                   <span style="display: none;">{{value8=value8?value8:lead[0].macchadalo_client_status}}
+                                </td>
+                                <td class="alignment">
+                                  <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(lead[0]._id,lead[0].requirement_id)">View / Add</button>
+                                </td>
+                                <td><button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;"
+                                  type="button" name="button" class="btn btn-danger"
+                                  ng-click="showLeadDetail(lead[0]._id,lead[0].requirement_id)" data-toggle="modal"
+                                  data-target="#myModal">Detail</button>
+                              </td>
                               </tr>
+                              <tr style="background-color: yellow;" id="{{id}}"
+                                  ng-if="icon==1 && lead[0].requirement_id==id"
+                                  ng-repeat="data in detail_supplier_leads">
+                                 <td></td>
+                                <td class="col-md-2">{{data.entity_name}}</td>
+                                <td class="col-md-2">{{data.entity_type}}</td>
+                                <td class="col-md-2">{{data.area}}</td>
+                                <td class="col-md-2">{{data.city}}</td>
+                                <td class="col-md-2">{{data.primary_count}}</td>
+                                <td class="col-md-2">{{data.lead_timestamp}}</td>
+                                <td class="col-md-2">
+                                   <select ng-change="setValue(value8,data.macchadalo_client_comment,data._id,data.requirement_id)"
+                                          class="form-control client-status" ng-model="value8">
+                                          <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
+                                   </select>
+                                    <span>{{data.updated_at}}</span>
+                                    <span style="display: none;">{{value8=value8==null?value8:data.macchadalo_client_status}}
+                                </td>
+                                <td class="alignment">
+                                    <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(data._id,data.requirement_id)">View / Add</button>
+                                </td>
+                                <td>
+                                   <button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;"
+                                           type="button" name="button" class="btn btn-danger"
+                                           ng-click="showLeadDetail(data._id,data.requirement_id)" data-toggle="modal"
+                                           data-target="#myModal">Detail</button>
+                                </td>
+                             </tr>
                             </tbody>
                           </table>
                         </div>
@@ -4847,6 +4878,202 @@
         </div>
       </div>
       <!--END: Change password modal  -->
+
+      <div id="viewCommentsLeadDetails" class="modal fade theme-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4>View Comments {{campaignDataForComment.name}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <div class="modalBodyBox">
+              <h3>Client Comments</h3>
+              <div class="table-h-scroll">
+                <table class="table-data">
+                  <tr ng-repeat="item in externalComment">
+                    <td>
+                      <div>
+                        <p>{{item.comment}}</p>
+                      </div>
+                      <div>
+                        <img ng-src="{{userIcon}}">
+                        <b>{{item.created_by}}:</b> 
+                        <span><small>{{item.created_at|date:'medium'}}</small></span>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+                <div  style="margin-top: 15px;">
+                  <textarea class="field"  rows="8" cols="200" ng-model="mymodel.comment" value="" placeholder="Write here.."></textarea>
+                  <button class="smallBtn" type="button" ng-click="commentValueDetails(mymodel,id_detail,req_id_detail,true)">Add Comment</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--comment modal ent -->
+
+
+
+      <!--Detail  Modal -->
+  <div class="modal fade modalForTAble b2b-dash-table" id="myModal" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div style="background-color: #8e1921; color:#FFFFFF;" class="modal-header">
+          <button style="color:#FFFFFF;" type="button" class="close" data-dismiss="modal">&times;</button>
+          <h2 class="modal-title">Lead Details  ({{lead_id}})</h2>
+        </div>
+        <div style="padding:15px;" class="modal-body">
+          <div>
+            <div>
+              <table class="table">
+                <tr>
+                  <th style="background-color: #8e1921; color: #fff;" bgcolor="#8e1921">
+                    <h4>Sector : </h4>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <h4 ng-if="leadDetailDataList.sector.subsector==null">{{leadDetailDataList.sector.sector}}</h4>
+                    <h4 ng-if="leadDetailDataList.sector.subsector!=null">{{leadDetailDataList.sector.sector}} ({{leadDetailDataList.sector.subsector}})</h4>
+                  </td>
+                </tr>
+              </table>
+            </div><br>
+            <div>
+              <table class="table">
+                <tr>
+                  <th style="background-color: #8e1921; color: #fff;" bgcolor="#8e1921">
+                    <h4>Sector Specific Questions :</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="tool-tip" ng-init="tips1=false">
+                      <h4>Q1.Response : {{leadDetailDataList.lead_info.L4}}<i class="fa fa-question tool-icon" ng-mouseover="tips1=true"ng-mouseleave="tips1=false"></i>
+                        <div ng-show="tips1" class="tool-popup">
+                            <div>Question1:{{leadDetailDataList.lead_info.L4_question.header}}</div>
+                            <div>A:{{leadDetailDataList.lead_info.L4_question.a}}</div>
+                            <div>B:{{leadDetailDataList.lead_info.L4_question.b}}</div>
+                            <div>C:{{leadDetailDataList.lead_info.L4_question.c}}</div>
+                        </div>
+                      </h4>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <!-- <td></td> -->
+                  <td>
+                    <div class="tool-tip" ng-init="tips2=false">
+                      <h4>Q2.Response: {{leadDetailDataList.lead_info.L5}}<i class="fa fa-question tool-icon" ng-mouseover="tips2=true"ng-mouseleave="tips2=false"></i>
+                        <div ng-show="tips2" class="tool-popup">
+                            <div>Question2:{{leadDetailDataList.lead_info.L5_question.header}}</div>
+                            <div>A:{{leadDetailDataList.lead_info.L5_question.a}}</div>
+                            <div>B:{{leadDetailDataList.lead_info.L5_question.b}}</div>
+                            <div>C:{{leadDetailDataList.lead_info.L5_question.c}}</div>
+                        </div>
+                      </h4>
+                    </div>                    
+                  </td>
+                </tr>
+                <tr>
+                  <!-- <td></td> -->
+                  <td>
+                    <div class="tool-tip" ng-init="tips3=false">
+                      <h4>Q3.Response: {{leadDetailDataList.lead_info.L6}}<i class="fa fa-question tool-icon" ng-mouseover="tips3=true"ng-mouseleave="tips3=false"></i>
+                        <div ng-show="tips3" class="tool-popup">
+                            <div>Question3:{{leadDetailDataList.lead_info.L6_question.header}}</div>
+                            <div>A:{{leadDetailDataList.lead_info.L6_question.a}}</div>
+                            <div>B:{{leadDetailDataList.lead_info.L6_question.b}}</div>
+                            <div>C:{{leadDetailDataList.lead_info.L6_question.c}}</div>
+                        </div>
+                      </h4>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div><br>
+            <div>
+              <table class="table">
+                <tr>
+                  <th style="background-color: #8e1921; color: #fff;" bgcolor="#8e1921">
+                    <h4>User Details:</h4>
+                  </th>
+                </tr>
+                <td>
+                  <h4>{{leadDetailDataList.user_info.name}}, {{leadDetailDataList.user_info.number}} , {{leadDetailDataList.user_info.designation}}</h4>
+                </td>
+                </tr>
+                <tr>
+                </tr>
+              </table>
+            </div><br>
+            <div>
+              <table class="table">
+                <tr>
+                  <th style="background-color: #8e1921; color: #fff;">
+                    <h4>Address :</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <h4 style="line-height:1.5;">{{leadDetailDataList.adress_details.address}},{{leadDetailDataList.adress_details.area}},{{leadDetailDataList.adress_details.city}}
+                      {{leadDetailDataList.adress_details.state}},{{leadDetailDataList.adress_details.country}},{{leadDetailDataList.adress_details.pincode}}
+                    </h4>
+                  </td>
+                </tr>
+              </table>
+            </div><br>
+            <div>
+              <table class="table">
+                <tr>
+                  <th style="background-color: #8e1921; color: #fff;">
+                    <h4>Client Comments :</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                <div class="modal-body">
+                  <div class="modalBodyBox">
+                    <div class="table-h-scroll">
+                     <table class="table-data">
+                      <tr ng-repeat="item in externalComment">
+                        <td>
+                          <div>
+                            <p>{{item.comment}}</p>
+                          </div>
+                          <div>
+                            <img ng-src="{{userIcon}}">
+                            <b>{{item.created_by}}:</b> 
+                            <span><small>{{item.created_at|date:'medium'}}</small></span>
+                          </div>
+                        </td>
+                      </tr>
+                     </table>
+                    </div>
+                    <div  style="margin-top: 15px;">
+                      <textarea class="field"  rows="2" cols="200" ng-model="mymodel.comment" value="" placeholder="Write here.."></textarea>
+                      <button class="smallBtn" type="button" ng-click="commentValueDetails(mymodel,idForComment,req_id_detail,false)" ng-click="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Popup end of view Detail -->
+
+
       <!--START: Print Leads In Excel Modal  -->
       <div id="printLeadsInExcelModal" class="modal fade">
         <div class="modal-dialog">

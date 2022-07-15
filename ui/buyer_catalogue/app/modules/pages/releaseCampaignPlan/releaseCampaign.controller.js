@@ -1483,7 +1483,6 @@ angular.module('catalogueApp')
                 userService.getSector()
                 .then(function onSuccess(response) {
                   $scope.sectorList = response.data;
-                  console.log($scope.sectorList[1].business_type);
                 });
                 //start added sector name
                 if ($scope.sectorList) {
@@ -1492,7 +1491,6 @@ angular.module('catalogueApp')
                   }).indexOf($scope.browsedDetailData[i].sector_id);
                   if (localindex_indexs != -1) {
                     $scope.browsedDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
-                    console.log($scope.browsedDetailData);
                   }
                 }
                 //end added sector name

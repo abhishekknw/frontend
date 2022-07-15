@@ -671,48 +671,124 @@
           $scope.allCampaignsLeadsData = {};
           $scope.options = {};
           $scope.viewCampaignLeads(true,$scope.selectedSupplierType.code);
-          DashboardService.getCampaigns(orgId, category, date, $scope.selectedVendor.name, supplierType)
-            .then(function onSuccess(response) {
+        //   DashboardService.getCampaigns(orgId, category, date, $scope.selectedVendor.name, supplierType)
+        //     .then(function onSuccess(response) {
        
-              cfpLoadingBar.complete();
-              $scope.searchSelectAllModel = [];
-              $scope.showSingleCampaignChart = false;
-              $scope.campaignData = response.data.data;
-              $scope.campaignAllStatusTypeData = response.data.data;
-              $scope.mergedarray = [];
-              angular.forEach($scope.campaignData, function (data) {
-                angular.forEach(data, function (campaign) {
-                  $scope.mergedarray.push(campaign);
-                })
-              })
-              $scope.distributedGraphsVendorsData = [];
+        //       cfpLoadingBar.complete();
+        //       $scope.searchSelectAllModel = [];
+        //       $scope.showSingleCampaignChart = false;
+        //       $scope.campaignData = response.data.data;
+        //       $scope.campaignAllStatusTypeData = response.data.data;
+        //       $scope.mergedarray = [];
+        //       angular.forEach($scope.campaignData, function (data) {
+        //         angular.forEach(data, function (campaign) {
+        //           $scope.mergedarray.push(campaign);
+        //         })
+        //       })
+        //       $scope.distributedGraphsVendorsData = [];
   
-              angular.forEach($scope.mergedarray, function (data) {
-                // $scope.distributedGraphsVendorsData.push(data);
-                if (data.principal_vendor) {
-                  $scope.vendorsData[data.principal_vendor] = data;
-                }
-              })
+        //       angular.forEach($scope.mergedarray, function (data) {
+        //         // $scope.distributedGraphsVendorsData.push(data);
+        //         if (data.principal_vendor) {
+        //           $scope.vendorsData[data.principal_vendor] = data;
+        //         }
+        //       })
   
-              $scope.vendorsList = Object.keys($scope.vendorsData);
-              // $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
-              // $scope.campaignChartdata = [
-              //   { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
-              //   { label: $scope.allCampaignStatusType.completed.campaignLabel, value: $scope.campaignData.completed_campaigns.length, status: $scope.allCampaignStatusType.completed.status },
-              //   { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: $scope.campaignData.upcoming_campaigns.length, status: $scope.allCampaignStatusType.upcoming.status },
-              //   { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: $scope.campaignData.onhold_campaigns.length, status: $scope.allCampaignStatusType.onhold.status }
-              // ];
-              $scope.options = angular.copy(doughnutChartOptions);
-              $scope.options.chart.pie.dispatch['elementClick'] = function (e) {  $scope.pieChartClick(e.data.label); };
-              $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
+        //       $scope.vendorsList = Object.keys($scope.vendorsData);
+        //       // $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
+        //       // $scope.campaignChartdata = [
+        //       //   { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
+        //       //   { label: $scope.allCampaignStatusType.completed.campaignLabel, value: $scope.campaignData.completed_campaigns.length, status: $scope.allCampaignStatusType.completed.status },
+        //       //   { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: $scope.campaignData.upcoming_campaigns.length, status: $scope.allCampaignStatusType.upcoming.status },
+        //       //   { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: $scope.campaignData.onhold_campaigns.length, status: $scope.allCampaignStatusType.onhold.status }
+        //       // ];
+        //       $scope.options = angular.copy(doughnutChartOptions);
+        //       $scope.options.chart.pie.dispatch['elementClick'] = function (e) {  $scope.pieChartClick(e.data.label); };
+        //       $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
               
-              $scope.showPerfPanel = $scope.perfPanel.all;
-              $scope.showAllMapData = false;
-            }).catch(function onError(response) {
-              console.log(response);
-            })
+        //       $scope.showPerfPanel = $scope.perfPanel.all;
+        //       $scope.showAllMapData = false;
+        //     }).catch(function onError(response) {
+        //       console.log(response);
+        //     })
         }
-  
+        $scope.viewTab=false
+        $scope.optionNewTab=function(){
+            $scope.viewTab=true;
+            $scope.showTable=false;
+        }
+        
+        $scope.viewCommentsLeadDetails = function (Id,req_id) {
+            $scope.id_detail=Id;
+            $scope.req_id_detail=req_id;
+            $('#viewCommentsLeadDetails').modal('show');
+            B2BDashboardService.viewCommentsDetails(Id)
+            .then(function onSuccess(response) {
+              $scope.externalComment=response.data.data.external_comments;
+              // $scope.internalComment=response.data.data.internal_comments;
+            })      
+          }
+
+
+     $scope.condition="";
+     $scope.mymodel=[{'comment':""}]
+     $scope.commentValueDetails = function(comment,Id,req_id,check){
+      $scope.condition=check;
+       B2BDashboardService.basicExternalComment(comment.comment,Id,req_id)
+       .then(function onSuccess(response){
+        $scope.mymodel["comment"]="";
+        swal("Successfull", "comment added sucessfully", "success");
+        if($scope.condition==true){
+          $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
+        }
+        
+        else{
+          B2BDashboardService.viewCommentsDetails(Id)
+           .then(function onSuccess(response) {
+           $scope.externalComment=response.data.data.external_comments;
+          }) 
+
+        }
+     })
+   }
+   $scope.icon=0;
+   $scope.showSubLeadDetail = function(row,supplier_id){
+     $scope.supp_id=supplier_id;
+     if($scope.id==row){
+       $scope.id="";
+       $scope.icon=0;
+     }
+     else if($scope.id!=row){
+       $scope.id=row;
+       $scope.icon=1;
+       B2BDashboardService.showSubLeadDetail($scope.campaignIdForLeads,$scope.selectedSupplierType.code,"",supplier_id)
+       .then(function onSuccess(response) {
+         $scope.detail_supplier_leads=response.data.data.lead;
+         console.log($scope.detail_supplier_leads)
+       })
+     }
+   }
+
+
+     $scope.leadDetailDataList="";
+     $scope.showLeadDetail = function (_id,req_id) {
+       $scope.idForComment=_id
+       $scope.lead_id=req_id;
+       B2BDashboardService.showLeadDetail(_id)
+         .then(function onSuccess(response) {
+         $scope.leadDetailDataList = response.data.data;  
+         //console.log($scope.leadDetailDataList);               
+         });
+ 
+       B2BDashboardService.viewCommentsDetails(_id)
+       .then(function onSuccess(response) {
+         $scope.externalComment=response.data.data.external_comments;
+       })  
+        }
+
+
+
+
   
         $scope.pieChartClick = function (label) {
     
@@ -3468,9 +3544,10 @@
           return isNaN(number);
         }
         $scope.viewCampaignLeads = function (value) {
+            $scope.showTable=true;
           // $scope.getCampaigns();
           cfpLoadingBar.start();
-          B2BDashboardService.viewCampaignLeads("Leads", $scope.selectedSupplierType.code)
+          B2BDashboardService.viewCampaignLeads("Leads", $scope.selectedSupplierType.code,"admin")
             .then(function onSuccess(response) {
               $scope.AllCampaignTotalLeadsCount = 0;
               $scope.AllCampaignHotLeadsCount = 0;
@@ -3558,12 +3635,14 @@
             })
         }
         $scope.viewLeadsForSelectedCampaign = function (data, campaignId) {
+            $scope.viewClientStatus ();
           cfpLoadingBar.start();
           $scope.campaignIdForLeads = campaignId;
-          DashboardService.viewLeadsForSelectedCampaign(data, campaignId)
-            .then(function onSuccess(response) {
+          B2BDashboardService.purchasedNotPurchasedLead(campaignId,$scope.filterType,$scope.selectedSupplierType.code,0,"","","")
+        .then(function onSuccess(response) {
               cfpLoadingBar.complete();
               $scope.selectedCampaignLeads = response.data.data;
+              console.log($scope.selectedCampaignLeads.values)
               $scope.CampaignNameofLeads = data.name;
               $scope.showCampaigns = false;
             }).catch(function onError(response) {
@@ -3573,6 +3652,49 @@
         $scope.backToCampaign = function () {
           $scope.showCampaigns = true;
         }
+
+
+    $scope.listClientStatus=[];
+    $scope.viewClientStatus = function () {
+      if($scope.listClientStatus.length==0){
+        B2BDashboardService.listClientStatus().then(function onSuccess(response) {
+          var listData  = response.data.data.client_status;
+          for(var k in listData){
+            $scope.listClientStatus.push(listData[k].status_name)
+          }
+        });
+      }
+    }
+
+
+    $scope.selectFlag=true;
+    $scope.clientStatus="";
+    $scope.clientComment="";
+    $scope.requirement_id="";
+    $scope.setValue = function (value,comment,id,req_id) {
+      $scope.clientStatus=value;
+      $scope.requirement_id=req_id;
+      if($scope.clientComment==""){
+        $scope.clientComment=comment;
+      }
+      $scope.selectFlag=false;
+      $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id,$scope.requirement_id);
+    }
+
+    $scope.updateLeadClientStatus = function (status,comment,id) {
+        if($scope.clientStatus==""){
+          $scope.clientStatus=status;
+        }
+        if($scope.clientComment==""){
+          $scope.clientComment=comment;
+        }
+        B2BDashboardService.updateLeadClientStatus( $scope.clientStatus, $scope.clientComment,id,$scope.requirement_id)
+          .then(function onSuccess(response) {
+            swal(constants.name, response.data.data, constants.success);
+            $scope.clientStatus="";
+            $scope.clientComment="";
+          });
+    }
   
   
         // Check for internal comments

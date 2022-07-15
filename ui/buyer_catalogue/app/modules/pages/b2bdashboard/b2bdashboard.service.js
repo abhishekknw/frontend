@@ -470,9 +470,9 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.viewCampaignLeads = function (vendor, supplierType) {
+      DashboardService.viewCampaignLeads = function (vendor, supplierType,user_type) {
         if (vendor) {
-          var url = url_root + "b2b/lead-distribution-campaign/?lead_type=" + vendor;
+          var url = url_root + "b2b/lead-distribution-campaign/?lead_type=" + vendor + "&user_type="+user_type;
         } else {
           var url = url_root + "b2b/lead-distribution-campaign/";
         }
