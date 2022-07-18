@@ -633,40 +633,53 @@
       $scope.selectFlag=false;
       $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id,$scope.requirement_id);
     }
-    $scope.viewComments = function (Id,req_id) {
-      $scope.id_basic=Id;
-      $scope.req_id_basic=req_id;
-      $('#viewComments').modal('show');
-       B2BDashboardService.viewCommentsBasic(Id)
-      .then(function onSuccess(response) {
-       $scope.internalComment=response.data.data.internal_comments;
-      })
-    }
+    // $scope.viewComments = function (Id,req_id) {
+    //   $scope.id_basic=Id;
+    //   $scope.req_id_basic=req_id;
+    //   $('#viewComments').modal('show');
+    //    B2BDashboardService.viewCommentsBasic(Id)
+    //   .then(function onSuccess(response) {
+    //    $scope.internalComment=response.data.data.internal_comments;
+    //   })
+    // }
     $scope.viewCommentsLeadDetails = function (Id,req_id) {
       $scope.id_detail=Id;
       $scope.req_id_detail=req_id;
       $('#viewCommentsLeadDetails').modal('show');
-      B2BDashboardService.viewCommentsDetails(Id)
+      B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
       .then(function onSuccess(response) {
         $scope.externalComment=response.data.data.external_comments;
+        // $scope.internalComment=response.data.data.internal_comments;
       })      
     }
-    $scope.commentValue = function(comment,Id,req_id){
-      B2BDashboardService.commentValueDetails(comment.comment,Id,req_id)
-      .then(function onSuccess(response){
-      $scope.mymodel["comment"]="";
-      swal("Successfull", "comment added sucessfully", "success");
-      })
-      $scope.viewComments($scope.id_basic,$scope.req_id_basic);
-     }
-     $scope.commentValueDetails = function(comment,Id,req_id){
+    // $scope.commentValue = function(comment,Id,req_id){
+    //   B2BDashboardService.commentValueDetails(comment.comment,Id,req_id)
+    //   .then(function onSuccess(response){
+    //   $scope.mymodel["comment"]="";
+    //   swal("Successfull", "comment added sucessfully", "success");
+    //   $scope.viewComments($scope.id_basic,$scope.req_id_basic);
+    //   })
+    //  }
 
-       B2BDashboardService.basicInternalComment(comment.comment,Id,req_id)
+    $scope.condition="";
+     $scope.commentValueDetails = function(comment,Id,req_id,check){
+      $scope.condition=check;
+       B2BDashboardService.basicExternalComment(comment.comment,Id,req_id)
        .then(function onSuccess(response){
         $scope.mymodel["comment"]="";
         swal("Successfull", "comment added sucessfully", "success");
+        if($scope.condition==true){
+          $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
+        }
+        
+        else{
+          B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
+           .then(function onSuccess(response) {
+           $scope.externalComment=response.data.data.external_comments;
+      }) 
+
+        }
       })
-      $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
      }
     $scope.valuechange=function(value1,status,id,req_id){
       $scope.clientComment=value1;
@@ -678,12 +691,18 @@
     }
     $scope.leadDetailDataList="";
     $scope.showLeadDetail = function (_id,req_id) {
+      $scope.idForComment=_id
       $scope.lead_id=req_id;
       B2BDashboardService.showLeadDetail(_id)
         .then(function onSuccess(response) {
         $scope.leadDetailDataList = response.data.data;  
         //console.log($scope.leadDetailDataList);               
         });
+
+      B2BDashboardService.viewCommentsDetails(_id)
+      .then(function onSuccess(response) {
+        $scope.externalComment=response.data.data.external_comments;
+      })  
        }
 
     $scope.updateLeadClientStatus = function (status,comment,id) {
@@ -699,6 +718,14 @@
           $scope.clientStatus="";
           $scope.clientComment="";
         });
+      B2BDashboardService.showLeads($scope.supp_id)
+        .then(function onSuccess(response) {
+          $scope.supplier_leads=response.data.data.lead;
+        })  
+      B2BDashboardService.showSubLeadDetail($scope.campaignId,$scope.selectedSupplierType.code,$scope.page,$scope.supp_id)
+        .then(function onSuccess(response) {
+          $scope.detail_supplier_leads=response.data.data.lead;
+        })
     }
 
     $scope.updateClientStatus = function (clentId,id,status,comment,type) {
@@ -755,6 +782,7 @@
     }
 
     $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus,page,startDate,endDate,city) {
+      $scope.page=page;
       if(!page){
         page=0;
       }
@@ -944,6 +972,9 @@
             swal(constants.name, value + " Successfully", constants.success);
           }
         });
+    }
+    $scope.viewLeadsPopup = function(){
+      $('#viewLeadsPopup').modal('show');
     }
 
     $scope.acceptDeclineMultiple = function (value) {
@@ -1663,7 +1694,49 @@
     }
     /** /Sort funtionality */
 
+    
+    $scope.arrowIcon=0;
+    $scope.showLeads = function(row,supplier_id){
+      $scope.supp_id=supplier_id;
+      if($scope.id==row){
+        $scope.id="";
+        $scope.arrowIcon=0;
+      }
+      else if($scope.id!=row){
+        $scope.id=row;
+        $scope.arrowIcon=1;
+        B2BDashboardService.showLeads(supplier_id)
+        .then(function onSuccess(response) {
+          $scope.supplier_leads=response.data.data.lead;
+        })
+
+      }
+    }
+
+    $scope.icon=0;
+    $scope.showSubLeadDetail = function(row,supplier_id){
+      // alert($scope.campaignId)
+      // alert($scope.selectedSupplierType.code)
+      // alert($scope.page)
+      // alert(supplier_id)
+      $scope.supp_id=supplier_id;
+      if($scope.id==row){
+        $scope.id="";
+        $scope.icon=0;
+      }
+      else if($scope.id!=row){
+        $scope.id=row;
+        $scope.icon=1;
+        B2BDashboardService.showSubLeadDetail($scope.campaignId,$scope.selectedSupplierType.code,$scope.page,supplier_id)
+        .then(function onSuccess(response) {
+          $scope.detail_supplier_leads=response.data.data.lead;
+        })
+      }
+    }
+
   })
+
+
 })();
 app.factory('Excel', function ($window) {
   var uri = 'data:application/vnd.ms-excel;base64,',

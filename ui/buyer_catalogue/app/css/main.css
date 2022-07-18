@@ -1082,6 +1082,11 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
   padding-bottom: 2px;
   line-height: 1.4;
 }
+
+.table-h-scroll{
+  max-height:150px;
+  overflow-x: auto;
+}
 /* Responsive */
 
 @media screen and (max-width: 1024px) {
@@ -1091,9 +1096,7 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
   .al-main.b2b-dash{
     padding: 0;
   }
-  .b2b-table-style{
-    
-  }
+
 }
 @media screen and (max-width: 400px) {
   div.dashboard-tab .uib-tab{

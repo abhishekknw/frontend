@@ -1,8 +1,8 @@
 
 angular.module('catalogueApp')
   .controller('ReleaseCampaignCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'releaseCampaignService', 'userService', 'createProposalService', 'auditReleasePlanService', '$stateParams', 'permissions', 'Upload', 'cfpLoadingBar', 'constants', 'mapViewService', '$timeout', 'commonDataShare',
-      function ($scope, $rootScope, $window, $location, releaseCampaignService, userService, createProposalService, auditReleasePlanService, $stateParams, permissions, Upload, cfpLoadingBar, constants, mapViewService, $timeout, commonDataShare) {
+    ['$scope', '$rootScope', '$window', '$location', 'releaseCampaignService','B2BDashboardService', 'userService', 'createProposalService', 'auditReleasePlanService', '$stateParams', 'permissions', 'Upload', 'cfpLoadingBar', 'constants', 'mapViewService', '$timeout', 'commonDataShare',
+      function ($scope, $rootScope, $window, $location, releaseCampaignService,B2BDashboardService, userService, createProposalService, auditReleasePlanService, $stateParams, permissions, Upload, cfpLoadingBar, constants, mapViewService, $timeout, commonDataShare) {
         $scope.campaign_id = $stateParams.proposal_id;
         $scope.positiveNoError = constants.positive_number_error;
         $scope.campaign_manager = constants.campaign_manager;
@@ -173,18 +173,18 @@ angular.module('catalogueApp')
           { header: 'L4 Answers' },
           { header: 'L5 Answers' },
           { header: 'L6 Answers' },
-          { header: 'L4.1 Answers' },
-          { header: 'L5.1 Answers' },
-          { header: 'L6.1 Answers' },
-          { header: 'Implementation Time' },
-          { header: 'Meeting Time' },
+          // { header: 'L4.1 Answers' },
+          // { header: 'L5.1 Answers' },
+          // { header: 'L6.1 Answers' },
+          // { header: 'Implementation Time' },
+          // { header: 'Meeting Time' },
           // { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
-          { header: 'Comment' },
+          { header: 'Client Comment' },
           { header: 'Internal Comment' },
           { header: 'Lead Given by' },
           { header: 'Call Status' },
-          { header: 'Price' },
+          { header: 'Next step date and time' },
           { header: 'Timestamp' },
           { header: 'Action' },
         ];
@@ -1466,7 +1466,7 @@ angular.module('catalogueApp')
                     $scope.browsedDetailData[i].otherPreferredCompanyBrowsed = true;
                     $scope.browsedDetailData[i].prefered_patners.push("");
                  }
-                if ($scope.browsedDetailData[i].prefered_patners.length > 0) {
+                if ($scope.browsedDetailData[i].prefered_patners && $scope.browsedDetailData[i].prefered_patners.length > 0) {
                   for (let j in $scope.browsedDetailData[i].prefered_patners) {
                     var localindex_index = $scope.companiesDetailDataBrowsed.map(function (el) {
                       return el.organisation_id;
@@ -1483,7 +1483,6 @@ angular.module('catalogueApp')
                 userService.getSector()
                 .then(function onSuccess(response) {
                   $scope.sectorList = response.data;
-                  console.log($scope.sectorList[1].business_type);
                 });
                 //start added sector name
                 if ($scope.sectorList) {
@@ -1492,7 +1491,6 @@ angular.module('catalogueApp')
                   }).indexOf($scope.browsedDetailData[i].sector_id);
                   if (localindex_indexs != -1) {
                     $scope.browsedDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
-                    console.log($scope.browsedDetailData);
                   }
                 }
                 //end added sector name
@@ -4080,5 +4078,40 @@ angular.module('catalogueApp')
             }
           }
         }
+      $scope.mymodel=[];
+      $scope.viewCommentsLeadDetails = function (Id) {
+          $scope.req_id=Id;
+          $('#viewCommentsLeadDetails').modal('show');
+          releaseCampaignService.viewCommentsDetails(Id)
+          .then(function onSuccess(response) {
+            $scope.externalComment=response.data.data;
+          })      
+        }
+        $scope.commentValueDetails = function(comment){
+          releaseCampaignService.basicClientComment(comment.comment,$scope.req_id)
+           .then(function onSuccess(response){
+            swal("Successfull", "comment added sucessfully", "success");
+            $scope.mymodel['comment']='';
+            $scope.viewCommentsLeadDetails($scope.req_id);
+            }) 
+          }
+
+
+          $scope.viewInternalsComments = function (Id) {
+            $scope.Internal_id=Id;
+            $('#viewInternalComments').modal('show');
+            releaseCampaignService.viewInternalsComments(Id)
+            .then(function onSuccess(response) {
+              $scope.externalComment=response.data.data;
+            })      
+          }
+          $scope.internalCommentValue = function(comment){
+            releaseCampaignService.internalCommentValue(comment.comment,$scope.Internal_id)
+             .then(function onSuccess(response){
+              })
+              swal("Successfull", "comment added sucessfully", "success");
+              $scope.mymodel['comment']='';
+              $scope.viewInternalsComments($scope.Internal_id);
+            }
 
       }]);//Controller function ends here

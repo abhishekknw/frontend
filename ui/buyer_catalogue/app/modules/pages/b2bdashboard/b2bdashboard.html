@@ -410,17 +410,16 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>Select Multiple</th>
+                          <th>Select</th>
                           <th>Entity Name</th>
                           <th>TOE</th>
-                          <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">Primary
-                            Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                          <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">PC<a><i class="icon-sort" style="color:white;"></i></a></th>
                           <th>Area</th>
                           <th>City</th>
                           <th>Lead Timestamp</th>
                           <th>Current Status</th>
-                          <th>Int Comment</th>
-                          <th>Phone Number</th>
+                          <th>Phone Number</th> 
+                          <th>Client Comment</th>
                           <th>Action</th>
                         </tr>
                         <!-- <tr colspan="9">
@@ -439,9 +438,14 @@
                       <tbody class="data-list" pagination-id="paginate1"
                         dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord"
                         total-items="totalrecord" current-page="currentPage" track by "$index">
-                        <tr>
+                        
                           <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
-                              ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus"></td>
+                              ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus">
+                              <span ng-if="decisionPanding.requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
+                              </span>
+                              <span ng-if="decisionPanding.requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
+                              </span>
+                          </td>                          
                           <td class="alignment text-center">{{decisionPanding.entity_name}}</td>
                           <td class="alignment text-center" >{{decisionPanding.entity_type}}</td>
                           <td class="alignment text-center">{{decisionPanding.primary_count}}</td>
@@ -467,13 +471,12 @@
                                         <span>{{mymodel=mymodel ? mymodel:mymodel==""?"":decisionPanding.macchadalo_client_comment}}</span>
                               </textarea>
                             </td>                -->
-                            <td class="alignment">
-                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewComments(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
+                            <td class="alignment text-center">
+                              {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
                             </td>
-
-                          <td class="alignment text-center">
-                            {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
-                          </td>
+                            <td class="alignment">
+                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
+                            </td>
                           <!-- <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td> -->
                           <td class="alignment text-center">
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
@@ -481,20 +484,55 @@
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                               ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id)"
                               ng-if="decisionPanding.client_status!='Decline'">Decline</button>
-
+                              <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger" ng-click="viewLeadsPopup()">View Leads</button>                               -->
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                               disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
                           </td>
-
                         </tr>
-
+                        <tr>
+                          <tr style="background-color: yellow;" id="{{id}}"
+                              ng-if="arrowIcon==1 && decisionPanding.requirement_id==id"
+                              ng-repeat="data in supplier_leads">
+                            <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
+                              ng-click="checkboxCheck($index)" ng-model="data.checkStatus"></td>
+                            <td class="alignment text-center">{{data.entity_name}}</td>
+                            <td class="alignment text-center" >{{data.entity_type}}</td>
+                            <td class="alignment text-center">{{data.primary_count}}</td>
+                            <td class="alignment text-center">{{data.area}}</td>
+                            <td class="alignment text-center">{{data.city}}</td>
+                            <td class="alignment text-center">{{data.lead_timestamp}}</td>
+                            <td class="alignment text-center">
+                              <select ng-change="setValue(value8,data.client_comment,data._id,data.requirement_id)"
+                                class="form-control client-status" ng-model="value8">
+                                <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
+                              </select>
+                              <span style="display: none;">{{value8=value8==null?value8:data.macchadalo_client_status}}</span>
+                              <span>{{data.updated_at?data.updated_at:"NA"}}</span>
+                            </td>
+                            <td class="alignment text-center">
+                              {{data.phone_number}}
+                            </td>
+                            <td class="alignment">
+                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(data._id,data.requirement_id)">View / Add</button>
+                            </td>
+                            <td class="alignment text-center">
+                              <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
+                              <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id)"
+                                ng-if="decisionPanding.client_status!='Decline'">Decline</button>
+                              <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
+                            </td>
+                          </tr>
                       </tbody>
                     </table>
                     <div style="padding: 8px 0px;color:#000000;">
                       <b>*TOE = Type of Entity </b><br>
                       <b>Int Comment = Internal Comment </b><br>
                       <b>Int Status = Internal Status</b><br>
-                      <b>Primary count = Flat count (for RS)</b>                      </b>
+                      <b>Primary count = Flat count (for RS)</b><br>
+                      <b>PC = Primary Count</b>
                     </div>
                     <dir-pagination-controls max-size="7" directionlinks="true" boundary-links="true"
                       on-page-change="pageChanged(newPageNumber-1)" pagination-id="paginate1">
@@ -1352,7 +1390,12 @@
                           total-items="purchasedNotPurchasedLeadTotal" current-page="purchasedNotPurchasedLeadCurrent"
                           track by "$index">
                           <tr>
-                            <td style="width: 60px;min-width: 60px;">{{$index + 1}}</td>
+                            <td style="width: 60px;min-width: 60px;">{{$index + 1}}
+                              <span ng-if="lead[0].requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,lead[0].supplier_id)">
+                              </span>
+                              <span ng-if="lead[0].requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,lead[0].supplier_id)">
+                              </span>
+                            </td>
                             <td class="col-md-2" ng-repeat="leadDetail in lead" ng-hide="$first">
                               <span ng-if="leadDetail.value">{{leadDetail.value}}</span>
                               <span ng-if="!leadDetail.value">NA</span>
@@ -1397,7 +1440,7 @@
                             </td>
                             <td class="alignment">
                               <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(lead[0]._id,lead[0].requirement_id)">View / Add</button>
-                          </td>
+                            </td>
                             <!-- <td class="alignment">
                               <textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel"
                                         ng-click="commentValue(mymodel)"
@@ -1414,8 +1457,36 @@
                             <td><button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;"
                                 type="button" name="button" class="btn btn-danger"
                                 ng-click="showLeadDetail(lead[0]._id,lead[0].requirement_id)" data-toggle="modal"
-                                data-target="#myModal">Detail</button></td>
+                                data-target="#myModal">Detail</button>
+                            </td>
                     </div>
+                    </tr>
+                    <tr style="background-color: yellow;" id="{{id}}"
+                        ng-if="icon==1 && lead[0].requirement_id==id"
+                        ng-repeat="data in detail_supplier_leads">
+                      <td></td>
+                      <td class="col-md-2">{{data.entity_name}}</td>
+                      <td class="col-md-2">{{data.entity_type}}</td>
+                      <td class="col-md-2">{{data.area}}</td>
+                      <td class="col-md-2">{{data.city}}</td>
+                      <td class="col-md-2">{{data.primary_count}}</td>
+                      <td class="col-md-2">{{data.lead_timestamp}}</td>
+                      <td class="col-md-2">
+                        <select ng-change="setValue(value8,data.macchadalo_client_comment,data._id,data.requirement_id)"
+                          class="form-control client-status" ng-model="value8">
+                          <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
+                        </select>
+                        <span>{{data.updated_at}}</span>
+                        <span style="display: none;">{{value8=value8==null?value8:data.macchadalo_client_status}}
+                      </td>
+                      <td class="alignment">
+                        <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(data._id,data.requirement_id)">View / Add</button>
+                      </td>
+                      <td><button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;"
+                          type="button" name="button" class="btn btn-danger"
+                          ng-click="showLeadDetail(data._id,data.requirement_id)" data-toggle="modal"
+                          data-target="#myModal">Detail</button>
+                      </td>
                     </tr>
 
                     </tbody>
@@ -2563,15 +2634,16 @@
                 </tr>
                 <tr>
                   <td>
-                    <h4>Sector : {{leadDetailDataList.sector.sector}}</h4>
+                    <h4 ng-if="leadDetailDataList.sector.subsector==null">{{leadDetailDataList.sector.sector}}</h4>
+                    <h4 ng-if="leadDetailDataList.sector.subsector!=null">{{leadDetailDataList.sector.sector}} ({{leadDetailDataList.sector.subsector}})</h4>
                   </td>
                 </tr>
-                <tr>
-                  <!-- <td></td> -->
+                <!-- <tr>
+                   <td></td>
                   <td>
                     <h4>Sub-Sector : {{leadDetailDataList.sector.subsector}}</h4>
                   </td>
-                </tr>
+                </tr> -->
               </table>
             </div><br>
             <div>
@@ -2635,15 +2707,15 @@
                   </th>
                 </tr>
                 <td>
-                  <h4>Name : {{leadDetailDataList.user_info.name}}</h4>
+                  <h4>{{leadDetailDataList.user_info.name}}, {{leadDetailDataList.user_info.number}} , {{leadDetailDataList.user_info.designation}}</h4>
                 </td>
                 </tr>
-                <tr>
-                  <!-- <td></td> -->
+                <!-- <tr>
+                   <td></td> 
                   <td>
                     <h4>Contact No. : {{leadDetailDataList.user_info.number}} , {{leadDetailDataList.user_info.designation}}</h4>
                   </td>
-                </tr>
+                </tr> -->
                 <tr>
                   <!-- <td></td> -->
                   <!-- <td>
@@ -2661,38 +2733,77 @@
                 </tr>
                 <tr>
                   <td>
-                    <h4 style="line-height:1.5;">{{leadDetailDataList.adress_details.address}}</h4>
+                    <h4 style="line-height:1.5;">{{leadDetailDataList.adress_details.address}},{{leadDetailDataList.adress_details.area}},{{leadDetailDataList.adress_details.city}}
+                      {{leadDetailDataList.adress_details.state}},{{leadDetailDataList.adress_details.country}},{{leadDetailDataList.adress_details.pincode}}
+                    </h4>
                   </td>
                 </tr>
-                <tr>
-                  <!-- <td></td> -->
+                <!-- <tr>
+                  <td></td>
                   <td>
                     <h4>Area : {{leadDetailDataList.adress_details.area}}</h4>
                   </td>
-                </tr>
-                <tr>
-                  <!-- <td></td> -->
+                </tr> -->
+                <!-- <tr>
+                  <td></td>
                   <td>
                     <h4>City : {{leadDetailDataList.adress_details.city}}</h4>
                   </td>
-                </tr>
-                <tr>
-                  <!-- <td></td> -->
+                </tr> -->
+                <!-- <tr>
+                  <td></td>
                   <td>
                     <h4>State : {{leadDetailDataList.adress_details.state}}</h4>
                   </td>
                 </tr>
                 <tr>
-                  <!-- <td></td> -->
+                  <td></td>
                   <td>
                     <h4>Country : {{leadDetailDataList.adress_details.country}}</h4>
                   </td>
                 </tr>
                 <tr>
-                  <!-- <td></td> -->
+                  <td></td>
                   <td>
                     <h4>Pin Code : {{leadDetailDataList.adress_details.pincode}}</h4>
                   </td>
+                </tr> -->
+              </table>
+            </div><br>
+            <div>
+              <table class="table">
+                <tr>
+                  <th style="background-color: #8e1921; color: #fff;">
+                    <h4>Client Comments :</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                <div class="modal-body">
+                  <div class="modalBodyBox">
+                    <div class="table-h-scroll">
+                     <table class="table-data">
+                      <tr ng-repeat="item in externalComment">
+                        <td>
+                          <div>
+                            <p>{{item.comment}}</p>
+                          </div>
+                          <div>
+                            <img ng-src="{{userIcon}}">
+                            <b>{{item.created_by}}:</b> 
+                            <span><small>{{item.created_at|date:'medium'}}</small></span>
+                          </div>
+                        </td>
+                      </tr>
+                     </table>
+                    </div>
+                    <div  style="margin-top: 15px;">
+                      <textarea class="field"  rows="2" cols="200" ng-model="mymodel.comment" value="" placeholder="Write here.."></textarea>
+                      <button class="smallBtn" type="button" ng-click="commentValueDetails(mymodel,id_detail,req_id_detail,false)" ng-click="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
+                    </div>
+                  </div>
+                </div>
+              </td>
                 </tr>
               </table>
             </div>
@@ -2702,15 +2813,17 @@
     </div>
   </div>
   <!--sendEmailModal start  -->
-  <div id="sendEmailModal" class="modal fade modal-styles">
+  <div id="sendEmailModal" class="modal fade modal-styles theme-modal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-body">
-          <div class="modalBodyBox">
-            <h3>Send Emails for {{ proposalDetail.name }}</h3>
+        <div class="modal-header">
+          <h3>Send Emails {{ proposalDetail.name }}</h3>
             <button type="button" class="close" ng-click="closeModel()" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
+        </div>
+        <div class="modal-body">
+          <div class="modalBodyBox">
             <label>Select Email Type:</label>
             <select class="field" name="" ng-model="emailModel.selected">
               <option value="" disabled selected hidden>Email Type</option>
@@ -2777,7 +2890,7 @@
   </div>
 
 <!--START : view external comments modal  -->
-<div id="viewComments" class="modal fade theme-modal">
+<!-- <div id="viewComments" class="modal fade theme-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -2788,8 +2901,9 @@
       </div>
       <div class="modal-body">
         <div class="modalBodyBox">
-          <table class="table-data">
-            <h3>Internal Comments</h3>
+          <h3>Internal Comments</h3>
+          <div class="table-h-scroll">
+            <table class="table-data">
             <tr ng-repeat="item in internalComment">
               <td>
                 <div>
@@ -2803,6 +2917,7 @@
               </td>
             </tr>
           </table>
+        </div>
           <div style="margin-top: 15px;">
             <textarea class="field"  rows="8" cols="200" ng-model="mymodel.comment" placeholder="Write here.."></textarea>
             <button class="smallBtn" type="button" ng-click="commentValue(mymodel,id_basic,req_id_basic)" ng-click="valuechange(mymodel,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
@@ -2811,7 +2926,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- modal -->  
 
 <!--START : view external and internal comments lead details  -->
@@ -2819,15 +2934,16 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>View Comments {{campaignDataForComment.name}}</h2>
+        <h4>View Comments {{campaignDataForComment.name}}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
       </div>
       <div class="modal-body">
         <div class="modalBodyBox">
+        <!-- <h3>Internal Comments</h3>
+        <div class="table-h-scroll">
           <table class="table-data">
-            <h3>Internal Comments</h3>
             <tr ng-repeat="item in internalComment">
               <td>
                 <div>
@@ -2840,9 +2956,11 @@
                 </div>
               </td>
             </tr>
-          </table><br>
+          </table>
+          </div><br> -->
+        <h3>Client Comments</h3>
+        <div class="table-h-scroll">
           <table class="table-data">
-            <h3>External Comments</h3>
             <tr ng-repeat="item in externalComment">
               <td>
                 <div>
@@ -2856,16 +2974,96 @@
               </td>
             </tr>
           </table>
+        </div>
           <div  style="margin-top: 15px;">
             <textarea class="field"  rows="8" cols="200" ng-model="mymodel.comment" value="" placeholder="Write here.."></textarea>
-            <button class="smallBtn" type="button" ng-click="commentValueDetails(mymodel,id_detail,req_id_detail)" ng-click="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
+            <button class="smallBtn" type="button" ng-click="commentValueDetails(mymodel,id_detail,req_id_detail,true)">Add Comment</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!-- modal --> 
+<!--comment modal ent -->
+
+<!-- view leads Popup start -->
+<!-- <div id="viewLeadsPopup" class="modal fade theme-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>View Leads</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div class="modalBodyBox">
+        <div class="table-h1-scroll">
+          <table class="table-data">
+            <thead>
+              <tr>
+                <th>Select Multiple</th>
+                <th>Entity Name</th>
+                <th>TOE</th>
+                <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">Primary
+                  Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                <th>Area</th>
+                <th>City</th>
+                <th>Lead Timestamp</th>
+                <th>Current Status</th>
+                <th>Int Comment</th>
+                <th>Phone Number</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody class="data-list" pagination-id="paginate1"
+                    dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord"
+                    total-items="totalrecord" current-page="currentPage" track by "$index">
+                        <tr>
+                          <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
+                              ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus"></td>
+                          <td class="alignment text-center">{{decisionPanding.entity_name}}</td>
+                          <td class="alignment text-center" >{{decisionPanding.entity_type}}</td>
+                          <td class="alignment text-center">{{decisionPanding.primary_count}}</td>
+                          <td class="alignment text-center">{{decisionPanding.area}}</td>
+                          <td class="alignment text-center">{{decisionPanding.city}}</td>
+                          <td class="alignment text-center">{{decisionPanding.lead_timestamp}}</td>
+                          <td class="alignment text-center">
+                            <select ng-change="setValue(value8,decisionPanding.client_comment,decisionPanding._id,decisionPanding.requirement_id)"
+                              class="form-control client-status" ng-model="value8">
+                              <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
+                            </select>
+                            <span style="display: none;">{{value8=value8?value8:decisionPanding.macchadalo_client_status}}</span>
+                            <span>{{decisionPanding.updated_at?decisionPanding.updated_at:"NA"}}</span>
+                          </td>
+                          <td class="alignment">
+                              <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewComments(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
+                          </td>
+
+                          <td class="alignment text-center">
+                            {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
+                          </td>
+                          <td class="alignment text-center">
+                            <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                              ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
+                            <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                              ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id)"
+                              ng-if="decisionPanding.client_status!='Decline'">Decline</button>
+                              <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger" ng-click="viewLeadsPopup()">View Leads</button>                              
+                            <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                              disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
+                          </td>
+                        </tr>
+            </tbody>
+           </table>
+          </div><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- Popup end -->
 </body>
 
 </html>
+

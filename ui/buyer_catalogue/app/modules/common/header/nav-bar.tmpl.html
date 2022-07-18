@@ -31,19 +31,20 @@
     </ul>
   </div>
 </header>
-<button ng-class="{'is-visible':visible,'hide-menu':category=='BUSINESS'}" class="hamburger" ng-class="{'is-visible':visible}" ng-click="visible=!visible;" ng-hide="custom_user_hide">
+<button style="z-index:100001;"  ng-class="{'is-visible':visible,'hide-menu':category=='BUSINESS'}" class="hamburger" ng-class="{'is-visible':visible}" ng-click="visible=!visible;" ng-hide="custom_user_hide">
   <span></span>
   <span></span>
   <span></span>
 </button>
 
-<aside ng-class="{'is-visible':visible}">
+<aside style="z-index:100000;" ng-class="{'is-visible':visible}">
   <div class="sidemenu">
     <ul id="menu-content">
       <li class="parent arrow" ng-class="{active: isActive('/dashboard')}" permission="[perm.menuDashboard]">
         <a href="javascript:void(0);">DashBoard</a>
         <ul class="child">
           <li><a ng-href="/#/dashboard">Business</a></li>
+          <li><a ng-href="/#/dashboard_Business">Business MCA</a></li>
           <li><a ng-href="/#/b2b/dashboard">B2B Client DashBoard</a></li>
           <li class="arrow">
             <a href="javascript:void(0);">Operational</a>
