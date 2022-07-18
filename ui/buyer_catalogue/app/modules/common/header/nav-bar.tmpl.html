@@ -31,13 +31,13 @@
     </ul>
   </div>
 </header>
-<button ng-class="{'is-visible':visible,'hide-menu':category=='BUSINESS'}" class="hamburger" ng-class="{'is-visible':visible}" ng-click="visible=!visible;" ng-hide="custom_user_hide">
+<button style="z-index:100001;"  ng-class="{'is-visible':visible,'hide-menu':category=='BUSINESS'}" class="hamburger" ng-class="{'is-visible':visible}" ng-click="visible=!visible;" ng-hide="custom_user_hide">
   <span></span>
   <span></span>
   <span></span>
 </button>
 
-<aside ng-class="{'is-visible':visible}">
+<aside style="z-index:100000;" ng-class="{'is-visible':visible}">
   <div class="sidemenu">
     <ul id="menu-content">
       <li class="parent arrow" ng-class="{active: isActive('/dashboard')}" permission="[perm.menuDashboard]">
