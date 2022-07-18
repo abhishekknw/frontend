@@ -670,16 +670,42 @@
           $scope.showAllCampaignDisplay = false;
           $scope.allCampaignsLeadsData = {};
           $scope.options = {};
+          $scope.leadBasicShow = false;
           $scope.viewCampaignLeads(true,$scope.selectedSupplierType.code);
   
         }
 
+        $scope.leadBasicShow = false;
+        $scope.leadBasics = function(){
+          $scope.leadBasicShow = true;
+          $scope.showTable = false;
+          B2BDashboardService.leadDecisionPanding('all',$scope.page,'admin')
+          .then(function onSuccess(response) {
+            $scope.leadDecisionPandingData = response.data.data.lead;
+            $scope.totalrecord = response.data.data.length;
+            $scope.itemsPerPageRecord = 20;
+          })
+
+        }
         
-        $scope.viewTab=false
-        $scope.optionNewTab=function(){
-            $scope.viewTab=true;
-            $scope.showTable=false;
+        $scope.viewTab = false;
+        $scope.page='';
+        $scope.optionNewTab = function(){
+          if(!$scope.page){
+            $scope.page=0;
+          }
+            $scope.leadBasicShow = true;
+            $scope.viewTab = true;
+            $scope.showTable = false;
             $scope.showCampaigns = true
+            B2BDashboardService.leadDecisionPanding('all',$scope.page,'admin')
+            .then(function onSuccess(response) {
+              $scope.leadDecisionPandingData = response.data.data.lead;
+              $scope.totalrecord = response.data.data.length;
+              $scope.itemsPerPageRecord = 20;
+              //$scope.currentPage = page; 
+              
+            });
         }
         
         $scope.viewCommentsLeadDetails = function (Id,req_id) {

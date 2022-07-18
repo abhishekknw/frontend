@@ -1092,15 +1092,15 @@
                              </h4>
                           </div>
                       </div>
-                      <uib-tab id="uib-tabs-width"  ng-click="getCampaigns()" index="1">
-                        <uib-tab-heading>
-                          <h5>Leads Details</h5>
-                        </uib-tab-heading>
-                      </uib-tab> 
-                      <br /><br />
+                      <br  />
+                      <button class="btn btn-danger" ng-click="getCampaigns()">
+                          Leads Details
+                      </button> 
+                      <br /><br/>
+                      <button class="btn btn-danger"  ng-click="leadBasics()">
+                        Leads Basics
+                      </button> 
                   <div class="viewLeadstable" ng-if="showTable">
-                        <!-- <br /><br /><br /><br /> -->
-                        <!-- <input type="text" class="form-control" ng-model="searchQuery" placeholder="search"> -->
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -1137,10 +1137,8 @@
   
                       </div>
                     </div>
-                      <div class="viewLeadstable" ng-if="!showCampaigns">
-                        <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
+                    <div class="viewLeadstable" ng-if="!showCampaigns">
                       </br><br>
-                        <!-- <input type="text" class="form-control" ng-model="searchData" placeholder="search"> -->
                         <div class="table-responsive">
                           <table class="table">
                             <thead>
@@ -1215,13 +1213,116 @@
                         </div>
                       </div>
                       <br /><br />
-                      <div style="text-align:center" ng-if="showTable">
+                      <div style="text-align:center" ng-if="showTable==true">
                       <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ></dir-pagination-controls>
                       </div>
                       <br /> <br />
                       <button ng-if="!showCampaigns" class="btn btn-danger" ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal" data-toggle="modal">Print Leads In Excel</button>
   
                     </div>
+                       <!-- table for lead basic -->
+                    <div class="viewLeadstable" ng-if="leadBasicShow==true">
+                      </br><br>
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Select</th>
+                                <th>Entity Name</th>
+                                <th>TOE</th>
+                                <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">PC<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                <th>Area</th>
+                                <th>City</th>
+                                <th>Lead Timestamp</th>
+                                <th>Current Status</th>
+                                <th>Phone Number</th> 
+                                <th>Client Comment</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody class="data-list" pagination-id="paginate1"
+                            dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord"
+                            total-items="totalrecord" current-page="currentPage" track by "$index">
+                            
+                              <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
+                                  ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus">
+                                  <span ng-if="decisionPanding.requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
+                                  </span>
+                                  <span ng-if="decisionPanding.requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
+                                  </span>
+                              </td>                          
+                              <td class="alignment text-center">{{decisionPanding.entity_name}}</td>
+                              <td class="alignment text-center" >{{decisionPanding.entity_type}}</td>
+                              <td class="alignment text-center">{{decisionPanding.primary_count}}</td>
+                              <td class="alignment text-center">{{decisionPanding.area}}</td>
+                              <td class="alignment text-center">{{decisionPanding.city}}</td>
+                              <td class="alignment text-center">{{decisionPanding.lead_timestamp}}</td>
+                              <td class="alignment text-center">
+                                <select ng-change="setValue(value8,decisionPanding.client_comment,decisionPanding._id,decisionPanding.requirement_id)"
+                                  class="form-control client-status" ng-model="value8">
+                                  <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
+                                </select>
+                                <span style="display: none;">{{value8=value8?value8:decisionPanding.macchadalo_client_status}}</span>
+                                <span>{{decisionPanding.updated_at?decisionPanding.updated_at:"NA"}}</span>
+                              </td>
+                                <td class="alignment text-center">
+                                  {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
+                                </td>
+                                <td class="alignment">
+                                    <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
+                                </td>
+                              <td class="alignment text-center">
+                                <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                  ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
+                                <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                  ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id)"
+                                  ng-if="decisionPanding.client_status!='Decline'">Decline</button>
+                                <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                  disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
+                              </td>
+                            </tr>
+                            <tr>
+                              <tr style="background-color: yellow;" id="{{id}}"
+                                  ng-if="arrowIcon==1 && decisionPanding.requirement_id==id"
+                                  ng-repeat="data in supplier_leads">
+                                <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
+                                  ng-click="checkboxCheck($index)" ng-model="data.checkStatus"></td>
+                                <td class="alignment text-center">{{data.entity_name}}</td>
+                                <td class="alignment text-center" >{{data.entity_type}}</td>
+                                <td class="alignment text-center">{{data.primary_count}}</td>
+                                <td class="alignment text-center">{{data.area}}</td>
+                                <td class="alignment text-center">{{data.city}}</td>
+                                <td class="alignment text-center">{{data.lead_timestamp}}</td>
+                                <td class="alignment text-center">
+                                  <select ng-change="setValue(value8,data.client_comment,data._id,data.requirement_id)"
+                                    class="form-control client-status" ng-model="value8">
+                                    <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
+                                  </select>
+                                  <span style="display: none;">{{value8=value8==null?value8:data.macchadalo_client_status}}</span>
+                                  <span>{{data.updated_at?data.updated_at:"NA"}}</span>
+                                </td>
+                                <td class="alignment text-center">
+                                  {{data.phone_number}}
+                                </td>
+                                <td class="alignment">
+                                    <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(data._id,data.requirement_id)">View / Add</button>
+                                </td>
+                                <td class="alignment text-center">
+                                  <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                    ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
+                                  <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                    ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id)"
+                                    ng-if="decisionPanding.client_status!='Decline'">Decline</button>
+                                  <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                    disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
                   </uib-tab>
   
   <!-- START : BOOKING ENGINE -->
