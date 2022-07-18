@@ -251,6 +251,40 @@
       var url = url_base_ui + "leads/generate-campaign-hash/" + campaignId + "/";
         return machadaloHttp.get(url);
     }
+    releaseCampaignService.viewCommentsDetails = function(Id){
+      var url = url_base_ui + "b2b/basic-client-comment/?requirement_id=" + Id;
+        return machadaloHttp.get(url);
+    }
+    releaseCampaignService.basicClientComment = function(comment,req_id){
+          var param={};
+          var payload=[];
+          var payload_param={};
+          payload_param['comment']=comment;
+          payload_param['requirement_id']=req_id;
+          payload.push(payload_param);
+          param['data']=payload;
+
+      var url = url_base_ui + "b2b/basic-client-comment/";
+        return machadaloHttp.post(url,param);
+    }
+
+    releaseCampaignService.viewInternalsComments = function(Id){
+      var url = url_base_ui + "b2b/internal-comment/?requirement_id=" + Id;
+        return machadaloHttp.get(url);
+    }
+
+    releaseCampaignService.internalCommentValue = function(comment,req_id){
+      var param={};
+      var payload=[];
+      var payload_param={};
+      payload_param['comment']=comment;
+      payload_param['requirement_id']=req_id;
+      payload.push(payload_param);
+      param['data']=payload;
+
+  var url = url_base_ui + "b2b/internal-comment/";
+    return machadaloHttp.post(url,param);
+}
 
     return releaseCampaignService;
 }]);

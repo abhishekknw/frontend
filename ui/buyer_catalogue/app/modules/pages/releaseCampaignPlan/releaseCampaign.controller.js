@@ -4078,26 +4078,40 @@ angular.module('catalogueApp')
             }
           }
         }
-
-
-      $scope.viewCommentsLeadDetails = function (Id,req_id) {
-          $scope.id_detail=Id;
-          $scope.req_id_detail=req_id;
+      $scope.mymodel=[];
+      $scope.viewCommentsLeadDetails = function (Id) {
+          $scope.req_id=Id;
           $('#viewCommentsLeadDetails').modal('show');
-          // B2BDashboardService.viewCommentsDetails(Id)
-          // .then(function onSuccess(response) {
-          //   $scope.externalComment=response.data.data.external_comments;
-          //   // $scope.internalComment=response.data.data.internal_comments;
-          // })      
+          releaseCampaignService.viewCommentsDetails(Id)
+          .then(function onSuccess(response) {
+            $scope.externalComment=response.data.data;
+          })      
         }
-        $scope.commentValueDetails = function(comment,Id,req_id){
-          // B2BDashboardService.basicExternalComment(comment.comment,Id,req_id)
-           //.then(function onSuccess(response){
-            //$scope.mymodel["comment"]="";
+        $scope.commentValueDetails = function(comment){
+          releaseCampaignService.basicClientComment(comment.comment,$scope.req_id)
+           .then(function onSuccess(response){
             swal("Successfull", "comment added sucessfully", "success");
-              $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
-            // }) 
-    
+            $scope.mymodel['comment']='';
+            $scope.viewCommentsLeadDetails($scope.req_id);
+            }) 
           }
+
+
+          $scope.viewInternalsComments = function (Id) {
+            $scope.Internal_id=Id;
+            $('#viewInternalComments').modal('show');
+            releaseCampaignService.viewInternalsComments(Id)
+            .then(function onSuccess(response) {
+              $scope.externalComment=response.data.data;
+            })      
+          }
+          $scope.internalCommentValue = function(comment){
+            releaseCampaignService.internalCommentValue(comment.comment,$scope.Internal_id)
+             .then(function onSuccess(response){
+              })
+              swal("Successfull", "comment added sucessfully", "success");
+              $scope.mymodel['comment']='';
+              $scope.viewInternalsComments($scope.Internal_id);
+            }
 
       }]);//Controller function ends here

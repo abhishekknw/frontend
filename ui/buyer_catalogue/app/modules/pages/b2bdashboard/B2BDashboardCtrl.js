@@ -646,7 +646,7 @@
       $scope.id_detail=Id;
       $scope.req_id_detail=req_id;
       $('#viewCommentsLeadDetails').modal('show');
-      B2BDashboardService.viewCommentsDetails(Id)
+      B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
       .then(function onSuccess(response) {
         $scope.externalComment=response.data.data.external_comments;
         // $scope.internalComment=response.data.data.internal_comments;
@@ -673,7 +673,7 @@
         }
         
         else{
-          B2BDashboardService.viewCommentsDetails(Id)
+          B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
            .then(function onSuccess(response) {
            $scope.externalComment=response.data.data.external_comments;
       }) 

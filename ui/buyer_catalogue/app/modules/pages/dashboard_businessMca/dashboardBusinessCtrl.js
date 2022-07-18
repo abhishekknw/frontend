@@ -671,47 +671,10 @@
           $scope.allCampaignsLeadsData = {};
           $scope.options = {};
           $scope.viewCampaignLeads(true,$scope.selectedSupplierType.code);
-        //   DashboardService.getCampaigns(orgId, category, date, $scope.selectedVendor.name, supplierType)
-        //     .then(function onSuccess(response) {
-       
-        //       cfpLoadingBar.complete();
-        //       $scope.searchSelectAllModel = [];
-        //       $scope.showSingleCampaignChart = false;
-        //       $scope.campaignData = response.data.data;
-        //       $scope.campaignAllStatusTypeData = response.data.data;
-        //       $scope.mergedarray = [];
-        //       angular.forEach($scope.campaignData, function (data) {
-        //         angular.forEach(data, function (campaign) {
-        //           $scope.mergedarray.push(campaign);
-        //         })
-        //       })
-        //       $scope.distributedGraphsVendorsData = [];
   
-        //       angular.forEach($scope.mergedarray, function (data) {
-        //         // $scope.distributedGraphsVendorsData.push(data);
-        //         if (data.principal_vendor) {
-        //           $scope.vendorsData[data.principal_vendor] = data;
-        //         }
-        //       })
-  
-        //       $scope.vendorsList = Object.keys($scope.vendorsData);
-        //       // $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
-        //       // $scope.campaignChartdata = [
-        //       //   { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
-        //       //   { label: $scope.allCampaignStatusType.completed.campaignLabel, value: $scope.campaignData.completed_campaigns.length, status: $scope.allCampaignStatusType.completed.status },
-        //       //   { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: $scope.campaignData.upcoming_campaigns.length, status: $scope.allCampaignStatusType.upcoming.status },
-        //       //   { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: $scope.campaignData.onhold_campaigns.length, status: $scope.allCampaignStatusType.onhold.status }
-        //       // ];
-        //       $scope.options = angular.copy(doughnutChartOptions);
-        //       $scope.options.chart.pie.dispatch['elementClick'] = function (e) {  $scope.pieChartClick(e.data.label); };
-        //       $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
-              
-        //       $scope.showPerfPanel = $scope.perfPanel.all;
-        //       $scope.showAllMapData = false;
-        //     }).catch(function onError(response) {
-        //       console.log(response);
-        //     })
         }
+
+        
         $scope.viewTab=false
         $scope.optionNewTab=function(){
             $scope.viewTab=true;
