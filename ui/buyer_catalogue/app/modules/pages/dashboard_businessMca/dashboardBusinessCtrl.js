@@ -716,6 +716,7 @@
         $scope.optionNewTab=function(){
             $scope.viewTab=true;
             $scope.showTable=false;
+            $scope.showCampaigns = true
         }
         
         $scope.viewCommentsLeadDetails = function (Id,req_id) {
