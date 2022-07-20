@@ -648,7 +648,7 @@
       $('#viewCommentsLeadDetails').modal('show');
       B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
       .then(function onSuccess(response) {
-        $scope.externalComment=response.data.data.external_comments;
+        $scope.externalComment=response.data.data;
         // $scope.internalComment=response.data.data.internal_comments;
       })      
     }
@@ -675,7 +675,7 @@
         else{
           B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
            .then(function onSuccess(response) {
-           $scope.externalComment=response.data.data.external_comments;
+           $scope.externalComment=response.data.data;
       }) 
 
         }
@@ -701,7 +701,7 @@
 
       B2BDashboardService.viewCommentsDetails(_id)
       .then(function onSuccess(response) {
-        $scope.externalComment=response.data.data.external_comments;
+        $scope.externalComment=response.data.data;
       })  
        }
 

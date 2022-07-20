@@ -1178,6 +1178,7 @@
                             <td ng-if="campaign.campaign_status != 'on_hold'" style="text-transform:capitalize">
                               {{campaign.campaign_status}}</td> -->
                             <td style="width:100px;" class="col-md-2">{{campaign.supplier_count}}</td>
+                            <td ng-if="campaign.unique_count" style="width:100px;" class="col-md-2">{{campaign.supplier_count}} ({{campaign.unique_count}})</td>
                             <!-- <td style="width:100px;" class="col-md-2">{{campaign.flat_count}}</td>
                             <td style="width:100px;" class="col-md-2">{{campaign.purchased_survey}}</td> -->
                             <!-- <td style="width:100px;" class="col-md-2" >{{campaign.hot_leads}}</td> -->
@@ -2968,7 +2969,7 @@
                 </div>
                 <div>
                   <img ng-src="{{userIcon}}">
-                  <b>{{item.created_by}}:</b> 
+                  <b>{{item.comment_by}}:</b> 
                   <span><small>{{item.created_at|date:'medium'}}</small></span>
                 </div>
               </td>
