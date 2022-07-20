@@ -699,7 +699,7 @@
         //console.log($scope.leadDetailDataList);               
         });
 
-      B2BDashboardService.viewCommentsDetails(_id)
+      B2BDashboardService.viewCommentsDetails(_id,req_id)
       .then(function onSuccess(response) {
         $scope.externalComment=response.data.data;
       })  
