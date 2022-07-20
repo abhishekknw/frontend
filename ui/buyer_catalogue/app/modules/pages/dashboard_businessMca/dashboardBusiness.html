@@ -1092,14 +1092,18 @@
                              </h4>
                           </div>
                       </div>
-                      <br  />
-                      <button class="btn btn-danger" ng-click="getCampaigns()">
-                          Leads Details
-                      </button> 
-                      <br /><br/>
-                      <button class="btn btn-danger"  ng-click="leadBasics()">
-                        Leads Basics
-                      </button> 
+                      <div class="col-sm-12 clearfix">                        
+                        <div class="col-sm-6">
+                          <button class="btn btn-danger"  ng-click="leadBasics()">
+                            Leads Basics
+                          </button> 
+                        </div>
+                        <div class="col-sm-6"  style="text-align: right;">
+                          <button class="btn btn-danger" ng-click="getCampaigns()">
+                            Leads Details
+                          </button> 
+                        </div>
+                      </div>                      
                   <div class="viewLeadstable" ng-if="showTable">
                     <div class="table-responsive">
                       <table class="table">
@@ -5295,4 +5299,5 @@
     </main>
     </body>
   </html>
-  
+  <style>
+  </style>
