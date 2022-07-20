@@ -648,7 +648,7 @@
       $('#viewCommentsLeadDetails').modal('show');
       B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
       .then(function onSuccess(response) {
-        $scope.externalComment=response.data.data.external_comments;
+        $scope.externalComment=response.data.data;
         // $scope.internalComment=response.data.data.internal_comments;
       })      
     }
@@ -675,7 +675,7 @@
         else{
           B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
            .then(function onSuccess(response) {
-           $scope.externalComment=response.data.data.external_comments;
+           $scope.externalComment=response.data.data;
       }) 
 
         }
@@ -699,9 +699,9 @@
         //console.log($scope.leadDetailDataList);               
         });
 
-      B2BDashboardService.viewCommentsDetails(_id)
+      B2BDashboardService.viewCommentsDetails(_id,req_id)
       .then(function onSuccess(response) {
-        $scope.externalComment=response.data.data.external_comments;
+        $scope.externalComment=response.data.data;
       })  
        }
 
@@ -763,6 +763,7 @@
       $scope.supplier_code="all";
     }
     $scope.sendBookingEmails=function(email){
+      swal("Successfull", "Email Sent Sucessfully", "success");
       B2BDashboardService.sendBookingEmails($scope.leads,$scope.supplier_code,$scope.campaign,email)
       .then(function onSuccess(response){
       });
@@ -1464,10 +1465,12 @@
         $scope.viewCampaignLeads();
       }
     }
-
     $scope.surveyLeadFilter('Leads');
     $scope.setButtonIndex = function (index,campaign_id,campaign_name) {
       $scope.buttonIndex = index;
+      setTimeout(function() {
+        $anchorScroll('scrollToTable');
+    },90);
       $scope.getPurchasedNotPurchasedLead(campaign_id,campaign_name) 
       //remove if show 2 butoon
     }

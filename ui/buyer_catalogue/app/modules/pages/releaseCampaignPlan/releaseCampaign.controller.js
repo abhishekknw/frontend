@@ -4108,10 +4108,11 @@ angular.module('catalogueApp')
           $scope.internalCommentValue = function(comment){
             releaseCampaignService.internalCommentValue(comment.comment,$scope.Internal_id)
              .then(function onSuccess(response){
-              })
               swal("Successfull", "comment added sucessfully", "success");
               $scope.mymodel['comment']='';
               $scope.viewInternalsComments($scope.Internal_id);
-            }
+            })
+          }
+
 
       }]);//Controller function ends here

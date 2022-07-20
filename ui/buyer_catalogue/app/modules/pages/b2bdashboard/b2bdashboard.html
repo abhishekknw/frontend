@@ -1177,7 +1177,8 @@
                             </td>
                             <td ng-if="campaign.campaign_status != 'on_hold'" style="text-transform:capitalize">
                               {{campaign.campaign_status}}</td> -->
-                            <td style="width:100px;" class="col-md-2">{{campaign.supplier_count}}</td>
+                            <td  ng-if="!campaign.unique_count" style="width:100px;" class="col-md-2">{{campaign.supplier_count}}</td>
+                            <td ng-if="campaign.unique_count" style="width:100px;" class="col-md-2">{{campaign.supplier_count}} ({{campaign.unique_count}})</td>
                             <!-- <td style="width:100px;" class="col-md-2">{{campaign.flat_count}}</td>
                             <td style="width:100px;" class="col-md-2">{{campaign.purchased_survey}}</td> -->
                             <!-- <td style="width:100px;" class="col-md-2" >{{campaign.hot_leads}}</td> -->
@@ -1229,7 +1230,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="viewLeadstable b2b-table-style"  ng-hide="isTableHide" ng-if="purchasedNotPurchasedLead">
+                  <div id="scrollToTable" class="viewLeadstable b2b-table-style"  ng-hide="isTableHide" ng-if="purchasedNotPurchasedLead">
                     <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
                     </br><br>
                     <input type="text" class="form-control" ng-model="searchData" ng-if="purchasedTable"
@@ -2738,36 +2739,6 @@
                     </h4>
                   </td>
                 </tr>
-                <!-- <tr>
-                  <td></td>
-                  <td>
-                    <h4>Area : {{leadDetailDataList.adress_details.area}}</h4>
-                  </td>
-                </tr> -->
-                <!-- <tr>
-                  <td></td>
-                  <td>
-                    <h4>City : {{leadDetailDataList.adress_details.city}}</h4>
-                  </td>
-                </tr> -->
-                <!-- <tr>
-                  <td></td>
-                  <td>
-                    <h4>State : {{leadDetailDataList.adress_details.state}}</h4>
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>
-                    <h4>Country : {{leadDetailDataList.adress_details.country}}</h4>
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>
-                    <h4>Pin Code : {{leadDetailDataList.adress_details.pincode}}</h4>
-                  </td>
-                </tr> -->
               </table>
             </div><br>
             <div>
@@ -2790,7 +2761,7 @@
                           </div>
                           <div>
                             <img ng-src="{{userIcon}}">
-                            <b>{{item.created_by}}:</b> 
+                            <b>{{item.comment_by}}:</b> 
                             <span><small>{{item.created_at|date:'medium'}}</small></span>
                           </div>
                         </td>
@@ -2968,7 +2939,7 @@
                 </div>
                 <div>
                   <img ng-src="{{userIcon}}">
-                  <b>{{item.created_by}}:</b> 
+                  <b>{{item.comment_by}}:</b> 
                   <span><small>{{item.created_at|date:'medium'}}</small></span>
                 </div>
               </td>

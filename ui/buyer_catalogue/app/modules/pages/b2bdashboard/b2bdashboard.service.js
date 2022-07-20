@@ -339,7 +339,7 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
       DashboardService.viewCommentsDetails = function (id,req_id) {
-        var url = url_root + "b2b/detail-client-comment/?requirement_id=" + req_id + "&_id="+id;
+        var url = url_root + "b2b/basic-client-comment/?requirement_id=" + req_id + "&_id="+id;
         return machadaloHttp.get(url);
       }
       DashboardService.basicExternalComment=function(comment,Id,req_id){
@@ -351,7 +351,7 @@ angular.module('catalogueApp')
           payload_param['requirement_id']=req_id;
           payload.push(payload_param);
           param['data']=payload;
-        var url = url_root + "b2b/md-client-external-comment/";
+        var url = url_root + "b2b/basic-client-comment/";
         return machadaloHttp.post(url,param);
       }
     //   DashboardService.commentValueDetails=function(comment,Id,req_id){

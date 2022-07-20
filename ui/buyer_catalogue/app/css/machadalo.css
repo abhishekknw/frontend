@@ -792,3 +792,8 @@ header .topRight .top-menu {
   z-index: 16;
   line-height: 1.5;
 }
+
+
+.al-main .ng-isolate-scope{
+  list-style: none;
+}
