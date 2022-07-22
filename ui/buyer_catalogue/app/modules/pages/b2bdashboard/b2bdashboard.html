@@ -1376,14 +1376,14 @@
                       <table class="table table_content viewLeadstable-new b2b-table-style">
                         <thead>
                           <tr>
-                            <th style="width: 60px;min-width: 60px !important;">Index</th>
+                            <th style="width: 60px;min-width: 60px !important;" ng-if="purchasedNotPurchasedLead.length != 0">Index</th>
                             <th class="col-md-2"
                               ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
                               <span> {{key}} </span>
                             </th>
-                            <th style="width:200px;">Current Status</th>
-                            <th style="width:200px;">Client Comment</th>
-                            <th>Action</th>
+                            <th ng-if="purchasedNotPurchasedLead.length != 0" style="width:200px;">Current Status</th>
+                            <th ng-if="purchasedNotPurchasedLead.length != 0" style="width:200px;">Client Comment</th>
+                            <th ng-if="purchasedNotPurchasedLead.length != 0">Action</th>
                           </tr>
                         </thead>
                         <tbody pagination-id="paginate2"
