@@ -6,7 +6,7 @@
   'use strict';
 
   angular.module('catalogueApp')
-    .controller('TemplateDashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
+    .controller('TemplateDashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper,AuthService, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
       $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
       $scope.itemsByPage = 15;
       $scope.permissions = permissions.dashboard;
@@ -650,19 +650,19 @@
         $scope.bookingPhases = [];
         $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code)
       }
-      $scope.getCampaigns = function (date, vendor, supplierType) {
+      $scope.templateDetail = function (value) {
         cfpLoadingBar.start();
         $scope.showSupplierTypeCountChart = false;
         $scope.selectedBookingCampaignName = undefined;
         $scope.showTableForAllCampaignDisplay = false;
 
-        if (!date)
-          date = new Date();
-        date = commonDataShare.formatDate(date);
-        date = date + ' 00:00:00';
-        if (!vendor) {
-          $scope.selectedVendor = {};
-        }
+        // if (!date)
+        //   date = new Date();
+        // date = commonDataShare.formatDate(date);
+        // date = date + ' 00:00:00';
+        // if (!vendor) {
+        //   $scope.selectedVendor = {};
+        // }
         $scope.showCampaignGraph = true;
         $scope.campaignLabel = false;
         $scope.showLeadsDetails = false;
@@ -670,47 +670,68 @@
         $scope.showAllCampaignDisplay = false;
         $scope.allCampaignsLeadsData = {};
         $scope.options = {};
-        $scope.viewCampaignLeads(true, $scope.selectedSupplierType.code);
-        DashboardService.getCampaigns(orgId, category, date, $scope.selectedVendor.name, supplierType)
-          .then(function onSuccess(response) {
+        //$scope.viewCampaignLeads(true, $scope.selectedSupplierType.code);
+        // DashboardService.getCampaigns(orgId, category, date, $scope.selectedVendor.name, supplierType)
+        //   .then(function onSuccess(response) {
 
-            cfpLoadingBar.complete();
-            $scope.searchSelectAllModel = [];
-            $scope.showSingleCampaignChart = false;
-            $scope.campaignData = response.data.data;
-            $scope.campaignAllStatusTypeData = response.data.data;
-            $scope.mergedarray = [];
-            angular.forEach($scope.campaignData, function (data) {
-              angular.forEach(data, function (campaign) {
-                $scope.mergedarray.push(campaign);
-              })
-            })
-            $scope.distributedGraphsVendorsData = [];
+             cfpLoadingBar.complete();
+        //     $scope.searchSelectAllModel = [];
+        //     $scope.showSingleCampaignChart = false;
+        //     $scope.campaignData = response.data.data;
+        //     $scope.campaignAllStatusTypeData = response.data.data;
+        //     $scope.mergedarray = [];
+        //     angular.forEach($scope.campaignData, function (data) {
+        //       angular.forEach(data, function (campaign) {
+        //         $scope.mergedarray.push(campaign);
+        //       })
+        //     })
+        //     $scope.distributedGraphsVendorsData = [];
 
-            angular.forEach($scope.mergedarray, function (data) {
-              // $scope.distributedGraphsVendorsData.push(data);
-              if (data.principal_vendor) {
-                $scope.vendorsData[data.principal_vendor] = data;
-              }
-            })
+        //     angular.forEach($scope.mergedarray, function (data) {
+        //       // $scope.distributedGraphsVendorsData.push(data);
+        //       if (data.principal_vendor) {
+        //         $scope.vendorsData[data.principal_vendor] = data;
+        //       }
+        //     })
 
-            $scope.vendorsList = Object.keys($scope.vendorsData);
-            // $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
-            // $scope.campaignChartdata = [
-            //   { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
-            //   { label: $scope.allCampaignStatusType.completed.campaignLabel, value: $scope.campaignData.completed_campaigns.length, status: $scope.allCampaignStatusType.completed.status },
-            //   { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: $scope.campaignData.upcoming_campaigns.length, status: $scope.allCampaignStatusType.upcoming.status },
-            //   { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: $scope.campaignData.onhold_campaigns.length, status: $scope.allCampaignStatusType.onhold.status }
-            // ];
-            $scope.options = angular.copy(doughnutChartOptions);
-            $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
-            $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
+        //     $scope.vendorsList = Object.keys($scope.vendorsData);
+        //     // $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
+        //     // $scope.campaignChartdata = [
+        //     //   { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
+        //     //   { label: $scope.allCampaignStatusType.completed.campaignLabel, value: $scope.campaignData.completed_campaigns.length, status: $scope.allCampaignStatusType.completed.status },
+        //     //   { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: $scope.campaignData.upcoming_campaigns.length, status: $scope.allCampaignStatusType.upcoming.status },
+        //     //   { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: $scope.campaignData.onhold_campaigns.length, status: $scope.allCampaignStatusType.onhold.status }
+        //     // ];
+        //     $scope.options = angular.copy(doughnutChartOptions);
+        //     $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
+        //     $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
 
-            $scope.showPerfPanel = $scope.perfPanel.all;
-            $scope.showAllMapData = false;
-          }).catch(function onError(response) {
-            console.log(response);
-          })
+        //     $scope.showPerfPanel = $scope.perfPanel.all;
+        //     $scope.showAllMapData = false;
+        //   }).catch(function onError(response) {
+        //     console.log(response);
+        //   })
+        let param = {
+          search:value,
+      }
+      if (!value) {
+          param.search = ""
+      }
+        AuthService.getTemplateTabData(param)
+
+                        .then(function onSuccess(response) {
+                            console.log(response)
+                            $scope.templateDetailData = response.data.data;
+
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
+        // $scope.templateDetailData = [{template_code: "6", bot_name: "MCA", template_name: "Doctors Template", date: "7/26/2021",status: "Live",template_code: "6"
+        //                              ,template_name: "Doctors Template"}]
+      }
+      $scope.viewMoreDetail = function(message){
+        $scope.message = message;
+        $('#viewMoreDetail').modal('show');
       }
 
 
