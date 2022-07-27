@@ -975,6 +975,10 @@
             }
             swal(constants.name, value + " Successfully", constants.success);
           }
+          B2BDashboardService.showLeads($scope.supp_id)
+          .then(function onSuccess(response) {
+            $scope.supplier_leads=response.data.data.lead;
+          }) 
         });
     }
     $scope.viewLeadsPopup = function(){
@@ -986,6 +990,7 @@
       for (let i in $scope.leadDecisionPandingData) {
         if ($scope.leadDecisionPandingData[i].checkStatus) {
           data.push({
+            "requirement_id": $scope.leadDecisionPandingData[i].requirement_id,
             "_id": $scope.leadDecisionPandingData[i]._id,
             "client_status": value
           })
