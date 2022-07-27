@@ -45,52 +45,32 @@
       scrollable: true,
       enableSearch: true
     };
-    //$scope.cityListDetails = ["Chennai","Delhi NCR","Kolkata"];
-
     $scope.startDate="";
     $scope.endDate="";
     $scope.options = {};
     $scope.dateRangeModel = {};
     $scope.changeStartDate = function () {
-        $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
-        $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
-        var flag=0;
-        if ($scope.startDate && $scope.endDate==""){
-          flag=1;          
-        }else if($scope.startDate < $scope.endDate){
-          flag=1;
-        }       
-      }
+           $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
+           $scope.options.minDate = $scope.dateRangeModel.start_date;
+           $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
+    }
 
     $scope.changeEndDate = function () {
-      $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
-        $scope.endDate = $scope.dateFormat($scope.dateRangeModel.end_date);
-      var flag=0;
-      if ($scope.startDate == "" && $scope.endDate){
-        flag=1;          
-      } 
-      if($scope.startDate < $scope.endDate && $scope.endDate <= $scope.todayDate()){
-        flag=1;
-      }
-      else {
-        $scope.dateRangeModel.end_dates="";
-        alert("Select a valid Date")
-      }
-      if(flag==1){
-        if($scope.endDate === 'NaN-NaN-NaN'){
-           $scope.endDate = $scope.todayDate();
-        }
-        $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
-      }            
+            if ($scope.changeEndDate > $scope.changeStartDate)
+                $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
+                $scope.endDate = $scope.dateFormat($scope.dateRangeModel.end_dates);
+                $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
     }
-    $scope.todayDate = function(){
-      var today = new Date();
-      var dd = String(today.getDate()).padStart(2, '0');
-      var mm = String(today.getMonth() + 1).padStart(2, '0');
-      var yyyy = today.getFullYear();
-      today = dd + '-' + mm + '-' + yyyy;
-      return today;
-    }
+
+
+    // $scope.todayDate = function(){
+    //   var today = new Date();
+    //   var dd = String(today.getDate()).padStart(2, '0');
+    //   var mm = String(today.getMonth() + 1).padStart(2, '0');
+    //   var yyyy = today.getFullYear();
+    //   today = dd + '-' + mm + '-' + yyyy;
+    //   return today;
+    // }
 
     $scope.dateFormat = function (date) {
       var d = new Date(date),
