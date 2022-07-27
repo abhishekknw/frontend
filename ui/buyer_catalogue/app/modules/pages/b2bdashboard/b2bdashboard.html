@@ -480,9 +480,9 @@
                           <!-- <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td> -->
                           <td class="alignment text-center">
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                              ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
+                              ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id,decisionPanding.requirement_id)">Accept</button>
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                              ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id)"
+                              ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id,decisionPanding.requirement_id)"
                               ng-if="decisionPanding.client_status!='Decline'">Decline</button>
                               <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger" ng-click="viewLeadsPopup()">View Leads</button>                               -->
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
@@ -517,9 +517,9 @@
                             </td>
                             <td class="alignment text-center">
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
+                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',data._id,data.requirement_id)">Accept</button>
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id)"
+                                ng-click="acceptDeclineDecisionPanding($index,'Decline',data._id,data.requirement_id)"
                                 ng-if="decisionPanding.client_status!='Decline'">Decline</button>
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                                 disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>

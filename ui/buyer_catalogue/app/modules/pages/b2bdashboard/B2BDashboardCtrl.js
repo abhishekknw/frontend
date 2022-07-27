@@ -53,6 +53,16 @@
            $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
            $scope.options.minDate = $scope.dateRangeModel.start_date;
            $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
+           if ($scope.endDate!=""){
+              if($scope.endDate >= $scope.startDate){
+                $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
+              }
+              else if($scope.endDate < $scope.startDate){
+                $scope.endDate = $scope.startDate;
+                $scope.dateRangeModel.end_dates=$scope.dateRangeModel.start_date;
+                $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
+              }
+           }
     }
 
     $scope.changeEndDate = function () {
@@ -944,9 +954,9 @@
       $scope.leadDecisionPanding(value)
     }
     
-    $scope.acceptDeclineDecisionPanding = function (index, value,id) {
+    $scope.acceptDeclineDecisionPanding = function (index, value,id,requirement_id) {
       let data = [{
-        "requirement_id": $scope.leadDecisionPandingData[index].requirement_id,
+        "requirement_id": requirement_id,
         "client_status": value,
         "_id":id
       }]
