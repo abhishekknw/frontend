@@ -53,6 +53,16 @@
            $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
            $scope.options.minDate = $scope.dateRangeModel.start_date;
            $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
+           if ($scope.endDate!=""){
+              if($scope.endDate >= $scope.startDate){
+                $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
+              }
+              else if($scope.endDate < $scope.startDate){
+                $scope.endDate = $scope.startDate;
+                $scope.dateRangeModel.end_dates=$scope.dateRangeModel.start_date;
+                $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
+              }
+           }
     }
 
     $scope.changeEndDate = function () {
@@ -778,7 +788,7 @@
     $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus,page,startDate,endDate,city) {
       $scope.page=page;
       if(!page){
-        page=0;
+        $scope.page=0;
       }
       if(!startDate){
         startDate="";
@@ -793,7 +803,7 @@
       $scope.campaignId = CampaignId;
       $scope.campaignName = campaignName;
       $scope.CampaignNameofLeads = campaignName;
-      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code,page,startDate,endDate,city)
+      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code,$scope.page,startDate,endDate,city)
         .then(function onSuccess(response) {
           $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
@@ -944,9 +954,9 @@
       $scope.leadDecisionPanding(value)
     }
     
-    $scope.acceptDeclineDecisionPanding = function (index, value,id) {
+    $scope.acceptDeclineDecisionPanding = function (index, value,id,requirement_id) {
       let data = [{
-        "requirement_id": $scope.leadDecisionPandingData[index].requirement_id,
+        "requirement_id": requirement_id,
         "client_status": value,
         "_id":id
       }]
@@ -965,6 +975,10 @@
             }
             swal(constants.name, value + " Successfully", constants.success);
           }
+          B2BDashboardService.showLeads($scope.supp_id)
+          .then(function onSuccess(response) {
+            $scope.supplier_leads=response.data.data.lead;
+          }) 
         });
     }
     $scope.viewLeadsPopup = function(){
@@ -976,6 +990,7 @@
       for (let i in $scope.leadDecisionPandingData) {
         if ($scope.leadDecisionPandingData[i].checkStatus) {
           data.push({
+            "requirement_id": $scope.leadDecisionPandingData[i].requirement_id,
             "_id": $scope.leadDecisionPandingData[i]._id,
             "client_status": value
           })
@@ -1711,10 +1726,6 @@
 
     $scope.icon=0;
     $scope.showSubLeadDetail = function(row,supplier_id){
-      // alert($scope.campaignId)
-      // alert($scope.selectedSupplierType.code)
-      // alert($scope.page)
-      // alert(supplier_id)
       $scope.supp_id=supplier_id;
       if($scope.id==row){
         $scope.id="";
