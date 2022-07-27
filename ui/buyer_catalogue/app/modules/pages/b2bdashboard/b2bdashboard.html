@@ -1290,100 +1290,19 @@
                       <div class="panel-heading content-title" ng-if="purchasedTable || notPurchasedTable"
                         style="height:70px">
                         <h3 style="background:'red'">Leads of {{CampaignNameofLeads}}</h3>
-                        <!-- <div class="row">
-                      <span class="pull-left"><label for="heading"><small>Campaign Owner :  </small><span><small>{{campaignOwner}}</small> </span></label></span>
-                      <span class="pull-right"><label for="heading"><small>Principal Vendor :  </small><span><small>{{principalVendor}}</small></span></label></span>
-                      </div> -->
                       </div>
                       <br />
-                      <!-- <table class="table" ng-if="purchasedTable">
-                    <thead>
-                      <tr>
-                        <th>Index</th>
-                        <th>Client Name</th>
-                        <th style="width:100px;" class="col-md-2" ng-click="Sorts('unit_primary_count')">Primary Count<a><i class="icon-sort" style="color:white;"></i></a></th>
-                        <th style="width:100px;" class="col-md-2" ng-click="Sorts('city')">City<a><i class="icon-sort" style="color:white;"></i></a></th>
-                        <th>Purchased on</th>
-                        <th>Comments</th>
-                        <th>Internal Comments</th>
-                        <th ng-if="filterType == 'Leads'">Installation/AMC Timeline</th>
-                        <th>Meeting Timeline</th>
-                        <th ng-if="filterType == 'Leads'">Sub Service Specific Detail L1
-                        </th>
-                        <th ng-if="filterType == 'Leads'">Sub Service Specific Detail L2</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat="lead in purchasedLeadData | filter : searchData | filter : Code | orderBy:sorts:reversesorts | itemsPerPage:20 track by $index">
-                        <td  style="width:200px;" class="col-md-2">{{$index + 1}}</td>
-                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].supplier_name}}</td>
-                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].unit_primary_count}}</td>
-                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].city}}</td>
-                        <td  style="width:200px;" class="col-md-2"></td>
-                        <td  style="width:200px;" class="col-md-2">
-                            <textarea placeholder="Comments" class="form-control" style="width:150px;"
-                            ng-model="lead.contact_data.external_comments" rows="4" cols="50">
-                       </textarea>
-                        </td>
-                        <td  style="width:200px;" class="col-md-2">
-                            <textarea placeholder="Internal Comments" class="form-control" style="width:150px;"
-                            ng-model="lead.contact_data.internal_comments" rows="4" cols="50">
-                       </textarea>
-                        </td>
-                        <td  style="width:200px;" class="col-md-2" ng-if="filterType == 'Leads'">              
-                                <input type="text"  ng-model="lead.Installation_Timeline" name="Installation/AMC_Timeline" class="form-control" placeholder="Installation/AMC Timeline" id="Installation_id"
-                                style="width:100px;">
-                              </td>
-                        <td  style="width:200px;" class="col-md-4">
-                          <p ng-if="filterType != 'Leads'">
-                            <input type="text"  ng-model="lead.meating_timeline" name="meating_timeline" class="form-control" placeholder="Meeting Timeline" id="meating_timeline_id"
-                            style="width:100px;">
-                          </p>
-                          <p ng-if="filterType != 'Leads'">
-                            {{lead.meating_timeline}}
-                          </p>
-                        </td>
-                        <td  style="width:200px;" class="col-md-2" ng-if="filterType == 'Leads'"></td>
-                        <td  style="width:200px;" class="col-md-2" ng-if="filterType == 'Leads'"></td>
-                      </tr>
-                    </tbody>
-                  </table> -->
-                      <!-- <table class="table table_content" ng-if="!isTableHide">
+                    <table ng-if="purchasedNotPurchasedLead.length != 0" class="table table_content viewLeadstable-new b2b-table-style">
                         <thead>
                           <tr>
-                            <th>Index</th>
-                            <th style="width:100px;" class="col-md-2"
-                              ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
-                              <span> {{key}} </span>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr ng-if="lead_purchased == leadPurchasedStatus" ng-repeat="lead in all_values">
-                           <td >{{$index + 1}}</td>
-                           <td style="width:100px;" class="col-md-2" ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
-                              <span>{{lead[key]}}</span>
-                            </td> 
-                          </tr>
-                    </div>
-                    </tr>
-
-                    </tbody>
-                    </table> -->
-                    
-          
-                    
-                      <table class="table table_content viewLeadstable-new b2b-table-style">
-                        <thead>
-                          <tr>
-                            <th style="width: 60px;min-width: 60px !important;" ng-if="purchasedNotPurchasedLead.length != 0">Index</th>
+                            <th style="width: 60px;min-width: 60px !important;">Index</th>
                             <th class="col-md-2"
                               ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
                               <span> {{key}} </span>
                             </th>
-                            <th ng-if="purchasedNotPurchasedLead.length != 0" style="width:200px;">Current Status</th>
-                            <th ng-if="purchasedNotPurchasedLead.length != 0" style="width:200px;">Client Comment</th>
-                            <th ng-if="purchasedNotPurchasedLead.length != 0">Action</th>
+                            <th style="width:200px;">Current Status</th>
+                            <th style="width:200px;">Client Comment</th>
+                            <th >Action</th>
                           </tr>
                         </thead>
                         <tbody pagination-id="paginate2"
@@ -1391,7 +1310,7 @@
                           total-items="purchasedNotPurchasedLeadTotal" current-page="purchasedNotPurchasedLeadCurrent"
                           track by "$index">
                           <tr>
-                            <td style="width: 60px;min-width: 60px;">{{$index + 1}}
+                            <td style="width: 60px;min-width: 60px;">{{$index + (page*20)+1}}
                               <span ng-if="lead[0].requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,lead[0].supplier_id)">
                               </span>
                               <span ng-if="lead[0].requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,lead[0].supplier_id)">

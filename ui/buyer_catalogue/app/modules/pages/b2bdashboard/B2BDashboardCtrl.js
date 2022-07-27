@@ -788,7 +788,7 @@
     $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus,page,startDate,endDate,city) {
       $scope.page=page;
       if(!page){
-        page=0;
+        $scope.page=0;
       }
       if(!startDate){
         startDate="";
@@ -803,7 +803,7 @@
       $scope.campaignId = CampaignId;
       $scope.campaignName = campaignName;
       $scope.CampaignNameofLeads = campaignName;
-      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code,page,startDate,endDate,city)
+      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code,$scope.page,startDate,endDate,city)
         .then(function onSuccess(response) {
           $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
@@ -1726,10 +1726,6 @@
 
     $scope.icon=0;
     $scope.showSubLeadDetail = function(row,supplier_id){
-      // alert($scope.campaignId)
-      // alert($scope.selectedSupplierType.code)
-      // alert($scope.page)
-      // alert(supplier_id)
       $scope.supp_id=supplier_id;
       if($scope.id==row){
         $scope.id="";
