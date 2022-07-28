@@ -72,15 +72,9 @@
                 $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
     }
 
-
-    // $scope.todayDate = function(){
-    //   var today = new Date();
-    //   var dd = String(today.getDate()).padStart(2, '0');
-    //   var mm = String(today.getMonth() + 1).padStart(2, '0');
-    //   var yyyy = today.getFullYear();
-    //   today = dd + '-' + mm + '-' + yyyy;
-    //   return today;
-    // }
+    $scope.searchForDetails = function(search){
+      $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate,$scope.selectCity,search);
+    }
 
     $scope.dateFormat = function (date) {
       var d = new Date(date),
@@ -785,7 +779,7 @@
       $scope.getPurchasedNotPurchasedLead(campaignId, campaignName, leadPurchasedStatus, page, $scope.startDate, $scope.endDate,$scope.selectCity);
     }
 
-    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus,page,startDate,endDate,city) {
+    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus,page,startDate,endDate,city,search) {
       $scope.page=page;
       if(!page){
         $scope.page=0;
@@ -799,11 +793,14 @@
       if(!city){
         city="";
       }
+      if(!search){
+        search="";
+      }
       $scope.leadPurchasedStatus = leadStatus;
       $scope.campaignId = CampaignId;
       $scope.campaignName = campaignName;
       $scope.CampaignNameofLeads = campaignName;
-      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code,$scope.page,startDate,endDate,city)
+      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code,$scope.page,startDate,endDate,city,search)
         .then(function onSuccess(response) {
           $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
