@@ -1263,7 +1263,7 @@
                                   <i class="glyphicon glyphicon-calendar"></i>
                                 </button>
                               </div>
-                            </div>
+                             </div>
                             </div>
                           </div>
 
@@ -1284,8 +1284,10 @@
                               </div>
                             </div>
                           </div>
-                          
                         </div>
+                        <span style="display: block;margin: 15px;">
+                          <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+                        </span>
                       </div>
                       <div class="panel-heading content-title" ng-if="purchasedTable || notPurchasedTable"
                         style="height:70px">
@@ -1306,7 +1308,7 @@
                           </tr>
                         </thead>
                         <tbody pagination-id="paginate2"
-                          dir-paginate="lead in purchasedNotPurchasedLead.values | itemsPerPage:purchasedNotPurchasedLeadPerPage"
+                          dir-paginate="lead in purchasedNotPurchasedLead.values | filter : searchQuery | itemsPerPage:purchasedNotPurchasedLeadPerPage"
                           total-items="purchasedNotPurchasedLeadTotal" current-page="purchasedNotPurchasedLeadCurrent"
                           track by "$index">
                           <tr>
