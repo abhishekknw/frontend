@@ -561,9 +561,9 @@ angular.module('catalogueApp')
       }
 
 
-      DashboardService.purchasedNotPurchasedLead = function (campaignId,filterType,supplierCode,page,startDate,endDate,city) {
+      DashboardService.purchasedNotPurchasedLead = function (campaignId,filterType,supplierCode,page,startDate,endDate,city,search) {
         //var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&lead_type=" + filterType;
-        var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&supplier_type=" + supplierCode+"&next_page="+page+"&start_date="+startDate+"&end_date="+endDate+"&city="+city;
+        var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&supplier_type=" + supplierCode+"&next_page="+page+"&start_date="+startDate+"&end_date="+endDate+"&city="+city+"&search="+search;
         if(filterType){
           url += "&lead_type=" + filterType;
         }
@@ -591,7 +591,7 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.leadDecisionPanding = function (type,page,user) {        
+      DashboardService.leadDecisionPanding = function (type,page,user) {  
         var url = url_root + "b2b/lead-decision-panding/";
         if(type){
           url = url_root + "b2b/lead-decision-panding/?type_of_entity=" + type +"&next_page="+page+"&user_type="+user;
