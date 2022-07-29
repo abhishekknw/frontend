@@ -164,6 +164,11 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
+      DashboardService.downloadSampleSheet = function(id){
+        let url="v0/ui/template/download-sample-sheet/?id="+id;
+        return machadaloHttp.get(url);
+      }
+
       DashboardService.viewBookingComments = function (campaignId, spaceId, relatedTo) {
         var url = url_base + campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo;
         return machadaloHttp.get(url);

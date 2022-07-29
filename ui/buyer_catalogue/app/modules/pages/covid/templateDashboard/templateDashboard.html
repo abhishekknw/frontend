@@ -85,6 +85,31 @@ top:0;
     border-radius: 5px;
     margin: 150px;
   }
+  .template-header{
+    display: flex;
+    gap: 10px;
+  }
+  .template-header .search-box input{
+    width: 100%;
+    height: 100%;
+  }
+  .input-wrapper{
+    height: 100%;
+    position: relative;
+  }
+  .input-wrapper i{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #000;
+  }
+  .table-center-btn{
+    text-align: center;
+  }
+  .table-center-btn button{
+    margin-top: 5px;
+    width: 100%;
+  }
 
 </style>
 
@@ -120,19 +145,18 @@ top:0;
                       </div>
                       <div class="container dropdown mca-page">
 
-                        <div class="add-button">
-                          <button type="button" class="btn btn-info">Add+</button>
-                        </div>
-                    
-                        <h3 style="padding: 5px; margin-bottom: 20px;"><b>TEMPLATE</b></h3>
-                    
-                        <div class="search-box">
-                          <div class="input-wrapper">
-                            <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-                    
-                            <input style="color:black" placeholder="Search here" ng-change="templateDetail(templateSearch)" ng-model="templateSearch"
+                        <div class="template-header">
+                          <div class="search-box">
+                            <div class="input-wrapper">
+                              <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
+                              
+                              <input style="color:black" placeholder="Search here" ng-change="templateDetail(templateSearch)" ng-model="templateSearch"
                               type="text" />
-                    
+                              
+                            </div>
+                          </div>
+                          <div class="add-button">
+                            <button type="button" class="btn btn-info">Add+</button>
                           </div>
                         </div>
                     
@@ -161,9 +185,13 @@ top:0;
                                 <td>{{template.status}}</td>
                                 <td>{{template.date}}</td>
                                 <td>{{template.bot_name}}</td>
-                                <td><button type="button" class="btn btn-success" style="align-items: center;" ng-click="viewMoreDetail(template.Template_message)">View More</button>
-                                    <button type="button" class="btn btn-success" style="align-items: center;">Download</button>
-                                    <button type="button" class="btn btn-success" style="align-items: center;">Upload</button>
+                                <td>
+                                  <div class="table-center-btn">
+                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="viewMoreDetail(template.Template_message)">View More</button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="downloadSampleSheet(template.template_code)">Download sample sheet </button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;">Upload users</button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="sendTemplates()">Send templates</button>
+                                  </div>
                                 </td>
                               </tr>
                             </tbody>
@@ -199,19 +227,29 @@ top:0;
                     </div>
                       <!--view more detail modal end-->
 
-                      <!-- <div class="col-md-12 panel-heading content-title CampaignDetails">
-                        <h4 ng-if="!campaignLabel" style="text-align:center;">All Campaigns Details</h4>
-                        <h4 ng-if="campaignLabel" style="text-align:center;">Details Of {{campaignTabPropsalName}}
-                        </h4>
-                        <span>
-                          <div class="row" ng-if="campaignLabel">
-                            <span class="pull-left"><label for="heading"><small>Campaign Owner :
-                                </small><span><small>{{campaignOwner}}</small> </span></label></span>
-                            <span class="pull-right"><label for="heading"><small>Principal Vendor :
-                                </small><span><small>{{principalVendor}}</small></span></label></span>
+                      <!-- send template modal -->
+                      <div id="sendTemplates" class="modal fade theme-modal">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Send Templates</h4>
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+            
+                            </div>
+                            <div class="modal-footer">
+                              <span style="float: left;">
+                                <button type="button" class="btn btn-danger">Upload Users</button>
+                                <button type="button" class="btn btn-danger">Send</button>
+                              </span>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>  
                           </div>
-                        </span>
-                      </div> -->
+                        </div>
+                      </div>
+                      <!-- modal end send template -->
+
                       <br />
                       <br />
 

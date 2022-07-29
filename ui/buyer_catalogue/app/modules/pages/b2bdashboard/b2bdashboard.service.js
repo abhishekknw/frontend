@@ -354,18 +354,17 @@ angular.module('catalogueApp')
         var url = url_root + "b2b/basic-client-comment/";
         return machadaloHttp.post(url,param);
       }
-    //   DashboardService.commentValueDetails=function(comment,Id,req_id){
-    //     var param={};
-    //     var payload=[];
-    //     var payload_param={};
-    //     payload_param['comment']=comment;
-    //     payload_param['_id']=Id;
-    //     payload_param['requirement_id']=req_id;
-    //     payload.push(payload_param);
-    //     param['data']=payload;
-    //   var url = url_root + "b2b/md-client-internal-comment/";
-    //   return machadaloHttp.post(url,param);
-    // }
+      DashboardService.deleteBasicComment = function (comment_Id,req_id){
+          var param={};
+          var payload=[];
+          var payload_param={};
+          payload_param['id']=comment_Id;
+          payload_param['requirement_id']=req_id;
+          payload.push(payload_param);
+          param['data']=payload;
+        var url = url_root + "b2b/basic-client-comment/";
+        return machadaloHttp.delete(url,param);
+      }
 
       DashboardService.downloadSheet = function (formId) {
         var url = url_root + "leads/" + formId + "/generate_lead_data_excel";

@@ -1109,9 +1109,9 @@
                       <table class="table">
                         <thead>
                             <tr>
-                              <th>Index</th>
-                              <th style="width:200px;" class="col-md-2">Campaign Name</th>
-                              <th ng-click="Sort('start_date')">Start Date <a><i class="icon-sort" style="color:white;"></i></a></th>
+                              <th style="width:62px;">Index</th>
+                              <th style="width:140px;" class="col-md-2">Campaign Name</th>
+                              <th ng-click="Sort('start_date')" style="width:140px;">Start Date <a><i class="icon-sort" style="color:white;"></i></a></th>
                               <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br> Count <a><i class="icon-sort" style="color:white;"></i></a></th>
                               <th>View Leads</th>
                               <th>Email Leads</th>
@@ -1121,10 +1121,10 @@
                           </thead>
                           <tbody>
                             <tr dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
-                              <td>{{$index + 1}}</td>
-                              <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
-                              <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
-                              <td style="width:100px;" class="col-md-2" >{{campaign.supplier_count}}</td>
+                              <td style="width:62px;">{{$index + 1}}</td>
+                              <td style="width:140px;"  class="col-md-2">{{campaign.name}}</td>
+                              <td style="width:140px;">{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
+                              <td class="col-md-2" >{{campaign.supplier_count}}</td>
                               <td>
                                 <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View Leads</button>
                               </td>
