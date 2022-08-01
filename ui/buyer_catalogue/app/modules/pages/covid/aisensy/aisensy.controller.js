@@ -1035,13 +1035,15 @@ $scope.addPoc = function(){
       $scope.releaseDetails.shortlisted_suppliers[localindex_index].contacts = $scope.pocModel;
       }
     }
-
+    
+$scope.opsVerifyButtonDiable = true;
 $scope.opsVerified=function(phone,supplier_id){
     $scope.detailedShow=[];
     userService.getSector()
     .then(function onSuccess(response) {
       $scope.sectorList = response.data;
     })
+    
 
     releaseCampaignService.selectLeads()
     .then(function onSuccess(response) { 
@@ -1053,8 +1055,91 @@ $scope.opsVerified=function(phone,supplier_id){
     releaseCampaignService.requirementDetail("",phone,supplier_id)
     .then(function onSuccess(response) {
       $scope.requirementDetailData = response.data.data.requirements;
-      console.log($scope.requirementDetailData[8].requirements[0].is_deleted)
       $scope.companiesDetailData = response.data.data.companies;
+      for (let k in $scope.companiesDetailData) {
+        $scope.companiesDetailData[k].id = $scope.companiesDetailData[k].organisation_id;
+        $scope.companiesDetailData[k].label = $scope.companiesDetailData[k].name;
+        $scope.companiesDetailData[k].sector = $scope.companiesDetailData[k].business_type[0];
+        if (k == response.data.data.companies.length - 1) {
+          $scope.companiesDetailData.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
+        }
+      }
+    })
+    angular.forEach($scope.requirementDetailData, function (value, i) {
+      if ($scope.requirementDetailData[i].requirements.length > 0) {
+        for (let x in $scope.requirementDetailData[i].requirements) {
+          if (!$scope.requirementDetailData[i].requirements[x].current_company) {
+            $scope.requirementDetailData[i].requirements[x].current_company = '';
+          }
+          var selected_preferred_company_sub_sector = [];
+          $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = [];
+
+          if ($scope.requirementDetailData[i].requirements[x].preferred_company_other) {
+            $scope.otherPreferredCompany = true
+            $scope.requirementDetailData[i].requirements[x].otherPreferredCompany = true
+            $scope.requirementDetailData[i].requirements[x].preferred_company.push("")
+          }
+
+          if ($scope.requirementDetailData[i].requirements[x].preferred_company && $scope.requirementDetailData[i].requirements[x].preferred_company.length > 0) {
+            for (let y in $scope.requirementDetailData[i].requirements[x].preferred_company) {
+
+              var _index = $scope.companiesDetailData.map(function (el) {
+                return el.organisation_id;
+              }).indexOf($scope.requirementDetailData[i].requirements[x].preferred_company[y]);
+              if (_index != -1) {
+                selected_preferred_company_sub_sector.push($scope.companiesDetailData[_index])
+              }
+            }
+
+            $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = selected_preferred_company_sub_sector;
+          }
+
+          var _indexCompany = $scope.companiesDetailData.map(function (el) {
+            return el.organisation_id;
+          }).indexOf($scope.requirementDetailData[i].requirements[x].company);
+          if (_indexCompany != -1) {
+            $scope.requirementDetailData[i].requirements[x].company_name = $scope.companiesDetailData[_indexCompany].name;
+          }
+
+          $scope.requirementDetailData[i].requirements[x].color_class = 'yellow'
+          if ($scope.requirementDetailData[i].requirements[x].varified_ops == 'yes') {
+            $scope.requirementDetailData[i].requirements[x].color_class = 'green'
+          }
+
+          if ($scope.requirementDetailData[i].requirements[x].is_deleted == 'yes') {
+            $scope.requirementDetailData[i].requirements[x].color_class = 'red'
+          }
+
+
+          //start sub sector name
+          if ($scope.requirementDetailData[i].requirements[x].sub_sector) {
+            if ($scope.sectorList) {
+              for (let p in $scope.sectorList) {
+                if ($scope.sectorList[p].subtypes && $scope.sectorList[p].subtypes.length > 0) {
+                  var sub_index = $scope.sectorList[p].subtypes.map(function (el) {
+                    return el.id;
+                  }).indexOf($scope.requirementDetailData[i].requirements[x].sub_sector);
+                  if (sub_index != -1) {
+                    $scope.requirementDetailData[i].requirements[x].sub_sector_name = $scope.sectorList[p].subtypes[sub_index].business_sub_type;
+                  }
+                }
+              }
+              //end sub sector name
+            }
+          }
+        }   
+      }
+      //END sub sector multiselect preferred company
+      //start added sector name
+      if ($scope.sectorList) {
+        var localindex_indexs = $scope.sectorList.map(function (el) {
+          return el.id;
+        }).indexOf($scope.requirementDetailData[i].sector);
+        if (localindex_indexs != -1) {
+          $scope.requirementDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
+        }
+        
+      }
     })
     
     $scope.getRequirementBrowsedData("",phone,supplier_id);

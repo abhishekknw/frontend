@@ -601,6 +601,7 @@
         .then(function onSuccess(response) {
           if(response.data.data){
             $scope.leadsDataCampaigns = response.data.data;
+            $scope.userName=response.data.data[0].name;
             $scope.campaign_id = $scope.leadsDataCampaigns[0].campaign_id;
           }
           
@@ -701,6 +702,13 @@
         $scope.externalComment=response.data.data;
       })  
        }
+       $scope.deleteBasicComment = function(comment_id,req_id){
+        B2BDashboardService.deleteBasicComment (comment_id,req_id)
+        .then(function onSuccess(response){
+          console.log(response);
+        })
+         
+      }
 
     $scope.updateLeadClientStatus = function (status,comment,id) {
       if($scope.clientStatus==""){

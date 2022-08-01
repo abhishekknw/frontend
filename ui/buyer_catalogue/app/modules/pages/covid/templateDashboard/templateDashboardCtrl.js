@@ -733,6 +733,16 @@
         $scope.message = message;
         $('#viewMoreDetail').modal('show');
       }
+      $scope.sendTemplates = function(){
+        $('#sendTemplates').modal('show');
+      }
+
+      $scope.downloadSampleSheet = function(id){
+        DashboardService.downloadSampleSheet(id)
+        .then(function onSuccess(response) {
+          console.log(response)
+        })
+      }
 
 
       $scope.pieChartClick = function (label) {

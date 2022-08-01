@@ -3531,17 +3531,13 @@
                       <span ng-if="!subrequirement.current_patner_feedback_reason">Reason:NA</span>
                     </td>
                     <td class="alignment">
-                      <!-- {{companyData(subrequirement.sector)}} -->
-                      <!-- <span style="width:150px;"
+                      {{companyData(subrequirement.sector)}}
+                      <span style="width:150px;"
                         class="multiselectDropdown multiselectDropdown-style style="color:red;width:100%;margin-left:20px;"
                         ng-dropdown-multiselect="" options="companiesDetailDataArray" extra-settings="settings"
                         selected-model="subrequirement.selected_preferred_company_sub_sector"
                         ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
                         events="events">
-                      </span> -->
-                      <span
-                        ng-dropdown-multiselect="" options="companiesDetailDataArray" extra-settings="settings"
-                        selected-model="subrequirement.selected_preferred_company_sub_sector">
                       </span>
                         <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector" style="text-align: left; display: inline-block">
                           {{selectedName.name}}
