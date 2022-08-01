@@ -1092,23 +1092,23 @@
                              </h4>
                           </div>
                       </div>
-                      <div class="col-sm-12 clearfix">                        
+                      <div class="col-sm-12 clearfix leads-btn">                        
                         <div class="col-sm-6">
-                          <button class="btn btn-danger"  ng-click="leadBasics()">
+                          <button class="btn btn-danger w-100"  ng-click="leadBasics()">
                             Leads Basics
                           </button> 
                         </div>
                         <div class="col-sm-6"  style="text-align: right;">
-                          <button class="btn btn-danger" ng-click="getCampaigns()">
+                          <button class="btn btn-danger w-100" ng-click="getCampaigns()">
                             Leads Details
                           </button> 
                         </div>
                       </div>                      
-                  <div class="viewLeadstable" ng-if="showTable">
+                  <div class="leads-details" ng-if="showTable">
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
-                            <tr>
+                            <tr style="text-align: center;">
                               <th style="width:62px;">Index</th>
                               <th style="width:140px;" class="col-md-2">Campaign Name</th>
                               <th ng-click="Sort('start_date')" style="width:140px;">Start Date <a><i class="icon-sort" style="color:white;"></i></a></th>
@@ -1120,7 +1120,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
+                            <tr style="text-align: center;" dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
                               <td style="width:62px;">{{$index + 1}}</td>
                               <td style="width:140px;"  class="col-md-2">{{campaign.name}}</td>
                               <td style="width:140px;">{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
@@ -5300,4 +5300,19 @@
     </body>
   </html>
   <style>
+    .w-100{
+      width: 100%;
+    }
+    .leads-btn{
+      margin-top: 15px;
+    }
+    .leads-btn .col-sm-6{
+      padding: 0;
+    }
+    .leads-btn .btn{
+      border-radius: 0;
+    }
+    .leads-btn .btn:hover{
+      background-color: #8e1921  !important;
+    }
   </style>

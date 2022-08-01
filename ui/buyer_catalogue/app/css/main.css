@@ -41,7 +41,9 @@ a.collapse-menu-link:hover {
 #uib-tabs-width{
   /*width: 18%;*/
   text-align: center;
-
+}
+.dashboard-tab.template-tabs .uib-tab{
+  width: 25%;
 }
 .dashboard-tab .tab-content {
   padding: 30px 20px 10px 20px;

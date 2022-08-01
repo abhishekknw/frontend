@@ -561,6 +561,9 @@ angular.module('catalogueApp')
 
 
       DashboardService.purchasedNotPurchasedLead = function (campaignId,filterType,supplierCode,page,startDate,endDate,city,search) {
+        if (search==undefined){
+            search="";
+        }
         //var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&lead_type=" + filterType;
         var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&supplier_type=" + supplierCode+"&next_page="+page+"&start_date="+startDate+"&end_date="+endDate+"&city="+city+"&search="+search;
         if(filterType){

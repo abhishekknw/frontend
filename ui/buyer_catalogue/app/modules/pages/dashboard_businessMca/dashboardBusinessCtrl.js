@@ -712,7 +712,7 @@
             $scope.id_detail=Id;
             $scope.req_id_detail=req_id;
             $('#viewCommentsLeadDetails').modal('show');
-            B2BDashboardService.viewCommentsDetails(Id)
+            B2BDashboardService.viewCommentsDetails(Id,req_id)
             .then(function onSuccess(response) {
               $scope.externalComment=response.data.data.external_comments;
               // $scope.internalComment=response.data.data.internal_comments;
@@ -764,13 +764,13 @@
      $scope.showLeadDetail = function (_id,req_id) {
        $scope.idForComment=_id
        $scope.lead_id=req_id;
-       B2BDashboardService.showLeadDetail(_id)
+       B2BDashboardService.showLeadDetail(_id,req_id)
          .then(function onSuccess(response) {
          $scope.leadDetailDataList = response.data.data;  
          //console.log($scope.leadDetailDataList);               
          });
  
-       B2BDashboardService.viewCommentsDetails(_id)
+       B2BDashboardService.viewCommentsDetails(_id,req_id)
        .then(function onSuccess(response) {
          $scope.externalComment=response.data.data.external_comments;
        })  

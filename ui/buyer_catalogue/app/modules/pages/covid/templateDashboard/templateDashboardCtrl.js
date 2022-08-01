@@ -733,8 +733,13 @@
         $scope.message = message;
         $('#viewMoreDetail').modal('show');
       }
-      $scope.sendTemplates = function(){
+      $scope.sendTemplates = function(message){
+        $scope.message = message;
         $('#sendTemplates').modal('show');
+      }
+      $scope.optionForTemplate=['option1','option2','option3'];
+      $scope.selectedForTemplate = function(value){
+        alert(value)
       }
 
       $scope.downloadSampleSheet = function(id){
