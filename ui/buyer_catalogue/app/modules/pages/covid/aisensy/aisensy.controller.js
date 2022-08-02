@@ -358,7 +358,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         username: data.whatsapp_name
                     }
 
-                    AuthService.addUserToActive(param)
+                    $scope.addUserToActive(param)
                         .then(function onSuccess(response) {
                             if (response.data.status) {
                                 var localindex_index = $scope.interveneUserData.map(function (el) {
@@ -381,10 +381,23 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     $scope.hideChatModule();
                     $scope.getActiveUser();
                     $scope.tab = { name: 'tabA' };
-
-
-
                 }
+                $scope.addUserToActive = function (param,meaType) {
+                  let url = "v0/ui/b2c-bot/action-status-intervene/?resolved=True&phone_number=" + param.phone + "&username=" + param.username;
+                  //apiHost = APIBaseUrl;
+                  if(meaType){
+                     url = "v0/ui/mea-bot/action-status-intervene/?resolved=True&phone_number=" + param.phone + "&username=" + param.username;
+                    // apiHost = interveneApiHost;
+                  }
+                  return machadaloHttp.get(url)
+                     .then(function onSuccess(response) {
+                        return response
+                     })
+                     .catch(function onError(response) {
+                        return response
+                     });
+                  
+               };
 
                 $scope.contactDetail = function (page) {
                     $scope.formData.historySearch = "";
@@ -1165,10 +1178,16 @@ $scope.selectLeadData=function(data){
       }
     }
   }
-  $scope.settings= {
-    scrollableHeight: '200px',
-    scrollable: false,
-    enableSearch: false
+//   $scope.settings= {
+//     scrollableHeight: '200px',
+//     scrollable: false,
+//     enableSearch: false
+// };
+$scope.settings = {
+  showCheckAll: false,
+  scrollable: false,
+  enableSearch: false,
+  showUncheckAll: false
 };
   
 $scope.detailedShow = [];
@@ -1238,9 +1257,10 @@ $scope.ShowDetailed = function (index,sector) {
           }
         }
 
-
         $scope.otherPreferredCompany = false;
-        $scope.subSectorPreferredMulticheck = function (key, index) {
+        $scope.subSectorPreferredMulticheck = function (key, index,temp) {
+          console.log(temp)
+          alert(1)
           // $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
           if ($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector.length > 0) {
             $scope.requirementDetailData[key].requirements[index].preferred_company = [];
@@ -1258,6 +1278,7 @@ $scope.ShowDetailed = function (index,sector) {
             $scope.requirementDetailData[key].requirements[index].preferred_company = [];
             $scope.requirementDetailData[key].requirements[index].otherPreferredCompany = false
           }
+          console.log($scope.requirementDetailData)
         }
 
         $scope.updateSubSectorRow = function (data,l4,l5,l6) {
