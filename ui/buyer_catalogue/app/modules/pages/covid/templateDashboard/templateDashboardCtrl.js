@@ -6,7 +6,20 @@
   'use strict';
 
   angular.module('catalogueApp')
-    .controller('TemplateDashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper,AuthService, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
+      .directive('ngFiles', ['$parse', function ($parse) {
+
+      function fn_link(scope, element, attrs) {
+          var onChange = $parse(attrs.ngFiles);
+          element.on('change', function (event) {
+              onChange(scope, { $files: event.target.files });
+          });
+      };
+
+      return {
+          link: fn_link
+      }
+  } ])
+    .controller('TemplateDashboardCtrl', function (machadaloHttp,$scope, NgMap, $rootScope, baConfig, colorHelper,AuthService, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
       $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
       $scope.itemsByPage = 15;
       $scope.permissions = permissions.dashboard;
@@ -670,85 +683,84 @@
         $scope.showAllCampaignDisplay = false;
         $scope.allCampaignsLeadsData = {};
         $scope.options = {};
-        //$scope.viewCampaignLeads(true, $scope.selectedSupplierType.code);
-        // DashboardService.getCampaigns(orgId, category, date, $scope.selectedVendor.name, supplierType)
-        //   .then(function onSuccess(response) {
 
-             cfpLoadingBar.complete();
-        //     $scope.searchSelectAllModel = [];
-        //     $scope.showSingleCampaignChart = false;
-        //     $scope.campaignData = response.data.data;
-        //     $scope.campaignAllStatusTypeData = response.data.data;
-        //     $scope.mergedarray = [];
-        //     angular.forEach($scope.campaignData, function (data) {
-        //       angular.forEach(data, function (campaign) {
-        //         $scope.mergedarray.push(campaign);
-        //       })
-        //     })
-        //     $scope.distributedGraphsVendorsData = [];
-
-        //     angular.forEach($scope.mergedarray, function (data) {
-        //       // $scope.distributedGraphsVendorsData.push(data);
-        //       if (data.principal_vendor) {
-        //         $scope.vendorsData[data.principal_vendor] = data;
-        //       }
-        //     })
-
-        //     $scope.vendorsList = Object.keys($scope.vendorsData);
-        //     // $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
-        //     // $scope.campaignChartdata = [
-        //     //   { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
-        //     //   { label: $scope.allCampaignStatusType.completed.campaignLabel, value: $scope.campaignData.completed_campaigns.length, status: $scope.allCampaignStatusType.completed.status },
-        //     //   { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: $scope.campaignData.upcoming_campaigns.length, status: $scope.allCampaignStatusType.upcoming.status },
-        //     //   { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: $scope.campaignData.onhold_campaigns.length, status: $scope.allCampaignStatusType.onhold.status }
-        //     // ];
-        //     $scope.options = angular.copy(doughnutChartOptions);
-        //     $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
-        //     $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
-
-        //     $scope.showPerfPanel = $scope.perfPanel.all;
-        //     $scope.showAllMapData = false;
-        //   }).catch(function onError(response) {
-        //     console.log(response);
-        //   })
+        cfpLoadingBar.complete();
         let param = {
           search:value,
       }
       if (!value) {
-          param.search = ""
+          param.search = "0"
       }
-        AuthService.getTemplateTabData(param)
+      templateDashboardService.getTemplateTabData(param.search)
 
                         .then(function onSuccess(response) {
-                            console.log(response)
-                            $scope.templateDetailData = response.data.data;
+                            $scope.templateDetailData = response.data.data.rows;
 
                         }).catch(function onError(response) {
                             console.log(response);
                         })
-        // $scope.templateDetailData = [{template_code: "6", bot_name: "MCA", template_name: "Doctors Template", date: "7/26/2021",status: "Live",template_code: "6"
-        //                              ,template_name: "Doctors Template"}]
       }
       $scope.viewMoreDetail = function(message){
         $scope.message = message;
         $('#viewMoreDetail').modal('show');
       }
-      $scope.sendTemplates = function(message){
+      $scope.checkUserModel = function(){
+        $('#checkUserModel').modal('show');
+      }
+      $scope.uploadId=0;
+      $scope.show1=false;
+      $scope.sendTemplates = function(message,id,template){
+        $scope.selectedFileName="";
+        $scope.excelColumnError="";
+        if(template=='template'){
+          $scope.show1=true;
+        } else{
+          $scope.show1=false;
+        }
+        $scope.template = template;
         $scope.message = message;
+        $scope.uploadId = id;
         $('#sendTemplates').modal('show');
       }
-      $scope.optionForTemplate=['option1','option2','option3'];
+      $scope.formdata = new FormData();
+      $scope.getTheFiles = function (files) {
+          $timeout(function () {
+            $scope.file=files;
+            $scope.selectedFileName = $scope.file[0].name;
+            // $scope.sendTemplates($scope.message,$scope.uploadId,$scope.template);
+            console.log($scope.selectedFileName);
+          }, 1);
+      };
+      $scope.uploadSendTemplate = function(){
+        $scope.uploadurl= {
+          url: 'https://stagingapi.machadalo.com/v0/ui/template/send-template-by-sheet/?id='+$scope.uploadId.trim(),
+          method:"POST",
+          timeout: 0,
+          data:{
+            "file": $scope.file[0],
+          },
+          headers: {
+            "Authorization": 'JWT ' + $rootScope.globals.currentUser.token
+          },
+          processData: false,
+          mimeType: "multipart/form-data",
+          contentType: false,
+        }
+        if ($scope.file) {
+          Upload.upload($scope.uploadurl).then(function onSuccess(response) {
+            $scope.file = undefined;
+            swal(constants.name, response.data.data, constants.success);
+          })
+            .catch(function onError(response) {
+              $scope.excelColumnError=response.data.data.general_error.errors;
+            });
+        }
+     
+      }
+      $scope.optionForTemplate=['APPROVED','REJECTED'];
       $scope.selectedForTemplate = function(value){
         alert(value)
       }
-
-      $scope.downloadSampleSheet = function(id){
-        DashboardService.downloadSampleSheet(id)
-        .then(function onSuccess(response) {
-          console.log(response)
-        })
-      }
-
 
       $scope.pieChartClick = function (label) {
 
@@ -6847,6 +6859,7 @@
       }
 
       $scope.getFormUpload = function (value, name) {
+        alert(value)
         $scope.current_template = {
           template_id: value,
           template_name: name
