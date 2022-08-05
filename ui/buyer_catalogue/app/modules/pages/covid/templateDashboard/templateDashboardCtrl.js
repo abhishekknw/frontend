@@ -663,19 +663,11 @@
         $scope.bookingPhases = [];
         $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code)
       }
-      $scope.templateDetail = function (value) {
+      $scope.templateDetail = function (pageNumber) {
         cfpLoadingBar.start();
         $scope.showSupplierTypeCountChart = false;
         $scope.selectedBookingCampaignName = undefined;
         $scope.showTableForAllCampaignDisplay = false;
-
-        // if (!date)
-        //   date = new Date();
-        // date = commonDataShare.formatDate(date);
-        // date = date + ' 00:00:00';
-        // if (!vendor) {
-        //   $scope.selectedVendor = {};
-        // }
         $scope.showCampaignGraph = true;
         $scope.campaignLabel = false;
         $scope.showLeadsDetails = false;
@@ -683,30 +675,28 @@
         $scope.showAllCampaignDisplay = false;
         $scope.allCampaignsLeadsData = {};
         $scope.options = {};
-
         cfpLoadingBar.complete();
-        let param = {
-          search:value,
-      }
-      if (!value) {
-          param.search = "0"
-      }
-      templateDashboardService.getTemplateTabData(param.search)
-
-                        .then(function onSuccess(response) {
+        if (!pageNumber){
+            pageNumber=0;
+        }
+        templateDashboardService.getTemplateTabData(pageNumber)
+                            .then(function onSuccess(response) {
                             $scope.templateDetailData = response.data.data.rows;
+                            $scope.totalrecord = response.data.data.total_row;
+                            $scope.itemsPerPageRecord = 20;
+                            $scope.currentPage = 0;
 
-                        }).catch(function onError(response) {
+                         }).catch(function onError(response) {
                             console.log(response);
-                        })
-      }
-      $scope.viewMoreDetail = function(message){
-        $scope.message = message;
-        $('#viewMoreDetail').modal('show');
-      }
+                         })
+       }
+       $scope.viewMoreDetail = function(message){
+          $scope.message = message;
+          $('#viewMoreDetail').modal('show');
+       }
       $scope.checkUserModel = function(){
         $('#checkUserModel').modal('show');
-      }
+       }
       $scope.uploadId=0;
       $scope.show1=false;
       $scope.sendTemplates = function(message,id,template){
@@ -6827,8 +6817,6 @@
             // alert("view")
             $scope.transactionalTemplateUserData = response.data.data.users;
             $scope.totalCount = response.data.data.total_count;
-            console.log('11111', $scope.transactionalTemplateUserData);
-            console.log('6666666', $scope.totalCount);
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -6945,6 +6933,9 @@
         console.log("qqgdq",$scope.backToDatewiseData)
 
       }
+      $scope.pageChangedMasterTemplate = function(newPage) {
+        $scope.templateDetail(newPage);
+      };
 
 
       $scope.pageChanged = function (newPageNumber, tab) {

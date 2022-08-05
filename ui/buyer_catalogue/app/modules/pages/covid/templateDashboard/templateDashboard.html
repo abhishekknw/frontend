@@ -183,8 +183,8 @@ top:0;
                               </tr>
                             </thead>
                             <tbody>
-                              <tr dir-paginate="template in templateDetailData| itemsPerPage:itemsPerPage" total-items="totalCount"
-                                current-page="pagination.current" track by "$index">
+                              <tr  pagination-id="paginate1" dir-paginate="template in templateDetailData| itemsPerPage:itemsPerPageRecord"
+                                 total-items="totalrecord" current-page="currentPage" track by "$index">
                                 <!-- <tr ng-repeat="template in templateDetailData"> -->
                                 <td>{{$index+serial}}</td>
                                 <td>{{template.id}}</td>
@@ -206,6 +206,9 @@ top:0;
                               </tr>
                             </tbody>
                           </table>
+                              <dir-pagination-controls max-size="7" directionlinks="true" boundary-links="true"
+                                                     on-page-change="pageChangedMasterTemplate(newPageNumber-1)" pagination-id="paginate1">
+                              </dir-pagination-controls>
                         </div>
                       </div>
                       <!-- view More detail popup start -->
