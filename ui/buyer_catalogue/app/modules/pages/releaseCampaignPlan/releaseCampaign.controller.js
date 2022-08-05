@@ -4087,6 +4087,18 @@ angular.module('catalogueApp')
             $scope.externalComment=response.data.data;
           })      
         }
+        $scope.deleteBasicComment = function(comment_id){
+            releaseCampaignService.deleteBasicComment (comment_id,$scope.req_id)
+            .then(function onSuccess(response){
+             swal("",response.data.data, "success");
+             releaseCampaignService.viewCommentsDetails($scope.req_id)
+              .then(function onSuccess(response) {
+                $scope.externalComment=response.data.data;
+              }) 
+           })   
+        }
+
+
         $scope.commentValueDetails = function(comment){
           releaseCampaignService.basicClientComment(comment.comment,$scope.req_id)
            .then(function onSuccess(response){
@@ -4104,6 +4116,17 @@ angular.module('catalogueApp')
             .then(function onSuccess(response) {
               $scope.externalComment=response.data.data;
             })      
+          }
+
+          $scope.deleteInternalComment = function(comment_id){
+            releaseCampaignService.deleteInternalComment (comment_id,$scope.Internal_id)
+                .then(function onSuccess(response){
+                  swal("",response.data.data, "success");
+                 releaseCampaignService.viewInternalsComments($scope.Internal_id)
+                 .then(function onSuccess(response) {
+                  $scope.externalComment=response.data.data;
+                 }) 
+              })   
           }
           $scope.internalCommentValue = function(comment){
             releaseCampaignService.internalCommentValue(comment.comment,$scope.Internal_id)

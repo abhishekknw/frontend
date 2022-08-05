@@ -281,10 +281,18 @@
       payload_param['requirement_id']=req_id;
       payload.push(payload_param);
       param['data']=payload;
+      var url = url_base_ui + "b2b/internal-comment/";
+         return machadaloHttp.post(url,param);
+     }
 
-  var url = url_base_ui + "b2b/internal-comment/";
-    return machadaloHttp.post(url,param);
-}
+     releaseCampaignService.deleteBasicComment = function (comment_Id,req_id){
+           var url = url_base_ui + "b2b/basic-client-comment/?requirement_id="+req_id+"&id="+comment_Id;
+           return machadaloHttp.delete(url);
+     }
+     releaseCampaignService.deleteInternalComment = function (comment_Id,req_id){
+          var url = url_base_ui + "b2b/internal-comment/?requirement_id="+req_id+"&id="+comment_Id;
+            return machadaloHttp.delete(url);
+     }
 
     return releaseCampaignService;
 }]);

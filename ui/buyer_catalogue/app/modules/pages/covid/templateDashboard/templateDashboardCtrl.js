@@ -746,8 +746,11 @@
           mimeType: "multipart/form-data",
           contentType: false,
         }
+        if($scope.show1==false){
+          $scope.uploadurl.url="aaaaakkkkkkkkssssss"
+        }
         if ($scope.file) {
-          Upload.upload($scope.uploadurl).then(function onSuccess(response) {
+           Upload.upload($scope.uploadurl).then(function onSuccess(response) {
             $scope.file = undefined;
             swal(constants.name, response.data.data, constants.success);
           })
