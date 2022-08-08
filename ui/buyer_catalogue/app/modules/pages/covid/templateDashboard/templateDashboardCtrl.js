@@ -6,7 +6,20 @@
   'use strict';
 
   angular.module('catalogueApp')
-    .controller('TemplateDashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper,AuthService, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
+      .directive('ngFiles', ['$parse', function ($parse) {
+
+      function fn_link(scope, element, attrs) {
+          var onChange = $parse(attrs.ngFiles);
+          element.on('change', function (event) {
+              onChange(scope, { $files: event.target.files });
+          });
+      };
+
+      return {
+          link: fn_link
+      }
+  } ])
+    .controller('TemplateDashboardCtrl', function (machadaloHttp,$scope, NgMap, $rootScope, baConfig, colorHelper,AuthService, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
       $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
       $scope.itemsByPage = 15;
       $scope.permissions = permissions.dashboard;
@@ -45,7 +58,6 @@
       $scope.tower_count_header = "Unit Secondary Count";
       $scope.flat = "Unit Primary";
       $scope.printLeadsInExcelData = {};
-
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
         { id: 2, name: 'High' },
@@ -650,19 +662,14 @@
         $scope.bookingPhases = [];
         $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code)
       }
-      $scope.templateDetail = function (value) {
+      $scope.templateDetail = function (pageNumber,search,status) {
+        let start_date="";
+        let next_page="";
+        let end_date="";
         cfpLoadingBar.start();
         $scope.showSupplierTypeCountChart = false;
         $scope.selectedBookingCampaignName = undefined;
         $scope.showTableForAllCampaignDisplay = false;
-
-        // if (!date)
-        //   date = new Date();
-        // date = commonDataShare.formatDate(date);
-        // date = date + ' 00:00:00';
-        // if (!vendor) {
-        //   $scope.selectedVendor = {};
-        // }
         $scope.showCampaignGraph = true;
         $scope.campaignLabel = false;
         $scope.showLeadsDetails = false;
@@ -670,85 +677,90 @@
         $scope.showAllCampaignDisplay = false;
         $scope.allCampaignsLeadsData = {};
         $scope.options = {};
-        //$scope.viewCampaignLeads(true, $scope.selectedSupplierType.code);
-        // DashboardService.getCampaigns(orgId, category, date, $scope.selectedVendor.name, supplierType)
-        //   .then(function onSuccess(response) {
+        cfpLoadingBar.complete();
+        if (!pageNumber || pageNumber==''){
+            pageNumber=0;
+        }
+        if (!search){
+            search="";
+        }
+        if(!status){
+           status="";
+        }
+        templateDashboardService.getTemplateTabData(pageNumber,search,status)
+                            .then(function onSuccess(response) {
+                            $scope.templateDetailData = response.data.data.rows;
+                            $scope.totalrecord = response.data.data.total_row;
+                            $scope.itemsPerPageRecord = 20;
+                            $scope.currentPage = 0;
+                            $scope.optionForTemplate=response.data.data.status_list;
 
-             cfpLoadingBar.complete();
-        //     $scope.searchSelectAllModel = [];
-        //     $scope.showSingleCampaignChart = false;
-        //     $scope.campaignData = response.data.data;
-        //     $scope.campaignAllStatusTypeData = response.data.data;
-        //     $scope.mergedarray = [];
-        //     angular.forEach($scope.campaignData, function (data) {
-        //       angular.forEach(data, function (campaign) {
-        //         $scope.mergedarray.push(campaign);
-        //       })
-        //     })
-        //     $scope.distributedGraphsVendorsData = [];
-
-        //     angular.forEach($scope.mergedarray, function (data) {
-        //       // $scope.distributedGraphsVendorsData.push(data);
-        //       if (data.principal_vendor) {
-        //         $scope.vendorsData[data.principal_vendor] = data;
-        //       }
-        //     })
-
-        //     $scope.vendorsList = Object.keys($scope.vendorsData);
-        //     // $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
-        //     // $scope.campaignChartdata = [
-        //     //   { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
-        //     //   { label: $scope.allCampaignStatusType.completed.campaignLabel, value: $scope.campaignData.completed_campaigns.length, status: $scope.allCampaignStatusType.completed.status },
-        //     //   { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: $scope.campaignData.upcoming_campaigns.length, status: $scope.allCampaignStatusType.upcoming.status },
-        //     //   { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: $scope.campaignData.onhold_campaigns.length, status: $scope.allCampaignStatusType.onhold.status }
-        //     // ];
-        //     $scope.options = angular.copy(doughnutChartOptions);
-        //     $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
-        //     $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
-
-        //     $scope.showPerfPanel = $scope.perfPanel.all;
-        //     $scope.showAllMapData = false;
-        //   }).catch(function onError(response) {
-        //     console.log(response);
-        //   })
-        let param = {
-          search:value,
-      }
-      if (!value) {
-          param.search = ""
-      }
-        AuthService.getTemplateTabData(param)
-
-                        .then(function onSuccess(response) {
-                            console.log(response)
-                            $scope.templateDetailData = response.data.data;
-
-                        }).catch(function onError(response) {
+                         }).catch(function onError(response) {
                             console.log(response);
-                        })
-        // $scope.templateDetailData = [{template_code: "6", bot_name: "MCA", template_name: "Doctors Template", date: "7/26/2021",status: "Live",template_code: "6"
-        //                              ,template_name: "Doctors Template"}]
-      }
-      $scope.viewMoreDetail = function(message){
+                         })
+       }
+       $scope.viewMoreDetail = function(message){
+          $scope.message = message;
+          $('#viewMoreDetail').modal('show');
+       }
+      $scope.checkUserModel = function(){
+        $('#checkUserModel').modal('show');
+       }
+      $scope.uploadId=0;
+      $scope.show1=false;
+      $scope.sendTemplates = function(message,id,template,name){
+        $scope.templateName = name;
+        $scope.selectedFileName="";
+        $scope.excelColumnError="";
+        if(template=='template'){
+          $scope.show1=true;
+        } else{
+          $scope.show1=false;
+        }
+        $scope.template = template;
         $scope.message = message;
-        $('#viewMoreDetail').modal('show');
-      }
-      $scope.sendTemplates = function(message){
-        $scope.message = message;
+        $scope.uploadId = id;
         $('#sendTemplates').modal('show');
       }
-      $scope.optionForTemplate=['option1','option2','option3'];
-      $scope.selectedForTemplate = function(value){
-        alert(value)
+      $scope.formdata = new FormData();
+      $scope.getTheFiles = function (files) {
+          $timeout(function () {
+            $scope.file=files;
+            $scope.selectedFileName = $scope.file[0].name;
+            // $scope.sendTemplates($scope.message,$scope.uploadId,$scope.template);
+            console.log($scope.selectedFileName);
+          }, 1);
+      };
+      $scope.uploadSendTemplate = function(){
+        $scope.uploadurl= {
+          url: 'https://stagingapi.machadalo.com/v0/ui/template/send-template-by-sheet/?id='+$scope.uploadId.trim(),
+          method:"POST",
+          timeout: 0,
+          data:{
+            "file": $scope.file[0],
+          },
+          headers: {
+            "Authorization": 'JWT ' + $rootScope.globals.currentUser.token
+          },
+          processData: false,
+          mimeType: "multipart/form-data",
+          contentType: false,
+        }
+        if($scope.show1==false){
+          $scope.uploadurl.url="aaaaakkkkkkkkssssss"
+        }
+        if ($scope.file) {
+           Upload.upload($scope.uploadurl).then(function onSuccess(response) {
+            $scope.file = undefined;
+            swal(constants.name, response.data.data, constants.success);
+          })
+            .catch(function onError(response) {
+              $scope.excelColumnError=response.data.data.general_error.errors;
+            });
+        }
+     
       }
-
-      $scope.downloadSampleSheet = function(id){
-        DashboardService.downloadSampleSheet(id)
-        .then(function onSuccess(response) {
-          console.log(response)
-        })
-      }
-
+      $scope.optionForTemplate=['APPROVED','REJECTED'];
 
       $scope.pieChartClick = function (label) {
 
@@ -6812,8 +6824,6 @@
             // alert("view")
             $scope.transactionalTemplateUserData = response.data.data.users;
             $scope.totalCount = response.data.data.total_count;
-            console.log('11111', $scope.transactionalTemplateUserData);
-            console.log('6666666', $scope.totalCount);
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -6847,6 +6857,7 @@
       }
 
       $scope.getFormUpload = function (value, name) {
+        alert(value)
         $scope.current_template = {
           template_id: value,
           template_name: name
@@ -6929,6 +6940,9 @@
         console.log("qqgdq",$scope.backToDatewiseData)
 
       }
+      $scope.pageChangedMasterTemplate = function(newPage) {
+        $scope.templateDetail(newPage);
+      };
 
 
       $scope.pageChanged = function (newPageNumber, tab) {

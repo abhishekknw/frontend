@@ -355,15 +355,8 @@ angular.module('catalogueApp')
         return machadaloHttp.post(url,param);
       }
       DashboardService.deleteBasicComment = function (comment_Id,req_id){
-          var param={};
-          var payload=[];
-          var payload_param={};
-          payload_param['id']=comment_Id;
-          payload_param['requirement_id']=req_id;
-          payload.push(payload_param);
-          param['data']=payload;
-        var url = url_root + "b2b/basic-client-comment/";
-        return machadaloHttp.delete(url,param);
+        var url = url_root + "b2b/basic-client-comment/?requirement_id="+req_id+"&id="+comment_Id;
+        return machadaloHttp.delete(url);
       }
 
       DashboardService.downloadSheet = function (formId) {

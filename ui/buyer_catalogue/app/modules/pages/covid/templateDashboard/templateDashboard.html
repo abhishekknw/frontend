@@ -154,12 +154,13 @@ top:0;
                           <div class="search-box">
                             <div class="input-wrapper">
                               <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-                              <input style="color:black" placeholder="Search here" ng-change="templateDetail(templateSearch)" ng-model="templateSearch"
+                              <input style="color:black" placeholder="Search here" ng-change="templateDetail('',templateSearch)" ng-model="templateSearch"
                               type="text" />
                             </div>
                           </div>
                           <div>
-                            <select ng-change="selectedForTemplate(selectValue)" value="selectValue" ng-model="selectValue">
+                            <select ng-change="templateDetail('','',selectValue)" value="selectValue" ng-model="selectValue">
+                              <option value="">Select Status</option>
                               <option value="{{value}}" ng-repeat="value in optionForTemplate">{{value}}</option>
                             </select>
                           </div>
@@ -183,27 +184,32 @@ top:0;
                               </tr>
                             </thead>
                             <tbody>
-                              <tr dir-paginate="template in templateDetailData| itemsPerPage:itemsPerPage" total-items="totalCount"
-                                current-page="pagination.current" track by "$index">
+                              <tr  pagination-id="paginate1" dir-paginate="template in templateDetailData| itemsPerPage:itemsPerPageRecord"
+                                 total-items="totalrecord" current-page="currentPage" track by "$index">
                                 <!-- <tr ng-repeat="template in templateDetailData"> -->
                                 <td>{{$index+serial}}</td>
-                                <td>{{template.template_code}}</td>
-                                <td>{{template.template_name}}</td>
-                                <td style="white-space: pre-line;word-wrap: break-word;">{{template.Template_message}}</td>
+                                <td>{{template.id}}</td>
+                                <td>{{template.elementName}}</td>
+                                <td style="white-space: pre-line;word-wrap: break-word;">{{template.data}}</td>
                                 <td>{{template.status}}</td>
-                                <td>{{template.date}}</td>
-                                <td>{{template.bot_name}}</td>
+                                <td>{{template.created_at}}</td>
+                                <td>{{template.bot}}</td>
                                 <td>
                                   <div class="table-center-btn">
-                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="viewMoreDetail(template.Template_message)">View More</button>
-                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="downloadSampleSheet(template.id)">Download sample sheet </button>
-                                    <button type="button" class="btn btn-danger" style="align-items: center;">Check users</button>
-                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="sendTemplates(template.Template_message)">Send templates</button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="viewMoreDetail(template.data)">View More</button>
+                                    <a href="https://stagingapi.machadalo.com/v0/ui/template/download-sample-sheet/?id={{template.id}}">
+                                      <button type="button" class="btn btn-danger" style="align-items: center;">Download sample sheet </button>
+                                    </a>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="sendTemplates(template.data,template.id,'user',template.elementName)">Check users</button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="sendTemplates(template.data,template.id,'template',template.elementName)">Send templates</button>
                                   </div>
                                 </td>
                               </tr>
                             </tbody>
                           </table>
+                              <dir-pagination-controls max-size="7" directionlinks="true" boundary-links="true"
+                                                     on-page-change="pageChangedMasterTemplate(newPageNumber-1)" pagination-id="paginate1">
+                              </dir-pagination-controls>
                         </div>
                       </div>
                       <!-- view More detail popup start -->
@@ -243,19 +249,36 @@ top:0;
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h4 class="modal-title">Send Templates</h4>
+                              <h4 class="modal-title">{{templateName}}</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
-                            <div class="modal-body">
-                              {{message}}
-                            </div>
-                            <div class="modal-footer">
-                              <span style="float: left;">
-                                <button type="button" class="btn btn-danger">Upload Users</button>
-                                <button type="button" class="btn btn-danger">Send</button>
-                              </span>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            </div>  
+                            <form>
+                              <div class="modal-body" style="line-height: 1.5;">
+                                <span ng-if="show1==true">
+                                  {{message}}
+                                </span>
+                              </div>
+                              <div class="modal-footer">
+                                <div class="row clearfix">
+                                  <div class="clearfix">
+                                    <div class="col-sm-3">
+                                      <div style="position: relative; text-align: left; height: 38px;">
+                                        <input  class="btn btn-danger" style="position: absolute; z-index: 16; opacity: 0; width:123px; cursor: pointer;" type="file" id="file1" name="file" multiple ng-files="getTheFiles($files)" />
+                                       <button style="position: absolute; z-index: 1; width:123px;" type="button" class="btn btn-danger">Upload Users</button>
+                                      </div>                                    
+                                    </div>
+                                    <div class="col-sm-2">
+                                      <button type="button" class="btn btn-danger" value="Upload" ng-click="uploadSendTemplate()">Send</button>
+                                    </div>
+                                    <div class="col-sm-7" style="text-align: right;">
+                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                  </div>                                  
+                                  <div style="text-align: left; padding-left: 23px; padding-top:5px;">{{selectedFileName}}</div>                                 
+                                  <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">{{excelColumnError}}</div>
+                                  </div>                                
+                              </div>
+                            </form> 
                           </div>
                         </div>
                       </div>
@@ -1892,7 +1915,7 @@ top:0;
                                   ngf-select="uploadFiles($file)">
                                 <div style="padding-top: 15px;">
                                   <button type="button" name="button" class="btn btn-danger"
-                                    ng-click="getFormUpload(current_template.template_id, )">Send
+                                    ng-click="getFormUpload(current_template.template_id)">Send
                                     <!-- <input type="submit"> -->
                                   </button>
                                 </div>

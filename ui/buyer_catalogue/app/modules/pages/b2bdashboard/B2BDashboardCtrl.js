@@ -21,7 +21,6 @@
 
     $scope.passwordError = constants.password_error;
     $scope.userInfo = $rootScope.globals.userInfo;
-
     // $scope.supplierTypeCode = constants.supplierTypeCode;
     $scope.supplierTypeCode = [
       {
@@ -647,21 +646,12 @@
       B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
       .then(function onSuccess(response) {
         $scope.externalComment=response.data.data;
-        // $scope.internalComment=response.data.data.internal_comments;
       })      
     }
-    // $scope.commentValue = function(comment,Id,req_id){
-    //   B2BDashboardService.commentValueDetails(comment.comment,Id,req_id)
-    //   .then(function onSuccess(response){
-    //   $scope.mymodel["comment"]="";
-    //   swal("Successfull", "comment added sucessfully", "success");
-    //   $scope.viewComments($scope.id_basic,$scope.req_id_basic);
-    //   })
-    //  }
 
     $scope.condition="";
-     $scope.commentValueDetails = function(comment,Id,req_id,check){
-      $scope.condition=check;
+    $scope.commentValueDetails = function(comment,Id,req_id,check){
+    $scope.condition=check;
        B2BDashboardService.basicExternalComment(comment.comment,Id,req_id)
        .then(function onSuccess(response){
         $scope.mymodel["comment"]="";
@@ -669,7 +659,6 @@
         if($scope.condition==true){
           $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
         }
-        
         else{
           B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
            .then(function onSuccess(response) {
@@ -689,25 +678,28 @@
     }
     $scope.leadDetailDataList="";
     $scope.showLeadDetail = function (_id,req_id) {
-      $scope.idForComment=_id
-      $scope.lead_id=req_id;
-      B2BDashboardService.showLeadDetail(_id)
-        .then(function onSuccess(response) {
-        $scope.leadDetailDataList = response.data.data;  
-        //console.log($scope.leadDetailDataList);               
-        });
+          $scope.idForComment=_id
+          $scope.lead_id=req_id;
+          B2BDashboardService.showLeadDetail(_id)
+            .then(function onSuccess(response) {
+            $scope.leadDetailDataList = response.data.data;  
+            });
 
-      B2BDashboardService.viewCommentsDetails(_id,req_id)
-      .then(function onSuccess(response) {
-        $scope.externalComment=response.data.data;
-      })  
+          B2BDashboardService.viewCommentsDetails(_id,req_id)
+          .then(function onSuccess(response) {
+            $scope.externalComment=response.data.data;
+          })  
        }
-       $scope.deleteBasicComment = function(comment_id,req_id){
+
+    $scope.deleteBasicComment = function(comment_id,req_id){
         B2BDashboardService.deleteBasicComment (comment_id,req_id)
         .then(function onSuccess(response){
-          console.log(response);
-        })
-         
+          swal("",response.data.data, "success");
+          B2BDashboardService.viewCommentsDetails($scope.id_detail,$scope.req_id_detail)
+            .then(function onSuccess(response) {
+              $scope.externalComment=response.data.data;
+            }) 
+        })   
       }
 
     $scope.updateLeadClientStatus = function (status,comment,id) {
