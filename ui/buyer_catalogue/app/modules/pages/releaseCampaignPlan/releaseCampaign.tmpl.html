@@ -3229,12 +3229,13 @@
           <div class="modalBodyBox">
           <h3>Client Comments</h3>
           <div class="table-h-scroll">
+            <div>
             <table class="table-data">
               <tr ng-repeat="item in externalComment">
                 <td>
                   <div>
                     <p>{{item.comment}}</p>
-                    <i style="margin-left:520px;" ng-if="userInfo.username==item.comment_by" ng-click="deleteBasicComment(item.id,req_id_detail)" class="fa fa-trash fa-2x"></i>
+                    <i style="margin-left: auto;     margin-right: 0;     float: right;     font-size: 16px;" ng-if="userInfo.username==item.comment_by" ng-click="deleteBasicComment(item.id,req_id_detail)" class="fa fa-trash fa-2x"></i>
                   </div>
                   <div>
                     <img ng-src="{{userIcon}}">
@@ -3244,6 +3245,7 @@
                 </td>
               </tr>
             </table>
+            </div>
           </div>
             <div  style="margin-top: 15px;">
               <textarea class="field"  rows="2" cols="200" ng-model="mymodel.comment" value="" placeholder="Write here.."></textarea>
@@ -3274,7 +3276,7 @@
                 <td>
                   <div>
                     <p>{{item.comment}}</p>
-                    <i style="margin-left:520px;" ng-if="userInfo.username==item.comment_by" ng-click="deleteInternalComment(item.id,req_id_detail)" class="fa fa-trash fa-2x"></i>
+                    <i style="margin-left: auto;     margin-right: 0;     float: right;     font-size: 16px;" ng-if="userInfo.username==item.comment_by" ng-click="deleteInternalComment(item.id,req_id_detail)" class="fa fa-trash fa-2x"></i>
                   </div>
                   <div>
                     <img ng-src="{{userIcon}}">
@@ -3344,7 +3346,7 @@
 
   .table-h-scroll {
     overflow-y: scroll;
-    height: 200px;
+    max-height: 200px;
   }
 
   #viewCommentsLeadDetails .modal-header{

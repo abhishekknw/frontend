@@ -178,6 +178,12 @@
     }
 
     releaseCampaignService.requirementDetail = function(id,phone,supplier_id){
+      if(phone==undefined){
+         phone="";
+      }
+      if(supplier_id==undefined){
+        supplier_id="";
+      }
       var url = url_base_ui + "b2b/requirements/?shortlisted_spaces_id=" + id + "&phone_number=" + phone + "&supplier_id=" + supplier_id;
       return machadaloHttp.get(url);
     }
@@ -192,8 +198,8 @@
       return machadaloHttp.put(url,data);
     }
 
-    releaseCampaignService.requirementBrowsedData = function(id){
-      var url = url_base_ui + "b2b/browsed-leads/?shortlisted_spaces_id=" + id;
+    releaseCampaignService.requirementBrowsedData = function(id,phone,supplier_id){
+      var url = url_base_ui + "b2b/browsed-leads/?shortlisted_spaces_id=" + id+ "&phone_number=" + phone + "&supplier_id=" + supplier_id;
       return machadaloHttp.get(url);
     }
 

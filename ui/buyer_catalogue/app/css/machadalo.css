@@ -11,7 +11,23 @@ body { font-family: 'Source Sans Pro', sans-serif; }
 .clearfix:after {
     clear: both;
 }
-
+.btn-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+.modalBodyBox {
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+.bg-red{
+  background-color: #8e1921 !important;
+  color: #fff !important;
+}
+.bg-red .close{
+  color: #fff;
+  opacity: 1;
+}
 .clearfix {
     *zoom: 1;
 }

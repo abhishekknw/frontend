@@ -16,7 +16,14 @@ body a {
 body a:hover {
   color: #123456;
 }
-
+.btn-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+.modalBodyBox {
+  padding-bottom: 15px;
+}
 a.collapse-menu-link:hover {
   color: #cb3328;
 }
@@ -1089,6 +1096,10 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
   max-height:150px;
   overflow-x: auto;
 }
+.bg-red{
+  background-color: #8e1921 !important;
+  color: #fff !important;
+}
 /* Responsive */
 
 @media screen and (max-width: 1024px) {
@@ -1102,7 +1113,7 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
 }
 @media screen and (max-width: 400px) {
   div.dashboard-tab .uib-tab{
-    width: 100%;
+    width: 100% !important;
   }
   ul.licence_detail_bx li:nth-child(1),ul.licence_detail_bx li:nth-last-child(1){
     width: 100%;
