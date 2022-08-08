@@ -1141,7 +1141,7 @@
   
                       </div>
                     </div>
-                    <div class="viewLeadstable" ng-if="!showCampaigns">
+                    <div class="viewLeadstable" ng-if="!showCampaigns && !leadBasicShow">
                       </br><br>
                         <div class="table-responsive">
                           <table class="table">
@@ -1221,11 +1221,11 @@
                       <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ></dir-pagination-controls>
                       </div>
                       <br /> <br />
-                      <button ng-if="!showCampaigns" class="btn btn-danger" ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal" data-toggle="modal">Print Leads In Excel</button>
+                      <button ng-if="!showCampaigns && !leadBasicShow" class="btn btn-danger" ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal" data-toggle="modal">Print Leads In Excel</button>
   
                     </div>
                        <!-- table for lead basic -->
-                    <div class="viewLeadstable" ng-if="leadBasicShow==true">
+                    <div class="" ng-if="leadBasicShow==true">
                       </br><br>
                         <div class="table-responsive">
                           <table class="table">
@@ -1244,10 +1244,10 @@
                                 <th>Action</th>
                               </tr>
                             </thead>
-                            <tbody class="data-list" pagination-id="paginate1"
+                            <!-- <tbody class="data-list" pagination-id="paginate1"
                             dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord"
-                            total-items="totalrecord" current-page="currentPage" track by "$index">
-                            
+                            total-items="totalrecord" current-page="currentPage" track by "$index"> -->
+                            <tbody  class="data-list">
                               <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
                                   ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus">
                                   <span ng-if="decisionPanding.requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
@@ -1255,12 +1255,12 @@
                                   <span ng-if="decisionPanding.requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
                                   </span>
                               </td>                          
-                              <td class="alignment text-center">{{decisionPanding.entity_name}}</td>
-                              <td class="alignment text-center" >{{decisionPanding.entity_type}}</td>
-                              <td class="alignment text-center">{{decisionPanding.primary_count}}</td>
-                              <td class="alignment text-center">{{decisionPanding.area}}</td>
-                              <td class="alignment text-center">{{decisionPanding.city}}</td>
-                              <td class="alignment text-center">{{decisionPanding.lead_timestamp}}</td>
+                              <td class="alignment text-center">{{decisionPanding.entity_name}}Sharanya Arcade</td>
+                              <td class="alignment text-center" >{{decisionPanding.entity_type}}RS</td>
+                              <td class="alignment text-center">{{decisionPanding.primary_count}}70</td>
+                              <td class="alignment text-center">{{decisionPanding.area}}Kasavanahalli</td>
+                              <td class="alignment text-center">{{decisionPanding.city}}Bengaluru</td>
+                              <td class="alignment text-center">{{decisionPanding.lead_timestamp}}2022-08-08 09:57 AM</td>
                               <td class="alignment text-center">
                                 <select ng-change="setValue(value8,decisionPanding.client_comment,decisionPanding._id,decisionPanding.requirement_id)"
                                   class="form-control client-status" ng-model="value8">
@@ -1270,7 +1270,7 @@
                                 <span>{{decisionPanding.updated_at?decisionPanding.updated_at:"NA"}}</span>
                               </td>
                                 <td class="alignment text-center">
-                                  {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
+                                  {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}96********
                                 </td>
                                 <td class="alignment">
                                     <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>

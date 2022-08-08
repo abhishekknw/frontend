@@ -480,9 +480,7 @@ input[type="radio"]{
 	display: flex;
 	/*align-items: center;*/
 }
-.top-select-option .form-group{
-	/*margin-bottom: 0;*/
-}
+
 .top-select-option {
 	padding: 20px;
 	box-shadow: 2px 2px 20px rgba(0,0,0,0.1);
@@ -1872,9 +1870,6 @@ input[type="radio"]{
 .top-select-option .row{
 	display: flex;
 	/*align-items: center;*/
-}
-.top-select-option .form-group{
-	/*margin-bottom: 0;*/
 }
 .top-select-option {
 	padding: 20px;
@@ -3408,4 +3403,29 @@ a.tooltip{
 	box-shadow: none;
 	outline: none;
 	padding: 5px 10px;
+  }
+  @media screen and (max-width: 640px){
+	.green-fixed-inner{
+		padding: 0;
+		position: relative;
+		flex-direction: column;
+		gap: 10px;
+	}
+	.green-fixed-inner .icon-back{
+		position: absolute;
+		top: 10px;
+		left: 0;
+	}
+	.green-fixed-inner .profile-heading{
+		left: auto;
+	}
+	.green-fixed-inner>div:nth-child(3){
+		order: 1;
+	}
+	.green-fixed-inner>div:nth-child(2){
+		order: 3;
+	}
+	.green-fixed-inner >div:nth-child(4){
+		order: 2;
+	}
   }
