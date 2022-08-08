@@ -135,7 +135,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         };
                     }
                     if ($scope.formData.actionSearch) {
-                        param.search = $scope.formData.actionSearch;
+                        parsuspenam.search = $scope.formData.actionSearch;
                     }
                     AuthService.getAllActionRequiredData(param)
 
@@ -941,11 +941,6 @@ $scope.requirement_submitted_headings = [
                         { header: 'L4 Answers' },
                         { header: 'L5 Answers' },
                         { header: 'L6 Answers' },
-                        { header: 'L4.1 Answers' },
-                        { header: 'L5.1 Answers' },
-                        { header: 'L6.1 Answers' },
-                        { header: 'Implementation Time' },
-                        { header: 'Meeting Time' },
                         // { header: 'Preferred Meeting Time' },
                         { header: 'Lead Status' },
                         { header: 'Comment' },
@@ -971,48 +966,6 @@ $scope.requirement_browsed_headings = [
                         { header: 'Comment' },
                         { header: 'Timestamps' }
                       ];  
-//  $scope.requirementDetailData=[
-//                          {sector:'test1'},
-//                          {sector:'test2'},
-//                          {sector:'test3'},
-//                     ];
-// $scope.requirements=[{test1:{a:"A",b:"B",c:"C",d:'D'}},
-//                      {test2:{a:"A",b:"B",c:"C"}},
-//                      {test3:{a:"A",b:"B",c:"C"}}
-//                     ];
-// $scope.browsedDetailData=[
-//                          {sector:'test4'},
-//                          {sector:'test5'},
-//                          {sector:'test6'}
-//                     ];   
-$scope.suspenseLeads_heading=[
-                             { header: '' },
-                             { header: 'Sector' },
-                             { header: 'Sub Sector' },
-                             { header: 'Current Partner' },
-                             { header: 'FeedBack' },
-                             { header: 'Preferred Partner' },
-                             { header: 'L4 Answers' },
-                             { header: 'L5 Answers' },
-                             { header: 'L6 Answers' },
-                             { header: 'L4.1 Answers' },
-                             { header: 'L5.1 Answers' },
-                             { header: 'L6.1 Answers' },
-                             { header: 'Implementation Time' },
-                             { header: 'Meeting Time' },
-                             { header: 'Lead Status' },
-                             { header: 'Comment' },
-                             { header: 'Internal Comment' },
-                             { header: 'Lead Given by' },
-                             { header: 'Call Status' },
-                             { header: 'Price' },
-                             { header: 'Timestamp' },
-                             { header: 'Action' },
-                             ] 
-
-                             
-// $scope.sectorName=['option1','option2','option3'];
-// $scope.subSectorName=['option11','option22','option33'];
 $scope.singleRemoveSubSector=function(){                             
                 swal({
                     title: 'Are you sure ?',
@@ -1056,8 +1009,6 @@ $scope.opsVerified=function(phone,supplier_id){
     .then(function onSuccess(response) {
       $scope.sectorList = response.data;
     })
-    
-
     releaseCampaignService.selectLeads()
     .then(function onSuccess(response) { 
       $scope.leads_time=response.data;
@@ -1178,11 +1129,6 @@ $scope.selectLeadData=function(data){
       }
     }
   }
-//   $scope.settings= {
-//     scrollableHeight: '200px',
-//     scrollable: false,
-//     enableSearch: false
-// };
 $scope.settings = {
   showCheckAll: false,
   scrollable: false,
@@ -1281,7 +1227,7 @@ $scope.ShowDetailed = function (index,sector) {
           console.log($scope.requirementDetailData)
         }
 
-        $scope.updateSubSectorRow = function (data,l4,l5,l6) {
+        $scope.updateSubSectorRow = function (data) {
             let updateData = [];
             if (data.current_company == "") {
               data.current_company = null
@@ -1805,6 +1751,67 @@ $scope.ShowDetailed = function (index,sector) {
                 });
             }
           }
+
+          $scope.mymodel=[];
+          $scope.viewCommentsLeadDetails = function (Id,check) {
+              $scope.req_id=Id;
+              $scope.check=check;
+              $('#viewCommentsLeadDetails').modal('show');
+              if(check=='external'){
+                releaseCampaignService.viewCommentsDetails(Id)
+                .then(function onSuccess(response) {
+                  $scope.externalComment=response.data.data;
+                }) 
+              }
+              else{
+                releaseCampaignService.viewInternalsComments(Id)
+                .then(function onSuccess(response) {
+                 $scope.externalComment=response.data.data;
+            }) 
+              }     
+            }
+          
+          $scope.commentValueDetails = function(comment){
+            if($scope.check=='external'){
+              releaseCampaignService.basicClientComment(comment.comment,$scope.req_id)
+              .then(function onSuccess(response){
+               swal("Successfull", "comment added sucessfully", "success");
+               $scope.mymodel['comment']='';
+               $scope.viewCommentsLeadDetails($scope.req_id,$scope.check);
+               })
+            }
+            else{
+              releaseCampaignService.internalCommentValue(comment.comment,$scope.req_id)
+             .then(function onSuccess(response){
+              swal("Successfull", "comment added sucessfully", "success");
+              $scope.mymodel['comment']='';
+              $scope.viewCommentsLeadDetails($scope.req_id,$scope.check);
+            })
+            } 
+         }
+          $scope.deleteBasicComment = function(comment_id){
+            if($scope.check=='external'){
+              releaseCampaignService.deleteBasicComment (comment_id,$scope.req_id)
+              .then(function onSuccess(response){
+               swal("",response.data.data, "success");
+               releaseCampaignService.viewCommentsDetails($scope.req_id,$scope.check)
+                .then(function onSuccess(response) {
+                  $scope.externalComment=response.data.data;
+                }) 
+             })              
+            } 
+            else{
+              releaseCampaignService.deleteInternalComment (comment_id,$scope.req_id)
+                .then(function onSuccess(response){
+                  swal("",response.data.data, "success");
+                 releaseCampaignService.viewInternalsComments($scope.req_id,$scope.check)
+                 .then(function onSuccess(response) {
+                  $scope.externalComment=response.data.data;
+                 }) 
+              }) 
+            }  
+          }
+
          $scope.getRequirementBrowsedData = function (id,phone,supplierId) {
             releaseCampaignService.requirementBrowsedData(id,phone,supplierId)
               .then(function onSuccess(response) {
@@ -1888,11 +1895,67 @@ $scope.ShowDetailed = function (index,sector) {
           }
           
          $scope.singleOpsVerifyRequirement = function (id) {
-            let verifyId = [];
+            let verifyId = [];alert(1)
             verifyId.push(id);
             if (verifyId.length > 0) {
               $scope.verifyRequirement(verifyId);
             }
+          }
+          $scope.getLeadsTabSuspenseLeads = function (page) {
+            $scope.loading = null;
+            if(!page){
+              page = 1;
+            }
+            $scope.leadTabData = [];
+            $scope.totalCount = 0;
+            $scope.companiesData = [{}];
+            AuthService.getLeasTabSuspenseLead(page)
+              .then(function onSuccess(response) {
+                $scope.loading = response;
+                $scope.leadTabData = response.data.data.suspense_lead.suspense_data;
+                $scope.totalCount = response.data.data.suspense_lead.count;
+                $scope.companiesData = response.data.data.companies;
+                for (let k in $scope.companiesData) {
+                  $scope.companiesData[k].id = $scope.companiesData[k].organisation_id;
+                  $scope.companiesData[k].label = $scope.companiesData[k].name;
+                  if (k == response.data.data.companies.length - 1) {
+                    $scope.companiesData.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
+                  }
+                }
+    
+                if ($scope.leadTabData && $scope.leadTabData.length > 0) {
+                  for (let i in $scope.leadTabData) { 
+                      var localTime  = moment.utc($scope.leadTabData[i].created_at).local();
+                      $scope.leadTabData[i].created_at =localTime._d;
+                    if (!$scope.leadTabData[i].current_patner) {
+                      $scope.leadTabData[i].current_patner = '';
+                    }
+                    var selected_preferred_patner = [];
+                    $scope.leadTabData[i].selected_preferred_patner = [];
+                    if ($scope.leadTabData[i].prefered_patner_other) {
+                      $scope.otherPreferredPatner = true
+                      $scope.leadTabData[i].otherPreferredPatner = true
+                      $scope.leadTabData[i].prefered_patners.push("")
+                    }
+                
+                    if ($scope.leadTabData[i].prefered_patners && $scope.leadTabData[i].prefered_patners.length > 0) {
+                      for (let y in $scope.leadTabData[i].prefered_patners) {
+                        var _index = $scope.companiesData.map(function (el) {
+                          return el.organisation_id;
+                        }).indexOf($scope.leadTabData[i].prefered_patners[y]);
+                        if (_index != -1) {
+                          selected_preferred_patner.push($scope.companiesData[_index])
+                        }
+                      }
+                      $scope.leadTabData[i].selected_preferred_patner = selected_preferred_patner;
+                    }
+    
+                  }
+                }
+    
+              }).catch(function onError(response) {
+                console.log(response);
+              })
           }
           
           

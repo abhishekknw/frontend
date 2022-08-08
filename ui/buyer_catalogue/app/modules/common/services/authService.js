@@ -806,6 +806,10 @@ angular.module('Authentication')
                      return response
                   });
             };
+            authService.getLeasTabSuspenseLead = function (page) {
+               var url = "v0/ui/b2b/suspense-leads-tab/?page=" + page;
+               return machadaloHttp.get(url);
+             }
             
             authService.sendMessage = function (param,meaType) {
                // console.log('vvvv',param)
