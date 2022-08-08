@@ -58,7 +58,6 @@
       $scope.tower_count_header = "Unit Secondary Count";
       $scope.flat = "Unit Primary";
       $scope.printLeadsInExcelData = {};
-
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
         { id: 2, name: 'High' },
@@ -663,7 +662,10 @@
         $scope.bookingPhases = [];
         $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code)
       }
-      $scope.templateDetail = function (pageNumber) {
+      $scope.templateDetail = function (pageNumber,search,status) {
+        let start_date="";
+        let next_page="";
+        let end_date="";
         cfpLoadingBar.start();
         $scope.showSupplierTypeCountChart = false;
         $scope.selectedBookingCampaignName = undefined;
@@ -676,15 +678,22 @@
         $scope.allCampaignsLeadsData = {};
         $scope.options = {};
         cfpLoadingBar.complete();
-        if (!pageNumber){
+        if (!pageNumber || pageNumber==''){
             pageNumber=0;
         }
-        templateDashboardService.getTemplateTabData(pageNumber)
+        if (!search){
+            search="";
+        }
+        if(!status){
+           status="";
+        }
+        templateDashboardService.getTemplateTabData(pageNumber,search,status)
                             .then(function onSuccess(response) {
                             $scope.templateDetailData = response.data.data.rows;
                             $scope.totalrecord = response.data.data.total_row;
                             $scope.itemsPerPageRecord = 20;
                             $scope.currentPage = 0;
+                            $scope.optionForTemplate=response.data.data.status_list;
 
                          }).catch(function onError(response) {
                             console.log(response);
@@ -699,7 +708,8 @@
        }
       $scope.uploadId=0;
       $scope.show1=false;
-      $scope.sendTemplates = function(message,id,template){
+      $scope.sendTemplates = function(message,id,template,name){
+        $scope.templateName = name;
         $scope.selectedFileName="";
         $scope.excelColumnError="";
         if(template=='template'){
@@ -751,9 +761,6 @@
      
       }
       $scope.optionForTemplate=['APPROVED','REJECTED'];
-      $scope.selectedForTemplate = function(value){
-        alert(value)
-      }
 
       $scope.pieChartClick = function (label) {
 

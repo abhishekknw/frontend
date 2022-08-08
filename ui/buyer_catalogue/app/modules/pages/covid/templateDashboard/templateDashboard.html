@@ -154,12 +154,13 @@ top:0;
                           <div class="search-box">
                             <div class="input-wrapper">
                               <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-                              <input style="color:black" placeholder="Search here" ng-change="templateDetail(templateSearch)" ng-model="templateSearch"
+                              <input style="color:black" placeholder="Search here" ng-change="templateDetail('',templateSearch)" ng-model="templateSearch"
                               type="text" />
                             </div>
                           </div>
                           <div>
-                            <select ng-change="selectedForTemplate(selectValue)" value="selectValue" ng-model="selectValue">
+                            <select ng-change="templateDetail('','',selectValue)" value="selectValue" ng-model="selectValue">
+                              <option value="">Select Status</option>
                               <option value="{{value}}" ng-repeat="value in optionForTemplate">{{value}}</option>
                             </select>
                           </div>
@@ -199,8 +200,8 @@ top:0;
                                     <a href="https://stagingapi.machadalo.com/v0/ui/template/download-sample-sheet/?id={{template.id}}">
                                       <button type="button" class="btn btn-danger" style="align-items: center;">Download sample sheet </button>
                                     </a>
-                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="sendTemplates(template.data,template.id,'user')">Check users</button>
-                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="sendTemplates(template.data,template.id,'template')">Send templates</button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="sendTemplates(template.data,template.id,'user',template.elementName)">Check users</button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="sendTemplates(template.data,template.id,'template',template.elementName)">Send templates</button>
                                   </div>
                                 </td>
                               </tr>
@@ -248,7 +249,7 @@ top:0;
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h4 class="modal-title">Send Templates</h4>
+                              <h4 class="modal-title">{{templateName}}</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <form>
