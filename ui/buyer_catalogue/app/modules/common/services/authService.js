@@ -3,8 +3,8 @@
 angular.module('Authentication')
 
    .factory('AuthService',
-      ['$http', '$location', '$rootScope', '$window', '$timeout', 'commonDataShare', 'constants',
-         function ($http, $location, $rootScope, $window, $timeout, commonDataShare, constants) {
+      ['$http', '$location', '$rootScope', '$window', '$timeout', 'commonDataShare','machadaloHttp', 'constants',
+         function ($http, $location, $rootScope, $window, $timeout, commonDataShare, machadaloHttp,constants) {
 
             var authService = {};
             var userInfo = {};
@@ -810,6 +810,22 @@ angular.module('Authentication')
                var url = "v0/ui/b2b/suspense-leads-tab/?page=" + page;
                return machadaloHttp.get(url);
              }
+             authService.getBrowsedTabSuspenseLead = function (page) {
+               var url = "v0/ui/b2b/suspense-browsed-tab/?page=" + page;
+               return machadaloHttp.get(url);
+             }
+             authService.updateLeadTab = function (data) {
+               var url = "v0/ui/b2b/update-suspense-leads/";
+               return machadaloHttp.post(url, data);
+             }
+             authService.removeSuspenseLead = function (data) {
+               var url = "v0/ui/b2b/delete-suspense-leads/";
+               return machadaloHttp.post(url, data);
+             }
+             authService.opsVerify = function (id) {
+               var url = "v0/ui/b2b/suspense-lead-ops-verification/?_id=" + id ;
+               return machadaloHttp.get(url);
+             };
             
             authService.sendMessage = function (param,meaType) {
                // console.log('vvvv',param)

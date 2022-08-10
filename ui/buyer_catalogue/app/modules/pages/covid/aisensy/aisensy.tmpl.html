@@ -1997,7 +1997,7 @@
                                   </svg>
                                 </div>
                                 <div>
-                                  <button ng-click="getLeadsTabSuspenseLeads('0')" data-toggle="modal"
+                                  <button ng-click="getLeadsTabSuspenseLeads('1')" data-toggle="modal"
                                     data-target="#SuspenseLeadsModel">Suspense Sheet</button>
                                 </div>
                                 <div ng-click="userProfileIcon()">
@@ -3531,7 +3531,7 @@
                       <span ng-if="!subrequirement.current_patner_feedback_reason">Reason:NA</span>
                     </td>
                     <td class="alignment">
-                      {{companyData(subrequirement.sector)}}1
+                      {{companyData(subrequirement.sector)}}
                       <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style style="
                         color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
                         options="companiesDetailDataArray" extra-settings="settings"
@@ -3627,7 +3627,7 @@
 
                       <button style="margin-top:10px" class="btn btn-success" type="button" name="button"
                         class="btn btn-success"
-                        ng-click="updateSubSectorRow(subrequirement,subrequirement.l1_answers,subrequirement.l1_answer_2,subrequirement.l2_answers)">Update</button>
+                        ng-click="updateSubSectorRow(subrequirement)">Update</button>
 
                       <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
                         ng-if="subrequirement.color_class != 'red'"
@@ -3920,7 +3920,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-if="leadTabData.length > 0 && loading"
+                  <tr ng-if="leadTabData.length > 0 && loading"  pagination-id="paginate1"
                     dir-paginate="leadData in leadTabData | itemsPerPage:itemsPerPage" total-items="totalCount"
                     current-page="pagination.current" track by "$index">
                     <td>{{$index+serial}}</td>
@@ -4078,9 +4078,10 @@
                 </tbody>
               </table>
             </form>
+            <!-- <dir-pagination-controls ng-if="leadTabData.length > 0 && selectedTab == 'lead'" max-size="10" on-page-change="pageChanged(newPageNumber)" direction-links="true"
+              boundary-links="true" pagination-id="paginate1">
+            </dir-pagination-controls> -->
           </div>
-
-
 
           <div class="modal-body col-md-4 table-responsive browsed_leads_main"
             style="width: 1100px; min-height: 200px;">
@@ -4089,125 +4090,184 @@
               <table class="table table-bordered submitted_lead_table" name="contactForm">
                 <thead>
                   <tr>
-                    <th ng-repeat="header in requirement_browsed_headings" class="col-md-2 alignment">
-                      <b>{{header.header}}</b>
-                    </th>
+                    <th class="alignment">Sr No</th>
+                    <th class="alignment">Phone Number</th>
+                    <th class="alignment">Sector</th>
+                    <th class="alignment">Sub Sector</th>
+                    <th class="alignment">Current Partner</th>
+                    <th class="alignment">Current Partner Feedback</th>
+                    <th class="alignment">Reason</th>
+                    <th class="alignment">Preferred Partner</th>
+                    <th class="alignment">Implementation TimeLine</th>
+                    <th class="alignment">Meeting TimeLine</th>
+                    <th class="alignment">L1 Answers</th>
+                    <th class="alignment">L2 Answers</th>
+                    <th class="alignment">L3 Answers</th>
+                    <th class="alignment">Lead Status</th>
+                    <th class="alignment">Callback Preference</th>
+                    <th class="alignment">Comment</th>
+                    <th class="alignment">Time Stamp</th>
+                    <th class="alignment">Calling State</th>
+                    <th class="alignment">Internal Comment</th>
+                    <th class="alignment">Chat</th>
+                    <th class="alignment">Action 1</th>
+                    <th class="alignment">Action 2</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="browsed in browsedDetailData">
+                  <tr ng-if="leadTabDataBrowsed.length > 0"
+                    dir-paginate="browseData in leadTabDataBrowsed | itemsPerPage:itemsPerPage"
+                    total-items="totalCount" current-page="pagination.current" track by "$index">
+                  <td>{{$index+serial}}</td>
+                  <td class="alignment">{{browseData.phone_number}}</td>
+                  <td class="alignment">{{browseData.sector_name}}</td>
+                  <td class="alignment">{{browseData.sub_sector_name}}</td>
+                  <td class="alignment">
+                    <select class="form-control" name="current_patner_{{$index}}" id="browes_current_patner_id_{{$index}}"
+                      ng-model="browseData.current_patner">
+                      <option value="" disabled>Select Current Partner</option>
+                      <option ng-repeat="cpartner in companiesData track by $index"
+                        value="{{cpartner.organisation_id}}">
+                        {{cpartner.name}}
+                      </option>
+                    </select>
+                    <input style="margin-top:10px" type="text" class="form-control"
+                      placeholder="Other Current Company" ng-if="browseData.current_patner == ''"
+                      name="currentCompanyOther" id="browesCurrentCompanyOtherId_{{$index}}"
+                      ng-model="browseData.current_patner_other">
+                  </td>
+                  <td class="alignment">
+                      <select class="form-control" name="current_patner_feedback" id="browes_current_patner_feedback_id_{{$index}}"
+                      ng-model="browseData.current_patner_feedback" >
+                      <option value="" disabled>Select Current Partner Feedback</option>
+                      <option ng-repeat="cpartnerfeedback in current_patner_feedback track by $index"
+                        value="{{cpartnerfeedback}}">
+                        {{cpartnerfeedback}}
+                      </option>
+                    </select>
+                  </td>
+                  <td class="alignment">
+                    <input type="text" ng-model="browseData.current_patner_feedback_reason"
+                      name="current_patner_feedback_reason" class="form-control"
+                      placeholder="Current Patner Feedback Reason"
+                      id="browes_current_patner_feedback_reason_id_{{$index}}">
+                  </td>
+                  <td class="alignment">
+                    <span style="width:150px;" class="multiselectDropdown"
+                      style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
+                      options="companiesData" extra-settings="dropdownSettings"
+                      selected-model="browseData.selected_preferred_patner" ng-click="leadPreferredMulticheck($index)"
+                      translation-texts="selected_business_type" events="events"></span>
+                    <span ng-repeat="selectedName in browseData.selected_preferred_patner" class="custom-dropdown"
+                      style="text-align: left; display: inline-block">
+                      {{selectedName.name}}
+                      <span ng-if="!$last">,</span>
+                    </span>
+                    <input style="margin-top:10px" type="text" class="form-control"
+                      placeholder="Other Preferred Company" ng-if="browseData.otherPreferredPatner"
+                      name="other_preferred_company" id="browes_other_preferred_company_{{$index}}"
+                      ng-model="browseData.prefered_patner_other">
+                  </td>
+                  <td class="alignment">
+                    <select class="form-control" name="implementation_{{$index}}" id="browes_implementation_id_{{$index}}"
+                      ng-model="browseData.implementation_timeline">
+                      <option value="" disabled>Select Implementation Time</option>
+                      <option ng-repeat="(key,value) in implementationTime track by $index" value="{{key}}">
+                        {{value}}
+                      </option>
+                    </select>
+                  </td>
+                  <td class="alignment" class="form-group">
+                    <select class="form-control" name="meating_time_{{$index}}" id="browes_meating_time_id_{{$index}}"
+                      ng-model="browseData.meating_timeline">
+                      <option value="" disabled>Select Meeting Time</option>
+                      <option ng-repeat="(key,value) in meetingTime track by $index" value="{{key}}">
+                        {{value}}
+                      </option>
+                    </select>
+                  </td>
+                  <td class="alignment">
+                    <span>{{browseData.l1_answers}}
+                      <p>{{browseData.l1_answer_2}}</p>
+                    </span>
+                  </td>
+                  <td class="alignment">
+                    <span>{{browseData.l2_answers}}
+                      <p>{{browseData.l2_answer_2}}</p>
+                    </span>
+                  </td>
+                
                     <td class="alignment">
-                      <input type="checkbox" name="browsedCheck" ng-click="checkboxBrowesLeadCheck()"
-                        id="browsedCheckId" ng-model="browsed.browsedCheck">
-                    </td>
-                    <td class="alignment">
-                    </td>
-
-                    <td class="alignment">
-                      <p ng-if="browsed.sub_sector_name">{{browsed.sub_sector_name}}</p>
-                      <p ng-if="!browsed.sub_sector_name">NA</p>
-
-                    </td>
-
-                    <td class="alignment">
-                      <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
-                        ng-change="browsCheckBoxAutoCheck($index)" ng-model="browsed.current_patner_id"
-                        style="width:100px;">
-                        <option value="" disabled>Select Current Partner</option>
-                        <option ng-if="browsed.sector_id==cpartner.sector || (browsed.sector_id==null)"
-                          ng-repeat="cpartner in companiesDetailDataBrowsed track by $index"
-                          value="{{cpartner.organisation_id}}">
-                          {{cpartner.name}}
-                        </option>
-                      </select>
-                      <input style="margin-top:10px" type="text" ng-change="browsCheckBoxAutoCheck($index)"
-                        class="form-control" placeholder="Other Current Company"
-                        ng-if="browsed.current_patner_id == '' || !browsed.current_patner_id" name="currentCompanyOther"
-                        id="currentCompanyOtherId" ng-model="browsed.current_patner_other">
-                    </td>
-
-                    <td class="alignment">
-                      {{browsed.current_patner_feedback}}<br>
-                      <span
-                        ng-if="browsed.current_patner_feedback_reason">Reason:{{browsed.current_patner_feedback_reason}}</span>
-                      <span ng-if="!browsed.current_patner_feedback_reason">Reason:NA</span>
-                    </td>
-
-                    <td class="alignment">
-                      {{companyBrowseData(browsed.sector_id)}}
-                      <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
-                        style="color:red;width:100%;margin-left:20px;" ng-click="browsedMulticheck($index)"
-                        ng-dropdown-multiselect="" options="companiesBrowseDetailDataArray" extra-settings="settings"
-                        selected-model="browsed.selected_preferred_company" translation-texts="selected_business_type"
-                        events="events"></span>
-                      <span ng-repeat="selectedName in browsed.selected_preferred_company"
-                        style="text-align: left; display: inline-block">
-                        {{selectedName.name}}
-                        <span ng-if="!$last">,</span>
+                      <textarea placeholder="L3 Answer" class="form-control" ng-model="browseData.l3_answer_1" rows="4"
+                        cols="50">
+                      </textarea>
+                      <span>
+                        <p>{{browseData.l3_answer_2}}</p>
                       </span>
-                      <input style="margin-top:10px" ng-change="browsCheckBoxAutoCheck($index)" type="text"
-                        class="form-control" placeholder="Other Preferred Company"
-                        ng-if="browsed.otherPreferredCompanyBrowsed" name="other_preferred_company"
-                        id="other_preferred_company" ng-model="browsed.prefered_patner_other">
                     </td>
-
-                    <td class="alignment">
-                      <span ng-if="browsed.l1_answers || browsed.l1_answer_2">{{browsed.l1_answers}}
-                        <p>{{browsed.l1_answer_2}}</p>
-                      </span>
-                      <span ng-if="!browsed.l1_answers && !browsed.l1_answer_2">NA</span>
-                    </td>
-
-                    <td class="alignment">
-                      <span ng-if="browsed.l2_answers || browsed.l2_answer_2">{{browsed.l2_answers}}
-                        <p>{{browsed.l2_answer_2}}</p>
-                      </span>
-                      <span ng-if="!browsed.l2_answers && !browsed.l2_answer_2">NA</span>
-                    </td>
-                    <td class="alignment">
-                      <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
-                        ng-model="browsed.implementation_timeline" ng-change="browsCheckBoxAutoCheck($index)"
-                        style="width:150px;">
-                        <option value="" disabled>Select Implementation Time</option>
-                        <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
-                          value="{{key}}">
-                          {{value}}
-                        </option>
-                      </select>
-                    </td>
-
-                    <td class="alignment">
-                      <select class="form-control" name="meating_time_{{$index}}" id="meating_time_id_{{$index}}"
-                        ng-model="browsed.meating_timeline" ng-change="browsCheckBoxAutoCheck($index)"
-                        style="width:150px;">
-                        <option value="" disabled>Select Meeting Time</option>
-                        <option ng-repeat="(key,value) in requirement_meeting_time track by $index" value="{{key}}">
-                          {{value}}
-                        </option>
-                      </select>
-                    </td>
-                    <td class="alignment">
-                      <p> Name: {{browsed.lead_by_name}}</p>
-                      <p> Phone: {{browsed.phone_number}}</p>
-                    </td>
-
-                    <td class="alignment">
-                      <textarea placeholder="Comments" class="form-control" style="width:150px;"
-                        ng-model="browsed.comment" ng-change="browsCheckBoxAutoCheck($index)" rows="4" cols="50">
-                     </textarea>
-                    </td>
-
-                    <td class="alignment" style="width:300px;">
-                      <p>Lead Entry:{{browsed.created_at | date:'medium'}}</p>
-                    </td>
-                  </tr>
+                   
+                  
+                  <td class="alignment">
+                    {{browseData.lead_status}}
+                  </td>
+                  <td class="alignment">
+                    <select class="form-control"
+                      name="call_back_time_{{$index}}" id="browes_call_back_time_id_{{$index}}"
+                      ng-model="browseData.call_back_preference"
+                      style="width:150px;">
+                      <option value="" disabled>Select Call Back Time</option>
+                      <option ng-repeat="(key,value) in call_back_time track by $index"
+                        value="{{key}}">
+                        {{value}}
+                      </option>
+                    </select>
+                  </td>
+                  <td class="alignment">
+                    <textarea placeholder="Comment" class="form-control" ng-model="browseData.comment" rows="4"
+                      cols="50">
+                    </textarea>
+                  </td>
+                  <td class="alignment">
+                    <p> Submitted: {{browseData.created_at | date:'medium' }} </p>
+                  </td>
+                  <td class="alignment">
+                    <p> {{browseData.calling_state }} 
+      
+                      {{browseData.calling_state_time }} 
+                    </p>
+                  </td>
+                  <td class="alignment">
+                    <textarea placeholder="Internal Comment" class="form-control" ng-model="browseData.internal_comment" rows="4"
+                      cols="50">
+                    </textarea>
+                  </td>
+                  <td class="alignment">
+                    <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info">View &
+                      Intervene</button>
+                  </td>
+                  <td class="alignment">
+                    <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
+                      data-target="#companyDetailModal" ng-click="supplierForAddUpdate($index)" data-toggle="modal">Add/Update Supplier</button>
+                    <button style="margin-bottom:2px" type="button" name="button"
+                      class="btn btn-success btn-small"  data-target="#pocModal"  ng-click="openAddPoc(browseData._id)" ng-disabled="browseData.is_updated == 'False'" data-toggle="modal">Add POC</button>
+                    <button style="margin-bottom:2px" type="button" ng-disabled="browseData.is_updated == 'False'" name="button"
+                      class="btn btn-success btn-small">Add RE</button>
+                  </td>
+                  <td class="alignment">
+                    <button style="margin-bottom:2px"  type="button" name="button" ng-click="opsVerify(browseData._id)" class="btn btn-success" ng-disabled="browseData.is_updated == 'False'">Transfer</button>
+                    <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
+                      ng-click="updateLeadTab($index)">Update</button>
+                    <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                      ng-click="removeSuspenseLead(browseData._id,$index)">Remove</button>
+                  </td>
+                </tr>
                 </tbody>
               </table>
-              <div class="">
+              <!-- <div class="">
                 <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="saveBrowsed()">Submit</button>
                 <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed()">Update</button>
                 <button class="btn btn-danger" ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
-              </div>
+              </div> -->
             </form>
           </div>
         </div>
@@ -4465,20 +4525,6 @@
                 </select>
               </div>
             </div>
-
-            <!-- <div class="row" ng-if="supplierForAddUpdateData.designation == 'Other'">
-              <div class="col-md-4" style="margin-top: 10px">
-                <label>Other Designation *: </label>
-              </div>
-              <div class="col-md-8" style="margin-top: 10px">
-                <input type="text" placeholder="Other Designation" class="form-control" name="other_designation"
-                  id="other_designation_id" ng-model="supplierForAddUpdateData.other_designation">
-                 
-                  <span ng-show="myForm.other_designation.$dirty && myForm.other_designation.$invalid" class="error">Other Designation is required.</span>
-                  </select>
-              </div>
-            </div> -->
-
             <div class="row">
               <div class="col-md-4" style="margin-top: 10px">
                 <label>Address: </label>
