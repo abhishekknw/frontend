@@ -826,7 +826,22 @@ angular.module('Authentication')
                var url = "v0/ui/b2b/suspense-lead-ops-verification/?_id=" + id ;
                return machadaloHttp.get(url);
              };
-            
+             authService.addUpdateSupplier = function (data) {
+               var url = "v0/ui/b2b/suspense-to-supplier/";
+               return machadaloHttp.post(url, data);
+             }
+             authService.initialData = function () {
+               var url = "v0/ui/create_supplier/load_initial_data/";
+               return machadaloHttp.get(url);
+             };
+             authService.getSupplierNameList = function (data) {
+               var url = "v0/ui/b2b/suspense-to-supplier/?city=" + data.city + '&area=' + data.area + '&supplier_type=' + data.supplier_type;
+               return machadaloHttp.get(url);
+             };
+             authService.getAreas = function (type, id) {
+               var url = "v0/ui/locations/" + id + "/?type=" + type;
+               return machadaloHttp.get(url);
+             };
             authService.sendMessage = function (param,meaType) {
                // console.log('vvvv',param)
                let url = "v0/ui/b2c-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
