@@ -258,7 +258,7 @@
         return machadaloHttp.get(url);
     }
     releaseCampaignService.viewCommentsDetails = function(Id){
-      var url = url_base_ui + "b2b/basic-client-comment/?requirement_id=" + Id;
+      var url = url_base_ui + "b2b/client-commits-ops/?pre_requirement_id=" + Id;
         return machadaloHttp.get(url);
     }
     releaseCampaignService.basicClientComment = function(comment,req_id){
@@ -266,11 +266,11 @@
           var payload=[];
           var payload_param={};
           payload_param['comment']=comment;
-          payload_param['requirement_id']=req_id;
+          payload_param['pre_requirement_id']=req_id;
           payload.push(payload_param);
           param['data']=payload;
 
-      var url = url_base_ui + "b2b/basic-client-comment/";
+      var url = url_base_ui + "b2b/client-commits-ops/";
         return machadaloHttp.post(url,param);
     }
 
@@ -292,7 +292,7 @@
      }
 
      releaseCampaignService.deleteBasicComment = function (comment_Id,req_id){
-           var url = url_base_ui + "b2b/basic-client-comment/?requirement_id="+req_id+"&id="+comment_Id;
+           var url = url_base_ui + "b2b/client-commits-ops/?pre_requirement_id="+req_id+"&id="+comment_Id;
            return machadaloHttp.delete(url);
      }
      releaseCampaignService.deleteInternalComment = function (comment_Id,req_id){
