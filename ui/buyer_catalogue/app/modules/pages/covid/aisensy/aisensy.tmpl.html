@@ -1997,7 +1997,7 @@
                                   </svg>
                                 </div>
                                 <div>
-                                  <button ng-click="getLeadsTabSuspenseLeads('1')" data-toggle="modal"
+                                  <button ng-click="getLeadsTabSuspenseLeads()" data-toggle="modal"
                                     data-target="#SuspenseLeadsModel">Suspense Sheet</button>
                                 </div>
                                 <div ng-click="userProfileIcon()">
@@ -3535,7 +3535,7 @@
                       <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style style="
                         color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
                         options="companiesDetailDataArray" extra-settings="settings"
-                        selected-model="subrequirement.selected_preferred_company_sub_sector"
+                        selected-model="selected_preferred_company_sub_sector"
                         ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
                         events="events">
                       </span>
@@ -3921,8 +3921,8 @@
                 </thead>
                 <tbody>
                   <tr ng-if="leadTabData.length > 0 && loading"  pagination-id="paginate1"
-                    dir-paginate="leadData in leadTabData | itemsPerPage:itemsPerPage" total-items="totalCount"
-                    current-page="pagination.current" track by "$index">
+                    dir-paginate="leadData in leadTabData | itemsPerPage:itemsPerPageLead" total-items="totalCountLead"
+                    current-page="currentPageLead" track by "$index">
                     <td>{{$index+serial}}</td>
                     <td class="alignment">{{leadData.phone_number}}</td>
                     <td class="alignment">{{leadData.sector_name}}</td>
@@ -4077,10 +4077,10 @@
                   </tr>
                 </tbody>
               </table>
+                <dir-pagination-controls ng-if="leadTabData.length > 0 " max-size="10" on-page-change="pageChangedSuspenseLead(newPageNumber,true)" direction-links="true"
+                  boundary-links="true" pagination-id="paginate1">
+                </dir-pagination-controls>
             </form>
-            <!-- <dir-pagination-controls ng-if="leadTabData.length > 0 && selectedTab == 'lead'" max-size="10" on-page-change="pageChanged(newPageNumber)" direction-links="true"
-              boundary-links="true" pagination-id="paginate1">
-            </dir-pagination-controls> -->
           </div>
 
           <div class="modal-body col-md-4 table-responsive browsed_leads_main"
@@ -4116,8 +4116,8 @@
                 </thead>
                 <tbody>
                   <tr ng-if="leadTabDataBrowsed.length > 0"
-                    dir-paginate="browseData in leadTabDataBrowsed | itemsPerPage:itemsPerPage"
-                    total-items="totalCount" current-page="pagination.current" track by "$index">
+                    dir-paginate="browseData in leadTabDataBrowsed | itemsPerPage:itemsPerPageLead"
+                    total-items="totalCountLead" pagination-id="browseDataPaginate" current-page="currentPageBrowsed" track by "$index">
                   <td>{{$index+serial}}</td>
                   <td class="alignment">{{browseData.phone_number}}</td>
                   <td class="alignment">{{browseData.sector_name}}</td>
@@ -4263,11 +4263,9 @@
                 </tr>
                 </tbody>
               </table>
-              <!-- <div class="">
-                <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="saveBrowsed()">Submit</button>
-                <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed()">Update</button>
-                <button class="btn btn-danger" ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
-              </div> -->
+              <dir-pagination-controls max-size="10" on-page-change="pageChangedSuspenseLead(newPageNumber,False)" direction-links="true"
+                    boundary-links="true" pagination-id="browseDataPaginate">
+              </dir-pagination-controls>
             </form>
           </div>
         </div>
