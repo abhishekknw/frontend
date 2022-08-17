@@ -2770,8 +2770,9 @@
               <div class="sendEmail1">
                 <div class="buttons">
                   <div>
-                    <a href="https://stagingapi.machadalo.com/v0/ui/b2b/download-leads-summary/?lead_type={{filterType}}&supplier_code=all&campaign_id={{campaign_id}}"><button type="button" name="button" class="smallBtn" ng-click="downloadAll_leads(campaign_id,filterType)">Download Lead</button></a>
-                    <!-- <a href="https://stagingapi.machadalo.com/v0/ui/b2b/download-leads-summary/?lead_type={{filterType}}&supplier_code=all&campaign_id={{campaign_id}}"><button type="button" name="button" class="smallBtn" ng-click="downloadAll_leads(campaign_id,filterType)">Download Lead</button></a> -->
+                    <a href="https://stagingapi.machadalo.com/v0/ui/b2b/download-leads-summary/?lead_type={{filterType}}&supplier_code=all&campaign_id={{campaign_id}}"><button type="button" name="button" class="smallBtn">Download Lead</button></a>
+                    <input class="smallBtn" type="file" name="file" id="file" ng-files="getFiles($files)">
+                    <button class="smallBtn" type="button" name="button" ng-click="uploadSelectFile()">upload</button>
                   </div>
                 </div>
              </div>

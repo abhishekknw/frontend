@@ -1588,10 +1588,30 @@
 
       return "";
     }
-    $scope.downloadAll_leads = function(comp_id,lead_type){
-      B2BDashboardService.downloadAll_leads(lead_type,comp_id)
-      .then(function onSuccess(response) {
-      })
+    $scope.getFiles = function(file){
+      $scope.file = file;
+      console.log(file);
+    }
+    $scope.uploadSelectFile = function(){
+      let uploadurl={
+        url: 'https://stagingapi.machadalo.com/v0/ui/b2b/upload-lead-comments/',
+        method:"POST",
+        timeout: 0,
+        data:{
+          "file": $scope.file[0],
+        },
+        headers: {
+          "Authorization": 'JWT ' + $rootScope.globals.currentUser.token
+        },
+        processData: false,
+        mimeType: "multipart/form-data",
+        contentType: false,
+      }    
+      Upload.upload(uploadurl).then(function onSuccess(response) {
+        $scope.file = undefined;
+        console.log(response);
+        swal(constants.name, response.data.data, constants.success);
+      })  
     }
 
     $scope.weekSummaryStackedBar = {
