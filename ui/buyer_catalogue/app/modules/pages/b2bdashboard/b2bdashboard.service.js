@@ -612,7 +612,14 @@ angular.module('catalogueApp')
         var url = url_root + "b2b/supplier-leads-details-page/?campaign_id="+ campaignId + "&supplier_type="+ supplier_code +"&next_page="+page+"&supplier_id="+supp_id;
         return machadaloHttp.get(url);
       }
-
+      DashboardService.basicCampaignList = function () {
+        var url = url_root +"b2b/get-basic-lead-distribution-campaign/";
+        return machadaloHttp.get(url);
+      }
+      DashboardService.basicLeadsOfCampaigns = function (campaignId,supplier_code,page) {
+        var url = url_root +"b2b/get-dynamic-basic-lead-form-headers/?campaign_id="+campaignId+"&supplier_type="+supplier_code+"&next_page="+page;
+        return machadaloHttp.get(url);
+      }
 
       return DashboardService;
 
