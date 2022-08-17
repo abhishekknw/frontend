@@ -943,7 +943,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           { header: 'L4 Answers' },
           { header: 'L5 Answers' },
           { header: 'L6 Answers' },
-          // { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
           { header: 'Comment' },
           { header: 'Internal Comment' },
@@ -953,6 +952,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           { header: 'Timestamp' },
           { header: 'Action' },
         ];
+        $scope.subSectorList =['option1','option2','option3']
         $scope.requirement_browsed_headings = [
           { header: '' },
           { header: 'Sector' },
@@ -2309,6 +2309,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }).catch(function onError(response) {
               console.log(response);
             });
+        }
+        $scope.countBrowsedRow = false;
+        $scope.addRemoveBtn = "Add row";
+        $scope.addBrowsedRow = function(){
+          if($scope.countBrowsedRow == false){
+              $scope.countBrowsedRow = true;
+              $scope.addRemoveBtn = "Remove row";
+            }
+          else{
+            $scope.countBrowsedRow = false;
+            $scope.addRemoveBtn = "Add row";
+           }  
         }
 
 

@@ -1100,6 +1100,16 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
   background-color: #8e1921 !important;
   color: #fff !important;
 }
+.download-leads-btn{
+  display: flex;
+  gap: 10px;
+}
+.download-leads-btn input[type="file"]{
+  padding: 10px 15px;
+}
+
+
+
 /* Responsive */
 
 @media screen and (max-width: 1024px) {

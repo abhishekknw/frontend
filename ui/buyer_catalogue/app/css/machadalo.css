@@ -695,7 +695,12 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
   max-height: 400px;
   overflow-x: auto;
 }
-
+.li-popup .multiselectDropdown.multiselectDropdown-123 .dropdown-menu{
+  position: absolute;
+    top: 100%;
+    left: 0;
+    transform: unset;
+}
 
 .scroll-tbody table tbody {
     overflow: auto;
@@ -707,6 +712,11 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 }
 .scroll-tbody table thead{
   display: block;
+}
+.custom-modal-box{
+  /* position: absolute !important; */
+  top: 0 !important;
+  background-color: rgba(0,0,0,0.5);
 }
 /*.table-suppliers td:nth-child(2), .table-suppliers th:nth-child(2){
   position: fixed;
