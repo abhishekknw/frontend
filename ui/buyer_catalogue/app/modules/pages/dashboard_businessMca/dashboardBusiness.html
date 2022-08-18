@@ -1249,31 +1249,31 @@
                             total-items="totalrecord" current-page="currentPage" track by "$index">
                               <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
                                   ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus">
-                                  <span ng-if="decisionPanding.requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
+                                  <span ng-if="decisionPanding[0].requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding[0].supplier_id)">
                                   </span>
-                                  <span ng-if="decisionPanding.requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
+                                  <span ng-if="decisionPanding[0].requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showLeads(decisionPanding[0].requirement_id,decisionPanding[0].supplier_id)">
                                   </span>
                               </td>                          
-                              <td class="alignment text-center" ng-repeat="decision in decisionPanding">{{decision.value}}</td>
+                              <td class="alignment text-center" ng-repeat="decision in decisionPanding" ng-hide="$first">{{decision.value}}</td>
                               <td class="alignment text-center">
-                                <select ng-change="setValue(value8,decision.client_comment,decision._id,decision.requirement_id)"
+                                <select ng-change="setValue(value8,decisionPanding[0].client_comment,decisionPanding[0]._id,decisionPanding[0].requirement_id)"
                                   class="form-control client-status" ng-model="value8">
                                   <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
                                 </select>
-                                <span style="display: none;">{{value8=value8?value8:decision.macchadalo_client_status}}</span>
-                                <span>{{decision.updated_at?decision.updated_at:"NA"}}</span>
+                                <span style="display: none;">{{value8=value8?value8:decisionPanding[0].macchadalo_client_status}}</span>
+                                <span>{{decisionPanding[0].updated_at?decisionPanding[0].updated_at:"NA"}}</span>
                               </td>
                                 <td class="alignment text-center">
                                   {{decision.phone_number?decision.phone_number:"NA"}}
                                 </td>
                                 <td class="alignment">
-                                    <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
+                                    <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding[0]._id,decisionPanding[0].requirement_id)">View / Add</button>
                                 </td>
                               <td class="alignment text-center">
                                 <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                  ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
+                                  ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding[0]._id,decisionPanding[0].requirement_id)">Accept</button>
                                 <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                  ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id)"
+                                  ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding[0]._id,decisionPanding[0].requirement_id)"
                                   ng-if="decisionPanding.client_status!='Decline'">Decline</button>
                                 <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                                   disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>

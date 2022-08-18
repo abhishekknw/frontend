@@ -17,19 +17,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
           );
           event.preventDefault();
-
-          // if(!event.shiftKey){
-          //     event.preventDefault();
-          //     scope.$apply(attrs.myEnter);
-          // }
         }
-        //     event.preventDefault();
-        //     if(event.which == 13) {
-        //         if (!event.shiftKey) {
-        //             scope.$eval(attrs.myEnter);
-        //         event.preventDefault();
-        //     }
-        // }
+
       });
     };
   })
@@ -80,9 +69,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.isUserProfile = false;
           $scope.showfilterDetail = false;
           $scope.formData.contactSearch = "";
-          // $scope.historySearch = "";
-          // $scope.search = "";
-          //$scope.showfilterDetail = false;
+          $scope.countBrowsedRow = false;
+          $scope.addRemoveBtn = "Add row";
+
 
           let param = {
             next_page: 1
@@ -952,7 +941,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           { header: 'Timestamp' },
           { header: 'Action' },
         ];
-        $scope.subSectorList =['option1','option2','option3']
+        $scope.subSectorList = ['option1', 'option2', 'option3']
         $scope.requirement_browsed_headings = [
           { header: '' },
           { header: 'Sector' },
@@ -1030,83 +1019,84 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                   $scope.companiesDetailData.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
                 }
               }
-            })
-          angular.forEach($scope.requirementDetailData, function (value, i) {
-            if ($scope.requirementDetailData[i].requirements.length > 0) {
-              for (let x in $scope.requirementDetailData[i].requirements) {
-                if (!$scope.requirementDetailData[i].requirements[x].current_company) {
-                  $scope.requirementDetailData[i].requirements[x].current_company = '';
-                }
-                var selected_preferred_company_sub_sector = [];
-                $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = [];
-
-                if ($scope.requirementDetailData[i].requirements[x].preferred_company_other) {
-                  $scope.otherPreferredCompany = true
-                  $scope.requirementDetailData[i].requirements[x].otherPreferredCompany = true
-                  $scope.requirementDetailData[i].requirements[x].preferred_company.push("")
-                }
-
-                if ($scope.requirementDetailData[i].requirements[x].preferred_company && $scope.requirementDetailData[i].requirements[x].preferred_company.length > 0) {
-                  for (let y in $scope.requirementDetailData[i].requirements[x].preferred_company) {
-
-                    var _index = $scope.companiesDetailData.map(function (el) {
-                      return el.organisation_id;
-                    }).indexOf($scope.requirementDetailData[i].requirements[x].preferred_company[y]);
-                    if (_index != -1) {
-                      selected_preferred_company_sub_sector.push($scope.companiesDetailData[_index])
+              angular.forEach($scope.requirementDetailData, function (value, i) {
+                if ($scope.requirementDetailData[i].requirements.length > 0) {
+                  for (let x in $scope.requirementDetailData[i].requirements) {
+                    if (!$scope.requirementDetailData[i].requirements[x].current_company) {
+                      $scope.requirementDetailData[i].requirements[x].current_company = '';
                     }
-                  }
+                    var selected_preferred_company_sub_sector = [];
+                    $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = [];
 
-                  $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = selected_preferred_company_sub_sector;
-                }
+                    if ($scope.requirementDetailData[i].requirements[x].preferred_company_other) {
+                      $scope.otherPreferredCompany = true
+                      $scope.requirementDetailData[i].requirements[x].otherPreferredCompany = true
+                      $scope.requirementDetailData[i].requirements[x].preferred_company.push("")
+                    }
 
-                var _indexCompany = $scope.companiesDetailData.map(function (el) {
-                  return el.organisation_id;
-                }).indexOf($scope.requirementDetailData[i].requirements[x].company);
-                if (_indexCompany != -1) {
-                  $scope.requirementDetailData[i].requirements[x].company_name = $scope.companiesDetailData[_indexCompany].name;
-                }
+                    if ($scope.requirementDetailData[i].requirements[x].preferred_company && $scope.requirementDetailData[i].requirements[x].preferred_company.length > 0) {
+                      for (let y in $scope.requirementDetailData[i].requirements[x].preferred_company) {
 
-                $scope.requirementDetailData[i].requirements[x].color_class = 'yellow'
-                if ($scope.requirementDetailData[i].requirements[x].varified_ops == 'yes') {
-                  $scope.requirementDetailData[i].requirements[x].color_class = 'green'
-                }
-
-                if ($scope.requirementDetailData[i].requirements[x].is_deleted == 'yes') {
-                  $scope.requirementDetailData[i].requirements[x].color_class = 'red'
-                }
-
-
-                //start sub sector name
-                if ($scope.requirementDetailData[i].requirements[x].sub_sector) {
-                  if ($scope.sectorList) {
-                    for (let p in $scope.sectorList) {
-                      if ($scope.sectorList[p].subtypes && $scope.sectorList[p].subtypes.length > 0) {
-                        var sub_index = $scope.sectorList[p].subtypes.map(function (el) {
-                          return el.id;
-                        }).indexOf($scope.requirementDetailData[i].requirements[x].sub_sector);
-                        if (sub_index != -1) {
-                          $scope.requirementDetailData[i].requirements[x].sub_sector_name = $scope.sectorList[p].subtypes[sub_index].business_sub_type;
+                        var _index = $scope.companiesDetailData.map(function (el) {
+                          return el.organisation_id;
+                        }).indexOf($scope.requirementDetailData[i].requirements[x].preferred_company[y]);
+                        if (_index != -1) {
+                          selected_preferred_company_sub_sector.push($scope.companiesDetailData[_index])
                         }
                       }
+
+                      $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = selected_preferred_company_sub_sector;
                     }
-                    //end sub sector name
+
+                    var _indexCompany = $scope.companiesDetailData.map(function (el) {
+                      return el.organisation_id;
+                    }).indexOf($scope.requirementDetailData[i].requirements[x].company);
+                    if (_indexCompany != -1) {
+                      $scope.requirementDetailData[i].requirements[x].company_name = $scope.companiesDetailData[_indexCompany].name;
+                    }
+
+                    $scope.requirementDetailData[i].requirements[x].color_class = 'yellow'
+                    if ($scope.requirementDetailData[i].requirements[x].varified_ops == 'yes') {
+                      $scope.requirementDetailData[i].requirements[x].color_class = 'green'
+                    }
+
+                    if ($scope.requirementDetailData[i].requirements[x].is_deleted == 'yes') {
+                      $scope.requirementDetailData[i].requirements[x].color_class = 'red'
+                    }
+
+
+                    //start sub sector name
+                    if ($scope.requirementDetailData[i].requirements[x].sub_sector) {
+                      if ($scope.sectorList) {
+                        for (let p in $scope.sectorList) {
+                          if ($scope.sectorList[p].subtypes && $scope.sectorList[p].subtypes.length > 0) {
+                            var sub_index = $scope.sectorList[p].subtypes.map(function (el) {
+                              return el.id;
+                            }).indexOf($scope.requirementDetailData[i].requirements[x].sub_sector);
+                            if (sub_index != -1) {
+                              $scope.requirementDetailData[i].requirements[x].sub_sector_name = $scope.sectorList[p].subtypes[sub_index].business_sub_type;
+                            }
+                          }
+                        }
+                        //end sub sector name
+                      }
+                    }
                   }
                 }
-              }
-            }
-            //END sub sector multiselect preferred company
-            //start added sector name
-            if ($scope.sectorList) {
-              var localindex_indexs = $scope.sectorList.map(function (el) {
-                return el.id;
-              }).indexOf($scope.requirementDetailData[i].sector);
-              if (localindex_indexs != -1) {
-                $scope.requirementDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
-              }
+                //END sub sector multiselect preferred company
+                //start added sector name
+                if ($scope.sectorList) {
+                  var localindex_indexs = $scope.sectorList.map(function (el) {
+                    return el.id;
+                  }).indexOf($scope.requirementDetailData[i].sector);
+                  if (localindex_indexs != -1) {
+                    $scope.requirementDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
+                  }
 
-            }
-          })
+                }
+              })
+            })
+
 
           $scope.getRequirementBrowsedData("", phone, supplier_id);
 
@@ -1206,12 +1196,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.otherPreferredCompany = false;
-        $scope.selected_preferred_company_sub_sector = [];
-        //$scope.subrequirement['selected_preferred_company_sub_sector'] =[];
         $scope.subSectorPreferredMulticheck = function (key, index) {
-          console.log($scope.selected_preferred_company_sub_sector)
-          //$scope.requirementDetailData[key].requirements[index] = {"selected_preferred_company_sub_sector":$scope.selected_preferred_company_sub_sector};
-          console.log($scope.requirementDetailData[key].requirements[index], key, index)
           if ($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector.length > 0) {
             $scope.requirementDetailData[key].requirements[index].preferred_company = [];
             $scope.otherPreferredCompany = false;
@@ -1223,7 +1208,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               }
               $scope.requirementDetailData[key].requirements[index].preferred_company.push($scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector[i].id);
             }
-            console.log($scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector)
           }
           if ($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector.length == 0) {
             $scope.requirementDetailData[key].requirements[index].preferred_company = [];
@@ -1232,7 +1216,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.updateSubSectorRow = function (data) {
-          console.log($scope.requirementDetailData)
           let updateData = [];
           if (data.current_company == "") {
             data.current_company = null
@@ -2098,14 +2081,14 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           AuthService.getAreas('areas', id)
             .success(function (response) {
               $scope.selectedArea = [];
-              if(!value){
+              if (!value) {
                 $scope.supplierForAddUpdateData['area_id'] = "";
                 $scope.supplierForAddUpdateData['area'] = "";
               }
               $scope.Areas = response;
             });
         }
-  
+
         $scope.selectArea = function () {
           $scope.suppliersName = [];
           $scope.selectedSupplierName = [];
@@ -2113,30 +2096,30 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.supplierForAddUpdateData['area'] = $scope.selectedArea[0].label;
             $scope.supplierForAddUpdateData['area_id'] = $scope.selectedArea[0].id;
           }
-            let data = {
-              city: $scope.supplierForAddUpdateData.city,
-              area: $scope.supplierForAddUpdateData.area,
-              supplier_type: $scope.supplierForAddUpdateData.supplier_type
-            }
-            AuthService.getSupplierNameList(data)
-              .then(function onSuccess(response) {
-                if (response) {
-                  $scope.suppliersName = response.data.data.supplier_list;
-                  if ($scope.suppliersName.length > 0) {
-                    for (let i in $scope.suppliersName) {
-                      if($scope.suppliersName[i].supplier_name){
-                        $scope.suppliersName[i].label = $scope.suppliersName[i].supplier_name;
-                      } else  {
-                        $scope.suppliersName[i].label = $scope.suppliersName[i].society_name;
-                      }
-                      
-                      $scope.suppliersName[i].id = $scope.suppliersName[i].supplier_id;
+          let data = {
+            city: $scope.supplierForAddUpdateData.city,
+            area: $scope.supplierForAddUpdateData.area,
+            supplier_type: $scope.supplierForAddUpdateData.supplier_type
+          }
+          AuthService.getSupplierNameList(data)
+            .then(function onSuccess(response) {
+              if (response) {
+                $scope.suppliersName = response.data.data.supplier_list;
+                if ($scope.suppliersName.length > 0) {
+                  for (let i in $scope.suppliersName) {
+                    if ($scope.suppliersName[i].supplier_name) {
+                      $scope.suppliersName[i].label = $scope.suppliersName[i].supplier_name;
+                    } else {
+                      $scope.suppliersName[i].label = $scope.suppliersName[i].society_name;
                     }
+
+                    $scope.suppliersName[i].id = $scope.suppliersName[i].supplier_id;
                   }
                 }
-              }).catch(function onError(response) {
-                console.log(response);
-              });
+              }
+            }).catch(function onError(response) {
+              console.log(response);
+            });
         }
 
         $scope.updateLeadTab = function (index) {
@@ -2310,17 +2293,15 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               console.log(response);
             });
         }
-        $scope.countBrowsedRow = false;
-        $scope.addRemoveBtn = "Add row";
-        $scope.addBrowsedRow = function(){
-          if($scope.countBrowsedRow == false){
-              $scope.countBrowsedRow = true;
-              $scope.addRemoveBtn = "Remove row";
-            }
-          else{
+        $scope.addBrowsedRow = function () {
+          if ($scope.countBrowsedRow == false) {
+            $scope.countBrowsedRow = true;
+            $scope.addRemoveBtn = "Remove row";
+          }
+          else {
             $scope.countBrowsedRow = false;
             $scope.addRemoveBtn = "Add row";
-           }  
+          }
         }
 
 

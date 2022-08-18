@@ -47,7 +47,7 @@
       $scope.printLeadsInExcelData = {};
       $scope.viewTab = false;
       $scope.leadBasicShow = false;
-      var conditionForTable = true; 
+      var conditionForTable = true;
       $scope.page = '';
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
@@ -707,9 +707,39 @@
         $('#viewCommentsLeadDetails').modal('show');
         B2BDashboardService.viewCommentsDetails(Id, req_id)
           .then(function onSuccess(response) {
-            $scope.externalComment = response.data.data.external_comments;
-            // $scope.internalComment=response.data.data.internal_comments;
+            $scope.externalComment = response.data.data;
           })
+      }
+      $scope.acceptDeclineDecisionPanding = function (index, value,id,requirement_id) {
+        alert(index)
+        alert(value)
+        alert(id)
+        alert(requirement_id)
+        let data = [{
+          "requirement_id": requirement_id,
+          "client_status": value,
+          "_id":id
+        }]
+        B2BDashboardService.acceptDeclineDecisionPanding({ 'data': data })
+          .then(function onSuccess(response) {
+            if (response) {
+              if(value == "Decline"){
+                $scope.leadDecisionPandingData[index].client_status = "Decline";
+              }
+              else{
+                $scope.leadDecisionPandingData.splice(index, 1);
+              }
+              
+              if(value == 'Decline'){
+                value = 'Declined';
+              }
+              swal(constants.name, value + " Successfully", constants.success);
+            }
+            B2BDashboardService.showLeads($scope.supp_id)
+            .then(function onSuccess(response) {
+              $scope.supplier_leads=response.data.data.lead;
+            }) 
+          });
       }
 
 
@@ -733,6 +763,23 @@
 
             }
           })
+      }
+      $scope.arrowIcon = 0;
+      $scope.showLeads = function (row, supplier_id) {
+        $scope.supp_id = supplier_id;
+        if ($scope.id == row) {
+          $scope.id = "";
+          $scope.arrowIcon = 0;
+        }
+        else if ($scope.id != row) {
+          $scope.id = row;
+          $scope.arrowIcon = 1;
+          B2BDashboardService.showLeads(supplier_id)
+            .then(function onSuccess(response) {
+              $scope.supplier_leads = response.data.data.lead;
+            })
+
+        }
       }
       $scope.icon = 0;
       $scope.showSubLeadDetail = function (row, supplier_id) {
@@ -3540,26 +3587,27 @@
         $scope.viewClientStatus();
         cfpLoadingBar.start();
         $scope.campaignIdForLeads = campaignId;
-        if (conditionForTable == true){
+        if (conditionForTable == true) {
           let page = 0;
           $scope.leadBasicShow = true;
-          B2BDashboardService.basicLeadsOfCampaigns(campaignId,"all",page)
-            .then(function onSuccess(response){
+          B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page)
+            .then(function onSuccess(response) {
               $scope.leadDecisionPandingData = response.data.data;
+              console.log($scope.leadDecisionPandingData);
             })
         }
-        else{
+        else {
           let page = 0;
           B2BDashboardService.purchasedNotPurchasedLead(campaignId, $scope.filterType, $scope.selectedSupplierType.code, page, "", "", "")
-          .then(function onSuccess(response) {
-            cfpLoadingBar.complete();
-            $scope.selectedCampaignLeads = response.data.data;
-            $scope.CampaignNameofLeads = data.name;
-            $scope.showCampaigns = false;
-            $scope.leadBasicShow = false;
-          }).catch(function onError(response) {
-            console.log(response);
-          })
+            .then(function onSuccess(response) {
+              cfpLoadingBar.complete();
+              $scope.selectedCampaignLeads = response.data.data;
+              $scope.CampaignNameofLeads = data.name;
+              $scope.showCampaigns = false;
+              $scope.leadBasicShow = false;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
         }
       }
       $scope.backToCampaign = function () {
