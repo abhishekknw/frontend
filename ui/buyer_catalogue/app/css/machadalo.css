@@ -826,3 +826,12 @@ header .topRight .top-menu {
 .al-main .ng-isolate-scope{
   list-style: none;
 }
+#SuspenseLeadsModel .modal-dialog, #RequirementModel .modal-dialog{
+  width: 1200px;
+}
+
+@media screen and (max-width: 767px) {
+  #SuspenseLeadsModel .modal-dialog,  #RequirementModel .modal-dialog{
+    width: auto;
+  }
+}

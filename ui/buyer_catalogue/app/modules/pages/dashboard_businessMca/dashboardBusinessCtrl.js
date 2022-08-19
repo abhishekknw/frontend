@@ -711,10 +711,6 @@
           })
       }
       $scope.acceptDeclineDecisionPanding = function (index, value,id,requirement_id) {
-        alert(index)
-        alert(value)
-        alert(id)
-        alert(requirement_id)
         let data = [{
           "requirement_id": requirement_id,
           "client_status": value,
@@ -3583,26 +3579,34 @@
             console.log(response);
           })
       }
-      $scope.viewLeadsForSelectedCampaign = function (data, campaignId) {
+      $scope.viewLeadsForSelectedCampaign = function (data,campaignId,page) {
         $scope.viewClientStatus();
         cfpLoadingBar.start();
+        $scope.leadDetailData = data;
         $scope.campaignIdForLeads = campaignId;
+        if(!page){
+          page = 1;
+        }
+        $scope.currentPageLead = page;
         if (conditionForTable == true) {
-          let page = 0;
           $scope.leadBasicShow = true;
           B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page)
             .then(function onSuccess(response) {
               $scope.leadDecisionPandingData = response.data.data;
-              console.log($scope.leadDecisionPandingData);
+              $scope.totalCountLead = response.data.data.length;
+              $scope.itemsPerPageLead = 20;
+              $scope.currentPageLead = 0;
             })
         }
         else {
-          let page = 0;
           B2BDashboardService.purchasedNotPurchasedLead(campaignId, $scope.filterType, $scope.selectedSupplierType.code, page, "", "", "")
             .then(function onSuccess(response) {
               cfpLoadingBar.complete();
               $scope.selectedCampaignLeads = response.data.data;
               $scope.CampaignNameofLeads = data.name;
+              $scope.totalCountLead = response.data.data.length;
+              $scope.itemsPerPageLead = 20;
+              $scope.currentPageLead = 0;
               $scope.showCampaigns = false;
               $scope.leadBasicShow = false;
             }).catch(function onError(response) {
@@ -6696,7 +6700,42 @@
         else
           return 'NA';
       }
-
+      $scope.pageChangedLeadDetail = function(page){
+        $scope.viewLeadsForSelectedCampaign ($scope.leadDetailData,$scope.campaignIdForLeads,page);
+      }
+      $scope.setEmailDownloadValue = function(campaignId){
+        $scope.campaignId = campaignId;
+      }
+      $scope.sendEmailsMca = function(email){
+        B2BDashboardService.sendBookingEmails("leads","all",$scope.campaignId,email)
+        .then(function onSuccess(response){
+        });
+        swal("Successfull", "Email Sent Sucessfully", "success");
+      }
+      $scope.getFiles = function(file){
+        $scope.file = file;
+      }
+      $scope.uploadSelectFile = function(){
+        let uploadurl={
+          url: 'https://stagingapi.machadalo.com/v0/ui/b2b/upload-lead-comments/',
+          method:"POST",
+          timeout: 0,
+          data:{
+            "file": $scope.file[0],
+          },
+          headers: {
+            "Authorization": 'JWT ' + $rootScope.globals.currentUser.token
+          },
+          processData: false,
+          mimeType: "multipart/form-data",
+          contentType: false,
+        }    
+        Upload.upload(uploadurl).then(function onSuccess(response) {
+          $scope.file = undefined;
+          console.log(response);
+          swal(constants.name, response.data.data, constants.success);
+        })  
+      }
       // END
 
     })
