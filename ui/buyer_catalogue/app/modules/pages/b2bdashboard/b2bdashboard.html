@@ -1304,7 +1304,7 @@
                             </th>
                             <th style="width:200px;">Current Status</th>
                             <th style="width:200px;">Client Comment</th>
-                            <th >Action</th>
+                            <th >Lead Details</th>
                           </tr>
                         </thead>
                         <tbody pagination-id="paginate2"
@@ -1322,36 +1322,6 @@
                               <span ng-if="leadDetail.value">{{leadDetail.value}}</span>
                               <span ng-if="!leadDetail.value">NA</span>
                             </td>
-                            <!-- <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[2].value">{{lead[2].value}}</span>
-                              <span ng-if="!lead[2].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[3].value">{{lead[3].value}}</span>
-                              <span ng-if="!lead[3].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[4].value">{{lead[4].value}}</span>
-                              <span ng-if="!lead[4].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[5].value">{{lead[5].value}}</span>
-                              <span ng-if="!lead[5].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[6].value">{{lead[6].value}}</span>
-                              <span ng-if="!lead[6].value">NA</span>
-                            </td> -->
-                            <!-- <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[24].value">{{lead[24].value}}</span>
-                              <span ng-if="!lead[24].value">NA</span>
-                            </td> -->
                             <td class="col-md-2">
                               <select ng-change="setValue(value8,lead[0].macchadalo_client_comment,lead[0]._id,lead[0].requirement_id)"
                                 class="form-control client-status" ng-model="value8">
@@ -1379,7 +1349,7 @@
                             <td><button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;"
                                 type="button" name="button" class="btn btn-danger"
                                 ng-click="showLeadDetail(lead[0]._id,lead[0].requirement_id)" data-toggle="modal"
-                                data-target="#myModal">Detail</button>
+                                data-target="#myModal">Lead Detail</button>
                             </td>
                     </div>
                     </tr>
@@ -2772,7 +2742,7 @@
                   <div class="download-leads-btn">
                     <a href="https://stagingapi.machadalo.com/v0/ui/b2b/download-leads-summary/?lead_type={{filterType}}&supplier_code=all&campaign_id={{campaign_id}}"><button type="button" name="button" class="smallBtn">Download Lead</button></a>
                     <input class="smallBtn" type="file" name="file" id="file" ng-files="getFiles($files)">
-                    <button class="smallBtn" type="button" name="button" ng-click="uploadSelectFile()">upload</button>
+                    <button class="smallBtn" type="button" name="button" ng-click="uploadSelectFile()">Upload Comments</button>
                   </div>
                 </div>
              </div>
