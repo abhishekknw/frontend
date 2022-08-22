@@ -24,7 +24,6 @@
       $scope.vendorsData = {};
       $scope.emailModel = {};
       $scope.vendorDataMap = {};
-      $scope.vendorsData = {};
       $scope.selectedVendors = [];
       $scope.selectedCities = [];
       $scope.selectedCities_temp = [];
@@ -47,7 +46,7 @@
       $scope.printLeadsInExcelData = {};
       $scope.viewTab = false;
       $scope.leadBasicShow = false;
-      var conditionForTable = true; 
+      var conditionForTable = true;
       $scope.page = '';
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
@@ -247,7 +246,8 @@
         // {header : 'AUDIT', key : 'audit', label1 : 'Audited', label2 : 'UnAudited'},
         // {header : 'CLOSURE', key : 'closure', label1 : 'Closed', label2 : 'UnClosed' },
       ];
-
+      $scope.surveyLeadArray = ['Leads','Survey','Feedback'];
+      $scope.supplierType = 'Leads';
 
       $scope.supHeaders = [
         { header: 'Campaign Name', key: 'proposal_name' },
@@ -358,7 +358,6 @@
         act_date: '',
         reAssign_date: '',
       };
-
       var category = $rootScope.globals.userInfo.profile.organisation.category;
       var orgId = $rootScope.globals.userInfo.profile.organisation.organisation_id;
       $scope.campaignDataList = [];
@@ -660,20 +659,20 @@
         $scope.selectedBookingCampaignName = undefined;
         $scope.showTableForAllCampaignDisplay = false;
 
-        if (!date)
-          date = new Date();
-        date = commonDataShare.formatDate(date);
-        date = date + ' 00:00:00';
-        if (!vendor) {
-          $scope.selectedVendor = {};
-        }
-        $scope.showCampaignGraph = true;
-        $scope.campaignLabel = false;
-        $scope.showLeadsDetails = false;
-        $scope.showDisplayDetailsTable = false;
-        $scope.showAllCampaignDisplay = false;
-        $scope.allCampaignsLeadsData = {};
-        $scope.options = {};
+        // if (!date)
+        //   date = new Date();
+        // date = commonDataShare.formatDate(date);
+        // date = date + ' 00:00:00';
+        // if (!vendor) {
+        //   $scope.selectedVendor = {};
+        // }
+        // $scope.showCampaignGraph = true;
+        // $scope.campaignLabel = false;
+        // $scope.showLeadsDetails = false;
+        // $scope.showDisplayDetailsTable = false;
+        // $scope.showAllCampaignDisplay = false;
+        // $scope.allCampaignsLeadsData = {};
+        // $scope.options = {};
         $scope.leadBasicShow = false;
         $scope.viewCampaignLeads(true, $scope.selectedSupplierType.code);
 
@@ -707,9 +706,35 @@
         $('#viewCommentsLeadDetails').modal('show');
         B2BDashboardService.viewCommentsDetails(Id, req_id)
           .then(function onSuccess(response) {
-            $scope.externalComment = response.data.data.external_comments;
-            // $scope.internalComment=response.data.data.internal_comments;
+            $scope.externalComment = response.data.data;
           })
+      }
+      $scope.acceptDeclineDecisionPanding = function (index, value,id,requirement_id) {
+        let data = [{
+          "requirement_id": requirement_id,
+          "client_status": value,
+          "_id":id
+        }]
+        B2BDashboardService.acceptDeclineDecisionPanding({ 'data': data })
+          .then(function onSuccess(response) {
+            if (response) {
+              if(value == "Decline"){
+                $scope.leadDecisionPandingData[index].client_status = "Decline";
+              }
+              else{
+                $scope.leadDecisionPandingData.splice(index, 1);
+              }
+              
+              if(value == 'Decline'){
+                value = 'Declined';
+              }
+              swal(constants.name, value + " Successfully", constants.success);
+            }
+            B2BDashboardService.showLeads($scope.supp_id)
+            .then(function onSuccess(response) {
+              $scope.supplier_leads=response.data.data.lead;
+            }) 
+          });
       }
 
 
@@ -733,6 +758,23 @@
 
             }
           })
+      }
+      $scope.arrowIcon = 0;
+      $scope.showLeads = function (row, supplier_id) {
+        $scope.supp_id = supplier_id;
+        if ($scope.id == row) {
+          $scope.id = "";
+          $scope.arrowIcon = 0;
+        }
+        else if ($scope.id != row) {
+          $scope.id = row;
+          $scope.arrowIcon = 1;
+          B2BDashboardService.showLeads(supplier_id)
+            .then(function onSuccess(response) {
+              $scope.supplier_leads = response.data.data.lead;
+            })
+
+        }
       }
       $scope.icon = 0;
       $scope.showSubLeadDetail = function (row, supplier_id) {
@@ -3529,37 +3571,47 @@
       $scope.viewCampaignLeads = function (value) {
         $scope.showTable = true;
         cfpLoadingBar.start();
-        B2BDashboardService.viewCampaignLeads("Leads", $scope.selectedSupplierType.code, "admin")
+        B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code, "admin")
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
           }).catch(function onError(response) {
             console.log(response);
           })
       }
-      $scope.viewLeadsForSelectedCampaign = function (data, campaignId) {
+      $scope.viewLeadsForSelectedCampaign = function (data,campaignId,count,page) {
         $scope.viewClientStatus();
         cfpLoadingBar.start();
+        $scope.uniqueCount = count;
+        $scope.leadDetailData = data;
         $scope.campaignIdForLeads = campaignId;
-        if (conditionForTable == true){
-          let page = 0;
+        if(!page){
+          page = 0;
+        }
+        $scope.currentPageLead = page;
+        if (conditionForTable == true) {
           $scope.leadBasicShow = true;
-          B2BDashboardService.basicLeadsOfCampaigns(campaignId,"all",page)
-            .then(function onSuccess(response){
+          B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page)
+            .then(function onSuccess(response) {
               $scope.leadDecisionPandingData = response.data.data;
+              $scope.totalCountLead = count;
+              $scope.itemsPerPageLead = 20;
+              $scope.currentPageLead = page;
             })
         }
-        else{
-          let page = 0;
+        else {
           B2BDashboardService.purchasedNotPurchasedLead(campaignId, $scope.filterType, $scope.selectedSupplierType.code, page, "", "", "")
-          .then(function onSuccess(response) {
-            cfpLoadingBar.complete();
-            $scope.selectedCampaignLeads = response.data.data;
-            $scope.CampaignNameofLeads = data.name;
-            $scope.showCampaigns = false;
-            $scope.leadBasicShow = false;
-          }).catch(function onError(response) {
-            console.log(response);
-          })
+            .then(function onSuccess(response) {
+              cfpLoadingBar.complete();
+              $scope.selectedCampaignLeads = response.data.data;
+              $scope.CampaignNameofLeads = data.name;
+              $scope.totalCountLead = count;
+              $scope.itemsPerPageLead = 20;
+              $scope.currentPageLead = page;
+              $scope.showCampaigns = false;
+              $scope.leadBasicShow = false;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
         }
       }
       $scope.backToCampaign = function () {
@@ -6648,7 +6700,52 @@
         else
           return 'NA';
       }
+      $scope.pageChangedLeadDetail = function(page){
+        $scope.viewLeadsForSelectedCampaign ($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,page);
+      }
+      $scope.setEmailDownloadValue = function(campaignId){
+        $scope.campaignId = campaignId;
+      }
+      $scope.sendEmailsMca = function(email){
+        B2BDashboardService.sendBookingEmails("leads","all",$scope.campaignId,email)
+        .then(function onSuccess(response){
+        });
+        swal("Successfull", "Email Sent Sucessfully", "success");
+      }
+      $scope.getFiles = function(file){
+        $scope.file = file;
+      }
+      $scope.uploadSelectFile = function(){
+        let uploadurl={
+          url: 'https://stagingapi.machadalo.com/v0/ui/b2b/upload-lead-comments/',
+          method:"POST",
+          timeout: 0,
+          data:{
+            "file": $scope.file[0],
+          },
+          headers: {
+            "Authorization": 'JWT ' + $rootScope.globals.currentUser.token
+          },
+          processData: false,
+          mimeType: "multipart/form-data",
+          contentType: false,
+        }    
+        Upload.upload(uploadurl).then(function onSuccess(response) {
+          $scope.file = undefined;
+          console.log(response);
+          swal(constants.name, response.data.data, constants.success);
+        })  
+      }
 
+      $scope.surveyLeadFilter = function (filter) {
+        $scope.filterType = filter;
+        if(filter == 'Leads' || filter == 'Survey'){
+          $scope.filterType = filter;
+          $scope.isTableHide = true;
+          $scope.viewCampaignLeads();
+        }
+      }
+      $scope.surveyLeadFilter('Leads');
       // END
 
     })

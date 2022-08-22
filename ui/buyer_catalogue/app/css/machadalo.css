@@ -695,7 +695,12 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
   max-height: 400px;
   overflow-x: auto;
 }
-
+.li-popup .multiselectDropdown.multiselectDropdown-123 .dropdown-menu{
+  position: absolute;
+    top: 100%;
+    left: 0;
+    transform: unset;
+}
 
 .scroll-tbody table tbody {
     overflow: auto;
@@ -708,6 +713,11 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 .scroll-tbody table thead{
   display: block;
 }
+.custom-modal-box{
+  /* position: absolute !important; */
+  top: 0 !important;
+  background-color: rgba(0,0,0,0.5);
+}
 /*.table-suppliers td:nth-child(2), .table-suppliers th:nth-child(2){
   position: fixed;
 }
@@ -718,6 +728,9 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 /* For media screen*/
 
 @media only screen and (max-width :767px)  {
+  .pm-0{
+    padding: 0;
+  }
   .hamburger {
     width: 30px;
     height: 30px;
@@ -812,4 +825,30 @@ header .topRight .top-menu {
 
 .al-main .ng-isolate-scope{
   list-style: none;
+}
+#SuspenseLeadsModel .modal-dialog, #RequirementModel .modal-dialog{
+  width: 1200px;
+}
+.leads-btn .btn{
+  padding: 12px  6px;
+  background-color: #d0332c;
+  margin-top: 20px;
+}
+.leads-btn .col-sm-6{
+  padding: 0px 15px ;
+}
+
+.leads-btn .col-sm-6:first-child{
+  padding-left: 0px;
+}
+.leads-btn .col-sm-6:last-child{
+  padding-right: 0px;
+}
+.modalBodyBox label {
+  font-size: 15px;
+}
+@media screen and (max-width: 767px) {
+  #SuspenseLeadsModel .modal-dialog,  #RequirementModel .modal-dialog{
+    width: auto;
+  }
 }

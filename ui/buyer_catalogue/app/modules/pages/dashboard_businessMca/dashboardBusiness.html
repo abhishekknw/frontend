@@ -1066,11 +1066,10 @@
                           </div>
                         <div class="col-md-6">
                               <h4 class="panel-title">
-                                <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
-                                  <option value="">Select Vendor</option>
-                                  <option value="{{vendor.vendor_id}}">All</option>
-                                  <option value="{{vendor.vendor_id}}" ng-repeat="vendor in vendorsData">{{vendor.principal_vendor}}</option>
-                                </select>
+                              <select ng-options="supplierType for supplierType in surveyLeadArray"
+                                aria-placeholder="Select Leads,Surveyed Clients" ng-model="supplierType" class="form-control"
+                                ng-change="surveyLeadFilter(supplierType)">
+                              </select>
                               </h4>
                           </div>
                           <div class="animate-show">
@@ -1092,7 +1091,7 @@
                              </h4>
                           </div>
                       </div>
-                      <div class="col-sm-12 clearfix leads-btn">                        
+                      <!-- <div class="col-sm-12 clearfix leads-btn">                        
                         <div class="col-sm-6">
                           <button class="btn btn-danger w-100"  ng-click="leadBasics()">
                             Leads Basics
@@ -1103,7 +1102,15 @@
                             Leads Details
                           </button> 
                         </div>
-                      </div>                      
+                      </div>  -->
+                      <div class="col-sm-12 clearfix leads-btn">
+                        <div class="col-sm-6">
+                          <label class="btn btn-danger w-100" ng-click="leadBasics()" ng-model="radioModel" uib-btn-radio="'Left'" uncheckable>Leads Basics</label>
+                        </div>
+                        <div class="col-sm-6"  style="text-align: right;">
+                          <label class="btn btn-danger w-100" ng-click="getCampaigns()" ng-model="radioModel" uib-btn-radio="'Middle'" uncheckable>Leads Details</label>
+                        </div>
+                      </div>
                   <div class="leads-details" ng-if="showTable">
                     <div class="table-responsive">
                       <table class="table">
@@ -1124,23 +1131,22 @@
                               <td style="width:62px;">{{$index + 1}}</td>
                               <td style="width:140px;"  class="col-md-2">{{campaign.name}}</td>
                               <td style="width:140px;">{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
-                              <td class="col-md-2" >{{campaign.supplier_count}}</td>
+                              <td class="col-md-2" >{{campaign.supplier_count}}({{campaign.unique_count}})</td>
                               <td>
-                                <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View Leads</button>
+                                <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id,campaign.unique_count)">View Leads</button>
                               </td>
                               <td>
-                                <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id, 'email')" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
+                                <button class="btn btn-danger" ng-click="setEmailDownloadValue(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
                               </td>
                               <td>
-                                <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Download Leads</button>
+                                <button class="btn btn-danger" data-target="#downloadLeads" ng-click="setEmailDownloadValue(campaign.campaign_id)" data-toggle="modal">Download Leads</button>
                               </td>
                             </tr>
   
                           </tbody>
                         </table>
-  
                       </div>
-                    </div>
+                   </div>
                     <div class="viewLeadstable" ng-if="!showCampaigns && !leadBasicShow">
                       </br><br>
                         <div class="table-responsive">
@@ -1152,11 +1158,11 @@
                                   <span>{{key}}</span></th>
                                 <th>Current Status</th>
                                 <th>Client Comment</th>
-                                <th>Action</th>
+                                <th>Lead Details</th>
                               </tr>
                             </thead>
-                            <tbody dir-paginate="lead in selectedCampaignLeads.values | filter : searchData
-                                                 | filter : Code | itemsPerPage:20 track by $index">
+                            <tbody dir-paginate="lead in selectedCampaignLeads.values | itemsPerPage:itemsPerPageLead" total-items="totalCountLead"
+                                   current-page="currentPageLead" track by "$index">
                               <tr>
                                 <td>{{$index + 1}}
                                   <span ng-if="lead[0].requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showSubLeadDetail(lead[0].requirement_id,lead[0].supplier_id)">
@@ -1181,7 +1187,7 @@
                                 <td><button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;"
                                   type="button" name="button" class="btn btn-danger"
                                   ng-click="showLeadDetail(lead[0]._id,lead[0].requirement_id)" data-toggle="modal"
-                                  data-target="#myModal">Detail</button>
+                                  data-target="#myModal">Lead Detail</button>
                               </td>
                               </tr>
                               <tr style="background-color: yellow;" id="{{id}}"
@@ -1215,10 +1221,9 @@
                             </tbody>
                           </table>
                         </div>
-                      </div>
                       <br /><br />
                       <div style="text-align:center" ng-if="showTable==true">
-                      <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ></dir-pagination-controls>
+                      <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" on-page-change="pageChangedLeadDetail(newPageNumber - 1)" ></dir-pagination-controls>
                       </div>
                       <br /> <br />
                       <button ng-if="!showCampaigns && !leadBasicShow" class="btn btn-danger" ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal" data-toggle="modal">Print Leads In Excel</button>
@@ -1245,41 +1250,41 @@
                               </tr>
                             </thead>
                             <tbody class="data-list" pagination-id="paginate1"
-                            dir-paginate="decisionPanding in leadDecisionPandingData.values |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord"
-                            total-items="totalrecord" current-page="currentPage" track by "$index">
+                                   dir-paginate="decisionPanding in leadDecisionPandingData.values |itemsPerPage:itemsPerPageLead" total-items="totalCountLead"
+                                   current-page="currentPageLead" track by "$index">
+                            <tr>
                               <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
                                   ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus">
-                                  <span ng-if="decisionPanding.requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
+                                  <span ng-if="decisionPanding[0].requirement_id==id" class='fas fa-caret-up' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding[0].supplier_id)">
                                   </span>
-                                  <span ng-if="decisionPanding.requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showLeads(decisionPanding.requirement_id,decisionPanding.supplier_id)">
+                                  <span ng-if="decisionPanding[0].requirement_id!=id"  class='fas fa-caret-down' style='font-size:24px' ng-click="showLeads(decisionPanding[0].requirement_id,decisionPanding[0].supplier_id)">
                                   </span>
                               </td>                          
-                              <td class="alignment text-center" ng-repeat="decision in decisionPanding">{{decision.value}}</td>
+                              <td class="alignment text-center" ng-repeat="decision in decisionPanding" ng-hide="$first">{{decision.value}}</td>
                               <td class="alignment text-center">
-                                <select ng-change="setValue(value8,decision.client_comment,decision._id,decision.requirement_id)"
+                                <select ng-change="setValue(value8,decisionPanding[0].client_comment,decisionPanding[0]._id,decisionPanding[0].requirement_id)"
                                   class="form-control client-status" ng-model="value8">
                                   <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
                                 </select>
-                                <span style="display: none;">{{value8=value8?value8:decision.macchadalo_client_status}}</span>
-                                <span>{{decision.updated_at?decision.updated_at:"NA"}}</span>
+                                <span style="display: none;">{{value8=value8?value8:decisionPanding[0].macchadalo_client_status}}</span>
+                                <span>{{decisionPanding[0].updated_at?decisionPanding[0].updated_at:"NA"}}</span>
                               </td>
                                 <td class="alignment text-center">
                                   {{decision.phone_number?decision.phone_number:"NA"}}
                                 </td>
                                 <td class="alignment">
-                                    <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
+                                    <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding[0]._id,decisionPanding[0].requirement_id)">View / Add</button>
                                 </td>
                               <td class="alignment text-center">
                                 <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                  ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
+                                  ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding[0]._id,decisionPanding[0].requirement_id)">Accept</button>
                                 <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                  ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding._id)"
+                                  ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding[0]._id,decisionPanding[0].requirement_id)"
                                   ng-if="decisionPanding.client_status!='Decline'">Decline</button>
                                 <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                                   disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
                               </td>
                             </tr>
-                            <tr>
                               <tr style="background-color: yellow;" id="{{id}}"
                                   ng-if="arrowIcon==1 && decisionPanding.requirement_id==id"
                                   ng-repeat="data in supplier_leads">
@@ -1319,8 +1324,10 @@
                           </table>
                         </div>
                       </div>
+                      <div style="text-align:center" ng-if="leadBasicShow==true && showTable==true">
+                        <dir-pagination-controls pagination-id="paginate1" max-size="7" direction-links="true" boundary-links="true" on-page-change="pageChangedLeadDetail(newPageNumber - 1)" ></dir-pagination-controls>
+                       </div>
                     </div>
-
                   </uib-tab>
   
   <!-- START : BOOKING ENGINE -->
@@ -4696,47 +4703,69 @@
           </div>
         </div>
       </div>
-      <div id="sendEmailModal" class="modal fade">
+      <div id="sendEmailModal" class="modal fade modal-styles theme-modal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" ng-if="submitLeadType">{{campaignNameOnImageModal}} Send Leads To Email</h4>
-              <h4 class="modal-title" ng-if="!submitLeadType">{{campaignNameOnImageModal}} Download Leads</h4>
-              <hr/>
-              <div class = "modal-body">
-  
-                <table class="table table-bordered table-align">
-                  <tbody>
-                    <div class="">
-                      Select Form :
-                      <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
-                          <option ng-repeat="form_name in formDetails"  value="{{form_name.leads_form_id}}">{{form_name.leads_form_name}}</option>
-                      </select>
-                    </div>
-                    <br />
-                    <tr>
-                      <td class="col-md-2">
-                        <p class="input-group">
-                          Select Start Date(Optional): <input type="date" class="form-control"  ng-model="emailCampaignLeadsModel.start_date"  required>
-                        </p>
-                      </td>
-                      <td class="col-md-2">
-                        <p class="input-group">
-                          Select End Date(Optional) : <input type="date" class="form-control"  ng-model="emailCampaignLeadsModel.end_date" required>
-                        </p>
-                      </td>
-                      <td> <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()" ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
-                        <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()" ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="!submitLeadType">Download</button></td>
-                    </tr>
-                  </tbody>
-                </table>
-                </div>
+                <h3>Send Emails {{ proposalDetail.name }}</h3>
+                  <button type="button" class="close" ng-click="closeModel()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
               </div>
-            </div>
+              <div class="modal-body">
+                <div class="modalBodyBox">
+                  <label>Select Email Type:</label>
+                  <select class="field" name="" ng-model="emailModel.selected">
+                    <option value="" disabled selected hidden>Email Type</option>
+                    <option value="recce">Recce Email</option>
+                    <option value="pipelineOfSupplier">Pipelined Societies Email</option>
+                    <option value="listOfSupplier">Booking(Upcoming Society activation Email)</option>
+                    <option value="activationOfSupplier">Activation Of Society,Branding and Permission Email</option>
+                    <option value="prehype">Prehype Email</option>
+                  </select>
+                  <div class="sendEmail1">
+                      <input type="email" class="field"  placeholder="Enter Multiple User's Email To Send Mail " ng-model="emailModel.email">
+                  </div>
+      
+                      <div>
+                        <label>Note :- Use comma separation between emails to send multiple emails to users at the same time</label>
+                      </div>
+                      <div class="buttons buttons-flex">
+                        <button type="button" name="button" ng-Click="sendEmailsMca(emailModel.email)" class="smallBtn" ng-disabled="isEmailButton || emailBtnDisabled || !emailModel.selected">Send email for given user</button>
+                        <span>OR</span>
+                        <button type="button" name="button" class="smallBtn" ng-click="sendEmailsMca(emailModel.email)" ng-disabled="emailBtnDisabled || !emailModel.selected">Send email to all (Default)</button>
+                      </div>
+                  </div>
+                </div>
           </div>
         </div>
       </div>
+
+      <!-- modal for download -->
+  <div id="downloadLeads" class="modal fade modal-styles">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalBodyBox">
+            <h3>Download All leads</h3>
+            
+             <button type="button" class="close" ng-click="closeModel()" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">×</span>
+             </button>
+              <div class="sendEmail1">
+                <div class="buttons">
+                  <div class="download-leads-btn">
+                    <a href="https://stagingapi.machadalo.com/v0/ui/b2b/download-leads-summary/?lead_type=leads&supplier_code=all&campaign_id={{campaignId}}"><button type="button" name="button" class="smallBtn">Download Lead</button></a>
+                    <input class="smallBtn" type="file" name="file" id="file" ng-files="getFiles($files)">
+                    <button class="smallBtn" type="button" name="button" ng-click="uploadSelectFile()">Upload Comments</button>
+                  </div>
+                </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   
   
       <!--End: Code for showing image Modal  Window -->
@@ -5300,13 +5329,22 @@
     .leads-btn{
       margin-top: 15px;
     }
-    .leads-btn .col-sm-6{
-      padding: 0;
-    }
+    
     .leads-btn .btn{
       border-radius: 0;
     }
     .leads-btn .btn:hover{
       background-color: #8e1921  !important;
+    }
+    .table  td button{
+      margin: 10px 0px;
+      ;
+    }
+    .table  td {
+      vertical-align: middle !important;
+      line-height: 1.4  !important;
+    }
+    .table > thead > tr > th{
+      vertical-align: middle !important;
     }
   </style>
