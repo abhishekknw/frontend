@@ -829,7 +829,24 @@ header .topRight .top-menu {
 #SuspenseLeadsModel .modal-dialog, #RequirementModel .modal-dialog{
   width: 1200px;
 }
+.leads-btn .btn{
+  padding: 12px  6px;
+  background-color: #d0332c;
+  margin-top: 20px;
+}
+.leads-btn .col-sm-6{
+  padding: 0px 15px ;
+}
 
+.leads-btn .col-sm-6:first-child{
+  padding-left: 0px;
+}
+.leads-btn .col-sm-6:last-child{
+  padding-right: 0px;
+}
+.modalBodyBox label {
+  font-size: 15px;
+}
 @media screen and (max-width: 767px) {
   #SuspenseLeadsModel .modal-dialog,  #RequirementModel .modal-dialog{
     width: auto;

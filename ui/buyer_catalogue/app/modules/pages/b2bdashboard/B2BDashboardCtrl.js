@@ -1458,8 +1458,7 @@
       }
       return values;
     }
-     $scope.aa = 'Leads';
-     $scope.supplierType = 'Leads';
+    $scope.supplierType = 'Leads';
     $scope.surveyLeadArray = ['Leads','Survey','Feedback'];
     
     $scope.surveyLeadFilter = function (filter) {
