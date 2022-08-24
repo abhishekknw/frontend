@@ -1052,10 +1052,7 @@
                       </div>
                     </div>
                 </uib-tab>
-  
-  
-                <!-- <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="1"> -->
-                  <uib-tab id="uib-tabs-width"  ng-click="optionNewTab()" index="1">
+                    <uib-tab id="uib-tabs-width"  ng-click="optionNewTab('basic')" index="1">
                     <uib-tab-heading>
                       <h5>View Leads</h5>
                     </uib-tab-heading>
@@ -1091,24 +1088,12 @@
                              </h4>
                           </div>
                       </div>
-                      <!-- <div class="col-sm-12 clearfix leads-btn">                        
-                        <div class="col-sm-6">
-                          <button class="btn btn-danger w-100"  ng-click="leadBasics()">
-                            Leads Basics
-                          </button> 
-                        </div>
-                        <div class="col-sm-6"  style="text-align: right;">
-                          <button class="btn btn-danger w-100" ng-click="getCampaigns()">
-                            Leads Details
-                          </button> 
-                        </div>
-                      </div>  -->
                       <div class="col-sm-12 clearfix leads-btn">
                         <div class="col-sm-6">
-                          <label class="btn btn-danger w-100" ng-click="leadBasics()" ng-model="radioModel" uib-btn-radio="'Left'" uncheckable>Leads Basics</label>
+                          <label class="btn btn-danger w-100 active" ng-click="leadBasics('basic')" ng-model="radioModel" uib-btn-radio="'Left'" uncheckable>Leads Basics</label>
                         </div>
                         <div class="col-sm-6"  style="text-align: right;">
-                          <label class="btn btn-danger w-100" ng-click="getCampaigns()" ng-model="radioModel" uib-btn-radio="'Middle'" uncheckable>Leads Details</label>
+                          <label class="btn btn-danger w-100 active" ng-click="getCampaigns('details')" ng-model="radioModel" uib-btn-radio="'Middle'" uncheckable>Leads Details</label>
                         </div>
                       </div>
                   <div class="leads-details" ng-if="showTable">
@@ -1183,6 +1168,7 @@
                                 </td>
                                 <td class="alignment">
                                   <button type="button" style=" line-height: 1.5;" class="btn btn-danger" ng-click="viewCommentsLeadDetails(lead[0]._id,lead[0].requirement_id)">View / Add</button>
+                                  <div>{{lead[0].last_comment.comment}}</div>
                                 </td>
                                 <td><button style="margin-top:8px; margin-right: -16px !important;"
                                   type="button" name="button" class="btn btn-danger"
@@ -1243,8 +1229,8 @@
                                 <th>City</th>
                                 <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">PC<a><i class="icon-sort" style="color:white;"></i></a></th>
                                 <th>Lead Timestamp</th>
-                                <th>Current Status</th>
                                 <th>Phone Number</th> 
+                                <th>Current Status</th>
                                 <th>Client Comment</th>
                                 <th>Action</th>
                               </tr>
@@ -1269,11 +1255,9 @@
                                 <span style="display: none;">{{value8=value8?value8:decisionPanding[0].macchadalo_client_status}}</span>
                                 <span>{{decisionPanding[0].updated_at?decisionPanding[0].updated_at:"NA"}}</span>
                               </td>
-                                <td class="alignment text-center">
-                                  {{decision.phone_number?decision.phone_number:"NA"}}
-                                </td>
                                 <td class="alignment">
                                     <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding[0]._id,decisionPanding[0].requirement_id)">View / Add</button>
+                                    <div>{{decisionPanding[0].last_comment.comment}}</div>
                                 </td>
                               <td class="alignment text-center">
                                 <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
@@ -5297,7 +5281,7 @@
       <link href="css/sidePanel.css" rel="stylesheet" media="screen">
       <link href="css/custom.css" rel="stylesheet" media="screen">
       <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
-      <link rel="stylesheet" type="text/css" href="modules/pages/dashboard/chat.css">
+      <!-- <link rel="stylesheet" type="text/css" href="modules/pages/dashboard/chat.css"> -->
   <!-- <script data-require="jquery@*" data-semver="2.1.4" src="https://code.jquery.com/jquery-2.1.4.js"></script> -->
       <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
       <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">

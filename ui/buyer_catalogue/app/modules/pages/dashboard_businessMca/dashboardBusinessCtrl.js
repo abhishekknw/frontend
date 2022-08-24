@@ -385,7 +385,6 @@
             console.log(response);
           })
       }
-
       var loadData = function () {
         getAllCampaignsData();
       }
@@ -652,52 +651,34 @@
         $scope.bookingPhases = [];
         $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code)
       }
-      $scope.getCampaigns = function (date, vendor, supplierType) {
+      $scope.getCampaigns = function (tabName) {
         cfpLoadingBar.start();
         conditionForTable = false;
         $scope.showSupplierTypeCountChart = false;
         $scope.selectedBookingCampaignName = undefined;
         $scope.showTableForAllCampaignDisplay = false;
-
-        // if (!date)
-        //   date = new Date();
-        // date = commonDataShare.formatDate(date);
-        // date = date + ' 00:00:00';
-        // if (!vendor) {
-        //   $scope.selectedVendor = {};
-        // }
-        // $scope.showCampaignGraph = true;
-        // $scope.campaignLabel = false;
-        // $scope.showLeadsDetails = false;
-        // $scope.showDisplayDetailsTable = false;
-        // $scope.showAllCampaignDisplay = false;
-        // $scope.allCampaignsLeadsData = {};
-        // $scope.options = {};
         $scope.leadBasicShow = false;
-        $scope.viewCampaignLeads(true, $scope.selectedSupplierType.code);
+        $scope.viewCampaignLeads(tabName);
 
       }
 
-      $scope.leadBasics = function () {
+      $scope.leadBasics = function (tabName) {
         $scope.showCampaigns = true;
         conditionForTable = true;
-        B2BDashboardService.basicCampaignList()
+        B2BDashboardService.basicCampaignList(tabName)
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
           })
       }
-      $scope.optionNewTab = function () {
+      $scope.optionNewTab = function (tabName) {
         if (!$scope.page) {
           $scope.page = 0;
         }
         $scope.leadBasicShow = false;
         $scope.viewTab = true;
         $scope.showTable = true;
-        $scope.showCampaigns = true
-        B2BDashboardService.basicCampaignList()
-          .then(function onSuccess(response) {
-            $scope.leadsDataCampaigns = response.data.data;
-          })
+        $scope.showCampaigns = true;
+        $scope.leadBasics (tabName);
       }
 
       $scope.viewCommentsLeadDetails = function (Id, req_id) {
@@ -708,6 +689,7 @@
           .then(function onSuccess(response) {
             $scope.externalComment = response.data.data;
           })
+        $scope.viewLeadsForSelectedCampaign ($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead );  
       }
       $scope.acceptDeclineDecisionPanding = function (index, value,id,requirement_id) {
         let data = [{
@@ -789,7 +771,6 @@
           B2BDashboardService.showSubLeadDetail($scope.campaignIdForLeads, $scope.selectedSupplierType.code, "", supplier_id)
             .then(function onSuccess(response) {
               $scope.detail_supplier_leads = response.data.data.lead;
-              console.log($scope.detail_supplier_leads)
             })
         }
       }
@@ -802,7 +783,6 @@
         B2BDashboardService.showLeadDetail(_id, req_id)
           .then(function onSuccess(response) {
             $scope.leadDetailDataList = response.data.data;
-            //console.log($scope.leadDetailDataList);               
           });
 
         B2BDashboardService.viewCommentsDetails(_id, req_id)
@@ -843,7 +823,7 @@
               $scope.showSupplierTypeCountChart = true;
             }
           }).catch(function onError(response) {
-            console.log(response);
+            //console.log(response);
           })
       }
 
@@ -1476,10 +1456,7 @@
 
               return $scope.x_fre_leads[d];
             },
-            // tickFormat: function(d){
-            //   console.log($scope.x[d]);
-            //           return $scope.x[d];
-            //       },
+
             "rotateLabels": -30
           },
           "yAxis": {
@@ -3568,10 +3545,10 @@
       $scope.checkNan = function (number) {
         return isNaN(number);
       }
-      $scope.viewCampaignLeads = function (value) {
+      $scope.viewCampaignLeads = function (tabName) {
         $scope.showTable = true;
         cfpLoadingBar.start();
-        B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code, "admin")
+        B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code, "admin",tabName)
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
           }).catch(function onError(response) {
@@ -3599,7 +3576,8 @@
             })
         }
         else {
-          B2BDashboardService.purchasedNotPurchasedLead(campaignId, $scope.filterType, $scope.selectedSupplierType.code, page, "", "", "")
+          B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page)
+          // B2BDashboardService.purchasedNotPurchasedLead(campaignId, $scope.filterType, $scope.selectedSupplierType.code, page, "", "", "")
             .then(function onSuccess(response) {
               cfpLoadingBar.complete();
               $scope.selectedCampaignLeads = response.data.data;

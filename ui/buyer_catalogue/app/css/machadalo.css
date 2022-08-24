@@ -847,6 +847,12 @@ header .topRight .top-menu {
 .modalBodyBox label {
   font-size: 15px;
 }
+.leads-btn .btn:active {
+  background: #8e1921 !important;
+}
+.leads-btn .btn.active {
+  background: #8e1921 !important;
+}
 @media screen and (max-width: 767px) {
   #SuspenseLeadsModel .modal-dialog,  #RequirementModel .modal-dialog{
     width: auto;

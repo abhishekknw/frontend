@@ -136,25 +136,6 @@ angular.module('catalogueApp')
         var url = url_base + campaign + "/get-suppliers-by-status/";
         return machadaloHttp.get(url);
       }
-
-      // DashboardService.viewCampaignLeads = function (vendor, supplierType) {
-      //   if (vendor) {
-      //     var url = url_root + "leads/summary/?vendor=" + vendor;
-      //   } else {
-      //     var url = url_root + "leads/summary/";
-      //   }
-      //   if (supplierType) {
-      //     if (vendor) {
-      //       url += "&supplier_code=" + supplierType;
-      //     } else {
-      //       url += "?supplier_code=" + supplierType;
-      //     }
-      //   }
-      //   return machadaloHttp.get(url);
-      // }
-
-    
-
       DashboardService.viewLeadsForSelectedCampaign = function (data, campaignId) {
         var url = url_root + "leads/" + campaignId + "/entry_list_by_campaign_id";
         return machadaloHttp.get(url);
@@ -462,9 +443,9 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.viewCampaignLeads = function (vendor, supplierType,user_type) {
+      DashboardService.viewCampaignLeads = function (vendor, supplierType,user_type,tabName) {
         if (vendor) {
-          var url = url_root + "b2b/lead-distribution-campaign/?lead_type=" + vendor + "&user_type="+user_type;
+          var url = url_root + "b2b/lead-distribution-campaign/?lead_type=" + vendor + "&user_type="+user_type + "&tabname="+tabName;
         } else {
           var url = url_root + "b2b/lead-distribution-campaign/";
         }
@@ -608,8 +589,8 @@ angular.module('catalogueApp')
         var url = url_root + "b2b/supplier-leads-details-page/?campaign_id="+ campaignId + "&supplier_type="+ supplier_code +"&next_page="+page+"&supplier_id="+supp_id;
         return machadaloHttp.get(url);
       }
-      DashboardService.basicCampaignList = function () {
-        var url = url_root +"b2b/get-basic-lead-distribution-campaign/";
+      DashboardService.basicCampaignList = function (tabName) {
+        var url = url_root +"b2b/get-basic-lead-distribution-campaign/?tabname="+tabName;
         return machadaloHttp.get(url);
       }
       DashboardService.basicLeadsOfCampaigns = function (campaignId,supplier_code,page) {
