@@ -3688,14 +3688,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- <tr ng-repeat="browsed in browsedDetailData"> -->
-                  <tr>
+                  <tr ng-repeat="browsed in browsedDetailData">
                     <td class="alignment">
                       <input type="checkbox" name="browsedCheck" ng-click="checkboxBrowesLeadCheck()"
                         id="browsedCheckId" ng-model="browsed.browsedCheck">
                     </td>
                     <td class="alignment">
-                      <!-- {{sectorName(browsed.sector_id)}} -->
+                      {{sectorName(browsed.sector_id)}}
                     </td>
 
                     <td class="alignment">
@@ -3834,7 +3833,7 @@
                     </td>
 
                     <td class="alignment">
-                      <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
+                      <!-- <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
                         style="color:red;width:100%;margin-left:20px;" ng-click="browsedMulticheck($index)"
                         ng-dropdown-multiselect="" options="companiesBrowseDetailDataArray" extra-settings="settings"
                         selected-model="browsed.selected_preferred_company" translation-texts="selected_business_type"
@@ -3847,7 +3846,7 @@
                       <input style="margin-top:10px" ng-change="browsCheckBoxAutoCheck($index)" type="text"
                         class="form-control" placeholder="Other Preferred Company"
                         ng-if="browsed.otherPreferredCompanyBrowsed" name="other_preferred_company"
-                        id="other_preferred_company" ng-model="browsed.prefered_patner_other">
+                        id="other_preferred_company" ng-model="browsed.prefered_patner_other"> -->
                     </td>
 
                     <td class="alignment">
