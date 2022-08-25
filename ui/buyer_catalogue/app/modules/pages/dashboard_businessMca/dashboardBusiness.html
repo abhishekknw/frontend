@@ -5009,10 +5009,12 @@
                     <td>
                       <div>
                         <p>{{item.comment}}</p>
+                        <i ng-if="userInfo.username==item.comment_by" style="margin-left: auto;     margin-right: 0;     float: right;     font-size: 16px;"
+                            ng-click="deleteBasicComment(item.id,req_id_detail)" class="fa fa-trash fa-2x"></i>
                       </div>
                       <div>
                         <img ng-src="{{userIcon}}">
-                        <b>{{item.created_by}}:</b> 
+                        <b>{{item.comment_by}}:</b> 
                         <span><small>{{item.created_at|date:'medium'}}</small></span>
                       </div>
                     </td>

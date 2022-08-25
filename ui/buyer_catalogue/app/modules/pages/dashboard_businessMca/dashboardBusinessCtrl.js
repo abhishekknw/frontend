@@ -689,7 +689,13 @@
           .then(function onSuccess(response) {
             $scope.externalComment = response.data.data;
           })
-        $scope.viewLeadsForSelectedCampaign ($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead );  
+      }
+      $scope.deleteBasicComment = function (comment_id, req_id) {
+        B2BDashboardService.deleteBasicComment(comment_id, req_id)
+          .then(function onSuccess(response) {
+            $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
+            swal("", response.data.data, "success");
+          })
       }
       $scope.acceptDeclineDecisionPanding = function (index, value,id,requirement_id) {
         let data = [{
@@ -737,9 +743,9 @@
                 .then(function onSuccess(response) {
                   $scope.externalComment = response.data.data.external_comments;
                 })
-
-            }
+             }
           })
+          $scope.viewLeadsForSelectedCampaign ($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead );
       }
       $scope.arrowIcon = 0;
       $scope.showLeads = function (row, supplier_id) {

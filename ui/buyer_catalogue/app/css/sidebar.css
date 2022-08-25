@@ -194,7 +194,7 @@ a.al-sidebar-list-link b {
 }
 @media (max-width: 1200px) and (min-width: 500px) {
   .al-main {
-    margin-left: 50px;
+    margin-left: 20px;
   }
 
   .al-footer {
