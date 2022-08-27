@@ -28,8 +28,8 @@
         "value": "all"
       },
       {
-          "name": "Residential Society",
-          "value": "RS"
+        "name": "Residential Society",
+        "value": "RS"
       },
     ];
     $scope.entityTypes = constants.entityType;
@@ -38,59 +38,59 @@
     $scope.supplierTypeCodePerformanceDetail = constants.supplierTypeCodePerformanceDetail;
     $scope.selectedSupplierType = { code: "all", codes: "all" };
     $scope.dateRangeModel = {};
-    $scope.example14model=[];
+    $scope.example14model = [];
     $scope.setting1 = {
       scrollableHeight: '200px',
       scrollable: true,
       enableSearch: true
     };
-    $scope.startDate="";
-    $scope.endDate="";
+    $scope.startDate = "";
+    $scope.endDate = "";
     $scope.options = {};
     $scope.dateRangeModel = {};
     $scope.changeStartDate = function () {
-           $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
-           $scope.options.minDate = $scope.dateRangeModel.start_date;
-           $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
-           if ($scope.endDate!=""){
-              if($scope.endDate >= $scope.startDate){
-                $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
-              }
-              else if($scope.endDate < $scope.startDate){
-                $scope.endDate = $scope.startDate;
-                $scope.dateRangeModel.end_dates=$scope.dateRangeModel.start_date;
-                $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
-              }
-           }
+      $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
+      $scope.options.minDate = $scope.dateRangeModel.start_date;
+      $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
+      if ($scope.endDate != "") {
+        if ($scope.endDate >= $scope.startDate) {
+          $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate);
+        }
+        else if ($scope.endDate < $scope.startDate) {
+          $scope.endDate = $scope.startDate;
+          $scope.dateRangeModel.end_dates = $scope.dateRangeModel.start_date;
+          $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate);
+        }
+      }
     }
 
     $scope.changeEndDate = function () {
-            if ($scope.changeEndDate > $scope.changeStartDate)
-                $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
-                $scope.endDate = $scope.dateFormat($scope.dateRangeModel.end_dates);
-                $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
+      if ($scope.changeEndDate > $scope.changeStartDate)
+        $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
+      $scope.endDate = $scope.dateFormat($scope.dateRangeModel.end_dates);
+      $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate);
     }
 
-    $scope.searchForDetails = function(search){
-      $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate,$scope.selectCity,search);
+    $scope.searchForDetails = function (search) {
+      $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate, $scope.selectCity, search);
     }
 
     $scope.dateFormat = function (date) {
       var d = new Date(date),
-          month = '' + (d.getMonth() + 1),
-          day = '' + d.getDate(),
-          year = d.getFullYear();
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
       if (month.length < 2) month = '0' + month;
       if (day.length < 2) day = '0' + day;
       return [day, month, year].join('-');
     }
-    $scope.selectCity="";
-    $scope.selectedCity = function(city){
-     $scope.selectCity=city;
-     $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate,$scope.selectCity);
+    $scope.selectCity = "";
+    $scope.selectedCity = function (city) {
+      $scope.selectCity = city;
+      $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate, $scope.selectCity);
 
-     console.log($scope.selectCity);
-    }                
+      console.log($scope.selectCity);
+    }
     $scope.invKeysLead = [
       { header: 'LEAD COUNT' },
       { header: 'EXISTING CLIENT FEEDBACK COUNT' },
@@ -583,12 +583,12 @@
 
     $scope.purchasedTable = false;
     $scope.notPurchasedTable = false;
-    $scope.listClientStatus=[];
+    $scope.listClientStatus = [];
     $scope.viewCampaignLeads = function () {
-      if($scope.listClientStatus.length==0){
+      if ($scope.listClientStatus.length == 0) {
         B2BDashboardService.listClientStatus().then(function onSuccess(response) {
-          var listData  = response.data.data.client_status;
-          for(var k in listData){
+          var listData = response.data.data.client_status;
+          for (var k in listData) {
             $scope.listClientStatus.push(listData[k].status_name)
           }
         });
@@ -598,12 +598,12 @@
       B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code)
         // B2BDashboardService.viewCampaignLeads()
         .then(function onSuccess(response) {
-          if(response.data.data){
+          if (response.data.data) {
             $scope.leadsDataCampaigns = response.data.data;
-            $scope.userName=response.data.data[0].name;
+            $scope.userName = response.data.data[0].name;
             $scope.campaign_id = $scope.leadsDataCampaigns[0].campaign_id;
           }
-          
+
         });
     }
 
@@ -617,18 +617,18 @@
         });
     }
 
-    $scope.selectFlag=true;
-    $scope.clientStatus="";
-    $scope.clientComment="";
-    $scope.requirement_id="";
-    $scope.setValue = function (value,comment,id,req_id) {
-      $scope.clientStatus=value;
-      $scope.requirement_id=req_id;
-      if($scope.clientComment==""){
-        $scope.clientComment=comment;
+    $scope.selectFlag = true;
+    $scope.clientStatus = "";
+    $scope.clientComment = "";
+    $scope.requirement_id = "";
+    $scope.setValue = function (value, comment, id, req_id) {
+      $scope.clientStatus = value;
+      $scope.requirement_id = req_id;
+      if ($scope.clientComment == "") {
+        $scope.clientComment = comment;
       }
-      $scope.selectFlag=false;
-      $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id,$scope.requirement_id);
+      $scope.selectFlag = false;
+      $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment, id, $scope.requirement_id);
     }
     // $scope.viewComments = function (Id,req_id) {
     //   $scope.id_basic=Id;
@@ -639,131 +639,131 @@
     //    $scope.internalComment=response.data.data.internal_comments;
     //   })
     // }
-    $scope.viewCommentsLeadDetails = function (Id,req_id) {
-      $scope.id_detail=Id;
-      $scope.req_id_detail=req_id;
+    $scope.viewCommentsLeadDetails = function (Id, req_id) {
+      $scope.id_detail = Id;
+      $scope.req_id_detail = req_id;
       $('#viewCommentsLeadDetails').modal('show');
-      B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
-      .then(function onSuccess(response) {
-        $scope.externalComment=response.data.data;
-      })      
-    }
-
-    $scope.condition="";
-    $scope.commentValueDetails = function(comment,Id,req_id,check){
-    $scope.condition=check;
-       B2BDashboardService.basicExternalComment(comment.comment,Id,req_id)
-       .then(function onSuccess(response){
-        $scope.mymodel["comment"]="";
-        swal("Successfull", "comment added sucessfully", "success");
-        if($scope.condition==true){
-          $scope.viewCommentsLeadDetails($scope.id_detail,$scope.req_id_detail);
-        }
-        else{
-          B2BDashboardService.viewCommentsDetails(Id,$scope.req_id_detail)
-           .then(function onSuccess(response) {
-           $scope.externalComment=response.data.data;
-      }) 
-
-        }
-      })
-     }
-    $scope.valuechange=function(value1,status,id,req_id){
-      $scope.clientComment=value1;
-      $scope.requirement_id=req_id;
-      $scope.clientStatus=status;
-      if($scope.clientComment != $scope.commentCheck){
-        $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id,$scope.requirement_id);
-      }
-    }
-    $scope.leadDetailDataList="";
-    $scope.showLeadDetail = function (_id,req_id) {
-          $scope.idForComment=_id
-          $scope.lead_id=req_id;
-          B2BDashboardService.showLeadDetail(_id)
-            .then(function onSuccess(response) {
-            $scope.leadDetailDataList = response.data.data;  
-            });
-
-          B2BDashboardService.viewCommentsDetails(_id,req_id)
-          .then(function onSuccess(response) {
-            $scope.externalComment=response.data.data;
-          })  
-       }
-
-    $scope.deleteBasicComment = function(comment_id,req_id){
-        B2BDashboardService.deleteBasicComment (comment_id,req_id)
-        .then(function onSuccess(response){
-          swal("",response.data.data, "success");
-          B2BDashboardService.viewCommentsDetails($scope.id_detail,$scope.req_id_detail)
-            .then(function onSuccess(response) {
-              $scope.externalComment=response.data.data;
-            }) 
-        })   
-      }
-
-    $scope.updateLeadClientStatus = function (status,comment,id) {
-      if($scope.clientStatus==""){
-        $scope.clientStatus=status;
-      }
-      if($scope.clientComment==""){
-        $scope.clientComment=comment;
-      }
-      B2BDashboardService.updateLeadClientStatus( $scope.clientStatus, $scope.clientComment,id,$scope.requirement_id)
+      B2BDashboardService.viewCommentsDetails(Id, $scope.req_id_detail)
         .then(function onSuccess(response) {
-          swal(constants.name, response.data.data, constants.success);
-          $scope.clientStatus="";
-          $scope.clientComment="";
-        });
-      B2BDashboardService.showLeads($scope.supp_id)
-        .then(function onSuccess(response) {
-          $scope.supplier_leads=response.data.data.lead;
-        })  
-      B2BDashboardService.showSubLeadDetail($scope.campaignId,$scope.selectedSupplierType.code,$scope.page,$scope.supp_id)
-        .then(function onSuccess(response) {
-          $scope.detail_supplier_leads=response.data.data.lead;
+          $scope.externalComment = response.data.data;
         })
     }
 
-    $scope.updateClientStatus = function (clentId,id,status,comment,type) {
-      if($scope.clientStatus==""){
-        $scope.clientStatus=status;
+    $scope.condition = "";
+    $scope.commentValueDetails = function (comment, Id, req_id, check) {
+      $scope.condition = check;
+      B2BDashboardService.basicExternalComment(comment.comment, Id, req_id)
+        .then(function onSuccess(response) {
+          $scope.mymodel["comment"] = "";
+          swal("Successfull", "comment added sucessfully", "success");
+          if ($scope.condition == true) {
+            $scope.viewCommentsLeadDetails($scope.id_detail, $scope.req_id_detail);
+          }
+          else {
+            B2BDashboardService.viewCommentsDetails(Id, $scope.req_id_detail)
+              .then(function onSuccess(response) {
+                $scope.externalComment = response.data.data;
+              })
+
+          }
+        })
+    }
+    $scope.valuechange = function (value1, status, id, req_id) {
+      $scope.clientComment = value1;
+      $scope.requirement_id = req_id;
+      $scope.clientStatus = status;
+      if ($scope.clientComment != $scope.commentCheck) {
+        $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment, id, $scope.requirement_id);
       }
-      if($scope.clientComment==""){
-        $scope.clientComment=comment;
+    }
+    $scope.leadDetailDataList = "";
+    $scope.showLeadDetail = function (_id, req_id) {
+      $scope.idForComment = _id
+      $scope.lead_id = req_id;
+      B2BDashboardService.showLeadDetail(_id)
+        .then(function onSuccess(response) {
+          $scope.leadDetailDataList = response.data.data;
+        });
+
+      B2BDashboardService.viewCommentsDetails(_id, req_id)
+        .then(function onSuccess(response) {
+          $scope.externalComment = response.data.data;
+        })
+    }
+
+    $scope.deleteBasicComment = function (comment_id, req_id) {
+      B2BDashboardService.deleteBasicComment(comment_id, req_id)
+        .then(function onSuccess(response) {
+          swal("", response.data.data, "success");
+          B2BDashboardService.viewCommentsDetails($scope.id_detail, $scope.req_id_detail)
+            .then(function onSuccess(response) {
+              $scope.externalComment = response.data.data;
+            })
+        })
+    }
+
+    $scope.updateLeadClientStatus = function (status, comment, id) {
+      if ($scope.clientStatus == "") {
+        $scope.clientStatus = status;
       }
-      B2BDashboardService.updateClientStatus(clentId, $scope.clientStatus, $scope.clientComment,id)
+      if ($scope.clientComment == "") {
+        $scope.clientComment = comment;
+      }
+      B2BDashboardService.updateLeadClientStatus($scope.clientStatus, $scope.clientComment, id, $scope.requirement_id)
         .then(function onSuccess(response) {
           swal(constants.name, response.data.data, constants.success);
-          $scope.clientStatus="";
-          $scope.clientComment="";
-          if(type!='Lead'){
-            $scope.leadDecisionPanding($scope.currentTypeForLeadDecisionPanding,$scope.currentPageForLeadDecisionPanding);
-          }          
+          $scope.clientStatus = "";
+          $scope.clientComment = "";
+        });
+      B2BDashboardService.showLeads($scope.supp_id)
+        .then(function onSuccess(response) {
+          $scope.supplier_leads = response.data.data.lead;
+        })
+      B2BDashboardService.showSubLeadDetail($scope.campaignId, $scope.selectedSupplierType.code, $scope.page, $scope.supp_id)
+        .then(function onSuccess(response) {
+          $scope.detail_supplier_leads = response.data.data.lead;
+        })
+    }
+
+    $scope.updateClientStatus = function (clentId, id, status, comment, type) {
+      if ($scope.clientStatus == "") {
+        $scope.clientStatus = status;
+      }
+      if ($scope.clientComment == "") {
+        $scope.clientComment = comment;
+      }
+      B2BDashboardService.updateClientStatus(clentId, $scope.clientStatus, $scope.clientComment, id)
+        .then(function onSuccess(response) {
+          swal(constants.name, response.data.data, constants.success);
+          $scope.clientStatus = "";
+          $scope.clientComment = "";
+          if (type != 'Lead') {
+            $scope.leadDecisionPanding($scope.currentTypeForLeadDecisionPanding, $scope.currentPageForLeadDecisionPanding);
+          }
         });
     }
 
-    $scope.clientStatusList = function (data) {      
+    $scope.clientStatusList = function (data) {
       B2BDashboardService.clientStatusList(data)
         .then(function onSuccess(response) {
-          var list = response.data.data.client_status;           
-          for (var k in list){
-            for(var i in  list[k]){
-              $scope.clientStausListData.push(list[k][i]);              
+          var list = response.data.data.client_status;
+          for (var k in list) {
+            for (var i in list[k]) {
+              $scope.clientStausListData.push(list[k][i]);
             }
-          }            
+          }
         });
     }
-    $scope.getFormDetails=function(campaign_id,leads_type){
-      $scope.campaign=campaign_id;
-      $scope.leads=leads_type;
-      $scope.supplier_code="all";
+    $scope.getFormDetails = function (campaign_id, leads_type) {
+      $scope.campaign = campaign_id;
+      $scope.leads = leads_type;
+      $scope.supplier_code = "all";
     }
-    $scope.sendBookingEmails=function(email){
+    $scope.sendBookingEmails = function (email) {
       swal("Successfull", "Email Sent Sucessfully", "success");
-      B2BDashboardService.sendBookingEmails($scope.leads,$scope.supplier_code,$scope.campaign,email)
-      .then(function onSuccess(response){
-      });
+      B2BDashboardService.sendBookingEmails($scope.leads, $scope.supplier_code, $scope.campaign, email)
+        .then(function onSuccess(response) {
+        });
     }
     $scope.getNotPurchasedLead = function (CampaignId, campaignName) {
       $scope.purchasedTable = false;
@@ -775,32 +775,32 @@
         });
     }
 
-    $scope.pageChangedPurchage= function(page,leadPurchasedStatus,campaignId,campaignName){
-      $scope.getPurchasedNotPurchasedLead(campaignId, campaignName, leadPurchasedStatus, page, $scope.startDate, $scope.endDate,$scope.selectCity);
+    $scope.pageChangedPurchage = function (page, leadPurchasedStatus, campaignId, campaignName) {
+      $scope.getPurchasedNotPurchasedLead(campaignId, campaignName, leadPurchasedStatus, page, $scope.startDate, $scope.endDate, $scope.selectCity);
     }
 
-    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus,page,startDate,endDate,city,search) {
-      $scope.page=page;
-      if(!page){
-        $scope.page=0;
+    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus, page, startDate, endDate, city, search) {
+      $scope.page = page;
+      if (!page) {
+        $scope.page = 0;
       }
-      if(!startDate){
-        startDate="";
+      if (!startDate) {
+        startDate = "";
       }
-      if(!endDate){
-        endDate="";
+      if (!endDate) {
+        endDate = "";
       }
-      if(!city){
-        city="";
+      if (!city) {
+        city = "";
       }
-      if(!search){
-        search="";
+      if (!search) {
+        search = "";
       }
       $scope.leadPurchasedStatus = leadStatus;
       $scope.campaignId = CampaignId;
       $scope.campaignName = campaignName;
       $scope.CampaignNameofLeads = campaignName;
-      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code,$scope.page,startDate,endDate,city,search)
+      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType, $scope.selectedSupplierType.code, $scope.page, startDate, endDate, city, search)
         .then(function onSuccess(response) {
           $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
@@ -810,7 +810,7 @@
           $scope.purchasedNotPurchasedLeadTotal = response.data.data.length;
           $scope.purchasedNotPurchasedLeadCurrent = page;
           $scope.purchasedNotPurchasedLeadPerPage = 20;
-          $scope.cityListDetails=$scope.purchasedNotPurchasedLead.city_list;
+          $scope.cityListDetails = $scope.purchasedNotPurchasedLead.city_list;
           // $scope.all_values = [];
           // for (let i in values) {
           //     let row = {};
@@ -862,11 +862,11 @@
         $scope.newLeadsTab = false;
         $scope.leadDecisionPanding();
       }
-      else if(value=='sync'){
+      else if (value == 'sync') {
         $scope.decisionPendingTab = false;
-        setTimeout(()=>{                          
+        setTimeout(() => {
           $scope.changeLeadTab('decisionPending');
-        }, 1000);        
+        }, 1000);
       } else {
         $scope.decisionPendingTab = false;
         $scope.newLeadsTab = true;
@@ -907,35 +907,35 @@
         });
     }
 
-    $scope.loadedData=true;
-    $scope.pageChanged = function(newPage) {
-      if($scope.loadedData==true){
-        $scope.leadDecisionPanding('all',newPage);  
+    $scope.loadedData = true;
+    $scope.pageChanged = function (newPage) {
+      if ($scope.loadedData == true) {
+        $scope.leadDecisionPanding('all', newPage);
       }
     };
 
-    $scope.currentPageForLeadDecisionPanding=0;
-    $scope.currentTypeForLeadDecisionPanding="";
-    $scope.clientStausListData=[];
-    $scope.leadDecisionPanding = function (value,page) {
+    $scope.currentPageForLeadDecisionPanding = 0;
+    $scope.currentTypeForLeadDecisionPanding = "";
+    $scope.clientStausListData = [];
+    $scope.leadDecisionPanding = function (value, page) {
       if (!value) {
         value = 'all'
       }
-      $scope.currentTypeForLeadDecisionPanding=value;
-      if(!page){
-        page=0;
+      $scope.currentTypeForLeadDecisionPanding = value;
+      if (!page) {
+        page = 0;
       }
-      $scope.currentPageForLeadDecisionPanding=page;
-      if($scope.clientStausListData.length==0){
+      $scope.currentPageForLeadDecisionPanding = page;
+      if ($scope.clientStausListData.length == 0) {
         $scope.clientStatusList();
       }
-      B2BDashboardService.leadDecisionPanding(value,page)
+      B2BDashboardService.leadDecisionPanding(value, page)
         .then(function onSuccess(response) {
           $scope.leadDecisionPandingData = response.data.data.lead;
           $scope.totalrecord = response.data.data.length;
           $scope.itemsPerPageRecord = 20;
-          $scope.currentPage = page; 
-          
+          $scope.currentPage = page;
+
         });
     }
     $scope.isCheck = false;
@@ -950,35 +950,35 @@
     $scope.setEntityType = function (value) {
       $scope.leadDecisionPanding(value)
     }
-    
-    $scope.acceptDeclineDecisionPanding = function (index, value,id,requirement_id) {
+
+    $scope.acceptDeclineDecisionPanding = function (index, value, id, requirement_id) {
       let data = [{
         "requirement_id": requirement_id,
         "client_status": value,
-        "_id":id
+        "_id": id
       }]
       B2BDashboardService.acceptDeclineDecisionPanding({ 'data': data })
         .then(function onSuccess(response) {
           if (response) {
-            if(value == "Decline"){
+            if (value == "Decline") {
               $scope.leadDecisionPandingData[index].client_status = "Decline";
             }
-            else{
+            else {
               $scope.leadDecisionPandingData.splice(index, 1);
             }
-            
-            if(value == 'Decline'){
+
+            if (value == 'Decline') {
               value = 'Declined';
             }
             swal(constants.name, value + " Successfully", constants.success);
           }
           B2BDashboardService.showLeads($scope.supp_id)
-          .then(function onSuccess(response) {
-            $scope.supplier_leads=response.data.data.lead;
-          }) 
+            .then(function onSuccess(response) {
+              $scope.supplier_leads = response.data.data.lead;
+            })
         });
     }
-    $scope.viewLeadsPopup = function(){
+    $scope.viewLeadsPopup = function () {
       $('#viewLeadsPopup').modal('show');
     }
 
@@ -1005,7 +1005,7 @@
                 }
               }
               $scope.leadDecisionPandingData = lead_Decision;
-              if(value == 'Decline'){
+              if (value == 'Decline') {
                 value = 'Declined';
               }
               swal(constants.name, value + " Successfully", constants.success);
@@ -1459,23 +1459,23 @@
       return values;
     }
     $scope.supplierType = 'Leads';
-    $scope.surveyLeadArray = ['Leads','Survey','Feedback'];
-    
+    $scope.surveyLeadArray = ['Leads', 'Survey', 'Feedback'];
+
     $scope.surveyLeadFilter = function (filter) {
       $scope.filterType = filter;
-      if(filter == 'Leads' || filter == 'Survey'){
+      if (filter == 'Leads' || filter == 'Survey') {
         $scope.filterType = filter;
         $scope.isTableHide = true;
         $scope.viewCampaignLeads();
       }
     }
     $scope.surveyLeadFilter('Leads');
-    $scope.setButtonIndex = function (index,campaign_id,campaign_name) {
+    $scope.setButtonIndex = function (index, campaign_id, campaign_name) {
       $scope.buttonIndex = index;
-      setTimeout(function() {
+      setTimeout(function () {
         $anchorScroll('scrollToTable');
-    },90);
-      $scope.getPurchasedNotPurchasedLead(campaign_id,campaign_name) 
+      }, 90);
+      $scope.getPurchasedNotPurchasedLead(campaign_id, campaign_name)
       //remove if show 2 butoon
     }
 
@@ -1520,62 +1520,62 @@
       }
 
       B2BDashboardService.getSummaryReport(campaign.proposal_id, start_date, end_date)
-      .then(function onSuccess(response) {
-        $scope.summary_report = response.data.data;
+        .then(function onSuccess(response) {
+          $scope.summary_report = response.data.data;
 
-        $scope.getHotLeadName = ($scope.summary_report.overall_data.company_hot_lead_status || 'Hot Leads');
+          $scope.getHotLeadName = ($scope.summary_report.overall_data.company_hot_lead_status || 'Hot Leads');
 
-        $scope.getDeepLeadName = ($scope.summary_report.overall_data.company_deep_lead_status || 'Deep Leads');
+          $scope.getDeepLeadName = ($scope.summary_report.overall_data.company_deep_lead_status || 'Deep Leads');
 
-        $scope.sortMenu = [
-          { name: 'Total Leads(ASC)', type: 'Total Leads', order: 'ASC', id: 1 },
-          { name: 'Total Leads(DESC)', type: 'Total Leads', order: 'DESC', id: 2 },
-          { name: $scope.getHotLeadName + '(ASC)', type: $scope.getHotLeadName, order: 'ASC', id: 3 },
-          { name: $scope.getHotLeadName + '(DESC)', type: $scope.getHotLeadName, order: 'DESC', id: 4 },
-          { name: $scope.getDeepLeadName + '(ASC)', type: $scope.getDeepLeadName, order: 'ASC', id: 5 },
-          { name: $scope.getDeepLeadName + '(DESC)', type: $scope.getDeepLeadName, order: 'DESC', id: 6 },
-          { name: 'All', type: '', order: '', id: 7 },
-        ];
+          $scope.sortMenu = [
+            { name: 'Total Leads(ASC)', type: 'Total Leads', order: 'ASC', id: 1 },
+            { name: 'Total Leads(DESC)', type: 'Total Leads', order: 'DESC', id: 2 },
+            { name: $scope.getHotLeadName + '(ASC)', type: $scope.getHotLeadName, order: 'ASC', id: 3 },
+            { name: $scope.getHotLeadName + '(DESC)', type: $scope.getHotLeadName, order: 'DESC', id: 4 },
+            { name: $scope.getDeepLeadName + '(ASC)', type: $scope.getDeepLeadName, order: 'ASC', id: 5 },
+            { name: $scope.getDeepLeadName + '(DESC)', type: $scope.getDeepLeadName, order: 'DESC', id: 6 },
+            { name: 'All', type: '', order: '', id: 7 },
+          ];
 
-        var summary_report = response.data.data;
+          var summary_report = response.data.data;
 
-        $scope.summary_report_graph_data = [
-          {
-            key: "Total Leads",
-            values:
-              [
-                { x: 'Overall', y: summary_report.overall_data.total_lead },
-                { x: 'Last Week', y: summary_report.last_week.total_lead },
-                { x: 'Last Two Week', y: summary_report.last_two_weeks.total_lead },
-                { x: 'Last Three Week', y: summary_report.last_three_weeks.total_lead }
-              ]
-          },
-          {
-            key: $scope.getHotLeadName,
-            values:
-              [
-                { x: 'Overall', y: summary_report.overall_data.hot_lead_count },
-                { x: 'Last Week', y: summary_report.last_week.hot_lead_count },
-                { x: 'Last Two Week', y: summary_report.last_two_weeks.hot_lead_count },
-                { x: 'Last Three Week', y: summary_report.last_three_weeks.hot_lead_count }
-              ]
-          },
-          {
-            key: $scope.getDeepLeadName,
-            values:
-              [
-                { x: 'Overall', y: summary_report.overall_data.total_deep_count },
-                { x: 'Last Week', y: summary_report.last_week.total_deep_count },
-                { x: 'Last Two Week', y: summary_report.last_two_weeks.total_deep_count },
-                { x: 'Last Three Week', y: summary_report.last_three_weeks.total_deep_count }
-              ]
-          }
-        ];
+          $scope.summary_report_graph_data = [
+            {
+              key: "Total Leads",
+              values:
+                [
+                  { x: 'Overall', y: summary_report.overall_data.total_lead },
+                  { x: 'Last Week', y: summary_report.last_week.total_lead },
+                  { x: 'Last Two Week', y: summary_report.last_two_weeks.total_lead },
+                  { x: 'Last Three Week', y: summary_report.last_three_weeks.total_lead }
+                ]
+            },
+            {
+              key: $scope.getHotLeadName,
+              values:
+                [
+                  { x: 'Overall', y: summary_report.overall_data.hot_lead_count },
+                  { x: 'Last Week', y: summary_report.last_week.hot_lead_count },
+                  { x: 'Last Two Week', y: summary_report.last_two_weeks.hot_lead_count },
+                  { x: 'Last Three Week', y: summary_report.last_three_weeks.hot_lead_count }
+                ]
+            },
+            {
+              key: $scope.getDeepLeadName,
+              values:
+                [
+                  { x: 'Overall', y: summary_report.overall_data.total_deep_count },
+                  { x: 'Last Week', y: summary_report.last_week.total_deep_count },
+                  { x: 'Last Two Week', y: summary_report.last_two_weeks.total_deep_count },
+                  { x: 'Last Three Week', y: summary_report.last_three_weeks.total_deep_count }
+                ]
+            }
+          ];
 
-        $scope.getFlatSummaryReport(campaign);
-      }).catch(function onError(response) {
-        cfpLoadingBar.complete();
-      });
+          $scope.getFlatSummaryReport(campaign);
+        }).catch(function onError(response) {
+          cfpLoadingBar.complete();
+        });
     };
 
     $scope.getPercentBrackets = function (num1, num2) {
@@ -1587,16 +1587,16 @@
 
       return "";
     }
-    $scope.getFiles = function(file){
+    $scope.getFiles = function (file) {
       $scope.file = file;
       console.log(file);
     }
-    $scope.uploadSelectFile = function(){
-      let uploadurl={
+    $scope.uploadSelectFile = function () {
+      let uploadurl = {
         url: 'https://stagingapi.machadalo.com/v0/ui/b2b/upload-lead-comments/',
-        method:"POST",
+        method: "POST",
         timeout: 0,
-        data:{
+        data: {
           "file": $scope.file[0],
         },
         headers: {
@@ -1605,12 +1605,12 @@
         processData: false,
         mimeType: "multipart/form-data",
         contentType: false,
-      }    
+      }
       Upload.upload(uploadurl).then(function onSuccess(response) {
         $scope.file = undefined;
         console.log(response);
         swal(constants.name, response.data.data, constants.success);
-      })  
+      })
     }
 
     $scope.weekSummaryStackedBar = {
@@ -1721,40 +1721,67 @@
     }
     /** /Sort funtionality */
 
-    
-    $scope.arrowIcon=0;
-    $scope.showLeads = function(row,supplier_id){
-      $scope.supp_id=supplier_id;
-      if($scope.id==row){
-        $scope.id="";
-        $scope.arrowIcon=0;
+
+    $scope.arrowIcon = 0;
+    $scope.showLeads = function (row, supplier_id) {
+      $scope.supp_id = supplier_id;
+      if ($scope.id == row) {
+        $scope.id = "";
+        $scope.arrowIcon = 0;
       }
-      else if($scope.id!=row){
-        $scope.id=row;
-        $scope.arrowIcon=1;
+      else if ($scope.id != row) {
+        $scope.id = row;
+        $scope.arrowIcon = 1;
         B2BDashboardService.showLeads(supplier_id)
-        .then(function onSuccess(response) {
-          $scope.supplier_leads=response.data.data.lead;
-        })
+          .then(function onSuccess(response) {
+            $scope.supplier_leads = response.data.data.lead;
+          })
 
       }
     }
 
-    $scope.icon=0;
-    $scope.showSubLeadDetail = function(row,supplier_id){
-      $scope.supp_id=supplier_id;
-      if($scope.id==row){
-        $scope.id="";
-        $scope.icon=0;
+    $scope.icon = 0;
+    $scope.showSubLeadDetail = function (row, supplier_id) {
+      $scope.supp_id = supplier_id;
+      if ($scope.id == row) {
+        $scope.id = "";
+        $scope.icon = 0;
       }
-      else if($scope.id!=row){
-        $scope.id=row;
-        $scope.icon=1;
-        B2BDashboardService.showSubLeadDetail($scope.campaignId,$scope.selectedSupplierType.code,$scope.page,supplier_id)
-        .then(function onSuccess(response) {
-          $scope.detail_supplier_leads=response.data.data.lead;
-        })
+      else if ($scope.id != row) {
+        $scope.id = row;
+        $scope.icon = 1;
+        B2BDashboardService.showSubLeadDetail($scope.campaignId, $scope.selectedSupplierType.code, $scope.page, supplier_id)
+          .then(function onSuccess(response) {
+            $scope.detail_supplier_leads = response.data.data.lead;
+          })
       }
+    }
+    $scope.inactive = true;
+    $scope.saveUpdateButton = "Update";
+    $scope.changeEditDisable = function () {
+      $scope.inactive = !$scope.inactive;
+      if($scope.saveUpdateButton == "Update"){
+        $scope.saveUpdateButton = "Save";
+      }
+      else{
+        $scope.saveUpdateButton = "Update";
+      }
+    };
+    $scope.removeSingleField = function () {
+      swal({
+        title: 'Are you sure ?',
+        text: 'Remove Requirement',
+        type: constants.warning,
+        showCancelButton: true,
+        confirmButtonClass: "btn-success",
+        confirmButtonText: "Yes, Remove!",
+        closeOnConfirm: false,
+        closeOnCancel: true
+      },
+      function (confirm) {
+        swal('Remove','Successfully')
+        }
+      )
     }
 
   })

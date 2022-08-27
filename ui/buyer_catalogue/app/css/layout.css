@@ -102,7 +102,7 @@ a {
 }
 
 .al-main {
-  margin-left: 180px;
+  margin-left: 0px;
   padding: 66px 0 34px 0;
   min-height: 100px;
 }
@@ -178,7 +178,7 @@ a {
 }
 
 .al-content {
-  padding: 8px 32px 8px 40px;
+  padding: 8px 32px 8px 32px;
   overflow: hidden;
 }
 

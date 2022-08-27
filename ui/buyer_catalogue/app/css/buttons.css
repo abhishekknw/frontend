@@ -63,12 +63,12 @@ button.btn.btn-primary:active, button.btn.btn-primary:target {
   background-color: #1b867b;
 }
 
-button.btn.btn-default {
+/* button.btn.btn-default {
   border-width: 1px;
   color: #ffffff;
   background: transparent;
   border-color: #ffffff;
-}
+} */
 button.btn.btn-default.disabled, button.btn.btn-default[disabled], fieldset[disabled] button.btn.btn-default, button.btn.btn-default.disabled:hover, button.btn.btn-default[disabled]:hover, fieldset[disabled] button.btn.btn-default:hover, button.btn.btn-default.disabled:focus, button.btn.btn-default[disabled]:focus, fieldset[disabled] button.btn.btn-default:focus, button.btn.btn-default.disabled.focus, button.btn.btn-default[disabled].focus, fieldset[disabled] button.btn.btn-default.focus, button.btn.btn-default.disabled:active, button.btn.btn-default[disabled]:active, fieldset[disabled] button.btn.btn-default:active, button.btn.btn-default.disabled.active, button.btn.btn-default[disabled].active, fieldset[disabled] button.btn.btn-default.active {
   background: transparent;
   border-color: white;

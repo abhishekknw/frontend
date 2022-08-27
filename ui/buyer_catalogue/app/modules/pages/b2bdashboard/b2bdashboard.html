@@ -1140,29 +1140,12 @@
                             <!-- <th>Campaign Status</th> -->
                             <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br>
                               Count <a><i class="icon-sort" style="color:white;"></i></a></th>
-                            <!-- <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Unit primary
-                              Count<a><i class="icon-sort" style="color:white;"></i></a></th>
-                            <th style="width:120px;" class="col-md-2" ng-click="Sort('total_leads')">Purchased Survey
-                              <a><i class="icon-sort" style="color:white;"></i></a> -->
                             </th>
-                            <!-- <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th> -->
                             <th class="btn_box_lead_survey_th">View {{filterType}}</th>
                             <th class="btn_box_lead_survey_th">Email {{filterType}}</th>
                             <th class="btn_box_lead_survey_th">Download {{filterType}}</th>
-
+                            <th class="btn_box_lead_survey_th">Create Field</th>
                           </tr>
-                          <!-- <tr colspan="9">
-                            <td></td>
-                            <td><input ng-model="f.name" class="form-control" placeholder="Search">
-                              <hr>
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td><input ng-model="f.campaign_status" class="form-control" placeholder="Search">
-                              <hr>
-                            </td>
-
-                          </tr> -->
                         </thead>
                         <tbody ng-if="leadsDataCampaigns.length > 0 ">
                           <tr style="margin:4px 0px;"
@@ -1170,18 +1153,8 @@
                             <td style="width: 60px;min-width: 60px;">{{$index + 1}}</td>
                             <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
                             <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
-                            <!-- <td ng-if="campaign.campaign_status == 'completed'" style="text-transform:capitalize">
-                              {{campaign.end_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.camyse_complete}}</td> -->
-                            <!-- <td ng-if="campaign.campaign_status == 'on_hold'" style="text-transform:capitalize">OnHold
-                            </td>
-                            <td ng-if="campaign.campaign_status != 'on_hold'" style="text-transform:capitalize">
-                              {{campaign.campaign_status}}</td> -->
                             <td  ng-if="!campaign.unique_count" style="width:100px;" class="col-md-2">{{campaign.supplier_count}}</td>
                             <td ng-if="campaign.unique_count" style="width:100px;" class="col-md-2">{{campaign.supplier_count}} ({{campaign.unique_count}})</td>
-                            <!-- <td style="width:100px;" class="col-md-2">{{campaign.flat_count}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.purchased_survey}}</td> -->
-                            <!-- <td style="width:100px;" class="col-md-2" >{{campaign.hot_leads}}</td> -->
                             <td class="btn_box_lead_survey">
                               <button class="btn btn-danger" id="viewLeads_{{$index}}"
                                 ng-click="setButtonIndex($index,campaign.campaign_id,campaign.name)">
@@ -1189,21 +1162,6 @@
                                 <p ng-if="filterType != 'Leads' && filterType == 'Survey' && filterType !='Feedback'">View Survey</p>
                                 <p ng-if="filterType != 'Leads' && filterType != 'Survey' && filterType =='Feedback'">View Feedback</p>
                               </button>
-                              <!-- <button class="btn btn-danger" ng-hide="$index == buttonIndex" id="viewLeads_{{$index}}"
-                                ng-click="setButtonIndex($index)">
-                                <p ng-if="filterType == 'Leads'">View Leads</p>
-                                <p ng-if="filterType != 'Leads'">View Survey</p>
-                              </button>
-                              <button class="btn btn-danger" ng-if="$index == buttonIndex"
-                                ng-click="getPurchasedNotPurchasedLead(campaign.campaign_id,campaign.name,'yes')">
-                                <p ng-if="filterType == 'Leads'">View Leads Purchased</p>
-                                <p ng-if="filterType != 'Leads'">View Survey Purchased</p>
-                              </button>
-                              <button class="btn btn-danger" ng-if="$index == buttonIndex"
-                                ng-click="getPurchasedNotPurchasedLead(campaign.campaign_id,campaign.name,'no')">
-                                <p ng-if="filterType == 'Leads'">View Leads Not Purchased</p>
-                                <p ng-if="filterType != 'Leads'">View Survey Not Purchased</p>
-                              </button> -->
                             </td>
                             <td class="btn_box_lead_survey">
                               <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id,filterType)"
@@ -1219,6 +1177,12 @@
                                 <p ng-if="filterType == 'Leads' && filterType != 'Survey' && filterType != 'Feedback'">Download Leads</p>
                                 <p ng-if="filterType != 'Leads' && filterType == 'Survey' && filterType !='Feedback'">Download Survey</p>
                                 <p ng-if="filterType != 'Leads' && filterType != 'Survey' && filterType =='Feedback'">Download Feedback</p>
+                              </button>
+                            </td>
+                            <td class="btn_box_lead_survey">
+                              <button class="btn btn-danger" 
+                               data-target="#CreateFields" data-toggle="modal">
+                               Create Field
                               </button>
                             </td>
                           </tr>
@@ -1331,25 +1295,12 @@
                               <span style="display: none;">{{value8=value8?value8:lead[0].macchadalo_client_status}}
                             </td>
                             <td class="alignment">
-                              <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(lead[0]._id,lead[0].requirement_id)">View / Add</button>
+                              <button type="button" style="margin-bottom:2px; line-height: 1.5;" class="btn btn-danger" ng-click="viewCommentsLeadDetails(lead[0]._id,lead[0].requirement_id)">View / Add</button>
                             </td>
-                            <!-- <td class="alignment">
-                              <textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel"
-                                        ng-click="commentValue(mymodel)"
-                                        ng-blur="valuechange(mymodel,lead[0].macchadalo_client_status,lead[0]._id,lead[0].requirement_id)" 
-                                        name="" placeholder="Comment">
-                                        <span>{{mymodel=mymodel?mymodel:mymodel==""?"":lead[0].macchadalo_client_comment}}</span>
-                              </textarea>
-                            </td> -->
-                            <!-- <td class="col-md-2" style="max-width:fit-content;text-align: center; width: 227px;">
-                              <span>{{macchadalo_client_comment?macchadalo_client_comment:"NA"}}</span>
-                            </td> -->
-                            <!-- <td><button style="margin-top:8px" type="button" name="button" class="btn btn-danger"
-                              ng-click="updateLeadClientStatus(lead[0].macchadalo_client_status,lead[0].macchadalo_client_comment,lead[0]._id)">Update</button></td> -->
-                            <td><button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;"
+                            <td><button style="margin-top:8px; margin-right: -16px !important;"
                                 type="button" name="button" class="btn btn-danger"
                                 ng-click="showLeadDetail(lead[0]._id,lead[0].requirement_id)" data-toggle="modal"
-                                data-target="#myModal">Lead Detail</button>
+                                data-target="#myModal">Lead Details</button>
                             </td>
                     </div>
                     </tr>
@@ -2560,7 +2511,6 @@
                   </td>
                 </tr>
                 <tr>
-                  <!-- <td></td> -->
                   <td>
                     <div class="tool-tip" ng-init="tips2=false">
                       <h4>Q2.Response: {{leadDetailDataList.lead_info.L5}}<i class="fa fa-question tool-icon" ng-mouseover="tips2=true"ng-mouseleave="tips2=false"></i>
@@ -2602,17 +2552,9 @@
                   <h4>{{leadDetailDataList.user_info.name}}, {{leadDetailDataList.user_info.number}} , {{leadDetailDataList.user_info.designation}}</h4>
                 </td>
                 </tr>
-                <!-- <tr>
-                   <td></td> 
-                  <td>
-                    <h4>Contact No. : {{leadDetailDataList.user_info.number}} , {{leadDetailDataList.user_info.designation}}</h4>
-                  </td>
-                </tr> -->
+
                 <tr>
-                  <!-- <td></td> -->
-                  <!-- <td>
-                    <h4>Designation : {{leadDetailDataList.user_info.designation}}</h4>
-                  </td> -->
+
                 </tr>
               </table>
             </div><br>
@@ -2697,17 +2639,6 @@
             </select>
             <div class="sendEmail1">
               <input type="email" class="field"  placeholder="Enter Multiple User's Email To Send Mail " ng-model="emailModel.email">
-               <!-- <div layout="column" ng-cloak>
-                <md-content class="md-padding" layout="column">
-                    <md-chips
-                    md-type="email"
-                    md-on-add="validateEmail($chip)"
-                    ng-model="emailModel.email" value="{{ng-model}}" input-aria-label="Emails"
-                    md-separator-keys="customKeys" placeholder="Enter Multiple User's Email To Send Mail "
-                    secondary-placeholder="Enter Email Id"
-                    input-aria-describedby="customSeparatorKeyDescription">
-                    </md-chips>
-                </md-content> -->
                </div>
 
                <div>
@@ -2752,45 +2683,142 @@
     </div>
   </div>
 
-<!--START : view external comments modal  -->
-<!-- <div id="viewComments" class="modal fade theme-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4>View Comments {{campaignDataForComment.name}}</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-      </div>
-      <div class="modal-body">
-        <div class="modalBodyBox">
-          <h3>Internal Comments</h3>
-          <div class="table-h-scroll">
-            <table class="table-data">
-            <tr ng-repeat="item in internalComment">
-              <td>
-                <div>
-                  <p>{{item.comment}}</p>
-                </div>
-                <div>
-                  <img ng-src="{{userIcon}}">
-                  <b>{{item.created_by}}:</b> 
-                  <span><small>{{item.created_at|date:'medium'}}</small></span>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
-          <div style="margin-top: 15px;">
-            <textarea class="field"  rows="8" cols="200" ng-model="mymodel.comment" placeholder="Write here.."></textarea>
-            <button class="smallBtn" type="button" ng-click="commentValue(mymodel,id_basic,req_id_basic)" ng-click="valuechange(mymodel,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
+  <!--CreateFields Modal start -->
+  <div id="CreateFields" class="modal fade modal-styles">
+    <div class="modal-dialog modal-90">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalBodyBox">
+            <h3>Create and Edit Leads</h3>
+             <button type="button" class="close" ng-click="closeModel()" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">×</span>
+             </button>
+             <div class="table-h-scroll-lg">
+              <table class="table-data">
+                <tr>
+                  <th class="text-center bg-red">Field Name</th>
+                  <th class="text-center bg-red"> Alais Name</th>
+                  <th class="text-center bg-red">Type of Field</th>
+                  <th class="text-center bg-red">Comment</th>
+                  <th class="text-center bg-red">Send Trigger (Y/N)</th>
+                  <th class="text-center bg-red">Trigger Message</th>
+                  <th class="text-center bg-red">Params <p>?</p></th>
+                  <th class="text-center bg-red">Add Buttons <p>?</p></th>
+                  <th class="text-center bg-red">Action</th>
+                  <th class="text-center bg-red">Help File<p>?</p></th>
+                </tr>
+                <tr>
+                  <td>
+                    <select class="form-control" style="min-width: 120px;">
+                      <option>field 1</option>
+                      <option>field 2</option>
+                      <option>field 3</option>
+                    </select>
+                  </td>
+                  <td><input type="text" class="form-control" style="min-width: 120px;"></td>
+                  <td>
+                    <select class="form-control" style="min-width: 80px;">
+                      <option>field 5</option>
+                      <option>field 6</option>
+                      <option>field 7</option>
+                    </select>
+                  </td>
+                  <td><input type="text" class="form-control" style="min-width: 120px;"></td>
+                  <td>
+                    <select class="form-control" style="min-width: 80px;">
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </td>
+                  <td><textarea type="text"></textarea></td>
+                  <td><input type="text" class="form-control" style="min-width: 120px;"></td>
+                  <td class="text-center">
+                    <button class="btn btn-danger" 
+                       data-target="#AddButtons" data-toggle="modal">Add Buttons
+                    </button>
+                  </td>
+                  <td class="text-center"><button class="btn btn-danger">Submit</button></td>
+                  <td class="text-center">
+                    <div class="tool-tip" ng-init="helpTips=false">
+                      <h5><i class="fa fa-question tool-icon" ng-mouseover="helpTips=true"ng-mouseleave="helpTips=false"></i></h5>
+                    </div>
+                  </td> 
+                </tr>
+                <tr>
+                  <td>
+                    <select ng-disabled="inactive" class="form-control" style="min-width: 120px;">
+                      <option>field 1</option>
+                      <option>field 2</option>
+                      <option>field 3</option>
+                    </select>
+                  </td>
+                  <td><input ng-disabled="inactive" type="text" class="form-control" style="min-width: 120px;"></td>
+                  <td>
+                    <select ng-disabled="inactive" class="form-control" style="min-width: 80px;">
+                      <option>field 5</option>
+                      <option>field 6</option>
+                      <option>field 7</option>
+                    </select>
+                  </td>
+                  <td><input ng-disabled="inactive" type="text" class="form-control" style="min-width: 120px;"></td>
+                  <td>
+                    <select ng-disabled="inactive"class="form-control" style="min-width: 80px;">
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </td>
+                  <td><textarea ng-disabled="inactive" type="text"></textarea></td>
+                  <td><input ng-disabled="inactive" type="text" class="form-control" style="min-width: 120px;"></td>
+                  <td class="text-center">
+                    <button ng-disabled="inactive" class="btn btn-danger" 
+                       data-target="#AddButtons" data-toggle="modal">Add Buttons
+                    </button>
+                  </td>
+                  <td class="text-center"><button class="btn btn-success mb-2" ng-click="changeEditDisable()">{{saveUpdateButton}}</button>
+                      <button class="btn btn-danger" ng-click="removeSingleField()">Remove</button>
+                  </td>
+                  <td class="text-center"><div class="tool-tip" ng-init="helpTips=false">
+                      <h5><i class="fa fa-question tool-icon" ng-mouseover="helpTips=true"ng-mouseleave="helpTips=false"></i>
+                      </h5>
+                    </div> 
+                  </td> 
+                </tr>
+              </table>
+              <div ng-show="helpTips" class="tool-popup">
+                help
+              </div> 
+             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div> -->
-<!-- modal -->  
+  <div id="AddButtons" class="modal fade modal-styles">
+    <div class="modal-dialog">
+    <div class="modal-header">       
+      <button type="button" class="close" ng-click="closeModel()" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+      <h3>Add Buttons</h3>  
+    </div>
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalBodyBox"> 
+           
+             <form>  
+              <div class="wrapper">
+                  <p>Button 1:<input type="text" class="form-control"/></p>
+                  <p>Button 2:<input type="text" class="form-control"/></p>
+                  <p>Button 3:<input type="text" class="form-control"/></p>
+                  <p><input type="submit" value="Submit" /></p>
+              </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END -->
 
 <!--START : view external and internal comments lead details  -->
 <div id="viewCommentsLeadDetails" class="modal fade theme-modal">
@@ -2804,23 +2832,6 @@
       </div>
       <div class="modal-body">
         <div class="modalBodyBox">
-        <!-- <h3>Internal Comments</h3>
-        <div class="table-h-scroll">
-          <table class="table-data">
-            <tr ng-repeat="item in internalComment">
-              <td>
-                <div>
-                  <p>{{item.comment}}</p>
-                </div>
-                <div>
-                  <img ng-src="{{userIcon}}">
-                  <b>{{item.created_by}}:</b> 
-                  <span><small>{{item.created_at|date:'medium'}}</small></span>
-                </div>
-              </td>
-            </tr>
-          </table>
-          </div><br> -->
         <h3>Client Comments</h3>
         <div class="table-h-scroll">
           <table class="table-data">

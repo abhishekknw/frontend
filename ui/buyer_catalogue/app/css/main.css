@@ -1096,6 +1096,13 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
   max-height:150px;
   overflow-x: auto;
 }
+.table-h-scroll-lg{
+  max-height:300px;
+  overflow-x: auto;
+}
+.text-center{
+  text-align: center !important;
+}
 .bg-red{
   background-color: #8e1921 !important;
   color: #fff !important;
@@ -1107,15 +1114,45 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
 .download-leads-btn input[type="file"]{
   padding: 10px 15px;
 }
+.mb-1{
+  margin-bottom:5px;
+}
+.mb-2{
+  margin-bottom:10px;
+}
 
 /* viewLeadstable */
 .viewLeadstable .alignment button{
   margin-top: 9px;
 }
 
-
+.modal .modalBodyBox h3{
+  text-align: center;
+}
+body .modal .modal-dialog {
+  background-color: #fff;
+  padding: 0px 15px
+px
+;
+  border-radius: 5px;
+    -webkit-box-shadow: 0 5px 15px rgb(0 0 0 / 50%);
+   box-shadow: 0 5px 15px rgb(0 0 0 / 50%)
+}
+#AddButtons .modal-content{
+  box-shadow: none  !important;
+}
+#AddButtons .modal-header{
+  background-color: #921923;
+  color: #fff;
+}
+body #AddButtons.modal button.close {
+  color: #fff;
+}
 /* Responsive */
 
+.modal-90{
+  width: 90%;
+}
 @media screen and (max-width: 1024px) {
   div.dashboard-tab .uib-tab{
     min-width: 100px;
