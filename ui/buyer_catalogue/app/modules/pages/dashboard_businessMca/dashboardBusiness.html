@@ -4739,7 +4739,7 @@
               <div class="sendEmail1">
                 <div class="buttons">
                   <div class="download-leads-btn">
-                    <a href="https://stagingapi.machadalo.com/v0/ui/b2b/download-leads-summary/?lead_type=leads&supplier_code=all&campaign_id={{campaignId}}"><button type="button" name="button" class="smallBtn">Download Lead</button></a>
+                    <a href="https://stagingapi.machadalo.com/v0/ui/b2b/download-leads-summary/?lead_type=leads&supplier_code=all&campaign_id={{campaignId}}&tabname={{tabName}}"><button type="button" name="button" class="smallBtn">Download Lead</button></a>
                     <input class="smallBtn" type="file" name="file" id="file" ng-files="getFiles($files)">
                     <button class="smallBtn" type="button" name="button" ng-click="uploadSelectFile()">Upload Comments</button>
                   </div>
@@ -5136,8 +5136,9 @@
                 </tr>
                 <tr>
                   <td>
-                    <h4 style="line-height:1.5;">{{leadDetailDataList.adress_details.address}},{{leadDetailDataList.adress_details.area}},{{leadDetailDataList.adress_details.city}}
-                      {{leadDetailDataList.adress_details.state}},{{leadDetailDataList.adress_details.country}},{{leadDetailDataList.adress_details.pincode}}
+                    <h4 style="line-height:1.5;">{{leadDetailDataList.adress_details.address}},{{leadDetailDataList.adress_details.area}},
+                      {{leadDetailDataList.adress_details.city}}{{leadDetailDataList.adress_details.state}},{{leadDetailDataList.adress_details.country}},
+                      {{leadDetailDataList.adress_details.pincode}},({{leadDetailDataList.adress_details.lat}},{{leadDetailDataList.adress_details.long}})
                     </h4>
                   </td>
                 </tr>

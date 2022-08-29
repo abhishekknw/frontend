@@ -935,8 +935,15 @@
           $scope.totalrecord = response.data.data.length;
           $scope.itemsPerPageRecord = 20;
           $scope.currentPage = page;
-
         });
+    }
+    
+    $scope.ratingStar = function (rating){
+      let star = "";
+      for (let i=0; i<rating; i++){
+        star += '*';
+      }
+      return star;
     }
     $scope.isCheck = false;
     $scope.checkboxCheck = function () {
