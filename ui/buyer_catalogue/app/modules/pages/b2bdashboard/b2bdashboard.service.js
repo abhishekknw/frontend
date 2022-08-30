@@ -491,8 +491,8 @@ angular.module('catalogueApp')
      //   } 
         return machadaloHttp.post(url,param);
       }
-      DashboardService.sendBookingEmails= function(leads,supplier_code,campaign,email){
-        var url = url_root + "b2b/email-leads-summary/?lead_type=" + leads + "&supplier_code="+supplier_code+"&campaign_id="+campaign+"&emails="+email;
+      DashboardService.sendBookingEmails= function(leads,supplier_code,campaign,email,tabName){
+        var url = url_root + "b2b/email-leads-summary/?lead_type=" + leads + "&supplier_code="+supplier_code+"&campaign_id="+campaign+"&emails="+email+"&tabname="+tabName;
         return machadaloHttp.get(url);
       }
 

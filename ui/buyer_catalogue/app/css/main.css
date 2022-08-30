@@ -727,7 +727,7 @@ color: #ffffff !important;
 .viewLeadstable table tbody tr td {
 
   text-align: center;
-  width: 113px;
+  width: 9%;
 }
 
 
@@ -1123,7 +1123,8 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
 
 /* viewLeadstable */
 .viewLeadstable .alignment button{
-  margin-top: 9px;
+  /* margin-top: 9px; */
+  margin: 0 auto;
 }
 
 .modal .modalBodyBox h3{

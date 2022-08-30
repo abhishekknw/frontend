@@ -652,6 +652,7 @@
         $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code)
       }
       $scope.getCampaigns = function (tabName) {
+        $scope.tabName = tabName;
         cfpLoadingBar.start();
         conditionForTable = false;
         $scope.showSupplierTypeCountChart = false;
@@ -671,6 +672,7 @@
           })
       }
       $scope.optionNewTab = function (tabName) {
+        $scope.tabName = tabName;
         if (!$scope.page) {
           $scope.page = 0;
         }
@@ -6691,7 +6693,7 @@
         $scope.campaignId = campaignId;
       }
       $scope.sendEmailsMca = function(email){
-        B2BDashboardService.sendBookingEmails("leads","all",$scope.campaignId,email)
+        B2BDashboardService.sendBookingEmails("leads","all",$scope.campaignId,email,$scope.tabName)
         .then(function onSuccess(response){
         });
         swal("Successfull", "Email Sent Sucessfully", "success");
@@ -6706,6 +6708,7 @@
           timeout: 0,
           data:{
             "file": $scope.file[0],
+            "tabname": $scope.tabName,
           },
           headers: {
             "Authorization": 'JWT ' + $rootScope.globals.currentUser.token

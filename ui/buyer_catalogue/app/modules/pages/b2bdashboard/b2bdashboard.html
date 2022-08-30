@@ -422,18 +422,6 @@
                           <th>Client Comment</th>
                           <th>Action</th>
                         </tr>
-                        <!-- <tr colspan="9">
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td style="width: 100px;"><input ng-model="f.city" class="form-control" placeholder="Search">
-                                <hr>
-                              </td>
-                              
-  
-                            </tr> -->
                       </thead>
                       <tbody class="data-list" pagination-id="paginate1"
                         dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord"
@@ -460,19 +448,9 @@
                             <span style="display: none;">{{value8=value8?value8:decisionPanding.macchadalo_client_status}}</span>
                             <span>{{decisionPanding.updated_at?decisionPanding.updated_at:"NA"}}</span>
                           </td>
-                          <!-- <td class="alignment text-center">
-                            {{decisionPanding.client_comment?decisionPanding.client_comment:"NA"}}
-                          </td> -->
-                            <!-- <td class="alignment">
-                              <textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" 
-                                        ng-click="commentValue(mymodel)"
-                                        ng-blur="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)"
-                                        name="" placeholder="Comment">
-                                        <span>{{mymodel=mymodel ? mymodel:mymodel==""?"":decisionPanding.macchadalo_client_comment}}</span>
-                              </textarea>
-                            </td>                -->
                             <td class="alignment text-center">
-                              {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
+                              {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}<br>
+                              <span>{{ratingStar(decisionPanding.rating)}}</span>
                             </td>
                             <td class="alignment">
                                 <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
@@ -1459,25 +1437,6 @@
                   <button data-target="#companyDetailModal" data-toggle="modal">Edit</button>
                 </div>
               </div>
-              <!-- <div class="col-md-6">
-                <div class="panel-title box_detail">
-                  <h4>Machadalo Relationship Manager details:</h4>
-                  <p>Name- <span
-                      ng-if="viewLicenceDetailData.relationship_manager.name">{{viewLicenceDetailData.relationship_manager.name}}</span>
-                    <span ng-if="!viewLicenceDetailData.relationship_manager.name">NA</span>
-                  </p>
-                  <p>Email- <span
-                      ng-if="viewLicenceDetailData.relationship_manager.email">{{viewLicenceDetailData.relationship_manager.email}}</span>
-                    <span ng-if="!viewLicenceDetailData.relationship_manager.email">NA</span>
-                  </p>
-                  <p>Phone Number-<span
-                      ng-if="viewLicenceDetailData.relationship_manager.phone_number">{{viewLicenceDetailData.relationship_manager.phone_number}}</span>
-                    <span ng-if="!viewLicenceDetailData.relationship_manager.phone_number">NA</span>
-                  </p>
-                  <button data-target="#relationshipManagerDetailsModal" data-toggle="modal">Edit</button>
-                </div>
-              </div> -->
-              <!-- <div class="col-md-6" style="clear: both;"> -->
               <div class="col-md-6">
                 <div class="panel-title box_detail">
                   <h4>My Details</h4>
@@ -2567,8 +2526,9 @@
                 </tr>
                 <tr>
                   <td>
-                    <h4 style="line-height:1.5;">{{leadDetailDataList.adress_details.address}},{{leadDetailDataList.adress_details.area}},{{leadDetailDataList.adress_details.city}}
-                      {{leadDetailDataList.adress_details.state}},{{leadDetailDataList.adress_details.country}},{{leadDetailDataList.adress_details.pincode}}
+                    <h4 style="line-height:1.5;">{{leadDetailDataList.adress_details.address}},{{leadDetailDataList.adress_details.area}},
+                      {{leadDetailDataList.adress_details.city}},{{leadDetailDataList.adress_details.state}},{{leadDetailDataList.adress_details.country}},
+                      {{leadDetailDataList.adress_details.pincode}},({{leadDetailDataList.adress_details.lat}},{{leadDetailDataList.adress_details.long}})
                     </h4>
                   </td>
                 </tr>
