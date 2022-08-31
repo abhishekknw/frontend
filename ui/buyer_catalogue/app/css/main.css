@@ -1176,3 +1176,15 @@ body #AddButtons.modal button.close {
     padding: 15px;
   }
 }
+.date_wrapper{
+  position: relative;
+}
+.date_wrapper button.smallBtn.calendar{
+  position: absolute;
+  top: 6px;
+  right: 10px;
+}
+.form-control.select_city{
+  height: auto;
+  padding: 13px 12px;
+}

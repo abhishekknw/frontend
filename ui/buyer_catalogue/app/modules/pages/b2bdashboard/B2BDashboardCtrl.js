@@ -21,7 +21,6 @@
 
     $scope.passwordError = constants.password_error;
     $scope.userInfo = $rootScope.globals.userInfo;
-    // $scope.supplierTypeCode = constants.supplierTypeCode;
     $scope.supplierTypeCode = [
       {
         "name": "ALL",
@@ -71,8 +70,13 @@
       $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate);
     }
 
-    $scope.searchForDetails = function (search) {
-      $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate, $scope.selectCity, search);
+    $scope.searchForDetails = function (search, lead) {
+      if (lead == undefined) {
+        $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate, $scope.selectCity, search);
+      }
+      else {
+        $scope.leadDecisionPanding($scope.currentTypeForLeadDecisionPanding, $scope.currentPageForLeadDecisionPanding, 'user', search);
+      }
     }
 
     $scope.dateFormat = function (date) {
@@ -88,8 +92,6 @@
     $scope.selectedCity = function (city) {
       $scope.selectCity = city;
       $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate, $scope.selectCity);
-
-      console.log($scope.selectCity);
     }
     $scope.invKeysLead = [
       { header: 'LEAD COUNT' },
@@ -306,9 +308,6 @@
       })
     }
 
-
-
-    //lead code start here
     $scope.leadCountByDate = function (date) {
       if (!date) {
         var date = new Date();
@@ -596,7 +595,6 @@
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = false;
       B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code)
-        // B2BDashboardService.viewCampaignLeads()
         .then(function onSuccess(response) {
           if (response.data.data) {
             $scope.leadsDataCampaigns = response.data.data;
@@ -630,15 +628,6 @@
       $scope.selectFlag = false;
       $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment, id, $scope.requirement_id);
     }
-    // $scope.viewComments = function (Id,req_id) {
-    //   $scope.id_basic=Id;
-    //   $scope.req_id_basic=req_id;
-    //   $('#viewComments').modal('show');
-    //    B2BDashboardService.viewCommentsBasic(Id)
-    //   .then(function onSuccess(response) {
-    //    $scope.internalComment=response.data.data.internal_comments;
-    //   })
-    // }
     $scope.viewCommentsLeadDetails = function (Id, req_id) {
       $scope.id_detail = Id;
       $scope.req_id_detail = req_id;
@@ -804,25 +793,10 @@
         .then(function onSuccess(response) {
           $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
-          //add start_date and end_date key
-          // $scope.purchasedNotPurchasedLead.start_date=$scope.options.minDate;
-          // $scope.purchasedNotPurchasedLead.end_date=$scope.dateRangeModel.end_date;
           $scope.purchasedNotPurchasedLeadTotal = response.data.data.length;
           $scope.purchasedNotPurchasedLeadCurrent = page;
           $scope.purchasedNotPurchasedLeadPerPage = 20;
           $scope.cityListDetails = $scope.purchasedNotPurchasedLead.city_list;
-          // $scope.all_values = [];
-          // for (let i in values) {
-          //     let row = {};
-          //     for (let t in values[i]) {
-          //       if(t != 0 ){
-          //         row[values[i][t].key_name] = values[i][t].value;
-          //       } else {               
-          //         $scope.lead_purchased = values[i][t].lead_purchased;
-          //       }
-          //     }
-          //     $scope.all_values.push(row);
-          // }
         });
     }
 
@@ -917,9 +891,12 @@
     $scope.currentPageForLeadDecisionPanding = 0;
     $scope.currentTypeForLeadDecisionPanding = "";
     $scope.clientStausListData = [];
-    $scope.leadDecisionPanding = function (value, page) {
+    $scope.leadDecisionPanding = function (value, page, user, search) {
       if (!value) {
-        value = 'all'
+        value = 'all';
+      }
+      if (!search) {
+        search = '';
       }
       $scope.currentTypeForLeadDecisionPanding = value;
       if (!page) {
@@ -929,7 +906,7 @@
       if ($scope.clientStausListData.length == 0) {
         $scope.clientStatusList();
       }
-      B2BDashboardService.leadDecisionPanding(value, page)
+      B2BDashboardService.leadDecisionPanding(value, page, user, search)
         .then(function onSuccess(response) {
           $scope.leadDecisionPandingData = response.data.data.lead;
           $scope.totalrecord = response.data.data.length;
@@ -937,13 +914,26 @@
           $scope.currentPage = page;
         });
     }
-    
-    $scope.ratingStar = function (rating){
+
+    $scope.ratingStar = function (rating) {
       let star = "";
-      for (let i=0; i<rating; i++){
+      for (let i = 0; i < rating; i++) {
         star += '*';
       }
       return star;
+    }
+    $scope.button = { 'one': '', 'two': '', 'three': '' };
+    $scope.addMultiButtons = function () {
+      if ($scope.button) {
+        $scope.addmultiButton = $scope.button;
+        $scope.button = "";
+      }
+    }
+    $scope.listOfCreateField = function () {
+      B2BDashboardService.listOfCreateField()
+        .then(function onSuccess(response) {
+          $scope.createFieldList = response.data.data;
+        });
     }
     $scope.isCheck = false;
     $scope.checkboxCheck = function () {
@@ -1008,7 +998,6 @@
               for (let i in $scope.leadDecisionPandingData) {
                 if (!$scope.leadDecisionPandingData[i].checkStatus) {
                   lead_Decision.push($scope.leadDecisionPandingData[i]);
-                  //$scope.leadDecisionPandingData.splice(i, 1);
                 }
               }
               $scope.leadDecisionPandingData = lead_Decision;
@@ -1160,7 +1149,6 @@
             latitude: campaign.center__latitude,
             longitude: campaign.center__longitude,
             id: campaign.proposal_id,
-            // icon: 'http://www.googlemapsmarkers.com/v1/009900/',
             options: { draggable: false },
             dataOfPanIndia: campaign,
             title: {
@@ -1193,21 +1181,6 @@
         } else {
           icon = icon + 'blue-dot.png'
         }
-
-        //if (supplier && supplier.supplier && supplier.supplier.supplier_id) {
-        // if (supplier.supplier.campaignStatus) {
-        //   var icon = 'http://maps.google.com/mapfiles/ms/icons/';
-
-        //   if (supplier.supplier.campaignStatus == 'completed') {
-        //     icon = icon + 'green-dot.png'
-        //   }
-        //   if (supplier.supplier.campaignStatus == 'upcoming') {
-        //     icon = icon + 'orange-dot.png'
-        //   }
-        //   if (supplier.supplier.campaignStatus == 'ongoing') {
-        //     icon = icon + 'blue-dot.png'
-        //   }
-        // }
         $scope.map = { zoom: 10, bounds: {}, center: { latitude: supplier.supplier_data.latitude, longitude: supplier.supplier_data.longitude, } };
 
         markers.push({
@@ -1217,7 +1190,6 @@
           icon: icon,
           options: { draggable: false },
           dataofSupplierAndInvData: supplier.supplier_data,
-          // completedLeadsSupplierData: supplier.leads_data,
           title: {
             name: supplier.supplier_data.name,
             flat_count: supplier.supplier_data.flat_count,
@@ -1767,14 +1739,14 @@
     $scope.saveUpdateButton = "Update";
     $scope.changeEditDisable = function () {
       $scope.inactive = !$scope.inactive;
-      if($scope.saveUpdateButton == "Update"){
+      if ($scope.saveUpdateButton == "Update") {
         $scope.saveUpdateButton = "Save";
       }
-      else{
+      else {
         $scope.saveUpdateButton = "Update";
       }
     };
-    $scope.removeSingleField = function () {
+    $scope.removeSingleField = function (id) {
       swal({
         title: 'Are you sure ?',
         text: 'Remove Requirement',
@@ -1785,8 +1757,11 @@
         closeOnConfirm: false,
         closeOnCancel: true
       },
-      function (confirm) {
-        swal('Remove','Successfully')
+        function (confirm) {
+          B2BDashboardService.removeSingleField(id)
+            .then(function onSuccess(response) {
+              swal('Remove', 'Successfully')
+            })
         }
       )
     }
