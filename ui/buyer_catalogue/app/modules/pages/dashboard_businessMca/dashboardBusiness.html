@@ -1132,6 +1132,55 @@
                         </table>
                       </div>
                    </div>
+                   <!-- fiter -->
+                   <div ng-if="!showCampaigns && !leadBasicShow" class="date_range_picker">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <select ng-change="selectedCity(city)"
+                            class="form-control select_city" ng-model="city">
+                                <option value="" >Select City</option>
+                                <option ng-repeat="city in cityListDetails" track by "$index">{{city}}</option>
+                            </select>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <div class="date_wrapper">
+                            <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                              placeholder="DD/MM/YYYY" ng-change="StartDateForLead()" ng-model="dateRangeModel.start_dates"
+                              is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
+                              alt-input-formats="altInputFormats">
+                            <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                          </div>
+                         </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <div class="row">
+                          <div class="col-sm-1"><h5 style="color:#000;padding: 10px 0;">To:</h5></div>
+                          <div class="col-md-6">
+                            <div class="date_wrapper">
+                            <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                              placeholder="DD/MM/YYYY" ng-change="endDateForLead()" ng-model="dateRangeModel.end_dates"
+                              is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
+                              alt-input-formats="altInputFormats">
+                            <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                              ng-click="isEndDateOpen = !isEndDateOpen">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <span style="display: block;margin: 15px;">
+                      <input type="text" class="form-control" ng-model="searchQuery" ng-change="searchForDetails(searchQuery)" placeholder="search">
+                    </span>
+                  </div>
                     <div class="viewLeadstable" ng-if="!showCampaigns && !leadBasicShow">
                       </br><br>
                         <div class="table-responsive">
@@ -1216,6 +1265,9 @@
   
                     </div>
                        <!-- table for lead basic -->
+                       <span ng-if="leadBasicShow==true && showTable==true" style="display: block;margin: 15px;">
+                        <input type="text" class="form-control" ng-model="searchQuery" ng-change="searchForDetails(searchQuery)" placeholder="search">
+                      </span>
                     <div class="" ng-if="leadBasicShow==true && showTable==true">
                       </br><br>
                         <div class="table-responsive">

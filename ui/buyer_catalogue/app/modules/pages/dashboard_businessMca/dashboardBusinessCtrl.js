@@ -3563,7 +3563,7 @@
             console.log(response);
           })
       }
-      $scope.viewLeadsForSelectedCampaign = function (data,campaignId,count,page) {
+      $scope.viewLeadsForSelectedCampaign = function (data,campaignId,count,page,city,startDate,endDate,search) {
         $scope.viewClientStatus();
         cfpLoadingBar.start();
         $scope.uniqueCount = count;
@@ -3572,10 +3572,22 @@
         if(!page){
           page = 0;
         }
+        if (!search) {
+          search = '';
+        }
+        if (!city) {
+          city = "";
+        }
+        if (!startDate) {
+          startDate = "";
+        }
+        if (!endDate) {
+          endDate = "";
+        }
         $scope.currentPageLead = page;
         if (conditionForTable == true) {
           $scope.leadBasicShow = true;
-          B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page)
+          B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page,city,startDate,endDate,search)
             .then(function onSuccess(response) {
               $scope.leadDecisionPandingData = response.data.data;
               $scope.totalCountLead = count;
@@ -3584,11 +3596,12 @@
             })
         }
         else {
-          B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page)
+          B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page,city,startDate,endDate,search)
           // B2BDashboardService.purchasedNotPurchasedLead(campaignId, $scope.filterType, $scope.selectedSupplierType.code, page, "", "", "")
             .then(function onSuccess(response) {
               cfpLoadingBar.complete();
               $scope.selectedCampaignLeads = response.data.data;
+              $scope.cityListDetails = $scope.selectedCampaignLeads.city_list;
               $scope.CampaignNameofLeads = data.name;
               $scope.totalCountLead = count;
               $scope.itemsPerPageLead = 20;
@@ -3600,6 +3613,51 @@
             })
         }
       }
+
+    $scope.selectCity = "";
+    $scope.selectedCity = function (city) {
+      $scope.selectCity = city;
+      $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead,$scope.selectCity);
+    }
+    $scope.startDate = "";
+    $scope.endDate = "";
+    $scope.options = {};
+    $scope.dateRangeModel = {};
+    $scope.StartDateForLead = function () {
+      $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
+      $scope.options.minDate = $scope.dateRangeModel.start_date;
+      $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
+      if ($scope.endDate != "") {
+        if ($scope.endDate >= $scope.startDate) {
+          $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate);
+        }
+        else if ($scope.endDate < $scope.startDate) {
+          $scope.endDate = $scope.startDate;
+          $scope.dateRangeModel.end_dates = $scope.dateRangeModel.start_date;
+          $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate);
+        }
+      }
+    }
+
+    $scope.endDateForLead = function () {
+      if ($scope.changeEndDate > $scope.changeStartDate)
+        $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
+      $scope.endDate = $scope.dateFormat($scope.dateRangeModel.end_dates);
+      $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate);
+    }
+    $scope.searchForDetails = function (search){
+      $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate,search);
+    }
+
+    $scope.dateFormat = function (date) {
+      var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      return [day, month, year].join('-');
+    }
       $scope.backToCampaign = function () {
         $scope.showCampaigns = true;
       }

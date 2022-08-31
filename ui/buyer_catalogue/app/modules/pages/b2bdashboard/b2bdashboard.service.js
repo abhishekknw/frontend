@@ -593,8 +593,8 @@ angular.module('catalogueApp')
         var url = url_root +"b2b/get-basic-lead-distribution-campaign/?tabname="+tabName;
         return machadaloHttp.get(url);
       }
-      DashboardService.basicLeadsOfCampaigns = function (campaignId,supplier_code,page) {
-        var url = url_root +"b2b/get-dynamic-basic-lead-form-headers/?campaign_id="+campaignId+"&supplier_type="+supplier_code+"&next_page="+page;
+      DashboardService.basicLeadsOfCampaigns = function (campaignId,supplier_code,page,city,startDate,endDate,search) {
+        var url = url_root +"b2b/get-dynamic-basic-lead-form-headers/?campaign_id="+campaignId+"&supplier_type="+supplier_code+"&next_page="+page+"&city="+city+"&startDate="+startDate+"&endDate="+endDate+"&search="+search;
         return machadaloHttp.get(url);
       }
       DashboardService.listOfCreateField = function () {

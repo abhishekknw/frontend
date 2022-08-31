@@ -92,8 +92,6 @@
     $scope.selectedCity = function (city) {
       $scope.selectCity = city;
       $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate, $scope.selectCity);
-
-      console.log($scope.selectCity);
     }
     $scope.invKeysLead = [
       { header: 'LEAD COUNT' },
