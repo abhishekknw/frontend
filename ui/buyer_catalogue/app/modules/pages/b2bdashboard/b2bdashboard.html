@@ -19,7 +19,6 @@
             <uib-tabset class="dashboard-tab" active="selectTabIndex.value">
               <uib-tab index="0">
                 <uib-tab-heading>
-                  <!-- <h5>New Leads</h5> -->
                   <h5 ng-click="changeLeadTab('sync')">Leads (Basic)</h5>
                 </uib-tab-heading>
                 <div class="">
@@ -36,14 +35,9 @@
                       <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
                       </div>
                       <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                        <!-- <div class="row zeroCampAct">
-                        <h1>NO LEAD ACTIVITY !!</h1>
-                      </div> -->
+                        
                       </div>
                     </div>
-                    <!-- start b2b code -->
-
-                    <!-- end b2b code -->
                     <div class="row">
                       <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
                         <h4 style="margin-left:140px;">Select Date </h4>
@@ -72,8 +66,6 @@
                                             <span style="color:#ffffff;" class="glyphicon glyphicon-forward"
                                               ng-click="getRecentActivity(next)" data-toggle="tooltip"
                                               title="Go To Next Activity!"></span>
-                                            <!-- <span style="color:#ffffff;left:16px;margin-top:1px;"
-                                                  class="glyphicon glyphicon-calendar pull-right" ng-click="visible=!visible;"> -->
                                             <div ng-class="{'is-visible':visible}" class="menu">
                                               <table class="table-responsive table table-bordered sidePanelTable"
                                                 style="width:300px;">
@@ -125,7 +117,6 @@
                                                 </tbody>
                                               </table>
                                             </div>
-                                            <!-- </span> -->
                                           </h5>
                                         </div>
                                       </div>
@@ -309,12 +300,6 @@
                               of <span
                                 style="color:#ffe000;font-style: italic;text-transform:capitalize;font-weight: 900;text-decoration: underline;">
                                 {{campaignName}} </span> Campaign</a></h4><br />
-                          <!-- <div class="row">
-                          <span class="pull-left"><label for="heading"><small>Campaign Owner :
-                              </small><span><small style="color:orange">{{campaignOwner}}</small> </span></label></span>
-                          <span class="pull-right"><label for="heading"><small>Principal Vendor :
-                              </small><span><small style="color:orange">{{principalVendor}}</small></span></label></span>  
-                        </div> -->
                         </div>
 
                         <div class="table-responsive">
@@ -363,11 +348,6 @@
                   <div style="margin-bottom: 15px;float: left; width: 100%;">
                     <div class="col-md-6">
                       <h4 class="panel-title">
-                        <!-- <select class="form-control" ng-model="surveyLeadFilter" aria-placeholder="Select Leads,Surveyed Clients" ng-change="setSurveyLeadFilter(surveyLeadFilter.value)">
-                          <option ng-selected="aa" disabled='true' value="">Select Leads,Surveyed Clients</option>
-                          <option value="Survey">Survey</option>
-                          <option value="Leads">Leads</option>
-                        </select> -->
                         <select ng-options="supplierType for supplierType in surveyLeadArray"
                           aria-placeholder="Select Leads,Surveyed Clients" ng-model="supplierType" class="form-control"
                           ng-change="surveyLeadFilter(supplierType)">
@@ -385,25 +365,10 @@
                         </select>
                       </h4>
                     </div>
-                    <!-- <h4 class="panel-title"> -->
-
-
-                      <!-- <select ng-options="entityType.name for entityType in entityTypes" ng-model="entityType.value"
-                      class="form-control" ng-change="setEntityType(entityType.value)"
-                      default-option="{{entityType.name}}">  
-                    </select> -->
-
-                      <!-- <select class="form-control" name="supplierType" ng-model="entityType.value"
-                        value="entityType.value" ng-change="setEntityType(entityType.value)">
-                        <option value="">Select Supplier Type</option>
-                        <option value="{{entityType.value}}" ng-selected="selectedEntityType == entityType.value"
-                          ng-repeat="entityType in supplierTypeCode">{{entityType.name}}</option>
-                      </select> -->
-                    <!-- </h4> -->
                   </div>
                   <br/>
                   <span style="display: block;margin: 15px;">
-                    <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+                    <input type="text" class="form-control" ng-model="searchQuery" ng-change="searchForDetails(searchQuery,'basic')" placeholder="search">
                   </span>
                   <br />
                   <div class="table-responsive b2b-table-style">
@@ -567,51 +532,6 @@
 
 
                           <div class="panel-group" id="accordion">
-                            <!-- <div class="panel panel-default">
-                              <div ng-if="showCampaignGraph" class="panel-heading" ng-click="getCampaigns()">
-                                <h4 class="panel-title">
-                                  All Campaigns
-                                </h4>
-
-                              </div>
-                            </div> -->
-                            <!-- <div class="panel panel-default">
-                              <div class="row" style="width:100%;margin-left:0px;">
-                                <h4 class="panel-title">
-                                  <select class="form-control" ng-model="selectedVendor.name"
-                                    ng-change="getCampaignsByVendor()">
-                                    <option value="">Select Vendor</option>
-                                    <option value="{{vendor.vendor_id}}">All</option>
-                                    <option value="{{vendor.vendor_id}}" ng-repeat="vendor in vendorsData">
-                                      {{vendor.principal_vendor}}</option>
-                                  </select>
-                                </h4>
-                              </div>
-                              <div class="animate-show">
-                                <div class="panel-bodyDashboard camp-menu-content">
-                                  <table class="table">
-                                    <tr ng-repeat="vendors in vendorsData">
-                                      {{vendors}}
-                                    </tr>
-                                  </table>
-                                </div>
-                              </div>
-                            </div> -->
-
-                            <!-- <div class="panel panel-default">
-                              <div class="row" style="width:100%;margin-left:0px;">
-                                <h4 class="panel-title">
-                                  <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code"
-                                    value="supplierType.value" ng-change="setSupplierType()">
-                                    <option value="">Select Supplier Type</option>
-                                    <option value="{{supplierType.value}}"
-                                      ng-selected="selectedSupplierType == supplierType.value"
-                                      ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
-                                  </select>
-                                </h4>
-                              </div>
-
-                            </div> -->
                             <div class="panel panel-default"
                               ng-click="getCampaignsMenu(campaignStatus.completed.status)">
                               <div class="panel-heading">
@@ -1158,10 +1078,7 @@
                               </button>
                             </td>
                             <td class="btn_box_lead_survey">
-                              <button class="btn btn-danger" 
-                               data-target="#CreateFields" data-toggle="modal">
-                               Create Field
-                              </button>
+                              <button class="btn btn-danger" data-target="#CreateFields" data-toggle="modal" ng-click="listOfCreateField()">Create Field </button>
                             </td>
                           </tr>
                         </tbody>
@@ -2696,6 +2613,9 @@
                     <button class="btn btn-danger" 
                        data-target="#AddButtons" data-toggle="modal">Add Buttons
                     </button>
+                    <div ng-repeat="button in addmultiButton">
+                      <button class="btn btn-danger" value="button" ng-if="button!=''">{{button}}</button>
+                    </div>
                   </td>
                   <td class="text-center"><button class="btn btn-danger">Submit</button></td>
                   <td class="text-center">
@@ -2704,7 +2624,7 @@
                     </div>
                   </td> 
                 </tr>
-                <tr>
+                <tr ng-repeat="data in createFieldList">
                   <td>
                     <select ng-disabled="inactive" class="form-control" style="min-width: 120px;">
                       <option>field 1</option>
@@ -2712,7 +2632,7 @@
                       <option>field 3</option>
                     </select>
                   </td>
-                  <td><input ng-disabled="inactive" type="text" class="form-control" style="min-width: 120px;"></td>
+                  <td><input ng-disabled="inactive" type="text" value="{{data.alias_name}}" class="form-control" style="min-width: 120px;"></td>
                   <td>
                     <select ng-disabled="inactive" class="form-control" style="min-width: 80px;">
                       <option>field 5</option>
@@ -2720,22 +2640,25 @@
                       <option>field 7</option>
                     </select>
                   </td>
-                  <td><input ng-disabled="inactive" type="text" class="form-control" style="min-width: 120px;"></td>
+                  <td><input ng-disabled="inactive" type="text" value="{{data.comment}}" class="form-control" style="min-width: 120px;"></td>
                   <td>
                     <select ng-disabled="inactive"class="form-control" style="min-width: 80px;">
                       <option>Yes</option>
                       <option>No</option>
                     </select>
                   </td>
-                  <td><textarea ng-disabled="inactive" type="text"></textarea></td>
-                  <td><input ng-disabled="inactive" type="text" class="form-control" style="min-width: 120px;"></td>
+                  <td><textarea ng-disabled="inactive" ng-model="data.triger_message" type="text"></textarea></td>
+                  <td><input ng-disabled="inactive" type="text" value="{{data.params.toString()}}" class="form-control" style="min-width: 120px;"></td>
                   <td class="text-center">
                     <button ng-disabled="inactive" class="btn btn-danger" 
                        data-target="#AddButtons" data-toggle="modal">Add Buttons
                     </button>
+                    <div ng-repeat="btn in data.button">
+                      <button ng-disabled="inactive" class="btn btn-danger" value="button" ng-if="btn!=''">{{btn.name}}</button>
+                    </div>
                   </td>
                   <td class="text-center"><button class="btn btn-success mb-2" ng-click="changeEditDisable()">{{saveUpdateButton}}</button>
-                      <button class="btn btn-danger" ng-click="removeSingleField()">Remove</button>
+                      <button class="btn btn-danger" ng-click="removeSingleField(data._id)">Remove</button>
                   </td>
                   <td class="text-center"><div class="tool-tip" ng-init="helpTips=false">
                       <h5><i class="fa fa-question tool-icon" ng-mouseover="helpTips=true"ng-mouseleave="helpTips=false"></i>
@@ -2765,12 +2688,12 @@
         <div class="modal-body">
           <div class="modalBodyBox"> 
            
-             <form>  
+             <form ng-submit="addMultiButtons()">  
               <div class="wrapper">
-                  <p>Button 1:<input type="text" class="form-control"/></p>
-                  <p>Button 2:<input type="text" class="form-control"/></p>
-                  <p>Button 3:<input type="text" class="form-control"/></p>
-                  <p><input type="submit" value="Submit" /></p>
+                  <p>Button 1:<input type="text" class="form-control"  ng-model="button.one"/></p>
+                  <p>Button 2:<input type="text" class="form-control"  ng-model="button.two"/></p>
+                  <p>Button 3:<input type="text" class="form-control"  ng-model="button.three"/></p>
+                  <p><input class="btn btn-danger" type="submit" value="Submit" /></p>
               </div>
           </form>
           </div>
