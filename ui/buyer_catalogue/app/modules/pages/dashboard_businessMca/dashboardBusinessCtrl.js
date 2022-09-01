@@ -704,26 +704,28 @@
           "requirement_id": requirement_id,
           "client_status": value,
           "_id":id
-        }]
+        }]  
         B2BDashboardService.acceptDeclineDecisionPanding({ 'data': data })
           .then(function onSuccess(response) {
             if (response) {
               if(value == "Decline"){
-                $scope.leadDecisionPandingData[index].client_status = "Decline";
+                $scope.leadDecisionPandingData.values[index][0].client_status = "Decline";
               }
               else{
-                $scope.leadDecisionPandingData.splice(index, 1);
+                $scope.leadDecisionPandingData = delete $scope.leadDecisionPandingData[index];
               }
               
               if(value == 'Decline'){
                 value = 'Declined';
               }
-              swal(constants.name, value + " Successfully", constants.success);
             }
             B2BDashboardService.showLeads($scope.supp_id)
             .then(function onSuccess(response) {
               $scope.supplier_leads=response.data.data.lead;
             }) 
+            swal(constants.name, value + " Successfully", constants.success);
+            $scope.leadBasics('basic');
+
           });
       }
 
@@ -747,7 +749,7 @@
                 })
              }
           })
-          $scope.viewLeadsForSelectedCampaign ($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead );
+          $scope.viewLeadsForSelectedCampaign ($scope.leadDetailData,$scope.campaignIdForLeads,$scope.currentPageLead );
       }
       $scope.arrowIcon = 0;
       $scope.showLeads = function (row, supplier_id) {
@@ -3563,10 +3565,13 @@
             console.log(response);
           })
       }
-      $scope.viewLeadsForSelectedCampaign = function (data,campaignId,count,page,city,startDate,endDate,search) {
+      $scope.viewLeadsForSelectedCampaign = function (data,campaignId,page,city,startDate,endDate,search) {
         $scope.viewClientStatus();
         cfpLoadingBar.start();
-        $scope.uniqueCount = count;
+        if($scope.campaignIdForLeads!=campaignId){
+          $scope.dateRangeModel = {};
+          $scope.city = "";
+        }
         $scope.leadDetailData = data;
         $scope.campaignIdForLeads = campaignId;
         if(!page){
@@ -3590,20 +3595,21 @@
           B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page,city,startDate,endDate,search)
             .then(function onSuccess(response) {
               $scope.leadDecisionPandingData = response.data.data;
-              $scope.totalCountLead = count;
+              $scope.cityListDetails = $scope.leadDecisionPandingData.city_list;
+              $scope.totalCountLead = $scope.leadDecisionPandingData.length;
               $scope.itemsPerPageLead = 20;
               $scope.currentPageLead = page;
             })
         }
         else {
-          B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page,city,startDate,endDate,search)
-          // B2BDashboardService.purchasedNotPurchasedLead(campaignId, $scope.filterType, $scope.selectedSupplierType.code, page, "", "", "")
+          //B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page,city,startDate,endDate,search)
+          B2BDashboardService.purchasedNotPurchasedLead(campaignId, "Leads",'all', page,city,startDate,endDate,search)
             .then(function onSuccess(response) {
               cfpLoadingBar.complete();
               $scope.selectedCampaignLeads = response.data.data;
               $scope.cityListDetails = $scope.selectedCampaignLeads.city_list;
               $scope.CampaignNameofLeads = data.name;
-              $scope.totalCountLead = count;
+              $scope.totalCountLead = $scope.selectedCampaignLeads.length;
               $scope.itemsPerPageLead = 20;
               $scope.currentPageLead = page;
               $scope.showCampaigns = false;
@@ -3617,7 +3623,7 @@
     $scope.selectCity = "";
     $scope.selectedCity = function (city) {
       $scope.selectCity = city;
-      $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead,$scope.selectCity);
+      $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.currentPageLead,$scope.selectCity);
     }
     $scope.startDate = "";
     $scope.endDate = "";
@@ -3629,12 +3635,12 @@
       $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
       if ($scope.endDate != "") {
         if ($scope.endDate >= $scope.startDate) {
-          $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate);
+          $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate);
         }
         else if ($scope.endDate < $scope.startDate) {
           $scope.endDate = $scope.startDate;
           $scope.dateRangeModel.end_dates = $scope.dateRangeModel.start_date;
-          $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate);
+          $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate);
         }
       }
     }
@@ -3643,10 +3649,10 @@
       if ($scope.changeEndDate > $scope.changeStartDate)
         $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
       $scope.endDate = $scope.dateFormat($scope.dateRangeModel.end_dates);
-      $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate);
+      $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate);
     }
     $scope.searchForDetails = function (search){
-      $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate,search);
+      $scope.viewLeadsForSelectedCampaign($scope.leadDetailData,$scope.campaignIdForLeads,$scope.currentPageLead,$scope.selectCity,$scope.startDate, $scope.endDate,search);
     }
 
     $scope.dateFormat = function (date) {
@@ -6745,7 +6751,7 @@
           return 'NA';
       }
       $scope.pageChangedLeadDetail = function(page){
-        $scope.viewLeadsForSelectedCampaign ($scope.leadDetailData,$scope.campaignIdForLeads,$scope.uniqueCount,page);
+        $scope.viewLeadsForSelectedCampaign ($scope.leadDetailData,$scope.campaignIdForLeads,page);
       }
       $scope.setEmailDownloadValue = function(campaignId){
         $scope.campaignId = campaignId;
