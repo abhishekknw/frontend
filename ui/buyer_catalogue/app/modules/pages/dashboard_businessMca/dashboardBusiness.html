@@ -1118,7 +1118,7 @@
                               <td style="width:140px;">{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
                               <td class="col-md-2" >{{campaign.supplier_count}}({{campaign.unique_count}})</td>
                               <td>
-                                <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id,campaign.unique_count)">View Leads</button>
+                                <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View Leads</button>
                               </td>
                               <td>
                                 <button class="btn btn-danger" ng-click="setEmailDownloadValue(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
@@ -1178,7 +1178,7 @@
                       </div>
                     </div>
                     <span style="display: block;margin: 15px;">
-                      <input type="text" class="form-control" ng-model="searchQuery" ng-change="searchForDetails(searchQuery)" placeholder="search">
+                      <input type="text" class="form-control" ng-model="searchForLead" ng-keyup="searchForDetails(searchForLead)" placeholder="search">
                     </span>
                   </div>
                     <div class="viewLeadstable" ng-if="!showCampaigns && !leadBasicShow">
@@ -1265,9 +1265,54 @@
   
                     </div>
                        <!-- table for lead basic -->
-                       <span ng-if="leadBasicShow==true && showTable==true" style="display: block;margin: 15px;">
-                        <input type="text" class="form-control" ng-model="searchQuery" ng-change="searchForDetails(searchQuery)" placeholder="search">
-                      </span>
+                       <div ng-if="leadBasicShow==true && showTable==true" class="date_range_picker">
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <select ng-change="selectedCity(city)"
+                                class="form-control select_city" ng-model="city">
+                                    <option value="" >Select City</option>
+                                    <option ng-repeat="city in cityListDetails" track by "$index">{{city}}</option>
+                                </select>
+                              </div>
+    
+                              <div class="col-lg-6">
+                                <div class="date_wrapper">
+                                <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                                  placeholder="DD/MM/YYYY" ng-change="StartDateForLead()" ng-model="dateRangeModel.start_dates"
+                                  is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
+                                  alt-input-formats="altInputFormats">
+                                <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                                  <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                              </div>
+                             </div>
+                            </div>
+                          </div>
+    
+                          <div class="col-lg-6">
+                            <div class="row">
+                              <div class="col-sm-1"><h5 style="color:#000;padding: 10px 0;">To:</h5></div>
+                              <div class="col-md-6">
+                                <div class="date_wrapper">
+                                <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                                  placeholder="DD/MM/YYYY" ng-change="endDateForLead()" ng-model="dateRangeModel.end_dates"
+                                  is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
+                                  alt-input-formats="altInputFormats">
+                                <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                                  ng-click="isEndDateOpen = !isEndDateOpen">
+                                  <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <span style="display: block;margin: 15px;">
+                          <input type="text" class="form-control" ng-model="searchForLead" ng-keyup="searchForDetails(searchForLead)" placeholder="search">
+                        </span>
+                      </div>
                     <div class="" ng-if="leadBasicShow==true && showTable==true">
                       </br><br>
                         <div class="table-responsive">
@@ -1316,9 +1361,9 @@
                                   ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding[0]._id,decisionPanding[0].requirement_id)">Accept</button>
                                 <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                                   ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding[0]._id,decisionPanding[0].requirement_id)"
-                                  ng-if="decisionPanding.client_status!='Decline'">Decline</button>
+                                  ng-if="decisionPanding[0].client_status!='Decline'">Decline</button>
                                 <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                  disabled ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
+                                  disabled ng-if="decisionPanding[0].client_status=='Decline'">Currently Declined</button>
                               </td>
                             </tr>
                               <tr style="background-color: yellow;" id="{{id}}"
