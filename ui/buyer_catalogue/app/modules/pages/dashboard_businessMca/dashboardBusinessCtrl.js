@@ -3574,6 +3574,7 @@
         }
         $scope.leadDetailData = data;
         $scope.campaignIdForLeads = campaignId;
+        $scope.CampaignNameofLeads = data.name;
         if(!page){
           page = 0;
         }
@@ -3608,7 +3609,6 @@
               cfpLoadingBar.complete();
               $scope.selectedCampaignLeads = response.data.data;
               $scope.cityListDetails = $scope.selectedCampaignLeads.city_list;
-              $scope.CampaignNameofLeads = data.name;
               $scope.totalCountLead = $scope.selectedCampaignLeads.length;
               $scope.itemsPerPageLead = 20;
               $scope.currentPageLead = page;
