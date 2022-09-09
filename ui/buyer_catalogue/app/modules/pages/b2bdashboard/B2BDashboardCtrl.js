@@ -922,17 +922,49 @@
       }
       return star;
     }
-    $scope.button = { 'one': '', 'two': '', 'three': '' };
-    $scope.addMultiButtons = function () {
+    // $scope.button = { 'one': '', 'two': '', 'three': '' };
+    $scope.addMultiButtons = function (button) {
+      // $scope.buttonList = [];
+      // for (let key in button){
+      // $scope.buttonList.push({"name":button[key]});
+      // }
       if ($scope.button) {
         $scope.addmultiButton = $scope.button;
         $scope.button = "";
       }
     }
-    $scope.listOfCreateField = function () {
-      B2BDashboardService.listOfCreateField()
+    $scope.listOfCreateField = function (campaign_id) {
+      $scope.campaign_id = campaign_id;
+      B2BDashboardService.listOfCreateField(campaign_id)
         .then(function onSuccess(response) {
-          $scope.createFieldList = response.data.data;
+          $scope.createFieldList = response.data.data.trigers;
+          $scope.fieldName = response.data.data.status_id_list;
+          $scope.typeOfField = response.data.data.type_of_feild;
+        });
+    }
+    $scope.submitCreateField = function(datalist){
+      console.log(datalist,"asdffa")
+      let fieldName = datalist.fieldName;
+      let params = datalist.params;
+      datalist.params = params.split(',');
+      delete datalist.fieldName;
+      datalist.status_id = fieldName.id;
+      datalist.field_name = fieldName.name;
+      datalist.campaign_id = $scope.campaign_id;
+      datalist.buttonOne =  $scope.addmultiButton.one;
+      datalist.buttonTwo =  $scope.addmultiButton.two;
+      datalist.buttonThree =  $scope.addmultiButton.three;
+      let data = [];
+      data.push(datalist);
+      let dataObj = {};
+      dataObj.data = data;
+      console.log(dataObj)
+      B2BDashboardService.submitCreateField(dataObj)
+        .then(function onSuccess(response) {
+          $scope.createData = "";
+          $scope.button = "";
+        }).catch(function onError(response) {
+          console.log(response);
         });
     }
     $scope.isCheck = false;
@@ -1735,17 +1767,27 @@
           })
       }
     }
-    $scope.inactive = true;
-    $scope.saveUpdateButton = "Update";
-    $scope.changeEditDisable = function () {
-      $scope.inactive = !$scope.inactive;
-      if ($scope.saveUpdateButton == "Update") {
-        $scope.saveUpdateButton = "Save";
+    $scope.updatingIndex = -1;
+    $scope.originalData = null;
+    $scope.changeEditDisable = function(index){
+      $scope.createFieldList[index].isEditing = true;
+      if( $scope.updatingIndex !== -1){
+        $scope.createFieldList[ $scope.updatingIndex] = angular.copy($scope.originalData);
+        $scope.createFieldList[$scope.updatingIndex].isEditing = false;
       }
-      else {
-        $scope.saveUpdateButton = "Update";
-      }
-    };
+      $scope.updatingIndex = index;
+      $scope.originalData = angular.copy($scope.createFieldList[index]);
+    }
+    $scope.onUpdate = function(index){
+      $scope.createFieldList[index].isEditing = false;
+      $scope.updatingIndex = -1;
+      $scope.originalData = null;
+    }
+     //$scope.inactive = true;
+    // $scope.changeEditDisable = function (id) {
+    //   $scope.idForButton = id;
+    //   $scope.inactive = !$scope.inactive;
+    // };
     $scope.removeSingleField = function (id) {
       swal({
         title: 'Are you sure ?',

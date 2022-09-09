@@ -1188,3 +1188,6 @@ body #AddButtons.modal button.close {
   height: auto;
   padding: 13px 12px;
 }
+#CreateFields button.btn.btn-danger{
+margin: 3px 1px;
+}

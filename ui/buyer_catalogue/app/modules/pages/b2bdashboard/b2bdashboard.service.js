@@ -260,7 +260,6 @@ angular.module('catalogueApp')
       }
 
       DashboardService.getDistributionGraphsStatics = function (data) {
-        console.log("data data data",data);
         var url = url_root + "analytics/get-leads-data-generic/";
         return machadaloHttp.put(url, data);
       }
@@ -294,7 +293,6 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
       DashboardService.getCampaignsWiseForCity = function (dataCity, supplierType) {
-        console.log(dataCity);
         var url = url_analytics + "city-vendor-campaigns/";
         if (supplierType) {
           url += "?supplier_code=" + supplierType;
@@ -303,12 +301,10 @@ angular.module('catalogueApp')
         return machadaloHttp.put(url, dataCity);
       }
       DashboardService.getCampaignsWiseForVendor = function (dataVendor, supplierType) {
-        console.log(dataVendor);
         var url = url_analytics + "city-vendor-campaigns/";
         if (supplierType) {
           url += "?supplier_code=" + supplierType;
         }
-        console.log(url);
         return machadaloHttp.put(url, dataVendor);
       }
       DashboardService.getCityUsers = function () {
@@ -597,9 +593,13 @@ angular.module('catalogueApp')
         var url = url_root +"b2b/get-dynamic-basic-lead-form-headers/?campaign_id="+campaignId+"&supplier_type="+supplier_code+"&next_page="+page+"&city="+city+"&startDate="+startDate+"&endDate="+endDate+"&search="+search;
         return machadaloHttp.get(url);
       }
-      DashboardService.listOfCreateField = function () {
-        var url = url_root +"b2b/create-field-views/";
+      DashboardService.listOfCreateField = function (campaign_id) {
+        var url = url_root +"b2b/create-field-views/?campaign_id="+campaign_id;
         return machadaloHttp.get(url);
+      }
+      DashboardService.submitCreateField = function (data) {
+        var url = url_root +"/b2b/create-field-views/";
+        return machadaloHttp.put(url,data);
       }
       DashboardService.removeSingleField = function(id){
         var url = url_root +"b2b/create-field-views/?_id="+id;
