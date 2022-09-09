@@ -2596,14 +2596,14 @@
                   </td>
                   <td>
                     <select class="form-control" style="min-width: 80px;" ng-model="createData.type_of_fields">
-                      <option ng-repeat="option in typeOfField" track by "$index">{{option.name}}</option>
+                      <option ng-repeat="option in typeOfField" track by "$index">{{option}}</option>
                     </select>
                   </td>
                   <td>
                     <input type="text" class="form-control" ng-model="createData.comment"  style="min-width: 120px;">
                   </td>
                   <td>
-                    <select class="form-control" ng-model="createData.send_triger" style="min-width: 80px;">
+                    <select class="form-control" ng-model="createData.send_trigger" style="min-width: 80px;">
                       <option>Yes</option>
                       <option>No</option>
                     </select>
@@ -2612,7 +2612,7 @@
                     <textarea type="text" ng-model="createData.triger_message"></textarea>
                   </td>
                   <td>
-                    <input type="text" class="form-control" ng-model="createData.params"  style="min-width: 120px;">
+                    <input type="text" class="form-control" ng-model="createData.param"  style="min-width: 120px;">
                   </td>
                   <td class="text-center">
                     <button class="btn btn-danger" 
@@ -2631,40 +2631,42 @@
                     </div>
                   </td> 
                 </tr>
-                <tr ng-repeat="data in createFieldList">
+                <tr ng-repeat="data in createFieldList track by $index">
                   <td>
-                    <!-- <select ng-disabled="!data.isEditing"style="min-width: 120px;"class="form-control" 
-                      ng-options="option.name for option in fieldName" track by "$index"
-                      value="{{option.name}}" ng-model="data.field_name">
-                    </select> -->
                     <select  ng-disabled="!data.isEditing"style="min-width: 120px;"class="form-control" 
                              ng-model="data.field_name">
-                             <option>{{data.field_name}}</option>
                           <option ng-repeat="option in fieldName" value="{{option.name}}">{{option.name}}</option>
                       </select>
                   </td>
                   <td>
-                    <input ng-disabled="!data.isEditing" type="text" class="form-control" style="min-width: 120px;"
+                    <input ng-disabled="!data.isEditing" ng-model="data.alias_name" type="text" class="form-control" style="min-width: 120px;"
                      value="{{data.alias_name}}">
                   </td>
                   <td>
                     <select ng-disabled="!data.isEditing" class="form-control" style="min-width: 80px;" 
-                          ng-model="data.type_of_fields">
-                      <option>{{data.type_of_fields}}</option>
-                      <option ng-repeat="option in typeOfField" track by "$index">{{option.name}}</option>
+                          ng-model="data.g_templateType">
+                      <option ng-repeat="option in typeOfField" track by "$index">{{option}}</option>
                     </select>
                   </td>
                   <td>
-                    <input ng-disabled="!data.isEditing" type="text" value="{{data.comment}}" class="form-control" style="min-width: 120px;">
+                    <input ng-disabled="!data.isEditing" type="text"  class="form-control" style="min-width: 120px;"
+                            value="{{data.comment}}" ng-model="data.comment">
                   </td>
                   <td>
-                    <select ng-disabled="!data.isEditing"class="form-control" style="min-width: 80px;">
+                    <select ng-disabled="!data.isEditing"class="form-control" style="min-width: 80px;"
+                            ng-model="data.send_trigger">
+                      <option>{{data.send_trigger}}</option>
                       <option>Yes</option>
                       <option>No</option>
                     </select>
                   </td>
-                  <td><textarea ng-disabled="!data.isEditing" ng-model="data.triger_message" type="text"></textarea></td>
-                  <td><input ng-disabled="!data.isEditing" type="text" value="{{data.params.toString()}}" class="form-control" style="min-width: 120px;"></td>
+                  <td>
+                    <textarea ng-disabled="!data.isEditing" ng-model="data.trigger_message" type="text"></textarea>
+                  </td>
+                  <td>
+                    <input ng-disabled="!data.isEditing" class="form-control" style="min-width: 120px;"
+                    type="text"  value="{{data.param.toString()}}" ng-model="data.param">
+                  </td>
                   <td class="text-center">
                     <button ng-disabled="!data.isEditing" class="btn btn-danger" 
                        data-target="#AddButtons" data-toggle="modal">Add Buttons
@@ -2675,8 +2677,8 @@
                   </td>
                   <td class="text-center">
                       <button class="btn btn-success mb-2" ng-if="!data.isEditing" ng-click="changeEditDisable($index)">Update</button>
-                      <button class="btn btn-success mb-2" ng-if="data.isEditing" ng-click="onUpdate($index)">Save</button>
-                      <button class="btn btn-danger" ng-click="removeSingleField(data._id)">Remove</button>
+                      <button class="btn btn-success mb-2" ng-if="data.isEditing" ng-click="onUpdate($index,data)">Save</button>
+                      <button class="btn btn-danger" ng-click="removeSingleField(data.md_id,$index)">Remove</button>
                   </td>
                   <td class="text-center"><div class="tool-tip" ng-init="helpTips=false">
                       <h5><i class="fa fa-question tool-icon" ng-mouseover="helpTips=true"ng-mouseleave="helpTips=false"></i>
