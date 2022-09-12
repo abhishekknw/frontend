@@ -930,7 +930,13 @@
         $scope.button = "";
       }
     }
-
+    $scope.updateButton = {};
+    $scope.MultipleButtonShow = function(button){
+      console.log(button);
+      $scope.updateButton.one = button[0].name;
+      $scope.updateButton.two = button[1].name;
+      $scope.updateButton.three = button[2].name;
+    }
 
     $scope.updateMultiButtons = function(updateButton){
       $scope.updateButton = updateButton;
@@ -1780,8 +1786,13 @@
       $scope.updatingIndex = index;
       $scope.originalData = angular.copy($scope.createFieldList[index]);
     }
+    $scope.statusId = function(id){
+      $scope.statusId = id;
+    }
     $scope.onUpdate = function(index,data){
       let dataObj = {};
+      let param = data.param.toString();
+      dataObj.param = param.split(',');
       dataObj.campaign_id = data.campaign_id;
       dataObj.field_name = data.field_name;
       dataObj.alias_name = data.alias_name;
@@ -1790,10 +1801,10 @@
       dataObj.send_triger = data.send_trigger;
       dataObj.md_id = data.md_id;
       dataObj.trigger_message = data.trigger_message;
-      dataObj.param = data.param.split(',');
       dataObj.buttonOne =  $scope.updateButton.one;
       dataObj.buttonTwo =  $scope.updateButton.two;
       dataObj.buttonThree =  $scope.updateButton.three;
+      dataObj.status_id = $scope.statusId;
       $scope.createFieldList[index].isEditing = false;
       $scope.updatingIndex = -1;
       $scope.originalData = null;
@@ -1834,7 +1845,7 @@
         function (confirm) {
           B2BDashboardService.removeSingleField(id)
             .then(function onSuccess(response) {
-              $scope.createFieldList = delete $scope.createFieldList[index];
+              $scope.createFieldList = $scope.createFieldList.splice(index,1);
               swal('Remove', 'Successfully')
             })
         }
