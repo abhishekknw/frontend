@@ -922,17 +922,46 @@
       }
       return star;
     }
-    $scope.button = { 'one': '', 'two': '', 'three': '' };
-    $scope.addMultiButtons = function () {
+    // $scope.button = { 'one': '', 'two': '', 'three': '' };
+    $scope.addMultiButtons = function (button) {
+      // $scope.buttonList = [];
+      // for (let key in button){
+      // $scope.buttonList.push({"name":button[key]});
+      // }
       if ($scope.button) {
         $scope.addmultiButton = $scope.button;
         $scope.button = "";
       }
     }
-    $scope.listOfCreateField = function () {
-      B2BDashboardService.listOfCreateField()
+    $scope.listOfCreateField = function (campaign_id) {
+      $scope.campaign_id = campaign_id;
+      B2BDashboardService.listOfCreateField(campaign_id)
         .then(function onSuccess(response) {
-          $scope.createFieldList = response.data.data;
+          $scope.createFieldList = response.data.data.rows;
+          $scope.fieldName = response.data.data.field_list;
+          $scope.typeOfField = response.data.data.template_type;
+        });
+    }
+    $scope.submitCreateField = function(datalist){
+      let fieldName = datalist.fieldName;
+      let param = datalist.param;
+      datalist.param = param.split(',');
+      delete datalist.fieldName;
+      datalist.status_id = fieldName.id;
+      datalist.field_name = fieldName.name;
+      datalist.campaign_id = $scope.campaign_id;
+      datalist.buttonOne =  $scope.addmultiButton.one;
+      datalist.buttonTwo =  $scope.addmultiButton.two;
+      datalist.buttonThree =  $scope.addmultiButton.three;
+      let dataObj = {};
+      dataObj.data = datalist;
+      B2BDashboardService.submitCreateField(dataObj)
+        .then(function onSuccess(response) {
+          $scope.createData = "";
+          $scope.button = "";
+          // $scope.createFieldList
+        }).catch(function onError(response) {
+          console.log(response);
         });
     }
     $scope.isCheck = false;
@@ -1735,18 +1764,44 @@
           })
       }
     }
-    $scope.inactive = true;
-    $scope.saveUpdateButton = "Update";
-    $scope.changeEditDisable = function () {
-      $scope.inactive = !$scope.inactive;
-      if ($scope.saveUpdateButton == "Update") {
-        $scope.saveUpdateButton = "Save";
+    $scope.updatingIndex = -1;
+    $scope.originalData = null;
+    $scope.changeEditDisable = function(index){
+      $scope.createFieldList[index].isEditing = true;
+      if( $scope.updatingIndex !== -1){
+        $scope.createFieldList[ $scope.updatingIndex] = angular.copy($scope.originalData);
+        $scope.createFieldList[$scope.updatingIndex].isEditing = false;
       }
-      else {
-        $scope.saveUpdateButton = "Update";
-      }
-    };
-    $scope.removeSingleField = function (id) {
+      $scope.updatingIndex = index;
+      $scope.originalData = angular.copy($scope.createFieldList[index]);
+    }
+    $scope.onUpdate = function(index,data){
+      let dataObj = {};
+      dataObj.campaign_id = data.campaign_id;
+      dataObj.field_name = data.field_name;
+      dataObj.alias_name = data.alias_name;
+      dataObj.type_of_fields =data.g_templateType;
+      dataObj.comment = data.comment;
+      dataObj.send_triger = data.send_trigger;
+      dataObj.md_id = data.md_id;
+      dataObj.trigger_message = data.trigger_message;
+      dataObj.param = data.param.split(',');
+      dataObj.buttonOne =  $scope.addmultiButton.one;
+      dataObj.buttonTwo =  $scope.addmultiButton.two;
+      dataObj.buttonThree =  $scope.addmultiButton.three;
+      $scope.createFieldList[index].isEditing = false;
+      $scope.updatingIndex = -1;
+      $scope.originalData = null;
+      let datalist = {};
+      datalist.data = dataObj;
+      B2BDashboardService.submitCreateField(datalist)
+      .then(function onSuccess(response) {
+     
+      }).catch(function onError(response) {
+        console.log(response);
+      });
+    }
+    $scope.removeSingleField = function (id,index) {
       swal({
         title: 'Are you sure ?',
         text: 'Remove Requirement',
@@ -1760,6 +1815,7 @@
         function (confirm) {
           B2BDashboardService.removeSingleField(id)
             .then(function onSuccess(response) {
+              delete $scope.createFieldList[index]
               swal('Remove', 'Successfully')
             })
         }
