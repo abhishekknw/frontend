@@ -484,9 +484,12 @@ angular.module('Authentication')
                      return response
                   });
             };
-            
-            authService.getAllActiveUserData = function (param,meaType) {
-               let url = "v0/ui/b2c-bot/active-users/?next_page=" + param.next_page;
+            authService.supplierFilterList = function(){
+               let url ="/v0/ui/b2c-bot/supliers-filter-list/";
+               return machadaloHttp.get(url);
+            }
+            authService.getAllActiveUserData = function (param,entity,meaType) {
+               let url = "v0/ui/b2c-bot/active-users/?next_page=" + param.next_page + "&type_of_entity="+entity;
                apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/active-users/?next_page=" + param.next_page
@@ -503,9 +506,9 @@ angular.module('Authentication')
                      return response
                   });
             };
-            authService.getAllActionRequiredData = function (param,meaType) {
+            authService.getAllActionRequiredData = function (param,entity,meaType) {
                apiHost = APIBaseUrl;
-               let url = "v0/ui/b2c-bot/action_required/?next_page=" + param.next_page;
+               let url = "v0/ui/b2c-bot/action_required/?next_page=" + param.next_page + "&type_of_entity="+entity;
                if(meaType){
                   url = "v0/ui/mea-bot/action_required/?next_page=" + param.next_page;
                   apiHost = interveneApiHost;
@@ -522,8 +525,8 @@ angular.module('Authentication')
                      return response
                   });
             };
-            authService.getAllInterveneUserData = function (param,meaType) {
-               let url = "v0/ui/b2c-bot/intervene/?next_page=" + param.next_page;
+            authService.getAllInterveneUserData = function (param,entity,meaType) {
+               let url = "v0/ui/b2c-bot/intervene/?next_page=" + param.next_page + "&type_of_entity="+entity;
                apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/intervene/?next_page=" + param.next_page;
@@ -606,9 +609,9 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllUserHistory = function (param,meaType) {
+            authService.getAllUserHistory = function (param,entity,meaType) {
                console.log(param);
-               let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
+               let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page + "&type_of_entity="+entity;
                apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/get-all-users-paginate/?next_page=" + param.next_page;

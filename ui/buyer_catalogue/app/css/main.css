@@ -1132,9 +1132,7 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
 }
 body .modal .modal-dialog {
   background-color: #fff;
-  padding: 0px 15px
-px
-;
+  /* padding: 0px 15px; */
   border-radius: 5px;
     -webkit-box-shadow: 0 5px 15px rgb(0 0 0 / 50%);
    box-shadow: 0 5px 15px rgb(0 0 0 / 50%)

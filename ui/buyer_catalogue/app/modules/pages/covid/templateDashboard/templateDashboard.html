@@ -110,6 +110,7 @@ top:0;
   }
   .table-center-btn{
     text-align: center;
+    padding-bottom: 5px;
   }
   .table-center-btn button{
     margin-top: 5px;
@@ -176,9 +177,9 @@ top:0;
                                 <th scope="col">Sr. No.</th>
                                 <th scope="col">Template ID</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Template Message</th>
+                                <th scope="col" style="min-width: 250px;">Template Message</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Created At</th>
+                                <th scope="col" style="width: 150px;">Created At</th>
                                 <th scope="col">Bot Name</th>
                                 <th scope="col">Action</th>
                               </tr>
@@ -194,7 +195,7 @@ top:0;
                                 <td>{{template.status}}</td>
                                 <td>{{template.created_at}}</td>
                                 <td>{{template.bot}}</td>
-                                <td>
+                                <td style="width: 100px;">
                                   <div class="table-center-btn">
                                     <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="viewMoreDetail(template.data)">View More</button>
                                     <a href="https://stagingapi.machadalo.com/v0/ui/template/download-sample-sheet/?id={{template.id}}">

@@ -1087,7 +1087,7 @@
     $(".navbar-collapse").collapse('hide');
   });
 </script>
-<div ng-init="getActiveUser()  ">
+<div ng-init="getActiveUser();supplierFilterList();  ">
 
 
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -1377,7 +1377,7 @@
               <div id="content-1">
                 <div class="row-aisensy no-gutters">
                   <div class="col-md-12 col-xs-12 border-right pm-0">
-                    <div class="search-box" ng-if="!showChatModule">
+                    <div class="search-box search-box-active" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         <!-- <input placeholder="Search here" ng-change="searchChat(search)" ng-model="search" id="search"
@@ -1385,8 +1385,13 @@
                         <input placeholder="Search here" ng-change="getActiveUser()" ng-model="formData.activesearch"
                           id="tab1search" name="search" type="text" />
                       </div>
+                      <div class="select">
+                        <select ng-model="selectForActive" ng-change="selectedSupplier(selectForActive,'active')"
+                          ng-options="supplier for supplier in supplierFilterList">
+                          <option value="" ng-disable> -- Select Supplier --</option>
+                        </select>
+                      </div>
                     </div>
-
                     <div class="fields-box">
                       <div ng-if="!showChatModule && activeUserData.length > 0">
                         <table class="table table-bordered table-hover">
@@ -1660,11 +1665,17 @@
               <div id="content-2">
                 <div class="row-aisensy no-gutters">
                   <div class="col-md-12 col-xs-12 border-right pm-0">
-                    <div class="search-box" ng-if="!showChatModule">
+                    <div class="search-box search-box-active" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         <input placeholder="Search here" ng-change="getActionRequiredUser()"
                           ng-model="formData.actionSearch" id="tab2search" name="search" type="text" />
+                      </div>
+                      <div class="select">
+                        <select ng-model="selectForAction" ng-change="selectedSupplier(selectForAction,'action')"
+                          ng-options="supplier for supplier in supplierFilterList">
+                          <option value="" ng-disable> -- Select Supplier --</option>
+                        </select>
                       </div>
                     </div>
                     <div class="fields-box">
@@ -1917,11 +1928,17 @@
               <div id="content-3">
                 <div class="row-aisensy no-gutters">
                   <div class="col-md-12 col-xs-12 border-right pm-0">
-                    <div class="search-box" ng-if="!showChatModule">
+                    <div class="search-box search-box-active" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         <input placeholder="Search here" ng-change="getInterveneUser()"
                           ng-model="formData.interveneSearch" id="searchIn" name="search" type="text" />
+                      </div>
+                      <div class="select">
+                        <select ng-model="selectForIntervene" ng-change="selectedSupplier(selectForIntervene,'intervene')"
+                          ng-options="supplier for supplier in supplierFilterList">
+                          <option value="" ng-disable> -- Select Supplier --</option>
+                        </select>
                       </div>
                     </div>
                     <div class="fields-box">
@@ -2491,11 +2508,17 @@
             </b>
           </h3>
           <div ng-if="!showChatModule">
-            <div class="search-box">
+            <div class="search-box search-box-active">
               <div class="input-wrapper">
                 <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
                 <input placeholder="Search here" ng-change="historyDetail()" ng-model="formData.historySearch"
                   type="text" />
+              </div>
+              <div class="select">
+                <select ng-model="selectForHistory" ng-change="selectedSupplier(selectForHistory,'history')"
+                  ng-options="supplier for supplier in supplierFilterList">
+                  <option value="" ng-disable> -- Select Supplier --</option>
+                </select>
               </div>
             </div>
             <table class="table table-bordered table-hover">
@@ -3464,7 +3487,7 @@
 
 <!-- start Requirement table -->
 <div id="RequirementModel" class="modal custom-modal-box fade li-popup">
-  <div class="modal-dialog modal-lg" >
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -3533,7 +3556,8 @@
                     </td>
                     <td class="alignment">
                       {{companyData(subrequirement.sector)}}
-                      <span style="width:150px;" class="multiselectDropdown multiselectDropdown-123 multiselectDropdown-style style="
+                      <span style="width:150px;"
+                        class="multiselectDropdown multiselectDropdown-123 multiselectDropdown-style style="
                         color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
                         options="companiesDetailDataArray" extra-settings="settings"
                         selected-model="subrequirement.selected_preferred_company_sub_sector"
@@ -3627,8 +3651,7 @@
                       <span ng-if="subrequirement.varified_ops == 'yes'">Ops Verified </span>
 
                       <button style="margin-top:10px" class="btn btn-success" type="button" name="button"
-                        class="btn btn-success"
-                        ng-click="updateSubSectorRow(subrequirement)">Update</button>
+                        class="btn btn-success" ng-click="updateSubSectorRow(subrequirement)">Update</button>
 
                       <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
                         ng-if="subrequirement.color_class != 'red'"
@@ -3675,8 +3698,7 @@
 
 
 
-          <div class="modal-body col-md-4 table-responsive browsed_leads_main"
-            style="width: 100%; min-height: 200px;">
+          <div class="modal-body col-md-4 table-responsive browsed_leads_main" style="width: 100%; min-height: 200px;">
             <form name="myForms">
               <h4 class="modal-title">Browsed Leads</h4>
               <table class="table table-bordered submitted_lead_table" name="contactForm">
@@ -3815,7 +3837,7 @@
                         <option>subsector3</option>
                       </select>
                     </td>
-                     <td class="alignment">
+                    <td class="alignment">
                       <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
                         ng-change="browsCheckBoxAutoCheck($index)" ng-model="browsed.current_patner_id"
                         style="width:100px;">
@@ -3823,8 +3845,8 @@
                         <option>Current Partner1</option>
                         <option>Current Partner2</option>
                       </select>
-                      <input style="margin-top:10px" type="text" ng-change=""
-                        class="form-control" placeholder="Other Current Company">
+                      <input style="margin-top:10px" type="text" ng-change="" class="form-control"
+                        placeholder="Other Current Company">
                     </td>
 
                     <td class="alignment">
@@ -3965,7 +3987,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-if="leadTabData.length > 0 && loading"  pagination-id="paginate1"
+                  <tr ng-if="leadTabData.length > 0 && loading" pagination-id="paginate1"
                     dir-paginate="leadData in leadTabData | itemsPerPage:itemsPerPageLead" total-items="totalCountLead"
                     current-page="currentPageLead" track by "$index">
                     <td>{{$index+serial}}</td>
@@ -4122,14 +4144,14 @@
                   </tr>
                 </tbody>
               </table>
-                <dir-pagination-controls ng-if="leadTabData.length > 0 " max-size="10" on-page-change="pageChangedSuspenseLead(newPageNumber,true)" direction-links="true"
-                  boundary-links="true" pagination-id="paginate1">
-                </dir-pagination-controls>
+              <dir-pagination-controls ng-if="leadTabData.length > 0 " max-size="10"
+                on-page-change="pageChangedSuspenseLead(newPageNumber,true)" direction-links="true"
+                boundary-links="true" pagination-id="paginate1">
+              </dir-pagination-controls>
             </form>
           </div>
 
-          <div class="modal-body col-md-4 table-responsive browsed_leads_main"
-            style="width: 100%; min-height: 200px;">
+          <div class="modal-body col-md-4 table-responsive browsed_leads_main" style="width: 100%; min-height: 200px;">
             <form name="myForms">
               <h4 class="modal-title">Browsed Leads</h4>
               <table class="table table-bordered submitted_lead_table" name="contactForm">
@@ -4162,86 +4184,87 @@
                 <tbody>
                   <tr ng-if="leadTabDataBrowsed.length > 0"
                     dir-paginate="browseData in leadTabDataBrowsed | itemsPerPage:itemsPerPageLead"
-                    total-items="totalCountLead" pagination-id="browseDataPaginate" current-page="currentPageBrowsed" track by "$index">
-                  <td>{{$index+serial}}</td>
-                  <td class="alignment">{{browseData.phone_number}}</td>
-                  <td class="alignment">{{browseData.sector_name}}</td>
-                  <td class="alignment">{{browseData.sub_sector_name}}</td>
-                  <td class="alignment">
-                    <select class="form-control" name="current_patner_{{$index}}" id="browes_current_patner_id_{{$index}}"
-                      ng-model="browseData.current_patner">
-                      <option value="" disabled>Select Current Partner</option>
-                      <option ng-repeat="cpartner in companiesData track by $index"
-                        value="{{cpartner.organisation_id}}">
-                        {{cpartner.name}}
-                      </option>
-                    </select>
-                    <input style="margin-top:10px" type="text" class="form-control"
-                      placeholder="Other Current Company" ng-if="browseData.current_patner == ''"
-                      name="currentCompanyOther" id="browesCurrentCompanyOtherId_{{$index}}"
-                      ng-model="browseData.current_patner_other">
-                  </td>
-                  <td class="alignment">
-                      <select class="form-control" name="current_patner_feedback" id="browes_current_patner_feedback_id_{{$index}}"
-                      ng-model="browseData.current_patner_feedback" >
-                      <option value="" disabled>Select Current Partner Feedback</option>
-                      <option ng-repeat="cpartnerfeedback in current_patner_feedback track by $index"
-                        value="{{cpartnerfeedback}}">
-                        {{cpartnerfeedback}}
-                      </option>
-                    </select>
-                  </td>
-                  <td class="alignment">
-                    <input type="text" ng-model="browseData.current_patner_feedback_reason"
-                      name="current_patner_feedback_reason" class="form-control"
-                      placeholder="Current Patner Feedback Reason"
-                      id="browes_current_patner_feedback_reason_id_{{$index}}">
-                  </td>
-                  <td class="alignment">
-                    <span style="width:150px;" class="multiselectDropdown"
-                      style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
-                      options="companiesData" extra-settings="dropdownSettings"
-                      selected-model="browseData.selected_preferred_patner" ng-click="leadPreferredMulticheck($index)"
-                      translation-texts="selected_business_type" events="events"></span>
-                    <span ng-repeat="selectedName in browseData.selected_preferred_patner" class="custom-dropdown"
-                      style="text-align: left; display: inline-block">
-                      {{selectedName.name}}
-                      <span ng-if="!$last">,</span>
-                    </span>
-                    <input style="margin-top:10px" type="text" class="form-control"
-                      placeholder="Other Preferred Company" ng-if="browseData.otherPreferredPatner"
-                      name="other_preferred_company" id="browes_other_preferred_company_{{$index}}"
-                      ng-model="browseData.prefered_patner_other">
-                  </td>
-                  <td class="alignment">
-                    <select class="form-control" name="implementation_{{$index}}" id="browes_implementation_id_{{$index}}"
-                      ng-model="browseData.implementation_timeline">
-                      <option value="" disabled>Select Implementation Time</option>
-                      <option ng-repeat="(key,value) in implementationTime track by $index" value="{{key}}">
-                        {{value}}
-                      </option>
-                    </select>
-                  </td>
-                  <td class="alignment" class="form-group">
-                    <select class="form-control" name="meating_time_{{$index}}" id="browes_meating_time_id_{{$index}}"
-                      ng-model="browseData.meating_timeline">
-                      <option value="" disabled>Select Meeting Time</option>
-                      <option ng-repeat="(key,value) in meetingTime track by $index" value="{{key}}">
-                        {{value}}
-                      </option>
-                    </select>
-                  </td>
-                  <td class="alignment">
-                    <span>{{browseData.l1_answers}}
-                      <p>{{browseData.l1_answer_2}}</p>
-                    </span>
-                  </td>
-                  <td class="alignment">
-                    <span>{{browseData.l2_answers}}
-                      <p>{{browseData.l2_answer_2}}</p>
-                    </span>
-                  </td>
-                
+                    total-items="totalCountLead" pagination-id="browseDataPaginate" current-page="currentPageBrowsed"
+                    track by "$index">
+                    <td>{{$index+serial}}</td>
+                    <td class="alignment">{{browseData.phone_number}}</td>
+                    <td class="alignment">{{browseData.sector_name}}</td>
+                    <td class="alignment">{{browseData.sub_sector_name}}</td>
+                    <td class="alignment">
+                      <select class="form-control" name="current_patner_{{$index}}"
+                        id="browes_current_patner_id_{{$index}}" ng-model="browseData.current_patner">
+                        <option value="" disabled>Select Current Partner</option>
+                        <option ng-repeat="cpartner in companiesData track by $index"
+                          value="{{cpartner.organisation_id}}">
+                          {{cpartner.name}}
+                        </option>
+                      </select>
+                      <input style="margin-top:10px" type="text" class="form-control"
+                        placeholder="Other Current Company" ng-if="browseData.current_patner == ''"
+                        name="currentCompanyOther" id="browesCurrentCompanyOtherId_{{$index}}"
+                        ng-model="browseData.current_patner_other">
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" name="current_patner_feedback"
+                        id="browes_current_patner_feedback_id_{{$index}}" ng-model="browseData.current_patner_feedback">
+                        <option value="" disabled>Select Current Partner Feedback</option>
+                        <option ng-repeat="cpartnerfeedback in current_patner_feedback track by $index"
+                          value="{{cpartnerfeedback}}">
+                          {{cpartnerfeedback}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <input type="text" ng-model="browseData.current_patner_feedback_reason"
+                        name="current_patner_feedback_reason" class="form-control"
+                        placeholder="Current Patner Feedback Reason"
+                        id="browes_current_patner_feedback_reason_id_{{$index}}">
+                    </td>
+                    <td class="alignment">
+                      <span style="width:150px;" class="multiselectDropdown"
+                        style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
+                        options="companiesData" extra-settings="dropdownSettings"
+                        selected-model="browseData.selected_preferred_patner" ng-click="leadPreferredMulticheck($index)"
+                        translation-texts="selected_business_type" events="events"></span>
+                      <span ng-repeat="selectedName in browseData.selected_preferred_patner" class="custom-dropdown"
+                        style="text-align: left; display: inline-block">
+                        {{selectedName.name}}
+                        <span ng-if="!$last">,</span>
+                      </span>
+                      <input style="margin-top:10px" type="text" class="form-control"
+                        placeholder="Other Preferred Company" ng-if="browseData.otherPreferredPatner"
+                        name="other_preferred_company" id="browes_other_preferred_company_{{$index}}"
+                        ng-model="browseData.prefered_patner_other">
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" name="implementation_{{$index}}"
+                        id="browes_implementation_id_{{$index}}" ng-model="browseData.implementation_timeline">
+                        <option value="" disabled>Select Implementation Time</option>
+                        <option ng-repeat="(key,value) in implementationTime track by $index" value="{{key}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment" class="form-group">
+                      <select class="form-control" name="meating_time_{{$index}}" id="browes_meating_time_id_{{$index}}"
+                        ng-model="browseData.meating_timeline">
+                        <option value="" disabled>Select Meeting Time</option>
+                        <option ng-repeat="(key,value) in meetingTime track by $index" value="{{key}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <span>{{browseData.l1_answers}}
+                        <p>{{browseData.l1_answer_2}}</p>
+                      </span>
+                    </td>
+                    <td class="alignment">
+                      <span>{{browseData.l2_answers}}
+                        <p>{{browseData.l2_answer_2}}</p>
+                      </span>
+                    </td>
+
                     <td class="alignment">
                       <textarea placeholder="L3 Answer" class="form-control" ng-model="browseData.l3_answer_1" rows="4"
                         cols="50">
@@ -4250,66 +4273,67 @@
                         <p>{{browseData.l3_answer_2}}</p>
                       </span>
                     </td>
-                   
-                  
-                  <td class="alignment">
-                    {{browseData.lead_status}}
-                  </td>
-                  <td class="alignment">
-                    <select class="form-control"
-                      name="call_back_time_{{$index}}" id="browes_call_back_time_id_{{$index}}"
-                      ng-model="browseData.call_back_preference"
-                      style="width:150px;">
-                      <option value="" disabled>Select Call Back Time</option>
-                      <option ng-repeat="(key,value) in call_back_time track by $index"
-                        value="{{key}}">
-                        {{value}}
-                      </option>
-                    </select>
-                  </td>
-                  <td class="alignment">
-                    <textarea placeholder="Comment" class="form-control" ng-model="browseData.comment" rows="4"
-                      cols="50">
+
+
+                    <td class="alignment">
+                      {{browseData.lead_status}}
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" name="call_back_time_{{$index}}"
+                        id="browes_call_back_time_id_{{$index}}" ng-model="browseData.call_back_preference"
+                        style="width:150px;">
+                        <option value="" disabled>Select Call Back Time</option>
+                        <option ng-repeat="(key,value) in call_back_time track by $index" value="{{key}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <textarea placeholder="Comment" class="form-control" ng-model="browseData.comment" rows="4"
+                        cols="50">
                     </textarea>
-                  </td>
-                  <td class="alignment">
-                    <p> Submitted: {{browseData.created_at | date:'medium' }} </p>
-                  </td>
-                  <td class="alignment">
-                    <p> {{browseData.calling_state }} 
-      
-                      {{browseData.calling_state_time }} 
-                    </p>
-                  </td>
-                  <td class="alignment">
-                    <textarea placeholder="Internal Comment" class="form-control" ng-model="browseData.internal_comment" rows="4"
-                      cols="50">
+                    </td>
+                    <td class="alignment">
+                      <p> Submitted: {{browseData.created_at | date:'medium' }} </p>
+                    </td>
+                    <td class="alignment">
+                      <p> {{browseData.calling_state }}
+
+                        {{browseData.calling_state_time }}
+                      </p>
+                    </td>
+                    <td class="alignment">
+                      <textarea placeholder="Internal Comment" class="form-control"
+                        ng-model="browseData.internal_comment" rows="4" cols="50">
                     </textarea>
-                  </td>
-                  <td class="alignment">
-                    <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info">View &
-                      Intervene</button>
-                  </td>
-                  <td class="alignment">
-                    <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
-                      data-target="#companyDetailModal" ng-click="supplierForAddUpdate($index)" data-toggle="modal">Add/Update Supplier</button>
-                    <button style="margin-bottom:2px" type="button" name="button"
-                      class="btn btn-success btn-small"  data-target="#pocModal"  ng-click="openAddPoc(browseData._id)" ng-disabled="browseData.is_updated == 'False'" data-toggle="modal">Add POC</button>
-                    <button style="margin-bottom:2px" type="button" ng-disabled="browseData.is_updated == 'False'" name="button"
-                      class="btn btn-success btn-small">Add RE</button>
-                  </td>
-                  <td class="alignment">
-                    <button style="margin-bottom:2px"  type="button" name="button" ng-click="opsVerify(browseData._id)" class="btn btn-success" ng-disabled="browseData.is_updated == 'False'">Transfer</button>
-                    <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
-                      ng-click="updateLeadTab($index)">Update</button>
-                    <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                      ng-click="removeSuspenseLead(browseData._id,$index)">Remove</button>
-                  </td>
-                </tr>
+                    </td>
+                    <td class="alignment">
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info">View &
+                        Intervene</button>
+                    </td>
+                    <td class="alignment">
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
+                        data-target="#companyDetailModal" ng-click="supplierForAddUpdate($index)"
+                        data-toggle="modal">Add/Update Supplier</button>
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
+                        data-target="#pocModal" ng-click="openAddPoc(browseData._id)"
+                        ng-disabled="browseData.is_updated == 'False'" data-toggle="modal">Add POC</button>
+                      <button style="margin-bottom:2px" type="button" ng-disabled="browseData.is_updated == 'False'"
+                        name="button" class="btn btn-success btn-small">Add RE</button>
+                    </td>
+                    <td class="alignment">
+                      <button style="margin-bottom:2px" type="button" name="button" ng-click="opsVerify(browseData._id)"
+                        class="btn btn-success" ng-disabled="browseData.is_updated == 'False'">Transfer</button>
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
+                        ng-click="updateLeadTab($index)">Update</button>
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                        ng-click="removeSuspenseLead(browseData._id,$index)">Remove</button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
-              <dir-pagination-controls max-size="10" on-page-change="pageChangedSuspenseLead(newPageNumber,False)" direction-links="true"
-                    boundary-links="true" pagination-id="browseDataPaginate">
+              <dir-pagination-controls max-size="10" on-page-change="pageChangedSuspenseLead(newPageNumber,False)"
+                direction-links="true" boundary-links="true" pagination-id="browseDataPaginate">
               </dir-pagination-controls>
             </form>
           </div>
@@ -4597,8 +4621,8 @@
   </div>
 </div>
 
- <!-- client comment  Modal -->
- <div id="viewCommentsLeadDetails" class="modal fade theme-modal">
+<!-- client comment  Modal -->
+<div id="viewCommentsLeadDetails" class="modal fade theme-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-red">
@@ -4631,8 +4655,8 @@
           <div style="margin-top: 15px;">
             <textarea class="field" rows="2" cols="200" ng-model="mymodel.comment" value=""
               placeholder="Write here.."></textarea>
-            <button class="smallBtn" type="button"
-              ng-click="commentValueDetails(mymodel,id_detail,req_id_detail)">Add Comment</button>
+            <button class="smallBtn" type="button" ng-click="commentValueDetails(mymodel,id_detail,req_id_detail)">Add
+              Comment</button>
           </div>
         </div>
       </div>

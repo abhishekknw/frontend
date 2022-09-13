@@ -56,7 +56,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         // console.log("start 78787")
 
         // AIsensy controller
-        $scope.getActiveUser = function (page) {
+        $scope.getActiveUser = function (page,entity) {
           // alert("first api call")
           $scope.tab.name = 'tabA';
           $scope.hideChatModule();
@@ -91,7 +91,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             param.search = $scope.formData.activesearch;
           }
 
-          AuthService.getAllActiveUserData(param)
+          AuthService.getAllActiveUserData(param,entity)
 
             .then(function onSuccess(response) {
               $scope.activeUserData = response.data.data.users;
@@ -101,9 +101,32 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               console.log(response);
             })
         }
-        $scope.formData = {};
+        $scope.supplierFilterList = function(){
+         
+          AuthService.supplierFilterList()
+            .then(function onSuccess(response) {
+              $scope.supplierFilterList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+        $scope.selectedSupplier = function(select,type){
+          if(type==='active'){
+            $scope.getActiveUser('',select);
+          }
+          else if(type==='action'){
+           $scope.getActionRequiredUser("",select);
+          }
+          else if(type==='intervene'){
+            $scope.getInterveneUser("",select);
+          }
+          else{
+            $scope.historyDetail("",select);
+          }
+        }
 
-        $scope.getActionRequiredUser = function (page) {
+        $scope.formData = {};
+        $scope.getActionRequiredUser = function (page,entity) {
 
           $scope.tab.name = 'tabB';
           $scope.isUserProfile = false;
@@ -128,7 +151,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.actionSearch) {
             parsuspenam.search = $scope.formData.actionSearch;
           }
-          AuthService.getAllActionRequiredData(param)
+          AuthService.getAllActionRequiredData(param,entity)
 
             .then(function onSuccess(response) {
               $scope.actionRequiredUserData = response.data.data.users;
@@ -138,7 +161,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             })
         }
 
-        $scope.getInterveneUser = function (page) {
+        $scope.getInterveneUser = function (page,entity) {
           $scope.tab.name = 'tabC';
           $scope.isUserProfile = false;
           $scope.formData.actionSearch = '';
@@ -162,7 +185,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.interveneSearch) {
             param.search = $scope.formData.interveneSearch;
           }
-          AuthService.getAllInterveneUserData(param)
+          AuthService.getAllInterveneUserData(param,entity)
 
             .then(function onSuccess(response) {
               $scope.interveneUserData = response.data.data.users;
@@ -430,7 +453,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             })
         }
 
-        $scope.historyDetail = function (page) {
+        $scope.historyDetail = function (page,entity) {
 
           $scope.formData.contactSearch = "";
           $scope.showcontactDetail = false;
@@ -460,7 +483,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.historySearch) {
             param.search = $scope.formData.historySearch;
           }
-          AuthService.getAllUserHistory(param)
+          AuthService.getAllUserHistory(param,entity)
 
 
             .then(function onSuccess(response) {

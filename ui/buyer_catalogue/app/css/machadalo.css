@@ -683,7 +683,24 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 	transition: all 0.5s ease-in-out;
 }
 
-
+.search-box-active{
+  display: flex;
+  gap: 15px;
+}
+.search-box-active .input-wrapper{
+  flex: 0 0 calc(75% - 20px);
+}
+.search-box-active .select{
+  flex: 0 0 25%;
+}
+.search-box-active .select select{
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: none;
+  outline: none;
+  border: 1px solid #000;
+  padding: 6px 15px;
+}
 
 /*6-mar-21*/
 .li-popup .multiselectDropdown .dropdown-menu {

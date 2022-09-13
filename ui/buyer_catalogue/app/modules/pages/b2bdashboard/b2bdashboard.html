@@ -419,6 +419,7 @@
                             </td>
                             <td class="alignment">
                                 <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
+                                <div>{{decisionPanding.last_comment.comment}}</div>
                             </td>
                           <!-- <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td> -->
                           <td class="alignment text-center">
@@ -1191,6 +1192,7 @@
                             </td>
                             <td class="alignment">
                               <button type="button" style="margin-bottom:2px; line-height: 1.5;" class="btn btn-danger" ng-click="viewCommentsLeadDetails(lead[0]._id,lead[0].requirement_id)">View / Add</button>
+                              <div>{{lead[0].last_comment.comment}}</div>
                             </td>
                             <td><button style="margin-top:8px; margin-right: -16px !important;"
                                 type="button" name="button" class="btn btn-danger"
