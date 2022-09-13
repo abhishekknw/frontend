@@ -419,6 +419,7 @@
                             </td>
                             <td class="alignment">
                                 <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
+                                <div>{{decisionPanding.last_comment.comment}}</div>
                             </td>
                           <!-- <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td> -->
                           <td class="alignment text-center">
@@ -1191,6 +1192,7 @@
                             </td>
                             <td class="alignment">
                               <button type="button" style="margin-bottom:2px; line-height: 1.5;" class="btn btn-danger" ng-click="viewCommentsLeadDetails(lead[0]._id,lead[0].requirement_id)">View / Add</button>
+                              <div>{{lead[0].last_comment.comment}}</div>
                             </td>
                             <td><button style="margin-top:8px; margin-right: -16px !important;"
                                 type="button" name="button" class="btn btn-danger"
@@ -2634,9 +2636,9 @@
                 <tr ng-repeat="data in createFieldList track by $index">
                   <td>
                     <select  ng-disabled="!data.isEditing"style="min-width: 120px;"class="form-control" 
-                             ng-model="data.field_name">
-                          <option ng-repeat="option in fieldName" value="{{option.name}}">{{option.name}}</option>
-                      </select>
+                              ng-model="data.field_name">
+                          <option ng-repeat="option in fieldName"  ng-click="statusId(option.id)" value="{{option.name}}" >{{option.name}}</option>
+                    </select>
                   </td>
                   <td>
                     <input ng-disabled="!data.isEditing" ng-model="data.alias_name" type="text" class="form-control" style="min-width: 120px;"
@@ -2655,9 +2657,9 @@
                   <td>
                     <select ng-disabled="!data.isEditing"class="form-control" style="min-width: 80px;"
                             ng-model="data.send_trigger">
-                      <option>{{data.send_trigger}}</option>
-                      <option>Yes</option>
-                      <option>No</option>
+                      <option value="{{data.send_trigger}}">{{data.send_trigger.toUpperCase()}}</option>
+                      <option>YES</option>
+                      <option>NO</option>
                     </select>
                   </td>
                   <td>
@@ -2669,10 +2671,10 @@
                   </td>
                   <td class="text-center">
                     <button ng-disabled="!data.isEditing" class="btn btn-danger" 
-                       data-target="#AddButtons" data-toggle="modal">Add Buttons
+                       data-target="#updateAddButtons" data-toggle="modal" ng-click="MultipleButtonShow(data.button)">Add Buttons
                     </button>
                     <div ng-repeat="btn in data.button">
-                      <button ng-disabled="!data.isEditing" class="btn btn-danger" value="button" ng-if="btn!=''">{{btn.name}}</button>
+                      <button ng-disabled="!data.isEditing" class="btn btn-danger" value="button" ng-if="btn.name!=null">{{btn.name}}</button>
                     </div>
                   </td>
                   <td class="text-center">
@@ -2696,6 +2698,7 @@
       </div>
     </div>
   </div>
+  <!-- start button modal -->
   <div id="AddButtons" class="modal fade modal-styles">
     <div class="modal-dialog">
     <div class="modal-header">       
@@ -2713,6 +2716,33 @@
                   <p>Button 1:<input type="text" class="form-control"  ng-model="button.one"/></p>
                   <p>Button 2:<input type="text" class="form-control"  ng-model="button.two"/></p>
                   <p>Button 3:<input type="text" class="form-control"  ng-model="button.three"/></p>
+                  <p><input class="btn btn-danger" type="submit" value="Submit" /></p>
+              </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END -->
+  <!-- startUpdate -->
+  <div id="updateAddButtons" class="modal fade modal-styles">
+    <div class="modal-dialog">
+    <div class="modal-header">       
+      <button type="button" class="close" ng-click="closeModel()" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+      <h3>Add Buttons</h3>  
+    </div>
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalBodyBox"> 
+           
+             <form ng-submit="updateMultiButtons(updateButton)">  
+              <div class="wrapper">
+                  <p>Button 1:<input type="text" class="form-control"  ng-model="updateButton.one"/></p>
+                  <p>Button 2:<input type="text" class="form-control"  ng-model="updateButton.two"/></p>
+                  <p>Button 3:<input type="text" class="form-control"  ng-model="updateButton.three"/></p>
                   <p><input class="btn btn-danger" type="submit" value="Submit" /></p>
               </div>
           </form>
