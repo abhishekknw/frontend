@@ -79,44 +79,51 @@ top:0;
     color: #B20000;
 
   }
+
   body .modal .modal-body {
     background-color: #fff;
     padding: 0px 15px;
     border-radius: 5px;
     /* margin: 150px; */
   }
-  .template-header{
+
+  .template-header {
     display: flex;
     gap: 10px;
     margin-bottom: 15px;
   }
-  .template-header .search-box input{
+
+  .template-header .search-box input {
     width: 100%;
     height: 100%;
   }
-  .template-header select{
+
+  .template-header select {
     height: 34px;
     color: #000;
   }
-  .input-wrapper{
+
+  .input-wrapper {
     height: 100%;
     position: relative;
   }
-  .input-wrapper i{
+
+  .input-wrapper i {
     position: absolute;
     top: 10px;
     right: 10px;
     color: #000;
   }
-  .table-center-btn{
+
+  .table-center-btn {
     text-align: center;
     padding-bottom: 5px;
   }
-  .table-center-btn button{
+
+  .table-center-btn button {
     margin-top: 5px;
     width: 100%;
   }
-
 </style>
 
 
@@ -155,27 +162,30 @@ top:0;
                           <div class="search-box">
                             <div class="input-wrapper">
                               <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-                              <input style="color:black" placeholder="Search here" ng-change="templateDetail('',templateSearch)" ng-model="templateSearch"
-                              type="text" />
+                              <input style="color:black" placeholder="Search here"
+                                ng-change="templateDetail('',templateSearch)" ng-model="templateSearch" type="text" />
                             </div>
                           </div>
                           <div>
-                            <select ng-change="templateDetail('','',selectValue,selectCampaign)" value="selectValue" ng-model="selectValue">
-                              <option value="">Select Status</option>
-                              <option value="{{value}}" ng-repeat="value in optionForTemplate">{{value}}</option>
-                            </select>
-                          </div>
-                          <div>
-                            <select ng-change="templateDetail('','',selectValue,selectCampaign)" value="selectCampaign" ng-model="selectCampaign">
+                            <select ng-change="templateDetail('','',selectValue,selectCampaign)" value="selectCampaign"
+                              ng-model="selectCampaign">
                               <option value="">Select Campaign</option>
                               <option value="{{value}}" ng-repeat="value in campaign_name_list">{{value}}</option>
                             </select>
                           </div>
-                          <!-- <div class="add-button">
-                            <button type="button" class="btn btn-info">Add+</button>
-                          </div> -->
+                          <div>
+                            <select ng-change="templateDetail('','',selectValue,selectCampaign)" value="selectValue"
+                              ng-model="selectValue">
+                              <option value="">Select Status</option>
+                              <option value="{{value}}" ng-repeat="value in optionForTemplate">{{value}}</option>
+                            </select>
+                          </div>
+                          <div class="add-button">
+                            <button type="button" class="btn btn-info" data-target="#addTemplate"
+                              data-toggle="modal">Add+</button>
+                          </div>
                         </div>
-                    
+
                         <div class="container py-5">
                           <table class="table table-bordered table-hover">
                             <thead class="thead-dark">
@@ -191,8 +201,9 @@ top:0;
                               </tr>
                             </thead>
                             <tbody>
-                              <tr  pagination-id="paginate1" dir-paginate="template in templateDetailData| itemsPerPage:itemsPerPageRecord"
-                                 total-items="totalrecord" current-page="currentPage" track by "$index">
+                              <tr pagination-id="paginate1"
+                                dir-paginate="template in templateDetailData| itemsPerPage:itemsPerPageRecord"
+                                total-items="totalrecord" current-page="currentPage" track by "$index">
                                 <!-- <tr ng-repeat="template in templateDetailData"> -->
                                 <td>{{$index+serial}}</td>
                                 <td>{{template.id}}</td>
@@ -203,52 +214,123 @@ top:0;
                                 <td>{{template.bot}}</td>
                                 <td style="width: 100px;">
                                   <div class="table-center-btn">
-                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="viewMoreDetail(template.data)">View More</button>
-                                    <a href="https://stagingapi.machadalo.com/v0/ui/template/download-sample-sheet/?id={{template.id}}">
-                                      <button type="button" class="btn btn-danger" style="align-items: center;">Download sample sheet </button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;"
+                                      ng-click="viewMoreDetail(template.data)">View More</button>
+                                    <a
+                                      href="https://stagingapi.machadalo.com/v0/ui/template/download-sample-sheet/?id={{template.id}}">
+                                      <button type="button" class="btn btn-danger" style="align-items: center;">Download
+                                        sample sheet </button>
                                     </a>
-                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="sendTemplates(template.data,template.id,'user',template.elementName)">Check users</button>
-                                    <button type="button" class="btn btn-danger" style="align-items: center;" ng-click="sendTemplates(template.data,template.id,'template',template.elementName)">Send templates</button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;"
+                                      ng-click="sendTemplates(template.data,template.id,'user',template.elementName)">Check
+                                      users</button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;"
+                                      ng-click="sendTemplates(template.data,template.id,'template',template.elementName)">Send
+                                      templates</button>
                                   </div>
                                 </td>
                               </tr>
                             </tbody>
                           </table>
-                              <dir-pagination-controls max-size="7" directionlinks="true" boundary-links="true"
-                                                     on-page-change="pageChangedMasterTemplate(newPageNumber-1)" pagination-id="paginate1">
-                              </dir-pagination-controls>
+                          <dir-pagination-controls max-size="7" directionlinks="true" boundary-links="true"
+                            on-page-change="pageChangedMasterTemplate(newPageNumber-1)" pagination-id="paginate1">
+                          </dir-pagination-controls>
                         </div>
                       </div>
+                      <!-- Add Template Modal -->
+                      <div id="addTemplate" class="modal fade theme-modal">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                              <h4 class="modal-title">Modal Heading</h4>
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                              <form action="">
+                                <div class="form-group">
+                                  <label>Field Name:</label>
+                                  <select class="form-control">
+                                    <option>test</option>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                  <label> Alais Name:</label>
+                                  <input class="form-control" type="text">
+                                </div>
+                                <div class="form-group">
+                                  <label> Type of Field:</label>
+                                  <select class="form-control">
+                                    <option>test</option>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                  <label> Comment:</label>
+                                  <input class="form-control" type="text">
+                                </div>
+                                <div class="form-group">
+                                  <label> Send Trigger (Y/N):</label>
+                                  <select class="form-control">
+                                    <option>YES</option>
+                                    <option>NO</option>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                  <label> Trigger Message:</label>
+                                  <textarea class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                  <label> Params:</label>
+                                  <input class="form-control" type="text">
+                                </div>
+                                <div class="form-group">
+                                  <label> Add Buttons:</label>
+                                  <button class="btn btn-danger">Add Buttons</button>
+                                </div>
+                              </form>
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger">
+                                Submit
+                              </button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end Add Temlate -->
                       <!-- view More detail popup start -->
-                    <div id="viewMoreDetail" class="modal fade theme-modal">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <!-- Modal Header -->
-                          <div class="modal-header">
-                            <h4 class="modal-title">Modal Heading</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          </div>
-                          <div class="modal-body">
-                            <div>Template ID:</div>
-                            <div>Template Name:</div>
-                            <div>Param:</div>
-                            <div>
-                              {{message}}
+                      <div id="viewMoreDetail" class="modal fade theme-modal">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                              <h4 class="modal-title">Modal Heading</h4>
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
-                            <div>
-                              <button style="width: 70px;">A</button>
-                              <button style="width:70px">B</button>
-                              <button style="width:70px">C</button>
+                            <div class="modal-body">
+                              <div>Template ID:</div>
+                              <div>Template Name:</div>
+                              <div>Param:</div>
+                              <div>
+                                {{message}}
+                              </div>
+                              <div>
+                                <button style="width: 70px;">A</button>
+                                <button style="width:70px">B</button>
+                                <button style="width:70px">C</button>
+                              </div>
                             </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+
                           </div>
-                          <!-- Modal footer -->
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                          </div>
-                          
                         </div>
                       </div>
-                    </div>
                       <!--view more detail modal end-->
 
                       <!-- send template modal -->
@@ -270,22 +352,28 @@ top:0;
                                   <div class="clearfix">
                                     <div class="col-sm-3">
                                       <div style="position: relative; text-align: left; height: 38px;">
-                                        <input  class="btn btn-danger" style="position: absolute; z-index: 16; opacity: 0; width:123px; cursor: pointer;" type="file" id="file1" name="file" multiple ng-files="getTheFiles($files)" />
-                                       <button style="position: absolute; z-index: 1; width:123px;" type="button" class="btn btn-danger">Upload Users</button>
-                                      </div>                                    
+                                        <input class="btn btn-danger"
+                                          style="position: absolute; z-index: 16; opacity: 0; width:123px; cursor: pointer;"
+                                          type="file" id="file1" name="file" multiple ng-files="getTheFiles($files)" />
+                                        <button style="position: absolute; z-index: 1; width:123px;" type="button"
+                                          class="btn btn-danger">Upload Users</button>
+                                      </div>
                                     </div>
                                     <div class="col-sm-2">
-                                      <button type="button" class="btn btn-danger" value="Upload" ng-click="uploadSendTemplate()">Send</button>
+                                      <button type="button" class="btn btn-danger" value="Upload"
+                                        ng-click="uploadSendTemplate()">Send</button>
                                     </div>
                                     <div class="col-sm-7" style="text-align: right;">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                     </div>
-                                  </div>                                  
-                                  <div style="text-align: left; padding-left: 23px; padding-top:5px;">{{selectedFileName}}</div>                                 
-                                  <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">{{excelColumnError}}</div>
-                                  </div>                                
+                                  </div>
+                                  <div style="text-align: left; padding-left: 23px; padding-top:5px;">
+                                    {{selectedFileName}}</div>
+                                  <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
+                                    {{excelColumnError}}</div>
+                                </div>
                               </div>
-                            </form> 
+                            </form>
                           </div>
                         </div>
                       </div>
@@ -306,7 +394,7 @@ top:0;
 
                             </div>
                           </div> -->
-                          <!-- <div class="panel panel-default">
+                      <!-- <div class="panel panel-default">
                             <div class="row" style="width:100%;margin-left:0px;">
                               <h4 class="panel-title">
                                 <select class="form-control" ng-model="selectedVendor.name"
@@ -329,7 +417,7 @@ top:0;
                             </div>
                           </div> -->
 
-                          <!-- <div class="panel panel-default">
+                      <!-- <div class="panel panel-default">
                             <div class="row" style="width:100%;margin-left:0px;">
                               <h4 class="panel-title">
                                 <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code"
@@ -343,7 +431,7 @@ top:0;
                             </div>
 
                           </div> -->
-                          <!-- <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
+                      <!-- <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
                             <div class="panel-heading">
                               <h4 class="panel-title">
                                 Completed Campaigns
@@ -361,7 +449,7 @@ top:0;
                               </div>
                             </div>
                           </div> -->
-                          <!-- <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
+                      <!-- <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
                             <div class="panel-heading">
                               <h4 class="panel-title">
                                 Ongoing Campaigns
@@ -380,13 +468,13 @@ top:0;
                             </div>
                           </div> -->
 
-                          <!--<div class="panel panel-default">
+                      <!--<div class="panel panel-default">
                              <div class="panel-heading" ng-click="switchToInventory(campaignStatus.upcoming.status)">
                               <h4 class="panel-title">
                                 Upcoming Campaigns
                               </h4>
                             </div> -->
-                            <!-- <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
+                      <!-- <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
                                           <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
                                                   <tr ng-repeat="campaign in campaignData.upcoming_campaigns">
@@ -398,7 +486,7 @@ top:0;
                                           </div>
                                       </div> 
                           </div>-->
-                          <!-- <div class="panel panel-default">
+                      <!-- <div class="panel panel-default">
                             <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.onhold.status)">
                               <h4 class="panel-title">
                                 On Hold Campaigns
@@ -1435,18 +1523,18 @@ top:0;
                             <i class="glyphicon glyphicon-calendar"></i>
                           </button>
                         </div>
-                          <div col-md-2 col-sm-2>
-                            <button class="btn btn-danger"
-                              ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
-                              ng-click="getTransactionalTemplate(search,dateRangeModel.start_dates,dateRangeModel.end_dates)">
-                              Submit</button>
-                          </div>
+                        <div col-md-2 col-sm-2>
+                          <button class="btn btn-danger"
+                            ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
+                            ng-click="getTransactionalTemplate(search,dateRangeModel.start_dates,dateRangeModel.end_dates)">
+                            Submit</button>
+                        </div>
                       </div>
                       <!--end of clender-->
                       <input type="text" class="form-control " placeholder="search"
-                    ng-change="getTransactionalTemplate(TransactionalTemplateSearch)"
-                    ng-model="TransactionalTemplateSearch">
-                    <br>
+                        ng-change="getTransactionalTemplate(TransactionalTemplateSearch)"
+                        ng-model="TransactionalTemplateSearch">
+                      <br>
                     </div>
                   </div>
                   <!-- <input type="text" class="form-control " placeholder="search"
@@ -1574,10 +1662,10 @@ top:0;
                   <div class="panel panel-default">
                     <div class="col-md-12 ">
                       <div ng-model="viewDaywise" ng-change="getTransactionalTemplateViewDetail()"
-                      style="color: #8e1921; text-align: center; margin: 10px; text-transform:capitalize">
-                      <h4><b>Template Name: </b>{{view_template.template_name}}</h4>
-                      <h5><b>Template ID: </b>{{view_template.template_id}}</h5>
-                    </div>
+                        style="color: #8e1921; text-align: center; margin: 10px; text-transform:capitalize">
+                        <h4><b>Template Name: </b>{{view_template.template_name}}</h4>
+                        <h5><b>Template ID: </b>{{view_template.template_id}}</h5>
+                      </div>
                       <!--clender + back button-->
                       <div class="col-md-12" print-remove style="margin-top: 10px;">
                         <div class="col-md-5 col-sm-5">
@@ -1600,17 +1688,17 @@ top:0;
                             <i class="glyphicon glyphicon-calendar"></i>
                           </button>
                         </div>
-                          <div col-md-1 col-sm-1>
-                            <button class="btn btn-danger"
-                              ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
-                              ng-click="getTransactionalTemplateViewDetail(view_template.template_id,next_page,view_template.template_name,dateRangeModel.start_dates,dateRangeModel.end_dates)">
-                              Submit</button>
+                        <div col-md-1 col-sm-1>
+                          <button class="btn btn-danger"
+                            ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
+                            ng-click="getTransactionalTemplateViewDetail(view_template.template_id,next_page,view_template.template_name,dateRangeModel.start_dates,dateRangeModel.end_dates)">
+                            Submit</button>
+                        </div>
+                        <div col-md-1 col-sm-1>
+                          <div style="margin: 10px;text-align: right;">
+                            <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
                           </div>
-                          <div col-md-1 col-sm-1>
-                            <div style="margin: 10px;text-align: right;">
-                              <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
-                            </div>
-                          </div>
+                        </div>
                       </div>
                       <!--end of clender + back button-->
                     </div>
@@ -1650,7 +1738,7 @@ top:0;
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
-                          <th style="padding:10px"  ng-click="Sort('start_date')">Sent Date</th>
+                          <th style="padding:10px" ng-click="Sort('start_date')">Sent Date</th>
                           <th style="padding:10px">Template Sent</th>
                           <th style="padding:10px">Positive</th>
                           <th style="padding:10px">Neutral</th>
@@ -1694,10 +1782,10 @@ top:0;
                   </div>
 
                   <!-- <center> -->
-                    <!-- <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)"
+                  <!-- <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)"
                         boundary-links="true">
                       </dir-pagination-controls> -->
-<!-- 
+                  <!-- 
                     <dir-pagination-controls max-size="2"
                       on-page-change="viewSummryPageChanged(template_id,viewSearch,pagination.current)"
                       boundary-links="true">
@@ -1718,7 +1806,9 @@ top:0;
                       <h5><b>Sent Date: </b>{{user_view.sent_date | date : "dd-MM-yyyy"}}</h5>
                     </div>
                     <div style="margin: 10px;text-align: right;">
-                      <button class="btn btn-danger" ng-click="backToDatewiseData(user_view.template_id,1,user_view.template_name,s_date='', e_date='')">Back To Previous</button>
+                      <button class="btn btn-danger"
+                        ng-click="backToDatewiseData(user_view.template_id,1,user_view.template_name,s_date='', e_date='')">Back
+                        To Previous</button>
                     </div>
                   </div>
 
@@ -1734,7 +1824,7 @@ top:0;
                           <th style="padding:10px">Index</th>
                           <th style="padding:10px">User Name</th>
                           <th style="padding:10px">What's app Name</th>
-                          <th style="padding:10px">Phone Number</th> 
+                          <th style="padding:10px">Phone Number</th>
                           <th style="padding:10px">Positive</th>
                           <th style="padding:10px">Neutral</th>
                           <th style="padding:10px">Negative</th>
@@ -2038,7 +2128,7 @@ top:0;
                           <b> 5. Neutral </b>: Total Neutral Response
                         </div>
                         <div class="col-xs-4">
-                          
+
                         </div>
                         <b>6. Negative </b>:Total Negative Response
                       </div>
