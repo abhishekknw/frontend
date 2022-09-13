@@ -662,7 +662,7 @@
         $scope.bookingPhases = [];
         $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code)
       }
-      $scope.templateDetail = function (pageNumber,search,status) {
+      $scope.templateDetail = function (pageNumber,search,status,campaign) {
         let start_date="";
         let next_page="";
         let end_date="";
@@ -687,13 +687,17 @@
         if(!status){
            status="";
         }
-        templateDashboardService.getTemplateTabData(pageNumber,search,status)
+        if(!campaign){
+          campaign = "";
+        }
+        templateDashboardService.getTemplateTabData(pageNumber,search,status,campaign)
                             .then(function onSuccess(response) {
                             $scope.templateDetailData = response.data.data.rows;
                             $scope.totalrecord = response.data.data.total_row;
                             $scope.itemsPerPageRecord = 20;
                             $scope.currentPage = 0;
-                            $scope.optionForTemplate=response.data.data.status_list;
+                            $scope.optionForTemplate = response.data.data.status_list;
+                            $scope.campaign_name_list = response.data.data.proposal_name_list;
 
                          }).catch(function onError(response) {
                             console.log(response);

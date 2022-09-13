@@ -160,14 +160,20 @@ top:0;
                             </div>
                           </div>
                           <div>
-                            <select ng-change="templateDetail('','',selectValue)" value="selectValue" ng-model="selectValue">
+                            <select ng-change="templateDetail('','',selectValue,selectCampaign)" value="selectValue" ng-model="selectValue">
                               <option value="">Select Status</option>
                               <option value="{{value}}" ng-repeat="value in optionForTemplate">{{value}}</option>
                             </select>
                           </div>
-                          <div class="add-button">
-                            <button type="button" class="btn btn-info">Add+</button>
+                          <div>
+                            <select ng-change="templateDetail('','',selectValue,selectCampaign)" value="selectCampaign" ng-model="selectCampaign">
+                              <option value="">Select Campaign</option>
+                              <option value="{{value}}" ng-repeat="value in campaign_name_list">{{value}}</option>
+                            </select>
                           </div>
+                          <!-- <div class="add-button">
+                            <button type="button" class="btn btn-info">Add+</button>
+                          </div> -->
                         </div>
                     
                         <div class="container py-5">
