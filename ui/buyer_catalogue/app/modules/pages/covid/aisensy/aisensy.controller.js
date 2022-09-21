@@ -38,8 +38,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.ckeckdUserAisensy = [];
         $scope.ckeckdUserAisensy1 = [];
         $scope.call_back_time = constants.call_back_time;
-        $scope.implementationTime = constants.requirement_implementation_time;
-        $scope.meetingTime = constants.requirement_meeting_time;
+        $scope.requirement_implementation_time = constants.requirement_implementation_time;
+        $scope.requirement_meeting_time = constants.requirement_meeting_time;
         $scope.current_patner_feedback = constants.current_patner_feedback;
         let gooIndex = document.getElementById('goo-index');
         let hoverEnter = index => {
@@ -1820,10 +1820,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           releaseCampaignService.requirementBrowsedData(id, phone, supplierId)
             .then(function onSuccess(response)  {
               $scope.browsedDetailData = response.data.data.browsed;
-              //console.log($scope.browsedDetailData);
-
               $scope.companiesDetailDataBrowsed = response.data.data.companies;
-              //console.log("current partnerData",$scope.companiesDetailDataBrowsed);
+              $scope.browsedSectorList = response.data.data.sector;
+
               for (let k in $scope.companiesDetailDataBrowsed) {
                 $scope.companiesDetailDataBrowsed[k].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
                 $scope.companiesDetailDataBrowsed[k].label = $scope.companiesDetailDataBrowsed[k].name;
@@ -1912,24 +1911,31 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.browsedDetailData[index].browsedCheck = true;
           $scope.checkboxBrowesLeadCheck()
         }
-        $scope.companiesBrowseDetailDataArray=[];
-        $scope.companyBrowseData=function(id){
-          while ($scope.companiesBrowseDetailDataArray.length) { 
-            $scope.companiesBrowseDetailDataArray.pop(); 
-          }
-          var i=0;
-          for (let k in $scope.companiesDetailDataBrowsed) {
-            if($scope.companiesDetailDataBrowsed[k].business_type!==undefined){
-              if(id==$scope.companiesDetailDataBrowsed[k].business_type[0]){
-                $scope.companiesBrowseDetailDataArray[i]=$scope.companiesDetailDataBrowsed[k];
-                $scope.companiesBrowseDetailDataArray[i].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
-                $scope.companiesBrowseDetailDataArray[i].label = $scope.companiesDetailDataBrowsed[k].name;
-                $scope.companiesBrowseDetailDataArray[i].sector = $scope.companiesDetailDataBrowsed[k].business_type[0];
-                i++;
-              }
-            }
-          }
+        $scope.newCheckboxBrowesLeadCheck = function(){
+          $scope.browsedCheck = false;
         }
+        $scope.newBrowsedMulticheck = function(data){
+          console.log(data,'11111111111111111111111')
+
+        }
+        //$scope.companiesBrowseDetailDataArray=[];
+        // $scope.companyBrowseData=function(id){
+        //   while ($scope.companiesBrowseDetailDataArray.length) { 
+        //     $scope.companiesBrowseDetailDataArray.pop(); 
+        //   }
+        //   var i=0;
+        //   for (let k in $scope.companiesDetailDataBrowsed) {
+        //     if($scope.companiesDetailDataBrowsed[k].business_type!==undefined){
+        //       if(id==$scope.companiesDetailDataBrowsed[k].business_type[0]){
+        //         $scope.companiesBrowseDetailDataArray[i]=$scope.companiesDetailDataBrowsed[k];
+        //         $scope.companiesBrowseDetailDataArray[i].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
+        //         $scope.companiesBrowseDetailDataArray[i].label = $scope.companiesDetailDataBrowsed[k].name;
+        //         $scope.companiesBrowseDetailDataArray[i].sector = $scope.companiesDetailDataBrowsed[k].business_type[0];
+        //         i++;
+        //       }
+        //     }
+        //   }
+        // }
         $scope.browsedCheck = true;
         $scope.checkboxBrowesLeadCheck = function () {
           $scope.browsedCheck = true;
@@ -2123,7 +2129,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               });
           }
         }
-        $scope.updateBrowsed = function () {
+        $scope.newbrowsed = {};
+        $scope.updateBrowsed = function (newbrowsed) {
+          newbrowsed._id = null;
+          console.log(newbrowsed,"newBrowsed");
           let browsedData = [];
           for (let i in $scope.browsedDetailData) {
             if ($scope.browsedDetailData[i].browsedCheck) {
@@ -2617,6 +2626,24 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.countBrowsedRow = false;
             $scope.addRemoveBtn = "Add row";
           }
+        }
+
+        $scope.companiesBrowseDetailDataArray=[];  
+        $scope.browsedPreferredPartner = function(id){
+          while ($scope.companiesBrowseDetailDataArray.length) { 
+                $scope.companiesBrowseDetailDataArray.pop(); 
+              }        
+          releaseCampaignService.browsedPreferredPartner(id)
+          .then(function onSuccess(response) {
+            console.log(response)
+            $scope.preferred_partnerList = response.data.data.companies;
+            for(let i in $scope.preferred_partnerList ){
+              $scope.companiesBrowseDetailDataArray.push($scope.preferred_partnerList[i].name);
+            }
+            console.log($scope.companiesBrowseDetailDataArray);
+          }).catch(function onError(response) {
+            console.log(response);
+          })
         }
 
 
