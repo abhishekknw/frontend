@@ -1133,6 +1133,15 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               return $scope.sector;
             }
           }
+          // releaseCampaignService.browsedPreferredPartner(sectorName)
+          // .then(function onSuccess(response) {
+          //   $scope.preferred_partnerList = response.data.data.companies;
+          //   for(let i in $scope.preferred_partnerList ){
+          //     $scope.companiesBrowseDetailDataArray.push($scope.preferred_partnerList[i].name);
+          //   }
+          // }).catch(function onError(response) {
+          //   console.log(response);
+          // })
         }
         $scope.selectLeadData = function (data) {
           for (let i in $scope.leads_Data) {
@@ -1911,31 +1920,25 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.browsedDetailData[index].browsedCheck = true;
           $scope.checkboxBrowesLeadCheck()
         }
-        $scope.newCheckboxBrowesLeadCheck = function(){
-          $scope.browsedCheck = false;
+      
+        $scope.companiesBrowseDetailDataArray=[];
+        $scope.companyBrowseData=function(id){
+          while ($scope.companiesBrowseDetailDataArray.length) { 
+            $scope.companiesBrowseDetailDataArray.pop(); 
+          }
+          var i=0;
+          for (let k in $scope.companiesDetailDataBrowsed) {
+            if($scope.companiesDetailDataBrowsed[k].business_type!==undefined){
+              if(id==$scope.companiesDetailDataBrowsed[k].business_type[0]){
+                $scope.companiesBrowseDetailDataArray[i]=$scope.companiesDetailDataBrowsed[k];
+                $scope.companiesBrowseDetailDataArray[i].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
+                $scope.companiesBrowseDetailDataArray[i].label = $scope.companiesDetailDataBrowsed[k].name;
+                $scope.companiesBrowseDetailDataArray[i].sector = $scope.companiesDetailDataBrowsed[k].business_type[0];
+                i++;
+              }
+            }
+          }
         }
-        $scope.newBrowsedMulticheck = function(data){
-          console.log(data,'11111111111111111111111')
-
-        }
-        //$scope.companiesBrowseDetailDataArray=[];
-        // $scope.companyBrowseData=function(id){
-        //   while ($scope.companiesBrowseDetailDataArray.length) { 
-        //     $scope.companiesBrowseDetailDataArray.pop(); 
-        //   }
-        //   var i=0;
-        //   for (let k in $scope.companiesDetailDataBrowsed) {
-        //     if($scope.companiesDetailDataBrowsed[k].business_type!==undefined){
-        //       if(id==$scope.companiesDetailDataBrowsed[k].business_type[0]){
-        //         $scope.companiesBrowseDetailDataArray[i]=$scope.companiesDetailDataBrowsed[k];
-        //         $scope.companiesBrowseDetailDataArray[i].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
-        //         $scope.companiesBrowseDetailDataArray[i].label = $scope.companiesDetailDataBrowsed[k].name;
-        //         $scope.companiesBrowseDetailDataArray[i].sector = $scope.companiesDetailDataBrowsed[k].business_type[0];
-        //         i++;
-        //       }
-        //     }
-        //   }
-        // }
         $scope.browsedCheck = true;
         $scope.checkboxBrowesLeadCheck = function () {
           $scope.browsedCheck = true;
@@ -1945,6 +1948,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
           }
         }
+  
         $scope.saveBrowsed = function () {
           let browsedData = [];
          
@@ -2130,9 +2134,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
         }
         $scope.newbrowsed = {};
-        $scope.updateBrowsed = function (newbrowsed) {
-          newbrowsed._id = null;
-          console.log(newbrowsed,"newBrowsed");
+        $scope.updateBrowsed = function (new_data) {
+          // let new_row = new_data;
+          let prefered_patners = [];
+          for(let i in $scope.SelectedCompany){
+            prefered_patners.push($scope.SelectedCompany[i].organisation_id)
+          }
+          new_data.prefered_patners_id = prefered_patners;
+          new_data._id = null;
+          new_data.current_company_other = "";
+          new_data.preferred_company_other = "";
+          console.log(new_data,"new_data")
+
           let browsedData = [];
           for (let i in $scope.browsedDetailData) {
             if ($scope.browsedDetailData[i].browsedCheck) {
@@ -2169,6 +2182,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             });
             }
           }
+          browsedData.push(new_data);
          
           if (browsedData.length > 0) {
             var browsed_leads = {
@@ -2203,6 +2217,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 }
               });
           }
+        }
+        // $scope.newbrowsed = {};
+        $scope.newCheckboxBrowesLeadCheck = function(data){
+          // console.log(data,"newCheckboxBrowesLeadCheck")
+           $scope.browsedCheck = false;
         }
 
         $scope.singleOpsVerifyRequirement = function (id) {
@@ -2616,8 +2635,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               console.log(response);
             });
         }
-
+        $scope.addBrowsedRowasdasdasda=1;
         $scope.addBrowsedRow = function () {
+          
+          console.log($scope.companiesBrowseDetailDataArray);
           if ($scope.countBrowsedRow == false) {
             $scope.countBrowsedRow = true;
             $scope.addRemoveBtn = "Remove row";
@@ -2627,26 +2648,26 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.addRemoveBtn = "Add row";
           }
         }
-
-        $scope.companiesBrowseDetailDataArray=[];  
+        $scope.SelectedCompany = [];
+        $scope.newCompaniesBrowseDetailDataArray=[];  
         $scope.browsedPreferredPartner = function(id){
-          while ($scope.companiesBrowseDetailDataArray.length) { 
-                $scope.companiesBrowseDetailDataArray.pop(); 
-              }        
+          // while ($scope.newCompaniesBrowseDetailDataArray.length) { 
+          //       $scope.newCompaniesBrowseDetailDataArray.pop(); 
+          //     }        
           releaseCampaignService.browsedPreferredPartner(id)
           .then(function onSuccess(response) {
-            console.log(response)
             $scope.preferred_partnerList = response.data.data.companies;
-            for(let i in $scope.preferred_partnerList ){
-              $scope.companiesBrowseDetailDataArray.push($scope.preferred_partnerList[i].name);
-            }
-            console.log($scope.companiesBrowseDetailDataArray);
+            console.log($scope.preferred_partnerList,"$scope.preferred_partnerList")
+            // for(let i in $scope.preferred_partnerList ){
+            //   $scope.newCompaniesBrowseDetailDataArray.push($scope.preferred_partnerList[i].name);
+            // }
           }).catch(function onError(response) {
             console.log(response);
           })
         }
-
-
+        $scope.newBrowsedMulticheck = function(index){
+          alert(index)
+        }
       }]);
 
 
