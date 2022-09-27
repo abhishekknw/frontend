@@ -3723,7 +3723,6 @@
                       <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
                         ng-change="browsCheckBoxAutoCheck($index)" ng-model="browsed.sector_id" style="width:100px;"
                         ng-click="browsedPreferredPartner(browsed.sector_id)">
-
                         <option ng-repeat="sector in browsedSectorList track by $index"
                           ng-selected="{{browsed.sector_id==sector.id}}" value="{{sector.id}}">
                           {{sector.business_type}}
@@ -3842,7 +3841,7 @@
                     </td>
                     <td class="alignment">
                       <select class="form-control" ng-model="newbrowsed.sector_id" style="width:100px;"
-                        ng-click="browsedPreferredPartner(newbrowsed.sector_id)">
+                        ng-click="browsedPreferredPartner(newbrowsed.sector_id);">
                         <option value="" disabled>Select Sector</option>
                         <option ng-repeat="sector in browsedSectorList track by $index" value="{{sector.id}}">
                           {{sector.business_type}}
@@ -3889,7 +3888,7 @@
                         id="other_preferred_company" ng-model="browsed.prefered_patner_other"> -->
                     </td>
                     <td class="alignment">
-                      <select class="form-control" ng-model="newbrowsed.lead_1">
+                      <select class="form-control" ng-model="newbrowsed.L4">
                         <option value="">Lead l1</option>
                         <option value="">Lead l2</option>
                         <option value="">Lead l3</option>
@@ -3897,7 +3896,14 @@
                     </td>
 
                     <td class="alignment">
-                      <select class="form-control" ng-model="newbrowsed.L2"">
+                      <select class="form-control" ng-model="newbrowsed.L5">
+                        <option value="">Lead l4</option>
+                        <option value="">Lead l5</option>
+                        <option value="">Lead l6</option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" ng-model="newbrowsed.L6">
                         <option value="">Lead l4</option>
                         <option value="">Lead l5</option>
                         <option value="">Lead l6</option>

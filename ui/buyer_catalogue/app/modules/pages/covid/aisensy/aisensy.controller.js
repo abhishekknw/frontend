@@ -974,6 +974,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           { header: 'Preferred Partner' },
           { header: 'L1 Answers' },
           { header: 'L2 Answers' },
+          { header: 'L3 Answers' },
           { header: 'Implementation Time' },
           { header: 'Meeting Time' },
           { header: 'Lead Given by' },
@@ -1129,21 +1130,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.sectorId = sectorName;
           for (i in $scope.sectorList) {
             if ($scope.sectorList[i].id == sectorName) {
-              $scope.sector = $scope.sectorList[i].business_type;
-              return $scope.sector;
+              let sector = $scope.sectorList[i].business_type;
+              return sector;
             }
           }
-          // releaseCampaignService.browsedPreferredPartner(sectorName)
-          // .then(function onSuccess(response) {
-          //   $scope.preferred_partnerList = response.data.data.companies;
-          //   for(let i in $scope.preferred_partnerList ){
-          //     $scope.companiesBrowseDetailDataArray.push($scope.preferred_partnerList[i].name);
-          //   }
-          // }).catch(function onError(response) {
-          //   console.log(response);
-          // })
         }
         $scope.selectLeadData = function (data) {
+          alert(data)
           for (let i in $scope.leads_Data) {
             for (let j in $scope.leads_Data[i]) {
               if (data === j) {
@@ -1826,6 +1819,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.getRequirementBrowsedData = function (id, phone, supplierId) {
+          $scope.phoneNumber = phone;
+          $scope.supplierId = supplierId;
           releaseCampaignService.requirementBrowsedData(id, phone, supplierId)
             .then(function onSuccess(response) {
               $scope.browsedDetailData = response.data.data.browsed;
@@ -2136,7 +2131,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
         $scope.newbrowsed = {};
         $scope.updateBrowsed = function (new_data) {
-          console.log(new_data,"new_datanew_data")
           let browsedData = [];
           for (let i in $scope.browsedDetailData) {
             if ($scope.browsedDetailData[i].browsedCheck) {
@@ -2173,6 +2167,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 'prefered_patners_id': $scope.browsedDetailData[i].prefered_patners,
                 'current_company_other': current_patner_other,
                 'preferred_company_other': preferred_company_other,
+                'supplier_type':$scope.userChatPayload.type_of_entity
               });
             }
           }
@@ -2186,6 +2181,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             new_data.sub_sector_id = null;
             new_data.current_company_other = "";
             new_data.preferred_company_other = "";
+            new_data.phone_number = $scope.phoneNumber;
+            new_data.supplier_id = $scope.supplierId;
+            new_data.supplier_type = $scope.userChatPayload.type_of_entity;
             browsedData.push(new_data);
           }
           if (browsedData.length > 0) {
