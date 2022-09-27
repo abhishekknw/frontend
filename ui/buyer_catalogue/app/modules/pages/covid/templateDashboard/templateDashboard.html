@@ -249,20 +249,19 @@ top:0;
                             <div class="modal-body">
                               <form action="">
                                 <div class="form-group">
-                                  <label>Field Name:</label>
-                                  <select class="form-control">
-                                    <option>test</option>
-                                  </select>
-                                </div>
-                                <div class="form-group">
                                   <label> Alais Name:</label>
                                   <input class="form-control" type="text">
                                 </div>
                                 <div class="form-group">
                                   <label> Type of Field:</label>
-                                  <select class="form-control">
-                                    <option>test</option>
+                                  <select class="form-control" ng-change="templateType(template)"
+                                           ng-model="template">
+                                           <option value="">Select Template Type</option>
+                                           <option  ng-repeat="value in template_type">{{value}}</option>
                                   </select>
+                                  <div ng-if="checkBrowseField">
+                                    <input type="file" demo-file-model="myFile"  class="form-control" ngf-select="selectImageVideo($file)"/>
+                                  </div>
                                 </div>
                                 <div class="form-group">
                                   <label> Comment:</label>
@@ -283,10 +282,22 @@ top:0;
                                   <label> Params:</label>
                                   <input class="form-control" type="text">
                                 </div>
-                                <div class="form-group">
+                                <ul class="list-group">
+                                  <li class="list-group-item" data-ng-repeat="choice in choices">
+                                   <div class="col-sm-9">
+                                    <input class="form-control" type="text" ng-model="choice.name" name="" placeholder="Enter Button Name">
+                                     </div>
+                                    <button class="btn btn-danger" ng-click="removeChoice(choice.id)" ng-if="choice.id!=index">Remove</button>
+                                    <button class="btn btn-danger" ng-click="addNewChoice()" ng-if="choice.id===index">Add Button</button>
+                                  </li>
+                                </ul>  
+                                <!-- <div class="form-group">
+                                  <div data-ng-repeat="choice in choices">
+                                    <input class="form-control" type="text">
+                                  </div>
                                   <label> Add Buttons:</label>
-                                  <button class="btn btn-danger">Add Buttons</button>
-                                </div>
+                                  <button class="btn btn-danger" ng-click="addMoreButton()">Add Buttons</button>
+                                </div> -->
                               </form>
                             </div>
                             <!-- Modal footer -->

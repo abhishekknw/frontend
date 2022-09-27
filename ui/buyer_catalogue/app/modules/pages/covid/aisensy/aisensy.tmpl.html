@@ -3720,14 +3720,18 @@
                       {{sectorName(browsed.sector_id)}}
                     </td> -->
                     <td class="alignment">
-                      <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
+                      <select class="form-control" ng-model="SectorName" style="width:100px;"
+                        ng-click="browsedPreferredPartner(SectorName);"
+                        ng-options="sector.business_type for sector in browsedSectorList" track by "$index">
+                      </select>
+                      <!-- <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
                         ng-change="browsCheckBoxAutoCheck($index)" ng-model="browsed.sector_id" style="width:100px;"
                         ng-click="browsedPreferredPartner(browsed.sector_id)">
                         <option ng-repeat="sector in browsedSectorList track by $index"
                           ng-selected="{{browsed.sector_id==sector.id}}" value="{{sector.id}}">
                           {{sector.business_type}}
                         </option>
-                      </select>
+                      </select> -->
                     </td>
                     <td class="alignment">
                       <!-- <select class="form-control" ng-model="browsed.sub_sector_id" style="width:100px;">
@@ -3783,19 +3787,34 @@
                     </td>
 
                     <td class="alignment">
-                      <span ng-if="browsed.l1_answers || browsed.l1_answer_2">{{browsed.l1_answers}}
+                      <select class="form-control" ng-model="browsed.l4">
+                        <option ng-repeat="lead_L4 in leads_Data_1.L4" value="{{lead_L4}}">
+                          {{lead_L4}}
+                        </option>
+                      </select>
+                      <!-- <span ng-if="browsed.l1_answers || browsed.l1_answer_2">{{browsed.l1_answers}}
                         <p>{{browsed.l1_answer_2}}</p>
                       </span>
-                      <span ng-if="!browsed.l1_answers && !browsed.l1_answer_2">NA</span>
-
+                      <span ng-if="!browsed.l1_answers && !browsed.l1_answer_2">NA</span> -->
                     </td>
 
                     <td class="alignment">
-                      <span ng-if="browsed.l2_answers || browsed.l2_answer_2">{{browsed.l2_answers}}
+                      <select class="form-control" ng-model="browsed.l5">
+                        <option ng-repeat="lead_L5 in leads_Data_1.L5" value="{{lead_L5}}">
+                          {{lead_L5}}
+                        </option>
+                      </select>
+                      <!-- <span ng-if="browsed.l2_answers || browsed.l2_answer_2">{{browsed.l2_answers}}
                         <p>{{browsed.l2_answer_2}}</p>
                       </span>
-                      <span ng-if="!browsed.l2_answers && !browsed.l2_answer_2">NA</span>
+                      <span ng-if="!browsed.l2_answers && !browsed.l2_answer_2">NA</span> -->
                     </td>
+                    <td class="alignment">
+                      <select class="form-control" ng-model="browsed.l6">
+                        <option ng-repeat="lead_L6 in leads_Data_1.L6" value="{{lead_L6}}">
+                          {{lead_L5}}
+                        </option>
+                      </select>
                     <td class="alignment">
                       <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
                         ng-model="browsed.implementation_timeline" ng-change="browsCheckBoxAutoCheck($index)"
@@ -3840,12 +3859,17 @@
                         id="browsedCheckId">
                     </td>
                     <td class="alignment">
-                      <select class="form-control" ng-model="newbrowsed.sector_id" style="width:100px;"
-                        ng-click="browsedPreferredPartner(newbrowsed.sector_id);">
-                        <option value="" disabled>Select Sector</option>
-                        <option ng-repeat="sector in browsedSectorList track by $index" value="{{sector.id}}">
+                      <!-- <select class="form-control" style="min-width: 120px;"
+                          ng-options="option.name for option in fieldName" track by "$index"
+                          ng-model="createData.fieldName">
+                    </select> -->
+                      <select class="form-control" ng-model="SectorName" style="width:100px;"
+                        ng-click="browsedPreferredPartner(SectorName);"
+                        ng-options="sector.business_type for sector in browsedSectorList" track by "$index">
+                        <!-- <option value="" disabled>Select Sector</option>
+                        <option ng-repeat="sector in browsedSectorList track by $index" value="{{sector}}">
                           {{sector.business_type}}
-                        </option>
+                        </option> -->
                       </select>
                     </td>
                     <td class="alignment">NA
@@ -3889,24 +3913,24 @@
                     </td>
                     <td class="alignment">
                       <select class="form-control" ng-model="newbrowsed.L4">
-                        <option value="">Lead l1</option>
-                        <option value="">Lead l2</option>
-                        <option value="">Lead l3</option>
+                        <option ng-repeat="lead_L4 in leads_Data_1.L4" value="{{lead_L4}}">
+                          {{lead_L4}}
+                        </option>
                       </select>
                     </td>
 
                     <td class="alignment">
                       <select class="form-control" ng-model="newbrowsed.L5">
-                        <option value="">Lead l4</option>
-                        <option value="">Lead l5</option>
-                        <option value="">Lead l6</option>
+                        <option ng-repeat="lead_L5 in leads_Data_1.L5" value="{{lead_L5}}">
+                          {{lead_L5}}
+                        </option>>
                       </select>
                     </td>
                     <td class="alignment">
                       <select class="form-control" ng-model="newbrowsed.L6">
-                        <option value="">Lead l4</option>
-                        <option value="">Lead l5</option>
-                        <option value="">Lead l6</option>
+                        <option ng-repeat="lead_L6 in leads_Data_1.L6" value="{{lead_L6}}">
+                          {{lead_L6}}
+                        </option>
                       </select>
                     </td>
                     <td class=" alignment">
