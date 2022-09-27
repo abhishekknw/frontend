@@ -2227,16 +2227,36 @@
                         <input type="checkbox" name="browsedCheck" ng-click="checkboxBrowesLeadCheck()"
                           id="browsedCheckId" ng-model="browsed.browsedCheck">
                       </td>
-                      <td class="alignment">
+                      <!-- <td class="alignment">
                         {{sectorName(browsed.sector_id)}}
+                      </td> -->
+                      <td class="alignment">
+                        <select class="form-control" name="current_company_{{$index}}"
+                          id="current_company_id_{{$index}}" ng-change="browsCheckBoxAutoCheck($index)"
+                          ng-model="browsed.sector" style="width:100px;" ng-click="browsedPreferredPartner(browsed.sector)">
+                          <option value="" disabled>Select Sector</option>
+                          <option ng-repeat="sector in browsedSectorList track by $index"
+                            value="{{sector.id}}">
+                            {{sector.business_type}}
+                          </option>
+                        </select>
                       </td>
 
-                      <td class="alignment">
+                      <!-- <td class="alignment">
                         <p ng-if="browsed.sub_sector_name">{{browsed.sub_sector_name}}</p>
                         <p ng-if="!browsed.sub_sector_name">NA</p>
-                    
+                      </td> -->
+                      <td class="alignment">
+                        <select class="form-control" name="current_company_{{$index}}"
+                          id="current_company_id_{{$index}}" ng-change="browsCheckBoxAutoCheck($index)"
+                          ng-model="browsed.subSector" style="width:100px;">
+                          <option value="" disabled>Select Sub Sector</option>
+                          <option ng-repeat="subSector in browsed_subSectorList track by $index"
+                            value="{{subSector.id}}">
+                            {{subSector.business_sub_type}}
+                          </option>
+                        </select>
                       </td>
-
                       <td class="alignment">
                         <select class="form-control" name="current_company_{{$index}}"
                           id="current_company_id_{{$index}}" ng-change="browsCheckBoxAutoCheck($index)"

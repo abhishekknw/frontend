@@ -698,6 +698,7 @@
                             $scope.currentPage = 0;
                             $scope.optionForTemplate = response.data.data.status_list;
                             $scope.campaign_name_list = response.data.data.proposal_name_list;
+                            $scope.template_type = response.data.data.template_type;
 
                          }).catch(function onError(response) {
                             console.log(response);
@@ -6964,6 +6965,48 @@
       $scope.pagination = {
         current: 1
       };
+
+
+      $scope.choices = [{"id": 1,"type":"Button","name":""},];
+      $scope.index = $scope.choices.length;
+      
+      $scope.addNewChoice = function() {
+        let newItemNo = ++$scope.index;
+          $scope.choices.push({'id':newItemNo, "type":"Button","name":""});      
+      };
+        
+      $scope.removeChoice = function(id) {
+      
+            if($scope.choices.length<=1){
+                alert("input cannot be less than 1");
+                return;
+            }      
+            let index = -1;
+            let comArr = eval( $scope.choices );
+            for( let i = 0; i < comArr.length; i++ ) {
+              if( comArr[i].id === id) {
+                index = i;
+                break;
+              }
+            }
+            if( index === -1 ) {
+              alert( "Something gone wrong" );
+            }
+            $scope.choices.splice( index, 1 );
+      };
+      $scope.checkBrowseField = false;
+      $scope.templateType = function (type){
+        if(type!='TEXT' && type!=''){
+          $scope.checkBrowseField = true;
+        }
+        else{
+          $scope.checkBrowseField = false;
+        }
+      }
+      $scope.selectImageVideo = function(event){
+        console.log(event);
+
+      }
 
       // Template Dashboard end
 

@@ -3721,8 +3721,8 @@
                     </td> -->
                     <td class="alignment">
                       <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
-                        ng-change="browsCheckBoxAutoCheck($index)" ng-model="browsed.sector"  style="width:100px;"
-                        ng-click="browsedPreferredPartner(browsed.sector)">
+                        ng-change="browsCheckBoxAutoCheck($index)" ng-model="browsed.sector_id" style="width:100px;"
+                        ng-click="browsedPreferredPartner(browsed.sector_id)">
 
                         <option ng-repeat="sector in browsedSectorList track by $index"
                           ng-selected="{{browsed.sector_id==sector.id}}" value="{{sector.id}}">
@@ -3731,6 +3731,12 @@
                       </select>
                     </td>
                     <td class="alignment">
+                      <!-- <select class="form-control" ng-model="browsed.sub_sector_id" style="width:100px;">
+                        <option value="" disabled>Select Sector</option>
+                        <option ng-repeat="sub_sector in sub_sectorList track by $index" value="{{sub_sector.id}}">
+                          {{sub_sector.business_sub_type}}
+                        </option>
+                      </select> -->
                       <p ng-if="browsed.sub_sector_name">{{browsed.sub_sector_name}}</p>
                       <p ng-if="!browsed.sub_sector_name">NA</p>
                     </td>
@@ -3831,37 +3837,36 @@
                   <tr ng-if="countBrowsedRow==true">
                     <!-- <tr> -->
                     <td class="alignment">
-                      <input type="checkbox" name="browsedCheck" ng-click="newCheckboxBrowesLeadCheck(browsedCheck)"
+                      <input type="checkbox" name="browsedCheck" ng-click="newCheckboxBrowesLeadCheck($index)"
                         id="browsedCheckId">
                     </td>
                     <td class="alignment">
-                      <select class="form-control"
-                        ng-change="newCheckboxBrowesLeadCheck(newbrowsed)" ng-model="newbrowsed.sector"
-                        style="width:100px;" ng-click="browsedPreferredPartner(newbrowsed.sector)">
+                      <select class="form-control" ng-model="newbrowsed.sector_id" style="width:100px;"
+                        ng-click="browsedPreferredPartner(newbrowsed.sector_id)">
                         <option value="" disabled>Select Sector</option>
                         <option ng-repeat="sector in browsedSectorList track by $index" value="{{sector.id}}">
                           {{sector.business_type}}
                         </option>
                       </select>
                     </td>
-                    <td class="alignment">
-                      NA
-                      <!-- <select class="form-control" ng-model="newbrowsed.sub_sector">
-                        <option>subsector</option>
-                        <option>subsector2</option>
-                        <option>subsector3</option>
+                    <td class="alignment">NA
+                      <!-- <select class="form-control" ng-model="newbrowsed.sub_sector_id" style="width:100px;">
+                        <option value="" disabled>Select Sector</option>
+                        <option ng-repeat="sub_sector in sub_sectorList track by $index" value="{{sub_sector.id}}">
+                          {{sub_sector.business_sub_type}}
+                        </option>
                       </select> -->
                     </td>
                     <td class="alignment">
-                      <select class="form-control"
-                        ng-change="newCheckboxBrowesLeadCheck(newbrowsed)"
-                        ng-model="newbrowsed.current_patner_id" style="width:100px;">
+                      <select class="form-control" ng-model="newbrowsed.current_patner_id" style="width:100px;">
                         <option value="" disabled>Select Current Partner</option>
-                        <option>Current Partner1</option>
-                        <option>Current Partner2</option>
-                      </select>
-                      <input style="margin-top:10px" type="text" class="form-control"
-                        placeholder="Other Current Company" ng-model="newbrowsed.preferred_company_other">
+                        <option ng-if="newbrowsed.sector==cpartner.sector || (newbrowsed.sector==null)"
+                          ng-repeat="cpartner in companiesDetailDataBrowsed track by $index"
+                          value="{{cpartner.organisation_id}}">
+                          {{cpartner.name}}
+                        </option>
+                        <input style="margin-top:10px" type="text" class="form-control"
+                          placeholder="Other Current Company" ng-model="newbrowsed.preferred_company_other">
                     </td>
 
                     <td class="alignment">
@@ -3873,10 +3878,8 @@
                       <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
                         style="color:red;width:100%;margin-left:20px;" ng-click="newbrowsedMulticheck($index)"
                         ng-dropdown-multiselect="" options="preferred_partnerList" extra-settings="settings"
-                        selected-model="SelectedCompany"
-                        events="events"></span>
-                      <span ng-repeat="selectedName in SelectedCompany"
-                        style="text-align: left; display: inline-block">
+                        selected-model="SelectedCompany" events="events"></span>
+                      <span ng-repeat="selectedName in SelectedCompany" style="text-align: left; display: inline-block">
                         {{selectedName.name}}
                         <span ng-if="!$last">,</span>
                       </span>
@@ -3886,9 +3889,7 @@
                         id="other_preferred_company" ng-model="browsed.prefered_patner_other"> -->
                     </td>
                     <td class="alignment">
-                      <select class="form-control"
-                      ng-change="newCheckboxBrowesLeadCheck(newbrowsed)"
-                       ng-model="newbrowsed.lead_1" >
+                      <select class="form-control" ng-model="newbrowsed.lead_1">
                         <option value="">Lead l1</option>
                         <option value="">Lead l2</option>
                         <option value="">Lead l3</option>
@@ -3896,31 +3897,24 @@
                     </td>
 
                     <td class="alignment">
-                      <select class="form-control" ng-model="newbrowsed.L2"
-                      ng-change="newCheckboxBrowesLeadCheck(newbrowsed)">
+                      <select class="form-control" ng-model="newbrowsed.L2"">
                         <option value="">Lead l4</option>
                         <option value="">Lead l5</option>
                         <option value="">Lead l6</option>
                       </select>
                     </td>
-                    <td class="alignment">
-                      <select class="form-control"
-                        ng-model="newbrowsed.implementation_timeline"
-                        style="width:150px;"
-                        ng-change="newCheckboxBrowesLeadCheck(newbrowsed)">
-                        <option value="" disabled>Select Implementation Time</option>
-                        <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
-                          value="{{key}}">
-                          {{value}}
-                        </option>
-                      </select>
+                    <td class=" alignment">
+                        <select class="form-control" ng-model="newbrowsed.implementation_timeline" style="width:150px;">
+                          <option value="" disabled>Select Implementation Time</option>
+                          <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
                     </td>
 
                     <td class="alignment">
-                      <select class="form-control"
-                        ng-model="newbrowsed.meating_timeline"
-                        style="width:150px;"
-                        ng-change="newCheckboxBrowesLeadCheck(newbrowsed)">
+                      <select class="form-control" ng-model="newbrowsed.meating_timeline" style="width:150px;">
                         <option value="" disabled>Select Meeting Time</option>
                         <option ng-repeat="(key,value) in requirement_meeting_time track by $index" value="{{key}}">
                           {{value}}
@@ -3934,8 +3928,7 @@
 
                     <td class="alignment">
                       <textarea placeholder="Comments" class="form-control" style="width:150px;"
-                        ng-model="newbrowsed.comment" ng-change="newCheckboxBrowesLeadCheck(newbrowsed)"
-                        cols="50">
+                        ng-model="newbrowsed.comment" cols="50">
                      </textarea>
                     </td>
 
@@ -3951,7 +3944,8 @@
               <div class="">
                 <button class="btn btn-danger" ng-click="addBrowsedRow()">{{addRemoveBtn}}</button>
                 <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="saveBrowsed()">Submit</button>
-                <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed(newbrowsed)">Update</button>
+                <button class="btn btn-success" ng-disabled="browsedCheck"
+                  ng-click="updateBrowsed(newbrowsed)">Update</button>
                 <button class="btn btn-danger" ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
               </div>
               <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
