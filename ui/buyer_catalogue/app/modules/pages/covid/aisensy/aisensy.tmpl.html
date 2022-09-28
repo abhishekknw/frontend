@@ -3726,7 +3726,7 @@
                       </select> -->
                       <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
                         ng-change="browsCheckBoxAutoCheck($index)" ng-model="browsed.sector_id" style="width:100px;"
-                        ng-click="browsedPreferredPartner(browsed.sector_id)">
+                        ng-click="browsedPreferredPartner(browsed.sector_id,true)">
                         <option ng-repeat="sector in browsedSectorList track by $index"
                           ng-selected="{{browsed.sector_id==sector.id}}" value="{{sector.id}}">
                           {{sector.business_type}}
@@ -3769,10 +3769,10 @@
                     </td>
 
                     <td class="alignment">
-                      {{companyBrowseData(browsed.sector_id)}}
+                      <!-- {{companyBrowseData(browsed.sector_id)}} -->
                       <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
                         style="color:red;width:100%;margin-left:20px;" ng-click="browsedMulticheck($index)"
-                        ng-dropdown-multiselect="" options="companiesBrowseDetailDataArray" extra-settings="settings"
+                        ng-dropdown-multiselect="" options="companiesBrowseDetailDataArrayCompany[browsed.sector_id]" extra-settings="settings"
                         selected-model="browsed.selected_preferred_company" translation-texts="selected_business_type"
                         events="events"></span>
                       <span ng-repeat="selectedName in browsed.selected_preferred_company"
@@ -3897,13 +3897,12 @@
                       <span>Reason:NA</span>
                     </td>
                     <td class="alignment">
-                      <!-- {{companyBrowseData(browsed.sector_id)}} -->
                       <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
                         style="color:red;width:100%;margin-left:20px;" ng-click="newbrowsedMulticheck($index)"
                         ng-dropdown-multiselect="" options="preferred_partnerList" extra-settings="settings"
-                        selected-model="SelectedCompany" events="events"></span>
+                        selected-model="SelectedCompany" events="events"translation-texts="selected_business_type" >asfafasfa</span>
                       <span ng-repeat="selectedName in SelectedCompany" style="text-align: left; display: inline-block">
-                        {{selectedName.name}}
+                        {{selectedName.label}}
                         <span ng-if="!$last">,</span>
                       </span>
                       <!-- <input style="margin-top:10px" ng-change="newCheckboxBrowesLeadCheck()" type="text"
