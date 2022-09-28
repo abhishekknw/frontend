@@ -3720,18 +3720,18 @@
                       {{sectorName(browsed.sector_id)}}
                     </td> -->
                     <td class="alignment">
-                      <select class="form-control" ng-model="SectorName" style="width:100px;"
-                        ng-click="browsedPreferredPartner(SectorName);"
+                      <!-- <select class="form-control" ng-model="SectorName" style="width:100px;"
+                        ng-click="browsedPreferredPartner(SectorName);"ng-change="browsCheckBoxAutoCheck($index)"
                         ng-options="sector.business_type for sector in browsedSectorList" track by "$index">
-                      </select>
-                      <!-- <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
+                      </select> -->
+                      <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
                         ng-change="browsCheckBoxAutoCheck($index)" ng-model="browsed.sector_id" style="width:100px;"
                         ng-click="browsedPreferredPartner(browsed.sector_id)">
                         <option ng-repeat="sector in browsedSectorList track by $index"
                           ng-selected="{{browsed.sector_id==sector.id}}" value="{{sector.id}}">
                           {{sector.business_type}}
                         </option>
-                      </select> -->
+                      </select>
                     </td>
                     <td class="alignment">
                       <!-- <select class="form-control" ng-model="browsed.sub_sector_id" style="width:100px;">
@@ -3812,7 +3812,7 @@
                     <td class="alignment">
                       <select class="form-control" ng-model="browsed.l6">
                         <option ng-repeat="lead_L6 in leads_Data_1.L6" value="{{lead_L6}}">
-                          {{lead_L5}}
+                          {{lead_L6}}
                         </option>
                       </select>
                     <td class="alignment">

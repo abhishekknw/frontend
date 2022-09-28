@@ -2210,6 +2210,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         swal(constants.name, response.data.data.error, constants.error);
                       } else {
                         swal(constants.name, constants.save_success, constants.success);
+                        if ($scope.new_data_check == true) {
+                        $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
+                        $scope.addRemoveBtn = "Add row";
+                      }
                       }
                     }).catch(function onError(response) {
                       if (response.data.data && response.data.data.general_error) {
