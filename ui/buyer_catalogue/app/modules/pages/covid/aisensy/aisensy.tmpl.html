@@ -3716,14 +3716,14 @@
                       <input type="checkbox" name="browsedCheck" ng-click="checkboxBrowesLeadCheck()"
                         id="browsedCheckId" ng-model="browsed.browsedCheck">
                     </td>
-                    <!-- <td class="alignment">
-                      {{sectorName(browsed.sector_id)}}
-                    </td> -->
                     <td class="alignment">
-                      <!-- <select class="form-control" ng-model="SectorName" style="width:100px;"
+                      {{sectorName(browsed.sector_id)}}
+                    </td>
+                    <!-- <td class="alignment">
+                      <select class="form-control" ng-model="SectorName" style="width:100px;"
                         ng-click="browsedPreferredPartner(SectorName);"ng-change="browsCheckBoxAutoCheck($index)"
                         ng-options="sector.business_type for sector in browsedSectorList" track by "$index">
-                      </select> -->
+                      </select>
                       <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
                         ng-change="browsCheckBoxAutoCheck($index)" ng-model="browsed.sector_id" style="width:100px;"
                         ng-click="browsedPreferredPartner(browsed.sector_id,true)">
@@ -3732,7 +3732,7 @@
                           {{sector.business_type}}
                         </option>
                       </select>
-                    </td>
+                    </td> -->
                     <td class="alignment">
                       <!-- <select class="form-control" ng-model="browsed.sub_sector_id" style="width:100px;">
                         <option value="" disabled>Select Sector</option>
@@ -3769,12 +3769,19 @@
                     </td>
 
                     <td class="alignment">
-                      <!-- {{companyBrowseData(browsed.sector_id)}} -->
-                      <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
+                      {{companyBrowseData(browsed.sector_id)}}
+                      <!-- <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
                         style="color:red;width:100%;margin-left:20px;" ng-click="browsedMulticheck($index)"
                         ng-dropdown-multiselect="" options="companiesBrowseDetailDataArrayCompany[browsed.sector_id]" extra-settings="settings"
                         selected-model="browsed.selected_preferred_company" translation-texts="selected_business_type"
-                        events="events"></span>
+                        events="events">
+                      </span> -->
+                      <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
+                        style="color:red;width:100%;margin-left:20px;" ng-click="browsedMulticheck($index)"
+                        ng-dropdown-multiselect="" options="companiesBrowseDetailDataArray" extra-settings="settings"
+                        selected-model="browsed.selected_preferred_company" translation-texts="selected_business_type"
+                        events="events">
+                      </span>
                       <span ng-repeat="selectedName in browsed.selected_preferred_company"
                         style="text-align: left; display: inline-block">
                         {{selectedName.name}}
@@ -3883,7 +3890,7 @@
                     <td class="alignment">
                       <select class="form-control" ng-model="newbrowsed.current_patner_id" style="width:100px;">
                         <option value="" disabled>Select Current Partner</option>
-                        <option ng-if="newbrowsed.sector==cpartner.sector || (newbrowsed.sector==null)"
+                        <option ng-if="selected_sectorId==cpartner.sector || (selected_sectorId==null)"
                           ng-repeat="cpartner in companiesDetailDataBrowsed track by $index"
                           value="{{cpartner.organisation_id}}">
                           {{cpartner.name}}

@@ -1130,10 +1130,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           for (i in $scope.sectorList) {
             if ($scope.sectorList[i].id == sectorName) {
               let sector = $scope.sectorList[i].business_type;
+              $scope.selectLeadData(sector);
               return sector;
             }
           }
         }
+
         $scope.selectLeadData = function (data) {
           for (let i in $scope.leads_Data) {
             for (let j in $scope.leads_Data[i]) {
@@ -1916,24 +1918,24 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         $scope.companiesBrowseDetailDataArray = [];
         $scope.companiesBrowseDetailDataArrayCompany = {};
-        // $scope.companyBrowseData = function (id) {
-        //   while ($scope.companiesBrowseDetailDataArray.length) {
-        //     $scope.companiesBrowseDetailDataArray.pop();
-        //   }
-        //   var i = 0;
-        //   for (let k in $scope.companiesDetailDataBrowsed) {
-        //     if ($scope.companiesDetailDataBrowsed[k].business_type !== undefined) {
-        //       if (id == $scope.companiesDetailDataBrowsed[k].business_type[0]) {
-        //         $scope.companiesBrowseDetailDataArray[i] = $scope.companiesDetailDataBrowsed[k];
-        //         $scope.companiesBrowseDetailDataArray[i].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
-        //         $scope.companiesBrowseDetailDataArray[i].label = $scope.companiesDetailDataBrowsed[k].name;
-        //         $scope.companiesBrowseDetailDataArray[i].sector = $scope.companiesDetailDataBrowsed[k].business_type[0];
-        //         i++;
-        //       }
-        //     }
-        //   }
-        //   $scope.companiesBrowseDetailDataArrayCompany[id] = $scope.companiesBrowseDetailDataArray;
-        // }
+        $scope.companyBrowseData = function (id) {
+          while ($scope.companiesBrowseDetailDataArray.length) {
+            $scope.companiesBrowseDetailDataArray.pop();
+          }
+          var i = 0;
+          for (let k in $scope.companiesDetailDataBrowsed) {
+            if ($scope.companiesDetailDataBrowsed[k].business_type !== undefined) {
+              if (id == $scope.companiesDetailDataBrowsed[k].business_type[0]) {
+                $scope.companiesBrowseDetailDataArray[i] = $scope.companiesDetailDataBrowsed[k];
+                $scope.companiesBrowseDetailDataArray[i].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
+                $scope.companiesBrowseDetailDataArray[i].label = $scope.companiesDetailDataBrowsed[k].name;
+                $scope.companiesBrowseDetailDataArray[i].sector = $scope.companiesDetailDataBrowsed[k].business_type[0];
+                i++;
+              }
+            }
+          }
+          $scope.companiesBrowseDetailDataArrayCompany[id] = $scope.companiesBrowseDetailDataArray;
+        }
         $scope.browsedCheck = true;
         $scope.checkboxBrowesLeadCheck = function () {
           $scope.browsedCheck = true;
@@ -2009,38 +2011,38 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
                         swal(constants.name, response.data.data.error, constants.error);
                       } else {
-                        var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                          return el.id;
-                        }).indexOf($scope.shortlisted_spaces_id);
-                        if (localindex_index != -1) {
-                          $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
-                          $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
-                        }
-                        let color_class = '';
-                        if (response.data.data.list_color_code == 1) {
-                          color_class = 'yellow';;
-                        }
-                        else if (response.data.data.list_color_code == 2) {
-                          color_class = '#7C4700';
-                        }
-                        else if (response.data.data.list_color_code == 3) {
-                          color_class = 'green';
-                        }
-                        else if (response.data.data.list_color_code == 4) {
-                          color_class = 'white';
-                        }
-                        else if (response.data.data.list_color_code == 5) {
-                          color_class = 'red';
-                        }
-                        var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                          return el.id;
-                        }).indexOf($scope.shortlisted_spaces_id);
-                        if (localindex_index != -1) {
-                          $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
-                          $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
-                        }
-                        $scope.getRequirementDetail($scope.shortlisted_spaces_id, "null", "null");
+                        // var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                        //   return el.id;
+                        // }).indexOf($scope.shortlisted_spaces_id);
+                        // if (localindex_index != -1) {
+                        //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
+                        //   $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
+                        // }
+                        // let color_class = '';
+                        // if (response.data.data.list_color_code == 1) {
+                        //   color_class = 'yellow';;
+                        // }
+                        // else if (response.data.data.list_color_code == 2) {
+                        //   color_class = '#7C4700';
+                        // }
+                        // else if (response.data.data.list_color_code == 3) {
+                        //   color_class = 'green';
+                        // }
+                        // else if (response.data.data.list_color_code == 4) {
+                        //   color_class = 'white';
+                        // }
+                        // else if (response.data.data.list_color_code == 5) {
+                        //   color_class = 'red';
+                        // }
+                        // var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                        //   return el.id;
+                        // }).indexOf($scope.shortlisted_spaces_id);
+                        // if (localindex_index != -1) {
+                        //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
+                        //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
+                        // }
                         swal(constants.name, constants.save_success, constants.success);
+                        // $scope.getRequirementDetail($scope.shortlisted_spaces_id, "null", "null");
                       }
                     }).catch(function onError(response) {
 
@@ -2215,7 +2217,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         swal(constants.name, constants.save_success, constants.success);
                         if ($scope.new_data_check == true) {
                           $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
-                          $scope.addRemoveBtn = "Add row";
+                          $scope.newbrowsed = {};
+                          $scope.SelectedCompany = [];
+                          $scope.browsedCheck = true;
                         }
                       }
                     }).catch(function onError(response) {
@@ -2682,7 +2686,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               for (let j in $scope.preferred_partnerList) {
                 $scope.preferred_partnerList[j]['label'] = $scope.preferred_partnerList[j].name;
               }
-              $scope.companiesBrowseDetailDataArrayCompany[$scope.selected_sectorId] = $scope.preferred_partnerList;
+            // $scope.companiesBrowseDetailDataArrayCompany[$scope.selected_sectorId] = $scope.preferred_partnerList;
               $scope.sub_sectorList = response.data.data.sub_sector;
               // for(let i in $scope.preferred_partnerList ){
               //   $scope.newCompaniesBrowseDetailDataArray.push($scope.preferred_partnerList[i].name);
@@ -2693,9 +2697,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
         $scope.newBrowsedMulticheck = function (index) {
           alert(index)
-        }
-        $scope.testingfunc = function (data) {
-          console.log(data, "dattadtatt")
         }
       }]);
 
