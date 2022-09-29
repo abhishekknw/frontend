@@ -809,12 +809,12 @@ angular.module('Authentication')
                      return response
                   });
             };
-            authService.getLeasTabSuspenseLead = function (page) {
-               var url = "v0/ui/b2b/suspense-leads-tab/?page=" + page;
+            authService.getLeasTabSuspenseLead = function (phone,page) {
+               var url = "v0/ui/b2b/intervene-get-all-suspense-lead/?page=" + page +'&phone_number=' + phone;
                return machadaloHttp.get(url);
              }
-             authService.getBrowsedTabSuspenseLead = function (page) {
-               var url = "v0/ui/b2b/suspense-browsed-tab/?page=" + page;
+             authService.getBrowsedTabSuspenseLead = function (phone,page) {
+               var url = "v0/ui/b2b/intervene-suspense-browsed-tab/?page=" + page +'&phone_number=' + phone;
                return machadaloHttp.get(url);
              }
              authService.updateLeadTab = function (data) {

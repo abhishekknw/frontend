@@ -2016,7 +2016,7 @@
                                   </svg>
                                 </div>
                                 <div>
-                                  <button ng-click="getLeadsTabSuspenseLeads()" data-toggle="modal"
+                                  <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)" data-toggle="modal"
                                     data-target="#SuspenseLeadsModel">Suspense Sheet</button>
                                 </div>
                                 <div ng-click="userProfileIcon()">
@@ -3795,6 +3795,7 @@
 
                     <td class="alignment">
                       <select class="form-control" ng-model="browsed.l4" >
+                        <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L4 in filterLeadData[browsed.sector_id].L4" value="{{lead_L4}}">
                           {{lead_L4}}
                         </option>
@@ -3807,6 +3808,7 @@
 
                     <td class="alignment">
                       <select class="form-control" ng-model="browsed.l5">
+                        <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L5 in filterLeadData[browsed.sector_id].L5" value="{{lead_L5}}">
                           {{lead_L5}}
                         </option>
@@ -3818,6 +3820,7 @@
                     </td>
                     <td class="alignment">
                       <select class="form-control" ng-model="browsed.l6">
+                        <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L6 in filterLeadData[browsed.sector_id].L6" value="{{lead_L6}}">
                           {{lead_L6}}
                         </option>
@@ -3907,7 +3910,7 @@
                       <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style multiselectDropdown-123"
                         style="color:red;width:100%;margin-left:20px;" ng-click="newbrowsedMulticheck($index)"
                         ng-dropdown-multiselect="" options="preferred_partnerList" extra-settings="settings"
-                        selected-model="SelectedCompany" events="events"translation-texts="selected_business_type" >asfafasfa</span>
+                        selected-model="SelectedCompany" events="events"translation-texts="selected_business_type" ></span>
                       <span ng-repeat="selectedName in SelectedCompany" style="text-align: left; display: inline-block">
                         {{selectedName.label}}
                         <span ng-if="!$last">,</span>
@@ -4195,7 +4198,7 @@
                 </tbody>
               </table>
               <dir-pagination-controls ng-if="leadTabData.length > 0 " max-size="10"
-                on-page-change="pageChangedSuspenseLead(newPageNumber,true)" direction-links="true"
+                on-page-change="pageChangedSuspenseLead(userChatData.phone_number,newPageNumber,true)" direction-links="true"
                 boundary-links="true" pagination-id="paginate1">
               </dir-pagination-controls>
             </form>
@@ -4382,7 +4385,7 @@
                   </tr>
                 </tbody>
               </table>
-              <dir-pagination-controls max-size="10" on-page-change="pageChangedSuspenseLead(newPageNumber,False)"
+              <dir-pagination-controls max-size="10" on-page-change="pageChangedSuspenseLead(userChatData.phone_number,newPageNumber,False)"
                 direction-links="true" boundary-links="true" pagination-id="browseDataPaginate">
               </dir-pagination-controls>
             </form>
