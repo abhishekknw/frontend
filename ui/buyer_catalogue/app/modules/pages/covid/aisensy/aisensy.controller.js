@@ -2062,7 +2062,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
                         // }
                         swal(constants.name, constants.save_success, constants.success);
-                        // $scope.getRequirementDetail($scope.shortlisted_spaces_id, "null", "null");
+                        $scope.opsVerified($scope.phoneNumber,$scope.supplierId)
                       }
                     }).catch(function onError(response) {
 
@@ -2239,7 +2239,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                           $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
                           $scope.newbrowsed = {};
                           $scope.SelectedCompany = [];
-                          $scope.browsedCheck = true;
+                          $scope.countBrowsedRow = false;
+                          $scope.addRemoveBtn = "Add row"
                         }
                       }
                     }).catch(function onError(response) {
