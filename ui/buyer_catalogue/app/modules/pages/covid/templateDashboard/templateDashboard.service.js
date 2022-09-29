@@ -103,8 +103,8 @@ angular.module('catalogueApp')
         return machadaloHttp.get( url);
       }
 
-      DashboardService.getTemplateTabData= function (page,search,status) {
-        let url="v0/ui/template/view-template/?next_page="+page+"&search="+search+"&status="+status;
+      DashboardService.getTemplateTabData= function (page,search,status,campaign) {
+        let url="v0/ui/template/view-template/?next_page="+page+"&search="+search+"&status="+status+"&campaign_id="+campaign;
         return machadaloHttp.get( url);
       }
       DashboardService.uploadSendTemplate= function (id,formdata) {

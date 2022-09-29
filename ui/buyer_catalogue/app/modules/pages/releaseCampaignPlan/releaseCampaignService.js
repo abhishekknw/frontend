@@ -299,6 +299,10 @@
           var url = url_base_ui + "b2b/internal-comment/?requirement_id="+req_id+"&id="+comment_Id;
             return machadaloHttp.delete(url);
      }
+     releaseCampaignService.browsedPreferredPartner = function(id){
+      let url = url_base_ui + "b2b/browsed-companies-list/?sector_id="+id;
+      return machadaloHttp.get(url);
+    }
 
     return releaseCampaignService;
 }]);
