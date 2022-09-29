@@ -6,20 +6,20 @@
   'use strict';
 
   angular.module('catalogueApp')
-      .directive('ngFiles', ['$parse', function ($parse) {
+    .directive('ngFiles', ['$parse', function ($parse) {
 
       function fn_link(scope, element, attrs) {
-          var onChange = $parse(attrs.ngFiles);
-          element.on('change', function (event) {
-              onChange(scope, { $files: event.target.files });
-          });
+        var onChange = $parse(attrs.ngFiles);
+        element.on('change', function (event) {
+          onChange(scope, { $files: event.target.files });
+        });
       };
 
       return {
-          link: fn_link
+        link: fn_link
       }
-  } ])
-    .controller('TemplateDashboardCtrl', function (machadaloHttp,$scope, NgMap, $rootScope, baConfig, colorHelper,AuthService, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
+    }])
+    .controller('TemplateDashboardCtrl', function (machadaloHttp, $scope, NgMap, $rootScope, baConfig, colorHelper, AuthService, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
       $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
       $scope.itemsByPage = 15;
       $scope.permissions = permissions.dashboard;
@@ -662,10 +662,10 @@
         $scope.bookingPhases = [];
         $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code)
       }
-      $scope.templateDetail = function (pageNumber,search,status,campaign) {
-        let start_date="";
-        let next_page="";
-        let end_date="";
+      $scope.templateDetail = function (pageNumber, search, status, campaign) {
+        let start_date = "";
+        let next_page = "";
+        let end_date = "";
         cfpLoadingBar.start();
         $scope.showSupplierTypeCountChart = false;
         $scope.selectedBookingCampaignName = undefined;
@@ -678,49 +678,49 @@
         $scope.allCampaignsLeadsData = {};
         $scope.options = {};
         cfpLoadingBar.complete();
-        if (!pageNumber || pageNumber==''){
-            pageNumber=0;
+        if (!pageNumber || pageNumber == '') {
+          pageNumber = 0;
         }
-        if (!search){
-            search="";
+        if (!search) {
+          search = "";
         }
-        if(!status){
-           status="";
+        if (!status) {
+          status = "";
         }
-        if(!campaign){
+        if (!campaign) {
           campaign = "";
         }
-        templateDashboardService.getTemplateTabData(pageNumber,search,status,campaign)
-                            .then(function onSuccess(response) {
-                            $scope.templateDetailData = response.data.data.rows;
-                            $scope.totalrecord = response.data.data.total_row;
-                            $scope.itemsPerPageRecord = 20;
-                            $scope.currentPage = 0;
-                            $scope.optionForTemplate = response.data.data.status_list;
-                            $scope.campaign_name_list = response.data.data.proposal_name_list;
-                            $scope.template_type = response.data.data.template_type;
+        templateDashboardService.getTemplateTabData(pageNumber, search, status, campaign)
+          .then(function onSuccess(response) {
+            $scope.templateDetailData = response.data.data.rows;
+            $scope.totalrecord = response.data.data.total_row;
+            $scope.itemsPerPageRecord = 20;
+            $scope.currentPage = 0;
+            $scope.optionForTemplate = response.data.data.status_list;
+            $scope.campaign_name_list = response.data.data.proposal_name_list;
+            $scope.template_type = response.data.data.template_type;
 
-                         }).catch(function onError(response) {
-                            console.log(response);
-                         })
-       }
-       $scope.viewMoreDetail = function(message){
-          $scope.message = message;
-          $('#viewMoreDetail').modal('show');
-       }
-      $scope.checkUserModel = function(){
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+      }
+      $scope.viewMoreDetail = function (message) {
+        $scope.message = message;
+        $('#viewMoreDetail').modal('show');
+      }
+      $scope.checkUserModel = function () {
         $('#checkUserModel').modal('show');
-       }
-      $scope.uploadId=0;
-      $scope.show1=false;
-      $scope.sendTemplates = function(message,id,template,name){
+      }
+      $scope.uploadId = 0;
+      $scope.show1 = false;
+      $scope.sendTemplates = function (message, id, template, name) {
         $scope.templateName = name;
-        $scope.selectedFileName="";
-        $scope.excelColumnError="";
-        if(template=='template'){
-          $scope.show1=true;
-        } else{
-          $scope.show1=false;
+        $scope.selectedFileName = "";
+        $scope.excelColumnError = "";
+        if (template == 'template') {
+          $scope.show1 = true;
+        } else {
+          $scope.show1 = false;
         }
         $scope.template = template;
         $scope.message = message;
@@ -729,19 +729,19 @@
       }
       $scope.formdata = new FormData();
       $scope.getTheFiles = function (files) {
-          $timeout(function () {
-            $scope.file=files;
-            $scope.selectedFileName = $scope.file[0].name;
-            // $scope.sendTemplates($scope.message,$scope.uploadId,$scope.template);
-            console.log($scope.selectedFileName);
-          }, 1);
+        $timeout(function () {
+          $scope.file = files;
+          $scope.selectedFileName = $scope.file[0].name;
+          // $scope.sendTemplates($scope.message,$scope.uploadId,$scope.template);
+          console.log($scope.selectedFileName);
+        }, 1);
       };
-      $scope.uploadSendTemplate = function(){
-        $scope.uploadurl= {
-          url: 'https://stagingapi.machadalo.com/v0/ui/template/send-template-by-sheet/?id='+$scope.uploadId.trim(),
-          method:"POST",
+      $scope.uploadSendTemplate = function () {
+        $scope.uploadurl = {
+          url: 'https://stagingapi.machadalo.com/v0/ui/template/send-template-by-sheet/?id=' + $scope.uploadId.trim(),
+          method: "POST",
           timeout: 0,
-          data:{
+          data: {
             "file": $scope.file[0],
           },
           headers: {
@@ -751,21 +751,21 @@
           mimeType: "multipart/form-data",
           contentType: false,
         }
-        if($scope.show1==false){
-          $scope.uploadurl.url="aaaaakkkkkkkkssssss"
+        if ($scope.show1 == false) {
+          $scope.uploadurl.url = "aaaaakkkkkkkkssssss"
         }
         if ($scope.file) {
-           Upload.upload($scope.uploadurl).then(function onSuccess(response) {
+          Upload.upload($scope.uploadurl).then(function onSuccess(response) {
             $scope.file = undefined;
             swal(constants.name, response.data.data, constants.success);
           })
             .catch(function onError(response) {
-              $scope.excelColumnError=response.data.data.general_error.errors;
+              $scope.excelColumnError = response.data.data.general_error.errors;
             });
         }
-     
+
       }
-      $scope.optionForTemplate=['APPROVED','REJECTED'];
+      $scope.optionForTemplate = ['APPROVED', 'REJECTED'];
 
       $scope.pieChartClick = function (label) {
 
@@ -6677,7 +6677,7 @@
 
 
       // Template Dashboard start
-      $scope.getTransactionalTemplate = function (value,s_date='',e_date='') {
+      $scope.getTransactionalTemplate = function (value, s_date = '', e_date = '') {
         $scope.TemplateListSummary()
         $scope.changeStartDate();
         $scope.changeEndDate();
@@ -6756,7 +6756,7 @@
             current: 1
           };
         }
-        console.log("zszszs",$scope.serial)
+        console.log("zszszs", $scope.serial)
         $scope.pageCount = param.next_page;
         // if (!searchitem) {
         //   param.search = ""
@@ -6818,8 +6818,8 @@
             current: 1
           };
         }
-        console.log('lll',$scope.pagination.current)
-        console.log('fff',$scope.currentPage)
+        console.log('lll', $scope.pagination.current)
+        console.log('fff', $scope.currentPage)
         $scope.pageCount = param.next_page;
         $scope.disableNextPagebutton = false;
         console.log("78", name, search)
@@ -6931,7 +6931,7 @@
         console.log("hiiiiiiiiiiiiiiiiiiii")
       }
 
-      $scope.backToDatewiseData = function (template_id,page,name,s_date='', e_date='') {
+      $scope.backToDatewiseData = function (template_id, page, name, s_date = '', e_date = '') {
         $scope.viewTemplateSummaryTable = true;
         $scope.viewAllTemplateSummaryTable = false;
         $scope.viewUserSummaryTable = false;
@@ -6939,13 +6939,13 @@
         $scope.pagination = {
           current: 1
         };
-        $scope.getTransactionalTemplateViewDetail(template_id,page, name, s_date='', e_date='')
+        $scope.getTransactionalTemplateViewDetail(template_id, page, name, s_date = '', e_date = '')
         // ttemplate.template_id,pagination.current,ttemplate.template_name,dateRangeModel.start_dates=' ',dateRangeModel.end_dates=' '
         $scope.transactionalTemplateDropdown = {};
-        console.log("qqgdq",$scope.backToDatewiseData)
+        console.log("qqgdq", $scope.backToDatewiseData)
 
       }
-      $scope.pageChangedMasterTemplate = function(newPage) {
+      $scope.pageChangedMasterTemplate = function (newPage) {
         $scope.templateDetail(newPage);
       };
 
@@ -6967,43 +6967,48 @@
       };
 
 
-      $scope.choices = [{"id": 1,"type":"Button","name":""},];
+      $scope.choices = [{ "id": 1, "type": "Button", "name": "" },];
       $scope.index = $scope.choices.length;
-      
-      $scope.addNewChoice = function() {
-        let newItemNo = ++$scope.index;
-          $scope.choices.push({'id':newItemNo, "type":"Button","name":""});      
+
+      $scope.addNewChoice = function () {
+        $scope.input_length = $scope.choices.length + 1;
+
+        if ($scope.input_length > 3 == false) {
+          var newItemNo = ++$scope.index;
+          $scope.choices.push({ 'id': newItemNo, "type": "Mobile", "name": "" });
+        }      
       };
-        
-      $scope.removeChoice = function(id) {
-      
-            if($scope.choices.length<=1){
-                alert("input cannot be less than 1");
-                return;
-            }      
-            let index = -1;
-            let comArr = eval( $scope.choices );
-            for( let i = 0; i < comArr.length; i++ ) {
-              if( comArr[i].id === id) {
-                index = i;
-                break;
-              }
-            }
-            if( index === -1 ) {
-              alert( "Something gone wrong" );
-            }
-            $scope.choices.splice( index, 1 );
+
+      $scope.removeChoice = function (id) {
+        if ($scope.choices.length <= 1) {
+          alert("input cannot be less than 1");
+          return;
+        }
+
+        var index = -1;
+        var comArr = eval($scope.choices);
+        for (var i = 0; i < comArr.length; i++) {
+          if (comArr[i].id === id) {
+            index = i;
+            break;
+          }
+        }
+        if (index === -1) {
+          alert("Something gone wrong");
+        }
+        $scope.choices.splice(index, 1);
       };
+
       $scope.checkBrowseField = false;
-      $scope.templateType = function (type){
-        if(type!='TEXT' && type!=''){
+      $scope.templateType = function (type) {
+        if (type != 'TEXT' && type != '') {
           $scope.checkBrowseField = true;
         }
-        else{
+        else {
           $scope.checkBrowseField = false;
         }
       }
-      $scope.selectImageVideo = function(event){
+      $scope.selectImageVideo = function (event) {
         console.log(event);
 
       }
