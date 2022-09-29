@@ -1126,16 +1126,36 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.sectorName = function (sectorName) {
-          $scope.sectorId = sectorName;
           for (i in $scope.sectorList) {
             if ($scope.sectorList[i].id == sectorName) {
               let sector = $scope.sectorList[i].business_type;
-              $scope.selectLeadData(sector);
               return sector;
             }
           }
         }
+        $scope.filterBrowsedLeadData = function(sectorName){
+          for (i in $scope.sectorList) {
+            if ($scope.sectorList[i].id == sectorName) {
+              let sector = $scope.sectorList[i].business_type;
+              $scope.sectorBrowseLead(sector.toLowerCase(),sectorName);
+              return sector;
+            }
+          }
+        }
+        $scope.filterLeadData = {}
+        $scope.sectorBrowseLead = function(name,id){
+          for (let i in $scope.leads_Data) {
+            for (let j in $scope.leads_Data[i]) {
+              if (name === j) {
+                $scope.leads_Data_browsed = $scope.leads_Data[i][name];
+                $scope.filterLeadData[id] = $scope.leads_Data_browsed;
 
+                // $scope.filterLeadData[name] = $scope.leads_Data_browsed;
+                break;
+              }
+            }
+          }
+        }
         $scope.selectLeadData = function (data) {
           for (let i in $scope.leads_Data) {
             for (let j in $scope.leads_Data[i]) {
@@ -2656,6 +2676,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.addBrowsedRow = function () {
+          console.log($scope.filterLeadData,"$scope.filterLeadData")
+
           if ($scope.countBrowsedRow == false) {
             $scope.countBrowsedRow = true;
             $scope.addRemoveBtn = "Remove row";
