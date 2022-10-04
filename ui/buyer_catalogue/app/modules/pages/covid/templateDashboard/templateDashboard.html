@@ -196,7 +196,7 @@
                                 dir-paginate="template in templateDetailData| itemsPerPage:itemsPerPageRecord"
                                 total-items="totalrecord" current-page="currentPage" track by "$index">
                                 <td>{{$index+serial}}</td>
-                                <td>{{template.id}}</td>
+                                <td>{{template.md_id}}</td>
                                 <td>{{template.elementName}}</td>
                                 <td style="white-space: pre-line;word-wrap: break-word;">{{template.data}}</td>
                                 <td>{{template.status}}</td>
@@ -207,12 +207,12 @@
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
                                       ng-click="viewMoreDetail(template.data)">View More</button>
                                     <a
-                                      href="https://stagingapi.machadalo.com/v0/ui/template/download-sample-sheet/?id={{template.id}}">
+                                      href="{{APIBaseUrl}}/v0/ui/template/download-sample-sheet/?id={{template.id}}">
                                       <button type="button" class="btn btn-danger" style="align-items: center;">Download
                                         sample sheet </button>
                                     </a>
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
-                                      ng-click="sendTemplates(template.data,template.id,'user',template.elementName)">Check
+                                      ng-click="sendTemplates(template.data,template.id,'user',template.elementName,template.md_id)">Check
                                       users</button>
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
                                       ng-click="sendTemplates(template.data,template.id,'template',template.elementName)">Send
@@ -354,8 +354,12 @@
                                       </div>
                                     </div>
                                     <div class="col-sm-2">
-                                      <button type="button" class="btn btn-danger" value="Upload"
+                                      <button type="button" class="btn btn-danger" ng-if="show1==true" value="Upload"
                                         ng-click="uploadSendTemplate()">Send</button>
+                                        <a href="{{APIBaseUrl}}/v0/ui/template/check-users/?temp_id={{md_id}}">
+                                          <button  ng-if="show1!=true" type="button" class="btn btn-danger" 
+                                                   value="Upload" ng-click="uploadSendTemplate();downloadCheckUserFile();">Send</button>
+                                        </a>
                                     </div>
                                     <div class="col-sm-7" style="text-align: right;">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -1536,7 +1540,7 @@
                             </b>{{current_template.template_name}}
                           </h5><br>
                           <span>
-                            <button ng-click="" data-target="#messageViewModal" data-toggle="modal" type="button"
+                            <button  data-target="#messageViewModal" data-toggle="modal" type="button"
                               name="button" class="btn btn-primary">View Message
                             </button>
                           </span>
@@ -1560,7 +1564,7 @@
                                     <div class="col-xs-12">
                                       <div class="form-group">
                                        
-                                        <select class="form-control" ng-change="" name="category" id="category"
+                                        <select class="form-control"  name="category" id="category"
                                           ng-model="category_code">
                                           <option value="" disabled> Select Attribute</option>
                                           <option>Updated At</option>
@@ -6352,7 +6356,7 @@
                           <div class="col-xs-12">
                             <div class="form-group">
                               <!--category dropdown-->
-                              <select class="form-control" ng-change="" name="category" id="category"
+                              <select class="form-control"  name="category" id="category"
                                 ng-model="category_code">
                                 <option value="" disabled> Select Attribute</option>
                                 <option>Updated At</option>

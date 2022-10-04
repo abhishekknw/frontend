@@ -58,6 +58,7 @@
       $scope.tower_count_header = "Unit Secondary Count";
       $scope.flat = "Unit Primary";
       $scope.printLeadsInExcelData = {};
+      $scope.APIBaseUrl = Config.APIBaseUrl;
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
         { id: 2, name: 'High' },
@@ -711,7 +712,7 @@
       }
       $scope.uploadId = 0;
       $scope.show1 = false;
-      $scope.sendTemplates = function (message, id, template, name) {
+      $scope.sendTemplates = function (message, id, template, name,md_id) {
         $scope.templateName = name;
         $scope.selectedFileName = "";
         $scope.excelColumnError = "";
@@ -723,18 +724,19 @@
         $scope.template = template;
         $scope.message = message;
         $scope.uploadId = id;
+        $scope.md_id = md_id;
         $('#sendTemplates').modal('show');
       }
-      $scope.formdata = new FormData();
       $scope.getTheFiles = function (files) {
         $timeout(function () {
+          $scope.excelColumnError = "";
           $scope.file = files;
           $scope.selectedFileName = $scope.file[0].name;
         }, 1);
       };
       $scope.uploadSendTemplate = function () {
         $scope.uploadurl = {
-          url: 'https://stagingapi.machadalo.com/v0/ui/template/send-template-by-sheet/?id=' + $scope.uploadId.trim(),
+          url: Config.APIBaseUrl+'v0/ui/template/send-template-by-sheet/?id=' + $scope.uploadId.trim(),
           method: "POST",
           timeout: 0,
           data: {
@@ -748,15 +750,16 @@
           contentType: false,
         }
         if ($scope.show1 == false) {
-          $scope.uploadurl.url = "https://stagingapi.machadalo.com/v0/ui/template/check-users/";
-          $scope.uploadurl.data = {"file": $scope.file[0],"temp_id":$scope.uploadId};
+          $scope.uploadurl.url = Config.APIBaseUrl+"v0/ui/template/check-users/?temp_id="+$scope.md_id;
+          
         }
         if ($scope.file) {
           Upload.upload($scope.uploadurl).then(function onSuccess(response) {
-            $scope.file = undefined;
+            $scope.file = "";
             swal(constants.name, response.data.data, constants.success);
           })
             .catch(function onError(response) {
+              $scope.file = "";
               $scope.excelColumnError = response.data.data.general_error.errors;
             });
         }

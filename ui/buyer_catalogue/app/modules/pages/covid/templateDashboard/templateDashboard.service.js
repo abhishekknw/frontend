@@ -107,19 +107,7 @@ angular.module('catalogueApp')
         let url="v0/ui/template/view-template/?next_page="+page+"&search="+search+"&status="+status+"&campaign_id="+campaign;
         return machadaloHttp.get( url);
       }
-      DashboardService.uploadSendTemplate= function (id,formdata) {
-        var url = "v0/ui/template/send-template-by-sheet/?id="+id;
-        //var token = $rootScope.globals.currentUser.token;
-        var config = {
-          "processData": false,
-            "mimeType": "multipart/form-data",
-            "contentType": false,
-            // "headers": {
-            //   "Authorization": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImFkbWluQG1hY2hhZGFsby5jb20iLCJ1c2VybmFtZSI6InZpZGhpZGV2ZWxvcG1lbnQiLCJuYW1lIjoiQWRtaW4iLCJleHAiOjE2NTk2MTY3NjcsIm9yaWdfaWF0IjoxNjU5NTMwMzY3fQ.W1Dekgi_i4-YmxcMj0sfX__vqYdNgPnT9Mdqla44t18"
-            // }
-          };
-        return machadaloHttp.post(url,formdata,config);
-      }
+      
 
         return DashboardService;
 
