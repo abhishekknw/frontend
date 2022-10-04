@@ -3893,10 +3893,9 @@
                     <td class="alignment">
                       <select class="form-control" ng-model="newbrowsed.current_patner_id" style="width:100px;">
                         <option value="" disabled>Select Current Partner</option>
-                        <option ng-if="selected_sectorId==cpartner.sector || (selected_sectorId==null)"
-                          ng-repeat="cpartner in companiesDetailDataBrowsed track by $index"
+                        <option ng-repeat="cpartner in preferred_partnerList track by $index"
                           value="{{cpartner.organisation_id}}">
-                          {{cpartner.name}}
+                          {{cpartner.label}}
                         </option>
                         <input style="margin-top:10px" type="text" class="form-control"
                           placeholder="Other Current Company" ng-model="newbrowsed.preferred_company_other">
