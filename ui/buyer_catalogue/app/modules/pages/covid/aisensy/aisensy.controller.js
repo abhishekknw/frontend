@@ -2062,7 +2062,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
                         // }
                         swal(constants.name, constants.save_success, constants.success);
-                        // $scope.getRequirementDetail($scope.shortlisted_spaces_id, "null", "null");
+                        $scope.opsVerified($scope.phoneNumber,$scope.supplierId)
                       }
                     }).catch(function onError(response) {
 
@@ -2239,7 +2239,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                           $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
                           $scope.newbrowsed = {};
                           $scope.SelectedCompany = [];
-                          $scope.browsedCheck = true;
+                          $scope.countBrowsedRow = false;
+                          $scope.addRemoveBtn = "Add row"
                         }
                       }
                     }).catch(function onError(response) {
@@ -2270,24 +2271,24 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.verifyRequirement(verifyId);
           }
         }
-        $scope.pageChangedSuspenseLead = function (page, condition) {
+        $scope.pageChangedSuspenseLead = function (phone,page, condition) {
           if (condition == true) {
-            $scope.getLeadsTabSuspenseLeads(page);
+            $scope.getLeadsTabSuspenseLeads(phone,page);
           }
           else {
-            $scope.browsedSuspenseLeads(page);
+            $scope.browsedSuspenseLeads(phone,page);
           }
         }
-        $scope.getLeadsTabSuspenseLeads = function (page) {
+        $scope.getLeadsTabSuspenseLeads = function (phone,page) {
           $scope.loading = null;
           if (!page) {
             page = 1;
-            $scope.browsedSuspenseLeads("1");
+            $scope.browsedSuspenseLeads(phone,'1');
           }
           $scope.leadTabData = [{}];
           $scope.currentPageLead = page;
           $scope.companiesData = [{}];
-          AuthService.getLeasTabSuspenseLead(page)
+          AuthService.getLeasTabSuspenseLead(phone,page)
             .then(function onSuccess(response) {
               $scope.loading = response;
               $scope.leadTabData = response.data.data.suspense_lead.suspense_data;
@@ -2340,13 +2341,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         //browsed data
 
-        $scope.browsedSuspenseLeads = function (page) {
+        $scope.browsedSuspenseLeads = function (phone,page) {
           if (!page) {
             page = 1;
           }
           $scope.currentPageBrowsed = page;
           $scope.leadTabDataBrowsed = [{}];
-          AuthService.getBrowsedTabSuspenseLead(page)
+          AuthService.getBrowsedTabSuspenseLead(phone,page)
             .then(function onSuccess(response) {
               $scope.loading = response;
               $scope.leadTabDataBrowsed = response.data.data.suspense_lead.suspense_data;

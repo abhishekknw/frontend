@@ -1147,11 +1147,18 @@ body .modal .modal-dialog {
 body #AddButtons.modal button.close {
   color: #fff;
 }
+.li-popup .multiselectDropdown.multiselectDropdown-123 .dropdown-menu{
+  position: absolute;
+    top: 100%;
+    left: 0;
+    transform: unset;
+}
 /* Responsive */
 
 .modal-90{
   width: 90%;
 }
+
 @media screen and (max-width: 1024px) {
   div.dashboard-tab .uib-tab{
     min-width: 100px;
