@@ -18,11 +18,6 @@
     width: 100%;
   }
 
-  /* .table.temp-table th{
-position: sticky;
-top:0;
-
-  } */
   .table-responsive th {
     position: sticky;
     top: 0;
@@ -75,7 +70,6 @@ top:0;
   .page-end .content {
     max-width: 1250px;
     margin: auto;
-    /* padding: 30px 40px 40px 40px; */
     color: #B20000;
 
   }
@@ -84,7 +78,6 @@ top:0;
     background-color: #fff;
     padding: 0px 15px;
     border-radius: 5px;
-    /* margin: 150px; */
   }
 
   .template-header {
@@ -141,9 +134,7 @@ top:0;
         <div class="body-bg"></div>
         <div class="al-content">
           <uib-tabset class="dashboard-tab template-tabs" active="selectTabIndex.value">
-            <!-- <uib-tab index="0">
-              </uib-tab> -->
-
+           
             <uib-tab ng-click="templateDetail()" index="2">
               <uib-tab-heading>
                 <h5>Master Template</h5>
@@ -204,7 +195,6 @@ top:0;
                               <tr pagination-id="paginate1"
                                 dir-paginate="template in templateDetailData| itemsPerPage:itemsPerPageRecord"
                                 total-items="totalrecord" current-page="currentPage" track by "$index">
-                                <!-- <tr ng-repeat="template in templateDetailData"> -->
                                 <td>{{$index+serial}}</td>
                                 <td>{{template.id}}</td>
                                 <td>{{template.elementName}}</td>
@@ -241,7 +231,6 @@ top:0;
                       <div id="addTemplate" class="modal fade theme-modal">
                         <div class="modal-dialog">
                           <div class="modal-content">
-                            <!-- Modal Header -->
                             <div class="modal-header">
                               <h4 class="modal-title">Modal Heading</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -291,13 +280,7 @@ top:0;
                                     <button class="btn btn-danger" ng-click="addNewChoice()" ng-if="choice.id===index">Add Button</button>
                                   </li>
                                 </ul>  
-                                <!-- <div class="form-group">
-                                  <div data-ng-repeat="choice in choices">
-                                    <input class="form-control" type="text">
-                                  </div>
-                                  <label> Add Buttons:</label>
-                                  <button class="btn btn-danger" ng-click="addMoreButton()">Add Buttons</button>
-                                </div> -->
+                  
                               </form>
                             </div>
                             <!-- Modal footer -->
@@ -391,349 +374,9 @@ top:0;
                       <!-- modal end send template -->
 
                       <br />
-                      <br />
-
-                      <!--<div class="col-md-3">
-
-
-                        <div class="panel-group" id="accordion">
-                           <div class="panel panel-default">
-                            <div ng-if="showCampaignGraph" class="panel-heading" ng-click="getCampaigns()">
-                              <h4 class="panel-title">
-                                All Campaigns
-                              </h4>
-
-                            </div>
-                          </div> -->
-                      <!-- <div class="panel panel-default">
-                            <div class="row" style="width:100%;margin-left:0px;">
-                              <h4 class="panel-title">
-                                <select class="form-control" ng-model="selectedVendor.name"
-                                  ng-change="getCampaignsByVendor()">
-                                  <option value="">Select Vendor</option>
-                                  <option value="{{vendor.vendor_id}}">All</option>
-                                  <option value="{{vendor.vendor_id}}" ng-repeat="vendor in vendorsData">
-                                    {{vendor.principal_vendor}}</option>
-                                </select>
-                              </h4>
-                            </div>
-                            <div class="animate-show">
-                              <div class="panel-bodyDashboard camp-menu-content">
-                                <table class="table">
-                                  <tr ng-repeat="vendors in vendorsData">
-                                    {{vendors}}
-                                  </tr>
-                                </table>
-                              </div>
-                            </div>
-                          </div> -->
-
-                      <!-- <div class="panel panel-default">
-                            <div class="row" style="width:100%;margin-left:0px;">
-                              <h4 class="panel-title">
-                                <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code"
-                                  value="supplierType.value" ng-change="setSupplierType()">
-                                  <option value="">Select Supplier Type</option>
-                                  <option value="{{supplierType.value}}"
-                                    ng-selected="selectedSupplierType == supplierType.value"
-                                    ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
-                                </select>
-                              </h4>
-                            </div>
-
-                          </div> -->
-                      <!-- <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
-                            <div class="panel-heading">
-                              <h4 class="panel-title">
-                                Completed Campaigns
-                              </h4>
-                            </div>
-                            <div id="completed" class="animate-show" ng-show="campaignStatus.completed.value">
-                              <div class="panel-bodyDashboard camp-menu-content">
-                                <table class="table">
-                                  <tr ng-repeat="campaign in campaignData.completed_campaigns | orderBy: 'name'">
-                                    <td ng-click="getSuppliersOfCampaignWithStatus(campaign)">
-                                      {{campaign.name}}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </div>
-                            </div>
-                          </div> -->
-                      <!-- <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
-                            <div class="panel-heading">
-                              <h4 class="panel-title">
-                                Ongoing Campaigns
-                              </h4>
-                            </div>
-                            <div id="ongoing" class="animate-show" ng-show="campaignStatus.ongoing.value">
-                              <div class="panel-bodyDashboard camp-menu-content">
-                                <table class="table">
-                                  <tr ng-repeat="campaign in campaignData.ongoing_campaigns | orderBy: 'name'">
-                                    <td ng-click="getSuppliersOfCampaignWithStatus(campaign)">
-                                      {{campaign.name}}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </div>
-                            </div>
-                          </div> -->
-
-                      <!--<div class="panel panel-default">
-                             <div class="panel-heading" ng-click="switchToInventory(campaignStatus.upcoming.status)">
-                              <h4 class="panel-title">
-                                Upcoming Campaigns
-                              </h4>
-                            </div> -->
-                      <!-- <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
-                                          <div class="panel-bodyDashboard camp-menu-content">
-                                              <table class="table">
-                                                  <tr ng-repeat="campaign in campaignData.upcoming_campaigns">
-                                                    <td ng-click="getSuppliersOfCampaignWithStatus(campaign)">
-                                                      {{campaign.name}}
-                                                    </td>
-                                                  </tr>
-                                              </table>
-                                          </div>
-                                      </div> 
-                          </div>-->
-                      <!-- <div class="panel panel-default">
-                            <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.onhold.status)">
-                              <h4 class="panel-title">
-                                On Hold Campaigns
-                              </h4>
-                            </div>
-                            <div id="onhold" class="animate-show" ng-show="campaignStatus.onhold.value">
-                              <div class="panel-bodyDashboard camp-menu-content">
-                                <table class="table">
-                                  <tr ng-repeat="campaign in campaignData.onhold_campaigns | orderBy: 'name'">
-                                    <td ng-click="getSuppliersOfCampaignWithStatus(campaign)">
-                                      {{campaign.name}}
-                                    </td>
-                                  </tr>
-                                </table>
-                              </div>
-                            </div>
-                          </div> 
-
-
-                        </div>
-
-                      </div>-->
-
-                      <!-- <div class="col-md-4">
-
-                        <nvd3 options="options" data="campaignChartdata" ng-if="!showSingleCampaignChart"></nvd3>
-                        <nvd3 options="options1" data="campaignChartdata" ng-if="showSingleCampaignChart"></nvd3>
-
-                      </div> -->
+                      <br />  
                       <div class="col-md-5 LeadsTable">
-                        <!-- <div class="panel-heading content-title">
-
-                          <h5 style="background:'red';color:white;" ng-if="!showSingleCampaignChart">All Campaign
-                            Details </h5>
-                          <h5 style="background:'red';color:white;" ng-if="showSingleCampaignChart">Supplier / Leads
-                            Details</h5>
-
-                        </div> -->
-
-                        <!-- <div class="supplierTable-style" ng-if="showSingleCampaignChart">
-                           <table class="table-responsive table table-bordered equal-width">
-                            <thead>
-                              <tr style="font-size:12px;">
-                                <td>Campaign Status</td>
-                                <td>Supplier Count</td>
-                                <td>{{flat_count_header}}</td>
-                                <td>Hot Leads %</td>
-                                <td>Total Leads %</td>
-                                <td>Hot Leads Count</td>
-                                <td>Total Leads Count</td>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr ng-repeat="(key,data) in overallMetric" style="font-size:12px;">
-                                <td style="text-align:left;text-transform: capitalize;" ng-if="key != 'ongoing'">
-                                  {{key}}</td>
-                                <td
-                                  style="text-align:left;background-color:green;color:#ffffff !important;text-transform: capitalize;"
-                                  ng-if="key == 'ongoing'">{{key}}</td>
-
-                                <td style="text-align:left; " ng-if="key != 'ongoing'">{{data.total_suppliers_count}}
-                                </td>
-                                <td id="ref" ng-mouseover="showPopover=true;" ng-mouseleave="showPopover=false;"
-                                  style="text-align:left;background-color:#cb1925;color:#ffffff !important"
-                                  ng-if="key == 'ongoing'">
-                                  <a style="color:#ffffff;background-color:#cb1925">{{data.total_suppliers_count}}
-                                    <md-card ng-show="showPopover"
-                                      ng-repeat="suppliers in campaignStatusData['ongoing']">
-                                      <md-card-content ng-if="suppliers.extra_leads_data.length">
-                                        <table class="table table-striped"
-                                          style="width:200px;height:100px;overflow:auto;">
-                                          <thead>
-                                            <th ng-if="suppliers.extra_leads_data.length"> <small>Date and
-                                                Time</small> </th>
-                                            <th ng-if="suppliers.extra_leads_data.length"> <small>Total Leads</small>
-                                            </th>
-                                            <th ng-if="suppliers.extra_leads_data.length"> <small>Total Hot
-                                                Leads</small> </th>
-                                          </thead>
-                                          <tbody ng-repeat="supplier in suppliers.extra_leads_data">
-                                            <h6 style="text-align:center" ng-if="suppliers.extra_leads_data.length">
-                                              <b>{{suppliers.supplier.name}}</b>
-                                            </h6>
-                                            <tr style="text-align:center">
-                                              <td ng-if="suppliers.extra_leads_data.length">
-                                                <small>{{supplier.created_at | date:'medium'}}</small>
-                                              </td>
-                                              <td ng-if="suppliers.extra_leads_data.length">
-                                                <small>{{supplier.extra_leads}}</small>
-                                              </td>
-                                              <td ng-if="suppliers.extra_leads_data.length">
-                                                <small>{{supplier.extra_hot_leads}}</small>
-                                              </td>
-                                            </tr>
-                                          </tbody>
-                                        </table>
-                                      </md-card-content>
-                                    </md-card>
-                                  </a>
-
-                                </td>
-                                <td style="text-align:left;" ng-if="key != 'ongoing'">{{data.flat_count}}</td>
-                                <td style="text-align:left;background-color:green;color:#ffffff !important"
-                                  ng-if="key == 'ongoing'">{{data.flat_count}}</td>
-
-                                <td style="text-align:left;" ng-if="key !='upcoming' && key != 'ongoing'">
-                                  {{data.hot_leads_percentage_by_flat_count | limitTo:4 || NA}} %</td>
-                                <td style="text-align:left;background-color:green;color:#ffffff !important"
-                                  ng-if="key =='ongoing'">{{data.hot_leads_percentage_by_flat_count | limitTo:4 ||
-                                  NA}} %</td>
-                                <td style="text-align:left;" ng-if="key =='upcoming'">NA</td>
-
-                                <td style="text-align:left;" ng-if="key !='upcoming' && key != 'ongoing'">
-                                  {{data.leads_flat_percentage| limitTo:4 || NA}} %</td>
-                                <td style="text-align:left;;background-color:green;color:#ffffff !important"
-                                  ng-if="key =='ongoing'">{{data.leads_flat_percentage| limitTo:4 || NA}} %</td>
-                                <td style="text-align:left" ng-if="key =='upcoming'">NA</td>
-
-                                <td style="text-align:left;" ng-if="key !='upcoming' && key != 'ongoing'">
-                                  {{data.total_hot_leads_count| limitTo:4 || NA}}</td>
-                                <td style="text-align:left;background-color:green;color:#ffffff !important"
-                                  ng-if="key =='ongoing'">{{data.total_hot_leads_count| limitTo:4 || NA}}</td>
-                                <td style="text-align:left;" ng-if="key =='upcoming'">NA</td>
-
-                                <td style="text-align:left;" ng-if="key !='upcoming' && key != 'ongoing'">
-                                  {{data.total_leads_count| limitTo:4 || NA}}</td>
-                                <td style="text-align:left;background-color:green;color:#ffffff !important"
-                                  ng-if="key =='ongoing'">{{data.total_leads_count| limitTo:4 || NA}}</td>
-                                <td style="text-align:left;" ng-if="key =='upcoming'">NA</td>
-                              </tr>
-                              <tr style="background:#c2452f;">
-                                <td style="color:#ffffff !important;">Total</td>
-                                <td style="color:#ffffff !important">
-                                  {{addCount(overallMetric,'total_suppliers_count')}}</td>
-                                <td style="color:#ffffff !important">{{addCount(overallMetric,'flat_count')}}</td>
-                                <td ng-if="addCount(overallMetric,'flat_count') != 0" style="color:#ffffff !important">
-                                  {{addCount(overallMetric,'total_hot_leads_count')/addCount(overallMetric,'flat_count')
-                                  * 100|limitTo:5}}%</td>
-                                <td ng-if="addCount(overallMetric,'flat_count') == 0" style="color:#ffffff !important">
-                                  NA</td>
-                                <td ng-if="addCount(overallMetric,'flat_count') != 0" style="color:#ffffff !important">
-                                  {{addCount(overallMetric,'total_leads_count')/addCount(overallMetric,'flat_count') *
-                                  100|limitTo:5}}%</td>
-                                <td ng-if="addCount(overallMetric,'flat_count') == 0" style="color:#ffffff !important">
-                                  NA</td>
-                                <td style="color:#ffffff !important">
-                                  {{addCount(overallMetric,'total_hot_leads_count')}}</td>
-                                <td style="color:#ffffff !important">{{addCount(overallMetric,'total_leads_count')}}
-                                </td>
-                              </tr>
-
-                            </tbody>
-                          </table> 
-
-                        </div> -->
-                        <!-- <div class="supplierTable-style" ng-if="!showSingleCampaignChart">
-                          <table class="table-responsive table table-bordered equal-width">
-                            <thead>
-                              <tr style="font-size:12px;">
-                                <td>Campaign Status</td>
-                                <td>Supplier Count</td>
-                                <td>{{flat_count_header}} </td>
-                                <td>Hot Leads Count</td>
-                                <td>Total Leads Count</td>
-                                <td>Hot Leads (%)</td>
-                                <td>Total Leads (%)</td>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr ng-repeat="(key,data) in allCampaignsLeadsData" style="font-size:12px;">
-                                <td style="text-align:left;text-transform: capitalize" ng-if="key != 'ongoing'">
-                                  {{key}}</td>
-                                <td
-                                  style="text-align:left;background-color:green;color:#ffffff !important;text-transform: capitalize"
-                                  ng-if="key == 'ongoing'">{{key}}</td>
-
-                                <td style="text-align:left;" ng-if="key != 'ongoing'">{{data.supplier_count}}</td>
-                                <td style="text-align:left;background-color:green;color:#ffffff !important"
-                                  ng-if="key == 'ongoing'">{{data.supplier_count}}</td>
-
-                                <td style="text-align:left;" ng-if="key != 'ongoing'">{{data.flat_count}}</td>
-                                <td style="text-align:left;background-color:green;color:#ffffff !important"
-                                  ng-if="key == 'ongoing'">{{data.flat_count}}</td>
-
-                                <td style="text-align:left;" ng-if="key != 'ongoing'">{{data.hot_leads}}</td>
-                                <td style="text-align:left;background-color:green;color:#ffffff !important"
-                                  ng-if="key == 'ongoing'">{{data.hot_leads}}</td>
-
-                                <td style="text-align:left;" ng-if="key != 'ongoing'">{{data.total_leads}}</td>
-                                <td style="text-align:left;background-color:green;color:#ffffff !important"
-                                  ng-if="key == 'ongoing'">{{data.total_leads}}</td>
-
-                                <td ng-if="data.flat_count != 0 && key != 'ongoing'">{{data.hot_leads/data.flat_count
-                                  * 100|limitTo:5}} %</td>
-                                <td ng-if="data.flat_count != 0 && key == 'ongoing'"
-                                  style="text-align:left;background-color:green;color:#ffffff !important">
-                                  {{data.hot_leads/data.flat_count * 100|limitTo:5}} %</td>
-                                <td ng-if="data.flat_count == 0">NA</td>
-
-                                <td ng-if="data.flat_count != 0 && key != 'ongoing'">
-                                  {{data.total_leads/data.flat_count * 100|limitTo:5}} %</td>
-                                <td ng-if="data.flat_count != 0 && key == 'ongoing'"
-                                  style="text-align:left;background-color:green;color:#ffffff !important">
-                                  {{data.total_leads/data.flat_count * 100|limitTo:5}} %</td>
-                                <td ng-if="data.flat_count == 0">NA</td>
-                              </tr>
-                              <tr style="background:#c2452f;">
-                                <td style="color:#ffffff !important">Total</td>
-                                <td style="color:#ffffff !important">
-                                  {{addCount(allCampaignsLeadsData,'supplier_count')}}</td>
-                                <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'flat_count')}}
-                                </td>
-                                <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'hot_leads')}}
-                                </td>
-                                <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'total_leads')}}
-                                </td>
-                                <td style="color:#ffffff !important"
-                                  ng-if="addCount(allCampaignsLeadsData,'flat_count') != 0">
-                                  {{addCount(allCampaignsLeadsData,'hot_leads')/addCount(allCampaignsLeadsData,'flat_count')
-                                  * 100|limitTo:5}}%</td>
-                                <td style="color:#ffffff !important"
-                                  ng-if="addCount(allCampaignsLeadsData,'flat_count') == 0">NA</td>
-                                <td style="color:#ffffff !important"
-                                  ng-if="addCount(allCampaignsLeadsData,'flat_count') != 0">
-                                  {{addCount(allCampaignsLeadsData,'total_leads')/addCount(allCampaignsLeadsData,'flat_count')
-                                  * 100|limitTo:5}}%</td>
-                                <td style="color:#ffffff !important"
-                                  ng-if="addCount(allCampaignsLeadsData,'flat_count') == 0">NA</td>
-                              </tr>
-
-                            </tbody>
-                          </table>
-
-                        </div> -->
-
-
+                        
                       </div>
                     </div>
                   </div>
@@ -776,7 +419,6 @@ top:0;
                                   <th ng-if="supplierStatus != 'upcoming'">Standee</th>
                                   <th ng-if="supplierStatus != 'upcoming'">Stall</th>
                                   <th ng-if="supplierStatus != 'upcoming'">Other Images</th>
-                                  <!-- <th>Permission Box</th> -->
                                   <th>Comments</th>
                                   <th ng-if="canViewInternalComments">Internal <br> Comments</th>
                                 </tr>
