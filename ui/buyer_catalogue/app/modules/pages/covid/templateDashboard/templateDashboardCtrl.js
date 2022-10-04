@@ -735,35 +735,53 @@
         }, 1);
       };
       $scope.uploadSendTemplate = function () {
-        $scope.uploadurl = {
-          url: Config.APIBaseUrl+'v0/ui/template/send-template-by-sheet/?id=' + $scope.uploadId.trim(),
-          method: "POST",
-          timeout: 0,
-          data: {
-            "file": $scope.file[0],
-          },
-          headers: {
-            "Authorization": 'JWT ' + $rootScope.globals.currentUser.token
-          },
-          processData: false,
-          mimeType: "multipart/form-data",
-          contentType: false,
-        }
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization",'JWT ' + $rootScope.globals.currentUser.token)
+        var formdata = new FormData();
+        formdata.append("file", $scope.file[0], $scope.selectedFileName);
+        
+        let requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: formdata,
+          redirect: 'follow'
+        };
         if ($scope.show1 == false) {
-          $scope.uploadurl.url = Config.APIBaseUrl+"v0/ui/template/check-users/?temp_id="+$scope.md_id;
-          
+          fetch(Config.APIBaseUrl+"v0/ui/template/check-users/?temp_id="+$scope.md_id, requestOptions)
+          .then(response => response.text())
+          .then(result =>{console.log(result)
+           let blob = new Blob([result], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+           let objectUrl = URL.createObjectURL(blob);
+           window.open(objectUrl);
+         })
+          .catch(error => console.log('error', error));
         }
-        if ($scope.file) {
-          Upload.upload($scope.uploadurl).then(function onSuccess(response) {
-            $scope.file = "";
-            swal(constants.name, response.data.data, constants.success);
-          })
-            .catch(function onError(response) {
+        else{
+          let uploadurl = {
+            url: Config.APIBaseUrl+'v0/ui/template/send-template-by-sheet/?id=' + $scope.uploadId.trim(),
+            method: "POST",
+            timeout: 0,
+            data: {
+              "file": $scope.file[0],
+            },
+            headers: {
+              "Authorization": 'JWT ' + $rootScope.globals.currentUser.token
+            },
+            processData: false,
+            mimeType: "multipart/form-data",
+            contentType: false,
+          }
+          if ($scope.file) {
+            Upload.upload(uploadurl).then(function onSuccess(response) {
               $scope.file = "";
-              $scope.excelColumnError = response.data.data.general_error.errors;
-            });
+              swal(constants.name, response.data.data, constants.success);
+            })
+              .catch(function onError(response) {
+                $scope.file = "";
+                $scope.excelColumnError = response.data.data.general_error.errors;
+              });
+          }
         }
-
       }
       $scope.optionForTemplate = ['APPROVED', 'REJECTED'];
 
