@@ -6727,7 +6727,7 @@
       };
 
       $scope.checkBrowseField = false;
-      $scope.templateType = function (type) {
+      $scope.selectTemplateType = function (type) {
         if (type != 'TEXT' && type != '') {
           $scope.checkBrowseField = true;
         }
@@ -6760,8 +6760,8 @@
         data.type_of_fields = 'TEXT';
         templateDashboardService.createTemplate(data)
           .then(function onSuccess(response) {
-            $scope.templateData = {};
-            console.log(response);
+            $scope.templateData = "";
+            $scope.templateDetail();
           }).catch(function onError(response) {
             console.log(response);
           })

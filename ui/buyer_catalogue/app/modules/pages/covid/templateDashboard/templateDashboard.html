@@ -264,8 +264,8 @@
                                 </div>
                                 <div class="form-group">
                                   <label> Type of Field:</label>
-                                  <select class="form-control" ng-change="templateType(template)"
-                                           ng-model="template">
+                                  <select class="form-control" ng-change="selectTemplateType(templateType)"
+                                           ng-model="templateType">
                                            <option value="">Select Template Type</option>
                                            <option  ng-repeat="value in template_type">{{value}}</option>
                                   </select>
