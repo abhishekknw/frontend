@@ -239,7 +239,28 @@
                               <form action="">
                                 <div class="form-group">
                                   <label> Alais Name:</label>
-                                  <input class="form-control" type="text">
+                                  <input class="form-control" ng-model="templateData.alias_name" type="text">
+                                </div>
+                                <div class="form-group">
+                                  <label> Sector:</label>
+                                  <select class="form-control " ng-model="templateData.sector">
+                                           <option value="">Select Sector</option>
+                                           <option>sector1</option>
+                                  </select>
+                                  <label> Sub Sector:</label>
+                                  <select class="form-control" ng-model="templateData.sub_sector">
+                                           <option value="">Select Sub Sector</option>
+                                           <option>subsector</option>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                  <label>Type Of Entity:</label>
+                                  <select class="form-control" ng-model="templateData.entity_type">
+                                           <option value="">Select</option>
+                                           <option>TOE</option>
+                                  </select>
+                                  <label> Template Name:</label>
+                                  <input class="form-control" ng-model="templateData.elementName" type="text">
                                 </div>
                                 <div class="form-group">
                                   <label> Type of Field:</label>
@@ -254,40 +275,37 @@
                                 </div>
                                 <div class="form-group">
                                   <label> Comment:</label>
-                                  <input class="form-control" type="text">
+                                  <input class="form-control"  ng-model="templateData.comment" type="text">
                                 </div>
                                 <div class="form-group">
                                   <label> Send Trigger (Y/N):</label>
-                                  <select class="form-control">
+                                  <select class="form-control"  ng-model="templateData.send_triger">
                                     <option>YES</option>
                                     <option>NO</option>
                                   </select>
                                 </div>
                                 <div class="form-group">
                                   <label> Trigger Message:</label>
-                                  <textarea class="form-control"></textarea>
+                                  <textarea class="form-control" ng-model="templateData.triger_message"></textarea>
                                 </div>
                                 <div class="form-group">
                                   <label> Params:</label>
-                                  <input class="form-control" type="text">
+                                  <input class="form-control" type="text" ng-model="templateData.param">
                                 </div>
                                 <ul class="list-group">
                                   <li class="list-group-item" data-ng-repeat="choice in choices">
                                    <div class="col-sm-9">
-                                    <input class="form-control" type="text" ng-model="choice.name" name="" placeholder="Enter Button Name">
+                                    <input class="form-control" type="text" ng-model="choice.name" ng-change="multipleButtons(choice)" name="" placeholder="Enter Button Name">
                                      </div>
                                     <button class="btn btn-danger" ng-click="removeChoice(choice.id)" ng-if="choice.id!=index">Remove</button>
                                     <button class="btn btn-danger" ng-click="addNewChoice()" ng-if="choice.id===index">Add Button</button>
                                   </li>
                                 </ul>  
-                  
                               </form>
                             </div>
                             <!-- Modal footer -->
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-danger">
-                                Submit
-                              </button>
+                              <button type="button" class="btn btn-danger" ng-click="createTemplate(templateData)">Submit</button>
                               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                             </div>
 
@@ -354,12 +372,8 @@
                                       </div>
                                     </div>
                                     <div class="col-sm-2">
-                                      <button type="button" class="btn btn-danger" ng-if="show1==true" value="Upload"
+                                      <button type="button" class="btn btn-danger" value="Upload"
                                         ng-click="uploadSendTemplate()">Send</button>
-                                        <!-- <a href="{{APIBaseUrl}}/v0/ui/template/check-users/?temp_id={{md_id}}"> -->
-                                        <a>  <button  ng-if="show1!=true" type="button" class="btn btn-danger" 
-                                                   value="Upload" ng-click="uploadSendTemplate();downloadCheckUserFile();">Send</button>
-                                        </a>
                                     </div>
                                     <div class="col-sm-7" style="text-align: right;">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
