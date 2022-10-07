@@ -2677,8 +2677,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.addBrowsedRow = function () {
-          console.log($scope.filterLeadData,"$scope.filterLeadData")
-
           if ($scope.countBrowsedRow == false) {
             $scope.countBrowsedRow = true;
             $scope.addRemoveBtn = "Remove row";
@@ -2692,6 +2690,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.newCompaniesBrowseDetailDataArray = [];
         $scope.browsedPreferredPartner = function (data,check) {
           $scope.selected_sectorId = "";
+          $scope.leads_Data_1 = "";
           if(check==true){
             $scope.selected_sectorId = data;
           }
