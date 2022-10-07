@@ -107,8 +107,10 @@ angular.module('catalogueApp')
         let url="v0/ui/template/view-template/?next_page="+page+"&search="+search+"&status="+status+"&campaign_id="+campaign;
         return machadaloHttp.get( url);
       }
-      
-
+      DashboardService.createTemplate= function (data) {
+        let url="v0/ui/template/";
+        return machadaloHttp.post(url,{data:data});
+      }
         return DashboardService;
 
 

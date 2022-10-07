@@ -725,6 +725,8 @@
         $scope.message = message;
         $scope.uploadId = id;
         $scope.md_id = md_id;
+        let fileElement = angular.element('#file1');
+        angular.element(fileElement).val(null);   
         $('#sendTemplates').modal('show');
       }
       $scope.getTheFiles = function (files) {
@@ -735,9 +737,9 @@
         }, 1);
       };
       $scope.uploadSendTemplate = function () {
-        var myHeaders = new Headers();
+        let myHeaders = new Headers();
         myHeaders.append("Authorization",'JWT ' + $rootScope.globals.currentUser.token)
-        var formdata = new FormData();
+        let formdata = new FormData();
         formdata.append("file", $scope.file[0], $scope.selectedFileName);
         
         let requestOptions = {
@@ -777,7 +779,7 @@
               swal(constants.name, response.data.data, constants.success);
             })
               .catch(function onError(response) {
-                $scope.file = "";
+                $scope.file ="";
                 $scope.excelColumnError = response.data.data.general_error.errors;
               });
           }
@@ -6702,7 +6704,7 @@
 
         if ($scope.input_length > 3 == false) {
           var newItemNo = ++$scope.index;
-          $scope.choices.push({ 'id': newItemNo, "type": "Mobile", "name": "" });
+          $scope.choices.push({ 'id': newItemNo, "type": "Button", "name": "" });
         }      
       };
 
@@ -6727,7 +6729,7 @@
       };
 
       $scope.checkBrowseField = false;
-      $scope.templateType = function (type) {
+      $scope.selectTemplateType = function (type) {
         if (type != 'TEXT' && type != '') {
           $scope.checkBrowseField = true;
         }
@@ -6739,7 +6741,34 @@
         console.log(event);
 
       }
-
+      $scope.templateData = {button:[{'connotation': 'POSITIVE', 'name': 'None'}, 
+                                     {'connotation': 'NEUTRAL', 'name': 'None'},
+                                      {'connotation': 'NEGATIVE', 'name': 'None'}]};
+      $scope.multipleButtons = function(data){
+        if(data.id==1){ 
+          $scope.templateData.button[0].name = data.name;
+        }
+        else if(data.id==2){
+          $scope.templateData.button[1].name = data.name;
+        }
+        else{
+          $scope.templateData.button[2].name = data.name;
+        }
+      }
+      $scope.createTemplate = function(data){
+        if(data.param){
+          data.param = data.param.split(',');
+        }
+        data.type_of_fields = 'TEXT';
+        templateDashboardService.createTemplate(data)
+          .then(function onSuccess(response) {
+            $scope.templateData = "";
+            $scope.templateDetail();
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+      }
+      
       // Template Dashboard end
 
     })
