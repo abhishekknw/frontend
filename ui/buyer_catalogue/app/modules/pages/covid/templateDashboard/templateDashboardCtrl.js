@@ -725,6 +725,8 @@
         $scope.message = message;
         $scope.uploadId = id;
         $scope.md_id = md_id;
+        let fileElement = angular.element('#file1');
+        angular.element(fileElement).val(null);   
         $('#sendTemplates').modal('show');
       }
       $scope.getTheFiles = function (files) {
@@ -735,9 +737,9 @@
         }, 1);
       };
       $scope.uploadSendTemplate = function () {
-        var myHeaders = new Headers();
+        let myHeaders = new Headers();
         myHeaders.append("Authorization",'JWT ' + $rootScope.globals.currentUser.token)
-        var formdata = new FormData();
+        let formdata = new FormData();
         formdata.append("file", $scope.file[0], $scope.selectedFileName);
         
         let requestOptions = {
@@ -777,7 +779,7 @@
               swal(constants.name, response.data.data, constants.success);
             })
               .catch(function onError(response) {
-                $scope.file = "";
+                $scope.file ="";
                 $scope.excelColumnError = response.data.data.general_error.errors;
               });
           }
