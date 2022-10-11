@@ -1072,7 +1072,7 @@
                             </td>
                             <td class="btn_box_lead_survey">
                               <button class="btn btn-danger"
-                                data-target="#downloadLeads" data-toggle="modal">
+                                data-target="#downloadLeads" data-toggle="modal" ng-click="downloadUploadFile(campaign.campaign_id,filterType)">
                                 <p ng-if="filterType == 'Leads' && filterType != 'Survey' && filterType != 'Feedback'">Download Leads</p>
                                 <p ng-if="filterType != 'Leads' && filterType == 'Survey' && filterType !='Feedback'">Download Survey</p>
                                 <p ng-if="filterType != 'Leads' && filterType != 'Survey' && filterType =='Feedback'">Download Feedback</p>
@@ -2550,7 +2550,9 @@
               <div class="sendEmail1">
                 <div class="buttons">
                   <div class="download-leads-btn">
-                    <a href="https://stagingapi.machadalo.com/v0/ui/b2b/download-leads-summary/?lead_type={{filterType}}&supplier_code=all&campaign_id={{campaign_id}}"><button type="button" name="button" class="smallBtn">Download Lead</button></a>
+                    <a href="{{APIBaseUrl}}v0/ui/b2b/download-leads-summary/?lead_type={{leads}}&supplier_code=all&campaign_id={{campaign}}">
+                      <button type="button" name="button" class="smallBtn">Download Lead</button>
+                    </a>
                     <input class="smallBtn" type="file" name="file" id="file" ng-files="getFiles($files)">
                     <button class="smallBtn" type="button" name="button" ng-click="uploadSelectFile()">Upload Comments</button>
                   </div>

@@ -18,9 +18,10 @@
   }).controller('B2BDashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, B2BDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
 
     $scope.campaign_id = $stateParams.proposal_id;
-
     $scope.passwordError = constants.password_error;
     $scope.userInfo = $rootScope.globals.userInfo;
+    $scope.APIBaseUrl = Config.APIBaseUrl;
+    console.log($scope.APIBaseUrl)
     $scope.supplierTypeCode = [
       {
         "name": "ALL",
@@ -743,15 +744,20 @@
           }
         });
     }
+    $scope.downloadUploadFile = function(campaign_id,leads_type){
+      $scope.campaign = campaign_id;
+      $scope.leads = leads_type;
+      $scope.supplier_code = "all";
+    }
     $scope.getFormDetails = function (campaign_id, leads_type) {
       $scope.campaign = campaign_id;
       $scope.leads = leads_type;
       $scope.supplier_code = "all";
     }
     $scope.sendBookingEmails = function (email) {
-      swal("Successfull", "Email Sent Sucessfully", "success");
       B2BDashboardService.sendBookingEmails($scope.leads, $scope.supplier_code, $scope.campaign, email)
         .then(function onSuccess(response) {
+          swal("Successfull", "Email Sent Sucessfully", "success");
         });
     }
     $scope.getNotPurchasedLead = function (CampaignId, campaignName) {
