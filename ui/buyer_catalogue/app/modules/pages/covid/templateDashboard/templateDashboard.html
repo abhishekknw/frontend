@@ -206,10 +206,8 @@
                                   <div class="table-center-btn">
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
                                       ng-click="viewMoreDetail(template.data)">View More</button>
-                                    <a href="{{APIBaseUrl}}/v0/ui/template/download-sample-sheet/?id={{template.id}}">
-                                      <button type="button" class="btn btn-danger" style="align-items: center;">Download
-                                        sample sheet </button>
-                                    </a>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;"
+                                      ng-click="download_sample_sheet(template.id)">Download sample sheet </button>
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
                                       ng-click="sendTemplates(template.data,template.id,'user',template.elementName,template.md_id)">Check
                                       users</button>
@@ -405,7 +403,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                       <button type="button" class="btn btn-danger" value="Upload"
-                                        ng-click="uploadSendTemplate()">Send</button>
+                                             ng-click="uploadSendTemplate()">Send</button>
                                     </div>
                                     <div class="col-sm-7" style="text-align: right;">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

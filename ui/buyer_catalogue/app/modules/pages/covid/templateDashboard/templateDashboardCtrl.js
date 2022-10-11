@@ -707,8 +707,8 @@
         $scope.message = message;
         $('#viewMoreDetail').modal('show');
       }
-      $scope.checkUserModel = function () {
-        $('#checkUserModel').modal('show');
+      $scope.download_sample_sheet = function(id){
+        $window.open(Config.APIBaseUrl+"v0/ui/template/download-sample-sheet/?id="+id );
       }
       $scope.uploadId = 0;
       $scope.show1 = false;
@@ -737,29 +737,32 @@
         }, 1);
       };
       $scope.uploadSendTemplate = function () {
-        let myHeaders = new Headers();
-        myHeaders.append("Authorization",'JWT ' + $rootScope.globals.currentUser.token)
-        let formdata = new FormData();
-        formdata.append("file", $scope.file[0], $scope.selectedFileName);
-        
-        let requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: formdata,
-          redirect: 'follow'
-        };
+        // $timeout(function () {       
+        // },2000)
         if ($scope.show1 == false) {
-          fetch(Config.APIBaseUrl+"v0/ui/template/check-users/?temp_id="+$scope.md_id, requestOptions)
-          .then(response => response.text())
-          .then(result =>{console.log(result)
-           let blob = new Blob([result], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-           let objectUrl = URL.createObjectURL(blob);
-           window.open(objectUrl);
-         })
-          .catch(error => console.log('error', error));
+
+            let myHeaders = new Headers();
+            myHeaders.append("Authorization",'JWT ' + $rootScope.globals.currentUser.token)
+            let formdata = new FormData();
+            formdata.append("file", $scope.file[0], $scope.selectedFileName);
+            
+            let requestOptions = {
+              method: 'POST',
+              headers: myHeaders,
+              body: formdata,
+              redirect: 'follow'
+            };
+              fetch(Config.APIBaseUrl+"v0/ui/template/generate-template-excel-download-hash/?md_id="+$scope.md_id, requestOptions)
+              .then(response =>response.text())
+              .then(result =>{
+                const obj = JSON.parse(result);
+                $scope.one_time_hash = obj.data.one_time_hash;
+                $window.open(Config.APIBaseUrl+"v0/ui/template/check-users/?one_time_hash="+$scope.one_time_hash + "/", '_blank');
+            })
+              .catch(error => console.log('error', error));
         }
         else{
-          let uploadurl = {
+            let uploadurl = {
             url: Config.APIBaseUrl+'v0/ui/template/send-template-by-sheet/?id=' + $scope.uploadId.trim(),
             method: "POST",
             timeout: 0,
@@ -773,6 +776,7 @@
             mimeType: "multipart/form-data",
             contentType: false,
           }
+          
           if ($scope.file) {
             Upload.upload(uploadurl).then(function onSuccess(response) {
               $scope.file = "";
@@ -783,7 +787,7 @@
                 $scope.excelColumnError = response.data.data.general_error.errors;
               });
           }
-        }
+        }        
       }
       $scope.optionForTemplate = ['APPROVED', 'REJECTED'];
 
