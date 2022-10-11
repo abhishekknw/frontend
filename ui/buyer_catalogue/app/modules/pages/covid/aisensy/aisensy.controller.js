@@ -1964,6 +1964,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.browsedCheck = false
             }
           }
+          if($scope.newbrowsed.newBrowsedCheck){
+            $scope.browsedCheck = false;
+          }
         }
 
         $scope.saveBrowsed = function () {
@@ -2252,9 +2255,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               });
           }
         }
+
         $scope.new_data_check = false;
         $scope.newCheckboxBrowesLeadCheck = function () {
-          $scope.browsedCheck = false;
+          $scope.browsedCheck = true;
+          for (let x in $scope.browsedDetailData) {
+            if ($scope.browsedDetailData[x].browsedCheck && $scope.browsedCheck) {
+              $scope.browsedCheck = false
+            }
+            else if($scope.newbrowsed.newBrowsedCheck){
+              $scope.browsedCheck = false
+            }
+          }
           if ($scope.new_data_check == false) {
             $scope.new_data_check = true;
           }
