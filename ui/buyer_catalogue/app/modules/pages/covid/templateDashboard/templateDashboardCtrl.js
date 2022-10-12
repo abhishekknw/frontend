@@ -726,7 +726,7 @@
         $scope.uploadId = id;
         $scope.md_id = md_id;
         let fileElement = angular.element('#file1');
-        angular.element(fileElement).val(null);   
+         angular.element(fileElement).val(null);   
         $('#sendTemplates').modal('show');
       }
       $scope.getTheFiles = function (files) {
@@ -6517,7 +6517,6 @@
           param.start_date = ''
           param.end_date = ''
         }
-        console.log(value, s_date, e_date, 'qws')
         if (page) {
           param.next_page = page;
         } else {
@@ -6529,17 +6528,14 @@
             current: 1
           };
         }
-        console.log("zszszs", $scope.serial)
         $scope.pageCount = param.next_page;
         $scope.pageCount = param.nextPage;
         $scope.disableNextPagebutton = false;
 
-        console.log(param, '6666')
         templateDashboardService.transactionalTemplateDatewiseDetail(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateDataDetail = response.data.data;
             $scope.totalCount = response.data.data.total_count;
-            console.log('222222', $scope.transactionalTemplateDataDetail);
 
           }).catch(function onError(response) {
             console.log(response);
@@ -6575,12 +6571,8 @@
             current: 1
           };
         }
-        console.log('lll', $scope.pagination.current)
-        console.log('fff', $scope.currentPage)
         $scope.pageCount = param.next_page;
         $scope.disableNextPagebutton = false;
-        console.log("78", name, search)
-        console.log("0000", param)
         templateDashboardService.transactionalTemplateUserDetail(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateUserData = response.data.data.users;
@@ -6594,7 +6586,6 @@
         let param = {
           template_id: value
         }
-        console.log(value, '111122334')
         templateDashboardService.transactionalTemplateSummaryDownload(param).
           then(function onSuccess(response) {
 
@@ -6698,16 +6689,17 @@
       $scope.pagination = {
         current: 1
       };
+      $scope.addTemplateModal =function(){
+        $scope.choices = [{ "id": 1, "type": "Button", "name": "" },];
+        $scope.index = $scope.choices.length;
+        $('#addTemplate').modal('show');
 
-
-      $scope.choices = [{ "id": 1, "type": "Button", "name": "" },];
-      $scope.index = $scope.choices.length;
+      }
 
       $scope.addNewChoice = function () {
         $scope.input_length = $scope.choices.length + 1;
-
         if ($scope.input_length > 3 == false) {
-          var newItemNo = ++$scope.index;
+          let newItemNo = ++$scope.index;
           $scope.choices.push({ 'id': newItemNo, "type": "Button", "name": "" });
         }      
       };
@@ -6743,20 +6735,18 @@
       }
       $scope.selectImageVideo = function (event) {
         console.log(event);
-
       }
-      $scope.templateData = {button:[{'connotation': 'POSITIVE', 'name': 'None'}, 
-                                     {'connotation': 'NEUTRAL', 'name': 'None'},
-                                      {'connotation': 'NEGATIVE', 'name': 'None'}]};
+
+      $scope.templateData = {};
       $scope.multipleButtons = function(data){
         if(data.id==1){ 
-          $scope.templateData.button[0].name = data.name;
+          $scope.templateData.buttonOne = data.name;
         }
         else if(data.id==2){
-          $scope.templateData.button[1].name = data.name;
+          $scope.templateData.buttonTwo = data.name;
         }
         else{
-          $scope.templateData.button[2].name = data.name;
+          $scope.templateData.buttonThree = data.name;
         }
       }
       $scope.createTemplate = function(data){
@@ -6764,13 +6754,17 @@
           data.param = data.param.split(',');
         }
         data.type_of_fields = 'TEXT';
-        templateDashboardService.createTemplate(data)
+        if(data.alias_name && data.elementName){
+          templateDashboardService.createTemplate(data)
           .then(function onSuccess(response) {
+            swal("Template", response.data.data, constants.success);
             $scope.templateData = "";
+            $('#addTemplate').modal('hide');
             $scope.templateDetail();
           }).catch(function onError(response) {
             console.log(response);
           })
+        }
       }
       
       // Template Dashboard end

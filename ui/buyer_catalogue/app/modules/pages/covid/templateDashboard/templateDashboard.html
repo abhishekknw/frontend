@@ -172,8 +172,8 @@
                             </select>
                           </div>
                           <div class="add-button">
-                            <button type="button" class="btn btn-info" data-target="#addTemplate"
-                              data-toggle="modal">Add+</button>
+                            <button type="button" class="btn btn-info"
+                              data-toggle="modal" ng-click="addTemplateModal()">Add+</button>
                           </div>
                         </div>
 
@@ -319,15 +319,14 @@
                                   <textarea class="form-control" ng-model="templateData.triger_message"></textarea>
                                 </div>
                                 <ul class="list-group">
-                                  <li class="list-group-item" data-ng-repeat="choice in choices">
+                                  <li class="list-group-item" ng-repeat="choice in choices">
                                     <div class="col-sm-9">
                                       <input class="form-control" type="text" ng-model="choice.name"
-                                        ng-change="multipleButtons(choice)" name="" placeholder="Enter Button Name">
+                                        ng-change="multipleButtons(choice)" placeholder="Enter Button Name">
                                     </div>
                                     <button class="btn btn-danger" ng-click="removeChoice(choice.id)"
                                       ng-if="choice.id!=index">Remove</button>
-                                    <button class="btn btn-danger" ng-click="addNewChoice()"
-                                      ng-if="choice.id===index">Add Button</button>
+                                    <button class="btn btn-danger" type="button" ng-click="addNewChoice()"ng-if="choice.id===index">Add Button</button>
                                   </li>
                                 </ul>
                               </form>
