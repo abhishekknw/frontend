@@ -13,38 +13,7 @@ angular.module('catalogueApp')
       var DashboardService = {};
       var apiHost = APIBaseUrl;
       var interveneApiHost = Config.interveneMeaAPIBaseUrl;
-      
-       
-      
-      // DashboardService.transactionalTemplate = function (param,botType) {
-      //         // apiHost = APIBaseUrl ;
-      //   // let url =   "v0/ui/mca-bot/template-summary-list/?search=" +param.search
-      // //   if(botType=='mca'){
-      // //     console.log("mca++",botType);
-      // //   url =   "v0/ui/mca-bot/template-summary-list/?search=" +param.search
-      // //   apiHost = APIBaseUrl;
-      // //   }
-      // let url =""
 
-      //   if(botType=='mea'){
-      //     console.log("mea++",botType);
-      //     url =   "v0/ui/mea-bot/template-summary-list/?search" +param.search
-      //     apiHost =  interveneApiHost; 
-      //   }
-      //   if(botType=='mca'){
-      //     console.log("mca++",botType);
-      //       url =   "v0/ui/mca-bot/template-summary-list/?search=" +param.search
-      //       apiHost = APIBaseUrl;
-      //   }
-      //   return $http.get(apiHost + url)
-      //   .then(function onSuccess(response) {
-         
-      //      return response
-
-      //   })
-      //   .catch(function onError(response) {
-      //      return response
-      //   });
       DashboardService.transactionalTemplateSummaryMca = function (param) {
         let url="v0/ui/mca-bot/template-summary-list/?search=" +param.search
         return machadaloHttp.get( url);
@@ -52,11 +21,6 @@ angular.module('catalogueApp')
      
       DashboardService.transactionalTemplateDatewiseDetail = function (param){
         let url="v0/ui/mca-bot/template-date-wise-summary/?template_id="+ param.template_id+ "&start_date="+param.start_date+"&end_date="+param.end_date+"&next_page=" + param.next_page;
-        // alert("template")
-      //   if (param.search) {
-      //     url += '&search=' + param.search
-      //  }
-      console.log(param.template_id,'777')
       return machadaloHttp.get( url);
 
       }
@@ -70,30 +34,7 @@ angular.module('catalogueApp')
 
       }
 
-      // DashboardService.transactionalTemplateDetail = function (botType) {
-      //   // let url =   "v0/ui/mca-bot/template-user-summary-list/" 
-      //   // return machadaloHttp.get( url);
-      //   let url =""
-      //   if(botType=='mca'){
-      //    url =   "v0/ui/mca-bot/template-user-summary-list/" 
-      //   apiHost = APIBaseUrl;
-      //   }
-      //  if(botType=='mea'){
-      //     url =   "v0/ui/mea-bot/template-user-summary-list/"
-      //     apiHost =  interveneApiHost; 
-      //   }
-      //   return  $http.get(url)
-      //   .then(function onSuccess(response) {
-      //      return response
-      //   })
-      //   .catch(function onError(response) {
-      //      return response
-      //   }); 
-      // }
-
-
       DashboardService.transactionalTemplateSummaryDownload = function (param) {
-        // let url = apiHost +  "v0/ui/mca-bot/download-template-summary/";
         let url =  "v0/ui/mca-bot/download-template-user-summary/?template_id="+param.template_id;
         return machadaloHttp.get(url);
       }
