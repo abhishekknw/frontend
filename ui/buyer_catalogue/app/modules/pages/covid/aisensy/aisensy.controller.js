@@ -2505,6 +2505,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                       swal(constants.name, response.data.data.error, constants.error);
                     } else {
                       $scope.leadTabData.splice(index, 1)
+                      $scope.leadTabDataBrowsed.splice(index, 1)
                       swal(constants.name, response.data.data.message, constants.success);
                     }
                   }).catch(function onError(response) {
