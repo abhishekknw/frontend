@@ -4102,8 +4102,8 @@
                     <th class="alignment">Current Partner Feedback</th>
                     <th class="alignment">Reason</th>
                     <th class="alignment">Preferred Partner</th>
-                    <th class="alignment">Implementation TimeLine</th>
-                    <th class="alignment">Meeting TimeLine</th>
+                    <!-- <th class="alignment">Implementation TimeLine</th>
+                    <th class="alignment">Meeting TimeLine</th> -->
                     <th class="alignment">L1 Answers</th>
                     <th class="alignment">L2 Answers</th>
                     <th class="alignment">L3 Answers</th>
@@ -4130,7 +4130,8 @@
                       <select class="form-control" name="current_patner_{{$index}}" id="current_patner_id_{{$index}}"
                         ng-model="leadData.current_patner">
                         <option value="" disabled>Select Current Partner</option>
-                        <option ng-repeat="cpartner in companiesData track by $index"
+                        <option ng-if="browsed.sector_id==cpartner.sector || (browsed.sector_id==null)"
+                          ng-repeat="cpartner in companiesData track by $index"
                           value="{{cpartner.organisation_id}}">
                           {{cpartner.name}}
                         </option>
@@ -4173,7 +4174,7 @@
                         ng-model="leadData.prefered_patner_other">
                     </td>
 
-                    <td class="alignment">
+                    <!-- <td class="alignment">
                       <select class="form-control" name="implementation_{{$index}}" id="implementation_id_{{$index}}"
                         ng-model="leadData.implementation_timeline">
                         <option value="" disabled>Select Implementation Time</option>
@@ -4191,29 +4192,29 @@
                           {{value}}
                         </option>
                       </select>
+                    </td> -->
+                    <td class="alignment">
+                      <select class="form-control" ng-model="newbrowsed.L4">
+                        <option ng-repeat="lead_L4 in leads_Data_1.L4" value="{{lead_L4}}">
+                          {{lead_L4}}
+                        </option>
+                      </select>
                     </td>
 
                     <td class="alignment">
-                      <span>{{leadData.l1_answers}}
-                        <p>{{leadData.l1_answer_2}}</p>
-                      </span>
+                      <select class="form-control" ng-model="newbrowsed.L5">
+                        <option ng-repeat="lead_L5 in leads_Data_1.L5" value="{{lead_L5}}">
+                          {{lead_L5}}
+                        </option>>
+                      </select>
                     </td>
                     <td class="alignment">
-                      <span>{{leadData.l2_answers}}
-                        <p>{{leadData.l2_answer_2}}</p>
-                      </span>
+                      <select class="form-control" ng-model="newbrowsed.L6">
+                        <option ng-repeat="lead_L6 in leads_Data_1.L6" value="{{lead_L6}}">
+                          {{lead_L6}}
+                        </option>
+                      </select>
                     </td>
-
-
-                    <td class="alignment">
-                      <textarea placeholder="L3 Answer" class="form-control" ng-model="leadData.l3_answer_1" rows="4"
-                        cols="50">
-                        </textarea>
-                      <span>
-                        <p>{{leadData.l3_answer_2}}</p>
-                      </span>
-                    </td>
-
 
                     <td class="alignment">
                       {{leadData.lead_status}}
