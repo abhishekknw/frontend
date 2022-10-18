@@ -1716,7 +1716,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           releaseCampaignService.requirementBrowsedData(id, phone, supplierId)
             .then(function onSuccess(response) {
               $scope.browsedDetailData = response.data.data.browsed;
-              console.log(response.data.data, "$scope.browsedDetailData$scope.browsedDetailData")
               $scope.companiesDetailDataBrowsed = response.data.data.companies;
               $scope.browsedSectorList = response.data.data.sector;
 
@@ -2132,20 +2131,24 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.new_data_check = false;
         $scope.newCheckboxBrowesLeadCheck = function () {
           $scope.browsedCheck = true;
-          for (let x in $scope.browsedDetailData) {
-            if ($scope.browsedDetailData[x].browsedCheck && $scope.browsedCheck) {
-              $scope.browsedCheck = false
-            }
-            else if ($scope.newbrowsed.newBrowsedCheck) {
-              $scope.browsedCheck = false
+          if($scope.browsedDetailData.length<1){
+            for (let x in $scope.browsedDetailData) {
+              if ($scope.browsedDetailData[x].browsedCheck && $scope.browsedCheck) {
+                $scope.browsedCheck = false
+              }
+              else if ($scope.newbrowsed.newBrowsedCheck) {
+                $scope.browsedCheck = false
             }
           }
+        }
+          
           if ($scope.new_data_check == false) {
             $scope.new_data_check = true;
+            $scope.browsedCheck = false;
           }
           else {
             $scope.new_data_check = false;
-
+            $scope.browsedCheck = true;
           }
         }
 
