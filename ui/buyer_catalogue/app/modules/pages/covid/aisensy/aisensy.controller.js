@@ -1367,6 +1367,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     if (response && response.data.data.error) {
                       swal(constants.name, response.data.data.error, constants.error);
                     } else {
+                      swal(constants.name, response.data.data.message, constants.success);
                       for (let i in verifyId) {
                         angular.forEach($scope.requirementDetailData, function (value, key) {
                           var localindex_index = $scope.requirementDetailData[key].requirements.map(function (el) {
@@ -1384,8 +1385,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                             }
 
                           }
-
-
                           var chechIfVerify = false
                           for (let j in $scope.requirementDetailData[key].requirements) {
                             if ($scope.requirementDetailData[key].requirements[j].varified_ops == 'no' && !chechIfVerify) {
@@ -1431,6 +1430,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                   }).catch(function onError(response) {
                     if (response && response.data && response.data.data && response.data.data.general_error && response.data.data.general_error.error) {
                       swal(constants.name, response.data.data.general_error.error, constants.error);
+                    }
+                    else if(response.statusText){
+                      swal(constants.name, response.statusText, constants.error);
                     }
                   })
               }
@@ -2153,7 +2155,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.singleOpsVerifyRequirement = function (id) {
-          let verifyId = []; alert(1)
+          let verifyId = [];
           verifyId.push(id);
           if (verifyId.length > 0) {
             $scope.verifyRequirement(verifyId);
