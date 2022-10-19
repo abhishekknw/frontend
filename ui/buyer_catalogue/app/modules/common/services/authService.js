@@ -473,7 +473,6 @@ angular.module('Authentication')
 
 
             authService.getAllMeaData = function (param) {
-               console.log(param);
                let url = "v0/ui/b2c-bot/Mea_data/?type_of_customer=" + param.type_of_customer + "&category=" + param.category + "&subcategory=" + param.subcategory + "&subsubcategory=" + param.subsubcategory;
 
                return $http.get(apiHost + url)
@@ -576,7 +575,6 @@ angular.module('Authentication')
             };
 
             authService.getAllMeaData = function (param) {
-               console.log(param);
                let url = "v0/ui/b2c-bot/Mea_data/?type_of_customer=" + param.type_of_customer + "&category=" + param.category + "&subcategory=" + param.subcategory + "&subsubcategory=" + param.subsubcategory;
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
@@ -610,7 +608,6 @@ angular.module('Authentication')
             };
 
             authService.getAllUserHistory = function (param,entity,meaType) {
-               console.log(param);
                let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page + "&type_of_entity="+entity;
                apiHost = APIBaseUrl;
                if(meaType){
@@ -630,7 +627,6 @@ angular.module('Authentication')
             };
 
             authService.getActiveSearch = function (param,meaType) {
-               console.log(param);
                let url = "v0/ui/b2c-bot/search-user/?search=" + param.search;
                apiHost = APIBaseUrl;
                if(meaType){
@@ -648,7 +644,6 @@ angular.module('Authentication')
 
 
             authService.getCustomerJourney = function (param,meaType) {
-               console.log(param);
                let url = "v0/ui/b2c-bot/user-journey/?phone_number=" +param.phone_number;
                apiHost = APIBaseUrl;
                if(meaType){
@@ -665,7 +660,6 @@ angular.module('Authentication')
             };
 
             authService.gettemplateInStatus = function (param,meaType) {
-               console.log(param);
                let url = "v0/ui/b2c-bot/get-user-templates1/?phone_number=" +param.phone_number ;
                apiHost = APIBaseUrl;
                if(meaType){
@@ -682,7 +676,6 @@ angular.module('Authentication')
             };
 
             authService.getAllUserContact = function (param,meaType) {
-               console.log(param);
                let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
                apiHost = APIBaseUrl;
                if(meaType){
@@ -846,15 +839,12 @@ angular.module('Authentication')
                return machadaloHttp.get(url);
              };
             authService.sendMessage = function (param,meaType) {
-               // console.log('vvvv',param)
                let url = "v0/ui/b2c-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
                apiHost = APIBaseUrl;
                if(meaType){
                    url = "v0/ui/mea-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
                    apiHost = interveneApiHost;
                 }
-               //  console.log(url,'09090')
-               //  console.log('hhh',param.text)
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -866,7 +856,6 @@ angular.module('Authentication')
 
 
             authService.contactList = function (param,meaType) {
-               console.log(apiHost,meaType)
              let url = "v0/ui/mca-bot/intervene-contact-list/?search="+param.search;
                apiHost = APIBaseUrl;
                if(meaType){
@@ -883,7 +872,6 @@ angular.module('Authentication')
             };
 
             authService.attachmentContact = function (param,data,meaType) {
-               console.log('mnmnm',param,data)
                let url = "v0/ui/mca-bot/send-contact-intervene/?phone_number="+param.phone_number;
                apiHost = APIBaseUrl;
                if(meaType){

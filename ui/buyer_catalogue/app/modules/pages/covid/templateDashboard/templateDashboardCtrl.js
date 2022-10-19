@@ -757,7 +757,7 @@
               .then(result =>{
                 const obj = JSON.parse(result);
                 $scope.one_time_hash = obj.data.one_time_hash;
-                $window.open(Config.APIBaseUrl+"v0/ui/template/check-users/?one_time_hash="+$scope.one_time_hash + "/", '_blank');
+                $window.open(Config.APIBaseUrl+"v0/ui/template/check-users/?one_time_hash="+$scope.one_time_hash);
             })
               .catch(error => console.log('error', error));
         }
@@ -6758,7 +6758,7 @@
           templateDashboardService.createTemplate(data)
           .then(function onSuccess(response) {
             swal("Template", response.data.data, constants.success);
-            $scope.templateData = "";
+            $scope.templateData = {};
             $('#addTemplate').modal('hide');
             $scope.templateDetail();
           }).catch(function onError(response) {

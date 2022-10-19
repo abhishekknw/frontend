@@ -2185,15 +2185,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.currentPageLead = 0;
               $scope.companiesData = response.data.data.companies;
 
-              for (let k in $scope.companiesData) {
-                $scope.companiesData[k].id = $scope.companiesData[k].organisation_id;
-                $scope.companiesData[k].label = $scope.companiesData[k].name;
-                $scope.companiesData[k].sector = $scope.companiesData[k].business_type[0];
-                if (k == response.data.data.companies.length - 1) {
-                  $scope.companiesData.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
-                }
-              }
-
               if ($scope.leadTabData && $scope.leadTabData.length > 0) {
                 for (let i in $scope.leadTabData) {
                   var localTime = moment.utc($scope.leadTabData[i].created_at).local();
@@ -2234,6 +2225,29 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               // $scope.lastIndex = $scope.leads_time.data.length - 1;
               $scope.leads_Data = response.data.data;
             })
+            userService.getSector()
+            .then(function onSuccess(response) {
+              $scope.sectorList = response.data;
+            })
+        }
+
+        $scope.companiessuspenseLeads = [];
+        $scope.suspenseLeadsPreferredPartner = function(id){
+          while ($scope.companiessuspenseLeads.length) {
+            $scope.companiessuspenseLeads.pop();
+          }
+          var i = 0;
+          for (let k in $scope.companiesData) {
+            if ($scope.companiesData[k].business_type !== undefined) {
+              if (id == $scope.companiesData[k].business_type[0]) {
+                $scope.companiessuspenseLeads[i] = $scope.companiesData[k];
+                $scope.companiessuspenseLeads[i].id = $scope.companiesData[k].organisation_id;
+                $scope.companiessuspenseLeads[i].label = $scope.companiesData[k].name;
+                $scope.companiessuspenseLeads[i].sector = $scope.companiesData[k].business_type[0];
+                i++;
+              }
+            }
+          }
         }
 
         //browsed data
@@ -2431,6 +2445,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             "current_patner_feedback_reason": $scope.leadTabData[index].current_patner_feedback_reason,
             "l3_answer_1": $scope.leadTabData[index].l3_answer_1,
             "internal_comment": $scope.leadTabData[index].internal_comment,
+            "L4":$scope.leadTabData[index].L4,
+            "L5":$scope.leadTabData[index].L5,
+            "L6":$scope.leadTabData[index].L6,
           }];
 
           let update = {
@@ -2488,6 +2505,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                       swal(constants.name, response.data.data.error, constants.error);
                     } else {
                       $scope.leadTabData.splice(index, 1)
+                      $scope.leadTabDataBrowsed.splice(index, 1)
                       swal(constants.name, response.data.data.message, constants.success);
                     }
                   }).catch(function onError(response) {
