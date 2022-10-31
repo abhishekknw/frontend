@@ -1529,7 +1529,7 @@
                                   <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)"
                                     data-toggle="modal" data-target="#SuspenseLeadsModel">Suspense Sheet</button>
                                 </div>
-                                <div ng-click="userProfileIcon()">
+                                <div ng-click="userProfileIcon(userChatData.phone_number)">
                                   <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
@@ -1831,7 +1831,7 @@
                                   <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)"
                                     data-toggle="modal" data-target="#SuspenseLeadsModel">Suspense Sheet</button>
                                 </div>
-                                <div ng-click="userProfileIcon()">
+                                <div ng-click="userProfileIcon(userChatData.phone_number)">
                                   <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
@@ -2085,7 +2085,7 @@
                                   <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)"
                                     data-toggle="modal" data-target="#SuspenseLeadsModel">Suspense Sheet</button>
                                 </div>
-                                <div ng-click="userProfileIcon()">
+                                <div ng-click="userProfileIcon(userChatData.phone_number)">
                                   <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
@@ -2491,12 +2491,20 @@
                           <table class="table table-striped">
                             <tbody>
                               <tr ng-if="templateInStatusData.length != 0">
+                                <th class="col-md-3">
+                                  <select class="form-control" ng-model="selectedSector" ng-change="templateInStatus(userDetailData,selectedSector)">
+                                      <option value="" >Select Sector</option>
+                                      <option ng-repeat="sector in sectorForTemplate" value="{{sector.sector}}">
+                                        {{sector.sector?sector.sector:"Null"}}</option>
+                                  </select>
+                                </th>
                                 <th class="col-md-3">Template ID</th>
                                 <th class="col-md-3">Send At</th>
                                 <th class="col-md-3">Response Message</th>
                                 <th class="col-md-3">Response At</th>
                               </tr>
                               <tr ng-repeat="tmp in templateInStatusData">
+                                <td></td>
                                 <td class="col-md-3" style="text-align: center;">{{tmp.template_id}}</td>
                                 <td class="col-md-3" style="text-align: center;">{{tmp.template_send_timestamp}}</td>
                                 <td class="col-md-3" style="text-align: center;">{{tmp.template_responce}}</td>
@@ -2690,7 +2698,7 @@
                       <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)" data-toggle="modal"
                         data-target="#SuspenseLeadsModel">Suspense Sheet</button>
                     </div>
-                    <div ng-click="userProfileIcon()">
+                    <div ng-click="userProfileIcon(userChatData.phone_number)">
                       <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
                         {{userChatData.whatsapp_name.length > 15 ? '...' :
                         ''}}</span><br />
@@ -3240,7 +3248,7 @@
 
 
           </div>
-          <div ng-click="userProfileIcon()">
+          <div ng-click="userProfileIcon(userChatData.phone_number)">
             <div ng-if="userChatData.whatsapp_name!=''">
               <center>
                 <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
@@ -3878,7 +3886,7 @@
                     </td>
 
                     <td class="alignment">
-                      <select class="form-control" ng-model="browsed.l4">
+                      <select class="form-control" ng-model="browsed.L4">
                         <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L4 in filterLeadData[browsed.sector_id].L4" value="{{lead_L4}}">
                           {{lead_L4}}
@@ -3891,7 +3899,7 @@
                     </td>
 
                     <td class="alignment">
-                      <select class="form-control" ng-model="browsed.l5">
+                      <select class="form-control" ng-model="browsed.L5">
                         <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L5 in filterLeadData[browsed.sector_id].L5" value="{{lead_L5}}">
                           {{lead_L5}}
@@ -3903,7 +3911,7 @@
                       <span ng-if="!browsed.l2_answers && !browsed.l2_answer_2">NA</span> -->
                     </td>
                     <td class="alignment">
-                      <select class="form-control" ng-model="browsed.l6">
+                      <select class="form-control" ng-model="browsed.L6">
                         <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L6 in filterLeadData[browsed.sector_id].L6" value="{{lead_L6}}">
                           {{lead_L6}}
