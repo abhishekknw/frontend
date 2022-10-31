@@ -2116,10 +2116,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         swal(constants.name, constants.save_success, constants.success);
                         if ($scope.new_data_check == true) {
                           $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
-                          $scope.newbrowsed = {};
+                          // $scope.newbrowsed = {};
                           $scope.SelectedCompany = [];
                           $scope.countBrowsedRow = false;
                           $scope.addRemoveBtn = "Add row"
+                          $scope.new_data_check = false;
+                          JSON.stringify($scope.newbrowsed) === '{}'
                         }
                       }
                     }).catch(function onError(response) {
