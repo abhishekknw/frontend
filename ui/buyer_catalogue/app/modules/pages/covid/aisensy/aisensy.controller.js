@@ -257,8 +257,15 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             })
         }
 
-        $scope.userProfileIcon = function () {
+        $scope.userProfileIcon = function (phoneNumber) {
           $scope.isUserProfile = true;
+          AuthService.getSectorForTemplate(phoneNumber)
+            .then(function onSuccess(response) {
+              $scope.sectorForTemplate = response.data.data;
+            })
+            .catch(function onError(response) {
+              console.log(response);
+            })
         }
         $scope.userChatIcon = function () {
           $scope.isUserProfile = false;
@@ -684,19 +691,20 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             })
         }
 
-        $scope.templateInStatus = function (data) {
+        $scope.templateInStatus = function (data,sector) {
           let param = {
             phone_number: data.phone_number
           }
-          AuthService.gettemplateInStatus(param)
+          if(!sector){
+            sector = "";
+          }
+          AuthService.gettemplateInStatus(param,sector)
             .then(function onSuccess(response) {
               $scope.templateInStatusData = response.data.data;
             }).catch(function onError(response) {
               console.log(response);
             })
         }
-
-
 
         $scope.dateFormat = function (date) {
           var d = new Date(date),
@@ -1431,7 +1439,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     if (response && response.data && response.data.data && response.data.data.general_error && response.data.data.general_error.error) {
                       swal(constants.name, response.data.data.general_error.error, constants.error);
                     }
-                    else if(response.statusText){
+                    else if (response.statusText) {
                       swal(constants.name, response.statusText, constants.error);
                     }
                   })
@@ -1753,14 +1761,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                   }
                   $scope.browsedDetailData[i].selected_preferred_company = selected_preferred_company
                 }
-
-
-
-                // userService.getSector()
-                // .then(function onSuccess(response) {
-                //   $scope.sectorList = response.data;
-                // });
-                //start added sector name
                 if ($scope.sectorList) {
                   var localindex_indexs = $scope.sectorList.map(function (el) {
                     return el.id;
@@ -2056,7 +2056,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               } else {
                 current_patner_other = null;
               }
-
               browsedData.push({
                 'sector_id': $scope.browsedDetailData[i].sector_id,
                 'sub_sector_id': null,
@@ -2068,7 +2067,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 'prefered_patners_id': $scope.browsedDetailData[i].prefered_patners,
                 'current_company_other': current_patner_other,
                 'preferred_company_other': preferred_company_other,
-                'supplier_type': $scope.userChatPayload.type_of_entity
+                'supplier_type': $scope.userChatPayload.type_of_entity,
+                'L4' : $scope.browsedDetailData[i].L4,
+                'L5' : $scope.browsedDetailData[i].L5,
+                'L6' : $scope.browsedDetailData[i].L6,
               });
             }
           }
@@ -2132,25 +2134,32 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         $scope.new_data_check = false;
         $scope.newCheckboxBrowesLeadCheck = function () {
-          $scope.browsedCheck = true;
-          if($scope.browsedDetailData.length<1){
+          if ($scope.browsedDetailData.length < 1) {
             for (let x in $scope.browsedDetailData) {
               if ($scope.browsedDetailData[x].browsedCheck && $scope.browsedCheck) {
                 $scope.browsedCheck = false
+                break
               }
               else if ($scope.newbrowsed.newBrowsedCheck) {
                 $scope.browsedCheck = false
+              }
             }
           }
-        }
-          
           if ($scope.new_data_check == false) {
             $scope.new_data_check = true;
             $scope.browsedCheck = false;
           }
           else {
             $scope.new_data_check = false;
-            $scope.browsedCheck = true;
+            for (let x in $scope.browsedDetailData) {
+              if ($scope.browsedDetailData[x].browsedCheck && $scope.browsedCheck) {
+                $scope.browsedCheck = false
+                break
+              }
+              else{
+                $scope.browsedCheck = true;
+              }
+            }
           }
         }
 
@@ -2227,14 +2236,14 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               // $scope.lastIndex = $scope.leads_time.data.length - 1;
               $scope.leads_Data = response.data.data;
             })
-            userService.getSector()
+          userService.getSector()
             .then(function onSuccess(response) {
               $scope.sectorList = response.data;
             })
         }
 
         $scope.companiessuspenseLeads = [];
-        $scope.suspenseLeadsPreferredPartner = function(id){
+        $scope.suspenseLeadsPreferredPartner = function (id) {
           while ($scope.companiessuspenseLeads.length) {
             $scope.companiessuspenseLeads.pop();
           }
@@ -2447,9 +2456,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             "current_patner_feedback_reason": $scope.leadTabData[index].current_patner_feedback_reason,
             "l3_answer_1": $scope.leadTabData[index].l3_answer_1,
             "internal_comment": $scope.leadTabData[index].internal_comment,
-            "L4":$scope.leadTabData[index].L4,
-            "L5":$scope.leadTabData[index].L5,
-            "L6":$scope.leadTabData[index].L6,
+            "L4": $scope.leadTabData[index].L4,
+            "L5": $scope.leadTabData[index].L5,
+            "L6": $scope.leadTabData[index].L6,
           }];
 
           let update = {
@@ -2555,7 +2564,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     $scope.leadTabData[i].is_updated = 'True';
                   }
                 }
-
                 swal(constants.name, response.data.data.message, constants.success);
               }
             }).catch(function onError(response) {
@@ -2600,6 +2608,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
           else {
             $scope.countBrowsedRow = false;
+            $scope.new_data_check = false;
             $scope.addRemoveBtn = "Add row";
           }
         }
