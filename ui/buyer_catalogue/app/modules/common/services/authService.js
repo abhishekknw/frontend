@@ -505,7 +505,7 @@ angular.module('Authentication')
                      return response
                   });
             };
-            authService.getAllActionRequiredData = function (param,entity,meaType) {
+            authService.getAllActionRequiredData = function (param,entity,meaType) { 
                apiHost = APIBaseUrl;
                let url = "v0/ui/b2c-bot/action_required/?next_page=" + param.next_page + "&type_of_entity="+entity;
                if(meaType){

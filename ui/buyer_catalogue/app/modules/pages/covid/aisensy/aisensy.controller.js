@@ -2123,6 +2123,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                           $scope.countBrowsedRow = false;
                           $scope.addRemoveBtn = "Add row"
                           $scope.new_data_check = false;
+                          $scope.newbrowsed.newBrowsedCheck = false;
                           JSON.stringify($scope.newbrowsed) === '{}';
                         }
                         else{
