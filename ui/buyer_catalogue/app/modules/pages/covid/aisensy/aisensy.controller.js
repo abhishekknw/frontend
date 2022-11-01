@@ -146,7 +146,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             };
           }
           if ($scope.formData.actionSearch) {
-            parsuspenam.search = $scope.formData.actionSearch;
+            param.search = $scope.formData.actionSearch;
           }
           AuthService.getAllActionRequiredData(param, entity)
 
