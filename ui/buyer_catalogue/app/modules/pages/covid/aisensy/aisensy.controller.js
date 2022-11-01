@@ -1904,10 +1904,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if (confirm) {
                   releaseCampaignService.saveBrowsed(browsedId)
                     .then(function onSuccess(response) {
+                      $scope.browsedCheck = true;
                       if (response && response.data.data.error) {
-
                         swal(constants.name, response.data.data.error, constants.error);
-                      } else {
+                      } 
+                      else {
                         // var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
                         //   return el.id;
                         // }).indexOf($scope.shortlisted_spaces_id);
@@ -1938,8 +1939,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
                         //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
                         // }
-                        swal(constants.name, constants.save_success, constants.success);
-                        $scope.opsVerified($scope.phoneNumber, $scope.supplierId)
+                        $scope.opsVerified($scope.phoneNumber, $scope.supplierId);
+                        swal(constants.name, response.data.data.message, constants.success);
                       }
                     }).catch(function onError(response) {
 
@@ -2110,18 +2111,22 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if (confirm) {
                   releaseCampaignService.updateBrowsed(browsed_leads)
                     .then(function onSuccess(response) {
+                      $scope.browsedCheck = true;
                       if (response && response.data.data.error) {
                         swal(constants.name, response.data.data.error, constants.error);
-                      } else {
+                      }
+                       else {
                         swal(constants.name, constants.save_success, constants.success);
                         if ($scope.new_data_check == true) {
-                          $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
-                          // $scope.newbrowsed = {};
+                          $scope.opsVerified($scope.phoneNumber, $scope.supplierId);
                           $scope.SelectedCompany = [];
                           $scope.countBrowsedRow = false;
                           $scope.addRemoveBtn = "Add row"
                           $scope.new_data_check = false;
-                          JSON.stringify($scope.newbrowsed) === '{}'
+                          JSON.stringify($scope.newbrowsed) === '{}';
+                        }
+                        else{
+                          $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
                         }
                       }
                     }).catch(function onError(response) {
