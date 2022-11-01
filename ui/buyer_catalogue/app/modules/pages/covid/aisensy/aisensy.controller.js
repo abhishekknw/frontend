@@ -2068,9 +2068,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 'current_company_other': current_patner_other,
                 'preferred_company_other': preferred_company_other,
                 'supplier_type': $scope.userChatPayload.type_of_entity,
-                'L4' : $scope.browsedDetailData[i].L4,
-                'L5' : $scope.browsedDetailData[i].L5,
-                'L6' : $scope.browsedDetailData[i].L6,
+                'L4' : $scope.browsedDetailData[i].l1_answers,
+                'L5' : $scope.browsedDetailData[i].l1_answer_2,
+                'L6' : $scope.browsedDetailData[i].l2_answers,
               });
             }
           }
@@ -2116,10 +2116,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         swal(constants.name, constants.save_success, constants.success);
                         if ($scope.new_data_check == true) {
                           $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
-                          $scope.newbrowsed = {};
+                          // $scope.newbrowsed = {};
                           $scope.SelectedCompany = [];
                           $scope.countBrowsedRow = false;
                           $scope.addRemoveBtn = "Add row"
+                          $scope.new_data_check = false;
+                          JSON.stringify($scope.newbrowsed) === '{}'
                         }
                       }
                     }).catch(function onError(response) {
