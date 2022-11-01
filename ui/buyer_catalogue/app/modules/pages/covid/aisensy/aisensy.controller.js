@@ -1196,8 +1196,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               }).catch(function onError(response) {
                 console.log(response);
                 if (response.data.status == false) {
-                  if (response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.impl_timeline) {
-                    swal(constants.name, response.data.data.general_error.errors.impl_timeline[0], constants.error);
+                  if (response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.call_back_preference) {
+                    swal(constants.name, response.data.data.general_error.errors.call_back_preference[0], constants.error);
                   }
                   if (response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.preferred_company) {
                     swal(constants.name, response.data.data.general_error.errors.preferred_company[0], constants.error);
