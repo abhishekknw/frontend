@@ -702,6 +702,10 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
   padding: 6px 15px;
 }
 
+.phone-chat .screen-phone button{
+  bottom: 35px;
+}
+
 /*6-mar-21*/
 .li-popup .multiselectDropdown .dropdown-menu {
   position: fixed;

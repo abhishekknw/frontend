@@ -146,7 +146,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             };
           }
           if ($scope.formData.actionSearch) {
-            parsuspenam.search = $scope.formData.actionSearch;
+            param.search = $scope.formData.actionSearch;
           }
           AuthService.getAllActionRequiredData(param, entity)
 
@@ -1196,8 +1196,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               }).catch(function onError(response) {
                 console.log(response);
                 if (response.data.status == false) {
-                  if (response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.impl_timeline) {
-                    swal(constants.name, response.data.data.general_error.errors.impl_timeline[0], constants.error);
+                  if (response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.call_back_preference) {
+                    swal(constants.name, response.data.data.general_error.errors.call_back_preference[0], constants.error);
                   }
                   if (response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.preferred_company) {
                     swal(constants.name, response.data.data.general_error.errors.preferred_company[0], constants.error);
@@ -1904,10 +1904,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if (confirm) {
                   releaseCampaignService.saveBrowsed(browsedId)
                     .then(function onSuccess(response) {
+                      $scope.browsedCheck = true;
                       if (response && response.data.data.error) {
-
                         swal(constants.name, response.data.data.error, constants.error);
-                      } else {
+                      } 
+                      else {
                         // var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
                         //   return el.id;
                         // }).indexOf($scope.shortlisted_spaces_id);
@@ -1938,8 +1939,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
                         //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
                         // }
-                        swal(constants.name, constants.save_success, constants.success);
-                        $scope.opsVerified($scope.phoneNumber, $scope.supplierId)
+                        $scope.opsVerified($scope.phoneNumber, $scope.supplierId);
+                        swal(constants.name, response.data.data.message, constants.success);
                       }
                     }).catch(function onError(response) {
 
@@ -2110,18 +2111,23 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if (confirm) {
                   releaseCampaignService.updateBrowsed(browsed_leads)
                     .then(function onSuccess(response) {
+                      $scope.browsedCheck = true;
                       if (response && response.data.data.error) {
                         swal(constants.name, response.data.data.error, constants.error);
-                      } else {
+                      }
+                       else {
                         swal(constants.name, constants.save_success, constants.success);
                         if ($scope.new_data_check == true) {
-                          $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
-                          // $scope.newbrowsed = {};
+                          $scope.opsVerified($scope.phoneNumber, $scope.supplierId);
                           $scope.SelectedCompany = [];
                           $scope.countBrowsedRow = false;
                           $scope.addRemoveBtn = "Add row"
                           $scope.new_data_check = false;
-                          JSON.stringify($scope.newbrowsed) === '{}'
+                          $scope.newbrowsed.newBrowsedCheck = false;
+                          JSON.stringify($scope.newbrowsed) === '{}';
+                        }
+                        else{
+                          $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
                         }
                       }
                     }).catch(function onError(response) {
@@ -2641,6 +2647,36 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               // for(let i in $scope.preferred_partnerList ){
               //   $scope.newCompaniesBrowseDetailDataArray.push($scope.preferred_partnerList[i].name);
               // }
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+        $scope.suspenseLeadFilterData = function (obj,index) {
+          let data = "";
+          data = JSON.parse(obj);
+          $scope.leads_Data_1 = "";
+          $scope.suspense_sectorId = data.id;
+          $scope.leadTabData[index].sector_id = data.id;
+          $scope.selectLeadData(data.business_type.toLowerCase());
+          releaseCampaignService.browsedPreferredPartner($scope.suspense_sectorId)
+            .then(function onSuccess(response) {
+              // $scope.suspensePreferred_partnerList = response.data.data.companies;
+              $scope.suspenseSub_sectorList = response.data.data.sub_sector;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+        $scope.suspenseBrowsedLeadSector = function (obj,index) {
+          let data = "";
+          data = JSON.parse(obj);
+          $scope.leads_Data_1 = "";
+          $scope.suspense_sectorId = data.id;
+          $scope.leadTabDataBrowsed[index].sector_id = data.id;
+          $scope.selectLeadData(data.business_type.toLowerCase());
+          releaseCampaignService.browsedPreferredPartner($scope.suspense_sectorId)
+            .then(function onSuccess(response) {
+              // $scope.suspensePreferred_partnerList = response.data.data.companies;
+              $scope.suspenseSub_sectorList = response.data.data.sub_sector;
             }).catch(function onError(response) {
               console.log(response);
             })
