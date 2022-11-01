@@ -4136,8 +4136,24 @@
                   <tr ng-if="leadTabData.length > 0 && loading" ng-repeat="leadData in leadTabData" track by "$index">
                     <td>{{$index+serial}}</td>
                     <td class="alignment">{{leadData.phone_number}}</td>
-                    <td class="alignment">{{filterBrowsedLeadData(leadData.sector_id)}}</td>
-                    <td class="alignment">{{leadData.sub_sector_name}}</td>
+                    <td class="alignment">
+                      <!-- <select class="form-control" ng-model="SectorName" ng-click="browsedPreferredPartner(SectorName);"
+                        ng-options="sector.business_type for sector in browsedSectorList" track by "$index">
+                      </select> -->
+                      <select class="form-control" ng-model="suspenseLeadSector" ng-click="suspenseLeadFilterData(suspenseLeadSector,$index);">
+                        <option value=""> {{leadData.sector_id?filterBrowsedLeadData(leadData.sector_id):"--Select Sector--"}}</option>
+                        <option ng-repeat="sector in sectorList track by $index" value="{{sector}}">
+                          {{sector.business_type}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" ng-model="leadData.sub_sector_name">
+                        <option ng-repeat="sub_sector in suspenseSub_sectorList track by $index" value="{{sub_sector.business_sub_type}}">
+                          {{sub_sector.business_sub_type}}
+                        </option>
+                      </select>
+                    </td>
                     <td class="alignment">
                       <select class="form-control" name="current_patner_{{$index}}" id="current_patner_id_{{$index}}"
                         ng-model="leadData.current_patner">
@@ -4320,8 +4336,23 @@
                     by "$index">
                     <td>{{$index+serial}}</td>
                     <td class="alignment">{{browseData.phone_number}}</td>
-                    <td class="alignment">{{filterBrowsedLeadData(browseData.sector_id)}}</td>
-                    <td class="alignment">{{browseData.sub_sector_name}}</td>
+                    <td class="alignment">
+                      <select class="form-control" ng-model="suspenseBrowsedSector" ng-click="suspenseBrowsedLeadSector(suspenseBrowsedSector,$index);">
+                        <option value=""> {{browseData.sector_id?filterBrowsedLeadData(browseData.sector_id):"--Select Sector--"}}</option>
+                        <option ng-repeat="sector in sectorList track by $index" value="{{sector}}">
+                          {{sector.business_type}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" ng-model="browseData.sub_sector_name">
+                        <option ng-repeat="sub_sector in suspenseSub_sectorList track by $index" value="{{sub_sector.business_sub_type}}">
+                          {{sub_sector.business_sub_type}}
+                        </option>
+                      </select>
+                    </td>
+                    <!-- </td>
+                    <td class="alignment">{{browseData.sub_sector_name}}</td> -->
                     <td class="alignment">
                       <select class="form-control" name="current_patner_{{$index}}"
                         id="browes_current_patner_id_{{$index}}" ng-model="browseData.current_patner">

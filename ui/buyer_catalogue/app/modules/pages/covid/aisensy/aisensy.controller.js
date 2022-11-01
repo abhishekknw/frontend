@@ -2651,6 +2651,36 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               console.log(response);
             })
         }
+        $scope.suspenseLeadFilterData = function (obj,index) {
+          let data = "";
+          data = JSON.parse(obj);
+          $scope.leads_Data_1 = "";
+          $scope.suspense_sectorId = data.id;
+          $scope.leadTabData[index].sector_id = data.id;
+          $scope.selectLeadData(data.business_type.toLowerCase());
+          releaseCampaignService.browsedPreferredPartner($scope.suspense_sectorId)
+            .then(function onSuccess(response) {
+              // $scope.suspensePreferred_partnerList = response.data.data.companies;
+              $scope.suspenseSub_sectorList = response.data.data.sub_sector;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+        $scope.suspenseBrowsedLeadSector = function (obj,index) {
+          let data = "";
+          data = JSON.parse(obj);
+          $scope.leads_Data_1 = "";
+          $scope.suspense_sectorId = data.id;
+          $scope.leadTabDataBrowsed[index].sector_id = data.id;
+          $scope.selectLeadData(data.business_type.toLowerCase());
+          releaseCampaignService.browsedPreferredPartner($scope.suspense_sectorId)
+            .then(function onSuccess(response) {
+              // $scope.suspensePreferred_partnerList = response.data.data.companies;
+              $scope.suspenseSub_sectorList = response.data.data.sub_sector;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
         $scope.newBrowsedMulticheck = function (index) {
           alert(index)
         }
