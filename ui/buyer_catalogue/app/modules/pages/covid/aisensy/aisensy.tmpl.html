@@ -4657,6 +4657,13 @@
                 <label> City *: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
+                <!-- <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"
+                ng-required="true">
+                  <option value="" disabled>Select City</option>
+                  <option ng-repeat="city in Cities | orderBy: 'city_name'" 
+                  ng-selected="supplierForAddUpdateData.city_id==city.id" value="{{city.id}}" required>
+                  {{city.city_name}}</option>
+                </select> -->
                 <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"
                   ng-model="supplierForAddUpdateData.city_id" ng-required="true">
                   <option value="" disabled>Select City</option>
@@ -4665,7 +4672,7 @@
                     {{city.city_name}}</option>
                 </select>
                 <span ng-show="myForm.city.$dirty && myForm.city.$invalid" class="error">Select a City</span>
-                </select>
+                <!-- </select> -->
               </div>
             </div>
 
@@ -4714,7 +4721,7 @@
               <div class="col-md-4" style="margin-top: 10px">
                 <span disabled="suppliersName == 0 || supplierForAddUpdateData.isNewSupplier"
                   class="multiselectDropdown" ng-dropdown-multiselect="" options="suppliersName" search-filter=""
-                  ng-click="selectSupplierName()" extra-settings="supplierSettings"
+                  ng-click="selectSupplierName()" extra-settings="areaSettings"
                   selected-model="selectedSupplierName"></span>
                 <span ng-if="suppliersName == 0" class="error">No supplier found</span>
               </div>

@@ -1059,6 +1059,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           enableSearch: false,
           showUncheckAll: false
         };
+        $scope.areaSettings = {
+           scrollableHeight: '300px', 
+           scrollable: true ,
+           enableSearch: true,
+          };
+
 
         $scope.detailedShow = [];
         $scope.sector_name = "";
@@ -2367,7 +2373,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               city_id: $scope.supplierForAddUpdateData.city_id,
               city: $scope.supplierForAddUpdateData.city,
             }
-            $scope.getArea(true)
+            // $scope.getArea(true)
           }
           if ($scope.supplierForAddUpdateData.is_updated == "True") {
             $scope.selectArea();
@@ -2376,6 +2382,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             .then(function onSuccess(response) {
               $scope.Cities = response.data.cities;
               $scope.supplierTypes = response.data.supplier_types;
+              $scope.getArea(true);
             }).catch(function onError(response) {
               console.log(response);
             })
