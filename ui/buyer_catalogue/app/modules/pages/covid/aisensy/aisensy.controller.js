@@ -2484,6 +2484,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             "L4": $scope.leadTabData[index].L4,
             "L5": $scope.leadTabData[index].L5,
             "L6": $scope.leadTabData[index].L6,
+            "sector_name":$scope.leadTabData[index].sector_name,
           }];
 
           let update = {
@@ -2509,9 +2510,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     } else {
                       swal(constants.name, response.data.data.message, constants.success);
                       $scope.leadTabData[index].lead_status = response.data.data.lead_status;
-                      if ($scope.leadTabData[index].meating_timeline == 'not given') {
-                        $scope.leadTabData.splice(index, 1)
-                      }
+                      // if ($scope.leadTabData[index].meating_timeline == 'not given') {
+                      //   $scope.leadTabData.splice(index, 1)
+                      // }
                     }
                   }).catch(function onError(response) {
                     console.log(response);
@@ -2673,6 +2674,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           data = JSON.parse(obj);
           $scope.leads_Data_1 = "";
           $scope.suspense_sectorId = data.id;
+          $scope.leadTabData[index].sector_name = data.business_type;
           $scope.leadTabData[index].sector_id = data.id;
           $scope.leadTabData[index].selected_preferred_patner = [];
           $scope.selectLeadData(data.business_type.toLowerCase());
