@@ -4658,20 +4658,18 @@
                 <label> City *: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
+                <select class="form-control" name="city" id="city_id"
+                  ng-model="supplierForAddUpdateData.city_id"
+                  ng-change='getArea()' ng-required="true" 
+                  ng-options="city.id as city.city_name for city in Cities | orderBy: 'city_name'">
+                </select>
                 <!-- <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"
-                ng-required="true">
-                  <option value="" disabled>Select City</option>
-                  <option ng-repeat="city in Cities | orderBy: 'city_name'" 
-                  ng-selected="supplierForAddUpdateData.city_id==city.id" value="{{city.id}}" required>
-                  {{city.city_name}}</option>
-                </select> -->
-                <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"
                   ng-model="supplierForAddUpdateData.city_id" ng-required="true">
                   <option value="" disabled>Select City</option>
                   <option ng-repeat="city in Cities | orderBy: 'city_name'"
                     ng-selected="supplierForAddUpdateData.city_id == city.id" value="{{city.id}}" required>
                     {{city.city_name}}</option>
-                </select>
+                </select> -->
                 <span ng-show="myForm.city.$dirty && myForm.city.$invalid" class="error">Select a City</span>
                 <!-- </select> -->
               </div>
@@ -4684,7 +4682,7 @@
               <div class="col-md-4" style="margin-top: 10px">
                 <span disabled="Areas.length == 0 || supplierForAddUpdateData.isNewArea" class="multiselectDropdown"
                   ng-dropdown-multiselect="" options="Areas" search-filter="" ng-click="selectArea()"
-                  extra-settings="areaSettings" selected-model="selectedArea"></span>
+                  extra-settings="areaSettings" selected-model="selectedArea">
                 </span>
               </div>
               <div class="col-md-4">
