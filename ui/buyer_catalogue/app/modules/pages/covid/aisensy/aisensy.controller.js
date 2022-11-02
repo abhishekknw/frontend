@@ -2460,6 +2460,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               }
             }
           }
+          let selected_preferred_patner = [];
+          if($scope.leadTabData[index].selected_preferred_patner){
+            for(let i in $scope.leadTabData[index].selected_preferred_patner){
+              selected_preferred_patner.push($scope.leadTabData[index].selected_preferred_patner[i].id)
+            }
+          }
           let data = [{
             "_id": $scope.leadTabData[index]._id,
             "implementation_timeline": $scope.leadTabData[index].implementation_timeline,
@@ -2467,7 +2473,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             "comment": $scope.leadTabData[index].comment,
             "current_patner_id": $scope.leadTabData[index].current_patner,
             "current_patner_other": $scope.leadTabData[index].current_patner_other ? $scope.leadTabData[index].current_patner_other : null,
-            "prefered_patners_id": $scope.leadTabData[index].prefered_patners,
+            // "prefered_patners_id": $scope.leadTabData[index].prefered_patners,
+            "prefered_patners_id": selected_preferred_patner,
             "prefered_patner_other": otherPreferred,
             "call_back_preference": $scope.leadTabData[index].call_back_preference,
             "current_patner_feedback": $scope.leadTabData[index].current_patner_feedback,

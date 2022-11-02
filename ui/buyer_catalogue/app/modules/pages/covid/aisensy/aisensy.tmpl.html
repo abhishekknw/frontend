@@ -4138,8 +4138,8 @@
                     <td>{{$index+serial}}</td>
                     <td class="alignment">{{leadData.phone_number}}</td>
                     <td class="alignment">
-                      <!-- <select class="form-control" ng-model="SectorName" ng-click="browsedPreferredPartner(SectorName);"
-                        ng-options="sector.business_type for sector in browsedSectorList" track by "$index">
+                      <!-- <select class="form-control" ng-model="suspenseLeadSector" ng-click="suspenseLeadFilterData(suspenseLeadSector,$index);"
+                        ng-options="sector.id as sector.business_type for sector in sectorList" track by "$index">
                       </select> -->
                       <select class="form-control" ng-model="suspenseLeadSector" ng-click="suspenseLeadFilterData(suspenseLeadSector,$index);">
                         <option value=""> {{leadData.sector_id?filterBrowsedLeadData(leadData.sector_id):"--Select Sector--"}}</option>
