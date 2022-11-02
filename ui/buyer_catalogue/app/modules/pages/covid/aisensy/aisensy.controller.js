@@ -2657,6 +2657,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.leads_Data_1 = "";
           $scope.suspense_sectorId = data.id;
           $scope.leadTabData[index].sector_id = data.id;
+          $scope.leadTabData[index].selected_preferred_patner = [];
           $scope.selectLeadData(data.business_type.toLowerCase());
           releaseCampaignService.browsedPreferredPartner($scope.suspense_sectorId)
             .then(function onSuccess(response) {
