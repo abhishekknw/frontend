@@ -667,7 +667,7 @@ angular.module('Authentication')
                   url = "v0/ui/mea-bot/get-user-templates1/?phone_number=" +param.phone_number ;
                    apiHost = interveneApiHost;
                 }
-               return machadaloHttp.get(apiHost + url)
+               return machadaloHttp.get(url)
                   .then(function onSuccess(response) {
                      return response
                   })

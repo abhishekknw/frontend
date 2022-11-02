@@ -1885,7 +1885,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 'current_company_other': current_patner_other,
                 'preferred_company_other': preferred_company_other,
                 'supplier_type': $scope.userChatPayload.type_of_entity,
-                "supplier_id": $scope.supplierId
+                "supplier_id": $scope.supplierId,
+                'L4' : $scope.browsedDetailData[i].l1_answers,
+                'L5' : $scope.browsedDetailData[i].l1_answer_2,
+                'L6' : $scope.browsedDetailData[i].l2_answers,
               });
             }
           }

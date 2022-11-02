@@ -2490,26 +2490,27 @@
                         <div class="info-table-covidhelp">
                           <table class="table table-striped">
                             <tbody>
+                                <select class="form-control" style="margin: 10px ;text-align: center;width:20%;" ng-model="selectedSector" ng-change="templateInStatus(userDetailData,selectedSector)">
+                                  <option value="" >Select Sector</option>
+                                  <option ng-repeat="sector in sectorForTemplate" value="{{sector.sector}}">
+                                  {{sector.sector?sector.sector:"Null"}}</option>
+                                </select>
                               <tr ng-if="templateInStatusData.length != 0">
-                                <th class="col-md-3">
-                                  <select class="form-control" ng-model="selectedSector" ng-change="templateInStatus(userDetailData,selectedSector)">
-                                      <option value="" >Select Sector</option>
-                                      <option ng-repeat="sector in sectorForTemplate" value="{{sector.sector}}">
-                                        {{sector.sector?sector.sector:"Null"}}</option>
-                                  </select>
-                                </th>
                                 <th class="col-md-3">Template ID</th>
-                                <th class="col-md-3">Send At</th>
-                                <th class="col-md-3">Response Message</th>
                                 <th class="col-md-3">Response At</th>
+                                <th class="col-md-3">Type</th>
+                                <th class="col-md-3">Total Negative</th>
+                                <th class="col-md-3">Total Neutral</th>
+                                <th class="col-md-3">Total Positive</th>
+
                               </tr>
                               <tr ng-repeat="tmp in templateInStatusData">
-                                <td></td>
                                 <td class="col-md-3" style="text-align: center;">{{tmp.template_id}}</td>
-                                <td class="col-md-3" style="text-align: center;">{{tmp.template_send_timestamp}}</td>
-                                <td class="col-md-3" style="text-align: center;">{{tmp.template_responce}}</td>
-                                <td class="col-md-3" style="text-align: center;">{{tmp.template_responce_timestamp}}
-                                </td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.last_date_of_response}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.status.type}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.total_negative}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.total_neutral}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.total_positive}}</td>
                               </tr>
                             </tbody>
                           </table>
