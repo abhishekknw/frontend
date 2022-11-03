@@ -4164,7 +4164,7 @@
                       <select class="form-control" name="current_patner_{{$index}}" id="current_patner_id_{{$index}}"
                         ng-model="leadData.current_patner">
                         <option value="" disabled>Select Current Partner</option>
-                        <option ng-if="leadData.sector_id==cpartner.sector || (leadData.sector_id==null)"
+                        <option ng-if="leadData.sector_id==cpartner.sector"
                           ng-repeat="cpartner in companiesData track by $index" value="{{cpartner.organisation_id}}">
                           {{cpartner.name}}
                         </option>
