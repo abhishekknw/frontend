@@ -172,8 +172,17 @@
                             </select>
                           </div>
                           <div class="add-button">
-                            <button type="button" class="btn btn-info"
-                              data-toggle="modal" ng-click="addTemplateModal()">Add+</button>
+                            <button type="button" class="btn btn-info" data-toggle="modal"
+                              ng-click="addTemplateModal()">Add+</button>
+                          </div>
+                          <div style="margin-left: auto;display: flex;">
+                            <div class="chose-file">
+                              <span style="color:#000;">{{optineFileName}}</span>
+                              <input class="custom-file-input" type="file" name="file" size="80" multiple
+                                ng-files="getOptinFiles($files)" />
+                            </div>
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                              ng-click="sendOptinUserFile();">Optin Users</button>
                           </div>
                         </div>
 
@@ -326,7 +335,8 @@
                                     </div>
                                     <button class="btn btn-danger" ng-click="removeChoice(choice.id)"
                                       ng-if="choice.id!=index">Remove</button>
-                                    <button class="btn btn-danger" type="button" ng-click="addNewChoice()"ng-if="choice.id===index">Add Button</button>
+                                    <button class="btn btn-danger" type="button" ng-click="addNewChoice()"
+                                      ng-if="choice.id===index">Add Button</button>
                                   </li>
                                 </ul>
                               </form>
@@ -402,7 +412,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                       <button type="button" class="btn btn-danger" value="Upload"
-                                             ng-click="uploadSendTemplate()">Send</button>
+                                        ng-click="uploadSendTemplate()">Send</button>
                                     </div>
                                     <div class="col-sm-7" style="text-align: right;">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
