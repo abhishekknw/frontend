@@ -57,7 +57,7 @@ angular.module('catalogueApp')
         let formdata = new FormData();
         let myHeaders = new Headers();
         myHeaders.append("Authorization",'JWT ' + token)
-        formdata.append("file", data);
+        formdata.append("excel_file", data);
         let requestOptions = {
           headers: myHeaders,
           method: 'POST',
