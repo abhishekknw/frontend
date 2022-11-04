@@ -146,7 +146,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             };
           }
           if ($scope.formData.actionSearch) {
-            parsuspenam.search = $scope.formData.actionSearch;
+            param.search = $scope.formData.actionSearch;
           }
           AuthService.getAllActionRequiredData(param, entity)
 
@@ -1059,6 +1059,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           enableSearch: false,
           showUncheckAll: false
         };
+        $scope.areaSettings = {
+           scrollableHeight: '300px', 
+           scrollable: true ,
+           enableSearch: true,
+          };
+
 
         $scope.detailedShow = [];
         $scope.sector_name = "";
@@ -1196,8 +1202,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               }).catch(function onError(response) {
                 console.log(response);
                 if (response.data.status == false) {
-                  if (response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.impl_timeline) {
-                    swal(constants.name, response.data.data.general_error.errors.impl_timeline[0], constants.error);
+                  if (response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.call_back_preference) {
+                    swal(constants.name, response.data.data.general_error.errors.call_back_preference[0], constants.error);
                   }
                   if (response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.preferred_company) {
                     swal(constants.name, response.data.data.general_error.errors.preferred_company[0], constants.error);
@@ -1879,7 +1885,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 'current_company_other': current_patner_other,
                 'preferred_company_other': preferred_company_other,
                 'supplier_type': $scope.userChatPayload.type_of_entity,
-                "supplier_id": $scope.supplierId
+                "supplier_id": $scope.supplierId,
+                'L4' : $scope.browsedDetailData[i].l1_answers,
+                'L5' : $scope.browsedDetailData[i].l1_answer_2,
+                'L6' : $scope.browsedDetailData[i].l2_answers,
               });
             }
           }
@@ -1904,10 +1913,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if (confirm) {
                   releaseCampaignService.saveBrowsed(browsedId)
                     .then(function onSuccess(response) {
+                      $scope.browsedCheck = true;
                       if (response && response.data.data.error) {
-
                         swal(constants.name, response.data.data.error, constants.error);
-                      } else {
+                      } 
+                      else {
                         // var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
                         //   return el.id;
                         // }).indexOf($scope.shortlisted_spaces_id);
@@ -1938,8 +1948,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
                         //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
                         // }
-                        swal(constants.name, constants.save_success, constants.success);
-                        $scope.opsVerified($scope.phoneNumber, $scope.supplierId)
+                        $scope.opsVerified($scope.phoneNumber, $scope.supplierId);
+                        swal(constants.name, response.data.data.message, constants.success);
                       }
                     }).catch(function onError(response) {
 
@@ -2110,18 +2120,23 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if (confirm) {
                   releaseCampaignService.updateBrowsed(browsed_leads)
                     .then(function onSuccess(response) {
+                      $scope.browsedCheck = true;
                       if (response && response.data.data.error) {
                         swal(constants.name, response.data.data.error, constants.error);
-                      } else {
+                      }
+                       else {
                         swal(constants.name, constants.save_success, constants.success);
                         if ($scope.new_data_check == true) {
-                          $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
-                          // $scope.newbrowsed = {};
+                          $scope.opsVerified($scope.phoneNumber, $scope.supplierId);
                           $scope.SelectedCompany = [];
                           $scope.countBrowsedRow = false;
                           $scope.addRemoveBtn = "Add row"
                           $scope.new_data_check = false;
-                          JSON.stringify($scope.newbrowsed) === '{}'
+                          $scope.newbrowsed.newBrowsedCheck = false;
+                          JSON.stringify($scope.newbrowsed) === '{}';
+                        }
+                        else{
+                          $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
                         }
                       }
                     }).catch(function onError(response) {
@@ -2361,7 +2376,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               city_id: $scope.supplierForAddUpdateData.city_id,
               city: $scope.supplierForAddUpdateData.city,
             }
-            $scope.getArea(true)
+            // $scope.getArea(true)
           }
           if ($scope.supplierForAddUpdateData.is_updated == "True") {
             $scope.selectArea();
@@ -2370,6 +2385,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             .then(function onSuccess(response) {
               $scope.Cities = response.data.cities;
               $scope.supplierTypes = response.data.supplier_types;
+              $scope.getArea(true);
             }).catch(function onError(response) {
               console.log(response);
             })
@@ -2444,6 +2460,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               }
             }
           }
+          let selected_preferred_patner = [];
+          if($scope.leadTabData[index].selected_preferred_patner){
+            for(let i in $scope.leadTabData[index].selected_preferred_patner){
+              selected_preferred_patner.push($scope.leadTabData[index].selected_preferred_patner[i].id)
+            }
+          }
           let data = [{
             "_id": $scope.leadTabData[index]._id,
             "implementation_timeline": $scope.leadTabData[index].implementation_timeline,
@@ -2451,7 +2473,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             "comment": $scope.leadTabData[index].comment,
             "current_patner_id": $scope.leadTabData[index].current_patner,
             "current_patner_other": $scope.leadTabData[index].current_patner_other ? $scope.leadTabData[index].current_patner_other : null,
-            "prefered_patners_id": $scope.leadTabData[index].prefered_patners,
+            // "prefered_patners_id": $scope.leadTabData[index].prefered_patners,
+            "prefered_patners_id": selected_preferred_patner,
             "prefered_patner_other": otherPreferred,
             "call_back_preference": $scope.leadTabData[index].call_back_preference,
             "current_patner_feedback": $scope.leadTabData[index].current_patner_feedback,
@@ -2461,6 +2484,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             "L4": $scope.leadTabData[index].L4,
             "L5": $scope.leadTabData[index].L5,
             "L6": $scope.leadTabData[index].L6,
+            "sector_name":$scope.leadTabData[index].sector_name,
           }];
 
           let update = {
@@ -2486,9 +2510,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     } else {
                       swal(constants.name, response.data.data.message, constants.success);
                       $scope.leadTabData[index].lead_status = response.data.data.lead_status;
-                      if ($scope.leadTabData[index].meating_timeline == 'not given') {
-                        $scope.leadTabData.splice(index, 1)
-                      }
+                      // if ($scope.leadTabData[index].meating_timeline == 'not given') {
+                      //   $scope.leadTabData.splice(index, 1)
+                      // }
                     }
                   }).catch(function onError(response) {
                     console.log(response);
@@ -2641,6 +2665,52 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               // for(let i in $scope.preferred_partnerList ){
               //   $scope.newCompaniesBrowseDetailDataArray.push($scope.preferred_partnerList[i].name);
               // }
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+        $scope.suspenseLeadFilterData = function (obj,index) {
+          let data = "";
+          data = JSON.parse(obj);
+          $scope.leads_Data_1 = "";
+          $scope.suspense_sectorId = data.id;
+          $scope.leadTabData[index].sector_name = data.business_type;
+          $scope.leadTabData[index].sector_id = data.id;
+          $scope.leadTabData[index].selected_preferred_patner = [];
+          $scope.selectLeadData(data.business_type.toLowerCase());
+          releaseCampaignService.browsedPreferredPartner($scope.suspense_sectorId)
+            .then(function onSuccess(response) {
+              $scope.suspensePreferred_partnerList = response.data.data.companies;
+              $scope.suspenseSub_sectorList = response.data.data.sub_sector;
+              let companyBysector = $scope.companiesData;
+              let companyPartner = $scope.suspensePreferred_partnerList;
+               let hash = {};
+               for(let i of companyBysector.concat(companyPartner)) {
+                 if(!hash[i]) {
+                   hash[i.organisation_id] = i;
+                 }
+               }
+               $scope.companiesData = [];               
+               for(let i in hash) {
+                $scope.companiesData.push(hash[i])
+               }
+               console.log($scope.companiesData,"111111")
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+        $scope.suspenseBrowsedLeadSector = function (obj,index) {
+          let data = "";
+          data = JSON.parse(obj);
+          $scope.leads_Data_1 = "";
+          $scope.suspense_sectorId = data.id;
+          $scope.leadTabDataBrowsed[index].sector_id = data.id;
+          $scope.leadTabDataBrowsed[index].selected_preferred_patner = [];
+          $scope.selectLeadData(data.business_type.toLowerCase());
+          releaseCampaignService.browsedPreferredPartner($scope.suspense_sectorId)
+            .then(function onSuccess(response) {
+              // $scope.suspensePreferred_partnerList = response.data.data.companies;
+              $scope.suspenseSub_sectorList = response.data.data.sub_sector;
             }).catch(function onError(response) {
               console.log(response);
             })

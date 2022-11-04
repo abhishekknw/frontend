@@ -505,7 +505,7 @@ angular.module('Authentication')
                      return response
                   });
             };
-            authService.getAllActionRequiredData = function (param,entity,meaType) {
+            authService.getAllActionRequiredData = function (param,entity,meaType) { 
                apiHost = APIBaseUrl;
                let url = "v0/ui/b2c-bot/action_required/?next_page=" + param.next_page + "&type_of_entity="+entity;
                if(meaType){
@@ -659,14 +659,15 @@ angular.module('Authentication')
                   });
             };
 
-            authService.gettemplateInStatus = function (param,meaType) {
-               let url = "v0/ui/b2c-bot/get-user-templates1/?phone_number=" +param.phone_number ;
+            authService.gettemplateInStatus = function (param,sector,meaType) {
+               let url = "v0/ui/b2c-bot/filter-template-wise/?phone_number="+param.phone_number+"&sector="+sector;
+               // let url = "v0/ui/b2c-bot/get-user-templates1/?phone_number=" +param.phone_number+"&sector="+sector;
                apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/get-user-templates1/?phone_number=" +param.phone_number ;
                    apiHost = interveneApiHost;
                 }
-               return $http.get(apiHost + url)
+               return machadaloHttp.get(url)
                   .then(function onSuccess(response) {
                      return response
                   })
@@ -888,7 +889,10 @@ angular.module('Authentication')
             };
 
  
-
+            authService.getSectorForTemplate = function (phoneNumber) {
+               var url = "v0/ui/b2c-bot/all-templates-send/?phone_number="+phoneNumber;
+               return machadaloHttp.get(url);
+             };
 
             return authService;
          }])

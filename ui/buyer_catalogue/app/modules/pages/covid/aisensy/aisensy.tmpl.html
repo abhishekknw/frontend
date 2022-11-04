@@ -2490,26 +2490,27 @@
                         <div class="info-table-covidhelp">
                           <table class="table table-striped">
                             <tbody>
+                                <select class="form-control" style="margin: 10px ;text-align: center;width:20%;" ng-model="selectedSector" ng-change="templateInStatus(userDetailData,selectedSector)">
+                                  <option value="" >Select Sector</option>
+                                  <option ng-repeat="sector in sectorForTemplate" value="{{sector.sector}}">
+                                  {{sector.sector?sector.sector:"Null"}}</option>
+                                </select>
                               <tr ng-if="templateInStatusData.length != 0">
-                                <th class="col-md-3">
-                                  <select class="form-control" ng-model="selectedSector" ng-change="templateInStatus(userDetailData,selectedSector)">
-                                      <option value="" >Select Sector</option>
-                                      <option ng-repeat="sector in sectorForTemplate" value="{{sector.sector}}">
-                                        {{sector.sector?sector.sector:"Null"}}</option>
-                                  </select>
-                                </th>
                                 <th class="col-md-3">Template ID</th>
-                                <th class="col-md-3">Send At</th>
-                                <th class="col-md-3">Response Message</th>
                                 <th class="col-md-3">Response At</th>
+                                <th class="col-md-3">Type</th>
+                                <th class="col-md-3">Total Negative</th>
+                                <th class="col-md-3">Total Neutral</th>
+                                <th class="col-md-3">Total Positive</th>
+
                               </tr>
                               <tr ng-repeat="tmp in templateInStatusData">
-                                <td></td>
                                 <td class="col-md-3" style="text-align: center;">{{tmp.template_id}}</td>
-                                <td class="col-md-3" style="text-align: center;">{{tmp.template_send_timestamp}}</td>
-                                <td class="col-md-3" style="text-align: center;">{{tmp.template_responce}}</td>
-                                <td class="col-md-3" style="text-align: center;">{{tmp.template_responce_timestamp}}
-                                </td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.last_date_of_response}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.status.type}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.total_negative}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.total_neutral}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.total_positive}}</td>
                               </tr>
                             </tbody>
                           </table>
@@ -4136,13 +4137,34 @@
                   <tr ng-if="leadTabData.length > 0 && loading" ng-repeat="leadData in leadTabData" track by "$index">
                     <td>{{$index+serial}}</td>
                     <td class="alignment">{{leadData.phone_number}}</td>
-                    <td class="alignment">{{filterBrowsedLeadData(leadData.sector_id)}}</td>
-                    <td class="alignment">{{leadData.sub_sector_name}}</td>
+                    <td class="alignment">
+                      <!-- <select class="form-control" ng-model="suspenseLeadSector" ng-click="suspenseLeadFilterData(suspenseLeadSector,$index);"
+                        ng-options="sector.id as sector.business_type for sector in sectorList" track by "$index">
+                      </select> -->
+                      <select class="form-control" ng-model="suspenseLeadSector" ng-click="suspenseLeadFilterData(suspenseLeadSector,$index);">
+                        <option value=""> {{leadData.sector_id?filterBrowsedLeadData(leadData.sector_id):"--Select Sector--"}}</option>
+                        <option ng-repeat="sector in sectorList track by $index" value="{{sector}}">
+                          {{sector.business_type}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <!-- <select class="form-control" ng-model="leadData.sub_sector_name">
+                        <option ng-repeat="sub_sector in suspenseSub_sectorList track by $index" value="{{sub_sector.business_sub_type}}">
+                          {{sub_sector.business_sub_type}}
+                        </option>
+                      </select> -->
+                      <select class="form-control">
+                        <option>Option1</option>
+                        <option>Option2</option>
+                        <option>Option3</option>
+                      </select>
+                    </td>
                     <td class="alignment">
                       <select class="form-control" name="current_patner_{{$index}}" id="current_patner_id_{{$index}}"
                         ng-model="leadData.current_patner">
                         <option value="" disabled>Select Current Partner</option>
-                        <option ng-if="leadData.sector_id==cpartner.sector || (leadData.sector_id==null)"
+                        <option ng-if="leadData.sector_id==cpartner.sector"
                           ng-repeat="cpartner in companiesData track by $index" value="{{cpartner.organisation_id}}">
                           {{cpartner.name}}
                         </option>
@@ -4320,8 +4342,28 @@
                     by "$index">
                     <td>{{$index+serial}}</td>
                     <td class="alignment">{{browseData.phone_number}}</td>
-                    <td class="alignment">{{filterBrowsedLeadData(browseData.sector_id)}}</td>
-                    <td class="alignment">{{browseData.sub_sector_name}}</td>
+                    <td class="alignment">
+                      <select class="form-control" ng-model="suspenseBrowsedSector" ng-click="suspenseBrowsedLeadSector(suspenseBrowsedSector,$index);">
+                        <option value=""> {{browseData.sector_id?filterBrowsedLeadData(browseData.sector_id):"--Select Sector--"}}</option>
+                        <option ng-repeat="sector in sectorList track by $index" value="{{sector}}">
+                          {{sector.business_type}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <!-- <select class="form-control" ng-model="browseData.sub_sector_name">
+                        <option ng-repeat="sub_sector in suspenseSub_sectorList track by $index" value="{{sub_sector.business_sub_type}}">
+                          {{sub_sector.business_sub_type}}
+                        </option>
+                      </select> -->
+                      <select class="form-control">
+                        <option>Option1</option>
+                        <option>Option2</option>
+                        <option>Option3</option>
+                      </select>
+                    </td>
+                    <!-- </td>
+                    <td class="alignment">{{browseData.sub_sector_name}}</td> -->
                     <td class="alignment">
                       <select class="form-control" name="current_patner_{{$index}}"
                         id="browes_current_patner_id_{{$index}}" ng-model="browseData.current_patner">
@@ -4616,15 +4658,20 @@
                 <label> City *: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"
+                <select class="form-control" name="city" id="city_id"
+                  ng-model="supplierForAddUpdateData.city_id"
+                  ng-change='getArea()' ng-required="true" 
+                  ng-options="city.id as city.city_name for city in Cities | orderBy: 'city_name'">
+                </select>
+                <!-- <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"
                   ng-model="supplierForAddUpdateData.city_id" ng-required="true">
                   <option value="" disabled>Select City</option>
                   <option ng-repeat="city in Cities | orderBy: 'city_name'"
                     ng-selected="supplierForAddUpdateData.city_id == city.id" value="{{city.id}}" required>
                     {{city.city_name}}</option>
-                </select>
+                </select> -->
                 <span ng-show="myForm.city.$dirty && myForm.city.$invalid" class="error">Select a City</span>
-                </select>
+                <!-- </select> -->
               </div>
             </div>
 
@@ -4635,7 +4682,7 @@
               <div class="col-md-4" style="margin-top: 10px">
                 <span disabled="Areas.length == 0 || supplierForAddUpdateData.isNewArea" class="multiselectDropdown"
                   ng-dropdown-multiselect="" options="Areas" search-filter="" ng-click="selectArea()"
-                  extra-settings="areaSettings" selected-model="selectedArea"></span>
+                  extra-settings="areaSettings" selected-model="selectedArea">
                 </span>
               </div>
               <div class="col-md-4">
@@ -4673,7 +4720,7 @@
               <div class="col-md-4" style="margin-top: 10px">
                 <span disabled="suppliersName == 0 || supplierForAddUpdateData.isNewSupplier"
                   class="multiselectDropdown" ng-dropdown-multiselect="" options="suppliersName" search-filter=""
-                  ng-click="selectSupplierName()" extra-settings="supplierSettings"
+                  ng-click="selectSupplierName()" extra-settings="areaSettings"
                   selected-model="selectedSupplierName"></span>
                 <span ng-if="suppliersName == 0" class="error">No supplier found</span>
               </div>
