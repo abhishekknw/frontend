@@ -6766,6 +6766,23 @@
           })
         }
       }
+
+      $scope.getOptinFiles = function(data){
+        $timeout(function () {
+          // $scope.excelColumnError = "";
+          $scope.optinFile = data;
+          $scope.optineFileName = $scope.optinFile[0].name;
+        }, 1);
+      }
+      $scope.sendOptinUserFile = function(){
+        templateDashboardService.sendOptinUserFile($scope.optinFile[0],$rootScope.globals.currentUser.token,Config.APIBaseUrl)
+          .then(function onSuccess(response) {
+            swal("Success","Successfull",constants.success);
+            // $('#optinUsers').modal('show');
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+      }
       
       // Template Dashboard end
 

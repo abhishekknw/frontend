@@ -2709,8 +2709,21 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.selectLeadData(data.business_type.toLowerCase());
           releaseCampaignService.browsedPreferredPartner($scope.suspense_sectorId)
             .then(function onSuccess(response) {
-              // $scope.suspensePreferred_partnerList = response.data.data.companies;
+              $scope.suspensePreferred_partnerList = response.data.data.companies;
               $scope.suspenseSub_sectorList = response.data.data.sub_sector;
+              let companyBysector = $scope.companiesData;
+              let companyPartner = $scope.suspensePreferred_partnerList;
+               let hash = {};
+               for(let i of companyBysector.concat(companyPartner)) {
+                 if(!hash[i]) {
+                   hash[i.organisation_id] = i;
+                 }
+               }
+               $scope.companiesData = [];               
+               for(let i in hash) {
+                $scope.companiesData.push(hash[i])
+               }
+               console.log($scope.companiesData,"111111")
             }).catch(function onError(response) {
               console.log(response);
             })
