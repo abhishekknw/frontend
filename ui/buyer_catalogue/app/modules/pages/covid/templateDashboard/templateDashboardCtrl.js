@@ -6783,17 +6783,31 @@
         }, 1);
       }
       $scope.sendOptinUserFile = function(){
-        templateDashboardService.sendOptinUserFile($scope.optinFile[0],$rootScope.globals.currentUser.token,Config.APIBaseUrl)
-          .then(function onSuccess(response) {
-            if(response && response.statusText ){
-              swal("Error",response.statusText,constants.error);
-            }
-            else{
-              swal(constants.name,response.data,constants.success);
-            }
-          }).catch(function onError(response) {
-            console.log(response);
-          })
+        let formdata = new FormData();
+        let myHeaders = new Headers();
+        myHeaders.append("Authorization",'JWT ' + $rootScope.globals.currentUser.token)
+        formdata.append("excel_file", $scope.optinFile[0]);
+        let requestOptions = {
+          headers: myHeaders,
+          method: 'POST',
+          body: formdata,
+          redirect: 'follow'
+        };
+        let url = Config.APIBaseUrl+"v0/ui/mca-bot/optin-users/";
+        fetch(url,requestOptions)
+              .then(response =>response.text())
+              .then(result =>{
+                const obj = JSON.parse(result);
+                let value = "Not opted in users:"+obj.data["not opted in users"];
+                let value2 = "successfully opted in users:"+obj.data["successfully opted in users"];
+                if(obj.status){
+                  swal("Success",value+'\n'+value2,constants.success);
+                }
+                if(obj.data.general_error.errors){
+                  swal("Error",obj.data.general_error.errors,constants.error);
+                }
+            })
+              .catch(error => console.log('error', error));
       }
       
       // Template Dashboard end
