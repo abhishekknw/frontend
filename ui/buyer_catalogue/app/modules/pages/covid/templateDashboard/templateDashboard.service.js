@@ -67,8 +67,16 @@ angular.module('catalogueApp')
         let url = baseUrl+"v0/ui/mca-bot/optin-users/";
         return fetch(url,requestOptions);
       }
-        return DashboardService;
+      DashboardService.getSector = function(){
+        var url = "v0/ui/accounts/create_business/load_business_types/";
+        return machadaloHttp.get(url);
+      }
 
+      DashboardService.supplierFilterList = function(){
+        let url ="v0/ui/b2c-bot/supliers-filter-list/";
+        return machadaloHttp.get(url);
+      }  
 
+      return DashboardService;
 
     }]);

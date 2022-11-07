@@ -214,14 +214,14 @@
                                 <td style="width: 100px;">
                                   <div class="table-center-btn">
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
-                                      ng-click="viewMoreDetail(template.data)">View More</button>
+                                      ng-click="viewMoreDetail(template)">View More</button>
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
                                       ng-click="download_sample_sheet(template.id)">Download sample sheet </button>
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
-                                      ng-click="sendTemplates(template.data,template.id,'user',template.elementName,template.md_id)">Check
+                                      ng-click="sendTemplates(template,template.data,template.id,'user',template.elementName,template.md_id)">Check
                                       users</button>
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
-                                      ng-click="sendTemplates(template.data,template.id,'template',template.elementName)">Send
+                                      ng-click="sendTemplates(template,template.data,template.id,'template',template.elementName)">Send
                                       templates</button>
                                   </div>
                                 </td>
@@ -255,7 +255,7 @@
                                       <label> Sector:</label>
                                       <select class="form-control " ng-model="templateData.sector">
                                         <option value="">Select Sector</option>
-                                        <option>sector1</option>
+                                        <option ng-repeat="item in sectorList" value="{{item.business_type}}">{{item.business_type}}</option>
                                       </select>
                                     </div>
                                   </div>
@@ -273,9 +273,9 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                       <label>Type Of Entity:</label>
-                                      <select class="form-control" ng-model="templateData.entity_type">
-                                        <option value="">Select</option>
-                                        <option>TOE</option>
+                                      <select class="form-control " ng-model="templateData.entity_type">
+                                        <option value="">Select Supplier</option>
+                                        <option ng-repeat="item in supplierList" value="{{item}}">{{item}}</option>
                                       </select>
                                     </div>
                                   </div>
@@ -318,6 +318,10 @@
                                       </select>
                                     </div>
                                   </div>
+                                </div>
+                                <div class="form-group">
+                                  <label> Gupsup ID:</label>
+                                  <input class="form-control" ng-model="templateData.g_id" type="text">
                                 </div>
                                 <div class="form-group">
                                   <label> Comment:</label>
@@ -366,12 +370,12 @@
                               <div>Template Name:</div>
                               <div>Param:</div>
                               <div>
-                                {{message}}
+                                {{templateData.data}}
                               </div>
                               <div>
-                                <button style="width: 70px;">A</button>
-                                <button style="width:70px">B</button>
-                                <button style="width:70px">C</button>
+                                <button style="width: 70px;">{{templateData.button[0].name}}</button>
+                                <button style="width:70px">{{templateData.button[1].name}}</button>
+                                <button style="width:70px">{{templateData.button[2].name}}</button>
                               </div>
                             </div>
                             <!-- Modal footer -->
@@ -394,9 +398,14 @@
                             </div>
                             <form>
                               <div class="modal-body" style="line-height: 1.5;">
-                                <span ng-if="show1==true">
+                                <div ng-if="show1==true">
                                   {{message}}
-                                </span>
+                                </div>
+                                <div>
+                                  <button style="width: 70px;">{{templateData.button[0].name}}</button>
+                                  <button style="width:70px">{{templateData.button[1].name}}</button>
+                                  <button style="width:70px">{{templateData.button[2].name}}</button>
+                                </div>
                               </div>
                               <div class="modal-footer">
                                 <div class="row clearfix">

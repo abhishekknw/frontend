@@ -703,8 +703,8 @@
             console.log(response);
           })
       }
-      $scope.viewMoreDetail = function (message) {
-        $scope.message = message;
+      $scope.viewMoreDetail = function (templateData) {
+        $scope.templateData = templateData;
         $('#viewMoreDetail').modal('show');
       }
       $scope.download_sample_sheet = function(id){
@@ -712,7 +712,8 @@
       }
       $scope.uploadId = 0;
       $scope.show1 = false;
-      $scope.sendTemplates = function (message, id, template, name,md_id) {
+      $scope.sendTemplates = function (templateData,message, id, template, name,md_id) {
+        $scope.templateData = templateData;
         $scope.templateName = name;
         $scope.selectedFileName = "";
         $scope.excelColumnError = "";
@@ -6600,7 +6601,6 @@
       }
 
       $scope.getFormUpload = function (value, name) {
-        alert(value)
         $scope.current_template = {
           template_id: value,
           template_name: name
@@ -6612,9 +6612,6 @@
         templateDashboardService.formUpload(param)
           .then(function onSuccess(response) {
             $scope.formUploadData = response.data.data;
-
-            console.log('1133311', $scope.formUploadData);
-
           }).catch(function onError(response) {
 
           })
@@ -6693,7 +6690,18 @@
         $scope.choices = [{ "id": 1, "type": "Button", "name": "" },];
         $scope.index = $scope.choices.length;
         $('#addTemplate').modal('show');
-
+        templateDashboardService.getSector()
+          .then(function onSuccess(response) {
+            $scope.sectorList = response.data;
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+        templateDashboardService.supplierFilterList()
+            .then(function onSuccess(response) {
+              $scope.supplierList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
       }
 
       $scope.addNewChoice = function () {
@@ -6777,8 +6785,12 @@
       $scope.sendOptinUserFile = function(){
         templateDashboardService.sendOptinUserFile($scope.optinFile[0],$rootScope.globals.currentUser.token,Config.APIBaseUrl)
           .then(function onSuccess(response) {
-            swal("Success","Successfull",constants.success);
-            // $('#optinUsers').modal('show');
+            if(response && response.statusText ){
+              swal("Error",response.statusText,constants.error);
+            }
+            else{
+              swal(constants.name,response.data,constants.success);
+            }
           }).catch(function onError(response) {
             console.log(response);
           })
