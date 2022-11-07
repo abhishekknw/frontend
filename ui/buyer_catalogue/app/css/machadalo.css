@@ -905,6 +905,9 @@ header .topRight .top-menu {
 .custom-file-input:active::before {
   background: #e85656;
 }
+.line-h-table.table > tbody > tr > td{
+  line-height: 1.3;
+}
 @media screen and (max-width: 767px) {
   #SuspenseLeadsModel .modal-dialog,  #RequirementModel .modal-dialog{
     width: auto;
