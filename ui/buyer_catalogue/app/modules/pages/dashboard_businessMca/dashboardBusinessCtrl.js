@@ -7,6 +7,7 @@
 
   angular.module('catalogueApp')
     .controller('dashboardBusinessCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, B2BDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
+      $scope.APIBaseUrl = Config.APIBaseUrl;
       $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
       $scope.itemsByPage = 15;
       $scope.permissions = permissions.dashboard;
@@ -6767,7 +6768,7 @@
       }
       $scope.uploadSelectFile = function(){
         let uploadurl={
-          url: 'https://stagingapi.machadalo.com/v0/ui/b2b/upload-lead-comments/',
+          url: Config.APIBaseUrl+'v0/ui/b2b/upload-lead-comments/',
           method:"POST",
           timeout: 0,
           data:{
