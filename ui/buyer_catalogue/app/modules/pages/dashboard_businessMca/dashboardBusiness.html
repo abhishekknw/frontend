@@ -1112,7 +1112,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr style="text-align: center;" dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
+                            <tr style="text-align: center;" dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:50 track by $index ">
                               <td style="width:62px;">{{$index + 1}}</td>
                               <td style="width:140px;"  class="col-md-2">{{campaign.name}}</td>
                               <td style="width:140px;">{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
