@@ -908,6 +908,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.opsVerifyButtonDiable = true;
         $scope.opsVerified = function (phone, supplier_id) {
           $scope.detailedShow = [];
+          $scope.newbrowsed = {};
+          $scope.SelectedCompany = [];
+          $scope.preferred_partnerList = {};
+          $scope.leads_Data_1 = {};
           userService.getSector()
             .then(function onSuccess(response) {
               $scope.sectorList = response.data;
@@ -2696,7 +2700,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                for(let i in hash) {
                 $scope.companiesData.push(hash[i])
                }
-               console.log($scope.companiesData,"111111")
             }).catch(function onError(response) {
               console.log(response);
             })
