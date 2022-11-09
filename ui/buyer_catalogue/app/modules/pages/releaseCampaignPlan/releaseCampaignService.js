@@ -177,14 +177,17 @@
       return machadaloHttp.put(url,data);
     }
 
-    releaseCampaignService.requirementDetail = function(id,phone,supplier_id){
+    releaseCampaignService.requirementDetail = function(id,phone,supplier_id,supplierType){
       if(phone==undefined){
          phone="";
       }
       if(supplier_id==undefined){
         supplier_id="";
       }
-      var url = url_base_ui + "b2b/requirements/?shortlisted_spaces_id=" + id + "&phone_number=" + phone + "&supplier_id=" + supplier_id;
+      if(supplierType==undefined){
+        supplierType="";
+      }
+      var url = url_base_ui + "b2b/requirements/?shortlisted_spaces_id=" + id + "&phone_number=" + phone + "&supplier_id=" + supplier_id +"&supplier_type="+supplierType;
       return machadaloHttp.get(url);
     }
         //Api for LeadDetails

@@ -68,7 +68,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.formData.contactSearch = "";
           $scope.countBrowsedRow = false;
           $scope.addRemoveBtn = "Add row";
-
+          $scope.supplierTypeUndefined = "supplier Type Undefined";
 
           let param = {
             next_page: 1
@@ -906,7 +906,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.opsVerifyButtonDiable = true;
-        $scope.opsVerified = function (phone, supplier_id) {
+        $scope.opsVerified = function (phone, supplier_id,supplierType) {
           $scope.detailedShow = [];
           $scope.newbrowsed = {};
           $scope.SelectedCompany = [];
@@ -923,7 +923,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.leads_Data = response.data.data;
             })
 
-          releaseCampaignService.requirementDetail("", phone, supplier_id)
+          releaseCampaignService.requirementDetail("", phone, supplier_id,supplierType)
             .then(function onSuccess(response) {
               $scope.requirementDetailData = response.data.data.requirements;
               $scope.companiesDetailData = response.data.data.companies;
