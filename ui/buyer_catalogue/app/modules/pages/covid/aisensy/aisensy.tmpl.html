@@ -1839,8 +1839,8 @@
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </div>
                                 <div>
-                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id)"
-                                    data-toggle="modal" data-target="#RequirementModel">Ops Verified</button>
+                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
+                                  data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>                                 
                                 </div>
                                 <div class="profile-image-chat">
                                   <span>
@@ -2093,8 +2093,8 @@
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </div>
                                 <div>
-                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id)"
-                                    data-toggle="modal" data-target="#RequirementModel">Ops Verified</button>
+                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
+                                  data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>
                                 </div>
                                 <div class="profile-image-chat">
                                   <span>
@@ -2707,8 +2707,8 @@
                         class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                     </div>
                     <div>
-                      <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id)"
-                        data-toggle="modal" data-target="#RequirementModel">Ops Verified</button>
+                      <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
+                        data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>
                     </div>
                     <div class="profile-image-chat">
                       <span>

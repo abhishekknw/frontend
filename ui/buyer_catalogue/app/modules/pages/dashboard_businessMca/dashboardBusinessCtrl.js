@@ -713,9 +713,8 @@
                 $scope.leadDecisionPandingData.values[index][0].client_status = "Decline";
               }
               else{
-                $scope.leadDecisionPandingData = delete $scope.leadDecisionPandingData[index];
+                $scope.leadDecisionPandingData.values.splice(index,1);
               }
-              
               if(value == 'Decline'){
                 value = 'Declined';
               }
