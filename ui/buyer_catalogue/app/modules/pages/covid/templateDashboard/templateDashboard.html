@@ -420,8 +420,10 @@
                                       </div>
                                     </div>
                                     <div class="col-sm-2">
-                                      <button type="button" class="btn btn-danger" value="Upload"
-                                        ng-click="uploadSendTemplate()">Send</button>
+                                      <button ng-if="!checkForLoader" type="button" class="btn btn-danger" value="Upload"
+                                             ng-click="uploadSendTemplate()">Send</button>
+                                      <button ng-if="checkForLoader" type="button" class="btn btn-danger" value="Upload" disabled>
+                                          <i class="fa fa-spinner fa-spin" style="margin-left: -10px; margin-right:4px;"></i>Send</button>
                                     </div>
                                     <div class="col-sm-7" style="text-align: right;">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

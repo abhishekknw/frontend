@@ -729,8 +729,10 @@
         let fileElement = angular.element('#file1');
          angular.element(fileElement).val(null);   
         $('#sendTemplates').modal('show');
+        $scope.checkForLoader = false;
       }
       $scope.getTheFiles = function (files) {
+        $scope.checkForLoader = false;
         $timeout(function () {
           $scope.excelColumnError = "";
           $scope.file = files;
@@ -738,8 +740,7 @@
         }, 1);
       };
       $scope.uploadSendTemplate = function () {
-        // $timeout(function () {       
-        // },2000)
+        $scope.checkForLoader = true;
         if ($scope.show1 == false) {
 
             let myHeaders = new Headers();
@@ -758,6 +759,10 @@
               .then(result =>{
                 const obj = JSON.parse(result);
                 $scope.one_time_hash = obj.data.one_time_hash;
+                $scope.checkForLoader = false;
+                let fileElement = angular.element('#file1');
+                angular.element(fileElement).val(null);
+                $scope.selectedFileName = ""; 
                 $window.open(Config.APIBaseUrl+"v0/ui/template/check-users/?one_time_hash="+$scope.one_time_hash);
             })
               .catch(error => console.log('error', error));
@@ -777,10 +782,13 @@
             mimeType: "multipart/form-data",
             contentType: false,
           }
-          
           if ($scope.file) {
             Upload.upload(uploadurl).then(function onSuccess(response) {
               $scope.file = "";
+              $scope.checkForLoader = false;
+              let fileElement = angular.element('#file1');
+              angular.element(fileElement).val(null);
+              $scope.selectedFileName = "";   
               swal(constants.name, response.data.data, constants.success);
             })
               .catch(function onError(response) {
