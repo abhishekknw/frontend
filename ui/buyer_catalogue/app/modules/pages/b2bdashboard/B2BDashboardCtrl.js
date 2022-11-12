@@ -1618,7 +1618,7 @@
     }
     $scope.uploadSelectFile = function () {
       let uploadurl = {
-        url: 'https://stagingapi.machadalo.com/v0/ui/b2b/upload-lead-comments/',
+        url: Config.APIBaseUrl+'v0/ui/b2b/upload-lead-comments/',
         method: "POST",
         timeout: 0,
         data: {

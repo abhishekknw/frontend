@@ -1537,8 +1537,8 @@
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </div>
                                 <div>
-                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id)"
-                                    data-toggle="modal" data-target="#RequirementModel">Ops Verified</button>
+                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
+                                    data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>
                                 </div>
                                 <div class="profile-image-chat">
                                   <span>
@@ -1839,8 +1839,8 @@
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </div>
                                 <div>
-                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id)"
-                                    data-toggle="modal" data-target="#RequirementModel">Ops Verified</button>
+                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
+                                  data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>                                 
                                 </div>
                                 <div class="profile-image-chat">
                                   <span>
@@ -2093,8 +2093,8 @@
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </div>
                                 <div>
-                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id)"
-                                    data-toggle="modal" data-target="#RequirementModel">Ops Verified</button>
+                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
+                                  data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>
                                 </div>
                                 <div class="profile-image-chat">
                                   <span>
@@ -2707,8 +2707,8 @@
                         class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                     </div>
                     <div>
-                      <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id)"
-                        data-toggle="modal" data-target="#RequirementModel">Ops Verified</button>
+                      <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
+                        data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>
                     </div>
                     <div class="profile-image-chat">
                       <span>
@@ -3889,7 +3889,7 @@
                     <td class="alignment">
                       <select class="form-control" ng-model="browsed.l1_answers">
                         <option value="" disabled>Select</option>
-                        <option ng-repeat="lead_L4 in filterLeadData[browsed.sector_id].L4" value="{{lead_L4}}">
+                        <option ng-repeat="lead_L4 in filterLeadData[browsed.sector_id].L4 track by $index" value="{{lead_L4}}">
                           {{lead_L4}}
                         </option>
                       </select>
@@ -3969,10 +3969,6 @@
                     </select> -->
                       <select class="form-control" ng-model="SectorName" ng-click="browsedPreferredPartner(SectorName);"
                         ng-options="sector.business_type for sector in browsedSectorList" track by "$index">
-                        <!-- <option value="" disabled>Select Sector</option>
-                        <option ng-repeat="sector in browsedSectorList track by $index" value="{{sector}}">
-                          {{sector.business_type}}
-                        </option> -->
                       </select>
                     </td>
                     <td class="alignment">NA
@@ -4016,6 +4012,7 @@
                     </td>
                     <td class="alignment">
                       <select class="form-control" ng-model="newbrowsed.L4">
+                        <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L4 in leads_Data_1.L4" value="{{lead_L4}}">
                           {{lead_L4}}
                         </option>
@@ -4024,6 +4021,7 @@
 
                     <td class="alignment">
                       <select class="form-control" ng-model="newbrowsed.L5">
+                        <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L5 in leads_Data_1.L5" value="{{lead_L5}}">
                           {{lead_L5}}
                         </option>>
@@ -4031,6 +4029,7 @@
                     </td>
                     <td class="alignment">
                       <select class="form-control" ng-model="newbrowsed.L6">
+                        <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L6 in leads_Data_1.L6" value="{{lead_L6}}">
                           {{lead_L6}}
                         </option>

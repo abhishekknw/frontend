@@ -703,8 +703,8 @@
             console.log(response);
           })
       }
-      $scope.viewMoreDetail = function (message) {
-        $scope.message = message;
+      $scope.viewMoreDetail = function (templateData) {
+        $scope.templateData = templateData;
         $('#viewMoreDetail').modal('show');
       }
       $scope.download_sample_sheet = function(id){
@@ -712,7 +712,8 @@
       }
       $scope.uploadId = 0;
       $scope.show1 = false;
-      $scope.sendTemplates = function (message, id, template, name,md_id) {
+      $scope.sendTemplates = function (templateData,message, id, template, name,md_id) {
+        $scope.templateData = templateData;
         $scope.templateName = name;
         $scope.selectedFileName = "";
         $scope.excelColumnError = "";
@@ -728,8 +729,10 @@
         let fileElement = angular.element('#file1');
          angular.element(fileElement).val(null);   
         $('#sendTemplates').modal('show');
+        $scope.checkForLoader = false;
       }
       $scope.getTheFiles = function (files) {
+        $scope.checkForLoader = false;
         $timeout(function () {
           $scope.excelColumnError = "";
           $scope.file = files;
@@ -737,8 +740,7 @@
         }, 1);
       };
       $scope.uploadSendTemplate = function () {
-        // $timeout(function () {       
-        // },2000)
+        $scope.checkForLoader = true;
         if ($scope.show1 == false) {
 
             let myHeaders = new Headers();
@@ -757,6 +759,10 @@
               .then(result =>{
                 const obj = JSON.parse(result);
                 $scope.one_time_hash = obj.data.one_time_hash;
+                $scope.checkForLoader = false;
+                let fileElement = angular.element('#file1');
+                angular.element(fileElement).val(null);
+                $scope.selectedFileName = ""; 
                 $window.open(Config.APIBaseUrl+"v0/ui/template/check-users/?one_time_hash="+$scope.one_time_hash);
             })
               .catch(error => console.log('error', error));
@@ -776,10 +782,13 @@
             mimeType: "multipart/form-data",
             contentType: false,
           }
-          
           if ($scope.file) {
             Upload.upload(uploadurl).then(function onSuccess(response) {
               $scope.file = "";
+              $scope.checkForLoader = false;
+              let fileElement = angular.element('#file1');
+              angular.element(fileElement).val(null);
+              $scope.selectedFileName = "";   
               swal(constants.name, response.data.data, constants.success);
             })
               .catch(function onError(response) {
@@ -6600,7 +6609,6 @@
       }
 
       $scope.getFormUpload = function (value, name) {
-        alert(value)
         $scope.current_template = {
           template_id: value,
           template_name: name
@@ -6612,9 +6620,6 @@
         templateDashboardService.formUpload(param)
           .then(function onSuccess(response) {
             $scope.formUploadData = response.data.data;
-
-            console.log('1133311', $scope.formUploadData);
-
           }).catch(function onError(response) {
 
           })
@@ -6693,7 +6698,18 @@
         $scope.choices = [{ "id": 1, "type": "Button", "name": "" },];
         $scope.index = $scope.choices.length;
         $('#addTemplate').modal('show');
-
+        templateDashboardService.getSector()
+          .then(function onSuccess(response) {
+            $scope.sectorList = response.data;
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+        templateDashboardService.supplierFilterList()
+            .then(function onSuccess(response) {
+              $scope.supplierList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
       }
 
       $scope.addNewChoice = function () {
@@ -6775,13 +6791,31 @@
         }, 1);
       }
       $scope.sendOptinUserFile = function(){
-        templateDashboardService.sendOptinUserFile($scope.optinFile[0],$rootScope.globals.currentUser.token,Config.APIBaseUrl)
-          .then(function onSuccess(response) {
-            swal("Success","Successfull",constants.success);
-            // $('#optinUsers').modal('show');
-          }).catch(function onError(response) {
-            console.log(response);
-          })
+        let formdata = new FormData();
+        let myHeaders = new Headers();
+        myHeaders.append("Authorization",'JWT ' + $rootScope.globals.currentUser.token)
+        formdata.append("excel_file", $scope.optinFile[0]);
+        let requestOptions = {
+          headers: myHeaders,
+          method: 'POST',
+          body: formdata,
+          redirect: 'follow'
+        };
+        let url = Config.APIBaseUrl+"v0/ui/mca-bot/optin-users/";
+        fetch(url,requestOptions)
+              .then(response =>response.text())
+              .then(result =>{
+                const obj = JSON.parse(result);
+                let value = "Not opted in users:"+obj.data["not opted in users"];
+                let value2 = "successfully opted in users:"+obj.data["successfully opted in users"];
+                if(obj.status){
+                  swal("Success",value+'\n'+value2,constants.success);
+                }
+                if(obj.data.general_error.errors){
+                  swal("Error",obj.data.general_error.errors,constants.error);
+                }
+            })
+              .catch(error => console.log('error', error));
       }
       
       // Template Dashboard end

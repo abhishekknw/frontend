@@ -52,23 +52,17 @@ angular.module('catalogueApp')
         let url="v0/ui/template/";
         return machadaloHttp.post(url,{data:data});
       }
-
-      DashboardService.sendOptinUserFile = function(data,token,baseUrl){
-        let formdata = new FormData();
-        let myHeaders = new Headers();
-        myHeaders.append("Authorization",'JWT ' + token)
-        formdata.append("excel_file", data);
-        let requestOptions = {
-          headers: myHeaders,
-          method: 'POST',
-          body: formdata,
-          redirect: 'follow'
-        };
-        let url = baseUrl+"v0/ui/mca-bot/optin-users/";
-        return fetch(url,requestOptions);
+      
+      DashboardService.getSector = function(){
+        var url = "v0/ui/accounts/create_business/load_business_types/";
+        return machadaloHttp.get(url);
       }
-        return DashboardService;
 
+      DashboardService.supplierFilterList = function(){
+        let url ="v0/ui/b2c-bot/supliers-filter-list/";
+        return machadaloHttp.get(url);
+      }  
 
+      return DashboardService;
 
     }]);
