@@ -907,6 +907,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         $scope.opsVerifyButtonDiable = true;
         $scope.opsVerified = function (phone, supplier_id,supplierType) {
+          $scope.requirementDetailData ={}
           $scope.detailedShow = [];
           $scope.newbrowsed = {};
           $scope.SelectedCompany = [];
