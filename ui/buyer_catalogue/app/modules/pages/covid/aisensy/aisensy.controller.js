@@ -67,8 +67,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.showfilterDetail = false;
           $scope.formData.contactSearch = "";
           $scope.countBrowsedRow = false;
+          $scope.NewcountBrowsedRow = false;
           $scope.addRemoveBtn = "Add row";
-          $scope.supplierTypeUndefined = "supplier Type Undefined";
+          $scope.NewaddRemoveBtn = "Add row";
+          $scope.supplierTypeUndefined = "supplier not found";
 
           let param = {
             next_page: 1
@@ -691,14 +693,14 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             })
         }
 
-        $scope.templateInStatus = function (data,sector) {
+        $scope.templateInStatus = function (data, sector) {
           let param = {
             phone_number: data.phone_number
           }
-          if(!sector){
+          if (!sector) {
             sector = "";
           }
-          AuthService.gettemplateInStatus(param,sector)
+          AuthService.gettemplateInStatus(param, sector)
             .then(function onSuccess(response) {
               $scope.templateInStatusData = response.data.data;
             }).catch(function onError(response) {
@@ -906,8 +908,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.opsVerifyButtonDiable = true;
-        $scope.opsVerified = function (phone, supplier_id,supplierType) {
-          $scope.requirementDetailData ={}
+        $scope.opsVerified = function (phone, supplier_id, supplierType) {
+          $scope.requirementDetailData = {}
           $scope.detailedShow = [];
           $scope.newbrowsed = {};
           $scope.SelectedCompany = [];
@@ -924,7 +926,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.leads_Data = response.data.data;
             })
 
-          releaseCampaignService.requirementDetail("", phone, supplier_id,supplierType)
+          releaseCampaignService.requirementDetail("", phone, supplier_id, supplierType)
             .then(function onSuccess(response) {
               $scope.requirementDetailData = response.data.data.requirements;
               $scope.companiesDetailData = response.data.data.companies;
@@ -1065,10 +1067,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           showUncheckAll: false
         };
         $scope.areaSettings = {
-           scrollableHeight: '300px', 
-           scrollable: true ,
-           enableSearch: true,
-          };
+          scrollableHeight: '300px',
+          scrollable: true,
+          enableSearch: true,
+        };
 
 
         $scope.detailedShow = [];
@@ -1380,8 +1382,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           },
             function (confirm) {
               if (confirm) {
-                $(".confirm").attr('disabled', 'disabled'); 
-                
+                $(".confirm").attr('disabled', 'disabled');
+
                 releaseCampaignService.opsVerifyRequirement({ "requirement_ids": verifyId })
                   .then(function onSuccess(response) {
                     // var changedBookingPlanListcolor = true;
@@ -1742,6 +1744,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.companiesDetailDataBrowsed = response.data.data.companies;
               $scope.browsedSectorList = response.data.data.sector;
 
+
               for (let k in $scope.companiesDetailDataBrowsed) {
                 $scope.companiesDetailDataBrowsed[k].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
                 $scope.companiesDetailDataBrowsed[k].label = $scope.companiesDetailDataBrowsed[k].name;
@@ -1893,9 +1896,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 'preferred_company_other': preferred_company_other,
                 'supplier_type': $scope.userChatPayload.type_of_entity,
                 "supplier_id": $scope.supplierId,
-                'L4' : $scope.browsedDetailData[i].l1_answers,
-                'L5' : $scope.browsedDetailData[i].l1_answer_2,
-                'L6' : $scope.browsedDetailData[i].l2_answers,
+                'L4': $scope.browsedDetailData[i].l1_answers,
+                'L5': $scope.browsedDetailData[i].l1_answer_2,
+                'L6': $scope.browsedDetailData[i].l2_answers,
               });
             }
           }
@@ -1923,39 +1926,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                       $scope.browsedCheck = true;
                       if (response && response.data.data.error) {
                         swal(constants.name, response.data.data.error, constants.error);
-                      } 
+                      }
                       else {
-                        // var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                        //   return el.id;
-                        // }).indexOf($scope.shortlisted_spaces_id);
-                        // if (localindex_index != -1) {
-                        //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
-                        //   $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
-                        // }
-                        // let color_class = '';
-                        // if (response.data.data.list_color_code == 1) {
-                        //   color_class = 'yellow';;
-                        // }
-                        // else if (response.data.data.list_color_code == 2) {
-                        //   color_class = '#7C4700';
-                        // }
-                        // else if (response.data.data.list_color_code == 3) {
-                        //   color_class = 'green';
-                        // }
-                        // else if (response.data.data.list_color_code == 4) {
-                        //   color_class = 'white';
-                        // }
-                        // else if (response.data.data.list_color_code == 5) {
-                        //   color_class = 'red';
-                        // }
-                        // var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                        //   return el.id;
-                        // }).indexOf($scope.shortlisted_spaces_id);
-                        // if (localindex_index != -1) {
-                        //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
-                        //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
-                        // }
-                        $scope.opsVerified($scope.phoneNumber, $scope.supplierId,$scope.userChatPayload.type_of_entity);
+                        $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
                         swal(constants.name, response.data.data.message, constants.success);
                       }
                     }).catch(function onError(response) {
@@ -2085,9 +2058,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 'current_company_other': current_patner_other,
                 'preferred_company_other': preferred_company_other,
                 'supplier_type': $scope.userChatPayload.type_of_entity,
-                'L4' : $scope.browsedDetailData[i].l1_answers,
-                'L5' : $scope.browsedDetailData[i].l1_answer_2,
-                'L6' : $scope.browsedDetailData[i].l2_answers,
+                'L4': $scope.browsedDetailData[i].l1_answers,
+                'L5': $scope.browsedDetailData[i].l1_answer_2,
+                'L6': $scope.browsedDetailData[i].l2_answers,
               });
             }
           }
@@ -2131,10 +2104,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                       if (response && response.data.data.error) {
                         swal(constants.name, response.data.data.error, constants.error);
                       }
-                       else {
+                      else {
                         swal(constants.name, constants.save_success, constants.success);
                         if ($scope.new_data_check == true) {
-                          $scope.opsVerified($scope.phoneNumber, $scope.supplierId,$scope.userChatPayload.type_of_entity);
+                          $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
                           $scope.SelectedCompany = [];
                           $scope.countBrowsedRow = false;
                           $scope.addRemoveBtn = "Add row"
@@ -2142,7 +2115,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                           $scope.newbrowsed.newBrowsedCheck = false;
                           JSON.stringify($scope.newbrowsed) === '{}';
                         }
-                        else{
+                        else {
                           $scope.getRequirementBrowsedData("", $scope.phoneNumber, $scope.supplierId);
                         }
                       }
@@ -2180,7 +2153,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.browsedCheck = false
                 break
               }
-              else{
+              else {
                 $scope.browsedCheck = true;
               }
             }
@@ -2468,8 +2441,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
           }
           let selected_preferred_patner = [];
-          if($scope.leadTabData[index].selected_preferred_patner){
-            for(let i in $scope.leadTabData[index].selected_preferred_patner){
+          if ($scope.leadTabData[index].selected_preferred_patner) {
+            for (let i in $scope.leadTabData[index].selected_preferred_patner) {
               selected_preferred_patner.push($scope.leadTabData[index].selected_preferred_patner[i].id)
             }
           }
@@ -2491,7 +2464,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             "L4": $scope.leadTabData[index].L4,
             "L5": $scope.leadTabData[index].L5,
             "L6": $scope.leadTabData[index].L6,
-            "sector_name":$scope.leadTabData[index].sector_name,
+            "sector_name": $scope.leadTabData[index].sector_name,
           }];
 
           let update = {
@@ -2645,6 +2618,19 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.addRemoveBtn = "Add row";
           }
         }
+
+        $scope.SubmittedaddBrowsedRow = function () {
+          if ($scope.NewcountBrowsedRow == false) {
+            $scope.NewcountBrowsedRow = true;
+            $scope.NewaddRemoveBtn = "Remove row";
+          }
+          else {
+            $scope.NewcountBrowsedRow = false;
+            $scope.new_data_check = false;
+            $scope.NewaddRemoveBtn = "Add row";
+          }
+        }
+
         $scope.SelectedCompany = [];
         $scope.newCompaniesBrowseDetailDataArray = [];
         $scope.browsedPreferredPartner = function (data, check) {
@@ -2676,7 +2662,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               console.log(response);
             })
         }
-        $scope.suspenseLeadFilterData = function (obj,index) {
+        $scope.suspenseLeadFilterData = function (obj, index) {
           let data = "";
           data = JSON.parse(obj);
           $scope.leads_Data_1 = "";
@@ -2691,21 +2677,21 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.suspenseSub_sectorList = response.data.data.sub_sector;
               let companyBysector = $scope.companiesData;
               let companyPartner = $scope.suspensePreferred_partnerList;
-               let hash = {};
-               for(let i of companyBysector.concat(companyPartner)) {
-                 if(!hash[i]) {
-                   hash[i.organisation_id] = i;
-                 }
-               }
-               $scope.companiesData = [];               
-               for(let i in hash) {
+              let hash = {};
+              for (let i of companyBysector.concat(companyPartner)) {
+                if (!hash[i]) {
+                  hash[i.organisation_id] = i;
+                }
+              }
+              $scope.companiesData = [];
+              for (let i in hash) {
                 $scope.companiesData.push(hash[i])
-               }
+              }
             }).catch(function onError(response) {
               console.log(response);
             })
         }
-        $scope.suspenseBrowsedLeadSector = function (obj,index) {
+        $scope.suspenseBrowsedLeadSector = function (obj, index) {
           let data = "";
           data = JSON.parse(obj);
           $scope.leads_Data_1 = "";
@@ -2719,17 +2705,17 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.suspenseSub_sectorList = response.data.data.sub_sector;
               let companyBysector = $scope.companiesData;
               let companyPartner = $scope.suspensePreferred_partnerList;
-               let hash = {};
-               for(let i of companyBysector.concat(companyPartner)) {
-                 if(!hash[i]) {
-                   hash[i.organisation_id] = i;
-                 }
-               }
-               $scope.companiesData = [];               
-               for(let i in hash) {
+              let hash = {};
+              for (let i of companyBysector.concat(companyPartner)) {
+                if (!hash[i]) {
+                  hash[i.organisation_id] = i;
+                }
+              }
+              $scope.companiesData = [];
+              for (let i in hash) {
                 $scope.companiesData.push(hash[i])
-               }
-               console.log($scope.companiesData,"111111")
+              }
+              console.log($scope.companiesData, "111111")
             }).catch(function onError(response) {
               console.log(response);
             })
@@ -2737,7 +2723,58 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.newBrowsedMulticheck = function (index) {
           alert(index)
         }
+
+        $scope.newRequirement = {};
+        $scope.newLeadCreated = function (data) {
+          let browsed_ids = [];
+          let obj = [];
+          for (let i in $scope.requirementCompany) {
+            obj.push($scope.requirementCompany[i].organisation_id)
+          }
+          data.prefered_patners = obj;
+          data.prefered_patner_other = "";
+          // data.current_patner_other = "";
+          data.phone_number = $scope.phoneNumber;
+          data.supplier_id = $scope.supplierId;
+          data.sub_sector_id = null;
+          data.call_back_preference = "";
+          data.current_patner_feedback = "";
+          data.current_patner_feedback_reason = "";
+          data.campaign_id = "MACDEL70CC";
+          data.status = "";
+          data.supplier_type = $scope.userChatPayload.type_of_entity;
+          data.shortlisted_spaces_id = null;
+          browsed_ids.push(data);
+          let newObj = {};
+          newObj.browsed_ids = browsed_ids;
+            releaseCampaignService.newLeadCreated(newObj)
+              .then(function onSuccess(response) {
+                $scope.newRequirement = {};
+                $scope.requirementCompany = [];
+                if (response && response.data.data.error) {
+                  swal(constants.name, response.data.data.error, constants.error);
+                }
+                else {
+                  swal(constants.name, response.data.data.message, constants.success);
+                  $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
+                }
+
+              }).catch(function onError(response) {
+                console.log(response);
+              })
+        }
+
+        $scope.NewbrowsedPreferredPartner = function (data) {
+          $scope.newRequirement = {};
+          $scope.requirementCompany = [];
+          $scope.newRequirement.sector_id = data.id;
+          $scope.browsedPreferredPartner(data) 
+        }
+
+       $scope.newCheckboxSubmitted = function(){
+        console.log("1111112345678")
+       }
+
+
+
       }]);
-
-
-

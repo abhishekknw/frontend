@@ -307,5 +307,10 @@
       return machadaloHttp.get(url);
     }
 
+    releaseCampaignService.newLeadCreated = function(data){
+      var url = url_base_ui + 'b2b/submit-tab-update-leads/';
+      return machadaloHttp.post(url,data);
+    }
+
     return releaseCampaignService;
 }]);
