@@ -1182,7 +1182,7 @@
                               <span ng-if="leadDetail.value">{{leadDetail.value}}</span>
                               <span ng-if="!leadDetail.value">NA</span>
                             </td>
-                            <td class="col-md-2">
+                            <td class="col-md-2">{{machadaloClientStatus(lead[0].macchadalo_client_status)}}
                               <select ng-change="setValue(value8,lead[0].macchadalo_client_comment,lead[0]._id,lead[0].requirement_id)"
                                 class="form-control client-status" ng-model="value8">
                                 <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
