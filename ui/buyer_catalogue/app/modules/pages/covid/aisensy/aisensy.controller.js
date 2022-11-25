@@ -2747,33 +2747,202 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           browsed_ids.push(data);
           let newObj = {};
           newObj.browsed_ids = browsed_ids;
-            releaseCampaignService.newLeadCreated(newObj)
-              .then(function onSuccess(response) {
-                $scope.newRequirement = {};
-                $scope.requirementCompany = [];
-                if (response && response.data.data.error) {
-                  swal(constants.name, response.data.data.error, constants.error);
-                }
-                else {
-                  swal(constants.name, response.data.data.message, constants.success);
-                  $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
-                }
+          releaseCampaignService.newLeadCreated(newObj)
+            .then(function onSuccess(response) {
+              $scope.newRequirement = {};
+              $scope.requirementCompany = [];
+              $scope.newRequirementCheckbox = false;
+              if (response && response.data.data.error) {
+                swal(constants.name, response.data.data.error, constants.error);
+              }
+              else {
+                swal(constants.name, response.data.data.message, constants.success);
+                $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
+              }
 
-              }).catch(function onError(response) {
-                console.log(response);
-              })
+            }).catch(function onError(response) {
+              console.log(response);
+            })
         }
 
         $scope.NewbrowsedPreferredPartner = function (data) {
           $scope.newRequirement = {};
           $scope.requirementCompany = [];
           $scope.newRequirement.sector_id = data.id;
-          $scope.browsedPreferredPartner(data) 
+          $scope.browsedPreferredPartner(data)
         }
 
-       $scope.newCheckboxSubmitted = function(){
-        console.log("1111112345678")
-       }
+      
+        $scope.newCheckboxSubmitted = function (check) {
+          $scope.newRequirementCheckbox = check;
+          }
+
+         $scope.NewsupplierAddUpdateData = {}
+        $scope.NewsupplierForAddUpdate = function(data){
+          // $scope.supplierForAddUpdate(data)
+          AuthService.initialData()
+            .then(function onSuccess(response) {
+              $scope.Cities = response.data.cities;
+              $scope.supplierTypes = response.data.supplier_types;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+        $scope.newSupplierPocModel = [];
+        $scope.newSupplierAddPoc = function () {
+          $scope.newSupplierPocModel.push({
+            'mobile': '',
+            'name': '',
+            'contact_type': ''
+          });
+        }
+        $scope.newSupplierRemovePoc = function (index) {
+          $scope.newSupplierPocModel.splice(index, 1)
+        }
+        $scope.newGetCityArea = function () {
+          $scope.newSelectedSupplierName = [];
+          var id = $scope.NewsupplierAddUpdateData.city_id;
+          var localindex_index = $scope.Cities.map(function (el) {
+            return el.id;
+          }).indexOf(JSON.parse($scope.NewsupplierAddUpdateData.city_id));
+          if (localindex_index != -1) {
+            $scope.NewsupplierAddUpdateData['city_id'] = $scope.Cities[localindex_index].id;
+            $scope.NewsupplierAddUpdateData['city'] = $scope.Cities[localindex_index].city_name;
+          }
+          AuthService.getAreas('areas', id)
+            .success(function (response) {
+              $scope.newSelectedArea = [];
+              // if (!value) {
+              //   $scope.NewsupplierAddUpdateData['area_id'] = "";
+              //   $scope.NewsupplierAddUpdateData['area'] = "";
+              // }
+              $scope.Areas = response;
+            });
+        }
+        $scope.newSelectArea = function () {
+          $scope.suppliersName = [];
+          $scope.newSelectedSupplierName = [];
+          if ($scope.newSelectedArea && $scope.newSelectedArea.length > 0) {
+            $scope.NewsupplierAddUpdateData['area'] = $scope.newSelectedArea[0].label;
+            $scope.NewsupplierAddUpdateData['area_id'] = $scope.newSelectedArea[0].id;
+          }
+          let data = {
+            city: $scope.NewsupplierAddUpdateData.city,
+            area: $scope.NewsupplierAddUpdateData.area,
+            supplier_type: $scope.NewsupplierAddUpdateData.supplier_type
+          }
+          AuthService.getSupplierNameList(data)
+            .then(function onSuccess(response) {
+              if (response) {
+                $scope.suppliersName = response.data.data.supplier_list;
+                if ($scope.suppliersName.length > 0) {
+                  for (let i in $scope.suppliersName) {
+                    if ($scope.suppliersName[i].supplier_name) {
+                      $scope.suppliersName[i].label = $scope.suppliersName[i].supplier_name;
+                    } else {
+                      $scope.suppliersName[i].label = $scope.suppliersName[i].society_name;
+                    }
+
+                    $scope.suppliersName[i].id = $scope.suppliersName[i].supplier_id;
+                  }
+                }
+              }
+            }).catch(function onError(response) {
+              console.log(response);
+            });
+        }
+        // $scope.newChangeSupplier = function (type) {
+        //   alert(type)
+        //   if (type == 'RS') {
+        //     $scope.designation = constants.designation_society;
+        //   } else if (type == 'CP') {
+        //     $scope.designation = constants.designation_corporate;
+
+        //   } else if (type == 'GY' || type == 'SA') {
+        //     $scope.designation = constants.designation_saloon;
+
+        //   } else if (type == 'EI' || type == 'GN') {
+        //     $scope.designation = constants.designation_gantry;
+
+        //   } else {
+        //     $scope.designation = constants.designation_bus_shelter;
+        //   }
+        //   $scope.NewsupplierAddUpdateData.designation = "";
+        // }
+        $scope.getSupplierDataByNumber = function (number){
+          $scope.newSelectedArea = [];
+          AuthService.getSupplierDataByNumber(number)
+            .then(function onSuccess(response) {
+              $scope.supplierData = response.data.data.supplier;
+              $scope.NewsupplierAddUpdateData.supplier_type = $scope.supplierData[0][0].supplier_type;
+              $scope.NewsupplierAddUpdateData.latitude = $scope.supplierData[0][0].latitude;
+              $scope.NewsupplierAddUpdateData.longitude = $scope.supplierData[0][0].longitude;
+              $scope.NewsupplierAddUpdateData.pin_code = $scope.supplierData[0][0].pincode;
+              $scope.NewsupplierAddUpdateData.address = $scope.supplierData[0][0].address;
+              $scope.NewsupplierAddUpdateData.city = $scope.supplierData[0][0].city;
+              $scope.NewsupplierAddUpdateData.poc_name = $scope.supplierData[1].name;
+              let object = $scope.Cities.find(obj => obj.city_name === $scope.supplierData[0][0].city);
+              $scope.NewsupplierAddUpdateData.city_id = object.id;
+              $scope.NewsupplierAddUpdateData.area = $scope.supplierData[0][0].area;
+              $scope.NewsupplierAddUpdateData.supplier_id = $scope.supplierData[0][0].supplier_id;
+              if($scope.supplierData[0][0].supplier_type){
+                $scope.NewsupplierAddUpdateData.designation = $scope.supplierData[1].contact_type;
+                $scope.designationList($scope.supplierData[0][0].supplier_type);
+              }
+              if($scope.supplierData[0][0].city){
+                 AuthService.getAreas('areas', $scope.NewsupplierAddUpdateData.city_id)
+                 .success(function (response) {
+                  $scope.Areas = response;
+                  let object = $scope.Areas.find(obj => obj.label === $scope.supplierData[0][0].area);
+                  $scope.NewsupplierAddUpdateData.area_id = object.id;
+                  // $scope.newSelectedArea = [];
+                  // $scope.newSelectedArea.push($scope.supplierData[0][0].area);
+                  // if (!value) {
+                  //   $scope.NewsupplierAddUpdateData['area_id'] = "";
+                  //   $scope.NewsupplierAddUpdateData['area'] = "";
+                  // }
+                 });
+              }
+              if($scope.supplierData[0][0].city && $scope.supplierData[0][0].area && $scope.supplierData[0][0].supplier_type){
+                $scope.newSelectArea();
+              }
+            }).catch(function onError(response) {
+              console.log(response);
+            });
+        }
+        $scope.designationList = function (supplier_type) {
+          if (supplier_type == 'RS') {
+            $scope.poc_designation = constants.designation_society;
+          } else if (supplier_type == 'CP') {
+            $scope.poc_designation = constants.designation_corporate;
+
+          } else if (supplier_type == 'GY' || supplier_type == 'SA') {
+            $scope.poc_designation = constants.designation_saloon;
+
+          } else if (supplier_type == 'EI' || supplier_type == 'GN') {
+            $scope.poc_designation = constants.designation_gantry;
+          } else {
+            $scope.poc_designation = constants.designation_bus_shelter;
+          }
+        }
+        $scope.newAddUpdateSupplierSubmit = function () {
+          if($scope.newSelectedSupplierName.length){
+             $scope.NewsupplierAddUpdateData.supplier_id = $scope.newSelectedSupplierName[$scope.newSelectedSupplierName.length - 1].supplier_id;
+          }
+          AuthService.newAddUpdateSupplierSubmit($scope.NewsupplierAddUpdateData)
+            .then(function onSuccess(response) {
+              console.log(response); 
+              $scope.NewsupplierAddUpdateData = {};
+              if (response && response.data.data.error) {
+                swal(constants.name, response.data.data.error, constants.error);
+              }
+              else {
+                swal(constants.name, response.data.data.message, constants.success);
+              }
+            }).catch(function onError(response) {
+              console.log(response);
+            });
+        }
 
 
 

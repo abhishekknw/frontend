@@ -1289,9 +1289,17 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="navbar-collapse" ng-class="isCollapsed ? 'collapse' : 'in'">
         <ul class="nav navbar-nav navbar-right" style="cursor: pointer;">
+
+          <li>
+            <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
+                      data-target="#NewcompanyDetailModal" ng-click="NewsupplierForAddUpdate(NewsupplierAddUpdateData)($index)"
+                      data-toggle="modal">Add/Update Supplier</button></li>
+          
           <li><a target="_blank" class="fa fa-comments" id="active-nav" aria-hidden="true" style="font-size: large"
               ng-click="getActiveUser()">
               Live chat</a> </li>
+
+            
           <li><a target="_blank" class="fa fa-user-circle" aria-hidden="true" style="font-size: large"
               ng-click="contactDetail()">
               Contact</a></li>
@@ -1304,6 +1312,7 @@
           <li> <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large"
               ng-click="filterTab()">
               Filter</a></li>
+         
 
         </ul>
 
@@ -3780,7 +3789,7 @@
                   </tr>
                   <tr ng-if="NewcountBrowsedRow==true">
                     <td class="alignment">
-                      <input type="checkbox" name="newBrowsedCheck" ng-click="newCheckboxSubmitted($index)"
+                      <input type="checkbox" name="newBrowsedCheck" ng-click="newCheckboxSubmitted(newRequirement.newBrowsedCheck)"
                         id="browsedCheckId" ng-model="newRequirement.newBrowsedCheck">
                     </td>
                     <td class="alignment">
@@ -3864,8 +3873,8 @@
               </table>
 
               <div class="">
-                <button class="btn btn-danger"  ng-click="SubmittedaddBrowsedRow()">{{NewaddRemoveBtn}}</button>
-                <button class="btn btn-success" ng-click="newLeadCreated(newRequirement)">Submit</button>
+                <button class="btn btn-danger" ng-click="SubmittedaddBrowsedRow()">{{NewaddRemoveBtn}}</button>
+                <button class="btn btn-success" ng-disabled="!newRequirementCheckbox" ng-click="newLeadCreated(newRequirement)">Submit</button>
               </div>
 
               <!-- test -->
@@ -4042,7 +4051,7 @@
                     </td>
                   </tr>
                   <tr ng-if="countBrowsedRow==true">
-                    <!-- <tr> -->
+                    
                     <td class="alignment">
                       <input type="checkbox" name="newBrowsedCheck" ng-click="newCheckboxBrowesLeadCheck($index)"
                         id="browsedCheckId" ng-model="newbrowsed.newBrowsedCheck">
@@ -4362,7 +4371,7 @@
                         data-toggle="modal">Add/Update Supplier</button>
                       <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
                         data-target="#pocModal" ng-click="openAddPoc(leadData._id,leadData.supplier_type)"
-                        ng-disabled="leadData.is_updated == 'False'" data-toggle="modal">Add POC</button>
+                         data-toggle="modal">Add POC</button>
                       <button style="margin-bottom:2px" type="button" ng-disabled="leadData.is_updated == 'False'"
                         name="button" class="btn btn-success btn-small">Add RE</button>
                     </td>
@@ -4700,7 +4709,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <div class="pageTitle smallBtn full-width-header">
-          <h4>Add/Update Supplier</h4>
+          <h4>Add/Update Suppliers</h4>
         </div>
         <!-- <h4 class="modal-title">Company Details:</h4>
         <hr /> -->
@@ -4930,6 +4939,282 @@
             <button class="smallBtn" type="button" ng-click="commentValueDetails(mymodel,id_detail,req_id_detail)">Add
               Comment</button>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- start of add supllier Model -->
+<div id="NewcompanyDetailModal" class="modal fade style-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="pageTitle smallBtn full-width-header">
+          <h4>Add/Update Supplier</h4>
+        </div>
+        <!-- <h4 class="modal-title">Company Details:</h4>
+        <hr /> -->
+        <div class="modal-body">
+          <form role="form" class="form-inline" ng-submit="newAddUpdateSupplierSubmit()" name="myForm">
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Phone Number *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Phone Number"
+                  class="form-control" name="phone_number"
+                  ng-model="NewsupplierAddUpdateData.phone_number" ng-change="getSupplierDataByNumber(NewsupplierAddUpdateData.phone_number)">
+                <div ng-show="myForm.phone_number.$error.pattern" class="error" style="font-size:12px; color: red;">
+                  Phone number Invalid</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Supplier Type *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <select class="form-control" name="supplier_type" id="supplier_type_id"
+                  ng-model="NewsupplierAddUpdateData.supplier_type"
+                  ng-change='designationList(NewsupplierAddUpdateData.supplier_type)'>
+                  <option value="" disabled>Select Supplier Type</option>
+                  <option ng-repeat="suppliertype in supplierTypes track by $index"
+                    value="{{suppliertype.supplier_type_code}}">
+                    {{suppliertype.supplier_type_name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> City *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <select class="form-control" name="city" id="city_id"
+                  ng-model="NewsupplierAddUpdateData.city_id"
+                  ng-change='newGetCityArea()' ng-required="true" 
+                  ng-options="city.id as city.city_name for city in Cities | orderBy: 'city_name'">
+                </select>
+                <!-- <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"
+                  ng-model="supplierForAddUpdateData.city_id" ng-required="true">
+                  <option value="" disabled>Select City</option>
+                  <option ng-repeat="city in Cities | orderBy: 'city_name'"
+                    ng-selected="supplierForAddUpdateData.city_id == city.id" value="{{city.id}}" required>
+                    {{city.city_name}}</option>
+                </select> -->
+                <span ng-show="myForm.city.$dirty && myForm.city.$invalid" class="error">Select a City</span>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Select Area & Edit : </label>
+              </div>
+              <div class="col-md-4" style="margin-top: 10px">
+                <span disabled="Areas.length == 0 || NewsupplierAddUpdateData.isNewArea" class="multiselectDropdown"
+                  ng-dropdown-multiselect="" options="Areas" search-filter="" ng-click="newSelectArea()"
+                  extra-settings="areaSettings" selected-model="newSelectedArea">
+                </span>
+              </div>
+              <div class="col-md-4">
+                <md-switch ng-model="NewsupplierAddUpdateData.isNewArea" ng-change="changeArea()" aria-label="Switch 1">
+                  <label>Add New Area</label>
+                </md-switch>
+              </div>
+            </div>
+
+            <div class="row" ng-if="!NewsupplierAddUpdateData.isNewArea && NewsupplierAddUpdateData.area_id">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Edit Area: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Edit Area " class="form-control" name="edit_area" id="edit_area_id"
+                  ng-model="NewsupplierAddUpdateData.area">
+              </div>
+            </div>
+
+            <div class="row" ng-if="NewsupplierAddUpdateData.isNewArea">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Add New Area: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Add New Area " class="form-control" name="new_area" id="new_area_id"
+                  ng-model="NewsupplierAddUpdateData.area">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Select Supplier & Edit : </label>
+              </div>
+
+              <div class="col-md-4" style="margin-top: 10px">
+                <span disabled="suppliersName == 0 || NewsupplierAddUpdateData.isNewSupplier"
+                  class="multiselectDropdown" ng-dropdown-multiselect="" options="suppliersName" search-filter=""
+                  ng-click="selectSupplierName()" extra-settings="areaSettings"
+                  selected-model="newSelectedSupplierName"></span>
+                <span ng-if="suppliersName == 0" class="error">No supplier found</span>
+              </div>
+
+              <div class="col-md-4">
+                <md-switch ng-model="NewsupplierAddUpdateData.isNewSupplier" ng-change="addNewSupplier()"
+                  aria-label="Switch 1">
+                  <label>Add New Supplier</label>
+                </md-switch>
+              </div>
+            </div>
+
+            <div class="row" ng-if="NewsupplierAddUpdateData.isNewSupplier">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Edit Supplier: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Add New Supplier " class="form-control" name="edit_supplier"
+                  id="edit_supplier_id" ng-model="NewsupplierAddUpdateData.supplier_name">
+              </div>
+            </div>
+
+            <div class="row" ng-if="supplierForAddUpdateData.isNewSupplier">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Add New Supplier: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Add New Supplier " class="form-control" name="new_supplier"
+                  id="new_supplier_id" ng-model="NewsupplierAddUpdateData.supplier_name">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Add POC *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="POC" class="form-control" name="poc" id="poc_id"
+                  ng-model="NewsupplierAddUpdateData.poc_name">  
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Designation *: </label>
+              </div>
+              
+              <div class="col-md-8" style="margin-top: 10px">
+
+                <select name="designation" class="form-control" value="NewsupplierAddUpdateData.designation"
+                  ng-model="NewsupplierAddUpdateData.designation" ng-required="true">
+                  <option value="" disabled>Select Designation</option>
+                  <option ng-repeat="desig in poc_designation" ng-selected="desig==NewsupplierAddUpdateData.designation"
+                    value="{{desig}}" >
+                    {{desig}}</option>
+                </select>
+                <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error">Designation is
+                  required.</span>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Address: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Address" class="form-control" name="address" id="address_id"
+                  ng-model="NewsupplierAddUpdateData.address">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Pin Code: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" ng-pattern="/^[0-9_ ]{0,9}$/" placeholder="Pin Code" class="form-control"
+                  name="pin_code" id="pin_code_id" ng-model="NewsupplierAddUpdateData.pin_code">
+                <div ng-show="myForm.pin_code.$error.pattern" class="error" style="font-size:12px; color: red;">
+                  Pin Code Invalid</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Latitude: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Latitude" class="form-control"
+                  name="Latitude" id="Latitude" ng-model="NewsupplierAddUpdateData.latitude">
+                <!-- <div ng-show="myForm.pin_code.$error.pattern" class="error" style="font-size:12px; color: red;">
+                  Latitude Invalid</div> -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Longitude: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text"  placeholder="Longitude" class="form-control"
+                  name="Longitude" id="Longitude" ng-model="NewsupplierAddUpdateData.longitude">
+                <!-- <div ng-show="myForm.pin_code.$error.pattern" class="error" style="font-size:12px; color: red;">
+                  Longitude Invalid</div> -->
+              </div>
+            </div>
+              <!-- ADD POC -->
+              <div ng-repeat="pocdata in newSupplierPocModel track by $index">
+                <div class="row">
+                  <div class="col-md-4" style="margin-top: 10px">
+                    <label> Phone Number *: </label>
+                  </div>
+                  <div class="col-md-6" style="margin-top: 10px">
+                    <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Phone Number"
+                      class="form-control" name="phone_number_{{$index}}" id="phone_number_{{$index}}"
+                      ng-model="pocdata.mobile" required>
+                    <div ng-show="pocForm.phone_number_{{$index}}.$error.pattern" class="error"
+                      style="font-size:12px; color: red;">
+                      Phone number Invalid</div>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-md-4" style="margin-top: 10px">
+                    <label> POC Name *: </label>
+                  </div>
+                  <div class="col-md-6" style="margin-top: 10px">
+                    <input type="text" placeholder="POC Name" class="form-control" name="poc" id="poc_poc_{{$index}}"
+                      ng-model="pocdata.name" required>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4" style="margin-top: 10px">
+                    <label>Designation *: </label>
+                  </div>
+                  <div class="col-md-6" style="margin-top: 10px">
+                    <select name="designation" class="form-control" value="pocdata.contact_type"
+                      ng-model="pocdata.contact_type" ng-required="true">
+                      <option value="" disabled>Select Designation</option>
+                      <option ng-repeat="desig in poc_designation" ng-selected="desig == pocdata.contact_type"
+                        value="{{desig}}" required>
+                        {{desig}}</option>
+                    </select>
+                    <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error"> Designation is
+                      required.</span>
+                    </select>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <button type="button" ng-click="newSupplierRemovePoc($index)" id="remove_poc_{{$index}}"
+                    class="smallBtn pocBtn">-</button>
+                </div>
+                <hr>
+              </div>
+              <!-- END Add POc -->
+            
+            <div class="text-left">
+              <button type="submit" class="smallBtn" >Add/Update Supplier</button>
+              <button type="button" ng-click="newSupplierAddPoc()" class="smallBtn pocBtn">+Add Poc</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
