@@ -746,6 +746,17 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
   margin-left: 170px;
 }*/
 
+
+.navbar-default .navbar-nav > li  button{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background: unset;
+    color: #777;
+    margin: 0;
+    font-weight: 900;
+    border: none;
+}
+
 /* For media screen*/
 
 @media only screen and (max-width :767px)  {
