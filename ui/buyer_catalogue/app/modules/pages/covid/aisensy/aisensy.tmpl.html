@@ -5162,7 +5162,7 @@
             </div>
               <!-- ADD POC -->
               <div ng-repeat="pocdata in newSupplierPocModel track by $index">
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-md-4" style="margin-top: 10px">
                     <label> Phone Number *: </label>
                   </div>
@@ -5174,7 +5174,7 @@
                       style="font-size:12px; color: red;">
                       Phone number Invalid</div>
                   </div>
-                </div>
+                </div> -->
   
                 <div class="row">
                   <div class="col-md-4" style="margin-top: 10px">
@@ -5182,7 +5182,7 @@
                   </div>
                   <div class="col-md-6" style="margin-top: 10px">
                     <input type="text" placeholder="POC Name" class="form-control" name="poc" id="poc_poc_{{$index}}"
-                      ng-model="pocdata.name" required>
+                      ng-model="pocdata.poc_name" required>
                   </div>
                 </div>
                 <div class="row">
@@ -5191,7 +5191,7 @@
                   </div>
                   <div class="col-md-6" style="margin-top: 10px">
                     <select name="designation" class="form-control" value="pocdata.contact_type"
-                      ng-model="pocdata.contact_type" ng-required="true">
+                      ng-model="pocdata.designation" ng-required="true">
                       <option value="" disabled>Select Designation</option>
                       <option ng-repeat="desig in poc_designation" ng-selected="desig == pocdata.contact_type"
                         value="{{desig}}" required>

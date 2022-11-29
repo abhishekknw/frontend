@@ -887,7 +887,6 @@ angular.module('Authentication')
                      return response
                   });
             };
-
  
             authService.getSectorForTemplate = function (phoneNumber) {
                var url = "v0/ui/b2c-bot/all-templates-send/?phone_number="+phoneNumber;
