@@ -762,7 +762,8 @@
       $scope.supplier_code = "all";
     }
     $scope.sendBookingEmails = function (email) {
-      B2BDashboardService.sendBookingEmails($scope.leads, $scope.supplier_code, $scope.campaign, email)
+      let tabname = "";
+      B2BDashboardService.sendBookingEmails($scope.leads, $scope.supplier_code, $scope.campaign, email,tabname)
         .then(function onSuccess(response) {
           swal("Successfull", "Email Sent Sucessfully", "success");
         });
