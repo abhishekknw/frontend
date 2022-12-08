@@ -766,7 +766,13 @@
       let tabname = "";
       B2BDashboardService.sendBookingEmails($scope.leads, $scope.supplier_code, $scope.campaign, email,tabname)
         .then(function onSuccess(response) {
-          swal("Successfull", "Email Sent Sucessfully", "success");
+          if(response.data.status && response.data.data ){
+            $scope.emailModel = {};
+            swal(constants.name,"Email Sent Sucessfully", constants.success);
+          }
+        })
+        .catch(function onError(response) {
+          swal(constants.name,"Error", constants.error);
         });
     }
     $scope.getNotPurchasedLead = function (CampaignId, campaignName) {

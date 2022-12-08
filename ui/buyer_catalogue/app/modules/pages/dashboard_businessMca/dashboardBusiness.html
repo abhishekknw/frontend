@@ -6109,13 +6109,9 @@
             <div class="modal-body">
               <div class="modalBodyBox">
                 <label>Select Email Type:</label>
-                <select class="field" name="" ng-model="emailModel.selected">
+                <select class="field" ng-model="emailModel.selected">
                   <option value="" disabled selected hidden>Email Type</option>
-                  <option value="recce">Recce Email</option>
-                  <option value="pipelineOfSupplier">Pipelined Societies Email</option>
-                  <option value="listOfSupplier">Booking(Upcoming Society activation Email)</option>
-                  <option value="activationOfSupplier">Activation Of Society,Branding and Permission Email</option>
-                  <option value="prehype">Prehype Email</option>
+                  <option ng-repeat="option in listClientStatus" track by "$index" value="{{option}}">{{option}}</option>
                 </select>
                 <div class="sendEmail1">
                   <input type="email" class="field" placeholder="Enter Multiple User's Email To Send Mail "
@@ -6127,11 +6123,11 @@
                     time</label>
                 </div>
                 <div class="buttons buttons-flex">
-                  <button type="button" name="button" ng-Click="sendEmailsMca(emailModel.email)" class="smallBtn"
+                  <button type="button" name="button" ng-Click="sendEmailsMca(emailModel)" class="smallBtn"
                     ng-disabled="isEmailButton || emailBtnDisabled || !emailModel.selected">Send email for given
                     user</button>
                   <span>OR</span>
-                  <button type="button" name="button" class="smallBtn" ng-click="sendEmailsMca(emailModel.email)"
+                  <button type="button" name="button" class="smallBtn" ng-click="sendEmailsMca(emailModel)"
                     ng-disabled="emailBtnDisabled || !emailModel.selected">Send email to all (Default)</button>
                 </div>
               </div>
