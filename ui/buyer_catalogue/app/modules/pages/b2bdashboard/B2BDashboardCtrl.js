@@ -1493,10 +1493,11 @@
       return values;
     }
     $scope.supplierType = 'Leads';
-    $scope.surveyLeadArray = ['Leads', 'Survey', 'Feedback'];
+    $scope.surveyLeadArray = ['Leads', 'Survey','Survey Leads', 'Feedback'];
 
     $scope.surveyLeadFilter = function (filter) {
       $scope.filterType = filter;
+      $scope.showPagination = false;
       if (filter == 'Leads' || filter == 'Survey') {
         $scope.filterType = filter;
         $scope.isTableHide = true;

@@ -1070,34 +1070,40 @@
                             <td class="btn_box_lead_survey">
                               <button class="btn btn-danger" id="viewLeads_{{$index}}"
                                 ng-click="setButtonIndex($index,campaign.campaign_id,campaign.name)">
-                                <p ng-if="filterType == 'Leads' && filterType != 'Survey' && filterType != 'Feedback'">
+                                <p ng-if="filterType === 'Leads'">
                                   View Leads</p>
-                                <p ng-if="filterType != 'Leads' && filterType == 'Survey' && filterType !='Feedback'">
+                                <p ng-if="filterType === 'Survey'">
                                   View Survey</p>
-                                <p ng-if="filterType != 'Leads' && filterType != 'Survey' && filterType =='Feedback'">
+                                <p ng-if="filterType ==='Feedback'">
                                   View Feedback</p>
+                                <p ng-if="filterType === 'Survey Leads'">
+                                  View Survey</p>
                               </button>
                             </td>
                             <td class="btn_box_lead_survey">
                               <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id,filterType)"
                                 data-target="#sendEmailModal" data-toggle="modal">
-                                <p ng-if="filterType == 'Leads' && filterType != 'Survey' && filterType != 'Feedback'">
+                                <p ng-if="filterType === 'Leads'">
                                   Email Leads</p>
-                                <p ng-if="filterType != 'Leads' && filterType == 'Survey' && filterType !='Feedback'">
+                                <p ng-if="filterType === 'Survey'">
                                   Email Survey</p>
-                                <p ng-if="filterType != 'Leads' && filterType != 'Survey' && filterType =='Feedback'">
+                                <p ng-if="filterType ==='Feedback'">
                                   Email Feedback</p>
+                                <p ng-if="filterType ==='Survey Leads'">
+                                  Email Survey</p>
                               </button>
                             </td>
                             <td class="btn_box_lead_survey">
                               <button class="btn btn-danger" data-target="#downloadLeads" data-toggle="modal"
                                 ng-click="downloadUploadFile(campaign.campaign_id,filterType)">
-                                <p ng-if="filterType == 'Leads' && filterType != 'Survey' && filterType != 'Feedback'">
+                                <p ng-if="filterType === 'Leads'">
                                   Download Leads</p>
-                                <p ng-if="filterType != 'Leads' && filterType == 'Survey' && filterType !='Feedback'">
+                                <p ng-if="filterType === 'Survey'">
                                   Download Survey</p>
-                                <p ng-if="filterType != 'Leads' && filterType != 'Survey' && filterType =='Feedback'">
+                                <p ng-if="filterType ==='Feedback'">
                                   Download Feedback</p>
+                                <p ng-if="filterType ==='Survey Leads'">
+                                    Download Survey</p>
                               </button>
                             </td>
                             <td class="btn_box_lead_survey">
