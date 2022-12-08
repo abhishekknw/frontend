@@ -247,7 +247,7 @@
         // {header : 'AUDIT', key : 'audit', label1 : 'Audited', label2 : 'UnAudited'},
         // {header : 'CLOSURE', key : 'closure', label1 : 'Closed', label2 : 'UnClosed' },
       ];
-      $scope.surveyLeadArray = ['Leads','Survey','Feedback'];
+      $scope.surveyLeadArray = ['Leads','Survey','Survey Leads','Feedback'];
       $scope.supplierType = 'Leads';
 
       $scope.supHeaders = [
