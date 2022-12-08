@@ -247,7 +247,7 @@
         // {header : 'AUDIT', key : 'audit', label1 : 'Audited', label2 : 'UnAudited'},
         // {header : 'CLOSURE', key : 'closure', label1 : 'Closed', label2 : 'UnClosed' },
       ];
-      $scope.surveyLeadArray = ['Leads','Survey','Feedback'];
+      $scope.surveyLeadArray = ['Leads','Survey','Survey Leads','Feedback'];
       $scope.supplierType = 'Leads';
 
       $scope.supHeaders = [
@@ -682,6 +682,7 @@
         $scope.showTable = true;
         $scope.showCampaigns = true;
         $scope.leadBasics (tabName);
+        $scope.viewClientStatus();
       }
 
       $scope.viewCommentsLeadDetails = function (Id, req_id) {
@@ -4583,8 +4584,6 @@
           },
           "raw_data": raw_data,
           "metrics": metrics,
-          // "metrics": [["2","3","/"],["m1",100,"*"]],
-          // "metrics" :[["1","3","/"],["2","3","/"],["m1","100","*"],["m2","100","*"]],
           "statistical_information": { "stats": ["z_score"], "metrics": ["m1", "m3"] },
           "higher_level_statistical_information": {
             "level": ["campaign"], "stats": ["frequency_distribution", "mean", "variance_stdev"],
@@ -4593,7 +4592,6 @@
           "supplier_code": $scope.selectedSupplierType.code
         }
 
-        console.log("data data", data);
         DashboardService.getDistributionGraphsStatics(data)
           .then(function onSuccess(response) {
             $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
@@ -5191,38 +5189,7 @@
           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
         } else if ($scope.graphSelection.dateRange.startDate &&
           ($scope.selectedbookingParameters.length && $scope.selectedDynamicCampaigns.length)) {
-          // alert("Date range + Booking(multiselect) and City Campaign Selected");
-
-          // specificXValue = 'campaign_name';
-          // angular.forEach($scope.selectedbookingParameters, function(data){
-          //   console.log(data);
-          //    $scope.xValues.value = data.name;
-          // });
-
-          // $scope.xValues.value = 'campaign_name';
-          // specificXValue2 = 'binary_fields';
-
-          //  specificXValue2 = 'standeetype';
-          // specificXValue = 'fliertype';
-          // var specficSelectedValue = 0;
-          // angular.forEach($scope.selectedbookingParameters, function(data){
-          //   console.log(data);
-          //   specficSelectedValue = specficSelectedValue + 1;
-          //   var dataSpecific = {
-          //     "specificXValue" : "specificXValue" + specficSelectedValue,
-          //   }
-          //   console.log(specficSelectedValue);
-          //   console.log(dataSpecific.specificXValue);
-          //   var dataValueSpecificKey = data.value;
-          //   console.log(dataValueSpecificKey);
-          //
-          // });
-          // $scope.xValues.value = 'campaign_name';
-
           angular.forEach($scope.selectedbookingParameters, function (data) {
-            // specificXValue = data.value;
-            // specificXValue = 'campaign_name';
-            // $scope.xValues.value = 'binary_fields';
             $scope.xValues.value = 'campaign_name';
             specificXValue = 'binary_fields';
           });
@@ -5263,7 +5230,6 @@
         else if ($scope.graphSelection.dateRange.startDate &&
           ($scope.selectedTypeOfSocieties.length &&
             $scope.selectedDynamicCampaigns.length)) {
-          // alert("Date range + society parameter(society) and Campaign Selected");
           $scope.xValues.value = 'qualitytype';
           specificXValue = 'campaign_name';
           var reqData = {
@@ -5302,7 +5268,6 @@
         else if ($scope.graphSelection.dateRange.startDate &&
           ($scope.selectedSizeOfFlats.length &&
             $scope.selectedDynamicCampaigns.length)) {
-          // alert("Date range + society parameter(flat) and Campaign Selected");
           $scope.xValues.value = 'flattype';
           specificXValue = 'campaign_name';
           var reqData = {
@@ -5341,9 +5306,7 @@
           ($scope.selectedSizeOfFlats.length &&
             $scope.selectedTypeOfSocieties.length && $scope.selectedCities_temp.length
             && $scope.selectedDynamicCampaigns.length)) {
-          // alert("only society type and Campaign Selected and Flat Type");
           $scope.xValues.value = 'qualitytype';
-          // $scope.xValues.value = 'flattype';
           specificXValue = 'campaign_name';
           specificXValue2 = 'flattype';
           var reqData = {
@@ -5373,9 +5336,7 @@
         else if (!$scope.graphSelection.dateRange.startDate &&
           ($scope.selectedTypeOfSocieties.length && $scope.selectedCities_temp.length
             && $scope.selectedDynamicCampaigns.length)) {
-          // alert("only society type and Campaign Selected");
           $scope.xValues.value = 'qualitytype';
-          // $scope.xValues.value = 'flattype';
           specificXValue = 'campaign_name';
 
           var reqData = {
@@ -5403,9 +5364,7 @@
         else if (!$scope.graphSelection.dateRange.startDate &&
           ($scope.selectedSizeOfFlats.length && $scope.selectedCities_temp.length
             && $scope.selectedDynamicCampaigns.length)) {
-          // alert("only flat type and Campaign Selected");
           $scope.xValues.value = 'flattype';
-          // $scope.xValues.value = 'flattype';
           specificXValue = 'campaign_name';
 
           var reqData = {
@@ -5433,7 +5392,6 @@
         else if (!$scope.graphSelection.dateRange.startDate && ($scope.graphSelection.phaseRange.length
           && $scope.selectedDynamicCampaigns.length
         )) {
-          // alert("only Phase Range and Campaign Selected");
           $scope.xValues.value = 'campaign_name';
           var reqData = {
             "data_scope": {
@@ -5461,7 +5419,6 @@
         else if ($scope.graphSelection.dateRange.startDate && (
           $scope.graphSelection.category == 'vendor' &&
           $scope.selectedVendors.length)) {
-          // alert("only Date Range Type and Vendor Selected");
           $scope.xValues.value = 'vendor_name';
           var reqData = {
             "data_scope": {
@@ -5569,7 +5526,6 @@
 
         else if ($scope.selectedSizeOfFlats.length) {
           if ($scope.selectedDynamicCampaigns.length) {
-            // alert("only Flat Type selected");
             $scope.xValues.value = 'flattype';
             specificXValue = 'campaign_name';
             var reqData = {
@@ -5602,7 +5558,6 @@
           $scope.selectedCities_temp.length
           && $scope.selectedDynamicCampaigns.length
         ) {
-          // alert("only city");
           $scope.xValues.value = 'campaign_name';
           orderSpecificCase = true;
           $scope.cumulativeOrder = true;
@@ -5677,7 +5632,6 @@
         else if (
           $scope.selectedCities_temp.length
         ) {
-          // alert("only city");
           $scope.xValues.value = 'city';
           var reqData = {
 
@@ -5703,7 +5657,6 @@
           $scope.graphSelection.category == 'vendor' &&
           $scope.selectedVendors.length
         )) {
-          // alert("Only Vendor Selected");
           $scope.xValues.value = 'vendor_name';
           var reqData = {
             "data_scope": {
@@ -5725,7 +5678,6 @@
           });
         } else if ($scope.graphSelection.specificParam.society == 'qualitytype') {
           if ($scope.selectedDynamicCampaigns.length) {
-            // alert("only Society Quality Type selected");
             $scope.xValues.value = 'qualitytype';
             specificXValue = 'campaign_name';
             var reqData = {
@@ -5751,12 +5703,9 @@
             angular.forEach($scope.selectedTypeOfSocieties, function (data) {
               reqData.data_point.value_ranges.qualitytype.push(data.name);
             });
-            // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
-            // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
           }
         } else if ($scope.graphSelection.phaseRange.start
           && $scope.selectedDynamicCampaigns.length) {
-          // alert("only Phase Range and Campaign Selected");
           $scope.xValues.value = 'phase';
           var reqData = {
             "data_scope": {
@@ -5784,7 +5733,6 @@
         }
         else if ($scope.selectedbookingParameters.length) {
           if ($scope.selectedDynamicCampaigns.length) {
-            // alert("only Booking Parameter Types Selected");
             $scope.xValues.value = 'campaign_name';
             angular.forEach($scope.selectedbookingParameters, function (data) {
               specificXValue = data.value;
@@ -5812,7 +5760,6 @@
         }
         else if ($scope.applyClickedFilters.value) {
 
-          // alert("By Default Campaign");
           $scope.xValues.value = 'campaign_name';
           var reqData =
           {
@@ -5868,7 +5815,6 @@
                 reqData['raw_data'] = ['total_orders_punched'];
                 DashboardService.getDistributionGraphsStatics(reqData, $scope.selectedSupplierType.code)
                   .then(function onSuccess(response) {
-                    console.log(response);
                     $scope.initialCumulativeOrderData = response.data.data;
                     $scope.lineChartGraphCumulativeOrder = [];
                     $scope.cumulativeOrderCampaignsNamesById = {};
@@ -5977,7 +5923,6 @@
       var setCampaignOverallSummary = function (data) {
         $scope.campaignOverallSummary = [];
         var campaign_data = {};
-        // campaign_data[campaign.campaign]['Name'] = campaign.campaign_name;
 
         angular.forEach(data, function (campaign) {
           if (!campaign_data.hasOwnProperty(campaign.campaign)) {
@@ -6054,18 +5999,12 @@
               data[key].values, key, $scope.cumulativeTableData);
             $scope.lineChartGraphCumulativeOrder.push(chart);
             var index = 0;
-            // values1.push({
-            //   x: 0, y: 0 
-            // })
-            // index++;
-
             angular.forEach(data[key].values, function (item) {
               values1.push({
                 x: data[key].dates[index], y: item
               })
               index++;
             })
-            // $scope.x_fre_leads = angular.copy(data[key].dates);
 
             temp_data.push({
               key: 'Total Orders Punched (%)',
@@ -6080,10 +6019,6 @@
             data[$scope.selectedOrderKey].sumValues.reduce((a, b) => a + b) + " Orders Punched)";
           $scope.lineChartGraphCumulativeOrder.push(chart);
           var index = 0;
-          // values1.push({
-          //   x: 0, y: 0 
-          // })
-          // index++;
 
           createNumberSet(data[$scope.selectedOrderKey].dates, data[$scope.selectedOrderKey].sumValues,
             data[$scope.selectedOrderKey].values, $scope.selectedOrderKey, $scope.cumulativeTableData);
@@ -6759,8 +6694,14 @@
       $scope.sendEmailsMca = function(email){
         B2BDashboardService.sendBookingEmails("leads","all",$scope.campaignId,email,$scope.tabName)
         .then(function onSuccess(response){
+          if(response.data.status && response.data.data ){
+            $scope.emailModel = {};
+            swal(constants.name,"Email Sent Sucessfully", constants.success);
+          }
+        })
+        .catch(function onError(response) {
+          swal(constants.name,"Error", constants.error);
         });
-        swal("Successfull", "Email Sent Sucessfully", "success");
       }
       $scope.getFiles = function(file){
         $scope.file = file;

@@ -48,6 +48,7 @@
     $scope.endDate = "";
     $scope.options = {};
     $scope.dateRangeModel = {};
+    $scope.showPagination = false;
     $scope.changeStartDate = function () {
       $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
       $scope.options.minDate = $scope.dateRangeModel.start_date;
@@ -762,9 +763,16 @@
       $scope.supplier_code = "all";
     }
     $scope.sendBookingEmails = function (email) {
-      B2BDashboardService.sendBookingEmails($scope.leads, $scope.supplier_code, $scope.campaign, email)
+      let tabname = "";
+      B2BDashboardService.sendBookingEmails($scope.leads, $scope.supplier_code, $scope.campaign, email,tabname)
         .then(function onSuccess(response) {
-          swal("Successfull", "Email Sent Sucessfully", "success");
+          if(response.data.status && response.data.data ){
+            $scope.emailModel = {};
+            swal(constants.name,"Email Sent Sucessfully", constants.success);
+          }
+        })
+        .catch(function onError(response) {
+          swal(constants.name,"Error", constants.error);
         });
     }
     $scope.getNotPurchasedLead = function (CampaignId, campaignName) {
@@ -1491,10 +1499,11 @@
       return values;
     }
     $scope.supplierType = 'Leads';
-    $scope.surveyLeadArray = ['Leads', 'Survey', 'Feedback'];
+    $scope.surveyLeadArray = ['Leads', 'Survey','Survey Leads', 'Feedback'];
 
     $scope.surveyLeadFilter = function (filter) {
       $scope.filterType = filter;
+      $scope.showPagination = false;
       if (filter == 'Leads' || filter == 'Survey') {
         $scope.filterType = filter;
         $scope.isTableHide = true;
@@ -1504,6 +1513,7 @@
     $scope.surveyLeadFilter('Leads');
     $scope.setButtonIndex = function (index, campaign_id, campaign_name) {
       $scope.buttonIndex = index;
+      $scope.showPagination = true;
       setTimeout(function () {
         $anchorScroll('scrollToTable');
       }, 90);
