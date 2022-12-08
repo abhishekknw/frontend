@@ -48,6 +48,7 @@
     $scope.endDate = "";
     $scope.options = {};
     $scope.dateRangeModel = {};
+    $scope.showPagination = false;
     $scope.changeStartDate = function () {
       $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
       $scope.options.minDate = $scope.dateRangeModel.start_date;
@@ -1505,6 +1506,7 @@
     $scope.surveyLeadFilter('Leads');
     $scope.setButtonIndex = function (index, campaign_id, campaign_name) {
       $scope.buttonIndex = index;
+      $scope.showPagination = true;
       setTimeout(function () {
         $anchorScroll('scrollToTable');
       }, 90);
