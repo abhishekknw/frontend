@@ -270,7 +270,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.writeMessage = function (data, tabValue) {
-                console.log('1111111111111111111', data);
+               
                 $scope.messageBox = true;
                 $scope.tab = { name: 'tabC' };
                 let param = {
