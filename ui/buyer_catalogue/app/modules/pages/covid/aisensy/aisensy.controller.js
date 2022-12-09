@@ -206,6 +206,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
 
         $scope.userDetail = function (value, page) {
+
           $scope.showChatModule = true;
 
           let param = {
@@ -260,6 +261,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.userProfileIcon = function (phoneNumber) {
+
           $scope.isUserProfile = true;
           AuthService.getSectorForTemplate(phoneNumber)
             .then(function onSuccess(response) {
@@ -2772,7 +2774,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.browsedPreferredPartner(data)
         }
 
-
         $scope.newCheckboxSubmitted = function (check) {
           $scope.newRequirementCheckbox = check;
         }
@@ -2787,7 +2788,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               console.log(response);
             })
         }
-        
+
         $scope.newSupplierPocModel = [];
         $scope.newSupplierAddPoc = function () {
           $scope.newSupplierPocModel.push({
@@ -2929,7 +2930,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.newSelectedSupplierName = [];
                 $scope.newSelectedArea = [];
               }
-              else if(response.data.data.message) {
+              else if (response.data.data.message) {
                 swal(constants.name, response.data.data.message, constants.success);
                 $scope.NewsupplierAddUpdateData = {};
                 $scope.newSupplierPocModel = [];
@@ -2937,7 +2938,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.newSelectedArea = [];
 
               }
-              else{
+              else {
                 swal(constants.name, response.data.data.Message, constants.error);
               }
             }).catch(function onError(response) {
@@ -2945,6 +2946,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             });
         }
 
-      
-      
+
+        $scope.visitmap = function (link) {
+          window.open(link, '_blank');
+        }
+
+
+
       }]);

@@ -1541,14 +1541,19 @@
                                 <div ng-click="userProfileIcon(userChatData.phone_number)">
                                   <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
-                                    ''}}</span><br />
+                                    ''}}({{userChatData.user_name}})</span><br />
                                   <span
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </div>
                                 <div>
                                   <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
-                                    data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>
+                                    data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>   
                                 </div>
+
+                                <div>
+                                  <i class='fas fa-map-marker-alt' style='font-size:24px;color:red' ng-click="visitmap(userChatData.gmapLink)"></i>
+                                </div>
+                                
                                 <div class="profile-image-chat">
                                   <span>
                                     {{userChatData.whatsapp_name |firstlater}}
@@ -1567,8 +1572,6 @@
                               </div>
 
                             </div>
-
-
                           </div>
 
 
@@ -1843,7 +1846,7 @@
                                 <div ng-click="userProfileIcon(userChatData.phone_number)">
                                   <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
-                                    ''}}</span><br />
+                                    ''}}({{userChatData.user_name}})</span><br />
                                   <span
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </div>
@@ -2427,6 +2430,21 @@
                             <span>
                               {{userChatPayload.designation}}</span>
                           </div>
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">sector:</label>
+                            <span>
+                              {{userChatPayload.sector}}</span>
+                          </div>
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Subsector:</label>
+                            <span>
+                              {{userChatPayload.subsector}}</span>
+                          </div>
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">User Name:</label>
+                            <span>
+                              {{userChatPayload.user_name}}</span>
+                          </div>
 
 
 
@@ -2711,7 +2729,7 @@
                     <div ng-click="userProfileIcon(userChatData.phone_number)">
                       <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
                         {{userChatData.whatsapp_name.length > 15 ? '...' :
-                        ''}}</span><br />
+                        ''}}({{userChatData.user_name}})</span><br />
                       <span
                         class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                     </div>
@@ -5077,7 +5095,7 @@
                 <label>Add New Supplier: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <input type="text" placeholder="Add New Supplier " class="form-control" name="new_supplier"
+                <input type="text" placeholder="Add New Supplier " class="form-control" name="new_supplier"                             
                   id="new_supplier_id" ng-model="NewsupplierAddUpdateData.supplier_name">
               </div>
             </div>
@@ -5097,13 +5115,13 @@
                 <label>Designation *: </label>
               </div>
               
-              <div class="col-md-8" style="margin-top: 10px">
-
-                <select id="Designation" name="designation" class="form-control" value="NewsupplierAddUpdateData.designation"
-                  ng-model="NewsupplierAddUpdateData.designation" ng-required="true">
+              <div class="col-md-8" style="margin-top: 10px">                                   
+                 
+                <select id="Designation" name="designation" class="form-control" value="NewsupplierAddUpdateData.de                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         signation"                     
+                                              ng-model="NewsupplierAddUpdateData.designation" ng-required="true">
                   <option value="" disabled>Select Designation</option>
-                  <option ng-repeat="desig in poc_designation" ng-selected="desig==NewsupplierAddUpdateData.designation"
-                    value="{{desig}}" >
+                  <option ng-r                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            epeat="desig in poc_designation" ng-selected="desig==NewsupplierAddUpdateData.designation"
+                                                                                                                                                                                                                                                                                      value="{{desig}}" >
                     {{desig}}</option>
                 </select>
                 <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error">Designation is
