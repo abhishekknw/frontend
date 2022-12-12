@@ -6424,7 +6424,15 @@
             </div>
             <div class="modal-body">
               <div class="modalBodyBox">
-                <h3>Client Comments</h3>
+                <h3>Comments</h3>
+                <div>
+                  <select class="form-control" style="color: #000000;margin-bottom: 15px;" ng-click="filterComment(commentType)" ng-model="commentType">
+                    <option value="all" ng-selected="true">All</option>
+                    <option value="company_comment">Company comment</option>
+                    <option value="machadalo_comment">Machadalo Comments</option>
+                    <option value="company_client_comment">Company's client comment</option>
+                  </select>
+                </div>
                 <div class="table-h-scroll">
                   <table class="table-data">
                     <tr ng-repeat="item in externalComment">
@@ -6579,7 +6587,13 @@
                   <table class="table">
                     <tr>
                       <th style="background-color: #8e1921; color: #fff;">
-                        <h4>Client Comments :</h4>
+                        <h4>Comments :</h4>
+                        <select class="form-control" style="color: #000000" ng-click="filterComment(commentType)" ng-model="commentType">
+                          <option value="all" ng-selected="true">All</option>
+                          <option value="company_comment">Company comment</option>
+                          <option value="machadalo_comment">Machadalo Comments</option>
+                          <option value="company_client_comment">Company's client comment</option>
+                        </select>
                       </th>
                     </tr>
                     <tr>
