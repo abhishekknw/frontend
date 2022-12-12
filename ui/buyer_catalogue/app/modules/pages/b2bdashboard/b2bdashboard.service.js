@@ -315,8 +315,11 @@ angular.module('catalogueApp')
         var url = url_root + "b2b/basic-client-comment/?_id=" + id;
         return machadaloHttp.get(url);
       }
-      DashboardService.viewCommentsDetails = function (id,req_id) {
-        var url = url_root + "b2b/basic-client-comment/?requirement_id=" + req_id + "&_id="+id;
+      DashboardService.viewCommentsDetails = function (id,req_id,type) {
+        if(!type){
+          type = "all";
+        }
+        var url = url_root + "b2b/basic-client-comment/?requirement_id=" + req_id + "&_id="+id + "&comment_type="+type;
         return machadaloHttp.get(url);
       }
       DashboardService.basicExternalComment=function(comment,Id,req_id){

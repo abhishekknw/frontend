@@ -676,8 +676,8 @@
     }
     $scope.leadDetailDataList = "";
     $scope.showLeadDetail = function (_id, req_id) {
-      $scope.idForComment = _id
-      $scope.lead_id = req_id;
+      $scope.id_detail = _id;
+      $scope.req_id_detail = req_id;
       B2BDashboardService.showLeadDetail(_id)
         .then(function onSuccess(response) {
           $scope.leadDetailDataList = response.data.data;
@@ -1873,6 +1873,13 @@
             })
         }
       )
+    }
+    
+    $scope.filterComment =function(type){
+      B2BDashboardService.viewCommentsDetails($scope.id_detail, $scope.req_id_detail,type)
+        .then(function onSuccess(response) {
+          $scope.externalComment = response.data.data;
+        })    
     }
 
   })
