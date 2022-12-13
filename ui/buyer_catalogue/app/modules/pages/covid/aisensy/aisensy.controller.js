@@ -2946,7 +2946,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             });
         }
 
-
         $scope.visitmap = function (link) {
           window.open(link, '_blank');
         }

@@ -1854,6 +1854,11 @@
                                   <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
                                   data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>                                 
                                 </div>
+
+                                <div>
+                                  <i class='fas fa-map-marker-alt' style='font-size:24px;color:red' ng-click="visitmap(userChatData.gmapLink)"></i>
+                                </div>
+
                                 <div class="profile-image-chat">
                                   <span>
                                     {{userChatData.whatsapp_name |firstlater}}
@@ -2100,7 +2105,7 @@
                                 <div ng-click="userProfileIcon(userChatData.phone_number)">
                                   <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
-                                    ''}}</span><br />
+                                    ''}}({{userChatData.user_name}})</span><br />
                                   <span
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </div>
@@ -2108,6 +2113,11 @@
                                   <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
                                   data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>
                                 </div>
+
+                                <div>
+                                  <i class='fas fa-map-marker-alt' style='font-size:24px;color:red' ng-click="visitmap(userChatData.gmapLink)"></i>
+                                </div>
+
                                 <div class="profile-image-chat">
                                   <span>
                                     {{userChatData.whatsapp_name |firstlater}}
@@ -2733,10 +2743,16 @@
                       <span
                         class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                     </div>
+                    
                     <div>
                       <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
                         data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>
                     </div>
+
+                    <div>
+                      <i class='fas fa-map-marker-alt' style='font-size:24px;color:red' ng-click="visitmap(userChatData.gmapLink)"></i>
+                    </div>
+
                     <div class="profile-image-chat">
                       <span>
                         {{userChatData.whatsapp_name |firstlater}}
