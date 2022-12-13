@@ -2860,8 +2860,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.NewsupplierAddUpdateData.id = $scope.supplierData[1].id;
               $scope.NewsupplierAddUpdateData.city = $scope.supplierData[0][0].city;
               $scope.NewsupplierAddUpdateData.area = $scope.supplierData[0][0].area;
-              $scope.NewsupplierAddUpdateData.area_id = response.data.data.area_id.id;
-              $scope.NewsupplierAddUpdateData.city_id = response.data.data.city.id;
+              if(response.data.data.area_id == null){
+                $scope.NewsupplierAddUpdateData.area_id = "";
+              }
+              else{
+                $scope.NewsupplierAddUpdateData.area_id = response.data.data.area_id.id;
+              }
+              if(response.data.data.city == null){
+                $scope.NewsupplierAddUpdateData.city_id = "";
+              }
+              else{
+                $scope.NewsupplierAddUpdateData.city_id = response.data.data.city.id;
+              }
               $scope.NewsupplierAddUpdateData.supplier_id = $scope.supplierData[0][0].supplier_id;
               $scope.NewsupplierAddUpdateData.supplier_name = $scope.supplierData[0][0].supplier_name
               if ($scope.supplierData[0][0].supplier_type) {
