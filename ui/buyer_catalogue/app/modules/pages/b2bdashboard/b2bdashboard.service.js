@@ -612,7 +612,10 @@ angular.module('catalogueApp')
         var url = url_root +"template/add-template/?md_id="+id;
         return machadaloHttp.delete(url); 
       }
-
+      DashboardService.getCityList = function (campaign_id) {
+        var url = url_root +"b2b/city-list/?campaign_id="+campaign_id;
+        return machadaloHttp.get(url);
+      }
       return DashboardService;
 
     }]);

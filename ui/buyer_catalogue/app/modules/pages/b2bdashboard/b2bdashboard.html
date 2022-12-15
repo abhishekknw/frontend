@@ -1136,18 +1136,8 @@
                           <div class="col-lg-6">
                             <div class="row">
                               <div class="col-lg-6">
-                                <h5 style="color:#000;padding: 10px 0;">Lead range</h5>
+                                <h5 style="color:#000;padding: 10px 0;">Lead Range</h5>
                               </div>
-                              <!-- <div class="col-lg-6">
-                                <span style="width:150px;" class="form-control select_city" 
-                                     style="color:red;width:100%;margin-left:20px;" 
-                                     ng-dropdown-multiselect=""
-                                    options="cityListDetails" extra-settings="settings"
-                                    selected-model="selected_cities_list"
-                                    ng-click="selectedCityFilter();" translation-texts="selected_business_type"
-                                    events="events">
-                                </span>
-                              </div> -->
                               <div class="col-lg-6">
                                 <div class="date_wrapper">
                                   <input type="text" style="color:#000000;" class="field"
@@ -1282,7 +1272,7 @@
                               <h5 style="color:#000;padding: 10px 0;">Primary Count:</h5>
                               </div>
                               <div class="col-lg-6">
-                              <input class="field" type="text" placeholder="Start Range" ng-change="searchPrimaryCount(primaryCount)" 
+                              <input class="field" style="color:#000" type="text" placeholder="Start Range" ng-change="searchPrimaryCount(primaryCount)" 
                               onkeypress='return event.charCode >= 48 && event.charCode <= 57' required ng-model="primaryCount.start">
                             </div>
                           
@@ -1294,7 +1284,7 @@
                                   <h5 style="color:#000;padding: 10px 0;">To:</h5>
                                 </div>
                                 <div class="col-sm-6">
-                                  <input class="field" type="text" placeholder="End Range" ng-change="searchPrimaryCount(primaryCount)" 
+                                  <input class="field" style="color:#000" type="text" placeholder="End Range" ng-change="searchPrimaryCount(primaryCount)" 
                                onkeypress='return event.charCode >= 48 && event.charCode <= 57' required  ng-model="primaryCount.end">
                                 </div>
                               </div>
@@ -1304,7 +1294,7 @@
                           <div class="col-lg-6">
                             <div class="row">
                               <div class="col-lg-6">
-                              <h5 style="color:#000;padding: 10px 0;">Cient Status:</h5>
+                              <h5 style="color:#000;padding: 10px 0;">Client Status:</h5>
                             </div>
                               <div class="col-lg-6">
                                 <span class="multi_dropdwn"  
@@ -1332,17 +1322,25 @@
                             <h5 style="color:#000;padding: 10px 0;">Select City:</h5>
                           </div>
                             <div class="col-lg-6">
-                              <!-- <span class="multi_dropdwn"  
+                              <span class="multi_dropdwn"  
                                   ng-dropdown-multiselect=""
-                                  options="listClientStatusObj" extra-settings="settings"
-                                  selected-model="selected_clientStatus"
-                                  ng-click="selectedClientSatusFilter();" translation-texts="selected_business_type"
+                                  options="cityListDetails" extra-settings="settings"
+                                  selected-model="selected_cities_list"
+                                  ng-click="selectedCityFilter();" translation-texts="selected_business_type"
                                   events="events">
-                              </span> -->
-                                <select ng-change="selectedCity(city)" class="form-control select_city" ng-model="city">
+                              </span>
+                                <!-- <span style="width:150px;" class="form-control select_city" 
+                                     style="color:red;width:100%;margin-left:20px;" 
+                                     ng-dropdown-multiselect=""
+                                    options="cityListDetails" extra-settings="settings"
+                                    selected-model="selected_cities_list"
+                                    ng-click="selectedCityFilter();" translation-texts="selected_business_type"
+                                    events="events">
+                                </span> -->
+                                <!-- <select ng-change="selectedCity(city)" class="form-control select_city" ng-model="city">
                                   <option value="">Select City</option>
                                   <option ng-repeat="city in cityListDetails" track by "$index">{{city}}</option>
-                                </select>
+                                </select> -->
                            </div>
                           </div>
                        </div>
