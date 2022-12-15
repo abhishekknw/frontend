@@ -2790,6 +2790,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.newSupplierPocModel = [];
         $scope.newSupplierAddPoc = function () {
           $scope.newSupplierPocModel.push({
+            'mobile':'',
             'poc_name': '',
             'designation': ''
           });
@@ -2912,6 +2913,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
           let poc = [];
           const obj = {
+            'mobile' : $scope.NewsupplierAddUpdateData.phone_number,
             "poc_name": $scope.NewsupplierAddUpdateData.poc_name,
             "designation": $scope.NewsupplierAddUpdateData.designation,
             "poc_id": $scope.NewsupplierAddUpdateData.id,
