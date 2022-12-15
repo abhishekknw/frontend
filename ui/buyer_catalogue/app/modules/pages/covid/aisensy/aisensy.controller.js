@@ -2856,7 +2856,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.NewsupplierAddUpdateData.longitude = $scope.supplierData[0][0].longitude;
               $scope.NewsupplierAddUpdateData.pin_code = $scope.supplierData[0][0].pincode;
               $scope.NewsupplierAddUpdateData.address = $scope.supplierData[0][0].address;
-              $scope.NewsupplierAddUpdateData.poc_name = $scope.supplierData[1]?.name;
+              $scope.NewsupplierAddUpdateData.poc_name = $scope.supplierData[1][0]?.name;
               $scope.NewsupplierAddUpdateData.id = $scope.supplierData[1]?.id;
               $scope.NewsupplierAddUpdateData.city = $scope.supplierData[0][0].city;
               $scope.NewsupplierAddUpdateData.area = $scope.supplierData[0][0].area;
