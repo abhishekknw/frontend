@@ -2953,7 +2953,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
           AuthService.getSupplierDataByNumber(number)
             .then(function onSuccess(response) {
-              $scope.societyNameList = [...response.data.data[0], ...response.data.data[1]];
+              $scope.societyNameList = response.data.data;
             }).catch(function onError(response) {
               console.log(response);
             });

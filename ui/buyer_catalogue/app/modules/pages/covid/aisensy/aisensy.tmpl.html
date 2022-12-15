@@ -5001,7 +5001,7 @@
                   <option value="" >Select Society</option>
                   <option ng-repeat="society in societyNameList track by $index"
                     value="{{society.supplier_id}}">
-                    {{society.society_name?society.society_name:society.supplier_name}}
+                    {{society.supplier_name}}
                   </option>
                 </select>
               </div>
@@ -5215,7 +5215,7 @@
             </div>
               <!-- ADD POC -->
               <div ng-repeat="pocdata in newSupplierPocModel track by $index">
-                <!-- <div class="row">
+                <div class="row">
                   <div class="col-md-4" style="margin-top: 10px">
                     <label> Phone Number *: </label>
                   </div>
@@ -5227,7 +5227,7 @@
                       style="font-size:12px; color: red;">
                       Phone number Invalid</div>
                   </div>
-                </div> -->
+                </div>
   
                 <div class="row">
                   <div class="col-md-4" style="margin-top: 10px">
