@@ -1443,7 +1443,7 @@
                 </div>
                 <br /><br />
                 <div>
-                  <dir-pagination-controls ng-if="showPagination" pagination-id="paginate2" max-size="7"
+                  <dir-pagination-controls ng-if="showPagination && purchasedNotPurchasedLead.length != 0" pagination-id="paginate2" max-size="7"
                     direction-links="true" boundary-links="true"
                     on-page-change="pageChangedPurchage(newPageNumber-1,leadPurchasedStatus,campaignId,campaignName)">
                   </dir-pagination-controls>
