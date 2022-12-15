@@ -4971,6 +4971,59 @@
               </div>
             </div>
 
+            <!-- <div class="row" ng-if="showSelectSocietyField">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Select Society *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <select class="form-control" name="supplier_type" id="society_name"
+                  ng-model="Supplier_id"
+                  ng-change='getSupplierDataBySociety(Supplier_id)'>
+                  <option value="" disabled>Select Society</option>
+                  <option ng-repeat="society in societyNameList track by $index"
+                    value="{{society.supplier_id}}">
+                    {{society.society_name?society.society_name:society.supplier_name}}
+                  </option>
+                </select>
+              </div>
+            </div> -->
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Select Society *:</label>
+              </div>
+
+              <div class="col-md-4" style="margin-top: 10px">
+                <select class="form-control" name="supplier_type" id="society_name"
+                  ng-model="Supplier_id"
+                  ng-change='getSupplierDataBySociety(Supplier_id)'
+                  ng-disabled="NewsupplierAddUpdateData.isNewSupplier">
+                  <option value="" >Select Society</option>
+                  <option ng-repeat="society in societyNameList track by $index"
+                    value="{{society.supplier_id}}">
+                    {{society.society_name?society.society_name:society.supplier_name}}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <md-switch ng-model="NewsupplierAddUpdateData.isNewSupplier" ng-change="addNewSupplier()"
+                  aria-label="Switch 1">
+                  <label>Add & Edit</label>
+                </md-switch>
+              </div>
+            </div>
+            <div class="row" ng-if="NewsupplierAddUpdateData.isNewSupplier">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Add & Edit Supplier: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Add New Supplier " class="form-control" name="edit_supplier"
+                  id="edit_supplier_id" ng-model="NewsupplierAddUpdateData.supplier_name">
+              </div>
+            </div>
+
+
             <div class="row">
               <div class="col-md-4" style="margin-top: 10px">
                 <label> Supplier Type *: </label>
@@ -5047,7 +5100,7 @@
               </div>
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-4" style="margin-top: 10px">
                 <label>Select Supplier & Edit : </label>
               </div>
@@ -5063,12 +5116,12 @@
               <div class="col-md-4">
                 <md-switch ng-model="NewsupplierAddUpdateData.isNewSupplier" ng-change="addNewSupplier()"
                   aria-label="Switch 1">
-                  <label>Add New Supplier</label>
+                  <label>Add New Supplier11</label>
                 </md-switch>
               </div>
-            </div>
+            </div> -->
 
-            <div class="row" ng-if="NewsupplierAddUpdateData.isNewSupplier">
+            <!-- <div class="row" ng-if="NewsupplierAddUpdateData.isNewSupplier">
               <div class="col-md-4" style="margin-top: 10px">
                 <label>Edit Supplier: </label>
               </div>
@@ -5076,7 +5129,7 @@
                 <input type="text" placeholder="Add New Supplier " class="form-control" name="edit_supplier"
                   id="edit_supplier_id" ng-model="NewsupplierAddUpdateData.supplier_name">
               </div>
-            </div>
+            </div> -->
 
             <div class="row" ng-if="supplierForAddUpdateData.isNewSupplier">
               <div class="col-md-4" style="margin-top: 10px">
