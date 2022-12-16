@@ -68,7 +68,7 @@
     $scope.listClientStatusObj = [];
     $scope.selected_clientStatus = [];
 
-    $scope.primaryCount = {"start":0,"end":''};
+    $scope.primaryCount = {"start":'',"end":''};
 
     $scope.changeStartDate = function () {
       $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
@@ -822,7 +822,7 @@
         search = "";
       }
       if(!$scope.primaryCount.start){
-        $scope.primaryCount.start = 0;
+        $scope.primaryCount.start = "";
       }
       if(!$scope.primaryCount.end){
         $scope.primaryCount.end = "";
@@ -1552,6 +1552,27 @@
       $scope.showPagination = true;
       $scope.selected_cities_list = [];
       $scope.selected_clientStatus = [];
+      $scope.startDate = "";
+      $scope.endDate = "";
+      $scope.options = {};
+      $scope.dateRangeModel = {};
+      $scope.showPagination = false;
+      $scope.selectCity = "";
+
+      $scope.AcceptanceDateRange = {};
+      $scope.AcceptanceStartDate = "";
+      $scope.AcceptanceEndDate = "";
+      $scope.AcceptanceOptions = {};
+
+      $scope.UpdateDateRangeModel = {};
+      $scope.UpdateStartDate = "";
+      $scope.UpdateEndDate = "";
+      $scope.UpdateOptions = {};
+
+      $scope.purchasedTable = false;
+      $scope.notPurchasedTable = false;
+      $scope.selected_clientStatus = [];
+      $scope.primaryCount = {"start":'',"end":''};
       setTimeout(function () {
         $anchorScroll('scrollToTable');
       }, 90);
