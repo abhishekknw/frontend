@@ -206,6 +206,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
 
         $scope.userDetail = function (value, page) {
+
           $scope.showChatModule = true;
 
           let param = {
@@ -260,6 +261,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.userProfileIcon = function (phoneNumber) {
+
           $scope.isUserProfile = true;
           AuthService.getSectorForTemplate(phoneNumber)
             .then(function onSuccess(response) {
@@ -2772,13 +2774,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.browsedPreferredPartner(data)
         }
 
-
         $scope.newCheckboxSubmitted = function (check) {
           $scope.newRequirementCheckbox = check;
         }
 
-        $scope.NewsupplierAddUpdateData = {}
         $scope.NewsupplierForAddUpdate = function (data) {
+          $scope.NewsupplierAddUpdateData = {};
           AuthService.initialData()
             .then(function onSuccess(response) {
               $scope.Cities = response.data.cities;
@@ -2787,6 +2788,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               console.log(response);
             })
         }
+
         $scope.newSupplierPocModel = [];
         $scope.newSupplierAddPoc = function () {
           $scope.newSupplierPocModel.push({
@@ -2795,9 +2797,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             'designation': ''
           });
         }
+
         $scope.newSupplierRemovePoc = function (index) {
           $scope.newSupplierPocModel.splice(index, 1)
         }
+
         $scope.newGetCityArea = function () {
           $scope.newSelectedSupplierName = [];
           var id = $scope.NewsupplierAddUpdateData.city_id;
@@ -2814,6 +2818,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.Areas = response;
             });
         }
+
         $scope.newSelectArea = function () {
           $scope.suppliersName = [];
           $scope.newSelectedSupplierName = [];
@@ -2892,6 +2897,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               console.log(response);
             });
         }
+
         $scope.designationList = function (supplier_type) {
           if (supplier_type == 'RS') {
             $scope.poc_designation = constants.designation_society;
@@ -2907,9 +2913,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.poc_designation = constants.designation_bus_shelter;
           }
         }
+
         $scope.newAddUpdateSupplierSubmit = function () {
           if ($scope.newSelectedSupplierName.length) {
             $scope.NewsupplierAddUpdateData.supplier_id = $scope.newSelectedSupplierName[$scope.newSelectedSupplierName.length - 1].supplier_id;
+            $scope.NewsupplierAddUpdateData.supplier_name = $scope.newSelectedSupplierName[$scope.newSelectedSupplierName.length - 1].label;
           }
           let poc = [];
           const obj = {
@@ -2927,6 +2935,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           data.data = $scope.NewsupplierAddUpdateData;
           AuthService.newAddUpdateSupplierSubmit(data)
             .then(function onSuccess(response) {
+
               $scope.NewsupplierAddUpdateData = {};
               $scope.newSupplierPocModel = [];
               $scope.Supplier_id = "";
@@ -2934,14 +2943,27 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.Areas = "";
               if (response && response.data.data.error) {
                 swal(constants.name, response.data.data.error, constants.error);
+                $scope.NewsupplierAddUpdateData = {};
+                $scope.newSupplierPocModel = [];
+                $scope.newSelectedSupplierName = [];
+                $scope.newSelectedArea = [];
+              }
+              else if (response.data.data.message) {
+                swal(constants.name, response.data.data.message, constants.success);
+                $scope.NewsupplierAddUpdateData = {};
+                $scope.newSupplierPocModel = [];
+                $scope.newSelectedSupplierName = [];
+                $scope.newSelectedArea = [];
+
               }
               else {
-                swal(constants.name, response.data.data.message, constants.success);
+                swal(constants.name, response.data.data.Message, constants.error);
               }
             }).catch(function onError(response) {
               console.log(response);
             });
         }
+
 
         $scope.getSupplierDataByNumber = function (number) {
           if (!number) {
@@ -2960,6 +2982,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               console.log(response);
             });
         }
+
+        $scope.visitmap = function (link) {
+          window.open(link, '_blank');
+        }
+
+
 
 
       }]);
