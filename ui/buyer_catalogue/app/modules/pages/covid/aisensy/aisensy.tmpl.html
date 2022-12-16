@@ -5186,11 +5186,11 @@
               
               <div class="col-md-8" style="margin-top: 10px">                                   
                  
-                <select id="Designation" name="designation" class="form-control" value="NewsupplierAddUpdateData.de                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         signation"                     
-                                              ng-model="NewsupplierAddUpdateData.designation" ng-required="true">
-                  <option value="" disabled>Select Designation</option>
-                  <option ng-r                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            epeat="desig in poc_designation" ng-selected="desig==NewsupplierAddUpdateData.designation"
-                                                                                                                                                                                                                                                                                      value="{{desig}}" >
+                <select id="Designation" name="designation" class="form-control" value="NewsupplierAddUpdateData.designation"                     
+                       ng-model="NewsupplierAddUpdateData.designation" ng-required="true">
+                       <option value="" disabled>Select Designation</option>
+                  <option ng-repeat="desig in poc_designation" ng-selected="desig==NewsupplierAddUpdateData.designation"
+                    value="{{desig}}" >
                     {{desig}}</option>
                 </select>
                 <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error">Designation is
