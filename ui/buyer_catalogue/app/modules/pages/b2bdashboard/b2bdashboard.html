@@ -1208,7 +1208,7 @@
                                   <input type="text" style="color:#000000;" class="field"
                                     uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                                     ng-change="changeAcceptanceEndDate()" ng-model="AcceptanceDateRange.end_dates"
-                                    is-open="isEndDateOpen1" datepicker-options="options" ng-required="true"
+                                    is-open="isEndDateOpen1" datepicker-options="options1" ng-required="true"
                                     close-text="Close" alt-input-formats="altInputFormats">
                                   <button type="button" class="smallBtn calendar"
                                     ng-disabled="!AcceptanceDateRange.start_dates"
@@ -1254,7 +1254,7 @@
                                   <input type="text" style="color:#000000;" class="field"
                                     uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                                     ng-change="changeUpdateEndDate()" ng-model="UpdateDateRangeModel.end_dates"
-                                    is-open="isEndDateOpen2" datepicker-options="options" ng-required="true"
+                                    is-open="isEndDateOpen2" datepicker-options="options2" ng-required="true"
                                     close-text="Close" alt-input-formats="altInputFormats">
                                   <button type="button" class="smallBtn calendar"
                                     ng-disabled="!UpdateDateRangeModel.start_dates"
@@ -1336,24 +1336,29 @@
                           </div>
                         </div>
                         <span style="display: block;margin: 15px;color:#000;">
-                          Based on your filter there are {{purchasedNotPurchasedLead.length}} leads in "
+                          Based on your filter there are <b>{{purchasedNotPurchasedLead.length}}</b> leads in "
                           <span ng-if="!CheckForAllSelectedCity"
                             ng-repeat="city in selected_cities_list">
-                            {{city.label}}
+                            <b>{{city.label}}</b>
                             <span ng-if="!$last">,</span>
                           </span>
-                          <span style="color:#000" ng-if="CheckForAllSelectedCity || selected_cities_list.length <= 0">All</span> " cities.
+                          <span style="color:#000" ng-if="CheckForAllSelectedCity || selected_cities_list.length <= 0"><b>All</b></span> " cities.
                         </span>
-
-                        <span style="display: block;margin: 15px;color:#000;">
-                          Based on your filter there are {{purchasedNotPurchasedLead.length}} leads in "
+                        <!-- <div style="color: rgb(249, 247, 247);">
+                          <button  class="btn btn-danger" ng-click="downloadLeadsByFilter()">Download Leads By Filter</button>
+                        </div>
+                        <div style="color: rgb(249, 247, 247);">
+                          <button  class="btn btn-danger" ng-click="EmailLeadsByFilter()">Email Leads By Filter</button>
+                        </div> -->
+                        <!-- <span style="display: block;margin: 15px;color:#000;">
+                          Based on your filter there are <b>{{purchasedNotPurchasedLead.length}}</b> leads in "
                           <span ng-if="!CheckForSelectedStatus"
                             ng-repeat="status in selected_clientStatus">
-                            {{status.label}}
+                            <b>{{status.label}}</b>
                             <span ng-if="!$last">,</span>
                           </span>
-                          <span ng-if="CheckForSelectedStatus || selected_clientStatus.length <= 0">All</span> " Client Status.
-                        </span>
+                          <span ng-if="CheckForSelectedStatus || selected_clientStatus.length <= 0"><b>All</b></span> " Client Status.
+                        </span> -->
 
                         <span style="display: block;margin: 15px;">
                           <input type="text" class="form-control" ng-model="searchQuery"
@@ -2754,8 +2759,8 @@
         </div>
         <div class="modal-body">
           <div class="modalBodyBox">
-            <label>Select Email Type:</label>
-            <select class="field" ng-model="emailModel.selected">
+            <label  ng-if="checkForEmailModal">Select Email Type:</label>
+            <select class="field"  ng-if="checkForEmailModal" ng-model="emailModel.selected">
               <option value="" disabled selected hidden>Email Type</option>
               <option ng-repeat="option in listClientStatus" track by "$index" value="{{option}}">{{option}}</option>
             </select>
@@ -2770,11 +2775,11 @@
             </div>
             <div class="buttons buttons-flex">
               <button type="button" name="button" ng-Click="sendBookingEmails(emailModel)" class="smallBtn"
-                ng-disabled="isEmailButton || emailBtnDisabled || !emailModel.selected">Send email for given
+                ng-disabled="isEmailButton || emailBtnDisabled || !emailModel.selected && checkForEmailModal">Send email for given
                 user</button>
               <span>OR</span>
               <button type="button" name="button" class="smallBtn" ng-click="sendBookingEmails(emailModel)"
-                ng-disabled="emailBtnDisabled || !emailModel.selected">Send email to all (Default)</button>
+                ng-disabled="emailBtnDisabled || !emailModel.selected && checkForEmailModal">Send email to all (Default)</button>
 
             </div>
           </div>
