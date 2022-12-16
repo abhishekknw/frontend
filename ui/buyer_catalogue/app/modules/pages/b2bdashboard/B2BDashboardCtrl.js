@@ -37,30 +37,51 @@
     $scope.selectedEntityType = { value: 'all', name: 'ALL' }
     $scope.supplierTypeCodePerformanceDetail = constants.supplierTypeCodePerformanceDetail;
     $scope.selectedSupplierType = { code: "all", codes: "all" };
-    $scope.dateRangeModel = {};
     $scope.example14model = [];
-    $scope.setting1 = {
-      scrollableHeight: '200px',
+    $scope.selected_cities_list = [];
+    $scope.settings = {
+      showCheckAll: false,
       scrollable: true,
-      enableSearch: true
+      enableSearch: true,
+      showUncheckAll: false
     };
     $scope.startDate = "";
     $scope.endDate = "";
     $scope.options = {};
     $scope.dateRangeModel = {};
     $scope.showPagination = false;
+    $scope.selectCity = "";
+
+    $scope.AcceptanceDateRange = {};
+    $scope.AcceptanceStartDate = "";
+    $scope.AcceptanceEndDate = "";
+    $scope.AcceptanceOptions = {};
+
+    $scope.UpdateDateRangeModel = {};
+    $scope.UpdateStartDate = "";
+    $scope.UpdateEndDate = "";
+    $scope.UpdateOptions = {};
+
+    $scope.purchasedTable = false;
+    $scope.notPurchasedTable = false;
+    $scope.listClientStatus = [];
+    $scope.listClientStatusObj = [];
+    $scope.selected_clientStatus = [];
+
+    $scope.primaryCount = {"start":0,"end":''};
+
     $scope.changeStartDate = function () {
       $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
       $scope.options.minDate = $scope.dateRangeModel.start_date;
       $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
       if ($scope.endDate != "") {
         if ($scope.endDate >= $scope.startDate) {
-          $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate);
+          $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate);
         }
         else if ($scope.endDate < $scope.startDate) {
           $scope.endDate = $scope.startDate;
           $scope.dateRangeModel.end_dates = $scope.dateRangeModel.start_date;
-          $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate);
+          $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate);
         }
       }
     }
@@ -69,12 +90,12 @@
       if ($scope.changeEndDate > $scope.changeStartDate)
         $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
       $scope.endDate = $scope.dateFormat($scope.dateRangeModel.end_dates);
-      $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate);
+      $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate);
     }
 
     $scope.searchForDetails = function (search, lead) {
       if (lead == undefined) {
-        $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate, $scope.selectCity, search);
+        $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate,$scope.selectCity,$scope.selectedClientStatus,search);
       }
       else {
         $scope.leadDecisionPanding($scope.currentTypeForLeadDecisionPanding, $scope.currentPageForLeadDecisionPanding, 'user', search);
@@ -90,11 +111,7 @@
       if (day.length < 2) day = '0' + day;
       return [day, month, year].join('-');
     }
-    $scope.selectCity = "";
-    $scope.selectedCity = function (city) {
-      $scope.selectCity = city;
-      $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate, $scope.selectCity);
-    }
+
     $scope.invKeysLead = [
       { header: 'LEAD COUNT' },
       { header: 'EXISTING CLIENT FEEDBACK COUNT' },
@@ -582,15 +599,13 @@
         })
     }
 
-    $scope.purchasedTable = false;
-    $scope.notPurchasedTable = false;
-    $scope.listClientStatus = [];
     $scope.viewCampaignLeads = function () {
       if ($scope.listClientStatus.length == 0) {
         B2BDashboardService.listClientStatus().then(function onSuccess(response) {
           var listData = response.data.data.client_status;
           for (var k in listData) {
             $scope.listClientStatus.push(listData[k].status_name)
+            $scope.listClientStatusObj.push({'label':listData[k].status_name});
           }
         });
       }
@@ -786,10 +801,10 @@
     }
 
     $scope.pageChangedPurchage = function (page, leadPurchasedStatus, campaignId, campaignName) {
-      $scope.getPurchasedNotPurchasedLead(campaignId, campaignName, leadPurchasedStatus, page, $scope.startDate, $scope.endDate, $scope.selectCity);
+      $scope.getPurchasedNotPurchasedLead(campaignId, campaignName, leadPurchasedStatus, page, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate,$scope.selectCity,$scope.selectedClientStatus);
     }
 
-    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus, page, startDate, endDate, city, search) {
+    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus, page, startDate, endDate,acceptStartDate,acceptEndDate,updateStartDate,updateEndDate,city,ClientStatus, search) {
       $scope.page = page;
       if (!page) {
         $scope.page = 0;
@@ -806,18 +821,39 @@
       if (!search) {
         search = "";
       }
+      if(!$scope.primaryCount.start){
+        $scope.primaryCount.start = 0;
+      }
+      if(!$scope.primaryCount.end){
+        $scope.primaryCount.end = "";
+      }
+      if(!acceptStartDate){
+        acceptStartDate = "";
+      }
+      if(!acceptEndDate){
+        acceptEndDate = "";
+      }
+      if(!updateStartDate){
+        updateStartDate = "";
+      }
+      if(!updateEndDate){
+        updateEndDate = "";
+      }
+      if(!ClientStatus){
+        ClientStatus = "";
+      }
       $scope.leadPurchasedStatus = leadStatus;
       $scope.campaignId = CampaignId;
       $scope.campaignName = campaignName;
       $scope.CampaignNameofLeads = campaignName;
-      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType, $scope.selectedSupplierType.code, $scope.page, startDate, endDate, city, search)
+      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType, $scope.selectedSupplierType.code, $scope.page, startDate, endDate,acceptStartDate,acceptEndDate,updateStartDate,updateEndDate, city,ClientStatus, search,$scope.primaryCount)
         .then(function onSuccess(response) {
           $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
           $scope.purchasedNotPurchasedLeadTotal = response.data.data.length;
           $scope.purchasedNotPurchasedLeadCurrent = page;
           $scope.purchasedNotPurchasedLeadPerPage = 20;
-          $scope.cityListDetails = $scope.purchasedNotPurchasedLead.city_list;
+          // $scope.cityListDetails = $scope.purchasedNotPurchasedLead.city_list;
         });
     }
 
@@ -1514,10 +1550,13 @@
     $scope.setButtonIndex = function (index, campaign_id, campaign_name) {
       $scope.buttonIndex = index;
       $scope.showPagination = true;
+      $scope.selected_cities_list = [];
+      $scope.selected_clientStatus = [];
       setTimeout(function () {
         $anchorScroll('scrollToTable');
       }, 90);
-      $scope.getPurchasedNotPurchasedLead(campaign_id, campaign_name)
+      $scope.getPurchasedNotPurchasedLead(campaign_id, campaign_name);
+      $scope.getCityList (campaign_id);
       //remove if show 2 butoon
     }
 
@@ -1880,6 +1919,89 @@
         .then(function onSuccess(response) {
           $scope.externalComment = response.data.data;
         })    
+    }
+
+    // $scope.selectedCity = function (city) {
+    //   $scope.selectCity = city;
+    //   $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate, $scope.selectCity,$scope.selectedClientStatus);
+    // }
+
+    $scope.changeAcceptanceStartDate = function () {
+      $scope.AcceptanceDateRange.start_date = $scope.AcceptanceDateRange.start_dates;
+      $scope.AcceptanceOptions.minDate = $scope.AcceptanceDateRange.start_date;
+      $scope.AcceptanceStartDate = $scope.dateFormat($scope.AcceptanceDateRange.start_date);
+      if ($scope.AcceptanceEndDate != "") {
+        if ($scope.AcceptanceEndDate >= $scope.AcceptanceStartDate) {
+          $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate);
+        }
+        else if ($scope.AcceptanceEndDate < $scope.AcceptanceStartDate) {
+          $scope.AcceptanceEndDate = $scope.AcceptanceStartDate;
+          $scope.AcceptanceDateRange.end_dates = $scope.AcceptanceDateRange.start_date;
+          $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate);
+        }
+      }
+    }
+
+    $scope.changeAcceptanceEndDate = function () {
+      if ($scope.changeAcceptanceEndDate > $scope.changeAcceptanceStartDate)
+        $scope.AcceptanceDateRange.end_date = $scope.AcceptanceDateRange.end_dates;
+        $scope.AcceptanceEndDate = $scope.dateFormat($scope.AcceptanceDateRange.end_dates);
+        $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate);
+    }
+
+
+    $scope.changeUpdateStartDate = function () {
+      $scope.UpdateDateRangeModel.start_date = $scope.UpdateDateRangeModel.start_dates;
+      $scope.UpdateOptions.minDate = $scope.UpdateDateRangeModel.start_date;
+      $scope.UpdateStartDate = $scope.dateFormat($scope.UpdateDateRangeModel.start_date);
+      if ($scope.UpdateEndDate != "") {
+        if ($scope.UpdateEndDate >= $scope.UpdateStartDate) {
+          $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate);
+        }
+        else if ($scope.UpdateEndDate < $scope.UpdateStartDate) {
+          $scope.UpdateEndDate = $scope.UpdateStartDate;
+          $scope.UpdateDateRangeModel.end_dates = $scope.UpdateDateRangeModel.start_date;
+          $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate);
+        }
+      }
+    }
+
+    $scope.changeUpdateEndDate = function () {
+      if ($scope.changeUpdateEndDate > $scope.changeUpdateStartDate)
+        $scope.UpdateDateRangeModel.end_date = $scope.UpdateDateRangeModel.end_dates;
+        $scope.UpdateEndDate = $scope.dateFormat($scope.UpdateDateRangeModel.end_dates);
+        $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate);
+    }
+
+    $scope.searchPrimaryCount = function (primarySearch) {
+        $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate, $scope.selectCity,$scope.selectedClientStatus,undefined);
+    }
+
+    $scope.selectedClientSatusFilter = function (){
+      let data = [];
+      for (let i in $scope.selected_clientStatus){
+        data.push($scope.selected_clientStatus[i].label)
+      }
+      $scope.selectedClientStatus = data.toString();
+      $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate,$scope.selectCity,$scope.selectedClientStatus);
+    }
+
+    $scope.getCityList = function(campaign_id){
+      B2BDashboardService.getCityList(campaign_id)
+      .then(function onSuccess(response) {
+        $scope.cityListDetails = response.data.data;
+      }).catch(function onError(response) {
+        console.log(response);
+      });
+    }
+
+    $scope.selectedCityFilter =function(){
+      let array = [];
+      for (let i in $scope.selected_cities_list){
+        array.push($scope.selected_cities_list[i].label);
+      }
+      $scope.selectCity = array.toString();
+      $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate,$scope.selectCity);
     }
 
   })

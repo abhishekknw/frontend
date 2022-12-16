@@ -533,12 +533,16 @@ angular.module('catalogueApp')
       }
 
 
-      DashboardService.purchasedNotPurchasedLead = function (campaignId,filterType,supplierCode,page,startDate,endDate,city,search) {
+      DashboardService.purchasedNotPurchasedLead = function (campaignId,filterType,supplierCode,page,startDate,endDate,acceptStartDate,acceptEndDate,updateStartDate,updateEndDate,city,ClientStatus,search,primary) {
         if (search==undefined){
             search="";
         }
         //var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&lead_type=" + filterType;
-        var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&supplier_type=" + supplierCode+"&next_page="+page+"&start_date="+startDate+"&end_date="+endDate+"&city="+city+"&search="+search;
+        var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&supplier_type=" + supplierCode+"&next_page="+page+"&start_date="+startDate+"&end_date="+endDate+"&city="+city+"&search="+search+
+                  "&start_acceptance_date="+ acceptStartDate + "&end_acceptance_date="+ acceptEndDate +
+                  "&start_update_date="+updateStartDate + "&end_update_date="+ updateEndDate +
+                  "&from_primary_count=" + primary.start + "&to_primary_count=" + primary.end +
+                  "&client_status="+ClientStatus;
         if(filterType){
           url += "&lead_type=" + filterType;
         }
@@ -608,7 +612,10 @@ angular.module('catalogueApp')
         var url = url_root +"template/add-template/?md_id="+id;
         return machadaloHttp.delete(url); 
       }
-
+      DashboardService.getCityList = function (campaign_id) {
+        var url = url_root +"b2b/city-list/?campaign_id="+campaign_id;
+        return machadaloHttp.get(url);
+      }
       return DashboardService;
 
     }]);

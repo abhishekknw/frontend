@@ -891,9 +891,15 @@ angular.module('Authentication')
             authService.getSectorForTemplate = function (phoneNumber) {
                var url = "v0/ui/b2c-bot/all-templates-send/?phone_number=" + phoneNumber;
                return machadaloHttp.get(url);
-            };
-            authService.getSupplierDataByNumber = function (number) {
-               let url = "v0/ui/b2b/suspense-tab-by-phone-number/?phone_number=" + number;
+
+             };
+             authService.getSupplierDataByNumber = function (number) {
+               let url = "v0/ui/b2b/supplier-list/?phone_number="+number;
+               return machadaloHttp.get(url);
+             };
+             authService.getSupplierDataBySociety = function (id) {
+               let url = "v0/ui/b2b/suspense-tab-by-supplier/?supplier_id="+id;
+
                return machadaloHttp.get(url);
             };
             authService.newAddUpdateSupplierSubmit = function (data) {
