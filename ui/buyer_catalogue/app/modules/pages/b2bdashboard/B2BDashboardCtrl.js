@@ -40,10 +40,10 @@
     $scope.example14model = [];
     $scope.selected_cities_list = [];
     $scope.settings = {
-      showCheckAll: false,
+      showCheckAll: true,
       scrollable: true,
       enableSearch: true,
-      showUncheckAll: false
+      showUncheckAll: true
     };
     $scope.startDate = "";
     $scope.endDate = "";
@@ -1942,11 +1942,6 @@
         })    
     }
 
-    // $scope.selectedCity = function (city) {
-    //   $scope.selectCity = city;
-    //   $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate, $scope.selectCity,$scope.selectedClientStatus);
-    // }
-
     $scope.changeAcceptanceStartDate = function () {
       $scope.AcceptanceDateRange.start_date = $scope.AcceptanceDateRange.start_dates;
       $scope.AcceptanceOptions.minDate = $scope.AcceptanceDateRange.start_date;
@@ -2000,10 +1995,18 @@
 
     $scope.selectedClientSatusFilter = function (){
       let data = [];
+      $scope.CheckForSelectedStatus = false;
       for (let i in $scope.selected_clientStatus){
         data.push($scope.selected_clientStatus[i].label)
       }
-      $scope.selectedClientStatus = data.toString();
+
+      if($scope.listClientStatus.length == data.length){
+        $scope.selectedClientStatus = null;
+        $scope.CheckForSelectedStatus = true;
+      }
+      else{
+        $scope.selectedClientStatus = data.toString();
+      }
       $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate,$scope.selectCity,$scope.selectedClientStatus);
     }
 
@@ -2017,11 +2020,18 @@
     }
 
     $scope.selectedCityFilter =function(){
+      $scope.CheckForAllSelectedCity = false;
       let array = [];
       for (let i in $scope.selected_cities_list){
         array.push($scope.selected_cities_list[i].label);
       }
-      $scope.selectCity = array.toString();
+      if($scope.cityListDetails.length == array.length){
+        $scope.selectCity = null;
+        $scope.CheckForAllSelectedCity = true;
+      }
+      else{
+        $scope.selectCity = array.toString();
+      }
       $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus, 0, $scope.startDate, $scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,$scope.UpdateStartDate,$scope.UpdateEndDate,$scope.selectCity);
     }
 

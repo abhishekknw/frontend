@@ -1103,7 +1103,7 @@
                                 <p ng-if="filterType ==='Feedback'">
                                   Download Feedback</p>
                                 <p ng-if="filterType ==='Survey Leads'">
-                                    Download Survey</p>
+                                  Download Survey</p>
                               </button>
                             </td>
                             <td class="btn_box_lead_survey">
@@ -1136,7 +1136,7 @@
                           <div class="col-lg-6">
                             <div class="row">
                               <div class="col-lg-6">
-                                <h5 style="color:#000;padding: 10px 0;">Lead Range</h5>
+                                <h5 style="color:#000;padding: 10px 0;">Lead Submitted Date</h5>
                               </div>
                               <div class="col-lg-6">
                                 <div class="date_wrapper">
@@ -1175,7 +1175,7 @@
                             </div>
                           </div>
                         </div>
-                       <!-- Start acceptance Date range filter -->
+                        <!-- Start acceptance Date range filter -->
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="row">
@@ -1187,8 +1187,8 @@
                                   <input type="text" style="color:#000000;" class="field"
                                     uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                                     ng-change="changeAcceptanceStartDate()" ng-model="AcceptanceDateRange.start_dates"
-                                    is-open="isDatepickerOpen1" datepicker-options="datepickerOptions1" ng-required="true"
-                                    close-text="Close" alt-input-formats="altInputFormats">
+                                    is-open="isDatepickerOpen1" datepicker-options="datepickerOptions1"
+                                    ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
                                   <button type="button" class="smallBtn calendar"
                                     ng-click="isDatepickerOpen1 = !isDatepickerOpen1">
                                     <i class="glyphicon glyphicon-calendar"></i>
@@ -1211,7 +1211,8 @@
                                     is-open="isEndDateOpen1" datepicker-options="options" ng-required="true"
                                     close-text="Close" alt-input-formats="altInputFormats">
                                   <button type="button" class="smallBtn calendar"
-                                    ng-disabled="!AcceptanceDateRange.start_dates" ng-click="isEndDateOpen1 = !isEndDateOpen1">
+                                    ng-disabled="!AcceptanceDateRange.start_dates"
+                                    ng-click="isEndDateOpen1 = !isEndDateOpen1">
                                     <i class="glyphicon glyphicon-calendar"></i>
                                   </button>
                                 </div>
@@ -1232,8 +1233,8 @@
                                   <input type="text" style="color:#000000;" class="field"
                                     uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                                     ng-change="changeUpdateStartDate()" ng-model="UpdateDateRangeModel.start_dates"
-                                    is-open="isDatepickerOpen2" datepicker-options="datepickerOptions2" ng-required="true"
-                                    close-text="Close" alt-input-formats="altInputFormats">
+                                    is-open="isDatepickerOpen2" datepicker-options="datepickerOptions2"
+                                    ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
                                   <button type="button" class="smallBtn calendar"
                                     ng-click="isDatepickerOpen2 = !isDatepickerOpen2">
                                     <i class="glyphicon glyphicon-calendar"></i>
@@ -1256,7 +1257,8 @@
                                     is-open="isEndDateOpen2" datepicker-options="options" ng-required="true"
                                     close-text="Close" alt-input-formats="altInputFormats">
                                   <button type="button" class="smallBtn calendar"
-                                    ng-disabled="!UpdateDateRangeModel.start_dates" ng-click="isEndDateOpen2 = !isEndDateOpen2">
+                                    ng-disabled="!UpdateDateRangeModel.start_dates"
+                                    ng-click="isEndDateOpen2 = !isEndDateOpen2">
                                     <i class="glyphicon glyphicon-calendar"></i>
                                   </button>
                                 </div>
@@ -1269,82 +1271,89 @@
                           <div class="col-lg-6">
                             <div class="row">
                               <div class="col-lg-6">
-                              <h5 style="color:#000;padding: 10px 0;">Primary Count:</h5>
+                                <h5 style="color:#000;padding: 10px 0;">Primary Count:</h5>
                               </div>
                               <div class="col-lg-6">
-                              <input class="field" style="color:#000" type="text" placeholder="Start Range" ng-change="searchPrimaryCount(primaryCount)" 
-                              onkeypress='return event.charCode >= 48 && event.charCode <= 57' required ng-model="primaryCount.start">
-                            </div>
-                          
+                                <input class="field" style="color:#000" type="text" placeholder="Start Range"
+                                  ng-change="searchPrimaryCount(primaryCount)"
+                                  onkeypress='return event.charCode >= 48 && event.charCode <= 57' required
+                                  ng-model="primaryCount.start">
+                              </div>
+
                             </div>
                           </div>
                           <div class="col-lg-6">
-                              <div class="row">
-                                <div class="col-sm-1">
-                                  <h5 style="color:#000;padding: 10px 0;">To:</h5>
-                                </div>
-                                <div class="col-sm-6">
-                                  <input class="field" style="color:#000" type="text" placeholder="End Range" ng-change="searchPrimaryCount(primaryCount)" 
-                               onkeypress='return event.charCode >= 48 && event.charCode <= 57' required  ng-model="primaryCount.end">
-                                </div>
+                            <div class="row">
+                              <div class="col-sm-1">
+                                <h5 style="color:#000;padding: 10px 0;">To:</h5>
                               </div>
+                              <div class="col-sm-6">
+                                <input class="field" style="color:#000" type="text" placeholder="End Range"
+                                  ng-change="searchPrimaryCount(primaryCount)"
+                                  onkeypress='return event.charCode >= 48 && event.charCode <= 57' required
+                                  ng-model="primaryCount.end">
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="row">
                               <div class="col-lg-6">
-                              <h5 style="color:#000;padding: 10px 0;">Client Status:</h5>
-                            </div>
+                                <h5 style="color:#000;padding: 10px 0;">Client Status:</h5>
+                              </div>
                               <div class="col-lg-6">
-                                <span class="multi_dropdwn"  
-                                    ng-dropdown-multiselect=""
-                                   options="listClientStatusObj" extra-settings="settings"
-                                   selected-model="selected_clientStatus"
-                                   ng-click="selectedClientSatusFilter();" translation-texts="selected_business_type"
-                                   events="events">
-                             </span>
-                             </div>
+                                <span class="multi_dropdwn" ng-dropdown-multiselect="" options="listClientStatusObj"
+                                  extra-settings="settings" selected-model="selected_clientStatus"
+                                  ng-click="selectedClientSatusFilter();" translation-texts="selected_business_type"
+                                  events="events">
+                                </span>
+                              </div>
                             </div>
-                         </div>
-                         <div class="col-lg-6">
-                         <div class="row">
-                          <div class="col-lg-1"></div>
-                         <div class="col-lg-6">
-                         </div>
-                        </div>
-                        </div>
-                       </div>
-                       <div class="row">
-                        <div class="col-lg-6">
-                          <div class="row">
-                            <div class="col-lg-6">
-                            <h5 style="color:#000;padding: 10px 0;">Select City:</h5>
                           </div>
-                            <div class="col-lg-6">
-                              <span class="multi_dropdwn"  
-                                  ng-dropdown-multiselect=""
-                                  options="cityListDetails" extra-settings="settings"
-                                  selected-model="selected_cities_list"
+                          <div class="col-lg-6">
+                            <div class="row">
+                              <div class="col-lg-1"></div>
+                              <div class="col-lg-6">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <h5 style="color:#000;padding: 10px 0;">Select City:</h5>
+                              </div>
+                              <div class="col-lg-6">
+                                <span class="multi_dropdwn" ng-dropdown-multiselect="" options="cityListDetails"
+                                  extra-settings="settings" selected-model="selected_cities_list"
                                   ng-click="selectedCityFilter();" translation-texts="selected_business_type"
                                   events="events">
-                              </span>
-                                <!-- <span style="width:150px;" class="form-control select_city" 
-                                     style="color:red;width:100%;margin-left:20px;" 
-                                     ng-dropdown-multiselect=""
-                                    options="cityListDetails" extra-settings="settings"
-                                    selected-model="selected_cities_list"
-                                    ng-click="selectedCityFilter();" translation-texts="selected_business_type"
-                                    events="events">
-                                </span> -->
-                                <!-- <select ng-change="selectedCity(city)" class="form-control select_city" ng-model="city">
-                                  <option value="">Select City</option>
-                                  <option ng-repeat="city in cityListDetails" track by "$index">{{city}}</option>
-                                </select> -->
-                           </div>
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                       </div>
-                      </div>
+                        </div>
+                        <span style="display: block;margin: 15px;color:#000;">
+                          Based on your filter there are {{purchasedNotPurchasedLead.length}} leads in "
+                          <span ng-if="!CheckForAllSelectedCity"
+                            ng-repeat="city in selected_cities_list">
+                            {{city.label}}
+                            <span ng-if="!$last">,</span>
+                          </span>
+                          <span style="color:#000" ng-if="CheckForAllSelectedCity || selected_cities_list.length <= 0">All</span> " cities.
+                        </span>
+
+                        <span style="display: block;margin: 15px;color:#000;">
+                          Based on your filter there are {{purchasedNotPurchasedLead.length}} leads in "
+                          <span ng-if="!CheckForSelectedStatus"
+                            ng-repeat="status in selected_clientStatus">
+                            {{status.label}}
+                            <span ng-if="!$last">,</span>
+                          </span>
+                          <span ng-if="CheckForSelectedStatus || selected_clientStatus.length <= 0">All</span> " Client Status.
+                        </span>
 
                         <span style="display: block;margin: 15px;">
                           <input type="text" class="form-control" ng-model="searchQuery"
@@ -1443,8 +1452,8 @@
                 </div>
                 <br /><br />
                 <div>
-                  <dir-pagination-controls ng-if="showPagination && purchasedNotPurchasedLead.length != 0" pagination-id="paginate2" max-size="7"
-                    direction-links="true" boundary-links="true"
+                  <dir-pagination-controls ng-if="showPagination && purchasedNotPurchasedLead.length != 0"
+                    pagination-id="paginate2" max-size="7" direction-links="true" boundary-links="true"
                     on-page-change="pageChangedPurchage(newPageNumber-1,leadPurchasedStatus,campaignId,campaignName)">
                   </dir-pagination-controls>
                 </div>
@@ -2685,7 +2694,8 @@
                 <tr>
                   <th style="background-color: #8e1921; color: #fff;">
                     <h4>Comments :</h4>
-                    <select class="form-control" style="color: #000000" ng-click="filterComment(commentType)" ng-model="commentType">
+                    <select class="form-control" style="color: #000000" ng-click="filterComment(commentType)"
+                      ng-model="commentType">
                       <option value="all" ng-selected="true">All</option>
                       <option value="company_comment">Company comment</option>
                       <option value="machadalo_comment">Machadalo Comments</option>
@@ -3018,7 +3028,8 @@
           <div class="modalBodyBox">
             <h3>Comments</h3>
             <div>
-              <select class="form-control" style="color: #000000;margin-bottom: 15px;" ng-click="filterComment(commentType)" ng-model="commentType">
+              <select class="form-control" style="color: #000000;margin-bottom: 15px;"
+                ng-click="filterComment(commentType)" ng-model="commentType">
                 <option value="all" ng-selected="true">All</option>
                 <option value="company_comment">Company comment</option>
                 <option value="machadalo_comment">Machadalo Comments</option>
