@@ -1019,9 +1019,9 @@
       datalist.status_id = fieldName.id;
       datalist.field_name = fieldName.name;
       datalist.campaign_id = $scope.campaign_id;
-      datalist.buttonOne = $scope.addmultiButton.one;
-      datalist.buttonTwo = $scope.addmultiButton.two;
-      datalist.buttonThree = $scope.addmultiButton.three;
+      datalist.buttonOne = $scope.addmultiButton?.one;
+      datalist.buttonTwo = $scope.addmultiButton?.two;
+      datalist.buttonThree = $scope.addmultiButton?.three;
       let dataObj = {};
       dataObj.data = datalist;
 
