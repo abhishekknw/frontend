@@ -1271,10 +1271,10 @@
                           <th style="padding:10px">Index</th>
                           <th style="padding:10px">Template ID</th>
                           <th style="padding:10px">Template Name</th>
-                          <th style="padding:10px">Template Relivered</th>
+                          <th style="padding:10px">Template Sent(Unique Count)</th>
+                          <th style="padding:10px">Template Delivered</th>
                           <th style="padding:10px">Template Read</th>
                           <th style="padding:10px">Days sent</th>
-                          <th style="padding:10px">Template Sent(Unique Count)</th>
                           <th>Positive</th>
                           <th>Neutral</th>
                           <th>Negative</th>
@@ -1288,10 +1288,10 @@
                           <td>{{$index+serial}}</td>
                           <td style="text-align: center;">{{ttemplate.template_id}}</td>
                           <td style="text-align: center; text-transform: capitalize;">{{ttemplate.template_name}}</td>
+                          <td style="text-align: center;">{{ttemplate.total_users}}({{tttemplate.Unique_send}})</td>
                           <td style="text-align: center;">{{ttemplate.total_template_delivered}}</td>
                           <td style="text-align: center;">{{ttemplate.total_template_read}}</td>
                           <td style="text-align: center;">{{ttemplate.days_count}}</td>
-                          <td style="text-align: center;">{{ttemplate.total_users}}({{tdtemplate.Unique_send}})</td>
                           <td style="text-align: center;">{{ttemplate.total_positive}}</td>
                           <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{ttemplate.total_negative}}</td>
