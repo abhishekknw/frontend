@@ -46,7 +46,7 @@
     };
     $scope.startDate = "";
     $scope.endDate = "";
-    $scope.options = {};
+    $scope.options1 = {};
     $scope.dateRangeModel = {};
     $scope.showPagination = false;
     $scope.selectCity = "";
@@ -71,7 +71,7 @@
 
     $scope.changeStartDate = function () {
       $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
-      $scope.options.minDate = $scope.dateRangeModel.start_date;
+      $scope.options1.minDate = $scope.dateRangeModel.start_date;
       $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
       if ($scope.endDate != "") {
         if ($scope.endDate >= $scope.startDate) {
@@ -1558,7 +1558,7 @@
       $scope.selected_clientStatus = [];
       $scope.startDate = "";
       $scope.endDate = "";
-      $scope.options = {};
+      $scope.options1 = {};
       $scope.dateRangeModel = {};
       $scope.showPagination = false;
       $scope.selectCity = "";
