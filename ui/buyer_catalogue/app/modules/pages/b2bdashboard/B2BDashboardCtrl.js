@@ -253,7 +253,6 @@
         return result;
       }, {});
     }
-
     $scope.count = 0;
     $scope.date = new Date();
     $scope.date = commonDataShare.formatDate($scope.date);
