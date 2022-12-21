@@ -601,15 +601,19 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
       DashboardService.listOfCreateField = function (campaign_id) {
-        var url = url_root +"template/view-template/?campaign_id="+campaign_id;
+        var url = url_root +"template/?campaign_id="+campaign_id;
         return machadaloHttp.get(url);
       }
       DashboardService.submitCreateField = function (data) {
-        var url = url_root +"template/add-template/";
+        var url = url_root +"template/";
         return machadaloHttp.post(url,data);
       }
+      DashboardService.UpdatedCreateField = function (data) {
+        var url = url_root +"template/";
+        return machadaloHttp.put(url,data);
+      }
       DashboardService.removeSingleField = function(id){
-        var url = url_root +"template/add-template/?md_id="+id;
+        var url = url_root +"template/?md_id="+id;
         return machadaloHttp.delete(url); 
       }
       DashboardService.getCityList = function (campaign_id) {
