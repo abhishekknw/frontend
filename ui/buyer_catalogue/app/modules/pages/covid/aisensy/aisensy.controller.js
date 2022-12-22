@@ -2883,7 +2883,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.NewsupplierAddUpdateData.supplier_id = $scope.supplierData[0][0].supplier_id;
               $scope.NewsupplierAddUpdateData.supplier_name = $scope.supplierData[0][0].supplier_name
               if ($scope.supplierData[0][0].supplier_type) {
-                $scope.NewsupplierAddUpdateData.designation = $scope.supplierData[1]?.contact_type;
+                $scope.NewsupplierAddUpdateData.designation = $scope.supplierData[1][0]?.contact_type;
                 $scope.designationList($scope.supplierData[0][0].supplier_type);
               }
               if ($scope.supplierData[0][0].city) {
