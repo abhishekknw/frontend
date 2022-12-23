@@ -778,8 +778,13 @@
     }
     $scope.sendBookingEmails = function (email) {
       if ($scope.checkForEmailModal==false){
-        sendEmailByFilter(email);
-        return 0;
+        if(!email){
+          return 0;
+        }
+        else{
+          sendEmailByFilter(email);
+          return 0;
+        }
       }
       let tabname = "";
       B2BDashboardService.sendBookingEmails($scope.leads, $scope.supplier_code, $scope.campaign, email, tabname)
