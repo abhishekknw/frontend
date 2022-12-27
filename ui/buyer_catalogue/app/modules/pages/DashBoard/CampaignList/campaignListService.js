@@ -9,8 +9,8 @@ function (machadaloHttp, $stateParams, $rootScope,$window, $routeParams, $locati
   var url_base = 'v0/ui/website/';
   var campaignListService = {};
 
-  campaignListService.getCampaignDetails = function(assigned_by,userId,fetch_all){
-    var url = url_base + "campaign-assignment/?include_assigned_by="+ assigned_by +  "&to="+userId + "&fetch_all=" + fetch_all;
+  campaignListService.getCampaignDetails = function(assigned_by,userId,fetch_all,page){
+    var url = url_base + "campaign-assignment/?include_assigned_by="+ assigned_by +  "&to="+userId + "&fetch_all=" + fetch_all +"&next_page="+page;
       return machadaloHttp.get(url);
     }
 

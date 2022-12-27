@@ -75,8 +75,9 @@
         <th>Download Campaign</th>
         <th>Email</th>
       </tr>
-      <tr st-select-row='proposal' dir-paginate="proposal in campaignData|filter:f|filter:searchQuery|itemsPerPage:10">
-        <td>{{$index + 1}}</td>
+      <tr st-select-row='proposal' dir-paginate="proposal in campaignData | filter:f | filter:searchQuery | itemsPerPage:10"
+      total-items="totalrecord" current-page="currentPage" track by "$index">
+        <td>{{$index + 1}}</td> 
         <td> {{proposal.campaign.accountOrganisationName}} <br>  ({{proposal.campaign.accountName}})  </td>
         <td> <span ng-if="proposal.campaign.brand == 'single_brand'"> Single Brand </span> <span ng-if="proposal.campaign.brand == 'multi_brand'"> Multi Brand </span></td>
         <td>{{proposal.campaign.name}}</td>
@@ -173,7 +174,9 @@
         </td>
       </tr>
     </table>
-    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"
+    on-page-change="pageChanged(newPageNumber)" >
+  </dir-pagination-controls>
   </div><!-- middle-section -->
   <div class="fixfooter"></div>
 </div><!-- wrapperBox -->
