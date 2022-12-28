@@ -1564,7 +1564,6 @@
       $scope.endDate = "";
       $scope.options1 = {};
       $scope.dateRangeModel = {};
-      $scope.showPagination = false;
       $scope.selectCity = "";
 
       $scope.AcceptanceDateRange = {};
@@ -2153,7 +2152,6 @@
           swal(constants.name, "Error", constants.error);
         });
     }
-
   })
 
 
