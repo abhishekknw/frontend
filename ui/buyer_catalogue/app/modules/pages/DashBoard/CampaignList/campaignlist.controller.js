@@ -50,8 +50,8 @@ angular.module('catalogueApp')
           $scope.Data = [];
           campaignListService.getCampaignDetails(assigned_by, userId, fetch_all,page)
             .then(function onSuccess(response) {
-              $scope.campaignData = response.data.data;
-              $scope.totalrecord = $scope.campaignData.length;
+              $scope.campaignData = response.data.data.suspense_data;
+              $scope.totalrecord = response.data.data.count;
               $scope.currentPage = page;
               $scope.Data = $scope.campaignData;
               $scope.loading = response.data.data;

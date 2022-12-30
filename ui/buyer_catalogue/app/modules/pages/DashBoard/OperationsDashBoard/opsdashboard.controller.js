@@ -38,8 +38,8 @@ angular.module('catalogueApp')
     $scope.Data = [];
     opsDashBoardService.getProposalDetails(page)
     	.then(function onSuccess(response){
-        $scope.proposals = response.data.data;
-        $scope.totalrecord = $scope.proposals.length;
+        $scope.proposals = response.data.data.list;
+        $scope.totalrecord = response.data.data.count;
         $scope.currentPage = page;
         $scope.Data = $scope.proposals;
         if($scope.proposals.length == 0){
