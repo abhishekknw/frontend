@@ -19,7 +19,10 @@ angular.module('catalogueApp')
 
       $scope.is_Superuser = $window.localStorage.isSuperUser;
       // var vm = this;
-      var getCampaignDetails = function () {
+      var getCampaignDetails = function (page) {
+        if(!page){
+          page = 1;
+        }
         if ($scope.is_Superuser == 'true') {
           var fetch_all = '1';
           campaignListService.getAllCampaignDetails(fetch_all)
@@ -45,10 +48,11 @@ angular.module('catalogueApp')
           var fetch_all = '0';
           var userId = $rootScope.globals.currentUser.user_id;
           $scope.Data = [];
-          campaignListService.getCampaignDetails(assigned_by, userId, fetch_all)
+          campaignListService.getCampaignDetails(assigned_by, userId, fetch_all,page)
             .then(function onSuccess(response) {
-              $scope.campaignData = response.data.data;
-
+              $scope.campaignData = response.data.data.suspense_data;
+              $scope.totalrecord = response.data.data.count;
+              $scope.currentPage = page;
               $scope.Data = $scope.campaignData;
               $scope.loading = response.data.data;
               if ($scope.campaignData.length == 0) {
@@ -66,6 +70,9 @@ angular.module('catalogueApp')
             });
         }
 
+      }
+      $scope.pageChanged = function (page) {
+        getCampaignDetails(page);
       }
 
       var getUsersList = function () {

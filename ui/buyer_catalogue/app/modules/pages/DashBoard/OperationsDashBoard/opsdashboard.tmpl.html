@@ -35,7 +35,9 @@
               <th>Edit Details</th>
               <th>Comments</th>
             </tr>
-            <tr ng-repeat="proposal in proposals">
+             <tr st-select-row='proposal' dir-paginate="proposal in proposals | filter:f | filter:searchQuery | itemsPerPage:10"
+                  total-items="totalrecord" current-page="currentPage" track by "$index">
+            <!-- <tr ng-repeat="proposal in proposals"> -->
               <td>{{$index+1}}</td>
               <td ng-click="showProposalDetails(proposal.proposal.proposal_id)">
                 <a class="linkBtn">{{proposal.proposal.proposal_id}}</a>
@@ -91,7 +93,10 @@
               </td>
             </tr>
           </table>
-          <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div>
+          <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"
+          on-page-change="pageChanged(newPageNumber)" >
+          </dir-pagination-controls>
+          <!-- <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div> -->
         </div>
       </div>
 
