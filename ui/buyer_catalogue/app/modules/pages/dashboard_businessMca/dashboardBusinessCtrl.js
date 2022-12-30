@@ -3605,7 +3605,14 @@
         }
         else {
           //B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page,city,startDate,endDate,search)
-          B2BDashboardService.purchasedNotPurchasedLead(campaignId, "Leads",'all', page,city,startDate,endDate,search)
+          // (campaignId,filterType,supplierCode,page,startDate,endDate,acceptStartDate,acceptEndDate,updateStartDate,updateEndDate,city,ClientStatus,search,primary)
+          let acceptStartDate = "";
+          let acceptEndDate = "";
+          let updateStartDate = "";
+          let updateEndDate = "";
+          let ClientStatus = "";
+          let primary = {"start":"","end":""};
+          B2BDashboardService.purchasedNotPurchasedLeadBusinessMCA(campaignId, "Leads",'all', page,startDate,endDate,acceptStartDate,acceptEndDate,updateStartDate,updateEndDate,city,ClientStatus,search,primary)
             .then(function onSuccess(response) {
               cfpLoadingBar.complete();
               $scope.selectedCampaignLeads = response.data.data;
