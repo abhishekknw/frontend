@@ -16,7 +16,8 @@
       <div class="" ng-hide="hideData || isEmpty">
         <div st-table="proposals" st-safe-src="Data">
           <div class="searchBox">
-            <input st-search="" placeholder="Search ..." class="field"  type="search">
+            <input placeholder="Search ..." class="field"  type="search"
+             ng-model="searchQuery" ng-change="pageChanged(currentPage,searchQuery)">
             <button><i class="fas fa-search"></i></button>
           </div>
           <table class="table-data">
