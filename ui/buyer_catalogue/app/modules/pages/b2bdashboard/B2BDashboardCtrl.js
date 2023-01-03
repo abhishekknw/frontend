@@ -778,8 +778,13 @@
     }
     $scope.sendBookingEmails = function (email) {
       if ($scope.checkForEmailModal==false){
-        sendEmailByFilter(email);
-        return 0;
+        if(!email){
+          return 0;
+        }
+        else{
+          sendEmailByFilter(email);
+          return 0;
+        }
       }
       let tabname = "";
       B2BDashboardService.sendBookingEmails($scope.leads, $scope.supplier_code, $scope.campaign, email, tabname)
@@ -1019,9 +1024,9 @@
       datalist.status_id = fieldName.id;
       datalist.field_name = fieldName.name;
       datalist.campaign_id = $scope.campaign_id;
-      datalist.buttonOne = $scope.addmultiButton.one;
-      datalist.buttonTwo = $scope.addmultiButton.two;
-      datalist.buttonThree = $scope.addmultiButton.three;
+      datalist.buttonOne = $scope.addmultiButton?.one;
+      datalist.buttonTwo = $scope.addmultiButton?.two;
+      datalist.buttonThree = $scope.addmultiButton?.three;
       let dataObj = {};
       dataObj.data = datalist;
 
@@ -1559,7 +1564,6 @@
       $scope.endDate = "";
       $scope.options1 = {};
       $scope.dateRangeModel = {};
-      $scope.showPagination = false;
       $scope.selectCity = "";
 
       $scope.AcceptanceDateRange = {};
@@ -1886,7 +1890,7 @@
       dataObj.comment = data.comment;
       dataObj.send_triger = data.send_trigger;
       dataObj.md_id = data.md_id;
-      dataObj.trigger_message = data.trigger_message;
+      dataObj.data = data.data;
       dataObj.buttonOne = $scope.updateButton.one;
       dataObj.buttonTwo = $scope.updateButton.two;
       dataObj.buttonThree = $scope.updateButton.three;
@@ -1907,14 +1911,16 @@
         closeOnCancel: true
       },
         function (confirm) {
-          B2BDashboardService.submitCreateField(datalist)
+          if(confirm){
+            B2BDashboardService.UpdatedCreateField(datalist)
             .then(function onSuccess(response) {
               console.log(response.data.data);
-              swal('Added', response.data.data)
+              swal('Updated', response.data.data)
               $scope.listOfCreateField($scope.campaign_id);
             }).catch(function onError(response) {
               console.log(response);
             });
+          }
         })
     }
     $scope.removeSingleField = function (id, index) {
@@ -1929,11 +1935,14 @@
         closeOnCancel: true
       },
         function (confirm) {
-          B2BDashboardService.removeSingleField(id)
+          if(confirm){
+            B2BDashboardService.removeSingleField(id)
             .then(function onSuccess(response) {
-              $scope.createFieldList = $scope.createFieldList.splice(index, 1);
-              swal('Remove', 'Successfully')
+              $scope.createFieldList.splice(index, 1);
+              swal('Remove', 'Successfully');
+              // $scope.listOfCreateField($scope.campaign_id);
             })
+          }
         }
       )
     }
@@ -2143,7 +2152,6 @@
           swal(constants.name, "Error", constants.error);
         });
     }
-
   })
 
 

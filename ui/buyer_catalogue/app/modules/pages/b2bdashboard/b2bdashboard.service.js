@@ -549,7 +549,14 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
       
-
+      // For Business Mca Dashboard
+      DashboardService.purchasedNotPurchasedLeadBusinessMCA =function(campaignId,filterType,supplierCode,page,startDate,endDate,acceptStartDate,acceptEndDate,updateStartDate,updateEndDate,city,ClientStatus,search,primary){
+        var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&supplier_type=" + supplierCode+"&next_page="+page+"&start_date="+startDate+"&end_date="+endDate+"&city="+city+"&search="+search;
+        if(filterType){
+          url += "&lead_type=" + filterType;
+        }
+        return machadaloHttp.get(url);
+      }
       DashboardService.viewLicenceDetail = function () {
         var url = url_root + "b2b/licence-details/";
         return machadaloHttp.get(url);
@@ -601,15 +608,19 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
       DashboardService.listOfCreateField = function (campaign_id) {
-        var url = url_root +"template/view-template/?campaign_id="+campaign_id;
+        var url = url_root +"template/?campaign_id="+campaign_id;
         return machadaloHttp.get(url);
       }
       DashboardService.submitCreateField = function (data) {
-        var url = url_root +"template/add-template/";
+        var url = url_root +"template/";
         return machadaloHttp.post(url,data);
       }
+      DashboardService.UpdatedCreateField = function (data) {
+        var url = url_root +"template/";
+        return machadaloHttp.put(url,data);
+      }
       DashboardService.removeSingleField = function(id){
-        var url = url_root +"template/add-template/?md_id="+id;
+        var url = url_root +"template/?md_id="+id;
         return machadaloHttp.delete(url); 
       }
       DashboardService.getCityList = function (campaign_id) {
@@ -618,8 +629,7 @@ angular.module('catalogueApp')
       }
 
       DashboardService.sendBookingEmailsByFilter = function(leads,supplier_code,campaign,email,tabName,startDate,endDate,AcceptanceStartDate,AcceptanceEndDate,UpdateStartDate,UpdateEndDate,selectCity,selectedClientStatus,countStart,countEnd){
-        email.selected = "";
-        var url = url_root + "b2b/email-leads-summary/?lead_type=" + leads + "&supplier_code="+supplier_code+"&campaign_id="+campaign+"&emails="+email.email+"&tabname="+tabName+"&Client_Status="+email.selected+
+        var url = url_root + "b2b/email-leads-summary/?lead_type=" + leads + "&supplier_code="+supplier_code+"&campaign_id="+campaign+"&emails="+email.email+"&tabname="+tabName+
         "&start_date="+startDate+"&end_date="+endDate+"&start_acceptance_date="+AcceptanceStartDate+"&end_acceptance_date="+AcceptanceEndDate+"&start_update_date="+UpdateStartDate+"end_update_date="+UpdateEndDate+
         "&city="+selectCity+"&client_status="+selectedClientStatus+"&from_primary_count="+countStart+"&to_primary_count="+countEnd;
         return machadaloHttp.get(url);

@@ -3819,8 +3819,10 @@
                         data-target="#pocModal" data-toggle="modal">Add POC</button>
                     </td>
                   </tr>
-                  </tr>
-                  </tr>
+                </tr>
+                </tr>
+                </tbody>
+                <tbody>
                   <tr ng-if="NewcountBrowsedRow==true">
                     <td class="alignment">
                       <input type="checkbox" name="newBrowsedCheck" ng-click="newCheckboxSubmitted(newRequirement.newBrowsedCheck)"
@@ -5239,6 +5241,24 @@
                   name="Longitude" id="Longitude" ng-model="NewsupplierAddUpdateData.longitude" value="" ng-required="true">
                 <!-- <div ng-show="myForm.pin_code.$error.pattern" class="error" style="font-size:12px; color: red;">
                   Longitude Invalid</div> -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Primary Count: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text"  placeholder="primary count" class="form-control"
+                  name="unit_primary_count" id="unit_primary_count" ng-model="NewsupplierAddUpdateData.unit_primary_count" value="" ng-required="true">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Secondary Count: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text"  placeholder="secondary count" class="form-control"
+                  name="unit_secondary_count" id="unit_secondary_count" ng-model="NewsupplierAddUpdateData.unit_secondary_count" value="" ng-required="true">
               </div>
             </div>
               <!-- ADD POC -->

@@ -31,11 +31,16 @@ angular.module('catalogueApp')
         // {header : 'Download Proposal'}
       ];
 
-  var getProposalDetails = function(){
+  var getProposalDetails = function(page){
+    if(!page){
+      page = 1;
+    }
     $scope.Data = [];
-    opsDashBoardService.getProposalDetails()
+    opsDashBoardService.getProposalDetails(page)
     	.then(function onSuccess(response){
-        $scope.proposals = response.data.data;
+        $scope.proposals = response.data.data.list;
+        $scope.totalrecord = response.data.data.count;
+        $scope.currentPage = page;
         $scope.Data = $scope.proposals;
         if($scope.proposals.length == 0){
           $scope.isEmpty = true;
@@ -54,6 +59,10 @@ angular.module('catalogueApp')
     		console.log("error occured", response);
         // swal(constants.name,constants.errorMsg,constants.error);
     	});
+    }
+
+    $scope.pageChanged = function(page){
+      getProposalDetails(page);
     }
 
     $scope.getUsersList = function(orgId){
