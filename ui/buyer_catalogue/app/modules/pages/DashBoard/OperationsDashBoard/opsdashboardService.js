@@ -8,8 +8,8 @@
     var url_base = 'v0/ui/website/';
     var opsDashBoard = {};
 
-  	opsDashBoard.getProposalDetails = function(page){
-      var url = url_base + "proposal/invoice_proposals/?next_page="+page;
+  	opsDashBoard.getProposalDetails = function(page,search){
+      var url = url_base + "proposal/invoice_proposals/?next_page="+page+"&search="+search;
   		return machadaloHttp.get(url);
   	}
     opsDashBoard.updateProposalDetails = function(proposal_id,data){

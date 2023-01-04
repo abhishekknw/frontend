@@ -46,7 +46,9 @@
     };
     $scope.startDate = "";
     $scope.endDate = "";
-    $scope.options1 = {};
+    $scope.submittedDateOptions = {
+      maxDate: new Date(),
+    };
     $scope.dateRangeModel = {};
     $scope.showPagination = false;
     $scope.selectCity = "";
@@ -54,12 +56,16 @@
     $scope.AcceptanceDateRange = {};
     $scope.AcceptanceStartDate = "";
     $scope.AcceptanceEndDate = "";
-    $scope.AcceptanceOptions = {};
+    $scope.AcceptanceOptions = {
+      maxDate: new Date(),
+    };
 
     $scope.UpdateDateRangeModel = {};
     $scope.UpdateStartDate = "";
     $scope.UpdateEndDate = "";
-    $scope.UpdateOptions = {};
+    $scope.UpdateOptions = {
+      maxDate: new Date(),
+    };
 
     $scope.purchasedTable = false;
     $scope.notPurchasedTable = false;
@@ -71,7 +77,7 @@
 
     $scope.changeStartDate = function () {
       $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
-      $scope.options1.minDate = $scope.dateRangeModel.start_date;
+      $scope.submittedDateOptions.minDate = $scope.dateRangeModel.start_date;
       $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
       if ($scope.endDate != "") {
         if ($scope.endDate >= $scope.startDate) {
@@ -1562,19 +1568,25 @@
       $scope.selected_clientStatus = [];
       $scope.startDate = "";
       $scope.endDate = "";
-      $scope.options1 = {};
+      $scope.submittedDateOptions = {
+        maxDate: new Date(),
+      };
       $scope.dateRangeModel = {};
       $scope.selectCity = "";
 
       $scope.AcceptanceDateRange = {};
       $scope.AcceptanceStartDate = "";
       $scope.AcceptanceEndDate = "";
-      $scope.AcceptanceOptions = {};
+      $scope.AcceptanceOptions = {
+        maxDate: new Date(),
+      };
 
       $scope.UpdateDateRangeModel = {};
       $scope.UpdateStartDate = "";
       $scope.UpdateEndDate = "";
-      $scope.UpdateOptions = {};
+      $scope.UpdateOptions = {
+        maxDate: new Date(),
+      };
 
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = false;

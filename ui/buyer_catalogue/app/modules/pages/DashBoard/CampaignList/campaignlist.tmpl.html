@@ -52,7 +52,7 @@
 
     <div ng-show="!isEmpty"> 
       <div class="searchBox">
-        <input type="text" class="field" ng-model="searchQuery" placeholder="search" type="search">
+        <input type="text" class="field" ng-model="searchQuery" ng-change="pageChanged(currentPage,searchQuery)" placeholder="search" type="search">
         <button><i class="fas fa-search"></i></button>
       </div>
     </div>
