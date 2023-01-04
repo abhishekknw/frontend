@@ -2164,6 +2164,37 @@
           swal(constants.name, "Error", constants.error);
         });
     }
+    $scope.refeshFilters = function(){
+      $scope.selected_cities_list = [];
+      $scope.selected_clientStatus = [];
+      $scope.startDate = "";
+      $scope.endDate = "";
+      $scope.submittedDateOptions = {
+        maxDate: new Date(),
+      };
+      $scope.dateRangeModel = {};
+      $scope.selectCity = "";
+
+      $scope.AcceptanceDateRange = {};
+      $scope.AcceptanceStartDate = "";
+      $scope.AcceptanceEndDate = "";
+      $scope.AcceptanceOptions = {
+        maxDate: new Date(),
+      };
+
+      $scope.UpdateDateRangeModel = {};
+      $scope.UpdateStartDate = "";
+      $scope.UpdateEndDate = "";
+      $scope.UpdateOptions = {
+        maxDate: new Date(),
+      };
+
+      $scope.purchasedTable = false;
+      $scope.notPurchasedTable = false;
+      $scope.selected_clientStatus = [];
+      $scope.primaryCount = { "start": '', "end": '' };
+      $scope.getPurchasedNotPurchasedLead( $scope.campaignId,$scope.campaignName);
+    }
   })
 
 
