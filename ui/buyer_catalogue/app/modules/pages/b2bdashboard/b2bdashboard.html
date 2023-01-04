@@ -1126,10 +1126,13 @@
                     <input type="text" class="form-control" ng-model="searchData" ng-if="purchasedTable"
                       placeholder="search">
                     <div class="table-responsive">
-                      <div>
+                      <div style="color: black;">
                         <center>
-                          <h2 style="color: black;">Leads of {{campaignName}}</h2>
+                          <h2>Leads of {{campaignName}}</h2>
                         </center>
+                        <div align="right">
+                          <button class="btn danger" ng-click="refeshFilters()">Refresh Filter</button>
+                        </div>
                       </div>
                       <div class="date_range_picker">
                         <div class="row">
