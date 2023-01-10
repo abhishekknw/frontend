@@ -2097,13 +2097,12 @@
         $scope.primaryCount.end = "";
       }
       let url = $scope.APIBaseUrl + "v0/ui/b2b/download-leads-summary/?lead_type=" + $scope.filterType + "&supplier_code=all&campaign_id=" + $scope.campaign +
-        "&start_date=" + $scope.startDate + "end_date=" + $scope.endDate +
+        "&start_date=" + $scope.startDate + "&end_date=" + $scope.endDate +
         "&start_acceptance_date=" + $scope.AcceptanceStartDate + "&end_acceptance_date=" + $scope.AcceptanceEndDate +
         "&start_update_date=" + $scope.UpdateStartDate + "&end_update_date=" + $scope.UpdateEndDate +
         "&city=" + $scope.selectCity + "&client_status=" + $scope.selectedClientStatus +
         "&from_primary_count=" + $scope.primaryCount.start + "&to_primary_count=" + $scope.primaryCount.end;
-      window.open(url, '_blank');
-      // window.open($scope.APIBaseUrl+"v0/ui/b2b/download-leads-summary/?lead_type="+ $scope.filterType+"&supplier_code=all&campaign_id="+$scope.campaign, '_blank');
+        window.open(url, '_blank');
     }
 
     $scope.EmailLeadsByFilter = function(){
