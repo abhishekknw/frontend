@@ -66,6 +66,11 @@ angular.module('catalogueApp')
     $scope.pageChanged = function(page,search){
       getProposalDetails(page,search);
     }
+    $scope.searchProposalDetails = function(page,search){
+      if(search.length == 0 || search.length > 2){
+       getProposalDetails(1,search);
+      }
+    }
 
     $scope.getUsersList = function(orgId){
       commonDataShare.getUsersList(orgId)
