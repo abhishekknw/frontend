@@ -164,10 +164,10 @@ angular.module('catalogueApp')
 
         suspenseLeadService.selectLeads()
           .then(function onSuccess(response) {
-             $scope.leads_time = response.data;
-             $scope.lastIndex = $scope.leads_time.data.length - 1;
-             $scope.leads_Data = response.data.data;
-            })
+            $scope.leads_time = response.data;
+            $scope.lastIndex = $scope.leads_time.data.length - 1;
+            $scope.leads_Data = response.data.data;
+          })
       }
 
       $scope.getBrowsedTabSuspenseLeads = function (page) {
@@ -633,8 +633,8 @@ angular.module('catalogueApp')
         }
         $scope.supplierForAddUpdateData.designation = "";
       }
-      $scope.showHideRow = function(){
-        $scope.newRowShowHide =  $scope.newRowShowHide===true?false:true;
+      $scope.showHideRow = function () {
+        $scope.newRowShowHide = $scope.newRowShowHide === true ? false : true;
       }
 
       $scope.filterLeadData = {}
@@ -658,52 +658,130 @@ angular.module('catalogueApp')
           }
         }
       }
-      $scope.newSelected_preferred_patner = [];
-      $scope.suspenseLeadFilterData = function (id){
-        $scope.sector_id = id;
-        suspenseLeadService.filterPreferredPartner(id)
-        .then(function onSuccess(response) {
-          $scope.suspensePreferred_partnerList = response.data.data.companies;
-          $scope.suspenseSub_sectorList = response.data.data.sub_sector;
-          for (let i in $scope.suspensePreferred_partnerList){
-            $scope.suspensePreferred_partnerList[i]['label'] =  $scope.suspensePreferred_partnerList[i]['name'];
-          }
-          // let companyBysector = $scope.companiesData;
-          // let companyPartner = $scope.suspensePreferred_partnerList;
-          // let hash = {};
-          // for (let i of companyBysector.concat(companyPartner)) {
-          //   if (!hash[i]) {
-          //     hash[i.organisation_id] = i;
-          //   }
-          // }
-          // $scope.companiesData = [];
-          // for (let i in hash) {
-          //   $scope.companiesData.push(hash[i])
-          // }
+      
+      $scope.suspenseLeadFilterData = function (id,index) {
+        $scope.newSelected_preferred_patner = [];
+        if(index!=undefined){
+          $scope.leadTabData[index].sector_name = $scope.filterBrowsedLeadData(id);
+          $scope.leadTabData[index].sector_id = id;
+          $scope.leadTabData[index].selected_preferred_patner = [];
+        }
+        else{
           $scope.filterBrowsedLeadData(id);
-        }).catch(function onError(response) {
-          console.log(response);
-        })
+          $scope.sector_id = id;
+        }
+
+        suspenseLeadService.filterPreferredPartner(id)
+          .then(function onSuccess(response) {
+            $scope.suspensePreferred_partnerList = response.data.data.companies;
+            $scope.suspenseSub_sectorList = response.data.data.sub_sector;
+            for (let i in $scope.suspensePreferred_partnerList) {
+              $scope.suspensePreferred_partnerList[i]['label'] = $scope.suspensePreferred_partnerList[i]['name'];
+            }
+            let companyBysector = $scope.companiesData;
+            let companyPartner = $scope.suspensePreferred_partnerList;
+            let hash = {};
+            for (let i of companyBysector.concat(companyPartner)) {
+              if (!hash[i]) {
+                hash[i.organisation_id] = i;
+              }
+            }
+            $scope.companiesData = [];
+            for (let i in hash) {
+              $scope.companiesData.push(hash[i])
+            }
+          }).catch(function onError(response) {
+            console.log(response);
+          })
       }
+
+      let getsubSectorName = function(id){
+        for (let i in $scope.suspenseSub_sectorList){
+          if($scope.suspenseSub_sectorList[i].id == id){
+            return $scope.suspenseSub_sectorList[i].business_sub_type;
+          }
+        }
+      }
+
       $scope.newRowData = {};
-      $scope.SaveNewRowData = function(row){
-        let arrayPrefered =[];
-        for (let i in $scope.newSelected_preferred_patner){
+      $scope.SaveNewRowData = function (row) {
+        let arrayPrefered = [];
+        for (let i in $scope.newSelected_preferred_patner) {
           arrayPrefered.push($scope.newSelected_preferred_patner[i].organisation_id);
         }
-        let data =[{
-          "call_back_preference":null,
+        let data = [{
+          "phone_number": $scope.newRowData.phone_number,
+          "sector_name" : $scope.filterBrowsedLeadData($scope.newRowData.sector),
+          "sub_sector" : getsubSectorName($scope.newRowData.subSector),
+          "call_back_preference": null,
           "current_patner_feedback": $scope.newRowData.current_patner_feedback,
-          "current_patner_feedback_reason":$scope.newRowData.current_patner_feedback_reason,
-          "current_patner_id":$scope.newRowData.current_patner,
-          "current_patner_other":$scope.newRowData.current_patner_other,
-          "implementation_timeline":$scope.newRowData.implementation_timeline,
-          "internal_comment":$scope.newRowData.internal_comment,
-          "meating_timeline":$scope.newRowData.meating_timeline,
-          "prefered_patner_other":$scope.newRowData.prefered_patner_other,
-          "prefered_patners_id":arrayPrefered,
-          "_id":null
-        }]
-        console.log(data,"datadata")
+          "current_patner_feedback_reason": $scope.newRowData.current_patner_feedback_reason,
+          "current_patner_id": $scope.newRowData.current_patner,
+          "current_patner_other": $scope.newRowData.current_patner_other,
+          "implementation_timeline": $scope.newRowData.implementation_timeline,
+          "internal_comment": $scope.newRowData.internal_comment,
+          "meating_timeline": $scope.newRowData.meating_timeline,
+          "prefered_patner_other": $scope.newRowData.prefered_patner_other,
+          "prefered_patners_id": arrayPrefered,
+          "calling_state": null,
+          "L4": $scope.newRowData.L4,
+          "L5": $scope.newRowData.L5,
+          "L6": $scope.newRowData.L6,
+          "_id": null
+        }];
+        console.log(data, "datadata")
+        let update = {
+          "suspense_leads": data
+        }
+        swal({
+          title: 'Are you sure ?',
+          text: 'Update Suspense Lead',
+          type: constants.warning,
+          showCancelButton: true,
+          confirmButtonClass: "btn-success",
+          confirmButtonText: "Yes, Save!",
+          closeOnConfirm: false,
+          closeOnCancel: true
+
+        },
+          function (confirm) {
+            if (confirm) {
+              suspenseLeadService.updateLeadTab(update)
+                .then(function onSuccess(response) {
+                  $scope.newRowData = {};
+                  $scope.newSelected_preferred_patner = [];
+                  if (response && response.data.data.error) {
+                    swal(constants.name, response.data.data.error, constants.error);
+                  } else {
+                    swal(constants.name, response.data.data.message, constants.success);
+                    // $scope.leadTabData[index].lead_status = response.data.data.lead_status;
+                    // if ($scope.leadTabData[index].meating_timeline == 'not given') {
+                    //   $scope.leadTabData.splice(index, 1)
+                    // }
+                  }
+                }).catch(function onError(response) {
+                  console.log(response);
+                })
+            }
+          });
+      }
+
+      $scope.companiessuspenseLeads = [];
+      $scope.suspenseLeadsPreferredPartner = function (id) {
+        while ($scope.companiessuspenseLeads.length) {
+          $scope.companiessuspenseLeads.pop();
+        }
+        var i = 0;
+        for (let k in $scope.companiesData) {
+          if ($scope.companiesData[k].business_type !== undefined) {
+            if (id == $scope.companiesData[k].business_type[0]) {
+              $scope.companiessuspenseLeads[i] = $scope.companiesData[k];
+              $scope.companiessuspenseLeads[i].id = $scope.companiesData[k].organisation_id;
+              $scope.companiessuspenseLeads[i].label = $scope.companiesData[k].name;
+              $scope.companiessuspenseLeads[i].sector = $scope.companiesData[k].business_type[0];
+              i++;
+            }
+          }
+        }
       }
     }]);
