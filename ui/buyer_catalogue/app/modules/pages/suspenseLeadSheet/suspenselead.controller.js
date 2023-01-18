@@ -267,6 +267,7 @@ angular.module('catalogueApp')
           }
         }
         let data = [{
+          "sector_name":  $scope.filterBrowsedLeadData($scope.leadTabData[index].sector_id),
           "_id": $scope.leadTabData[index]._id,
           "implementation_timeline": $scope.leadTabData[index].implementation_timeline,
           "meating_timeline": $scope.leadTabData[index].meating_timeline,
@@ -280,6 +281,9 @@ angular.module('catalogueApp')
           "current_patner_feedback_reason": $scope.leadTabData[index].current_patner_feedback_reason,
           "l3_answer_1": $scope.leadTabData[index].l3_answer_1,
           "internal_comment": $scope.leadTabData[index].internal_comment,
+          "L4": $scope.leadTabData[index].l1_answers,
+          "L5": $scope.leadTabData[index].l1_answer_2,
+          "L6": $scope.leadTabData[index].l2_answers,
         }];
 
         let update = {
@@ -675,6 +679,13 @@ angular.module('catalogueApp')
           .then(function onSuccess(response) {
             $scope.suspensePreferred_partnerList = response.data.data.companies;
             $scope.suspenseSub_sectorList = response.data.data.sub_sector;
+            if(index==undefined){
+              $scope.newRowPreferred_partnerList = response.data.data.companies;
+              $scope.newRowSub_sectorList = response.data.data.sub_sector;
+              for (let i in $scope.newRowPreferred_partnerList) {
+                $scope.newRowPreferred_partnerList[i]['label'] = $scope.newRowPreferred_partnerList[i]['name'];
+              }
+            }
             for (let i in $scope.suspensePreferred_partnerList) {
               $scope.suspensePreferred_partnerList[i]['label'] = $scope.suspensePreferred_partnerList[i]['name'];
             }
@@ -783,5 +794,6 @@ angular.module('catalogueApp')
             }
           }
         }
+        $scope.filterBrowsedLeadData(id);
       }
     }]);
