@@ -927,6 +927,20 @@ header .topRight .top-menu {
 .line-h-table.table > tbody > tr > td{
   line-height: 1.3;
 }
+
+.suspense-lead-sheet{
+  margin-top: 0;
+  /* margin-bottom: 0; */
+}
+.suspense-lead-sheet h3{
+  margin-top: 0;
+}
+.suspense-lead-sheet-page .middle-section{
+  padding: 30px;
+}
+.suspense-lead-sheet-page .dashboard-tab h5{
+  margin: 0;
+}
 @media screen and (max-width: 767px) {
   #SuspenseLeadsModel .modal-dialog,  #RequirementModel .modal-dialog{
     width: auto;

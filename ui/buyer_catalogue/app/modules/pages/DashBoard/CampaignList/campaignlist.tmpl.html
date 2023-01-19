@@ -52,7 +52,7 @@
 
     <div ng-show="!isEmpty"> 
       <div class="searchBox">
-        <input type="text" class="field" ng-model="searchQuery" ng-change="pageChanged(currentPage,searchQuery)" placeholder="search" type="search">
+        <input type="text" class="field" ng-model="searchQuery" ng-change="searchProposalDetails(currentPage,searchQuery)" placeholder="search" type="search">
         <button><i class="fas fa-search"></i></button>
       </div>
     </div>
@@ -78,9 +78,9 @@
       <tr st-select-row='proposal' dir-paginate="proposal in campaignData | filter:f | filter:searchQuery | itemsPerPage:10"
       total-items="totalrecord" current-page="currentPage" track by "$index">
         <td>{{$index + 1}}</td> 
-        <td> {{proposal.campaign.accountOrganisationName}} <br>  ({{proposal.campaign.accountName}})  </td>
-        <td> <span ng-if="proposal.campaign.brand == 'single_brand'"> Single Brand </span> <span ng-if="proposal.campaign.brand == 'multi_brand'"> Multi Brand </span></td>
-        <td>{{proposal.campaign.name}}</td>
+        <td> {{proposal.accountOrganisationName}} <br>  ({{proposal.accountName}})  </td>
+        <td> <span ng-if="proposal.brand == 'single_brand'"> Single Brand </span> <span ng-if="proposal.brand == 'multi_brand'"> Multi Brand </span></td>
+        <td>{{proposal.name}}</td>
         <td>
           <div ng-repeat="assigned_data in proposal.assigned">{{assigned_data.assigned_to}}</div>
         </td>
@@ -88,9 +88,9 @@
           <div ng-repeat="assigned_data in proposal.assigned">{{assigned_data.assigned_by}}</div>
         </td>
         <td>{{proposal.updated_at|limitTo:10 }}</td>
-        <td>{{proposal.campaign.tentative_start_date|limitTo:10}}</td>
-        <td>{{proposal.campaign.tentative_end_date|limitTo:10}}</td>
-        <td class="campaignStatus" style="text-transform:lowercase;">{{proposal.campaign.campaign_state==="POH"?"On Hold":proposal.campaign.status}}</td>
+        <td>{{proposal.tentative_start_date|limitTo:10}}</td>
+        <td>{{proposal.tentative_end_date|limitTo:10}}</td>
+        <td class="campaignStatus" style="text-transform:lowercase;">{{proposal.campaign_state==="POH"?"On Hold":proposal.status}}</td>
 
         <td rowspan="{{key.length}}" >
           <!-- <div class="comment" ng-if="comments[supplier.id]">
@@ -102,23 +102,23 @@
           
             <p>{{proposal.comment.slice(0,20)}}</p>
           </div>
-          <button type="button" class="linkBtn" ng-click="viewComments(proposal.campaign,proposal.id)">View/Add</button>
+          <button type="button" class="linkBtn" ng-click="viewComments(proposal,proposal.id)">View/Add</button>
         </td>
         <td>
-          <a class="linkBtn" ng-click="getDetails(proposal.campaign.proposal_id)">Details </a>
+          <a class="linkBtn" ng-click="getDetails(proposal.proposal_id)">Details </a>
         </td>
         <td>
-          <a class="linkBtn" ng-click="goToAssignDatesPage(proposal.campaign.proposal_id)">Assign Dates</a>
+          <a class="linkBtn" ng-click="goToAssignDatesPage(proposal.proposal_id)">Assign Dates</a>
         </td>
         <td>
-          <a class="linkBtn" ng-click="getExecutionDetails(proposal.campaign)">Image Details </a>
+          <a class="linkBtn" ng-click="getExecutionDetails(proposal)">Image Details </a>
         </td>
         <td>
-          <a class="linkBtn" ng-click="downloadSheet(proposal.campaign.proposal_id)">Download </a>
+          <a class="linkBtn" ng-click="downloadSheet(proposal.proposal_id)">Download </a>
         </td>
 
         <td>
-          <a class="linkBtn" data-toggle="modal" data-target="#sendEmailModal" ng-click="getProposalDetails(proposal.campaign)">Send Email</a>
+          <a class="linkBtn" data-toggle="modal" data-target="#sendEmailModal" ng-click="getProposalDetails(proposal)">Send Email</a>
           <!--Open email model    -->
           <div id="sendEmailModal" class="modal fade">
             <div class="modal-dialog">
