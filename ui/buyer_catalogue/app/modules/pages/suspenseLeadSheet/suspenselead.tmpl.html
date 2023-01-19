@@ -78,7 +78,7 @@
                 <table class="table table-striped table-bordered table-suppliers release_plan_table"
                   data-ng-init="initTable()">
                   <thead>
-                    <button class="btn btn-danger" ng-click="showHideRow()">{{newRowShowHide?'Remove':'Add New'}}</button>
+                    <!-- <button class="btn btn-danger" ng-click="showHideRow()">{{newRowShowHide?'Remove':'Add New'}}</button> -->
                     <tr>
                       <th>Sr No</th>
                       <th class="alignment">Phone Number</th>
@@ -105,7 +105,7 @@
                     </tr>
                   </thead>
                   <tbody ng-if="loading">
-                    <tr ng-if="newRowShowHide" style="background-color:antiquewhite;">
+                    <tr style="background-color:antiquewhite;">
                     <td>New Row</td>                   
                     <td class="alignment">
                       <input type="text" ng-model="newRowData.phone_number" name="Phone Number"
@@ -255,25 +255,18 @@
                     </td>
                    
                     <td class="alignment">
-                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info" ng-click="SaveNewRowData(newRowData)">Save</button>
+                      <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info" ng-click="SaveNewRowData(newRowData)">Save</button> -->
                     </td>
 
                     <td class="alignment">
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info" ng-click="SaveNewRowData(newRowData)">Save</button>
                       <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
-                        data-target="#companyDetailModal" ng-click="supplierForAddUpdate($index)" data-toggle="modal">Add/Update Supplier</button>
-                      <button style="margin-bottom:2px" type="button" name="button"
-                        class="btn btn-success btn-small"  data-target="#pocModal"  ng-click="openAddPoc(leadData._id,leadData.supplier_type)" ng-disabled="leadData.is_updated == 'False'" data-toggle="modal">Add POC</button>
-                      <button style="margin-bottom:2px" type="button" ng-disabled="leadData.is_updated == 'False'" name="button"
-                        class="btn btn-success btn-small">Add RE</button> -->
+                        data-target="#companyDetailModal" ng-click="supplierForAddUpdate($index)" data-toggle="modal">Add/Update Supplier</button> -->
                     </td>
 
                     <td class="alignment">
                       <!-- <button style="margin-bottom:2px"  type="button" name="button" ng-click="opsVerify(leadData._id)" class="btn btn-success" ng-disabled="leadData.is_updated == 'False'">Ops
-                        Verify</button>
-                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
-                        ng-click="updateLeadTab($index)">Update</button>
-                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                        ng-click="removeSuspenseLead(leadData._id,$index)">Remove</button> -->
+                        Verify</button>-->
                     </td>
                   </tr>
                     

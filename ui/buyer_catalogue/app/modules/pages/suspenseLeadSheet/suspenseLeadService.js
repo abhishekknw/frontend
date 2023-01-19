@@ -90,6 +90,10 @@ angular.module('catalogueApp')
         let url = base_url + "b2b/browsed-companies-list/?sector_id="+id;
         return machadaloHttp.get(url);
       }
+      suspenseLeadService.saveNewLeadTabSuspenseLead = function (data) {
+        var url = base_url + "b2b/suspense-leads-tab/";
+        return machadaloHttp.post(url,data);
+      }
   
       return suspenseLeadService;
     }]);

@@ -13,6 +13,9 @@ angular.module('catalogueApp')
       $scope.meetingTime = constants.requirement_meeting_time;
       $scope.call_back_time = constants.call_back_time;
       $scope.current_patner_feedback = constants.current_patner_feedback;
+      $scope.newRowData = {};
+      $scope.filterLeadData = {};
+      $scope.companiessuspenseLeads = [];
 
 
       $scope.dropdownSettings = {
@@ -637,11 +640,11 @@ angular.module('catalogueApp')
         }
         $scope.supplierForAddUpdateData.designation = "";
       }
-      $scope.showHideRow = function () {
-        $scope.newRowShowHide = $scope.newRowShowHide === true ? false : true;
-      }
 
-      $scope.filterLeadData = {}
+      // $scope.showHideRow = function () {
+      //   $scope.newRowShowHide = $scope.newRowShowHide === true ? false : true;
+      // }
+
       $scope.sectorBrowseLead = function (name, id) {
         for (let i in $scope.leads_Data) {
           for (let j in $scope.leads_Data[i]) {
@@ -714,7 +717,6 @@ angular.module('catalogueApp')
         }
       }
 
-      $scope.newRowData = {};
       $scope.SaveNewRowData = function (row) {
         let arrayPrefered = [];
         for (let i in $scope.newSelected_preferred_patner) {
@@ -757,7 +759,7 @@ angular.module('catalogueApp')
         },
           function (confirm) {
             if (confirm) {
-              suspenseLeadService.updateLeadTab(update)
+              suspenseLeadService.saveNewLeadTabSuspenseLead(update)
                 .then(function onSuccess(response) {
                   $scope.newRowData = {};
                   $scope.newSelected_preferred_patner = [];
@@ -777,7 +779,6 @@ angular.module('catalogueApp')
           });
       }
 
-      $scope.companiessuspenseLeads = [];
       $scope.suspenseLeadsPreferredPartner = function (id) {
         while ($scope.companiessuspenseLeads.length) {
           $scope.companiessuspenseLeads.pop();
