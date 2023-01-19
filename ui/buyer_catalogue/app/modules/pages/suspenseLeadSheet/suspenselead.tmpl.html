@@ -5,15 +5,15 @@
   <nav-bar></nav-bar>
 </div>
 </br></br></br>
-<main ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
+<main class="suspense-lead-sheet-page" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
 
   <div class="" permission="[]">
-    <div class="breadcrumb" ncy-breadcrumb></div>
-  </div>
-  <div class="pageTitle">
-    <h3>Suspense Lead</h3>
+    <!-- <div class="breadcrumb" ncy-breadcrumb></div> -->
   </div>
   <div class="middle-section">
+  <div class="suspense-lead-sheet">
+    <h3>Suspense Lead</h3>
+  </div>
   <div class="wrapperBox" ng-init="getAllSuspenseLeads(); initialData() ">
     <!-- <div class="middle-section"> -->
     <div class="al-main">
@@ -105,7 +105,7 @@
                     </tr>
                   </thead>
                   <tbody ng-if="loading">
-                    <tr style="background-color:antiquewhite;">
+                    <tr style="background-color:rgb(146 25 35 / 16%);">
                     <td>New Row</td>                   
                     <td class="alignment">
                       <input type="text" ng-model="newRowData.phone_number" name="Phone Number"
