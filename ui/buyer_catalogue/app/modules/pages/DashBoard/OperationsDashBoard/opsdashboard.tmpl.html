@@ -2,18 +2,20 @@
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
 
 <div ng-loading="loading"></div> <!--For displaying loading icon-->
-<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
+<!-- <main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading"> -->
+  <main ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
   <div class="wrapperBox">
-    <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
     <nav-bar></nav-bar>
     <div class="middle-section">
+      <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
       <div class="backBtn">
         <button class="smallBtn active" ng-click="goToCampaignList()">List Campaigns</button>
       </div>
       <div class="breadcrumb" ncy-breadcrumb></div>
-      <h2 class="heading" ng-hide="hideData || isEmpty">Campaign Decision Board</h2>
-
-      <div class="" ng-hide="hideData || isEmpty">
+      <!-- <h2 class="heading" ng-hide="hideData || isEmpty">Campaign Decision Board</h2> -->
+      <h2 class="heading" ng-hide="hideData">Campaign Decision Board</h2>
+      <!-- <div class="" ng-hide="hideData || isEmpty"> -->
+      <div class="" ng-hide="hideData">
         <div st-table="proposals" st-safe-src="Data">
           <div class="searchBox">
             <input placeholder="Search ..." class="field"  type="search"
