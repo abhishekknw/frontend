@@ -767,6 +767,7 @@ angular.module('catalogueApp')
                     swal(constants.name, response.data.data.error, constants.error);
                   } else {
                     swal(constants.name, response.data.data.message, constants.success);
+                    $scope.getLeadsTabSuspenseLeads();
                     // $scope.leadTabData[index].lead_status = response.data.data.lead_status;
                     // if ($scope.leadTabData[index].meating_timeline == 'not given') {
                     //   $scope.leadTabData.splice(index, 1)
