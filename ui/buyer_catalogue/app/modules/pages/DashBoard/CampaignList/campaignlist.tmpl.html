@@ -3,11 +3,12 @@
 
 
 <div ng-loading="loading"></div> <!--For displaying loading icon-->
-<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
+<main ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
+<!-- <main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading"> -->
 <div class="wrapperBox">
-  <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
   <nav-bar></nav-bar>
   <div class="middle-section">
+    <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
     <div class="breadcrumb" ncy-breadcrumb></div>
     <h2 class="heading">Campaign List</h2>
     <button class="btn btn-danger mb_20" ng-click="suspenseSection()">Suspense Leads</button>
@@ -50,7 +51,8 @@
       </div>
     </form>
 
-    <div ng-show="!isEmpty"> 
+    <!-- <div ng-show="!isEmpty">  -->
+    <div> 
       <div class="searchBox">
         <input type="text" class="field" ng-model="searchQuery" ng-change="searchProposalDetails(currentPage,searchQuery)" placeholder="search" type="search">
         <button><i class="fas fa-search"></i></button>
