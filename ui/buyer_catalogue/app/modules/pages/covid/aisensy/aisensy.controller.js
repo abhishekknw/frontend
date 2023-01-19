@@ -2717,7 +2717,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               for (let i in hash) {
                 $scope.companiesData.push(hash[i])
               }
-              console.log($scope.companiesData, "111111")
             }).catch(function onError(response) {
               console.log(response);
             })
