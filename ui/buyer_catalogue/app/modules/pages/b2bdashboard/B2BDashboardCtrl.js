@@ -75,6 +75,18 @@
 
     $scope.primaryCount = { "start": '', "end": '' };
 
+    $scope.clientStatusMachadalo = [
+      { "status_name": "Verified By BD Head" },
+      { "status_name": "Demo Completed" },
+      { "status_name": "Proposal Sent" },
+      { "status_name": "Under PO Processing" },
+      { "status_name": "Invoice Raised" },
+      { "status_name": "Payment Recieved" },
+      { "status_name": "Payment Delay 7+" },
+      { "status_name": "Payment Delay 15+" },
+      { "status_name": "Payment Delay 30+" },
+    ]
+
     $scope.changeStartDate = function () {
       $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
       $scope.submittedDateOptions.minDate = $scope.dateRangeModel.start_date;
@@ -604,14 +616,22 @@
     }
 
     $scope.viewCampaignLeads = function () {
-      if ($scope.listClientStatus.length == 0) {
+      let storeData = JSON.parse(localStorage.userInfo);
+      if ($scope.listClientStatus.length == 0 && storeData.username!="machadalosales") {
         B2BDashboardService.listClientStatus().then(function onSuccess(response) {
           var listData = response.data.data.client_status;
           for (var k in listData) {
-            $scope.listClientStatus.push(listData[k].status_name)
+            $scope.listClientStatus.push(listData[k].status_name);
             $scope.listClientStatusObj.push({ 'label': listData[k].status_name });
           }
         });
+      }
+      else{
+        let listData = $scope.clientStatusMachadalo;
+        for (let k in listData) {
+          $scope.listClientStatus.push(listData[k].status_name);
+          $scope.listClientStatusObj.push({ 'label': listData[k].status_name });
+        }
       }
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = false;
@@ -783,11 +803,11 @@
       $scope.supplier_code = "all";
     }
     $scope.sendBookingEmails = function (email) {
-      if ($scope.checkForEmailModal==false){
-        if(!email){
+      if ($scope.checkForEmailModal == false) {
+        if (!email) {
           return 0;
         }
-        else{
+        else {
           sendEmailByFilter(email);
           return 0;
         }
@@ -1923,15 +1943,15 @@
         closeOnCancel: true
       },
         function (confirm) {
-          if(confirm){
+          if (confirm) {
             B2BDashboardService.UpdatedCreateField(datalist)
-            .then(function onSuccess(response) {
-              console.log(response.data.data);
-              swal('Updated', response.data.data)
-              $scope.listOfCreateField($scope.campaign_id);
-            }).catch(function onError(response) {
-              console.log(response);
-            });
+              .then(function onSuccess(response) {
+                console.log(response.data.data);
+                swal('Updated', response.data.data)
+                $scope.listOfCreateField($scope.campaign_id);
+              }).catch(function onError(response) {
+                console.log(response);
+              });
           }
         })
     }
@@ -1947,13 +1967,13 @@
         closeOnCancel: true
       },
         function (confirm) {
-          if(confirm){
+          if (confirm) {
             B2BDashboardService.removeSingleField(id)
-            .then(function onSuccess(response) {
-              $scope.createFieldList.splice(index, 1);
-              swal('Remove', 'Successfully');
-              // $scope.listOfCreateField($scope.campaign_id);
-            })
+              .then(function onSuccess(response) {
+                $scope.createFieldList.splice(index, 1);
+                swal('Remove', 'Successfully');
+                // $scope.listOfCreateField($scope.campaign_id);
+              })
           }
         }
       )
@@ -2102,15 +2122,15 @@
         "&start_update_date=" + $scope.UpdateStartDate + "&end_update_date=" + $scope.UpdateEndDate +
         "&city=" + $scope.selectCity + "&client_status=" + $scope.selectedClientStatus +
         "&from_primary_count=" + $scope.primaryCount.start + "&to_primary_count=" + $scope.primaryCount.end;
-        window.open(url, '_blank');
+      window.open(url, '_blank');
     }
 
-    $scope.EmailLeadsByFilter = function(){
+    $scope.EmailLeadsByFilter = function () {
       $scope.checkForEmailModal = false;
       $('#sendEmailModal').modal('show');
     }
 
-    var sendEmailByFilter = function(email){
+    var sendEmailByFilter = function (email) {
       let tabname = "";
       let supplier_code = "all"
       if (!$scope.primaryCount.start) {
@@ -2149,10 +2169,10 @@
       if (!$scope.primaryCount.end) {
         $scope.primaryCount.end = "";
       }
-      B2BDashboardService.sendBookingEmailsByFilter($scope.filterType,supplier_code, $scope.campaign, email, tabname,
-        $scope.startDate,$scope.endDate,$scope.AcceptanceStartDate,$scope.AcceptanceEndDate,
-        $scope.UpdateStartDate,$scope.UpdateEndDate,$scope.selectCity,$scope.selectedClientStatus,
-        $scope.primaryCount.start,$scope.primaryCount.end)
+      B2BDashboardService.sendBookingEmailsByFilter($scope.filterType, supplier_code, $scope.campaign, email, tabname,
+        $scope.startDate, $scope.endDate, $scope.AcceptanceStartDate, $scope.AcceptanceEndDate,
+        $scope.UpdateStartDate, $scope.UpdateEndDate, $scope.selectCity, $scope.selectedClientStatus,
+        $scope.primaryCount.start, $scope.primaryCount.end)
         .then(function onSuccess(response) {
           if (response.data.status && response.data.data) {
             $scope.emailModel = {};
@@ -2163,7 +2183,7 @@
           swal(constants.name, "Error", constants.error);
         });
     }
-    $scope.refeshFilters = function(){
+    $scope.refeshFilters = function () {
       $scope.selected_cities_list = [];
       $scope.selected_clientStatus = [];
       $scope.startDate = "";
@@ -2192,7 +2212,7 @@
       $scope.notPurchasedTable = false;
       $scope.selected_clientStatus = [];
       $scope.primaryCount = { "start": '', "end": '' };
-      $scope.getPurchasedNotPurchasedLead( $scope.campaignId,$scope.campaignName);
+      $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName);
     }
   })
 
