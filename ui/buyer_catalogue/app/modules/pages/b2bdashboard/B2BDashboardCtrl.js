@@ -626,8 +626,8 @@
           }
         });
       }
-      else{
-        let listData = $scope.clientStatusMachadalo;
+      else if($scope.listClientStatus.length == 0){
+        var listData = $scope.clientStatusMachadalo;
         for (let k in listData) {
           $scope.listClientStatus.push(listData[k].status_name);
           $scope.listClientStatusObj.push({ 'label': listData[k].status_name });
