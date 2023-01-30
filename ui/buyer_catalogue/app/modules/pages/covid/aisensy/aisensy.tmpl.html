@@ -3758,6 +3758,14 @@
                     </td>
                     <td class="alignment">
                       <select class="form-control" name="value" id="value"
+                        ng-model="subrequirement.lead_source" style="width:150px;">
+                        <option value="">Select Source</option>
+                        <option value="bot">BOT</option>
+                        <option value="feetonstreet">Feet on Street</option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" name="value" id="value"
                         ng-model="subrequirement.call_back_preference" style="width:150px;">
                         <option value="" disabled>Select Call Back Time</option>
                         <option ng-repeat="(key,value) in leads_time.data[lastIndex].call_status track by $index"
@@ -3876,7 +3884,7 @@
 
                     <td class="alignment">
                       <select class="form-control" ng-model="newRequirement.l1_answer_2">
-                        <option >Select</option>
+                        <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L5 in leads_Data_1.L5" value="{{lead_L5}}">
                           {{lead_L5}}
                         </option>>
@@ -3891,18 +3899,52 @@
                       </select>
                     </td>
                     <td class="alignment">
-                      <p> Name: </p>
-                      <p> Phone:</p>
+                      Lead
                     </td>
-
                     <td class="alignment">
                       <textarea placeholder="Comments" class="form-control" style="width:150px;"
                         ng-model="newRequirement.comment" cols="50">
                      </textarea>
                     </td>
+                    <td class="alignment">
+                      <textarea placeholder="Internal Comments" class="form-control" style="width:150px;"
+                        ng-model="newRequirement.internal_comment" cols="50">
+                     </textarea>
+                    </td>
+                    <td class="alignment">
+                      <p> Name: </p>
+                      <p> Phone:</p>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" name="value" id="value"
+                        ng-model="newRequirement.lead_source" style="width:150px;">
+                        <option value="">Select Source</option>
+                        <option value="bot">BOT</option>
+                        <option value="feetonstreet">Feet on Street</option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" name="value" id="value"
+                        ng-model="newRequirement.call_back_preference" style="width:150px;">
+                        <option value="" disabled>Select Call Back Time</option>
+                        <option ng-repeat="(key,value) in leads_time.data[lastIndex].call_status track by $index"
+                          value="{{value}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <input type="number" ng-change="checkBoxAutoCheck(key,$index)"
+                        ng-model="newRequirement.lead_price" name="lead_price" class="form-control" placeholder="Price"
+                        id="price_id" style="width:150px;">
+                      <span ng-if="newRequirement.lead_price">Price (Points): {{newRequirement.lead_price}}</span>
+                    </td>
 
                     <td class="alignment" style="width:300px;">
-                      <p>Lead Entry:</p>
+                      Null
+                    </td>
+                    <td class="alignment">
+                      <button style="margin-top:10px" type="button" name="button" class="btn btn-success" ng-disabled="!newRequirementCheckbox" ng-click="newLeadCreated(newRequirement)">Submit</button>
                     </td>
                   </tr>
                 </tbody>

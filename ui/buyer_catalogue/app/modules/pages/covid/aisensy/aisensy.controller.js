@@ -71,6 +71,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.addRemoveBtn = "Add row";
           $scope.NewaddRemoveBtn = "Add row";
           $scope.supplierTypeUndefined = "supplier not found";
+          $scope.newRequirement = {};
 
           let param = {
             next_page: 1
@@ -851,6 +852,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           { header: 'Comment' },
           { header: 'Internal Comment' },
           { header: 'Lead Given by' },
+          { header: 'Lead Source' },
           { header: 'Call Status' },
           { header: 'Price' },
           { header: 'Timestamp' },
@@ -2725,7 +2727,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           alert(index)
         }
 
-        $scope.newRequirement = {};
         $scope.newLeadCreated = function (data) {
           let browsed_ids = [];
           let obj = [];
@@ -2757,8 +2758,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 swal(constants.name, response.data.data.error, constants.error);
               }
               else {
-                swal(constants.name, response.data.data.message, constants.success);
                 $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
+                $scope.newRequirement = {};
+                $scope.NewcountBrowsedRow = false;
+                $scope.NewaddRemoveBtn = "Add row";
+                swal(constants.name, response.data.data.message, constants.success);
               }
 
             }).catch(function onError(response) {
