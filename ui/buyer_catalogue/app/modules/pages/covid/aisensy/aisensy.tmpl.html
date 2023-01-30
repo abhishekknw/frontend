@@ -4284,6 +4284,7 @@
                     <th class="alignment">L2 Answers</th>
                     <th class="alignment">L3 Answers</th>
                     <th class="alignment">Lead Status</th>
+                    <th class="alignment">Lead Source</th>
                     <!-- <th class="alignment">Callback Preference</th> -->
                     <th class="alignment">Comment</th>
                     <th class="alignment">Time Stamp</th>
@@ -4401,6 +4402,14 @@
 
                     <td class="alignment">
                       {{leadData.lead_status}}
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" name="value" id="value"
+                        ng-model="leadData.lead_source" style="width:150px;">
+                        <option value="">Select Source</option>
+                        <option value="bot">BOT</option>
+                        <option value="feetonstreet">Feet on Street</option>
+                      </select>
                     </td>
                     <!-- <td class="alignment">
                       <select class="form-control" name="call_back_time_{{$index}}" id="call_back_time_id_{{$index}}"

@@ -2469,6 +2469,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             "L5": $scope.leadTabData[index].L5,
             "L6": $scope.leadTabData[index].L6,
             "sector_name": $scope.leadTabData[index].sector_name,
+            "lead_source": $scope.leadTabData[index].lead_source,
           }];
 
           let update = {
