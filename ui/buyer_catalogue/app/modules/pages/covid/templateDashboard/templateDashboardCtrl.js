@@ -3299,7 +3299,7 @@
 
 
       $scope.selectTabIndex = {
-        value: 0
+        value: 2
       }
 
       $scope.switchToLeads = function () {
@@ -6817,7 +6817,8 @@
             })
               .catch(error => console.log('error', error));
       }
-      
+
+      $scope.templateDetail();
       // Template Dashboard end
 
     })
