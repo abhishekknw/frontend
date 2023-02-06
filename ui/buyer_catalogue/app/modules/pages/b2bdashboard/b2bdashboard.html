@@ -412,7 +412,7 @@
                         <td class="alignment text-center">{{decisionPanding.city}}</td>
                         <td class="alignment text-center">{{decisionPanding.lead_timestamp.split(' ')[0]}}</td>
                         <td class="alignment text-center">
-                          {{machadaloClientStatus(decisionPanding.macchadalo_client_status)}}
+                          <!-- {{machadaloClientStatus(decisionPanding.macchadalo_client_status)}} -->
                           <select
                             ng-change="setValue(value8,decisionPanding.client_comment,decisionPanding._id,decisionPanding.requirement_id)"
                             class="form-control client-status" ng-model="value8">
@@ -1405,7 +1405,8 @@
                               <span ng-if="leadDetail.value">{{leadDetail.value}}</span>
                               <span ng-if="!leadDetail.value">NA</span>
                             </td>
-                            <td class="col-md-2">{{machadaloClientStatus(lead[0].macchadalo_client_status)}}
+                            <td class="col-md-2">
+                              <!-- {{machadaloClientStatus(lead[0].macchadalo_client_status)}} -->
                               <select
                                 ng-change="setValue(value8,lead[0].macchadalo_client_comment,lead[0]._id,lead[0].requirement_id)"
                                 class="form-control client-status" ng-model="value8">
