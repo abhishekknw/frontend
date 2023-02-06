@@ -6468,12 +6468,14 @@
 
 
       <!--Detail  Modal -->
-      <div class="modal fade modalForTAble b2b-dash-table" id="myModal" role="dialog">
+      <div class="modal fade modalForTAble b2b-dash-modal b2b-dash-table" id="myModal" role="dialog">
         <div class="modal-dialog modal-md">
           <div class="modal-content">
             <div style="background-color: #8e1921; color:#FFFFFF;" class="modal-header">
               <button style="color:#FFFFFF;" type="button" class="close" data-dismiss="modal">&times;</button>
               <h2 class="modal-title">Lead Details ({{req_id_detail}})</h2>
+               <div class="d-flex font-14 pt-5 justify-content-between"><span class="lead-date">Date: 10/02/2022</span> &nbsp; <span class="lead-assigned-by">Assigned by: Name</span> &nbsp; <span class="lead-assigned-to">Assigned to: Name</span></div>
+                      
             </div>
             <div style="padding:15px;" class="modal-body">
               <div>
@@ -6481,8 +6483,8 @@
                   <table class="table">
                     <tr>
                       <th style="background-color: #8e1921; color: #fff;" bgcolor="#8e1921">
-                        <h4>Sector : </h4>
-                      </th>
+                        <h4>Sector : </h4> 
+                       </th>
                     </tr>
                     <tr>
                       <td>
@@ -6586,9 +6588,9 @@
                 <div>
                   <table class="table">
                     <tr>
-                      <th style="background-color: #8e1921; color: #fff;">
+                      <th style="background-color: #8e1921; color: #fff;" class="d-flex align-item-center">
                         <h4>Comments :</h4>
-                        <select class="form-control" style="color: #000000" ng-click="filterComment(commentType)" ng-model="commentType">
+                        <select class="form-control small-dropdown" style="color: #000000" ng-click="filterComment(commentType)" ng-model="commentType">
                           <option value="all" ng-selected="true">All</option>
                           <option value="company_comment">Company comment</option>
                           <option value="machadalo_comment">Machadalo Comments</option>
@@ -6598,7 +6600,7 @@
                     </tr>
                     <tr>
                       <td>
-                        <div class="modal-body">
+                        <div class="">
                           <div class="modalBodyBox">
                             <div class="table-h-scroll">
                               <table class="table-data">
@@ -6616,7 +6618,7 @@
                                 </tr>
                               </table>
                             </div>
-                            <div style="margin-top: 15px;">
+                            <div style="margin-top: 15px; " class="text-left">
                               <textarea class="field" rows="2" cols="200" ng-model="mymodel.comment" value=""
                                 placeholder="Write here.."></textarea>
                               <button class="smallBtn" type="button"
