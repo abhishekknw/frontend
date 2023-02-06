@@ -410,7 +410,7 @@
                         <td class="alignment text-center">{{decisionPanding.primary_count}}</td>
                         <td class="alignment text-center">{{decisionPanding.area}}</td>
                         <td class="alignment text-center">{{decisionPanding.city}}</td>
-                        <td class="alignment text-center">{{decisionPanding.lead_timestamp}}</td>
+                        <td class="alignment text-center">{{decisionPanding.lead_timestamp.split(' ')[0]}}</td>
                         <td class="alignment text-center">
                           <select
                             ng-change="setValue(value8,decisionPanding.client_comment,decisionPanding._id,decisionPanding.requirement_id)"
@@ -453,7 +453,7 @@
                           <td class="alignment text-center">{{data.primary_count}}</td>
                           <td class="alignment text-center">{{data.area}}</td>
                           <td class="alignment text-center">{{data.city}}</td>
-                          <td class="alignment text-center">{{data.lead_timestamp}}</td>
+                          <td class="alignment text-center">{{data.lead_timestamp.split(' ')[0]}}</td>
                           <td class="alignment text-center">
                             <select ng-change="setValue(value8,data.client_comment,data._id,data.requirement_id)"
                               class="form-control client-status" ng-model="value8">
