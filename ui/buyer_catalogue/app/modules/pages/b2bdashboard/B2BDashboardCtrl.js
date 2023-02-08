@@ -645,14 +645,14 @@
 
         });
     }
-    $scope.machadaloClientStatus = function (data) {
-      if (data == null) {
-        $scope.value8 = $scope.listClientStatus[0];
-      }
-      else {
-        $scope.value8 = data;
-      }
-    }
+    // $scope.machadaloClientStatus = function (data) {
+    //   if (data == null) {
+    //     $scope.value8 = $scope.listClientStatus[0];
+    //   }
+    //   else {
+    //     $scope.value8 = data;
+    //   }
+    // }
     $scope.getPurchasedLead = function (CampaignId, campaignName) {
       $scope.purchasedTable = true;
       $scope.notPurchasedTable = false;

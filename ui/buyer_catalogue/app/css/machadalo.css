@@ -941,6 +941,39 @@ header .topRight .top-menu {
 .suspense-lead-sheet-page .dashboard-tab h5{
   margin: 0;
 }
+.small-dropdown{
+  max-width: 250px;margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+}
+.d-flex{
+  display: flex;
+}
+.align-item-center{
+  align-items: center;
+}
+.b2b-dash-modal{
+  text-align: left;
+}
+.b2b-dash-modal h4{
+  font-size: 14px;    text-align: left;
+  margin: 5px 0px;
+}
+.pt-5{
+  padding-top: 5px;
+}
+.justify-content-between{
+  justify-content: space-between;
+}
+.font-14{
+  font-size: 14px;
+}
+.b2b-dash-modal table tr th, .b2b-dash-modal table tr td{
+  pad: 6px 10px ;
+}
+.text-left{
+  text-align: left;
+}
 @media screen and (max-width: 767px) {
   #SuspenseLeadsModel .modal-dialog,  #RequirementModel .modal-dialog{
     width: auto;
