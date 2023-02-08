@@ -6474,7 +6474,10 @@
             <div style="background-color: #8e1921; color:#FFFFFF;" class="modal-header">
               <button style="color:#FFFFFF;" type="button" class="close" data-dismiss="modal">&times;</button>
               <h2 class="modal-title">Lead Details ({{req_id_detail}})</h2>
-               <div class="d-flex font-14 pt-5 justify-content-between"><span class="lead-date">Date: 10/02/2022</span> &nbsp; <span class="lead-assigned-by">Assigned by: Name</span> &nbsp; <span class="lead-assigned-to">Assigned to: Name</span></div>
+               <div class="d-flex font-14 pt-5 justify-content-between">
+                <span class="lead-date">Share Date: {{leadDetailDataList.sector.acceptance_date}}</span> &nbsp;
+                <span class="lead-assigned-by">Assigned by: {{leadDetailDataList.sector.lead_assigned.assignedby}}</span> &nbsp;
+                 <span class="lead-assigned-to">Assigned to: {{leadDetailDataList.sector.lead_assigned.assignedto}}</span></div>
                       
             </div>
             <div style="padding:15px;" class="modal-body">
