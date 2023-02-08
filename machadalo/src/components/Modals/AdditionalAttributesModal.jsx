@@ -4,7 +4,7 @@ import Select from 'react-select';
 
 import '../Checklist/index.css';
 import './index.css';
-import GoogleMap from '../GoogleMap';
+import GoogleMapComponent from '../GoogleMap';
 
 const customStyles = {
   content: {
@@ -252,7 +252,7 @@ export default class AdditionalAttributeModal extends React.Component {
         </div>
         {latitude && longitude ? (
           <div>
-            <GoogleMap latitude={latitude} longitude={longitude} />
+            <GoogleMapComponent latitude={latitude} longitude={longitude} />
           </div>
         ) : null}
         <div className="createform__form">

@@ -9,8 +9,9 @@ import Pagination from '../Pagination';
 import PhaseModal from './../Modals/PhaseModal';
 import ViewHashtagImagesModal from '../Modals/ViewHashtagImagesModal';
 import FillAdditionalAttributeModal from './../Modals/AdditionalAttributesModal';
-import InputRange from 'react-input-range';
-import 'react-input-range/lib/css/index.css';
+// import InputRange from 'react-input-range';
+// import 'react-input-range/lib/css/index.css';
+import Slider from '@mui/material/Slider';
 
 let optionTypes = [
   { value: 'supplier', label: 'Supplier', type: 'dropdown' },
@@ -866,12 +867,18 @@ export default class ListBooking extends Component {
           </div>
           <div className="list__filter__query">
             {isSearchInputVisible ? (
-              <InputRange
-                maxValue={rangeSliderOptions[selectedOption].max}
-                minValue={rangeSliderOptions[selectedOption].min}
-                value={this.state.value}
-                onChange={(value) => this.setState({ value })}
-              />
+              // <InputRange
+              //   maxValue={rangeSliderOptions[selectedOption].max}
+              //   minValue={rangeSliderOptions[selectedOption].min}
+              //   value={this.state.value}
+              //   onChange={(value) => this.setState({ value })}
+              // />
+              <Slider
+              max={rangeSliderOptions[selectedOption].max}
+              min={rangeSliderOptions[selectedOption].min}
+              defaultValue={this.state.value}
+              onChange={(value) => this.setState({ value })}
+            />
             ) : (
               <Select
                 options={dropdownOptionsTypes[selectedOption]}

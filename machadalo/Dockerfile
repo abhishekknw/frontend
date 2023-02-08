@@ -1,7 +1,4 @@
-FROM node:12.18.2-buster-slim as build-step
+FROM node:18.14.0
 WORKDIR  /src
 COPY .  /src
-RUN npm i react-scripts --legacy-peer-deps && \
-    npm i --legacy-peer-deps && \
-    sh -c -- node scripts/build.js && \
-    npm i && npm install node-sass --save
+RUN npm install -g npm@9.4.1 && npm install --legacy-peer-deps

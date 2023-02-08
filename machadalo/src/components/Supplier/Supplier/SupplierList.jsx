@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import DatetimeRangePicker from 'react-datetime-range-picker';
+// import DatetimeRangePicker from 'react-datetime-range-picker';
 import ReactPaginate from 'react-paginate';
+import Box from '@mui/material/Box';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 
 const DateTypes = [
   { label: 'Created At', value: 'created_at' },
@@ -23,6 +27,7 @@ export default class List extends React.Component {
       selectedDateFilter: '',
       offset: 0,
       perPage: 10,
+      selectedDate:["",""],
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -107,9 +112,13 @@ export default class List extends React.Component {
   }
 
   handleDateChange(date) {
+    let temp = [date[0]?.$d,date[1]?.$d];
     this.setState({
-      startDate: date.start,
-      endDate: date.end,
+      selectedDate:temp,
+      startDate: temp[0]?temp[0]:"",
+      endDate: temp[1]?temp[1]:"",
+      // startDate: date.start,
+      // endDate: date.end,
     });
   }
 
@@ -152,7 +161,22 @@ export default class List extends React.Component {
 
             {isDateRangePickerVisisble ? (
               <div className="form-control">
-                <DatetimeRangePicker className="dateTimePicker" onChange={this.handleDateChange} />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateRangePicker
+                    label="Advanced keyboard"
+                    value={this.state.selectedDate}
+                    onChange={(newValue) => this.handleDateChange(newValue)}
+                    renderInput={(startProps, endProps) => (
+                      <React.Fragment>
+                        <input ref={startProps.inputRef} {...startProps.inputProps} />
+                        <Box sx={{ mx: 1 }}> to </Box>
+                        <input ref={endProps.inputRef} {...endProps.inputProps} />
+                      </React.Fragment>
+                    )}
+                  />
+                </LocalizationProvider>
+                {/* <CustomDateRangeInputs SelectedDate={{"start":this.state.startDate,"end":this.state.endDate}} handleChange={e=>this.handleDateChange(e)} /> */}
+                {/* <DatetimeRangePicker className="dateTimePicker" onChange={this.handleDateChange} /> */}
               </div>
             ) : null}
           </div>

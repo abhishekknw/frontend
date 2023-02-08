@@ -1,6 +1,7 @@
 import React from 'react';
 import { get } from 'lodash';
-import '../bootstrap-iso.css';
+// import '../bootstrap-iso.css';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.css'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import GridHeader from '../GridHeader';

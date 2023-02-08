@@ -1,5 +1,6 @@
 import React from 'react';
-import '../../bootstrap-iso.css';
+// import '../../bootstrap-iso.css';
+import '../../../../node_modules/bootstrap/dist/css/bootstrap.css'
 import request from 'superagent';
 import config from '../../../config';
 import getCampaignColumn from './CampaignGridColumnConfig';

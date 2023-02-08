@@ -1,6 +1,7 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
-import '../../bootstrap-iso.css';
+// import '../../bootstrap-iso.css';
+import '../../../../node_modules/bootstrap/dist/css/bootstrap.css'
 import getBookingSubStatusColumn from './BookingSubStatusGridColumnConfig';
 import InnerGrid from '../../InnerGrid';
 

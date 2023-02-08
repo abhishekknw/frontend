@@ -4,12 +4,20 @@ import Modal from 'react-modal';
 
 import './index.css';
 
-import Typography from '@material-ui/core/Typography';
-import FolderIcon from '@material-ui/icons/Folder';
-import FolderOpenIcon from '@material-ui/icons/FolderOpen';
-import ClearIcon from '@material-ui/icons/Clear';
-import EditIcon from '@material-ui/icons/Edit';
-import TextFieldIcon from '@material-ui/icons/TextFields';
+// import Typography from '@material-ui/core/Typography';
+// import FolderIcon from '@material-ui/icons/Folder';
+// import FolderOpenIcon from '@material-ui/icons/FolderOpen';
+// import ClearIcon from '@material-ui/icons/Clear';
+// import EditIcon from '@material-ui/icons/Edit';
+// import TextFieldIcon from '@material-ui/icons/TextFields';
+// import Tree, { getTreeLeafDataByIndexArray } from 'material-ui-tree';
+// NEW MUI
+import { Typography } from '@mui/material';
+import FolderIcon from '@mui/icons-material/Folder';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import ClearIcon from '@mui/icons-material/Clear';
+import EditIcon from '@mui/icons-material/Edit';
+import TextFieldsIcon from '@mui/icons-material/TextFields';
 import Tree, { getTreeLeafDataByIndexArray } from 'material-ui-tree';
 
 const customStyles = {
@@ -141,6 +149,7 @@ export default class PermissionModal extends React.Component {
           'permission-icon' + (leafData.permission === 'None' ? ' permission-selected' : ''),
         onClick: () => {
           const data = { ...this.state.data };
+          alert(typeof chdIndex);
           const leaf = getTreeLeafDataByIndexArray(data, chdIndex, 'data');
           leaf.permission = 'None';
           if (leaf.data && leaf.data.length) {
@@ -179,7 +188,7 @@ export default class PermissionModal extends React.Component {
         },
       },
       {
-        icon: <TextFieldIcon className="tree-action" />,
+        icon: <TextFieldsIcon className="tree-action" />,
         hint: 'Fill',
         className:
           'permission-icon' + (leafData.permission === 'Fill' ? ' permission-selected' : ''),
