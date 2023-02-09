@@ -28,3 +28,4 @@ package-lock.json
 *.css
 *.rdb
 *.log
+*.css.map
