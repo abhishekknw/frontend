@@ -5,9 +5,8 @@ import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ViewComment from '../modals/ViewComment';
-import dropdown from '../common/Common';
 
-const BasicTable = (props) => {
+const ViewLeadDetail = (props) => {
   const data = [
     {
       _id: '63ac281db3cf3b4',
@@ -432,4 +431,4 @@ const BasicTable = (props) => {
   );
 };
 
-export default BasicTable;
+export default ViewLeadDetail;

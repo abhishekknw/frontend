@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Header from './common/b2bHeader';
 import LeadDecisionPending from './Basic/LeadDecisionPending';
 import LeadDetail from './Detail/LeadDetail';
 import './index.css';
 
 const B2bDashboard = (props) => {
-  console.log(props)
+  console.log(props);
   const [key, setKey] = useState('Basic');
   const [basicKey, setBasicKey] = useState('Pending');
   return (
     <>
-      <Header />
       <Tabs
         id="controlled-tab-example"
         activeKey={key}
