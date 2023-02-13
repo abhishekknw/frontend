@@ -166,8 +166,8 @@ const LeadDetailTable = (props) => {
   return (
     <>
       <DataGridTable row={TableData} columns={columns} />
-      <div style={{ height: 400, width: '100%' }}>
-        {/* <DataGrid
+      {/* <div style={{ height: 400, width: '100%' }}>
+        <DataGrid
       rows={TableData}
       getRowId={(row) => row.campaign_id} 
       columns={columns}
@@ -176,8 +176,8 @@ const LeadDetailTable = (props) => {
       disableColumnMenu
       disableColumnFilter
       disableColumnSelector
-    /> */}
-      </div>
+    />
+      </div> */}
       <div>
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -188,7 +188,7 @@ const LeadDetailTable = (props) => {
           </Modal.Body>
         </Modal>
       </div>
-      {/* {showViewLeads && <ViewLeadTable />} */}
+      {showViewLeads && <ViewLeadDetail />}
     </>
   );
 };

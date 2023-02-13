@@ -8,7 +8,6 @@ import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import BasicTable from '../Table/BasicTable';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import * as API from '../API/request';
 import Pagination from '../../components/Pagination';
 import { useRecoilValue } from 'recoil';
 import { leadDecisionPendingListAtom } from '../API/_state';
@@ -39,6 +38,7 @@ const LeadDecisionPending = () => {
   const handlePageChange = (page) => {
     alert(page.selected + 1);
   };
+  console.log(ListData, 'ListDataListDataListData');
   return (
     <>
       <Box sx={{ minWidth: 120 }}>
@@ -70,9 +70,9 @@ const LeadDecisionPending = () => {
         </Box>
       </Box>
       <BasicTable />
-      {/* <div className="list__footer">
-        <Pagination pageSize={5} totalItems={data.length} handlePageClick={handlePageChange} />
-      </div> */}
+      <div className="list__footer">
+        <Pagination pageSize={5} totalItems={20} handlePageClick={handlePageChange} />
+      </div>
     </>
   );
 };

@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
-import Button from 'react-bootstrap/Button';
+// import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
 import Modal from 'react-bootstrap/Modal';
 import ViewComment from '../modals/ViewComment';
+import { Button } from '@mui/material';
+import DataGridTable from './DataGridTable';
 
 const ViewLeadDetail = (props) => {
-  const data = [
+  const row = [
     {
-      _id: '63ac281db3cf3b4',
+      _id: '63ac2812db3c2f3b4',
       requirement_id: 9924,
       supplier_id: 'CVLOKFVSXAYWG',
       entity_name: 'Akash Apartments',
@@ -27,7 +26,7 @@ const ViewLeadDetail = (props) => {
       last_comment: '',
     },
     {
-      _id: '63ac23b4ce7cd37eb',
+      _id: '22222',
       requirement_id: 9924,
       supplier_id: 'CVLOKFVSXAYWG',
       entity_name: 'Akash Apartments',
@@ -45,7 +44,7 @@ const ViewLeadDetail = (props) => {
       last_comment: '',
     },
     {
-      _id: '63ac28ce7cd37eb',
+      _id: '63ac28ce722cd37eb',
       requirement_id: 9924,
       supplier_id: 'CVLOKFVSXAYWG',
       entity_name: 'Akash Apartments',
@@ -63,7 +62,7 @@ const ViewLeadDetail = (props) => {
       last_comment: '',
     },
     {
-      _id: '63ac283b4ce7cd37eb',
+      _id: '63ac283b4ce7cd37eb11',
       requirement_id: 9924,
       supplier_id: 'CVLOKFVSXAYWG',
       entity_name: 'Akash Apartments',
@@ -297,126 +296,116 @@ const ViewLeadDetail = (props) => {
       last_comment: '',
     },
   ];
+  const headCells = [
+    {
+      field: 'checkbox',
+      headerName: 'Select',
+      width: 50,
+      renderCell: (params) => <>1</>,
+    },
+    {
+      field: 'entity_name',
+      headerName: 'Supplier Name',
+      width: 200,
+    },
+    {
+      field: 'entity_name',
+      numeric: true,
+      description: 'Type Of Entity',
+      headerName: 'TOE',
+      width: 60,
+    },
+    {
+      field: 'entity_type',
+      numeric: true,
+      headerName: 'Supplier Type',
+      width: 60,
+    },
+    {
+      field: 'area',
+      numeric: true,
+      headerName: 'Area',
+    },
+    {
+      field: 'city',
+      numeric: true,
+      headerName: 'City',
+    },
+    {
+      field: 'primary_count',
+      headerName: 'Flat Count',
+      numeric: true,
+      width: 100,
+    },
+    {
+      field: 'supplier_secondary_count',
+      headerName: 'Tower Count',
+      numeric: true,
+      width: 100,
+    },
+    {
+      field: 'lead_timestamp',
+      numeric: true,
+      sortable: true,
+      headerName: 'Lead Time Stamp',
+    },
+    {
+      field: 'CurrentStatus',
+      numeric: true,
+      sortable: false,
+      headerName: 'Current Status',
+      width: 200,
+      renderCell: (params) => (
+        <>
+          <select>
+            <option>Leads Verified By Machadalo</option>
+            <option>Leads Verified By Machadalo</option>
+            <option>Leads Verified By Machadalo</option>
+            <option>Leads Verified By Machadalo</option>
+            <option>Leads Verified By Machadalo</option>
+            <option>Leads Verified By Machadalo</option>
+            <option>Leads Verified By Machadalo</option>
+          </select>
+        </>
+      ),
+    },
+    {
+      field: 'ClientComment',
+      headerName: 'Client Comment',
+      width: 140,
+      sortable: false,
+      renderCell: (params) => (
+        <strong>
+          <Button variant="contained" size="small" style={{ marginLeft: 16 }}>
+            View Comment
+          </Button>
+        </strong>
+      ),
+    },
+    {
+      field: 'Action',
+      headerName: 'Action',
+      width: 150,
+      sortable: false,
+      renderCell: (params) => (
+        <strong>
+          <Button variant="contained" size="small" style={{ marginLeft: 16 }}>
+            Lead Details
+          </Button>
+        </strong>
+      ),
+    },
+  ];
   const [showModal, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  function actionButton(row) {
-    return (
-      <>
-        <Button>Lead Details</Button>
-        <br />
-      </>
-    );
-  }
-  function commentButton(cell, row) {
-    return (
-      <>
-        <Button onClick={(e) => viewComment(cell, row)}>View Comment</Button>
-        <br />
-      </>
-    );
-  }
-  function Status(cell, row) {
-    return (
-      <>
-        <div>
-          <select>
-            <option value="fruit">Leads Verified By Machadalo</option>
-            <option value="vegetable">Leads Verified By Client</option>
-            <option value="meat">Leads Verified By Machadalo</option>
-            <option value="meat">Leads Verified By Machadalo</option>
-            <option value="meat">Ringing Not Responding</option>
-            <option value="meat">Current Not a Decision Maker</option>
-            <option value="meat">Leads Verified By Machadalo</option>
-            <option value="meat">Meeting confirmed</option>
-          </select>
-        </div>
-      </>
-    );
-  }
-  function checkBox(cell, row) {
-    return (
-      <>
-        <input type="checkbox"></input>
-      </>
-    );
-  }
   const viewComment = (e, data) => {
     handleShow();
   };
 
   return (
     <>
-      <div className="bootstrap-iso">
-        <h4>Leads of Kriti test</h4>
-        <BootstrapTable data={data} striped={true}>
-          <TableHeaderColumn
-            tdAttr={{ 'data-attr': 'SN' }}
-            width={'100px'}
-            dataField={'index'}
-            dataFormat={checkBox}
-          >
-            SELECT
-          </TableHeaderColumn>
-          <TableHeaderColumn isKey dataField="entity_name">
-            Entity Name
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            tdAttr={{ 'data-attr': 'entity_type' }}
-            dataField="entity_type"
-            dataSort={true}
-            searchable={false}
-          >
-            TOE
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="primary_count" dataSort={true} searchable={false}>
-            PC
-          </TableHeaderColumn>
-          <TableHeaderColumn tdAttr={{ 'data-attr': 'area' }} dataField="area">
-            AREA
-          </TableHeaderColumn>
-          <TableHeaderColumn tdAttr={{ 'data-attr': 'city' }} dataField="city">
-            CITY
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            tdAttr={{ 'data-attr': 'lead_timestamp' }}
-            dataField="lead_timestamp"
-            dataSort={true}
-            searchable={false}
-          >
-            LEAD STAMP
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            tdAttr={{ 'data-attr': 'macchadalo_client_status' }}
-            dataField="macchadalo_client_status"
-            dataFormat={Status}
-          >
-            CLIENT STATUS
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            tdAttr={{ 'data-attr': 'phone_number' }}
-            dataField="phone_number"
-            dataSort={true}
-            searchable={false}
-          >
-            PHONE NUMBER
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            tdAttr={{ 'data-attr': 'Client Comment' }}
-            dataField="Client Comment"
-            dataFormat={commentButton}
-          >
-            CLIENT COMMENT
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            tdAttr={{ 'data-attr': 'Action' }}
-            dataField="Action"
-            dataFormat={actionButton}
-          >
-            ACTION
-          </TableHeaderColumn>
-        </BootstrapTable>
-      </div>
+      <DataGridTable row={row} columns={headCells} />
       <div>
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>

@@ -19,7 +19,7 @@ function useFetchWrapper() {
 
   function request(method) {
     return (url, body, file = false) => {
-      const baseUrl = `${API_URL}`;
+      const baseUrl = API_URL.API_URL;
       url = `${baseUrl}/${url}`;
       const requestOptions = {
         method,
@@ -41,7 +41,7 @@ function useFetchWrapper() {
     // return auth header with jwt if user is logged in and request is to the api url
     const token = auth[0]?.token;
     const isLoggedIn = !!token;
-    const isApiUrl = url.startsWith(API_URL);
+    const isApiUrl = url.startsWith(API_URL.API_URL);
     if (isLoggedIn && isApiUrl) {
       return { Authorization: `JWT ${token}` };
     } else {
@@ -50,12 +50,11 @@ function useFetchWrapper() {
   }
 
   function handleResponse(response) {
-    console.log(response);
     return response.text().then((text) => {
       const data = text && JSON.parse(text);
 
       if (!response.ok) {
-        if ([401, 403].includes(response.status) && auth?.token) {
+        if ([401, 403].includes(response.status) && auth[0]?.token) {
           // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
           localStorage.removeItem('user');
           setAuth(null);
