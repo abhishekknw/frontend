@@ -379,6 +379,8 @@ const headCells = [
     field: 'entity_name',
     headerName: 'Entity Name',
     width: 200,
+    headerClassName: 'super-app-theme--header',
+    cellClassName: 'super-app-theme--cell',
   },
   {
     field: 'entity_type',
@@ -418,7 +420,7 @@ const headCells = [
     width: 230,
     renderCell: (params) => (
       <>
-        <select>
+        <select className='select-b2b'>
           <option>Leads Verified By Machadalo</option>
           <option>Leads Verified By Machadalo</option>
           <option>Leads Verified By Machadalo</option>
@@ -443,7 +445,7 @@ const headCells = [
     sortable: false,
     renderCell: (params) => (
       <strong>
-        <Button variant="contained" size="small" style={{ marginLeft: 16 }} className="theme-btn text-small">
+        <Button variant="contained" size="small" style={{ }} className="theme-btn text-small">
           View Comment
         </Button>
       </strong>
@@ -456,7 +458,7 @@ const headCells = [
     sortable: false,
     renderCell: (params) => (
       <strong>
-        <Button variant="contained" size="small" className="theme-btn text-small" style={{ marginLeft: 16 }}>
+        <Button variant="contained" size="small" className="theme-btn text-small" style={{ }}>
           Accept
         </Button>
         <Button variant="contained" size="small" className="theme-btn text-small" style={{ marginLeft: 16 }}>
