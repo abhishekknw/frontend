@@ -2,17 +2,18 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 const DataGridTable = (props) => {
+  console.log(props);
   const TableData = props?.row;
   const columns = props?.columns;
   return (
     <>
-      <div style={{ height: 400, width: '100%' }} className="data-b2b-table">
+      <div style={props?.styles} className={props?.classNames}>
         <DataGrid
           rows={TableData}
           getRowId={(row, index) => (row.campaign_id ? row.campaign_id : row._id)}
           columns={columns}
           pageSize={20}
-          rowsPerPageOptions={[5]}
+          rowsPerPageOptions={[]}
           // checkboxSelection
           disableColumnMenu
           disableColumnFilter

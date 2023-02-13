@@ -3,68 +3,67 @@ import Modal from 'react-bootstrap/Modal';
 import ViewComment from '../modals/ViewComment';
 import ViewLeadDetail from './ViewLeadTable';
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import DataGridTable from './DataGridTable';
 const LeadDetailTable = (props) => {
   const [showViewLeads, setShowViewLeads] = useState(false);
-  const TableData = [
-    {
-      campaign_id: 'KRIKRI8',
-      name: 'Kriti test',
-      start_date: '2022-06-02T12:13:38.632000Z',
-      end_date: '2023-01-09T12:13:38.632000Z',
-      supplier_count: 21,
-      flat_count: 3205,
-      purchased_survey: 0,
-      campaign_status: 'completed',
-      unique_count: 6,
-    },
-    {
-      campaign_id: 'KRIK4EF8',
-      name: 'Kriti test',
-      start_date: '2022-06-02T12:13:38.632000Z',
-      end_date: '2023-01-09T12:13:38.632000Z',
-      supplier_count: 21,
-      flat_count: 3205,
-      purchased_survey: 0,
-      campaign_status: 'completed',
-      unique_count: 6,
-    },
-    {
-      campaign_id: 'KRRI4EF8',
-      name: 'Kriti test',
-      start_date: '2022-06-02T12:13:38.632000Z',
-      end_date: '2023-01-09T12:13:38.632000Z',
-      supplier_count: 21,
-      flat_count: 3205,
-      purchased_survey: 0,
-      campaign_status: 'completed',
-      unique_count: 6,
-    },
-    {
-      campaign_id: 'RI4EF8',
-      name: 'Kriti test',
-      start_date: '2022-06-02T12:13:38.632000Z',
-      end_date: '2023-01-09T12:13:38.632000Z',
-      supplier_count: 21,
-      flat_count: 3205,
-      purchased_survey: 0,
-      campaign_status: 'completed',
-      unique_count: 6,
-    },
-    {
-      campaign_id: 'KRI4EF8',
-      name: 'Kriti test',
-      start_date: '2022-06-02T12:13:38.632000Z',
-      end_date: '2023-01-09T12:13:38.632000Z',
-      supplier_count: 21,
-      flat_count: 3205,
-      purchased_survey: 0,
-      campaign_status: 'completed',
-      unique_count: 6,
-    },
-  ];
+  // const TableData = [
+  //   {
+  //     campaign_id: 'KRIKRI8',
+  //     name: 'Kriti test',
+  //     start_date: '2022-06-02T12:13:38.632000Z',
+  //     end_date: '2023-01-09T12:13:38.632000Z',
+  //     supplier_count: 21,
+  //     flat_count: 3205,
+  //     purchased_survey: 0,
+  //     campaign_status: 'completed',
+  //     unique_count: 6,
+  //   },
+  //   {
+  //     campaign_id: 'KRIK4EF8',
+  //     name: 'Kriti test',
+  //     start_date: '2022-06-02T12:13:38.632000Z',
+  //     end_date: '2023-01-09T12:13:38.632000Z',
+  //     supplier_count: 21,
+  //     flat_count: 3205,
+  //     purchased_survey: 0,
+  //     campaign_status: 'completed',
+  //     unique_count: 6,
+  //   },
+  //   {
+  //     campaign_id: 'KRRI4EF8',
+  //     name: 'Kriti test',
+  //     start_date: '2022-06-02T12:13:38.632000Z',
+  //     end_date: '2023-01-09T12:13:38.632000Z',
+  //     supplier_count: 21,
+  //     flat_count: 3205,
+  //     purchased_survey: 0,
+  //     campaign_status: 'completed',
+  //     unique_count: 6,
+  //   },
+  //   {
+  //     campaign_id: 'RI4EF8',
+  //     name: 'Kriti test',
+  //     start_date: '2022-06-02T12:13:38.632000Z',
+  //     end_date: '2023-01-09T12:13:38.632000Z',
+  //     supplier_count: 21,
+  //     flat_count: 3205,
+  //     purchased_survey: 0,
+  //     campaign_status: 'completed',
+  //     unique_count: 6,
+  //   },
+  //   {
+  //     campaign_id: 'KRI4EF8',
+  //     name: 'Kriti test',
+  //     start_date: '2022-06-02T12:13:38.632000Z',
+  //     end_date: '2023-01-09T12:13:38.632000Z',
+  //     supplier_count: 21,
+  //     flat_count: 3205,
+  //     purchased_survey: 0,
+  //     campaign_status: 'completed',
+  //     unique_count: 6,
+  //   },
+  // ];
   const columns = [
     { field: 'campaign_id', headerName: 'Index', sortable: false, width: 70 },
     { field: 'name', headerName: 'Camaign Name', sortable: false, width: 130 },
@@ -159,25 +158,15 @@ const LeadDetailTable = (props) => {
   const [showModal, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  function ViewLeads(params) {
-    console.log(params);
-  }
 
   return (
     <>
-      <DataGridTable row={TableData} columns={columns} />
-      {/* <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-      rows={TableData}
-      getRowId={(row) => row.campaign_id} 
-      columns={columns}
-      pageSize={5}
-      rowsPerPageOptions={[5]}
-      disableColumnMenu
-      disableColumnFilter
-      disableColumnSelector
-    />
-      </div> */}
+      <DataGridTable
+        row={props.data}
+        columns={columns}
+        styles={{ height: 400, width: '100%' }}
+        classNames="data-b2b-table"
+      />
       <div>
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>

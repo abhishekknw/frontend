@@ -8,10 +8,10 @@ import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import BasicTable from '../Table/BasicTable';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Pagination from '../../components/Pagination';
 import { useRecoilValue } from 'recoil';
 import { leadDecisionPendingListAtom } from '../API/_state';
 import { decisionPendingActions } from '../API/_actions';
+
 const LeadDecisionPending = () => {
   const [leadType, setLeadType] = useState('Leads');
   let [search, setSearch] = useState('');
@@ -23,22 +23,22 @@ const LeadDecisionPending = () => {
       '?type_of_entity=all&next_page=0&user_type=undefined&search='
     );
   };
+
   const handleChange = (event) => {
     setLeadType(event.target.value);
     setSearch('');
     LeadDecisionPendingData();
   };
+
   const handleSearch = (e) => {
     setSearch(e.target.value);
     LeadDecisionPendingData();
   };
+
   useEffect(() => {
     LeadDecisionPendingData();
   }, []);
-  const handlePageChange = (page) => {
-    alert(page.selected + 1);
-  };
-  console.log(ListData, 'ListDataListDataListData');
+
   return (
     <>
       <Box sx={{ minWidth: 120 }}>
@@ -69,10 +69,7 @@ const LeadDecisionPending = () => {
           />
         </Box>
       </Box>
-      <BasicTable />
-      <div className="list__footer">
-        <Pagination pageSize={5} totalItems={20} handlePageClick={handlePageChange} />
-      </div>
+      <BasicTable data={ListData} />
     </>
   );
 };

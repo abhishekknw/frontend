@@ -405,7 +405,12 @@ const ViewLeadDetail = (props) => {
 
   return (
     <>
-      <DataGridTable row={row} columns={headCells} />
+      <DataGridTable
+        row={row}
+        columns={headCells}
+        styles={{ height: 400, width: '100%' }}
+        classNames="data-b2b-table"
+      />
       <div>
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>

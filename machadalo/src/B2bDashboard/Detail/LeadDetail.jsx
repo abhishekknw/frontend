@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import LeadDetailTable from '../Table/LeadDetailTable';
+import { useRecoilValue } from 'recoil';
+import { currentCampaign } from '../API/_state';
+import { LeadDetailActions } from '../API/_actions';
 
 const LeadDetail = () => {
   const [leadType, setLeadType] = React.useState('Leads');
+  const ListData = useRecoilValue(currentCampaign);
+  const leadDetailApi = LeadDetailActions();
 
+  const CampaignList = async () => {
+    await leadDetailApi.CurrentCampaignList(
+      '?lead_type=Leads&user_type=undefined&tabname=undefined&supplier_code=all'
+    );
+  };
   const handleChange = (event) => {
     setLeadType(event.target.value);
   };
+
+  useEffect(() => {
+    CampaignList();
+  }, []);
   return (
     <>
       <Box sx={{ minWidth: 120 }}>
@@ -31,7 +45,7 @@ const LeadDetail = () => {
           </Select>
         </FormControl>
       </Box>
-      <LeadDetailTable leadType={leadType} />
+      <LeadDetailTable data={ListData} />
     </>
   );
 };
