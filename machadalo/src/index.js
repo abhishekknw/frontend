@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -8,6 +8,7 @@ import logger from 'redux-logger';
 import reducer from './reducers';
 import Routes from './routes';
 import registerServiceWorker from './registerServiceWorker';
+import { RecoilRoot } from 'recoil';
 
 import './index.css';
 
@@ -26,9 +27,13 @@ function configureStore(initialState) {
 const store = configureStore({});
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Routes />
-  </Provider>,
+  <RecoilRoot>
+    <Suspense fallback={true}>
+      <Provider store={store}>
+        <Routes />
+      </Provider>
+    </Suspense>
+  </RecoilRoot>,
   document.getElementById('root')
 );
 
