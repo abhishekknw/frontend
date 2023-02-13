@@ -111,20 +111,25 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             })
         }
         $scope.selectedSupplier = function (select, type) {
-          if (type === 'active') {
-            $scope.getActiveUser('', select[0]);
+          if(!select){
+            return 0;
           }
-          else if (type === 'action') {
-            $scope.getActionRequiredUser("", select[0]);
-          }
-          else if (type === 'intervene') {
-            $scope.getInterveneUser("", select[0]);
-          }
-          else if(type === 'contact'){
-            $scope.contactDetail("",select[0])
-          }
-          else {
-            $scope.historyDetail("", select[0]);
+          else{
+            if (type === 'active') {
+              $scope.getActiveUser('', select[0]);
+            }
+            else if (type === 'action') {
+              $scope.getActionRequiredUser("", select[0]);
+            }
+            else if (type === 'intervene') {
+              $scope.getInterveneUser("", select[0]);
+            }
+            else if(type === 'contact'){
+              $scope.contactDetail("",select[0])
+            }
+            else {
+              $scope.historyDetail("", select[0]);
+            }
           }
         }
 
