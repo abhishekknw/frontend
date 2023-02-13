@@ -6,7 +6,7 @@ const DataGridTable = (props) => {
   const columns = props?.columns;
   return (
     <>
-      <div style={{ height: 400, width: '100%' }}>
+      <div style={{ height: 400, width: '100%' }} className="data-b2b-table">
         <DataGrid
           rows={TableData}
           getRowId={(row, index) => (row.campaign_id ? row.campaign_id : row._id)}

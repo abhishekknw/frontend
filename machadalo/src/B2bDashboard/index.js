@@ -14,14 +14,14 @@ const B2bDashboard = (props) => {
         id="controlled-tab-example"
         activeKey={key}
         onSelect={(k) => setKey(k)}
-        className="mb-3"
+        className="mb-3 main-b2b-tab"
       >
         <Tab eventKey="Basic" title="Basic">
           <Tabs
             id="controlled-tab-example"
             activeKey={basicKey}
             onSelect={(k) => setBasicKey(k)}
-            className="mb-3"
+            className="mb-3 inner-b2b-tab"
           >
             <Tab eventKey="Pending" title="Lead-(Decision Pending)">
               <LeadDecisionPending />

@@ -1,0 +1,71 @@
+.main-b2b-tab.nav-tabs{
+    width: 100%;
+    background-color: #1C0606;
+    padding: 5px 10px;
+}
+.main-b2b-tab.nav-tabs .nav-item.show .nav-link, .main-b2b-tab.nav-tabs .nav-link.active{
+    background-color: #1C0606;
+    color: #ffffff;
+    border: 0px;
+}
+.main-b2b-tab.nav-tabs .nav-item.show .nav-link, .main-b2b-tab.nav-tabs .nav-link.active{
+    border: 0;
+}
+.main-b2b-tab.nav-tabs .nav-link{
+    background-color: #1C0606;
+    color: #ffffff;
+    border: 0px;
+    text-transform: uppercase;    
+}
+ul.inner-b2b-tab {
+    justify-content: space-between;
+    border: 0px;
+}
+.inner-b2b-tab li{
+    width: 49%;
+}
+.inner-b2b-tab li button{
+    width: 100%;
+    background-color: #CB3328 !important;
+    border: 2px solid #CB3328 !important;
+    padding: 10px 5px;
+    border-radius: 6px;
+    color: #fff;
+    margin: 0 auto;
+    font-weight: 600;
+}
+.inner-b2b-tab .nav-link:focus,.inner-b2b-tab .nav-link:hover{
+    color: #fff;
+}
+.inner-b2b-tab.nav-tabs .nav-item.show .nav-link, .inner-b2b-tab.nav-tabs .nav-link.active{
+    color: #CB3328;
+    background-color: transparent !important;
+}
+.tab-content .MuiSelect-select{
+    width: 196px;
+    border: 1px solid #1C0606;
+    padding: 10px 20px;
+    color: #3D0F0C;
+}
+.tab-content .MuiBox-root label#demo-simple-select-label{
+    display: none;
+}
+.MuiBox-root.css-1nylpq2{    height: 42px;
+border: 1px solid #000;
+padding: 4px 10px;
+width: 250px;
+border-radius: 5px;}
+.data-b2b-table .MuiDataGrid-columnHeader{
+    background-color: #8E1921;
+    color: #fff;
+}
+.data-b2b-table .css-yrdy0g-MuiDataGrid-columnHeaderRow  svg{
+    display: none;
+}
+.theme-btn{
+    background-color: #9A0000 !important;
+}
+.text-small{
+    text-transform: capitalize !important;
+    font-weight: 500 !important;
+}
