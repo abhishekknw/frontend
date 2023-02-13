@@ -385,23 +385,25 @@ const headCells = [
     numeric: true,
     description: 'Type Of Entity',
     headerName: 'TOE',
-    width: 60,
+    width: 50,
   },
   {
     field: 'primary_count',
     numeric: true,
     headerName: 'Primary Count',
-    width: 60,
+    width: 100,
   },
   {
     field: 'city',
     numeric: true,
     headerName: 'City',
+    width: 150,
   },
   {
     field: 'area',
     numeric: true,
     headerName: 'Area',
+    width: 150,
   },
   {
     field: 'lead_timestamp',
@@ -413,7 +415,7 @@ const headCells = [
     numeric: true,
     sortable: false,
     headerName: 'Current Status',
-    width: 200,
+    width: 230,
     renderCell: (params) => (
       <>
         <select>
@@ -432,15 +434,16 @@ const headCells = [
     field: 'phone_number',
     numeric: true,
     headerName: 'Phone Number',
+    width: 150,
   },
   {
     field: 'ClientComment',
     headerName: 'Client Comment',
-    width: 140,
+    width: 150,
     sortable: false,
     renderCell: (params) => (
       <strong>
-        <Button variant="contained" size="small" style={{ marginLeft: 16 }}>
+        <Button variant="contained" size="small" style={{ marginLeft: 16 }} className="theme-btn text-small">
           View Comment
         </Button>
       </strong>
@@ -449,14 +452,14 @@ const headCells = [
   {
     field: 'Action',
     headerName: 'Action',
-    width: 150,
+    width: 200,
     sortable: false,
     renderCell: (params) => (
       <strong>
-        <Button variant="contained" size="small" style={{ marginLeft: 16 }}>
+        <Button variant="contained" size="small" className="theme-btn text-small" style={{ marginLeft: 16 }}>
           Accept
         </Button>
-        <Button variant="contained" size="small" style={{ marginLeft: 16 }}>
+        <Button variant="contained" size="small" className="theme-btn text-small" style={{ marginLeft: 16 }}>
           Decline
         </Button>
       </strong>
