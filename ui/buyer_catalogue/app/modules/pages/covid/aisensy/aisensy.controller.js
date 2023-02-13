@@ -112,16 +112,19 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
         $scope.selectedSupplier = function (select, type) {
           if (type === 'active') {
-            $scope.getActiveUser('', select);
+            $scope.getActiveUser('', select[0]);
           }
           else if (type === 'action') {
-            $scope.getActionRequiredUser("", select);
+            $scope.getActionRequiredUser("", select[0]);
           }
           else if (type === 'intervene') {
-            $scope.getInterveneUser("", select);
+            $scope.getInterveneUser("", select[0]);
+          }
+          else if(type === 'contact'){
+            $scope.contactDetail("",select[0])
           }
           else {
-            $scope.historyDetail("", select);
+            $scope.historyDetail("", select[0]);
           }
         }
 
@@ -404,7 +407,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         };
 
-        $scope.contactDetail = function (page) {
+        $scope.contactDetail = function (page,type_of_entity) {
           $scope.formData.historySearch = "";
           $scope.showcontactDetail = true;
           $scope.showhistoryDetail = false;
@@ -429,6 +432,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.pagination = {
               current: 1
             };
+          }
+          if(type_of_entity){
+            param.type_of_entity = type_of_entity;
+          }
+          else{
+            param.type_of_entity = "";
           }
           if ($scope.formData.contactSearch) {
             param.search = $scope.formData.contactSearch;
