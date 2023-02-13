@@ -4,7 +4,6 @@ import { DataGrid } from '@mui/x-data-grid';
 const DataGridTable = (props) => {
   const TableData = props?.row;
   const columns = props?.columns;
-  console.log(props, '11111111111');
   return (
     <>
       <div style={{ height: 400, width: '100%' }}>

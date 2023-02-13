@@ -8,17 +8,21 @@ import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import BasicTable from '../Table/BasicTable';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import * as API from '../API/types';
+import * as API from '../API/request';
 import Pagination from '../../components/Pagination';
-
+import { useRecoilValue } from 'recoil';
+import { leadDecisionPendingListAtom } from '../API/_state';
+import { decisionPendingActions } from '../API/_actions';
 const LeadDecisionPending = () => {
   const [leadType, setLeadType] = useState('Leads');
   let [search, setSearch] = useState('');
-  // const [data, setData] = useState([]);
+  const ListData = useRecoilValue(leadDecisionPendingListAtom);
+  const LeadBasicApi = decisionPendingActions();
 
   const LeadDecisionPendingData = async () => {
-    let resp = await API.getDecisionPendingList(leadType, search);
-    setData(resp.data.data.lead);
+    await LeadBasicApi.LeadDecisionPendingList(
+      '?type_of_entity=all&next_page=0&user_type=undefined&search='
+    );
   };
   const handleChange = (event) => {
     setLeadType(event.target.value);
@@ -30,7 +34,7 @@ const LeadDecisionPending = () => {
     LeadDecisionPendingData();
   };
   useEffect(() => {
-    // LeadDecisionPendingData();
+    LeadDecisionPendingData();
   }, []);
   const handlePageChange = (page) => {
     alert(page.selected + 1);

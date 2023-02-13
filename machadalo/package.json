@@ -41,6 +41,7 @@
     "react-star-ratings": "^2.3.0",
     "reactstrap": "^9.1.5",
     "read-excel-file": "^5.5.3",
+    "recoil": "^0.7.6",
     "redux": "^4.2.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.2",

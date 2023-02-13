@@ -6,7 +6,6 @@ import LeadDetail from './Detail/LeadDetail';
 import './index.css';
 
 const B2bDashboard = (props) => {
-  console.log(props);
   const [key, setKey] = useState('Basic');
   const [basicKey, setBasicKey] = useState('Pending');
   return (
