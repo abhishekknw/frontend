@@ -3,6 +3,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import LeadDecisionPending from './Basic/LeadDecisionPending';
 import LeadDetail from './Detail/LeadDetail';
+import Container from '@mui/material/Container';
 import './index.css';
 
 const B2bDashboard = (props) => {
@@ -10,6 +11,7 @@ const B2bDashboard = (props) => {
   const [basicKey, setBasicKey] = useState('Pending');
   return (
     <>
+      {/* <Container maxWidth="xl"> */}
       <Tabs
         id="controlled-tab-example"
         activeKey={key}
@@ -38,6 +40,7 @@ const B2bDashboard = (props) => {
           <div>Licenses & Payment</div>
         </Tab>
       </Tabs>
+      {/* </Container>        */}
     </>
   );
 };

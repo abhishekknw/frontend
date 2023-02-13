@@ -41,30 +41,48 @@ const LeadDecisionPending = () => {
 
   return (
     <>
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl sx={{ m: 1, minWidth: 100 }}>
-          <InputLabel id="demo-simple-select-label">Lead Type</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={leadType}
-            label="Lead Type"
-            onChange={handleChange}
-          >
-            <MenuItem value={'Leads'}>Leads</MenuItem>
-            <MenuItem value={'Survey'}>Survey</MenuItem>
-            <MenuItem value={'Survey Leads'}>Survey Leads</MenuItem>
-            <MenuItem value={'FeedBack'}>FeedBack</MenuItem>
-          </Select>
-        </FormControl>
+      <Box sx={{ minWidth: 120 }} className="b2b-container">
+        <Box>
+          <FormControl sx={{ m: 1, minWidth: 100 }}>
+            <InputLabel id="demo-simple-select-label">Lead Type</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={leadType}
+              label="Lead Type"
+              onChange={handleChange}
+            >
+              <MenuItem value={'Leads'}>Leads</MenuItem>
+              <MenuItem value={'Survey'}>Survey</MenuItem>
+              <MenuItem value={'Survey Leads'}>Survey Leads</MenuItem>
+              <MenuItem value={'FeedBack'}>FeedBack</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, minWidth: 100 }}>
+            <InputLabel id="demo-simple-select-label">All</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={leadType}
+              label="Lead Type"
+              onChange={handleChange}
+            >
+              <MenuItem value={'Leads'}>Leads</MenuItem>
+              <MenuItem value={'Survey'}>Survey</MenuItem>
+              <MenuItem value={'Survey Leads'}>Survey Leads</MenuItem>
+              <MenuItem value={'FeedBack'}>FeedBack</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+        <Box sx={{ m: 1, display: 'flex', alignItems: 'flex-end' }} className="input-col">
           <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
           <TextField
             id="input-with-sx"
             label="Search"
             variant="standard"
             value={search}
+            className="input-col-text"
             onChange={(e) => handleSearch(e)}
           />
         </Box>
