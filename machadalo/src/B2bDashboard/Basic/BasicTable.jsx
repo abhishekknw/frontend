@@ -102,7 +102,7 @@ export default function BasicTable(props) {
     {
       field: 'Action',
       headerName: 'Action',
-      width: 180,
+      width: 200,
       sortable: false,
       renderCell: (params) => (
         <strong>
