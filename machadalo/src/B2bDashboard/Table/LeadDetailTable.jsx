@@ -5,67 +5,19 @@ import ViewLeadDetail from './ViewLeadTable';
 import * as React from 'react';
 import { Button } from '@mui/material';
 import DataGridTable from './DataGridTable';
+import FormControl from '@mui/material/FormControl';
 import EmailIcon from '@mui/icons-material/Email';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import InputLabel from '@mui/material/InputLabel';
 const LeadDetailTable = (props) => {
+  const [params, setParams] = useState({
+    leadType: 'Leads',
+    supplierType: 'all',
+    search: '',
+    page: 0,
+    userType: '',
+  });
   const [showViewLeads, setShowViewLeads] = useState(false);
-  // const TableData = [
-  //   {
-  //     campaign_id: 'KRIKRI8',
-  //     name: 'Kriti test',
-  //     start_date: '2022-06-02T12:13:38.632000Z',
-  //     end_date: '2023-01-09T12:13:38.632000Z',
-  //     supplier_count: 21,
-  //     flat_count: 3205,
-  //     purchased_survey: 0,
-  //     campaign_status: 'completed',
-  //     unique_count: 6,
-  //   },
-  //   {
-  //     campaign_id: 'KRIK4EF8',
-  //     name: 'Kriti test',
-  //     start_date: '2022-06-02T12:13:38.632000Z',
-  //     end_date: '2023-01-09T12:13:38.632000Z',
-  //     supplier_count: 21,
-  //     flat_count: 3205,
-  //     purchased_survey: 0,
-  //     campaign_status: 'completed',
-  //     unique_count: 6,
-  //   },
-  //   {
-  //     campaign_id: 'KRRI4EF8',
-  //     name: 'Kriti test',
-  //     start_date: '2022-06-02T12:13:38.632000Z',
-  //     end_date: '2023-01-09T12:13:38.632000Z',
-  //     supplier_count: 21,
-  //     flat_count: 3205,
-  //     purchased_survey: 0,
-  //     campaign_status: 'completed',
-  //     unique_count: 6,
-  //   },
-  //   {
-  //     campaign_id: 'RI4EF8',
-  //     name: 'Kriti test',
-  //     start_date: '2022-06-02T12:13:38.632000Z',
-  //     end_date: '2023-01-09T12:13:38.632000Z',
-  //     supplier_count: 21,
-  //     flat_count: 3205,
-  //     purchased_survey: 0,
-  //     campaign_status: 'completed',
-  //     unique_count: 6,
-  //   },
-  //   {
-  //     campaign_id: 'KRI4EF8',
-  //     name: 'Kriti test',
-  //     start_date: '2022-06-02T12:13:38.632000Z',
-  //     end_date: '2023-01-09T12:13:38.632000Z',
-  //     supplier_count: 21,
-  //     flat_count: 3205,
-  //     purchased_survey: 0,
-  //     campaign_status: 'completed',
-  //     unique_count: 6,
-  //   },
-  // ];
   const columns = [
     { field: 'campaign_id', headerName: 'Index', sortable: false, width: 70 },
     { field: 'name', headerName: 'Camaign Name', sortable: false, width: 130 },
@@ -80,7 +32,7 @@ const LeadDetailTable = (props) => {
       renderCell: (params) => (
         <strong>
           <Button
-            className='theme-btn'
+            className="theme-btn"
             variant="contained"
             size="small"
             style={{ marginLeft: 16 }}
@@ -96,13 +48,13 @@ const LeadDetailTable = (props) => {
     {
       field: 'EmailLeads',
       headerName: 'View Leads	',
-      description: 'This column has a value getter and is not sortable.',
+      description: 'Send Emails',
       sortable: false,
       width: 200,
       renderCell: (params) => (
         <strong>
           <Button
-            className='theme-btn'
+            className="theme-btn"
             variant="contained"
             size="small"
             style={{ marginLeft: 16 }}
@@ -119,13 +71,13 @@ const LeadDetailTable = (props) => {
     {
       field: 'DownloadLeads',
       headerName: 'View Leads	',
-      description: 'This column has a value getter and is not sortable.',
+      description: 'Download Leads',
       sortable: false,
       width: 200,
       renderCell: (params) => (
         <strong>
-          <Button 
-            className='theme-btn'
+          <Button
+            className="theme-btn"
             variant="contained"
             size="small"
             startIcon={<CloudDownloadIcon />}
@@ -148,7 +100,7 @@ const LeadDetailTable = (props) => {
       renderCell: (params) => (
         <strong>
           <Button
-            className='theme-btn'
+            className="theme-btn"
             variant="contained"
             size="small"
             style={{ marginLeft: 16 }}

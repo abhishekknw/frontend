@@ -44,6 +44,21 @@ const LeadDetail = () => {
             <MenuItem value={'FeedBack'}>FeedBack</MenuItem>
           </Select>
         </FormControl>
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-label">Lead Type</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={leadType}
+            label="Lead Type"
+            onChange={handleChange}
+          >
+            <MenuItem value={'Leads'}>Leads</MenuItem>
+            <MenuItem value={'Survey'}>Survey</MenuItem>
+            <MenuItem value={'Survey Leads'}>Survey Leads</MenuItem>
+            <MenuItem value={'FeedBack'}>FeedBack</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
       <LeadDetailTable data={ListData} />
     </>

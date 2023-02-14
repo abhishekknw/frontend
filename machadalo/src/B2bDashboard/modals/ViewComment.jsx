@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
-import { Button, Modal, Typography, Box } from '@mui/material';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const ViewCommentModal = (props) => {
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   function commentModal(e) {
@@ -33,21 +37,41 @@ const ViewCommentModal = (props) => {
       </Button>
 
       <div>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-          </Box>
-        </Modal>
+        <Dialog className='modal-comment' open={open} onClose={handleClose}>
+          <DialogTitle className='title-modal'>View Comments</DialogTitle>
+          <DialogContent className='content-modal'>
+            <DialogContentText className='text-black' variant='h5' textAlign={"center"} sx={{pb: 2}}>
+              Comments
+            </DialogContentText>
+            <Box sx={{}} >
+              <FormControl fullWidth sx={{mb: 2}}>
+                <InputLabel id="demo-simple-select-label">All</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={10}>All</MenuItem>
+                  <MenuItem value={20}>Company Comment</MenuItem>
+                  <MenuItem value={30}>Machadalo Comments</MenuItem>
+                  <MenuItem value={40}>Company's client comment</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField 
+              fullWidth
+              className='textarea-modal'
+                placeholder="Write Here"
+                multiline
+                rows={5}
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions className='flex-start modal-btn'>
+            <Button onClick={handleClose}>Add Comment</Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </>
   );

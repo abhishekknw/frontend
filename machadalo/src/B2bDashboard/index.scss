@@ -175,6 +175,31 @@ ul.inner-b2b-tab {
 .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root {
     border: 1px solid #3D0F0C;
 }
+.modal-comment .MuiPaper-root{
+    width: 100%;
+    min-width: 500px;
+    max-width: 650px;
+}
+.textarea-modal{
+    width: 100%;
+}
+.flex-start{
+    justify-content: flex-start !important;
+}
+.modal-btn{
+    padding: 0px 24px 24px 24px !important;
+}
+.title-modal{
+background-color: #CB3328;
+color: #fff;
+}
+.modal-btn button{
+    background-color: #CB3328;
+    color: #fff
+}
+.content-modal{
+    padding-top: 24px !important;
+}
 @media screen and (max-width: 480px) {
     .b2b-container   {
         flex-direction: column;

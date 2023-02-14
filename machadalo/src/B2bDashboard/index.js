@@ -5,6 +5,7 @@ import LeadDecisionPending from './Basic/LeadDecisionPending';
 import LeadDetail from './Detail/LeadDetail';
 import Container from '@mui/material/Container';
 import './index.css';
+import NewLeadsBasic from './Basic/newLeadsBasic';
 
 const B2bDashboard = (props) => {
   const [key, setKey] = useState('Basic');
@@ -29,7 +30,7 @@ const B2bDashboard = (props) => {
               <LeadDecisionPending />
             </Tab>
             <Tab eventKey="NewLeads" title="New Leads">
-              <div> New Leads</div>
+              <NewLeadsBasic />
             </Tab>
           </Tabs>
         </Tab>
