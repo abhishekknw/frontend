@@ -13,16 +13,17 @@ export default function ClientStatusDropdown(props) {
     <>
       <FormControl sx={{ m: 1, minWidth: 100 }}>
         <Select
+        className="select-menu"
           value={props.data.row.macchadalo_client_status}
           onChange={ChangeClientStatus}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
+          displayEmpty inputProps={{ 'aria-label': 'Without label' }}
         >
           {/* <MenuItem value="">
                 <em>None</em>
               </MenuItem> */}
           {clientStatus.map((status, index) => (
-            <MenuItem key={index} value={status.status_name}>
+            <MenuItem key={index} value={status.status_name} 
+            className="select-menu-list">
               {status.status_name}
             </MenuItem>
           ))}

@@ -173,7 +173,7 @@ const LeadDetailTable = (props) => {
         row={props.data}
         columns={columns}
         styles={{ height: 400, width: '100%' }}
-        classNames="data-b2b-table"
+        classNames="small-height-table data-b2b-table"
       />
       <div>
         <Modal show={showModal} onHide={handleClose}>
