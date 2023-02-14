@@ -4,7 +4,10 @@ import Modal from 'react-bootstrap/Modal';
 import ViewComment from '../modals/ViewComment';
 import { Button } from '@mui/material';
 import DataGridTable from './DataGridTable';
-
+import TuneIcon from '@mui/icons-material/Tune';
+import Box from '@mui/material/Box';
+import SearchIcon from '@mui/icons-material/Search';
+import TextField from '@mui/material/TextField';
 const ViewLeadDetail = (props) => {
   const row = [
     {
@@ -354,10 +357,10 @@ const ViewLeadDetail = (props) => {
       numeric: true,
       sortable: false,
       headerName: 'Current Status',
-      width: 200,
+      width: 250,
       renderCell: (params) => (
         <>
-          <select>
+          <select className="select-b2b">
             <option>Leads Verified By Machadalo</option>
             <option>Leads Verified By Machadalo</option>
             <option>Leads Verified By Machadalo</option>
@@ -376,7 +379,8 @@ const ViewLeadDetail = (props) => {
       sortable: false,
       renderCell: (params) => (
         <strong>
-          <Button variant="contained" size="small" style={{ marginLeft: 16 }}>
+          <Button variant="contained" size="small"  
+            className='theme-btn'>
             View Comment
           </Button>
         </strong>
@@ -389,7 +393,8 @@ const ViewLeadDetail = (props) => {
       sortable: false,
       renderCell: (params) => (
         <strong>
-          <Button variant="contained" size="small" style={{ marginLeft: 16 }}>
+          <Button variant="contained" size="small"  
+            className='theme-btn'>
             Lead Details
           </Button>
         </strong>
@@ -406,6 +411,21 @@ const ViewLeadDetail = (props) => {
   return (
     <>
     {/* FILTER ICON nd search */}
+    <Box  className="b2b-container">
+      <Box  sx={{ m: 1 }} >
+        <Button startIcon={<TuneIcon />} className="text-black">Apply Filter</Button>
+      </Box>
+      <Box sx={{ m: 1, display: 'flex', alignItems: 'flex-end' }} className="input-col">
+          <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+          <TextField
+            id="input-with-sx"
+            label="Search"
+            variant="standard"
+            className="input-col-text"
+            onChange={(e) => handleSearch(e)}
+          />
+        </Box>
+    </Box>
       <DataGridTable
         row={row}
         columns={headCells}

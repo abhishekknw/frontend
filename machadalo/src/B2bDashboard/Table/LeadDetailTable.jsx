@@ -5,6 +5,8 @@ import ViewLeadDetail from './ViewLeadTable';
 import * as React from 'react';
 import { Button } from '@mui/material';
 import DataGridTable from './DataGridTable';
+import EmailIcon from '@mui/icons-material/Email';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 const LeadDetailTable = (props) => {
   const [showViewLeads, setShowViewLeads] = useState(false);
   // const TableData = [
@@ -100,12 +102,14 @@ const LeadDetailTable = (props) => {
       renderCell: (params) => (
         <strong>
           <Button
+            className='theme-btn'
             variant="contained"
             size="small"
             style={{ marginLeft: 16 }}
             onClick={(e) => {
               handleShow(params);
             }}
+            startIcon={<EmailIcon />}
           >
             Email Leads
           </Button>
@@ -120,9 +124,11 @@ const LeadDetailTable = (props) => {
       width: 200,
       renderCell: (params) => (
         <strong>
-          <Button
+          <Button 
+            className='theme-btn'
             variant="contained"
             size="small"
+            startIcon={<CloudDownloadIcon />}
             style={{ marginLeft: 16 }}
             onClick={(e) => {
               handleShow(params);
@@ -142,6 +148,7 @@ const LeadDetailTable = (props) => {
       renderCell: (params) => (
         <strong>
           <Button
+            className='theme-btn'
             variant="contained"
             size="small"
             style={{ marginLeft: 16 }}
