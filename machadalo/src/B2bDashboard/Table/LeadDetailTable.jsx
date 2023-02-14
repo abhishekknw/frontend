@@ -20,7 +20,13 @@ const LeadDetailTable = (props) => {
   }
 
   const columns = [
-    { field: 'campaign_id', headerName: 'Index', sortable: false, width: 70 },
+    {
+      field: 'unique',
+      headerName: 'Index',
+      sortable: false,
+      width: 70,
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 2,
+    },
     { field: 'name', headerName: 'Camaign Name', sortable: false, width: 130 },
     { field: 'start_date', headerName: 'Start Date', width: 130 },
     { field: 'supplier_count', headerName: 'Supplier Count', type: 'number', width: 90 },
