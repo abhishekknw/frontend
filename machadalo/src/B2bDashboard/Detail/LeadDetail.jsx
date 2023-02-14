@@ -23,7 +23,7 @@ const LeadDetail = () => {
     );
   };
   const handleChange = (event) => {
-    setLeadType(event.target.value);
+    // setLeadType(event.target.value);
   };
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const LeadDetail = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={leadType}
+            value={params.leadType}
             label="Lead Type"
             onChange={handleChange}
           >
