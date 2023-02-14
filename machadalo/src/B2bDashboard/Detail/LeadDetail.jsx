@@ -5,13 +5,16 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import LeadDetailTable from '../Table/LeadDetailTable';
-import { useRecoilValue } from 'recoil';
-import { currentCampaign } from '../API/_state';
 import { LeadDetailActions } from '../API/_actions';
 
 const LeadDetail = () => {
-  const [leadType, setLeadType] = React.useState('Leads');
-  const ListData = useRecoilValue(currentCampaign);
+  const [params, setParams] = useState({
+    leadType: 'Leads',
+    supplierType: 'all',
+    search: '',
+    page: 0,
+    userType: '',
+  });
   const leadDetailApi = LeadDetailActions();
 
   const CampaignList = async () => {
@@ -34,7 +37,7 @@ const LeadDetail = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={leadType}
+            value={params.leadType}
             label="Lead Type"
             onChange={handleChange}
           >
@@ -45,7 +48,7 @@ const LeadDetail = () => {
           </Select>
         </FormControl>
       </Box>
-      <LeadDetailTable data={ListData} />
+      <LeadDetailTable data={params} />
     </>
   );
 };

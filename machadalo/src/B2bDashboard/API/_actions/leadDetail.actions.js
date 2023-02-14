@@ -13,8 +13,16 @@ const LeadDetailActions = () => {
       setCurrentCampaign(data);
     });
   };
+
+  const campaignViewLeads = () => {
+    return fetchWrapper.get(`${Apis.campaignViewLeads}/${'id'}`).then((res) => {
+      const { data } = res;
+      console.log(data, '1111111111111111111');
+    });
+  };
   return {
     CurrentCampaignList,
+    campaignViewLeads,
   };
 };
 export { LeadDetailActions };

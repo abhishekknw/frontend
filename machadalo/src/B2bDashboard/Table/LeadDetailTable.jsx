@@ -1,14 +1,24 @@
 import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
-import ViewComment from '../modals/ViewComment';
 import ViewLeadDetail from './ViewLeadTable';
 import * as React from 'react';
 import { Button } from '@mui/material';
 import DataGridTable from './DataGridTable';
-import EmailIcon from '@mui/icons-material/Email';
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import SendEmailModal from '../modals/sendEmailModal';
+import DownloadLeadsModal from '../modals/DownloadLeadsModal';
+import { useRecoilValue } from 'recoil';
+import { currentCampaign } from '../API/_state';
+import { LeadDetailActions } from '../API/_actions';
+
 const LeadDetailTable = (props) => {
+  const leadDetailApi = LeadDetailActions();
   const [showViewLeads, setShowViewLeads] = useState(false);
+  const allCampaingn = useRecoilValue(currentCampaign);
+
+  async function viewCampaignLeads(e, data) {
+    await leadDetailApi.campaignViewLeads();
+    console.log(e, data);
+  }
+
   const columns = [
     { field: 'campaign_id', headerName: 'Index', sortable: false, width: 70 },
     { field: 'name', headerName: 'Camaign Name', sortable: false, width: 130 },
@@ -17,7 +27,7 @@ const LeadDetailTable = (props) => {
     {
       field: 'ViewLeads',
       headerName: 'View Leads	',
-      description: 'This column has a value getter and is not sortable.',
+      description: 'View Leads',
       sortable: false,
       width: 200,
       renderCell: (params) => (
@@ -28,7 +38,7 @@ const LeadDetailTable = (props) => {
             size="small"
             style={{ marginLeft: 16 }}
             onClick={(e) => {
-              setShowViewLeads(true);
+              viewCampaignLeads(e, params);
             }}
           >
             View Leads
@@ -43,20 +53,9 @@ const LeadDetailTable = (props) => {
       sortable: false,
       width: 200,
       renderCell: (params) => (
-        <strong>
-          <Button
-            className="theme-btn"
-            variant="contained"
-            size="small"
-            style={{ marginLeft: 16 }}
-            onClick={(e) => {
-              handleShow(params);
-            }}
-            startIcon={<EmailIcon />}
-          >
-            Email Leads
-          </Button>
-        </strong>
+        <>
+          <SendEmailModal data={params} />
+        </>
       ),
     },
     {
@@ -66,20 +65,9 @@ const LeadDetailTable = (props) => {
       sortable: false,
       width: 200,
       renderCell: (params) => (
-        <strong>
-          <Button
-            className="theme-btn"
-            variant="contained"
-            size="small"
-            startIcon={<CloudDownloadIcon />}
-            style={{ marginLeft: 16 }}
-            onClick={(e) => {
-              handleShow(params);
-            }}
-          >
-            Download Leads
-          </Button>
-        </strong>
+        <>
+          <DownloadLeadsModal data={params} />
+        </>
       ),
     },
     {
@@ -106,28 +94,14 @@ const LeadDetailTable = (props) => {
     },
   ];
 
-  const [showModal, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   return (
     <>
       <DataGridTable
-        row={props.data}
+        row={allCampaingn}
         columns={columns}
         styles={{ height: 400, width: '100%' }}
         classNames="data-b2b-table"
       />
-      <div>
-        <Modal show={showModal} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <ViewComment />
-          </Modal.Body>
-        </Modal>
-      </div>
       {showViewLeads && <ViewLeadDetail />}
     </>
   );

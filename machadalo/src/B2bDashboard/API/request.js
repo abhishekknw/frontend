@@ -4,4 +4,5 @@ export const Apis = {
 
   // Lead Details APIs
   currentCampaign: 'v0/ui/b2b/lead-distribution-campaign',
+  campaignViewLeads: 'v0/ui/b2b/lead-form-headers',
 };
