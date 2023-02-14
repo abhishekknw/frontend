@@ -12,7 +12,7 @@ const B2bDashboard = (props) => {
   const [basicKey, setBasicKey] = useState('Pending');
   return (
     <>
-      <Container maxWidth="xl" className=" p-4">
+      <Container maxWidth="xl" className=" px-4">
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
