@@ -166,6 +166,11 @@ ul.inner-b2b-tab {
 .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root {
     border: 1px solid #3D0F0C;
 }
-.MuiDataGrid-cell:last-child{
-    display: none !important;
+@media screen and (max-width: 480px) {
+    .b2b-container   {
+        flex-direction: column;
+    }
+    .tab-content .MuiSelect-select{
+        width: 100%;
+    }
 }

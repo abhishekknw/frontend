@@ -19,7 +19,7 @@ export default function BasicTable(props) {
     {
       field: 'checkbox',
       headerName: 'Select',
-      width: 60,
+      width: 40,
       renderCell: (params) => (
         <>
           <Checkbox />
@@ -29,7 +29,7 @@ export default function BasicTable(props) {
     {
       field: 'entity_name',
       headerName: 'Entity Name',
-      width: 200,
+      width: 180,
       headerClassName: 'super-app-theme--header',
       cellClassName: 'super-app-theme--cell',
     },
@@ -39,7 +39,7 @@ export default function BasicTable(props) {
       headerClassName: 'super-app-theme--header',
       description: 'Type Of Entity',
       headerName: 'TOE',
-      width: 60,
+      width: 40,
     },
     {
       field: 'primary_count',
@@ -47,7 +47,7 @@ export default function BasicTable(props) {
       headerClassName: 'super-app-theme--header',
       headerName: 'PC',
       description: 'Primary Count',
-      width: 60,
+      width: 40,
     },
     {
       field: 'city',
@@ -74,7 +74,7 @@ export default function BasicTable(props) {
       numeric: true,
       sortable: false,
       headerName: 'Current Status',
-      width: 230,
+      width: 200,
       renderCell: (params) => (
         <>
           <ClientStatusDropdown data={params} />
@@ -113,7 +113,7 @@ export default function BasicTable(props) {
             variant="contained"
             size="small"
             className="theme-btn text-small"
-            style={{ marginLeft: 16 }}
+            style={{ marginLeft: 5 }}
           >
             Decline
           </Button>
