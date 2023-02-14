@@ -92,6 +92,7 @@ ul.inner-b2b-tab {
 
 .theme-btn {
     background-color: #9A0000 !important;
+    border-radius: 5px;
 }
 
 .text-small {
@@ -197,8 +198,22 @@ color: #fff;
     background-color: #CB3328;
     color: #fff
 }
+.modal-btn button:hover{
+    background-color: #9A0000;
+    color: #fff
+}
 .content-modal{
     padding-top: 24px !important;
+}
+.upload-btns button{
+    padding: 13px 10px;
+}
+@media screen and (max-width: 600px) {
+    .modal-comment .MuiPaper-root{
+        width: 95%;
+        min-width: 250px;
+        max-width: 400px;
+    }
 }
 @media screen and (max-width: 480px) {
     .b2b-container   {
