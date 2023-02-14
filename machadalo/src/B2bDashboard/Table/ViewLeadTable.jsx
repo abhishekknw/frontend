@@ -405,6 +405,7 @@ const ViewLeadDetail = (props) => {
 
   return (
     <>
+    {/* FILTER ICON nd search */}
       <DataGridTable
         row={row}
         columns={headCells}

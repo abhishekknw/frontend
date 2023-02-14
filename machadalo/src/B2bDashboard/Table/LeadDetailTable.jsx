@@ -78,6 +78,7 @@ const LeadDetailTable = (props) => {
       renderCell: (params) => (
         <strong>
           <Button
+            className='theme-btn'
             variant="contained"
             size="small"
             style={{ marginLeft: 16 }}

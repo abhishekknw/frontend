@@ -136,6 +136,7 @@ export default function BasicTable(props) {
 
       <Stack spacing={2}>
         <Pagination
+        className="page-link"
           count={10}
           variant="outlined"
           shape="rounded"
