@@ -1,15 +1,11 @@
-import { useRecoilState, useSetRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useFetchWrapper } from '../_helpers/fetch-wrapper';
-// import { authAtom, usersAtom, userAtom,userErrorAtom} from '../_state';
-import { leadDecisionPendingListAtom } from '../_state/decisionPending';
+import { leadDecisionPendingListAtom, clientStatusAtom } from '../_state/decisionPending';
 import { Apis } from '../request';
 const decisionPendingActions = () => {
   const fetchWrapper = useFetchWrapper();
   const setDecisionPendingList = useSetRecoilState(leadDecisionPendingListAtom);
-  // const alertActions = useAlertActions();
-  // const setUsers = useSetRecoilState(usersAtom);
-  // const setUser = useSetRecoilState(userAtom);
-  // const setUserError = useSetRecoilState(userErrorAtom);
+  const setClientStatusAtom = useSetRecoilState(clientStatusAtom);
 
   const LeadDecisionPendingList = (data) => {
     let parmas =
@@ -30,8 +26,17 @@ const decisionPendingActions = () => {
       setDecisionPendingList(data);
     });
   };
+
+  const ClientStatusList = () => {
+    return fetchWrapper.get(`${Apis.clientStatusList}/`).then((res) => {
+      const { data } = res;
+      setClientStatusAtom(data.client_status);
+    });
+  };
+
   return {
     LeadDecisionPendingList,
+    ClientStatusList,
   };
 };
 export { decisionPendingActions };

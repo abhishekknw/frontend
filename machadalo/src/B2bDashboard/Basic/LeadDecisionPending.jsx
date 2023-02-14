@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
-import BasicTable from '../Table/BasicTable';
+import BasicTable from './BasicTable';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRecoilValue } from 'recoil';
 import { leadDecisionPendingListAtom } from '../API/_state';
@@ -48,9 +48,14 @@ const LeadDecisionPending = () => {
     LeadDecisionPendingData(data);
   };
 
+  const clientStatusList = () => {
+    LeadBasicApi.ClientStatusList();
+  };
+
   useEffect(() => {
     let data = params;
     LeadDecisionPendingData(data);
+    clientStatusList();
   }, []);
 
   return (

@@ -12,7 +12,7 @@ import SettingContainer from './../../containers/SettingContainer';
 import LeadsContainer from './../../containers/LeadsContainer';
 import BookingContainer from './../../containers/BookingContainer';
 import OperationsDashboardContainer from '../../containers/OperationsDashboardContainer';
-
+import B2bContainer from '../../containers/B2bContainer';
 import './index.css';
 
 export default class Layout extends React.Component {
@@ -31,7 +31,8 @@ export default class Layout extends React.Component {
     // if (auth.isLoggedOut) {
     //   return <Redirect to="/auth/login" />;
     // }
-
+    let superUser = false;
+    // if (superUser) {
     return (
       <main>
         <Toastr />
@@ -55,10 +56,17 @@ export default class Layout extends React.Component {
                 path={`${match.path}/operations-dashboard`}
                 component={OperationsDashboardContainer}
               />
+              {/* <Route path={`${match.path}/b2b`} component={B2bContainer} /> */}
             </Switch>
           </div>
         </div>
       </main>
     );
   }
+  // return (
+  //   <>
+  //     <Route path={`${match.path}/b2b`} component={B2bContainer} />
+  //   </>
+  // )
+  // }
 }

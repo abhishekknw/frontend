@@ -5,4 +5,9 @@ const leadDecisionPendingListAtom = atom({
   default: [],
 });
 
-export { leadDecisionPendingListAtom };
+const clientStatusAtom = atom({
+  key: 'clientstatus',
+  default: [],
+});
+
+export { leadDecisionPendingListAtom, clientStatusAtom };

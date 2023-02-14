@@ -1,23 +1,20 @@
 import * as React from 'react';
-import DataGridTable from './DataGridTable';
+import DataGridTable from '../Table/DataGridTable';
 import { Button, Checkbox } from '@mui/material';
-
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import Modal from '@mui/material/Modal';
-import ViewComment from '../modals/ViewComment';
+import ClientStatusDropdown from '../common/ClientStatus';
+import ViewCommentModal from '../modals/ViewComment';
+
 export default function BasicTable(props) {
   const { data } = props;
   const [page, setPage] = React.useState(1);
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => setOpen(false);
+
   const handleChange = (event, value) => {
     setPage(value);
     alert(value);
   };
-  const viewCommentModal = (e, params) => {
-    setOpen(true);
-  };
+
   const headCells = [
     {
       field: 'checkbox',
@@ -80,15 +77,7 @@ export default function BasicTable(props) {
       width: 230,
       renderCell: (params) => (
         <>
-          <select className="select-b2b">
-            <option>Leads Verified By Machadalo</option>
-            <option>Leads Verified By Machadalo</option>
-            <option>Leads Verified By Machadalo</option>
-            <option>Leads Verified By Machadalo</option>
-            <option>Leads Verified By Machadalo</option>
-            <option>Leads Verified By Machadalo</option>
-            <option>Leads Verified By Machadalo</option>
-          </select>
+          <ClientStatusDropdown data={params} />
         </>
       ),
     },
@@ -105,18 +94,9 @@ export default function BasicTable(props) {
       width: 150,
       sortable: false,
       renderCell: (params) => (
-        <strong>
-          <Button
-            variant="contained"
-            size="small"
-            className="theme-btn text-small"
-            onClick={(e) => {
-              viewCommentModal(e, params);
-            }}
-          >
-            View Comment
-          </Button>
-        </strong>
+        <>
+          <ViewCommentModal data={params} />
+        </>
       ),
     },
     {
@@ -152,28 +132,20 @@ export default function BasicTable(props) {
           classNames="data-b2b-table"
         />
       )}
-      <Stack spacing={2}>
-        <Pagination
-        className="page-link"
-          count={10}
-          variant="outlined"
-          shape="rounded"
-          showFirstButton
-          showLastButton
-          page={page}
-          onChange={handleChange}
-        />
-      </Stack>
-      <div>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <ViewComment />
-        </Modal>
-      </div>
+      {data.length > 10 && (
+        <Stack spacing={2}>
+          <Pagination
+            className="page-link"
+            count={10}
+            variant="outlined"
+            shape="rounded"
+            showFirstButton
+            showLastButton
+            page={page}
+            onChange={handleChange}
+          />
+        </Stack>
+      )}
     </>
   );
 }
