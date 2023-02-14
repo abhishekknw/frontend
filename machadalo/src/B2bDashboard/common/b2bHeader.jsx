@@ -8,14 +8,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
-// import {LogoImage} from '../../../src/assets/image/logo.png';
+import Logo from './logo.png';
 import '../index.css';
+
 export default function Header() {
   return (
     <AppBar position="static" className="header-b2b">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {/* <Image src="../../../src/assets/image/logo.png"/> */}
+          <img src={Logo} alt="Machadalo" />
         </Typography>
         <Button color="inherit" startIcon={<HomeIcon />}>
           Home

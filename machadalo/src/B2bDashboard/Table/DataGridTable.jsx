@@ -2,7 +2,6 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 const DataGridTable = (props) => {
-  console.log(props);
   const TableData = props?.row;
   const columns = props?.columns;
   return (

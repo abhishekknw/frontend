@@ -13,30 +13,44 @@ import { leadDecisionPendingListAtom } from '../API/_state';
 import { decisionPendingActions } from '../API/_actions';
 
 const LeadDecisionPending = () => {
-  const [leadType, setLeadType] = useState('Leads');
-  let [search, setSearch] = useState('');
+  const [params, setParams] = useState({
+    leadType: 'Leads',
+    supplierType: 'all',
+    search: '',
+    page: 0,
+    userType: '',
+  });
   const ListData = useRecoilValue(leadDecisionPendingListAtom);
   const LeadBasicApi = decisionPendingActions();
 
-  const LeadDecisionPendingData = async () => {
-    await LeadBasicApi.LeadDecisionPendingList(
-      '?type_of_entity=all&next_page=0&user_type=undefined&search='
-    );
+  const LeadDecisionPendingData = async (data) => {
+    await LeadBasicApi.LeadDecisionPendingList(data);
   };
 
-  const handleChange = (event) => {
-    setLeadType(event.target.value);
-    setSearch('');
-    LeadDecisionPendingData();
+  const handleChange = (e) => {
+    let data = params;
+    data.leadType = e.target.value;
+    setParams({ ...params, leadType: e.target.value });
+    LeadDecisionPendingData(data);
+  };
+
+  const ChangeSupplierType = (e) => {
+    let data = params;
+    data.supplierType = e.target.value;
+    setParams({ ...params, supplierType: e.target.value });
+    LeadDecisionPendingData(data);
   };
 
   const handleSearch = (e) => {
-    setSearch(e.target.value);
-    LeadDecisionPendingData();
+    let data = params;
+    data.search = e.target.value;
+    setParams({ ...params, search: e.target.value });
+    LeadDecisionPendingData(data);
   };
 
   useEffect(() => {
-    LeadDecisionPendingData();
+    let data = params;
+    LeadDecisionPendingData(data);
   }, []);
 
   return (
@@ -48,7 +62,7 @@ const LeadDecisionPending = () => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={leadType}
+              value={params.leadType}
               label="Lead Type"
               onChange={handleChange}
             >
@@ -63,14 +77,12 @@ const LeadDecisionPending = () => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={leadType}
+              value={params.supplierType}
               label="Lead Type"
-              onChange={handleChange}
+              onChange={ChangeSupplierType}
             >
-              <MenuItem value={'Leads'}>Leads</MenuItem>
-              <MenuItem value={'Survey'}>Survey</MenuItem>
-              <MenuItem value={'Survey Leads'}>Survey Leads</MenuItem>
-              <MenuItem value={'FeedBack'}>FeedBack</MenuItem>
+              <MenuItem value={'all'}>All</MenuItem>
+              <MenuItem value={'RS'}>Residential Society</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -81,7 +93,7 @@ const LeadDecisionPending = () => {
             id="input-with-sx"
             label="Search"
             variant="standard"
-            value={search}
+            value={params.search}
             className="input-col-text"
             onChange={(e) => handleSearch(e)}
           />

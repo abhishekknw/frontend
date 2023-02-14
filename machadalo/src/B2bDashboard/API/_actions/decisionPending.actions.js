@@ -11,8 +11,21 @@ const decisionPendingActions = () => {
   // const setUser = useSetRecoilState(userAtom);
   // const setUserError = useSetRecoilState(userErrorAtom);
 
-  const LeadDecisionPendingList = (id) => {
-    return fetchWrapper.get(`${Apis.leadDecisionPending}/${id}`).then((res) => {
+  const LeadDecisionPendingList = (data) => {
+    let parmas =
+      '?type_of_entity=' +
+      data?.supplierType +
+      '&next_page=' +
+      data?.page +
+      '&lead_type=' +
+      data?.leadType +
+      '&user_type=' +
+      data?.userType;
+
+    if (data?.search) {
+      parmas += '&search=' + data?.search;
+    }
+    return fetchWrapper.get(`${Apis.leadDecisionPending}/${parmas}`).then((res) => {
       const { data } = res;
       setDecisionPendingList(data);
     });
