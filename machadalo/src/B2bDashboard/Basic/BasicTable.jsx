@@ -21,11 +21,15 @@ export default function BasicTable(props) {
     {
       field: 'checkbox',
       headerName: 'Select',
-      width: 40,
+      width: 65,
       sortable: false,
+      headerClassName: 'super-app-theme--header',
+      cellClassName: 'select-box-cell',
       renderCell: (params) => (
         <>
+        <div className=''>
           <Checkbox />
+          </div>
         </>
       ),
     },
@@ -78,6 +82,7 @@ export default function BasicTable(props) {
       sortable: false,
       headerName: 'Current Status',
       width: 200,
+      headerClassName: 'super-app-theme--header',
       renderCell: (params) => (
         <>
           <ClientStatusDropdown data={params} />
@@ -87,14 +92,16 @@ export default function BasicTable(props) {
     {
       field: 'phone_number',
       numeric: true,
+      headerClassName: 'super-app-theme--header',
       headerName: 'Phone Number',
       sortable: false,
-      width: 100,
+      width: 120,
     },
     {
       field: 'ClientComment',
       headerName: 'Client Comment',
       width: 150,
+      headerClassName: 'super-app-theme--header',
       sortable: false,
       renderCell: (params) => (
         <>
