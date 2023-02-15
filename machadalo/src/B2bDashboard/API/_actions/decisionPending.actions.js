@@ -40,14 +40,17 @@ const decisionPendingActions = () => {
   const updateClientStatus = (data) => {
     let update = data;
     return fetchWrapper.post(`${Apis.updateClientStatus}/`, { data: data }).then((res) => {
-      const { data } = res;
-      let newList = [...decisionPendingList.lead].map((item) => {
-        if (item._id === update[0]._id)
-          return { ...item, macchadalo_client_status: update[0].macchadalo_client_status };
-        else return item;
-      });
-      alertActions.success('Success');
-      setDecisionPendingList({ ...decisionPendingList, lead: newList });
+      if (res.status) {
+        alertActions.success(res.data);
+        let newList = [...decisionPendingList.lead].map((item) => {
+          if (item._id === update[0]?._id)
+            return { ...item, macchadalo_client_status: update[0]?.macchadalo_client_status };
+          else return item;
+        });
+        setDecisionPendingList({ ...decisionPendingList, lead: newList });
+      } else {
+        alertActions.success(res.data);
+      }
     });
   };
 

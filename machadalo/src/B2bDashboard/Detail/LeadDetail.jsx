@@ -4,16 +4,19 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import LeadDetailTable from '../Table/LeadDetailTable';
+import LeadDetailTable from './LeadDetailTable';
 import { LeadDetailActions } from '../API/_actions';
+import { viewLeadFilters } from '../API/_state';
+import { useRecoilState } from 'recoil';
 
 const LeadDetail = () => {
-  const [params, setParams] = useState({
-    leadType: 'Leads',
-    supplierType: 'all',
-    tabname: '',
-    userType: '',
-  });
+  // const [params, setParams] = useState({
+  //   leadType: 'Leads',
+  //   supplierType: 'all',
+  //   tabname: '',
+  //   userType: '',
+  // });
+  const [filters, setFilters] = useRecoilState(viewLeadFilters);
   const leadDetailApi = LeadDetailActions();
 
   const CampaignList = async (data) => {
@@ -21,21 +24,21 @@ const LeadDetail = () => {
   };
 
   const handleChange = (event) => {
-    let data = params;
-    data.leadType = event.target.value;
-    setParams({ ...params, leadType: event.target.value });
+    let data = filters;
+    data = { data, lead_type: event.target.value };
+    setFilters({ ...filters, lead_type: event.target.value });
     CampaignList(data);
   };
 
   const ChangeSupplier = (event) => {
-    let data = params;
-    data.supplierType = event.target.value;
-    setParams({ ...params, supplierType: event.target.value });
+    let data = filters;
+    data = { data, supplier_type: event.target.value };
+    setFilters({ ...filters, supplier_type: event.target.value });
     CampaignList(data);
   };
 
   useEffect(() => {
-    let data = params;
+    let data = filters;
     CampaignList(data);
   }, []);
   return (
@@ -46,7 +49,7 @@ const LeadDetail = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={params.leadType}
+            value={filters.lead_type}
             label="Lead Type"
             onChange={handleChange}
           >
@@ -61,7 +64,7 @@ const LeadDetail = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={params.supplierType}
+            value={filters.supplier_type}
             label="Lead Type"
             onChange={ChangeSupplier}
           >
@@ -70,7 +73,7 @@ const LeadDetail = () => {
           </Select>
         </FormControl>
       </Box>
-      <LeadDetailTable data={params} />
+      <LeadDetailTable />
     </>
   );
 };

@@ -15,7 +15,7 @@ export default function B2bRoutes(props) {
       <Header />
       <Switch>
         <SnackbarProvider
-          autoHideDuration={1000}
+          autoHideDuration={2000}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           open={open}
         >

@@ -2,21 +2,25 @@ import { useState } from 'react';
 import ViewLeadDetail from './ViewLeadTable';
 import * as React from 'react';
 import { Button } from '@mui/material';
-import DataGridTable from './DataGridTable';
+import DataGridTable from '../Table/DataGridTable';
 import SendEmailModal from '../modals/sendEmailModal';
 import DownloadLeadsModal from '../modals/DownloadLeadsModal';
-import { useRecoilValue } from 'recoil';
-import { currentCampaign } from '../API/_state';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { currentCampaign, viewLeadFilters } from '../API/_state';
 import { LeadDetailActions } from '../API/_actions';
 
 const LeadDetailTable = (props) => {
   const leadDetailApi = LeadDetailActions();
   const [showViewLeads, setShowViewLeads] = useState(false);
   const allCampaingn = useRecoilValue(currentCampaign);
+  const [filters, setFilters] = useRecoilState(viewLeadFilters);
 
   async function viewCampaignLeads(e, data) {
-    await leadDetailApi.campaignViewLeads();
-    console.log(e, data);
+    let filterData = filters;
+    filterData = { ...filterData, campaign_id: data.row.campaign_id };
+    setFilters({ ...filters, campaign_id: data.row.campaign_id });
+    await leadDetailApi.campaignViewLeads(filterData);
+    setShowViewLeads(true);
   }
 
   const columns = [

@@ -1,14 +1,15 @@
-import { useRecoilState, useSetRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import { useFetchWrapper } from '../_helpers/fetch-wrapper';
-import { currentCampaign } from '../_state';
+import { currentCampaign, campaignLeads } from '../_state';
 import { Apis } from '../request';
 
 const LeadDetailActions = () => {
   const fetchWrapper = useFetchWrapper();
   const setCurrentCampaign = useSetRecoilState(currentCampaign);
+  const [viewLeads, setViewLeads] = useRecoilState(campaignLeads);
 
   const CurrentCampaignList = (data) => {
-    let parmas = '?lead_type=' + data?.leadType + '&supplier_code=' + data?.supplierType;
+    let parmas = '?lead_type=' + data?.lead_type + '&supplier_code=' + data?.supplier_type;
     // '?lead_type=Leads&user_type=undefined&tabname=undefined&supplier_code=all'
     return fetchWrapper.get(`${Apis.currentCampaign}/${parmas}`).then((res) => {
       const { data } = res;
@@ -16,9 +17,20 @@ const LeadDetailActions = () => {
     });
   };
 
-  const campaignViewLeads = () => {
-    return fetchWrapper.get(`${Apis.campaignViewLeads}/${'id'}`).then((res) => {
-      const { data } = res;
+  const campaignViewLeads = (data) => {
+    console.log(data, 'filtersfiltersfiltersfilters');
+    let parmas =
+      '?campaign_id=' +
+      data.campaign_id +
+      '&lead_type=' +
+      data?.lead_type +
+      '&supplier_code=' +
+      data?.supplier_type +
+      '&next_page=' +
+      data.next_page;
+
+    return fetchWrapper.get(`${Apis.campaignViewLeads}/${parmas}`).then((res) => {
+      setViewLeads(res.data);
     });
   };
   return {
