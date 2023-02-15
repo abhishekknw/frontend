@@ -2798,6 +2798,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         $scope.NewsupplierForAddUpdate = function (data) {
           $scope.NewsupplierAddUpdateData = {};
+          $scope.societyNameList = [];
           AuthService.initialData()
             .then(function onSuccess(response) {
               $scope.Cities = response.data.cities;
