@@ -2,9 +2,12 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useFetchWrapper } from '../_helpers/fetch-wrapper';
 import { leadDecisionPendingListAtom, clientStatusAtom } from '../_state/decisionPending';
 import { Apis } from '../request';
+import { useAlertActions } from '../_actions/alert.actions';
+
 const decisionPendingActions = () => {
   const fetchWrapper = useFetchWrapper();
-  const setDecisionPendingList = useSetRecoilState(leadDecisionPendingListAtom);
+  const alertActions = useAlertActions();
+  const [decisionPendingList, setDecisionPendingList] = useRecoilState(leadDecisionPendingListAtom);
   const setClientStatusAtom = useSetRecoilState(clientStatusAtom);
 
   const LeadDecisionPendingList = (data) => {
@@ -35,9 +38,16 @@ const decisionPendingActions = () => {
   };
 
   const updateClientStatus = (data) => {
+    let update = data;
     return fetchWrapper.post(`${Apis.updateClientStatus}/`, { data: data }).then((res) => {
       const { data } = res;
-      console.log(data);
+      let newList = [...decisionPendingList.lead].map((item) => {
+        if (item._id === update[0]._id)
+          return { ...item, macchadalo_client_status: update[0].macchadalo_client_status };
+        else return item;
+      });
+      alertActions.success('Success');
+      setDecisionPendingList({ ...decisionPendingList, lead: newList });
     });
   };
 
