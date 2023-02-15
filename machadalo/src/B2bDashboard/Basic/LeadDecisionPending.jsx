@@ -59,7 +59,7 @@ const LeadDecisionPending = () => {
     <>
       <Box sx={{ minWidth: 120 }} className="b2b-container">
         <Box>
-          <FormControl sx={{ m: 1, minWidth: 100 }}>
+          <FormControl sx={{ mt:1, mb: 1, ms: 0, minWidth: 100 }}>
             <InputLabel id="demo-simple-select-label">Lead Type</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -89,7 +89,7 @@ const LeadDecisionPending = () => {
           </FormControl>
         </Box>
 
-        <Box sx={{ m: 1, display: 'flex', alignItems: 'flex-end' }} className="input-col">
+        <Box sx={{ mt:1, mb: 1, ms: 0, display: 'flex', alignItems: 'flex-end' }} className="input-col">
           <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
           <TextField
             id="input-with-sx"

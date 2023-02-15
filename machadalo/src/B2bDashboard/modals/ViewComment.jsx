@@ -11,6 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { Typography } from '@mui/material';
 
 const ViewCommentModal = (props) => {
   const [age, setAge] = React.useState('');
@@ -48,7 +49,7 @@ const ViewCommentModal = (props) => {
             >
               Comments
             </DialogContentText>
-            <Box sx={{}}>
+            <Box sx={{}} className="comment-all d-flex">
               <FormControl fullWidth sx={{ mb: 2 }}>
                 <InputLabel id="demo-simple-select-label">All</InputLabel>
                 <Select
@@ -64,6 +65,7 @@ const ViewCommentModal = (props) => {
                   <MenuItem value={40}>Company's client comment</MenuItem>
                 </Select>
               </FormControl>
+              
               <TextField
                 fullWidth
                 className="textarea-modal"
@@ -72,6 +74,10 @@ const ViewCommentModal = (props) => {
                 rows={5}
               />
             </Box>
+            <Box className="user-comment-box">
+                <Typography>Kriti</Typography>
+                <Typography> kritiuser(kriti test company):<span> Feb 14, 2023 3:38:33 PM</span></Typography>
+              </Box>
           </DialogContent>
           <DialogActions className="flex-start modal-btn">
             <Button onClick={handleClose}>Add Comment</Button>

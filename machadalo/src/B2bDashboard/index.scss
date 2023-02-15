@@ -59,7 +59,7 @@ ul.inner-b2b-tab {
 }
 
 .tab-content .MuiSelect-select {
-    width: 196px;
+    width: 142px;
     border: 1px solid #1C0606;
     padding: 6px 20px;
     color: #3D0F0C;
@@ -169,13 +169,22 @@ ul.inner-b2b-tab {
 
 }
 .select-menu-list{
-    padding: 3px 9px !important;
+    padding: 4px 12px !important;
     word-spacing: -1px;
-    max-width: 178px;
-    font-size: 12px !important;
+    max-width: 190px;
+    font-size: 12px !important
 }
 .small-height-table{
     height: 250px !important;
+}
+.user-comment-box{
+    border: 1px solid #8e19215c;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.comment-all fieldset{
+    border-color: #8e19215c;
 }
 
 .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root {
