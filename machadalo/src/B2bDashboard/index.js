@@ -12,7 +12,7 @@ const B2bDashboard = (props) => {
   const [basicKey, setBasicKey] = useState('Pending');
   return (
     <>
-      <Container maxWidth="xl" className=" px-4">
+      <div className='tab-wrapper-main'>
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
@@ -41,7 +41,7 @@ const B2bDashboard = (props) => {
             <div>Licenses & Payment</div>
           </Tab>
         </Tabs>
-      </Container>
+        </div>
     </>
   );
 };
