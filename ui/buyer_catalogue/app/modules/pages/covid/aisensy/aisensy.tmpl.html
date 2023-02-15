@@ -5039,7 +5039,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <div class="pageTitle smallBtn full-width-header">
-          <h4>Add/Update Supplier</h4>
+          <h4>Add/Update Supplier11</h4>
         </div>
         <!-- <h4 class="modal-title">Company Details:</h4>
         <hr /> -->
@@ -5055,6 +5055,16 @@
                   ng-model="NewsupplierAddUpdateData.phone_number" ng-change="getSupplierDataByNumber(NewsupplierAddUpdateData.phone_number)">
                 <div ng-show="myForm.phone_number.$error.pattern" class="error" style="font-size:12px; color: red;" value="">
                   Phone number Invalid</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Search Society *: </label>
+              </div>
+              <div  class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Search..."
+                  class="form-control" name="Society" id="Society"
+                  ng-model="searchSociety" ng-change="getSupplierDataByNumber(true,searchSociety)">
               </div>
             </div>
 
@@ -5127,6 +5137,23 @@
                 </select>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> State *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <select class="form-control" name="state" id="state_id" 
+                  ng-model="NewsupplierAddUpdateData.state_name"
+                  ng-change='newGetStateCity()'
+                  ng-options="state.state_name as state.state_name for state in StateList | orderBy: 'state_name'">
+                  <option value="" disabled>Select State</option>
+                </select>
+                <span ng-show="myForm.state.$dirty && myForm.state.$invalid" class="error">Select a State</span>
+                </select>
+              </div>
+            </div>
+
 
             <div class="row">
               <div class="col-md-4" style="margin-top: 10px">

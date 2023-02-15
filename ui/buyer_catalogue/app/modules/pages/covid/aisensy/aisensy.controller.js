@@ -2805,6 +2805,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }).catch(function onError(response) {
               console.log(response);
             })
+
+            AuthService.initialStateList()
+            .then(function onSuccess(response) {
+              $scope.StateList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
         }
 
         $scope.newSupplierPocModel = [];
@@ -2898,6 +2905,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               else {
                 $scope.NewsupplierAddUpdateData.city_id = response.data.data.city.id;
               }
+              if(response.data.data.state == null){
+                $scope.NewsupplierAddUpdateData.state_name = "";
+              }
+              else{
+                $scope.NewsupplierAddUpdateData.state_name = response.data.data.state.state_name;
+              }
+
               $scope.NewsupplierAddUpdateData.supplier_id = $scope.supplierData[0][0].supplier_id;
               $scope.NewsupplierAddUpdateData.supplier_name = $scope.supplierData[0][0].supplier_name
               if ($scope.supplierData[0][0].supplier_type) {
@@ -2985,7 +2999,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
 
-        $scope.getSupplierDataByNumber = function (number) {
+        $scope.getSupplierDataByNumber = function (number,society) {
           if (!number) {
             $scope.NewsupplierAddUpdateData = {};
             $scope.newSupplierPocModel = [];
@@ -2995,7 +3009,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.Areas = ""
             return 0;
           }
-          AuthService.getSupplierDataByNumber(number)
+          AuthService.getSupplierDataByNumber(number,society)
             .then(function onSuccess(response) {
               $scope.societyNameList = response.data.data;
             }).catch(function onError(response) {
@@ -3007,7 +3021,4 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           window.open(link, '_blank');
         }
 
-
-
-
-      }]);
+   }]);
