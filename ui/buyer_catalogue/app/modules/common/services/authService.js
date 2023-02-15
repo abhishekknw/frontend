@@ -686,6 +686,9 @@ angular.module('Authentication')
                if (param.search) {
                   url += '&search=' + param.search
                }
+               if(param.type_of_entity){
+                  url += '&type_of_entity=' + param.type_of_entity;
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response

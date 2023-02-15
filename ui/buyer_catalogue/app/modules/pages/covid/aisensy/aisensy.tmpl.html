@@ -1396,7 +1396,7 @@
                       </div>
                       <div class="select">
                         <select ng-model="selectForActive" ng-change="selectedSupplier(selectForActive,'active')"
-                          ng-options="supplier for supplier in supplierFilterList">
+                          ng-options="supplier[1] for supplier in supplierFilterList">
                           <option value="" ng-disable> -- Select Supplier --</option>
                         </select>
                       </div>
@@ -1721,7 +1721,7 @@
                       </div>
                       <div class="select">
                         <select ng-model="selectForAction" ng-change="selectedSupplier(selectForAction,'action')"
-                          ng-options="supplier for supplier in supplierFilterList">
+                          ng-options="supplier[1] for supplier in supplierFilterList">
                           <option value="" ng-disable> -- Select Supplier --</option>
                         </select>
                       </div>
@@ -2021,7 +2021,7 @@
                       <div class="select">
                         <select ng-model="selectForIntervene"
                           ng-change="selectedSupplier(selectForIntervene,'intervene')"
-                          ng-options="supplier for supplier in supplierFilterList">
+                          ng-options="supplier[1] for supplier in supplierFilterList">
                           <option value="" ng-disable> -- Select Supplier --</option>
                         </select>
                       </div>
@@ -2629,7 +2629,7 @@
               </div>
               <div class="select">
                 <select ng-model="selectForHistory" ng-change="selectedSupplier(selectForHistory,'history')"
-                  ng-options="supplier for supplier in supplierFilterList">
+                  ng-options="supplier[1] for supplier in supplierFilterList">
                   <option value="" ng-disable> -- Select Supplier --</option>
                 </select>
               </div>
@@ -3065,10 +3065,16 @@
   <div class="container dropdown mca-page" ng-if="showcontactDetail">
     <h3><b>CONTACT</b></h3>
 
-    <div class="search-box">
+    <div class="search-box search-box-active">
       <div class="input-wrapper">
         <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
         <input placeholder="Search here" ng-change="contactDetail()" ng-model="formData.contactSearch" type="text" />
+      </div>
+      <div class="select">
+        <select ng-model="selectForActive" ng-change="selectedSupplier(selectForActive,'contact')"
+          ng-options="supplier[1] for supplier in supplierFilterList">
+          <option value="" ng-disable> -- Select Supplier --</option>
+        </select>
       </div>
     </div>
 
