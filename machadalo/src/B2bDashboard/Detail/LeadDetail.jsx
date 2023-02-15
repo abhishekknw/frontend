@@ -11,23 +11,32 @@ const LeadDetail = () => {
   const [params, setParams] = useState({
     leadType: 'Leads',
     supplierType: 'all',
-    search: '',
-    page: 0,
+    tabname: '',
     userType: '',
   });
   const leadDetailApi = LeadDetailActions();
 
-  const CampaignList = async () => {
-    await leadDetailApi.CurrentCampaignList(
-      '?lead_type=Leads&user_type=undefined&tabname=undefined&supplier_code=all'
-    );
+  const CampaignList = async (data) => {
+    await leadDetailApi.CurrentCampaignList(data);
   };
+
   const handleChange = (event) => {
-    // setLeadType(event.target.value);
+    let data = params;
+    data.leadType = event.target.value;
+    setParams({ ...params, leadType: event.target.value });
+    CampaignList(data);
+  };
+
+  const ChangeSupplier = (event) => {
+    let data = params;
+    data.supplierType = event.target.value;
+    setParams({ ...params, supplierType: event.target.value });
+    CampaignList(data);
   };
 
   useEffect(() => {
-    CampaignList();
+    let data = params;
+    CampaignList(data);
   }, []);
   return (
     <>
@@ -52,14 +61,12 @@ const LeadDetail = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={params.leadType}
+            value={params.supplierType}
             label="Lead Type"
-            onChange={handleChange}
+            onChange={ChangeSupplier}
           >
-            <MenuItem value={'Leads'}>Leads</MenuItem>
-            <MenuItem value={'Survey'}>Survey</MenuItem>
-            <MenuItem value={'Survey Leads'}>Survey Leads</MenuItem>
-            <MenuItem value={'FeedBack'}>FeedBack</MenuItem>
+            <MenuItem value={'all'}>All</MenuItem>
+            <MenuItem value={'RS'}>Residential Society</MenuItem>
           </Select>
         </FormControl>
       </Box>

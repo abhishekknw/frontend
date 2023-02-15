@@ -7,8 +7,10 @@ const LeadDetailActions = () => {
   const fetchWrapper = useFetchWrapper();
   const setCurrentCampaign = useSetRecoilState(currentCampaign);
 
-  const CurrentCampaignList = (id) => {
-    return fetchWrapper.get(`${Apis.currentCampaign}/${id}`).then((res) => {
+  const CurrentCampaignList = (data) => {
+    let parmas = '?lead_type=' + data?.leadType + '&supplier_code=' + data?.supplierType;
+    // '?lead_type=Leads&user_type=undefined&tabname=undefined&supplier_code=all'
+    return fetchWrapper.get(`${Apis.currentCampaign}/${parmas}`).then((res) => {
       const { data } = res;
       setCurrentCampaign(data);
     });
@@ -17,7 +19,6 @@ const LeadDetailActions = () => {
   const campaignViewLeads = () => {
     return fetchWrapper.get(`${Apis.campaignViewLeads}/${'id'}`).then((res) => {
       const { data } = res;
-      console.log(data, '1111111111111111111');
     });
   };
   return {

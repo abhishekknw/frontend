@@ -34,9 +34,17 @@ const decisionPendingActions = () => {
     });
   };
 
+  const updateClientStatus = (data) => {
+    return fetchWrapper.post(`${Apis.updateClientStatus}/`, { data: data }).then((res) => {
+      const { data } = res;
+      console.log(data);
+    });
+  };
+
   return {
     LeadDecisionPendingList,
     ClientStatusList,
+    updateClientStatus,
   };
 };
 export { decisionPendingActions };
