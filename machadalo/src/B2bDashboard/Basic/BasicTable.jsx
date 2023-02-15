@@ -5,9 +5,11 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import ClientStatusDropdown from '../common/ClientStatus';
 import ViewCommentModal from '../modals/ViewComment';
+import { useRecoilValue } from 'recoil';
+import { leadDecisionPendingListAtom } from '../API/_state';
 
 export default function BasicTable(props) {
-  const { data } = props;
+  const ListData = useRecoilValue(leadDecisionPendingListAtom);
   const [page, setPage] = React.useState(1);
 
   const handleChange = (event, value) => {
@@ -20,6 +22,7 @@ export default function BasicTable(props) {
       field: 'checkbox',
       headerName: 'Select',
       width: 40,
+      sortable: false,
       renderCell: (params) => (
         <>
           <Checkbox />
@@ -124,15 +127,15 @@ export default function BasicTable(props) {
 
   return (
     <>
-      {data.length > 0 && (
+      {ListData.length > 0 && (
         <DataGridTable
-          row={data.lead}
+          row={ListData.lead}
           columns={headCells}
           styles={{ height: 400, width: '100%' }}
           classNames="data-b2b-table"
         />
       )}
-      {data.length > 10 && (
+      {ListData.length > 10 && (
         <Stack spacing={2}>
           <Pagination
             className="page-link"

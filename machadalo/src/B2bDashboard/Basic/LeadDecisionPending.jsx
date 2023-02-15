@@ -8,8 +8,6 @@ import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import BasicTable from './BasicTable';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useRecoilValue } from 'recoil';
-import { leadDecisionPendingListAtom } from '../API/_state';
 import { decisionPendingActions } from '../API/_actions';
 
 const LeadDecisionPending = () => {
@@ -20,7 +18,6 @@ const LeadDecisionPending = () => {
     page: 0,
     userType: '',
   });
-  const ListData = useRecoilValue(leadDecisionPendingListAtom);
   const LeadBasicApi = decisionPendingActions();
 
   const LeadDecisionPendingData = async (data) => {
@@ -104,7 +101,7 @@ const LeadDecisionPending = () => {
           />
         </Box>
       </Box>
-      <BasicTable data={ListData} />
+      <BasicTable />
     </>
   );
 };
