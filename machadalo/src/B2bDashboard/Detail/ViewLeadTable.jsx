@@ -9,6 +9,13 @@ import { campaignLeads } from '../API/_state';
 import { useRecoilValue } from 'recoil';
 import FilterModal from '../modals/FilterModal';
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 const ViewLeadDetail = (props) => {
   // const headCells = [
   //   {
@@ -112,39 +119,63 @@ const ViewLeadDetail = (props) => {
   //     ),
   //   },
   // ];
+  function createData(index, suppliername, suppliertype, area, city, flatcount, leadtimestamp, towercount, currentstatus, clientcomment, leaddetail) {
+    return { index, suppliername, suppliertype, area, city, flatcount, leadtimestamp, towercount, currentstatus, clientcomment, leaddetail };
+  }
+
+  const rows = [
+    // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    
+    createData(1, 'CPWD Colony 2','RS', 'Prayagraj', 'Allahabad', 300, '2022-12-23  09:09:34', 5, 'Last Verified by', 'View/ Add', 'Lead Detail'),
+  ];
+  
   const viewLeads = useRecoilValue(campaignLeads);
   console.log(viewLeads, 'viewLeads');
 
   return (
     <>
       <FilterModal />
-
-      {/* FILTER ICON nd search */}
-      {/* <Box className="b2b-container">
-        <Box sx={{ m: 1 }}>
-          <Button startIcon={<TuneIcon />} className="text-black"
-          onClick={e=>{openModalFilter(e)}}
-          >
-            Apply Filter
-          </Button>
-        </Box>
-        <Box sx={{ m: 1, display: 'flex', alignItems: 'flex-end' }} className="input-col">
-          <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-          <TextField
-            id="input-with-sx"
-            label="Search"
-            variant="standard"
-            className="input-col-text"
-            onChange={(e) => handleSearch(e)}
-          />
-        </Box>
-      </Box> */}
-      {/* <DataGridTable
-        row={row}
-        columns={headCells}
-        styles={{ height: 400, width: '100%' }}
-        classNames="data-b2b-table"
-      /> */}
+       <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Index</TableCell>
+            <TableCell>Supplier Name</TableCell>
+            <TableCell>Supplier Type</TableCell>
+            <TableCell>Area</TableCell>
+            <TableCell>City</TableCell>
+            <TableCell>Flat Count</TableCell>
+            <TableCell>Lead Time Stamp</TableCell>
+            <TableCell>Tower count</TableCell>
+            <TableCell>Current Status</TableCell>
+            <TableCell>Client Comment </TableCell>
+            <TableCell>Lead Details</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.index}
+              </TableCell>
+              <TableCell>{row.suppliername}</TableCell>
+              <TableCell>{row.suppliertype}</TableCell>
+              <TableCell>{row.area}</TableCell>
+              <TableCell>{row.city}</TableCell> 
+              <TableCell>{row.flatcount}</TableCell>
+              <TableCell>{row.leadtimestamp}</TableCell>
+              <TableCell>{row.towercount}</TableCell>
+              <TableCell>{row.currentstatus}</TableCell> 
+              <TableCell>{row.clientcomment}</TableCell>
+              <TableCell>{row.leaddetail}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
     </>
   );
 };

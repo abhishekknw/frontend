@@ -186,7 +186,19 @@ ul.inner-b2b-tab {
 .comment-all fieldset{
     border-color: #8e19215c;
 }
-
+fieldset{
+    border-color: #8e19215c !important;
+}
+.status .MuiSelect-select.MuiSelect-outlined{
+    padding: 7px 0px
+}
+.status label{
+    font-size: 12px;
+    top: -6px;
+}
+.css-l4u8b9-MuiInputBase-root-MuiInput-root:after{
+    border-bottom: 0px !important;
+}
 .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root {
     border: 1px solid #3D0F0C;
 }
@@ -265,8 +277,14 @@ color: #fff;
     margin-top: 40px !important;
 }
 .select-box-cell svg{
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
+}
+.super-app-theme--header .MuiDataGrid-iconButtonContainer{
+    width: 20px;
+    display: block;
+    position: absolute;
+    right: 0;
 }
 .select-menu .MuiSelect-select{
     font-size: 12px;
@@ -285,8 +303,19 @@ color: #fff;
     border-width: 0px;
     box-shadow: none ;
 }
-.accordion-box .MuiAccordionSummary-root{
+.accordion-box .MuiAccordionSummary-root,.accordion-box .MuiAccordionDetails-root{
     padding: 0px
+}
+.main-b2b-tab .nav-link.active{
+    border-bottom: 1px solid #ffffff !important;
+}
+.small-text{
+    font-size: 14px !important;
+}
+.date-range-d input{
+    padding: 8px 0px 8px 10px;
+    width: 72px;
+    font-size: 11px;
 }
 .tab-wrapper-main{
     .main-b2b-tab {
@@ -295,6 +324,18 @@ color: #fff;
     &>.tab-content{
         padding: 0 20px;
     }
+}
+table thead tr th {
+    background-color: #8E1921;
+    color: #ffffff !important;
+    margin: 0 0;
+    padding: 9px 10px !important;
+}
+.comment-all #demo-simple-select{
+    padding: 8px 10px;
+}
+.comment-all label{
+    top: -6px
 }
 @media screen and (max-width: 600px) {
     .modal-comment .MuiPaper-root{
