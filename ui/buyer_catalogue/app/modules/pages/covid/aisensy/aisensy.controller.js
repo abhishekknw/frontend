@@ -112,17 +112,17 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             .then(function onSuccess(response) {
               let output = response.data.data;
               $scope.supplierFilterList = output.map(([id, lable]) => ({ id, lable }));
-              $scope.supplierFilterList.splice(0,0, {'id':'undefined',"lable":"---Select Supplier---"});
+              $scope.supplierFilterList.splice(0, 0, { 'id': 'undefined', "lable": "---Select Supplier---" });
 
             }).catch(function onError(response) {
               console.log(response);
             })
         }
         $scope.selectedSupplier = function (select, type) {
-          if(!select){
+          if (!select) {
             return 0;
           }
-          else{
+          else {
             if (type === 'active') {
               $scope.getActiveUser('', select);
             }
@@ -132,8 +132,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             else if (type === 'intervene') {
               $scope.getInterveneUser("", select);
             }
-            else if(type === 'contact'){
-              $scope.contactDetail("",select)
+            else if (type === 'contact') {
+              $scope.contactDetail("", select)
             }
             else {
               $scope.historyDetail("", select);
@@ -420,7 +420,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         };
 
-        $scope.contactDetail = function (page,type_of_entity) {
+        $scope.contactDetail = function (page, type_of_entity) {
           $scope.formData.historySearch = "";
           $scope.showcontactDetail = true;
           $scope.showhistoryDetail = false;
@@ -446,10 +446,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               current: 1
             };
           }
-          if(type_of_entity){
+          if (type_of_entity) {
             param.type_of_entity = type_of_entity;
           }
-          else{
+          else {
             param.type_of_entity = "";
           }
           if ($scope.formData.contactSearch) {
@@ -2263,6 +2263,15 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             .then(function onSuccess(response) {
               $scope.sectorList = response.data;
             })
+
+          let organisation = JSON.parse(localStorage["userInfo"]);
+          
+          AuthService.getUserMinimalList(organisation.profile.organisation.organisation_id)
+            .then(function onSuccess(response) {
+              $scope.userMinimalList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
         }
 
         $scope.companiessuspenseLeads = [];
@@ -2816,15 +2825,15 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               console.log(response);
             })
 
-            AuthService.initialStateList()
+          AuthService.initialStateList()
             .then(function onSuccess(response) {
               $scope.StateList = response.data.data;
             }).catch(function onError(response) {
               console.log(response);
             })
 
-            let organisation = JSON.parse(localStorage["userInfo"]);
-            AuthService.getUserMinimalList(organisation.profile.organisation.organisation_id)
+          let organisation = JSON.parse(localStorage["userInfo"]);
+          AuthService.getUserMinimalList(organisation.profile.organisation.organisation_id)
             .then(function onSuccess(response) {
               $scope.userMinimalList = response.data.data;
             }).catch(function onError(response) {
@@ -2835,7 +2844,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.newSupplierPocModel = [];
         $scope.newSupplierAddPoc = function () {
           $scope.newSupplierPocModel.push({
-            'mobile':'',
+            'mobile': '',
             'poc_name': '',
             'designation': ''
           });
@@ -2923,10 +2932,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               else {
                 $scope.NewsupplierAddUpdateData.city_id = response.data.data.city.id;
               }
-              if(response.data.data.state == null){
+              if (response.data.data.state == null) {
                 $scope.NewsupplierAddUpdateData.state_name = "";
               }
-              else{
+              else {
                 $scope.NewsupplierAddUpdateData.state_name = response.data.data.state.state_name;
               }
 
@@ -2973,7 +2982,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
           let poc = [];
           const obj = {
-            'mobile' : $scope.NewsupplierAddUpdateData.phone_number,
+            'mobile': $scope.NewsupplierAddUpdateData.phone_number,
             "poc_name": $scope.NewsupplierAddUpdateData.poc_name,
             "designation": $scope.NewsupplierAddUpdateData.designation,
             "poc_id": $scope.NewsupplierAddUpdateData.id,
@@ -3018,7 +3027,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
 
-        $scope.getSupplierDataByNumber = function (number,society) {
+        $scope.getSupplierDataByNumber = function (number, society) {
           if (!number && !society) {
             $scope.NewsupplierAddUpdateData = {};
             $scope.newSupplierPocModel = [];
@@ -3028,7 +3037,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.Areas = ""
             return 0;
           }
-          AuthService.getSupplierDataByNumber(number,society)
+          AuthService.getSupplierDataByNumber(number, society)
             .then(function onSuccess(response) {
               $scope.societyNameList = response.data.data;
             }).catch(function onError(response) {
@@ -3040,4 +3049,4 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           window.open(link, '_blank');
         }
 
-   }]);
+      }]);

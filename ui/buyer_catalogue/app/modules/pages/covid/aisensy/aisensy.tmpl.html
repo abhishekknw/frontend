@@ -4411,12 +4411,17 @@
                       {{leadData.lead_status}}
                     </td>
                     <td class="alignment">
-                      <select class="form-control" name="value" id="value"
+                      <!-- <select class="form-control" name="value" id="value"
                         ng-model="leadData.lead_source" style="width:150px;">
                         <option value="">Select Source</option>
                         <option value="bot">BOT</option>
                         <option value="feetonstreet">Feet on Street</option>
-                      </select>
+                      </select> -->
+                      <select class="form-control" name="Source" id="Source_id" 
+                              ng-model="leadData.lead_source"
+                              ng-options="data.id as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
+                              <option value="" disabled>Select Data Source</option>
+                     </select>
                     </td>
                     <!-- <td class="alignment">
                       <select class="form-control" name="call_back_time_{{$index}}" id="call_back_time_id_{{$index}}"
@@ -5348,7 +5353,7 @@
               </div>
               <div class="col-md-8" style="margin-top: 10px">
                 <select class="form-control" name="Source" id="Source_id" 
-                  ng-model="NewsupplierAddUpdateData.organisation_id"
+                  ng-model="NewsupplierAddUpdateData.representativeid"
                   ng-options="data.id as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
                   <option value="" disabled>Select Data Source</option>
                 </select>
