@@ -51,6 +51,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           nowVisible.classList.add('visible');
         }
 
+
+        $scope.NewsupplierAddUpdateData = {};
+        $scope.societyNameList = [];
+        $scope.searchSociety = "";
+
         $scope.tab = { name: 'tabA' };
 
         // AIsensy controller
@@ -2799,6 +2804,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.NewsupplierForAddUpdate = function (data) {
           $scope.NewsupplierAddUpdateData = {};
           $scope.societyNameList = [];
+          $scope.searchSociety = "";
           AuthService.initialData()
             .then(function onSuccess(response) {
               $scope.Cities = response.data.cities;
