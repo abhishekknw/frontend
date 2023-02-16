@@ -5,14 +5,14 @@ import LeadDecisionPending from './Basic/LeadDecisionPending';
 import LeadDetail from './Detail/LeadDetail';
 import Container from '@mui/material/Container';
 import './index.css';
-import NewLeadsBasic from './Basic/newLeadsBasic';
+import NewLeadsBasic from './Basic/NewLeadTab/newLeadsBasic';
 
 const B2bDashboard = (props) => {
   const [key, setKey] = useState('Basic');
   const [basicKey, setBasicKey] = useState('Pending');
   return (
     <>
-      <div className='tab-wrapper-main'>
+      <div className="tab-wrapper-main">
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
@@ -41,7 +41,7 @@ const B2bDashboard = (props) => {
             <div>Licenses & Payment</div>
           </Tab>
         </Tabs>
-        </div>
+      </div>
     </>
   );
 };
