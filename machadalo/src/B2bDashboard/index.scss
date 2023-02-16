@@ -325,6 +325,18 @@ color: #fff;
         padding: 0 20px;
     }
 }
+table thead tr th {
+    background-color: #8E1921;
+    color: #ffffff !important;
+    margin: 0 0;
+    padding: 9px 10px !important;
+}
+.comment-all #demo-simple-select{
+    padding: 8px 10px;
+}
+.comment-all label{
+    top: -6px
+}
 @media screen and (max-width: 600px) {
     .modal-comment .MuiPaper-root{
         width: 95%;

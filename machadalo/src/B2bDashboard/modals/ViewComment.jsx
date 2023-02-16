@@ -1,18 +1,12 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { Typography } from '@mui/material';
+import { Typography, Select, FormControl, MenuItem, InputLabel, DialogTitle, DialogContentText, DialogContent, DialogActions, Box, Dialog, TextField, Button } from '@mui/material';
 
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
 const ViewCommentModal = (props) => {
   const [age, setAge] = React.useState('');
 
@@ -45,12 +39,10 @@ const ViewCommentModal = (props) => {
               className="text-black"
               variant="h5"
               textAlign={'center'}
-              sx={{ pb: 2 }}
             >
-              Comments
             </DialogContentText>
             <Box sx={{}} className="comment-all d-flex">
-              <FormControl fullWidth sx={{ mb: 2, mr:2 }}>
+              <FormControl  sx={{ mb: 2, mr: 2, width:250 }}>
                 <InputLabel id="demo-simple-select-label">All</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -65,23 +57,97 @@ const ViewCommentModal = (props) => {
                   <MenuItem value={40}>Company's client comment</MenuItem>
                 </Select>
               </FormControl>
-              
+              <Box></Box>
+
+            </Box>
+            <Typography className='pb-2'>Previous Comments</Typography>
+            <Box sx={{maxHeight: "250px", overflowX: "hidden", overflowY: "scroll"}}>
+              <List sx={{ width: '100%',  bgcolor: 'background.paper' }}>
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar alt="Kriti" src="/static/images/avatar/1.jpg" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Kritiuser"
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: 'inline' }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          kriti test company -  Feb 14, 2023 3:38:33 PM
+                        </Typography>
+                        <Typography>{"test 1111"}</Typography>
+                        
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar alt="Kriti" src="/static/images/avatar/1.jpg" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Kritiuser"
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: 'inline' }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          kriti test company -  Feb 14, 2023 3:38:33 PM
+                        </Typography>
+                        <Typography>{"test 1111"}</Typography>
+                        
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar alt="Kriti" src="/static/images/avatar/1.jpg" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Kritiuser"
+                    secondary={
+                     <React.Fragment>
+                        <Typography
+                          sx={{ display: 'inline' }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          kriti test company -  Feb 14, 2023 3:38:33 PM
+                        </Typography>
+                        <Typography>{"test 1111"}</Typography>
+                        
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+              </List>
+
+            </Box>
+          </DialogContent>
+          <DialogActions className="modal-btn d-flex justify-content-between">
+            <Box>
               <TextField
-                fullWidth
+                sx={{ width: 250 }}
                 className="textarea-modal"
                 placeholder="Write Here"
                 multiline
                 rows={1}
               />
             </Box>
-            <Typography className='pb-2'>              Previous Comments            </Typography>
-            <Box className="user-comment-box">
-                <Typography>Kriti</Typography>
-                <Typography> kritiuser(kriti test company):<span> Feb 14, 2023 3:38:33 PM</span></Typography>
-              </Box>
-          </DialogContent>
-          <DialogActions className="flex-start modal-btn">
-            <Button onClick={handleClose}>Add Comment</Button>
+            <Box>
+              <Button onClick={handleClose}>Add Comment</Button>
+            </Box>
           </DialogActions>
         </Dialog>
       </div>
