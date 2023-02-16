@@ -1,10 +1,19 @@
 import * as React from 'react';
 import TuneIcon from '@mui/icons-material/Tune';
 import SearchIcon from '@mui/icons-material/Search';
-import { Typography, Box, Button, Drawer, TextField, Accordion, AccordionSummary, AccordionDetails, InputLabel, MenuItem, FormControl, Select} from '@mui/material';
+import { Typography, Box, Button, Drawer, TextField, Accordion, AccordionSummary, AccordionDetails, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import dayjs from 'dayjs';
 
 export default function FilterModal() {
+
+  const [value, setValue] = React.useState(dayjs('2023-03-15T21:11:54'));
+  // const handleChange = (newValue) => {
+  //   setValue(newValue);
+  // };
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -30,12 +39,12 @@ export default function FilterModal() {
 
   const list = (anchor) => (
     <Box
-      sx={{ p: 3, width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 460 }}
+      sx={{ p: 3, height: 'auto', width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 460 }}
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(anchor, false)}
+    // onClick={toggleDrawer(anchor, false)}
+    // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <Typography borderBottom={1} variant='h5' mb={4}>Filters</Typography>
+      <Typography borderBottom={1} variant='h5' pb={1} mb={4}>Filters</Typography>
       <Box sx={{ mt: 1, display: 'flex', alignItems: 'flex-end' }} className="input-col-filter">
         <TextField
           fullWidth
@@ -53,13 +62,38 @@ export default function FilterModal() {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography>Lead Submitted Date</Typography>
+            <Typography >Lead Submitted Date</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-              malesuada lacus ex, sit amet blandit leo lobortis eget.
-            </Typography>
+            <Box className="d-flex justify-content-between">
+              <Box className="me-2 d-flex">
+                <Typography className='small-text me-2' variant='h6' >Start Date </Typography>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DesktopDatePicker
+                  className='date-range-d'
+                    label="Select Date"
+                    inputFormat="DD/MM/YYYY"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Box>
+
+              <Box className="d-flex">      
+                <Typography className='small-text me-2' variant='h6' >End Date </Typography>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DesktopDatePicker
+                  className='date-range-d'
+                    label="Select Date"
+                    inputFormat="DD/MM/YYYY"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Box>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -71,10 +105,35 @@ export default function FilterModal() {
             <Typography>Lead Acceptance Date</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-              malesuada lacus ex, sit amet blandit leo lobortis eget.
-            </Typography>
+          <Box className="d-flex justify-content-between">
+              <Box className="me-2 d-flex">
+                <Typography className='small-text me-2' variant='h6' >Start Date </Typography>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DesktopDatePicker
+                  className='date-range-d'
+                    label="Select Date"
+                    inputFormat="DD/MM/YYYY"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Box>
+
+              <Box className="d-flex">      
+                <Typography className='small-text me-2' variant='h6' >End Date </Typography>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DesktopDatePicker
+                  className='date-range-d'
+                    label="Select Date"
+                    inputFormat="DD/MM/YYYY"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Box>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -86,10 +145,35 @@ export default function FilterModal() {
             <Typography>Lead Update Date</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-              malesuada lacus ex, sit amet blandit leo lobortis eget.
-            </Typography>
+          <Box className="d-flex justify-content-between">
+              <Box className="me-2 d-flex">
+                <Typography className='small-text me-2' variant='h6' >Start Date </Typography>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DesktopDatePicker
+                  className='date-range-d'
+                    label="Select Date"
+                    inputFormat="DD/MM/YYYY"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Box>
+
+              <Box className="d-flex">      
+                <Typography className='small-text me-2' variant='h6' >End Date </Typography>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DesktopDatePicker
+                  className='date-range-d'
+                    label="Select Date"
+                    inputFormat="DD/MM/YYYY"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Box>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -101,17 +185,42 @@ export default function FilterModal() {
             <Typography>Primary Count</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-              malesuada lacus ex, sit amet blandit leo lobortis eget.
-            </Typography>
+          <Box className="d-flex justify-content-between">
+              <Box className="me-2 d-flex">
+                <Typography className='small-text me-2' variant='h6' >Start Date </Typography>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DesktopDatePicker
+                  className='date-range-d'
+                    label="Select Date"
+                    inputFormat="DD/MM/YYYY"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Box>
+
+              <Box className="d-flex">      
+                <Typography className='small-text me-2' variant='h6' >End Date </Typography>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DesktopDatePicker
+                  className='date-range-d'
+                    label="Select Date"
+                    inputFormat="DD/MM/YYYY"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Box>
           </AccordionDetails>
         </Accordion>
       </Box>
       <Box className="d-flex justify-content-between">
-        <div>
+        <div className='status'>
           <Typography varient="h6" pb={2}>Client Status:</Typography>
-          <FormControl sx={{width: '160px'}}>
+          <FormControl sx={{ width: '160px' }}>
             <InputLabel id="demo-simple-select-label">Select</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -126,9 +235,9 @@ export default function FilterModal() {
             </Select>
           </FormControl>
         </div>
-        <div>
+        <div className='status'>
           <Typography varient="h6" pb={2}>Select City:</Typography>
-          <FormControl sx={{width: '160px'}}>
+          <FormControl sx={{ width: '160px' }}>
             <InputLabel id="demo-simple-select-label">Select</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -145,10 +254,10 @@ export default function FilterModal() {
         </div>
       </Box>
       <Typography className='pt-5 pb-4'>Based on your filter there are 700+ leads in “All” cities</Typography>
-      <Box className="d-flex justify-content-between"> 
-      <Button variant="outlined " className='theme-btn text-white ' >Download Leads</Button>
-      <Button variant="outlined " className='theme-btn text-white ' >Send Email</Button>
-      <Button variant="outlined " className='theme-btn text-white ' >Apply</Button>
+      <Box className="d-flex justify-content-between">
+        <Button variant="outlined " className='theme-btn text-white ' >Download Leads</Button>
+        <Button variant="outlined " className='theme-btn text-white ' >Send Email</Button>
+        <Button variant="outlined " className='theme-btn text-white ' >Apply</Button>
       </Box>
     </Box>
   );
@@ -167,7 +276,7 @@ export default function FilterModal() {
           </Drawer>
         </React.Fragment>
       ))} */}
-      <Box className="b2b-container">
+      <Box className="b2b-container" >
         <Box sx={{ m: 1 }}>
           <React.Fragment key={'right'}>
             <Button
@@ -177,7 +286,7 @@ export default function FilterModal() {
             >
               Apply Filter
             </Button>
-            <Drawer anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}>
+            <Drawer height={400}  anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}>
               {list('right')}
             </Drawer>
           </React.Fragment>

@@ -74,6 +74,7 @@ const ViewCommentModal = (props) => {
                 rows={1}
               />
             </Box>
+            <Typography className='pb-2'>              Previous Comments            </Typography>
             <Box className="user-comment-box">
                 <Typography>Kriti</Typography>
                 <Typography> kritiuser(kriti test company):<span> Feb 14, 2023 3:38:33 PM</span></Typography>
