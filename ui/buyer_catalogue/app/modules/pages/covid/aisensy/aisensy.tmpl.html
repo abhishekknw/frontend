@@ -5051,8 +5051,8 @@
               </div>
               <div  class="col-md-8" style="margin-top: 10px">
                 <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Phone Number"
-                  class="form-control" name="phone_number" id="phone" ng-required="true"
-                  ng-model="NewsupplierAddUpdateData.phone_number" ng-change="getSupplierDataByNumber(NewsupplierAddUpdateData.phone_number)">
+                  class="form-control" name="phone_number" id="phone"
+                  ng-model="NewsupplierAddUpdateData.phone_number" ng-change="getSupplierDataByNumber(NewsupplierAddUpdateData.phone_number,false)">
                 <div ng-show="myForm.phone_number.$error.pattern" class="error" style="font-size:12px; color: red;" value="">
                   Phone number Invalid</div>
               </div>
@@ -5064,7 +5064,8 @@
               <div  class="col-md-8" style="margin-top: 10px">
                 <input type="text" placeholder="Search..."
                   class="form-control" name="Society" id="Society"
-                  ng-model="searchSociety" ng-change="getSupplierDataByNumber(true,searchSociety)">
+                  minlength="3"
+                  ng-model="searchSociety" ng-change="getSupplierDataByNumber(false,searchSociety)">
               </div>
             </div>
 
@@ -5145,7 +5146,7 @@
               <div class="col-md-8" style="margin-top: 10px">
                 <select class="form-control" name="state" id="state_id" 
                   ng-model="NewsupplierAddUpdateData.state_name"
-                  ng-change='newGetStateCity()'
+                  ng-required="true" 
                   ng-options="state.state_name as state.state_name for state in StateList | orderBy: 'state_name'">
                   <option value="" disabled>Select State</option>
                 </select>

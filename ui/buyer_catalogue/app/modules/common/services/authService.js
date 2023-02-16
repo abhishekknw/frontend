@@ -897,7 +897,14 @@ angular.module('Authentication')
 
              };
              authService.getSupplierDataByNumber = function (number,society) {
-               let url = "v0/ui/b2b/supplier-list/?phone_number="+number+"&society_name="+society;
+               let url = "v0/ui/b2b/supplier-list/"
+               if(number){
+                  url = url+ "?phone_number="+number;
+               }
+               else{
+                  url = url+ "?society_name="+society;
+               }
+               // let url = "v0/ui/b2b/supplier-list/?phone_number="+number+"&society_name="+society;
                return machadaloHttp.get(url);
              };
              authService.getSupplierDataBySociety = function (id) {

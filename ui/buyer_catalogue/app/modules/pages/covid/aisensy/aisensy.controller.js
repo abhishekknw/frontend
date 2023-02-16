@@ -2976,6 +2976,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.Supplier_id = "";
               $scope.newSelectedArea = [];
               $scope.Areas = "";
+              $scope.societyNameList = [];
               if (response && response.data.data.error) {
                 swal(constants.name, response.data.data.error, constants.error);
                 $scope.NewsupplierAddUpdateData = {};
@@ -3001,7 +3002,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
 
         $scope.getSupplierDataByNumber = function (number,society) {
-          if (!number) {
+          if (!number && !society) {
             $scope.NewsupplierAddUpdateData = {};
             $scope.newSupplierPocModel = [];
             $scope.Supplier_id = "";
