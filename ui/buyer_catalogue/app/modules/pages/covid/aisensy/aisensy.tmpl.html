@@ -5051,10 +5051,21 @@
               </div>
               <div  class="col-md-8" style="margin-top: 10px">
                 <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Phone Number"
-                  class="form-control" name="phone_number" id="phone" ng-required="true"
-                  ng-model="NewsupplierAddUpdateData.phone_number" ng-change="getSupplierDataByNumber(NewsupplierAddUpdateData.phone_number)">
+                  class="form-control" name="phone_number" id="phone"
+                  ng-model="NewsupplierAddUpdateData.phone_number" ng-change="getSupplierDataByNumber(NewsupplierAddUpdateData.phone_number,false)">
                 <div ng-show="myForm.phone_number.$error.pattern" class="error" style="font-size:12px; color: red;" value="">
                   Phone number Invalid</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Search Society *: </label>
+              </div>
+              <div  class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Search..."
+                  class="form-control" name="Society" id="Society"
+                  minlength="3"
+                  ng-model="searchSociety" ng-change="getSupplierDataByNumber(false,searchSociety)">
               </div>
             </div>
 
@@ -5127,6 +5138,23 @@
                 </select>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> State *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <select class="form-control" name="state" id="state_id" 
+                  ng-model="NewsupplierAddUpdateData.state_name"
+                  ng-required="true" 
+                  ng-options="state.state_name as state.state_name for state in StateList | orderBy: 'state_name'">
+                  <option value="" disabled>Select State</option>
+                </select>
+                <span ng-show="myForm.state.$dirty && myForm.state.$invalid" class="error">Select a State</span>
+                </select>
+              </div>
+            </div>
+
 
             <div class="row">
               <div class="col-md-4" style="margin-top: 10px">
