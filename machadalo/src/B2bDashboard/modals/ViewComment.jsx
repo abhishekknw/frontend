@@ -50,7 +50,7 @@ const ViewCommentModal = (props) => {
               Comments
             </DialogContentText>
             <Box sx={{}} className="comment-all d-flex">
-              <FormControl fullWidth sx={{ mb: 2 }}>
+              <FormControl fullWidth sx={{ mb: 2, mr:2 }}>
                 <InputLabel id="demo-simple-select-label">All</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -71,7 +71,7 @@ const ViewCommentModal = (props) => {
                 className="textarea-modal"
                 placeholder="Write Here"
                 multiline
-                rows={5}
+                rows={1}
               />
             </Box>
             <Box className="user-comment-box">

@@ -271,6 +271,23 @@ color: #fff;
 .select-menu .MuiSelect-select{
     font-size: 12px;
 }
+.textarea-modal{
+    height: 45px;
+}
+.input-col-filter{
+    border: 1px solid #1C0606;
+    padding: 0px 10px;
+    color: #3D0F0C;
+    border-radius: 5px;
+    height: 40px;
+}
+.accordion-box .MuiAccordion-gutters{
+    border-width: 0px;
+    box-shadow: none ;
+}
+.accordion-box .MuiAccordionSummary-root{
+    padding: 0px
+}
 .tab-wrapper-main{
     .main-b2b-tab {
         padding: 5px 40px;
