@@ -27,15 +27,15 @@ const B2bDashboard = (props) => {
               className="mb-3 inner-b2b-tab"
             >
               <Tab eventKey="Pending" title="Lead-(Decision Pending)">
-                <LeadDecisionPending />
+                {basicKey == 'Pending' && <LeadDecisionPending />}
               </Tab>
               <Tab eventKey="NewLeads" title="New Leads">
-                <NewLeadsBasic />
+                {basicKey == 'NewLeads' && <NewLeadsBasic />}
               </Tab>
             </Tabs>
           </Tab>
           <Tab eventKey="Detail" title="Detail">
-            <LeadDetail />
+            {key == 'Detail' && <LeadDetail />}
           </Tab>
           <Tab eventKey="Payment" title="Licenses & Payment">
             <div>Licenses & Payment</div>
