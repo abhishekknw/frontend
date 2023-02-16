@@ -2819,6 +2819,14 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }).catch(function onError(response) {
               console.log(response);
             })
+            
+            let organisation = JSON.parse(localStorage["userInfo"]);
+            AuthService.getUserMinimalList(organisation.profile.organisation.organisation_id)
+            .then(function onSuccess(response) {
+              $scope.userMinimalList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
         }
 
         $scope.newSupplierPocModel = [];

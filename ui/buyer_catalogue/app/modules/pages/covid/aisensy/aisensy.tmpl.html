@@ -5340,6 +5340,21 @@
                   name="unit_secondary_count" id="unit_secondary_count" ng-model="NewsupplierAddUpdateData.unit_secondary_count" value="" ng-required="true">
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Data Source *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <select class="form-control" name="Source" id="Source_id" 
+                  ng-model="NewsupplierAddUpdateData.city_id" 
+                  ng-options="data.id as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
+                  <option value="" disabled>Select Data Source</option>
+                </select>
+                <span ng-show="myForm.Source.$dirty && myForm.Source.$invalid" class="error">Select Data Source</span>
+                </select>
+              </div>
+            </div>
               <!-- ADD POC -->
               <div ng-repeat="pocdata in newSupplierPocModel track by $index">
                 <div class="row">

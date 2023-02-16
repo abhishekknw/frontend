@@ -921,6 +921,10 @@ angular.module('Authentication')
                var url = "v0/ui/state/";
                return machadaloHttp.get(url);
             };
+            authService.getUserMinimalList= function (org_id) {
+               var url = "v0/ui/website/get-users-minimal-list/?org_id="+org_id;
+               return machadaloHttp.get(url);
+            };
 
             return authService;
       }])
