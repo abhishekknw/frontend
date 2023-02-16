@@ -110,7 +110,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
           AuthService.supplierFilterList()
             .then(function onSuccess(response) {
-              $scope.supplierFilterList = response.data.data;
+              let output = response.data.data;
+              $scope.supplierFilterList = output.map(([id, lable]) => ({ id, lable }));
+              $scope.supplierFilterList.splice(0,0, {'id':'undefined',"lable":"---Select Supplier---"});
+
             }).catch(function onError(response) {
               console.log(response);
             })
@@ -121,19 +124,19 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
           else{
             if (type === 'active') {
-              $scope.getActiveUser('', select[0]);
+              $scope.getActiveUser('', select);
             }
             else if (type === 'action') {
-              $scope.getActionRequiredUser("", select[0]);
+              $scope.getActionRequiredUser("", select);
             }
             else if (type === 'intervene') {
-              $scope.getInterveneUser("", select[0]);
+              $scope.getInterveneUser("", select);
             }
             else if(type === 'contact'){
-              $scope.contactDetail("",select[0])
+              $scope.contactDetail("",select)
             }
             else {
-              $scope.historyDetail("", select[0]);
+              $scope.historyDetail("", select);
             }
           }
         }
@@ -2819,7 +2822,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }).catch(function onError(response) {
               console.log(response);
             })
-            
+
             let organisation = JSON.parse(localStorage["userInfo"]);
             AuthService.getUserMinimalList(organisation.profile.organisation.organisation_id)
             .then(function onSuccess(response) {
