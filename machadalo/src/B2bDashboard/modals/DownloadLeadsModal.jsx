@@ -30,36 +30,40 @@ export default function DownloadLeadsModal(props) {
         variant="contained"
         size="small"
         startIcon={<CloudDownloadIcon />}
-        style={{ }}
+        style={{}}
         onClick={(e) => {
           handleClickOpen();
         }}
       >
-        Download Leads
+        Download
       </Button>
       <Dialog className="modal-comment" open={open} onClose={handleClose}>
-      <Button className='close-btn'><CloseIcon  sx={{ color: 'action.active', mr: 1, my: 0.5 }}/></Button>
+        <Button className="close-btn">
+          <CloseIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+        </Button>
         <DialogTitle className="title-modal">Download All leads</DialogTitle>
         <DialogContent className="content-modal">
           <DialogContentText></DialogContentText>
           <Box className="d-flex justify-content-between upload-btns">
             <Box>
-              <Button variant="contained" className="theme-btn">Download Leads</Button>
+              <Button variant="contained" className="theme-btn">
+                Download Leads
+              </Button>
             </Box>
             <Box className=" text-white ">
-            
-              <Button variant="contained" className='theme-btn' component="label">
-              <IconButton color="" aria-label="upload picture" component="label">
-                <input hidden accept="image/*" type="file" />
-                <CloudUploadIcon  style={{ fill: '#fff' }}/>
-              </IconButton>
+              <Button variant="contained" className="theme-btn" component="label">
+                <IconButton color="" aria-label="upload picture" component="label">
+                  <input hidden accept="image/*" type="file" />
+                  <CloudUploadIcon style={{ fill: '#fff' }} />
+                </IconButton>
                 Upload
                 <input hidden accept="image/*" multiple type="file" />
               </Button>
-              
             </Box>
             <Box>
-              <Button variant="contained" className="theme-btn">Upload Comments</Button>
+              <Button variant="contained" className="theme-btn">
+                Upload Comments
+              </Button>
             </Box>
           </Box>
         </DialogContent>

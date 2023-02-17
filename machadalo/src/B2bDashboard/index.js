@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import LeadDecisionPending from './Basic/LeadDecisionPending';
-import LeadDetail from './Detail/LeadDetail';
+import LeadDecisionPending from './BasicLeads/LeadDecisionPending';
+import LeadDetail from './DetailLeads/LeadDetail';
 import Container from '@mui/material/Container';
 import './index.css';
-import NewLeadsBasic from './Basic/NewLeadTab/newLeadsBasic';
+import NewLeadsBasic from './BasicLeads/NewLeadTab/newLeadsBasic';
 
 const B2bDashboard = (props) => {
   const [key, setKey] = useState('Basic');

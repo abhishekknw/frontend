@@ -4,4 +4,9 @@ const alertAtom = atom({
   key: 'alert',
   default: null,
 });
-export { alertAtom };
+
+const errorAtom = atom({
+  key: 'error',
+  default: false,
+});
+export { alertAtom, errorAtom };
