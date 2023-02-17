@@ -52,7 +52,7 @@ const LeadDetailActions = () => {
     return fetchWrapper.get(`${Apis.sendEmails}/${params}`).then((res) => {
       if (res.status) {
         alertActions.success(res.data);
-        setError(true);
+        setError(false);
       } else {
         alertActions.error('something went wrong');
       }

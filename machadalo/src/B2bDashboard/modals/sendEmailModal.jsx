@@ -42,6 +42,7 @@ export default function SendEmailModal(props) {
   };
 
   const sendEmails = async () => {
+    setError(true);
     await leadDetailApi.sendEmails(fields);
     setFields({ ...fields, emails: '', status: '' });
   };
@@ -109,7 +110,9 @@ export default function SendEmailModal(props) {
           </Typography>
         </DialogContent>
         <DialogActions className="justify-content-between modal-btn">
-          <Button onClick={(e) => sendEmails()}>Send email for given user</Button>
+          <Button onClick={(e) => sendEmails()} disabled={error}>
+            Send email for given user
+          </Button>
           <Typography>Or</Typography>
           <Button onClick={(e) => handleClose()}>Send email to all (Default)</Button>
         </DialogActions>
