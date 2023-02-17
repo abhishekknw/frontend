@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function SendEmailModal() {
   const [age, setAge] = React.useState('');
@@ -45,6 +46,7 @@ export default function SendEmailModal() {
         Email Leads
       </Button>
       <Dialog className="modal-comment" open={open} onClose={handleClose}>
+      <Button className='close-btn'><CloseIcon  sx={{ color: 'action.active', mr: 1, my: 0.5 }}/></Button>
         <DialogTitle className="title-modal">Send Email</DialogTitle>
         <DialogContent className="content-modal">
           <DialogContentText

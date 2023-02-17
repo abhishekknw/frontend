@@ -352,6 +352,21 @@ table thead tr th {
 .center-data-table .MuiDataGrid-cell, .center-data-table .MuiDataGrid-columnHeaderTitleContainer{
     justify-content: center !important;
 }
+.red-font{
+    color: #8E1921;
+}
+.close-btn svg{
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 2px;
+}
+.close-btn{
+    position: absolute !important;
+    top: 0px;
+    right: 0;
+}
 @media screen and (max-width: 767px) {
     .tab-wrapper-main{
         .main-b2b-tab {

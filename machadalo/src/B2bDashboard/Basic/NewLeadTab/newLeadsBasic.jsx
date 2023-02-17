@@ -7,6 +7,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { Typography, Box, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CampaignTable from './CamapignTable';
+import TuneIcon from '@mui/icons-material/Tune';
 
 export default function NewLeadsBasic() {
   const [value, setValue] = React.useState(dayjs('2023-03-15T21:11:54'));
@@ -16,8 +17,8 @@ export default function NewLeadsBasic() {
 
   return (
     <>
-      <Box className="d-flex pt-4 date-box">
-        <Typography className="px-3">Select Date</Typography>
+      <Box className="d-flex pt-4 date-box justify-content-around">
+        {/* <Typography className="px-3">Select Date</Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DesktopDatePicker
             label="Select Date"
@@ -26,7 +27,8 @@ export default function NewLeadsBasic() {
             onChange={handleChange}
             renderInput={(params) => <TextField {...params} />}
           />
-        </LocalizationProvider>
+        </LocalizationProvider> */}
+        <Box className="d-flex">
         <Box className="time-color-bg text-center mx-5">
           <Typography variant="h6" className="text-white pb-1 count-heading">
             Least Count
@@ -43,12 +45,18 @@ export default function NewLeadsBasic() {
             01
           </Typography>
         </Box>
+        </Box>
       </Box>
-      <Box>
         <Box className="d-flex justify-content-between align-items-center">
-          <Button variant="outlined" className="btn btn-dark">
+      <Box>
+          <Button variant="outlined" className="btn btn-dark me-4">
             Lead Details (28-12-2022)
           </Button>
+          <Button>
+          <TuneIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }}/>
+          </Button>
+
+        </Box>
           <Box sx={{ m: 1, display: 'flex', alignItems: 'flex-end' }} className="input-col">
             <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
             <TextField
@@ -59,7 +67,6 @@ export default function NewLeadsBasic() {
               onChange={(e) => handleSearch(e)}
             />
           </Box>
-        </Box>
       </Box>
       <CampaignTable />
     </>

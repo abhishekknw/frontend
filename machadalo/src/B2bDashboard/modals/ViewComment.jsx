@@ -25,6 +25,7 @@ import { decisionPendingActions } from '../API/_actions';
 import { commentListAtom } from '../API/_state';
 import { useRecoilValue } from 'recoil';
 
+import CloseIcon from '@mui/icons-material/Close';
 const ViewCommentModal = (props) => {
   const LeadBasicApi = decisionPendingActions();
   const commentList = useRecoilValue(commentListAtom);
@@ -68,6 +69,7 @@ const ViewCommentModal = (props) => {
 
       <div>
         <Dialog className="modal-comment" open={open} onClose={handleClose}>
+      <Button className='close-btn'><CloseIcon  sx={{ color: 'action.active', mr: 1, my: 0.5 }}/></Button>
           <DialogTitle className="title-modal">View Comments</DialogTitle>
           <DialogContent className="content-modal">
             <DialogContentText
