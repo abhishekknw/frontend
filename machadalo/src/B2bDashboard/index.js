@@ -19,7 +19,7 @@ const B2bDashboard = (props) => {
           onSelect={(k) => setKey(k)}
           className="mb-3 main-b2b-tab"
         >
-          <Tab eventKey="Basic" title="Basic">
+          <Tab eventKey="Basic" title="LEADS (BASIC)">
             <Tabs
               id="controlled-tab-example"
               activeKey={basicKey}
@@ -34,10 +34,10 @@ const B2bDashboard = (props) => {
               </Tab>
             </Tabs>
           </Tab>
-          <Tab eventKey="Detail" title="Detail">
+          <Tab eventKey="Detail" title="LEADS (DETAILS)">
             {key == 'Detail' && <LeadDetail />}
           </Tab>
-          <Tab eventKey="Payment" title="Licenses & Payment">
+          <Tab eventKey="Payment" title="LICENSES & PAYMENT">
             <div>Licenses & Payment</div>
           </Tab>
         </Tabs>

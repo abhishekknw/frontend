@@ -1,5 +1,19 @@
 import * as React from 'react';
-import { Typography, Select, FormControl, MenuItem, InputLabel, DialogTitle, DialogContentText, DialogContent, DialogActions, Box, Dialog, TextField, Button } from '@mui/material';
+import {
+  Typography,
+  Select,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+  DialogActions,
+  Box,
+  Dialog,
+  TextField,
+  Button,
+} from '@mui/material';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -7,17 +21,29 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
+import { decisionPendingActions } from '../API/_actions';
+import { commentListAtom } from '../API/_state';
+import { useRecoilValue } from 'recoil';
+
 const ViewCommentModal = (props) => {
   const [age, setAge] = React.useState('');
+  const { data } = props;
+  const LeadBasicApi = decisionPendingActions();
+  const [comment, setComment] = React.useState('all');
+  const commentList = useRecoilValue(commentListAtom);
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-  function commentModal(e) {
+
+  async function commentModal(row, type) {
+    await LeadBasicApi.getCommentList(row, type);
     setOpen(true);
+    console.log(commentList, 'commentListcommentListcommentList');
   }
+
   return (
     <>
       <Button
@@ -25,7 +51,7 @@ const ViewCommentModal = (props) => {
         size="small"
         className="theme-btn text-small"
         onClick={(e) => {
-          commentModal(e);
+          commentModal(data.row, comment);
         }}
       >
         View Comment
@@ -39,10 +65,9 @@ const ViewCommentModal = (props) => {
               className="text-black"
               variant="h5"
               textAlign={'center'}
-            >
-            </DialogContentText>
+            ></DialogContentText>
             <Box sx={{}} className="comment-all d-flex">
-              <FormControl  sx={{ mb: 2, mr: 2, width:250 }}>
+              <FormControl sx={{ mb: 2, mr: 2, width: 250 }}>
                 <InputLabel id="demo-simple-select-label">All</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -58,11 +83,12 @@ const ViewCommentModal = (props) => {
                 </Select>
               </FormControl>
               <Box></Box>
-
             </Box>
-            <Typography className='pb-2'>Previous Comments</Typography>
-            <Box sx={{maxHeight: "250px", overflowX: "hidden", overflowY: "scroll"}}>
-              <List sx={{ width: '100%',  bgcolor: 'background.paper' }}>
+            <Typography className="pb-2">Previous Comments</Typography>
+            <Box sx={{ maxHeight: '250px', overflowX: 'hidden', overflowY: 'scroll' }}>
+              <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                {/* {commentList.map((data, index) => { */}
+
                 <ListItem alignItems="flex-start">
                   <ListItemAvatar>
                     <Avatar alt="Kriti" src="/static/images/avatar/1.jpg" />
@@ -77,10 +103,34 @@ const ViewCommentModal = (props) => {
                           variant="body2"
                           color="text.primary"
                         >
-                          kriti test company -  Feb 14, 2023 3:38:33 PM
+                          kriti test company - Feb 14, 2023 3:38:33 PM
                         </Typography>
-                        <Typography>{"test 1111"}</Typography>
-                        
+                        <Typography>{'test 1111'}</Typography>
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                {/* }
+                )} */}
+
+                <Divider variant="inset" component="li" />
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar alt="Kriti" src="/static/images/avatar/1.jpg" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Kritiuser"
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: 'inline' }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          kriti test company - Feb 14, 2023 3:38:33 PM
+                        </Typography>
+                        <Typography>{'test 1111'}</Typography>
                       </React.Fragment>
                     }
                   />
@@ -100,39 +150,14 @@ const ViewCommentModal = (props) => {
                           variant="body2"
                           color="text.primary"
                         >
-                          kriti test company -  Feb 14, 2023 3:38:33 PM
+                          kriti test company - Feb 14, 2023 3:38:33 PM
                         </Typography>
-                        <Typography>{"test 1111"}</Typography>
-                        
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Kriti" src="/static/images/avatar/1.jpg" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Kritiuser"
-                    secondary={
-                     <React.Fragment>
-                        <Typography
-                          sx={{ display: 'inline' }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          kriti test company -  Feb 14, 2023 3:38:33 PM
-                        </Typography>
-                        <Typography>{"test 1111"}</Typography>
-                        
+                        <Typography>{'test 1111'}</Typography>
                       </React.Fragment>
                     }
                   />
                 </ListItem>
               </List>
-
             </Box>
           </DialogContent>
           <DialogActions className="modal-btn d-flex justify-content-between">

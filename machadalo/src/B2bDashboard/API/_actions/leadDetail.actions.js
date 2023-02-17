@@ -18,7 +18,6 @@ const LeadDetailActions = () => {
   };
 
   const campaignViewLeads = (data) => {
-    console.log(data, 'filtersfiltersfiltersfilters');
     let parmas =
       '?campaign_id=' +
       data.campaign_id +
