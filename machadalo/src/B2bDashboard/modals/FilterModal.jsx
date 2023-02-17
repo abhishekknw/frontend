@@ -7,6 +7,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dayjs from 'dayjs';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function FilterModal() {
 
@@ -45,6 +46,7 @@ export default function FilterModal() {
     // onKeyDown={toggleDrawer(anchor, false)}
     >
       <Typography borderBottom={1} variant='h5' pb={1} mb={4}>Filters</Typography>
+      <Button className='close-btn'><CloseIcon  sx={{ color: 'action.active', mr: 1, my: 0.5 }}/></Button>
       <Box sx={{ mt: 1, display: 'flex', alignItems: 'flex-end' }} className="input-col-filter">
         <TextField
           fullWidth

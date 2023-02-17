@@ -84,7 +84,7 @@ export default function BasicTable(props) {
       sortable: false,
       headerName: 'Current Status',
       headerAlign: 'center',
-      width: 200,
+      width: 150,
       headerClassName: 'super-app-theme--header',
       renderCell: (params) => (
         <>
@@ -103,7 +103,7 @@ export default function BasicTable(props) {
     {
       field: 'ClientComment',
       headerName: 'Client Comment',
-      width: 150,
+      width: 125,
       headerClassName: 'super-app-theme--header',
       cellClassName: 'super-app-theme--cell center-div',
       sortable: false,
@@ -116,7 +116,7 @@ export default function BasicTable(props) {
     {
       field: 'Action',
       headerName: 'Action',
-      width: 200,
+      width: 150,
       sortable: false,
       headerAlign: 'center',
       headerClassName: 'super-app-theme--header',

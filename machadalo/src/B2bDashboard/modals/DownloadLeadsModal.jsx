@@ -10,6 +10,7 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function DownloadLeadsModal(props) {
   const [open, setOpen] = React.useState(false);
@@ -37,6 +38,7 @@ export default function DownloadLeadsModal(props) {
         Download Leads
       </Button>
       <Dialog className="modal-comment" open={open} onClose={handleClose}>
+      <Button className='close-btn'><CloseIcon  sx={{ color: 'action.active', mr: 1, my: 0.5 }}/></Button>
         <DialogTitle className="title-modal">Download All leads</DialogTitle>
         <DialogContent className="content-modal">
           <DialogContentText></DialogContentText>
