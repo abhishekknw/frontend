@@ -36,13 +36,24 @@ ul.inner-b2b-tab {
 .super-app-theme--header{
     text-transform: uppercase;
 }
-.inner-b2b-tab li button {
+html body .inner-b2b-tab li button.active, html body .inner-b2b-tab li button:hover{
     width: 100%;
     background-color: #CB3328 !important;
     border: 2px solid #CB3328 !important;
     padding: 10px 5px;
     border-radius: 6px;
-    color: #fff;
+    color: #fff !important;
+    margin: 0 auto;
+    font-weight: 600;
+}
+
+.inner-b2b-tab li button {
+    width: 100%;
+    background-color: #fff !important;
+    border: 2px solid #CB3328 !important;
+    padding: 10px 5px;
+    border-radius: 6px;
+    color: #CB3328;
     margin: 0 auto;
     font-weight: 600;
 }
@@ -52,11 +63,7 @@ ul.inner-b2b-tab {
     color: #fff;
 }
 
-.inner-b2b-tab.nav-tabs .nav-item.show .nav-link,
-.inner-b2b-tab.nav-tabs .nav-link.active {
-    color: #CB3328;
-    background-color: transparent !important;
-}
+
 
 .tab-content .MuiSelect-select {
     width: 142px;
@@ -150,11 +157,13 @@ ul.inner-b2b-tab {
     display: none !important;
 }
 
-.data-b2b-table .MuiDataGrid-columnHeaderTitleContainer,
-.data-b2b-table .MuiDataGrid-row:not(.MuiDataGrid-row--dynamicHeight)>.MuiDataGrid-cell {
-    justify-content: center;
+// .data-b2b-table .MuiDataGrid-columnHeaderTitleContainer,
+// .data-b2b-table .MuiDataGrid-row:not(.MuiDataGrid-row--dynamicHeight)>.MuiDataGrid-cell {
+//     justify-content: center;
+// }
+.center-div{
+    justify-content: center !important;
 }
-
 .select-b2b {
     padding: 10px;
 }
@@ -317,12 +326,15 @@ color: #fff;
     width: 72px;
     font-size: 11px;
 }
+.header-b2b .header-b{
+    padding: 5px 150px;
+}
 .tab-wrapper-main{
     .main-b2b-tab {
-        padding: 5px 40px;
+        padding: 5px 150px;
     }
     &>.tab-content{
-        padding: 0 20px;
+        padding: 0 80px;
     }
 }
 table thead tr th {

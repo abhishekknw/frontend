@@ -25,6 +25,7 @@ export default function BasicTable(props) {
       sortable: false,
       headerClassName: 'super-app-theme--header',
       cellClassName: 'select-box-cell',
+      headerAlign: 'left',
       renderCell: (params) => (
         <>
         <div className=''>
@@ -36,7 +37,8 @@ export default function BasicTable(props) {
     {
       field: 'entity_name',
       headerName: 'Entity Name',
-      width: 180,
+      width: 140,
+      headerAlign: 'left',
       headerClassName: 'super-app-theme--header',
       cellClassName: 'super-app-theme--cell',
     },
@@ -74,13 +76,14 @@ export default function BasicTable(props) {
       field: 'lead_timestamp',
       headerName: 'Lead Stamp',
       headerClassName: 'super-app-theme--header',
-      width: 100,
+      width: 140,
     },
     {
       field: 'CurrentStatus',
       numeric: true,
       sortable: false,
       headerName: 'Current Status',
+      headerAlign: 'center',
       width: 200,
       headerClassName: 'super-app-theme--header',
       renderCell: (params) => (
@@ -102,6 +105,7 @@ export default function BasicTable(props) {
       headerName: 'Client Comment',
       width: 150,
       headerClassName: 'super-app-theme--header',
+      cellClassName: 'super-app-theme--cell center-div',
       sortable: false,
       renderCell: (params) => (
         <>
@@ -114,6 +118,9 @@ export default function BasicTable(props) {
       headerName: 'Action',
       width: 200,
       sortable: false,
+      headerAlign: 'center',
+      headerClassName: 'super-app-theme--header',
+      cellClassName: 'super-app-theme--cell center-div',
       renderCell: (params) => (
         <strong>
           <Button variant="contained" size="small" className="theme-btn text-small">

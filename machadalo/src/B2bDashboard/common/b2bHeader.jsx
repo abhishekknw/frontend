@@ -14,7 +14,7 @@ import '../index.css';
 export default function Header() {
   return (
     <AppBar position="static" className="header-b2b">
-      <Toolbar>
+      <Toolbar className='header-b'>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           <img src={Logo} alt="Machadalo" />
         </Typography>
