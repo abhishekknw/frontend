@@ -26,26 +26,31 @@ import { commentListAtom } from '../API/_state';
 import { useRecoilValue } from 'recoil';
 
 const ViewCommentModal = (props) => {
-  const { data } = props;
   const LeadBasicApi = decisionPendingActions();
-  const [commentType, setCommentType] = React.useState('all');
   const commentList = useRecoilValue(commentListAtom);
   const [comment, setComment] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const [commentType, setCommentType] = React.useState('all');
   const [open, setOpen] = React.useState(false);
+  const [rowData, setRowData] = React.useState({});
+
   const handleClose = () => setOpen(false);
+
+  const handleChange = async (event) => {
+    setCommentType(event.target.value);
+    await LeadBasicApi.getCommentList(rowData, event.target.value);
+  };
 
   async function commentModal(row, type) {
     await LeadBasicApi.getCommentList(row, type);
     setOpen(true);
+    setRowData({ ...row });
   }
 
-  function addComment() {
-    // await LeadBasicApi.getCommentList(row, type);
-    console.log(comment, '11111');
+  async function addComment() {
+    let data = [{ comment: comment, _id: rowData?._id, requirement_id: rowData?.requirement_id }];
+    await LeadBasicApi.postComment(data);
+    setComment('');
+    commentModal(rowData, commentType);
   }
 
   return (
@@ -55,7 +60,7 @@ const ViewCommentModal = (props) => {
         size="small"
         className="theme-btn text-small"
         onClick={(e) => {
-          commentModal(data.row, commentType);
+          commentModal(props.data.row, commentType);
         }}
       >
         View / Add
@@ -80,15 +85,15 @@ const ViewCommentModal = (props) => {
                   label="Age"
                   onChange={handleChange}
                 >
-                  <MenuItem value={10}>All</MenuItem>
-                  <MenuItem value={20}>Company Comment</MenuItem>
-                  <MenuItem value={30}>Machadalo Comments</MenuItem>
-                  <MenuItem value={40}>Company's client comment</MenuItem>
+                  <MenuItem value={'all'}>All</MenuItem>
+                  <MenuItem value={'company_comment'}>Company Comment</MenuItem>
+                  <MenuItem value={'machadalo_comment'}>Machadalo Comments</MenuItem>
+                  <MenuItem value={'company_client_comment'}>Company's client comment</MenuItem>
                 </Select>
               </FormControl>
               <Box></Box>
             </Box>
-            <Typography className="pb-2">Previous Comments</Typography>
+            <Typography className="pb-2">{commentType} Comments</Typography>
             <Box sx={{ maxHeight: '250px', overflowX: 'hidden', overflowY: 'scroll' }}>
               <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                 {commentList.map((data, index) => (
@@ -121,16 +126,17 @@ const ViewCommentModal = (props) => {
           <DialogActions className="modal-btn d-flex justify-content-between">
             <Box>
               <TextField
-                sx={{ width: 250 }}
+                sx={{ width: 450 }}
                 className="textarea-modal"
                 placeholder="Write Here"
                 multiline
                 rows={1}
+                value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />
             </Box>
             <Box>
-              <Button onClick={addComment}>Add Comment</Button>
+              <Button onClick={(e) => addComment(e)}>Add Comment</Button>
             </Box>
           </DialogActions>
         </Dialog>

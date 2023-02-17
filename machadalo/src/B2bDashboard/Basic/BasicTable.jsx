@@ -28,8 +28,8 @@ export default function BasicTable(props) {
       headerAlign: 'left',
       renderCell: (params) => (
         <>
-        <div className=''>
-          <Checkbox />
+          <div className="">
+            <Checkbox />
           </div>
         </>
       ),
@@ -44,7 +44,7 @@ export default function BasicTable(props) {
     },
     {
       field: 'entity_type',
-      numeric: true,
+      sortable: false,
       headerClassName: 'super-app-theme--header',
       description: 'Type Of Entity',
       headerName: 'TOE',
@@ -61,6 +61,7 @@ export default function BasicTable(props) {
     {
       field: 'city',
       numeric: true,
+      sortable: false,
       headerClassName: 'super-app-theme--header',
       headerName: 'City',
       width: 100,

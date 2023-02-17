@@ -67,11 +67,18 @@ const decisionPendingActions = () => {
     });
   };
 
+  const postComment = (data) => {
+    return fetchWrapper.post(`${Apis.commentList}/`, { data: data }).then((res) => {
+      alertActions.success(res.data);
+    });
+  };
+
   return {
     LeadDecisionPendingList,
     ClientStatusList,
     updateClientStatus,
     getCommentList,
+    postComment,
   };
 };
 export { decisionPendingActions };
