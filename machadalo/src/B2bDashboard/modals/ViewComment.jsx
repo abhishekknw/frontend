@@ -14,7 +14,7 @@ import {
   TextField,
   Button,
 } from '@mui/material';
-
+import dayjs from 'dayjs';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
@@ -26,11 +26,11 @@ import { commentListAtom } from '../API/_state';
 import { useRecoilValue } from 'recoil';
 
 const ViewCommentModal = (props) => {
-  const [age, setAge] = React.useState('');
   const { data } = props;
   const LeadBasicApi = decisionPendingActions();
-  const [comment, setComment] = React.useState('all');
+  const [commentType, setCommentType] = React.useState('all');
   const commentList = useRecoilValue(commentListAtom);
+  const [comment, setComment] = React.useState('');
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -41,7 +41,11 @@ const ViewCommentModal = (props) => {
   async function commentModal(row, type) {
     await LeadBasicApi.getCommentList(row, type);
     setOpen(true);
-    console.log(commentList, 'commentListcommentListcommentList');
+  }
+
+  function addComment() {
+    // await LeadBasicApi.getCommentList(row, type);
+    console.log(comment, '11111');
   }
 
   return (
@@ -51,7 +55,7 @@ const ViewCommentModal = (props) => {
         size="small"
         className="theme-btn text-small"
         onClick={(e) => {
-          commentModal(data.row, comment);
+          commentModal(data.row, commentType);
         }}
       >
         View Comment
@@ -72,7 +76,7 @@ const ViewCommentModal = (props) => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={age}
+                  value={commentType}
                   label="Age"
                   onChange={handleChange}
                 >
@@ -87,76 +91,30 @@ const ViewCommentModal = (props) => {
             <Typography className="pb-2">Previous Comments</Typography>
             <Box sx={{ maxHeight: '250px', overflowX: 'hidden', overflowY: 'scroll' }}>
               <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                {/* {commentList.map((data, index) => { */}
-
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Kriti" src="/static/images/avatar/1.jpg" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Kritiuser"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: 'inline' }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          kriti test company - Feb 14, 2023 3:38:33 PM
-                        </Typography>
-                        <Typography>{'test 1111'}</Typography>
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                {/* }
-                )} */}
-
+                {commentList.map((data, index) => (
+                  <ListItem alignItems="flex-start" key={index}>
+                    <ListItemAvatar>
+                      <Avatar alt={data.comment_by.charAt(0)} src="/static/images/avatar/1.jpg" />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={data.comment_by}
+                      secondary={
+                        <React.Fragment>
+                          <Typography
+                            sx={{ display: 'inline' }}
+                            component="span"
+                            variant="body2"
+                            color="text.primary"
+                          >
+                            {dayjs(data.created_at).format('MMM D, YYYY h:mm A')}
+                          </Typography>
+                          <Typography>{data.comment}</Typography>
+                        </React.Fragment>
+                      }
+                    />
+                  </ListItem>
+                ))}
                 <Divider variant="inset" component="li" />
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Kriti" src="/static/images/avatar/1.jpg" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Kritiuser"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: 'inline' }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          kriti test company - Feb 14, 2023 3:38:33 PM
-                        </Typography>
-                        <Typography>{'test 1111'}</Typography>
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Kriti" src="/static/images/avatar/1.jpg" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Kritiuser"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: 'inline' }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          kriti test company - Feb 14, 2023 3:38:33 PM
-                        </Typography>
-                        <Typography>{'test 1111'}</Typography>
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
               </List>
             </Box>
           </DialogContent>
@@ -168,10 +126,11 @@ const ViewCommentModal = (props) => {
                 placeholder="Write Here"
                 multiline
                 rows={1}
+                onChange={(e) => setComment(e.target.value)}
               />
             </Box>
             <Box>
-              <Button onClick={handleClose}>Add Comment</Button>
+              <Button onClick={addComment}>Add Comment</Button>
             </Box>
           </DialogActions>
         </Dialog>
