@@ -36,7 +36,7 @@ export default function SendEmailModal() {
         className="theme-btn"
         variant="contained"
         size="small"
-        style={{ marginLeft: 16 }}
+        style={{}}
         onClick={(e) => {
           handleClickOpen();
         }}
