@@ -54,7 +54,7 @@ const ViewCommentModal = (props) => {
           commentModal(data.row, comment);
         }}
       >
-        View Comment
+        View / Add
       </Button>
 
       <div>

@@ -28,25 +28,25 @@ const LeadDetailTable = (props) => {
       field: 'unique',
       headerName: 'Index',
       sortable: false,
-      width: 70,
+      width: 50,
       renderCell: (index) => index.api.getRowIndex(index.row.id) + 2,
     },
-    { field: 'name', headerName: 'Camaign Name', sortable: false, width: 130 },
-    { field: 'start_date', headerName: 'Start Date', width: 130 },
-    { field: 'supplier_count', headerName: 'Supplier Count', type: 'number', width: 90 },
+    { field: 'name',      headerClassName: 'super-app-theme--header', headerName: 'View Leads', sortable: false, width: 140 },
+    { field: 'start_date',       headerClassName: 'super-app-theme--header', headerName: 'Start Date', width: 220 },
+    { field: 'supplier_count',      headerClassName: 'super-app-theme--header', headerName: 'Supplier Count', type: 'number', width: 120 },
     {
       field: 'ViewLeads',
-      headerName: 'View Leads	',
+      headerName: 'Campaign Name	',
       description: 'View Leads',
       sortable: false,
-      width: 200,
+      width: 120,      headerClassName: 'super-app-theme--header',
       renderCell: (params) => (
         <strong>
           <Button
             className="theme-btn"
             variant="contained"
             size="small"
-            style={{ marginLeft: 16 }}
+            style={{}}
             onClick={(e) => {
               viewCampaignLeads(e, params);
             }}
@@ -58,10 +58,10 @@ const LeadDetailTable = (props) => {
     },
     {
       field: 'EmailLeads',
-      headerName: 'View Leads	',
+      headerName: 'Email Leads	',
       description: 'Send Emails',
       sortable: false,
-      width: 200,
+      width: 130,      headerClassName: 'super-app-theme--header',
       renderCell: (params) => (
         <>
           <SendEmailModal data={params} />
@@ -70,10 +70,10 @@ const LeadDetailTable = (props) => {
     },
     {
       field: 'DownloadLeads',
-      headerName: 'View Leads	',
+      headerName: 'Download Leads	',
       description: 'Download Leads',
       sortable: false,
-      width: 200,
+      width: 180,      headerClassName: 'super-app-theme--header',
       renderCell: (params) => (
         <>
           <DownloadLeadsModal data={params} />
@@ -82,8 +82,9 @@ const LeadDetailTable = (props) => {
     },
     {
       field: 'CreateField',
-      headerName: 'View Leads	',
+      headerName: 'Create Fields	',
       description: 'This column has a value getter and is not sortable.',
+      headerClassName: 'super-app-theme--header',
       sortable: false,
       width: 180,
       renderCell: (params) => (
@@ -92,7 +93,7 @@ const LeadDetailTable = (props) => {
             className="theme-btn"
             variant="contained"
             size="small"
-            style={{ marginLeft: 16 }}
+            style={{}}
             onClick={(e) => {
               handleShow(params);
             }}
@@ -110,7 +111,7 @@ const LeadDetailTable = (props) => {
         row={allCampaingn}
         columns={columns}
         styles={{ height: 400, width: '100%' }}
-        classNames="small-height-table data-b2b-table"
+        classNames="small-height-table data-b2b-table center-data-table"
       />
       {showViewLeads && <ViewLeadDetail />}
     </>

@@ -349,6 +349,22 @@ table thead tr th {
 .comment-all label{
     top: -6px
 }
+.center-data-table .MuiDataGrid-cell, .center-data-table .MuiDataGrid-columnHeaderTitleContainer{
+    justify-content: center !important;
+}
+@media screen and (max-width: 767px) {
+    .tab-wrapper-main{
+        .main-b2b-tab {
+            padding: 5px 40px;
+        }
+        &>.tab-content{
+            padding: 0 20px;
+        }
+    }
+    .header-b2b .header-b{
+        padding: 5px 40px;
+    }
+}
 @media screen and (max-width: 600px) {
     .modal-comment .MuiPaper-root{
         width: 95%;

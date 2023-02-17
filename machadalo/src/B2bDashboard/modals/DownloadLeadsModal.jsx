@@ -29,7 +29,7 @@ export default function DownloadLeadsModal(props) {
         variant="contained"
         size="small"
         startIcon={<CloudDownloadIcon />}
-        style={{ marginLeft: 16 }}
+        style={{ }}
         onClick={(e) => {
           handleClickOpen();
         }}
