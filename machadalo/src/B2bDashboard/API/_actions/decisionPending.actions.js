@@ -1,6 +1,10 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useFetchWrapper } from '../_helpers/fetch-wrapper';
-import { leadDecisionPendingListAtom, clientStatusAtom } from '../_state/decisionPending';
+import {
+  leadDecisionPendingListAtom,
+  clientStatusAtom,
+  commentListAtom,
+} from '../_state/decisionPending';
 import { Apis } from '../request';
 import { useAlertActions } from '../_actions/alert.actions';
 
@@ -9,6 +13,7 @@ const decisionPendingActions = () => {
   const alertActions = useAlertActions();
   const [decisionPendingList, setDecisionPendingList] = useRecoilState(leadDecisionPendingListAtom);
   const setClientStatusAtom = useSetRecoilState(clientStatusAtom);
+  const [commentList, setCommentList] = useRecoilState(commentListAtom);
 
   const LeadDecisionPendingList = (data) => {
     let parmas =
@@ -54,10 +59,19 @@ const decisionPendingActions = () => {
     });
   };
 
+  const getCommentList = (data, type) => {
+    let params =
+      '?requirement_id=' + data?.requirement_id + '&_id=' + data?._id + '&comment_type=' + type;
+    return fetchWrapper.get(`${Apis.commentList}/${params}`).then((res) => {
+      setCommentList(res.data);
+    });
+  };
+
   return {
     LeadDecisionPendingList,
     ClientStatusList,
     updateClientStatus,
+    getCommentList,
   };
 };
 export { decisionPendingActions };
