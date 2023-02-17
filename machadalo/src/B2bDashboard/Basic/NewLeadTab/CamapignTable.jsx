@@ -8,15 +8,17 @@ export default function CampaignTable() {
       numeric: true,
       headerClassName: '',
       headerName: 'Index',
-      width: 40,
+      width: 240,
+      textAlign: 'center',
       renderCell: (index) => index.api.getRowIndex(index.row.id) + 2,
     },
     {
       field: 'name',
       headerClassName: '',
       description: '',
+      cellClassName: 'red-font',
       headerName: 'Campaign Name	',
-      width: 40,
+      width: 240,
     },
     {
       field: 'purchased_count',
@@ -24,7 +26,7 @@ export default function CampaignTable() {
       headerClassName: '',
       description: '',
       headerName: 'Total purchased',
-      width: 40,
+      width: 240,
     },
     {
       field: 'not_purchased_count',
@@ -32,7 +34,7 @@ export default function CampaignTable() {
       headerClassName: '',
       description: '',
       headerName: 'Total available',
-      width: 40,
+      width: 240,
     },
   ];
 
@@ -51,7 +53,7 @@ export default function CampaignTable() {
         row={tableData}
         columns={header}
         styles={{ height: 400, width: '100%' }}
-        classNames="small-height-table data-b2b-table"
+        classNames="small-height-table data-b2b-table center-data-table "
       />
     </>
   );

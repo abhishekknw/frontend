@@ -352,6 +352,9 @@ table thead tr th {
 .center-data-table .MuiDataGrid-cell, .center-data-table .MuiDataGrid-columnHeaderTitleContainer{
     justify-content: center !important;
 }
+.red-font{
+    color: #8E1921;
+}
 @media screen and (max-width: 767px) {
     .tab-wrapper-main{
         .main-b2b-tab {
