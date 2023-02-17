@@ -5353,8 +5353,8 @@
               </div>
               <div class="col-md-8" style="margin-top: 10px">
                 <select class="form-control" name="Source" id="Source_id" 
-                  ng-model="NewsupplierAddUpdateData.representativeid"
-                  ng-options="data.id as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
+                  ng-model="NewsupplierAddUpdateData.relationship_manager"
+                  ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
                   <option value="" disabled>Select Data Source</option>
                 </select>
                 <span ng-show="myForm.Source.$dirty && myForm.Source.$invalid" class="error">Select Data Source</span>

@@ -2920,6 +2920,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.NewsupplierAddUpdateData.id = $scope.supplierData[1]?.id;
               $scope.NewsupplierAddUpdateData.city = $scope.supplierData[0][0].city;
               $scope.NewsupplierAddUpdateData.area = $scope.supplierData[0][0].area;
+              $scope.NewsupplierAddUpdateData.relationship_manager = $scope.supplierData[0][0]?.relationship_manager;
               if (response.data.data.area_id == null) {
                 $scope.NewsupplierAddUpdateData.area_id = "";
               }
