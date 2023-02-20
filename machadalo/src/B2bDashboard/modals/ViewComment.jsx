@@ -49,9 +49,11 @@ const ViewCommentModal = (props) => {
 
   async function addComment() {
     let data = [{ comment: comment, _id: rowData?._id, requirement_id: rowData?.requirement_id }];
-    await LeadBasicApi.postComment(data);
-    setComment('');
-    commentModal(rowData, commentType);
+    if (comment.length > 0) {
+      await LeadBasicApi.postComment(data);
+      setComment('');
+      commentModal(rowData, commentType);
+    }
   }
 
   return (
@@ -61,7 +63,7 @@ const ViewCommentModal = (props) => {
         size="small"
         className="theme-btn text-small"
         onClick={(e) => {
-          commentModal(props.data.row, commentType);
+          commentModal(props.data, commentType);
         }}
       >
         View / Add
@@ -69,7 +71,9 @@ const ViewCommentModal = (props) => {
 
       <div>
         <Dialog className="modal-comment" open={open} onClose={handleClose}>
-      <Button className='close-btn'><CloseIcon  sx={{ color: 'action.active', mr: 1, my: 0.5 }}/></Button>
+          <Button className="close-btn" onClick={(e) => setOpen(false)}>
+            <CloseIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+          </Button>
           <DialogTitle className="title-modal">View Comments</DialogTitle>
           <DialogContent className="content-modal">
             <DialogContentText

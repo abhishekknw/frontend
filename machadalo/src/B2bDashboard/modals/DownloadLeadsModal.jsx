@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -39,7 +38,12 @@ export default function DownloadLeadsModal(props) {
         Download
       </Button>
       <Dialog className="modal-comment" open={open} onClose={handleClose}>
-        <Button className="close-btn">
+        <Button
+          className="close-btn"
+          onClick={(e) => {
+            handleClose();
+          }}
+        >
           <CloseIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
         </Button>
         <DialogTitle className="title-modal">Download All leads</DialogTitle>

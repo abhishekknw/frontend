@@ -10,7 +10,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ClientStatusDropdown from '../common/ClientStatus';
-
+import ViewCommentModal from '../modals/ViewComment';
+import LeadDetailModal from '../modals/leadDetailModal';
 const ViewLeadDetail = (props) => {
   const viewLeads = useRecoilValue(campaignLeads);
   const headers = viewLeads.header;
@@ -36,7 +37,7 @@ const ViewLeadDetail = (props) => {
             {tableData.map((row, index) => (
               <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
-                  {row.index}
+                  {index + 1}
                 </TableCell>
                 {row.map((data, index) =>
                   index != 0 ? <TableCell key={index}>{data?.value}</TableCell> : null
@@ -44,8 +45,12 @@ const ViewLeadDetail = (props) => {
                 <TableCell>
                   <ClientStatusDropdown data={row[0]} checkTable="leadDetailTable" />
                 </TableCell>
-                <TableCell>{row.clientcomment}</TableCell>
-                <TableCell>{row.leaddetail}</TableCell>
+                <TableCell>
+                  <ViewCommentModal data={row[0]} />
+                </TableCell>
+                <TableCell>
+                  <LeadDetailModal />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

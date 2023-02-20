@@ -110,7 +110,7 @@ export default function BasicTable(props) {
       sortable: false,
       renderCell: (params) => (
         <>
-          <ViewCommentModal data={params} />
+          <ViewCommentModal data={params.row} />
         </>
       ),
     },

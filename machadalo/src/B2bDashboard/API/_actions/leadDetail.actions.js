@@ -61,7 +61,7 @@ const LeadDetailActions = () => {
 
   const detailClientStatus = (data) => {
     let update = data;
-    return fetchWrapper.post(`${Apis.detailClientStatus}/`, { data: data }).then((res) => {
+    return fetchWrapper.post(`${Apis.updateClientStatus}/`, { data: data }).then((res) => {
       if (res.status) {
         alertActions.success(res.data);
       } else {
