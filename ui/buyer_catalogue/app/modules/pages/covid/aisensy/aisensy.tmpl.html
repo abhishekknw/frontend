@@ -1396,8 +1396,8 @@
                       </div>
                       <div class="select">
                         <select ng-model="selectForActive" ng-change="selectedSupplier(selectForActive,'active')"
-                          ng-options="supplier[1] for supplier in supplierFilterList">
-                          <option value="" ng-disable> -- Select Supplier --</option>
+                          ng-init="selectForActive='undefined'"
+                          ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                         </select>
                       </div>
                     </div>
@@ -1721,8 +1721,8 @@
                       </div>
                       <div class="select">
                         <select ng-model="selectForAction" ng-change="selectedSupplier(selectForAction,'action')"
-                          ng-options="supplier[1] for supplier in supplierFilterList">
-                          <option value="" ng-disable> -- Select Supplier --</option>
+                                ng-init="selectForAction='undefined'"
+                                ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                         </select>
                       </div>
                     </div>
@@ -2021,8 +2021,8 @@
                       <div class="select">
                         <select ng-model="selectForIntervene"
                           ng-change="selectedSupplier(selectForIntervene,'intervene')"
-                          ng-options="supplier[1] for supplier in supplierFilterList">
-                          <option value="" ng-disable> -- Select Supplier --</option>
+                          ng-init="selectForIntervene='undefined'"
+                          ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                         </select>
                       </div>
                     </div>
@@ -2629,8 +2629,8 @@
               </div>
               <div class="select">
                 <select ng-model="selectForHistory" ng-change="selectedSupplier(selectForHistory,'history')"
-                  ng-options="supplier[1] for supplier in supplierFilterList">
-                  <option value="" ng-disable> -- Select Supplier --</option>
+                        ng-init="selectForHistory='undefined'"
+                        ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                 </select>
               </div>
             </div>
@@ -3072,8 +3072,9 @@
       </div>
       <div class="select">
         <select ng-model="selectForActive" ng-change="selectedSupplier(selectForActive,'contact')"
-          ng-options="supplier[1] for supplier in supplierFilterList">
-          <option value="" ng-disable> -- Select Supplier --</option>
+                ng-init="selectForActive='undefined'"
+                ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
+
         </select>
       </div>
     </div>
@@ -4410,12 +4411,17 @@
                       {{leadData.lead_status}}
                     </td>
                     <td class="alignment">
-                      <select class="form-control" name="value" id="value"
+                      <!-- <select class="form-control" name="value" id="value"
                         ng-model="leadData.lead_source" style="width:150px;">
                         <option value="">Select Source</option>
                         <option value="bot">BOT</option>
                         <option value="feetonstreet">Feet on Street</option>
-                      </select>
+                      </select> -->
+                      <select class="form-control" name="Source" id="Source_id" 
+                              ng-model="leadData.lead_source"
+                              ng-options="data.id as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
+                              <option value="" disabled>Select Data Source</option>
+                     </select>
                     </td>
                     <!-- <td class="alignment">
                       <select class="form-control" name="call_back_time_{{$index}}" id="call_back_time_id_{{$index}}"
@@ -5338,6 +5344,21 @@
               <div class="col-md-8" style="margin-top: 10px">
                 <input type="text"  placeholder="secondary count" class="form-control"
                   name="unit_secondary_count" id="unit_secondary_count" ng-model="NewsupplierAddUpdateData.unit_secondary_count" value="" ng-required="true">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Data Source *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <select class="form-control" name="Source" id="Source_id" 
+                  ng-model="NewsupplierAddUpdateData.relationship_manager"
+                  ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
+                  <option value="" disabled>Select Data Source</option>
+                </select>
+                <span ng-show="myForm.Source.$dirty && myForm.Source.$invalid" class="error">Select Data Source</span>
+                </select>
               </div>
             </div>
               <!-- ADD POC -->
