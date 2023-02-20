@@ -2,12 +2,15 @@ import * as React from 'react';
 import { MenuItem, FormControl, Select, FormHelperText } from '@mui/material';
 import { clientStatusAtom, leadDecisionPendingListAtom } from '../API/_state';
 import { useRecoilValue } from 'recoil';
-import { decisionPendingActions } from '../API/_actions';
+import { decisionPendingActions, LeadDetailActions } from '../API/_actions';
 
 export default function ClientStatusDropdown(props) {
   const clientStatus = useRecoilValue(clientStatusAtom);
   const LeadBasicApi = decisionPendingActions();
-  const rowData = props.data.row;
+  const LeadDetailApi = LeadDetailActions();
+  const rowData = props.data;
+  const checkTable = props.checkTable;
+
   const ChangeClientStatus = async (e) => {
     let object = {
       macchadalo_client_status: e.target?.value,
@@ -16,7 +19,11 @@ export default function ClientStatusDropdown(props) {
     };
     let arr = [];
     arr.push(object);
-    await LeadBasicApi.updateClientStatus(arr);
+    if (checkTable == 'leadBasicTable') {
+      await LeadBasicApi.updateClientStatus(arr);
+    } else {
+      await LeadDetailApi.detailClientStatus(arr);
+    }
   };
 
   return (
@@ -24,7 +31,7 @@ export default function ClientStatusDropdown(props) {
       <FormControl sx={{ m: 1, minWidth: 100 }}>
         <Select
           className="select-menu"
-          value={props.data.row.macchadalo_client_status}
+          value={props.data?.macchadalo_client_status}
           onChange={ChangeClientStatus}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}

@@ -54,7 +54,7 @@ const decisionPendingActions = () => {
         });
         setDecisionPendingList({ ...decisionPendingList, lead: newList });
       } else {
-        alertActions.success(res.data);
+        alertActions.error(res.data);
       }
     });
   };

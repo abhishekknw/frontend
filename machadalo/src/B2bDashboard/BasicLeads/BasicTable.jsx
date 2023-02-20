@@ -89,7 +89,7 @@ export default function BasicTable(props) {
       headerClassName: 'super-app-theme--header',
       renderCell: (params) => (
         <>
-          <ClientStatusDropdown data={params} />
+          <ClientStatusDropdown data={params.row} checkTable="leadBasicTable" />
         </>
       ),
     },

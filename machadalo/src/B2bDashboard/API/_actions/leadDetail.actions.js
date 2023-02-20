@@ -58,10 +58,22 @@ const LeadDetailActions = () => {
       }
     });
   };
+
+  const detailClientStatus = (data) => {
+    let update = data;
+    return fetchWrapper.post(`${Apis.detailClientStatus}/`, { data: data }).then((res) => {
+      if (res.status) {
+        alertActions.success(res.data);
+      } else {
+        alertActions.error(res.data);
+      }
+    });
+  };
   return {
     CurrentCampaignList,
     campaignViewLeads,
     sendEmails,
+    detailClientStatus,
   };
 };
 export { LeadDetailActions };
