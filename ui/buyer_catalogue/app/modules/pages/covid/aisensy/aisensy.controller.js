@@ -941,6 +941,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.SelectedCompany = [];
           $scope.preferred_partnerList = {};
           $scope.leads_Data_1 = {};
+          let organisation = JSON.parse(localStorage["userInfo"]);
+          
           userService.getSector()
             .then(function onSuccess(response) {
               $scope.sectorList = response.data;
@@ -951,6 +953,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.lastIndex = $scope.leads_time.data.length - 1;
               $scope.leads_Data = response.data.data;
             })
+
+          AuthService.getUserMinimalList(organisation.profile.organisation.organisation_id)
+          .then(function onSuccess(response) {
+            $scope.userMinimalList = response.data.data;
+          }).catch(function onError(response) {
+            console.log(response);
+          })  
 
           releaseCampaignService.requirementDetail("", phone, supplier_id, supplierType)
             .then(function onSuccess(response) {
@@ -1037,7 +1046,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                   if (localindex_indexs != -1) {
                     $scope.requirementDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
                   }
-
                 }
               })
             })
