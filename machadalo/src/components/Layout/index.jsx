@@ -31,7 +31,7 @@ export default class Layout extends React.Component {
     // if (auth.isLoggedOut) {
     //   return <Redirect to="/auth/login" />;
     // }
-    let superUser = false;
+    let superUser = true;
     if (superUser) {
       return (
         <main>
