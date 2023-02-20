@@ -30,13 +30,15 @@ angular.module('catalogueApp')
         {header : 'Edit Details'},
         // {header : 'Download Proposal'}
       ];
-
-  var getProposalDetails = function(page){
+  var getProposalDetails = function(page,search){
     if(!page){
       page = 1;
     }
+    if(!search){
+      search = "";
+    }
     $scope.Data = [];
-    opsDashBoardService.getProposalDetails(page)
+    opsDashBoardService.getProposalDetails(page,search)
     	.then(function onSuccess(response){
         $scope.proposals = response.data.data.list;
         $scope.totalrecord = response.data.data.count;
@@ -61,8 +63,13 @@ angular.module('catalogueApp')
     	});
     }
 
-    $scope.pageChanged = function(page){
-      getProposalDetails(page);
+    $scope.pageChanged = function(page,search){
+      getProposalDetails(page,search);
+    }
+    $scope.searchProposalDetails = function(page,search){
+      if(search.length == 0 || search.length > 2){
+       getProposalDetails(1,search);
+      }
     }
 
     $scope.getUsersList = function(orgId){

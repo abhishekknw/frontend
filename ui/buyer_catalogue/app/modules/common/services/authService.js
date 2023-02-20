@@ -686,6 +686,9 @@ angular.module('Authentication')
                if (param.search) {
                   url += '&search=' + param.search
                }
+               if(param.type_of_entity){
+                  url += '&type_of_entity=' + param.type_of_entity;
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -893,8 +896,15 @@ angular.module('Authentication')
                return machadaloHttp.get(url);
 
              };
-             authService.getSupplierDataByNumber = function (number) {
-               let url = "v0/ui/b2b/supplier-list/?phone_number="+number;
+             authService.getSupplierDataByNumber = function (number,society) {
+               let url = "v0/ui/b2b/supplier-list/"
+               if(number){
+                  url = url+ "?phone_number="+number;
+               }
+               else{
+                  url = url+ "?society_name="+society;
+               }
+               // let url = "v0/ui/b2b/supplier-list/?phone_number="+number+"&society_name="+society;
                return machadaloHttp.get(url);
              };
              authService.getSupplierDataBySociety = function (id) {
@@ -907,5 +917,14 @@ angular.module('Authentication')
                return machadaloHttp.post(url, data);
             };
 
+            authService.initialStateList = function () {
+               var url = "v0/ui/state/";
+               return machadaloHttp.get(url);
+            };
+            authService.getUserMinimalList= function (org_id) {
+               var url = "v0/ui/website/get-users-minimal-list/?org_id="+org_id;
+               return machadaloHttp.get(url);
+            };
+
             return authService;
-         }])
+      }])

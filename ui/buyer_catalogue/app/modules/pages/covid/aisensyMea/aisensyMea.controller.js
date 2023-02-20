@@ -76,12 +76,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if ($scope.formData.activesearch) {
                     param.search = $scope.formData.activesearch;
                 }
-// console.log(param,'119090')
-                AuthService.getAllActiveUserData(param, true)
+                AuthService.getAllActiveUserData(param,"", true)
                     .then(function onSuccess(response) {
                         $scope.activeUserData = response.data.data.users;
                         $scope.totalCount = response.data.data.total_count
-                        console.log($scope.activeUserData)
                     }).catch(function onError(response) {
                         console.log(response);
                     })
@@ -112,7 +110,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if ($scope.formData.actionSearch) {
                     param.search = $scope.formData.actionSearch;
                 }
-                AuthService.getAllActionRequiredData(param,true)
+                AuthService.getAllActionRequiredData(param,"",true)
 
                     .then(function onSuccess(response) {
                         $scope.actionRequiredUserData = response.data.data.users;
@@ -146,7 +144,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if ($scope.formData.interveneSearch) {
                     param.search = $scope.formData.interveneSearch;
                 }
-                AuthService.getAllInterveneUserData(param,true)
+                AuthService.getAllInterveneUserData(param,"",true)
 
                     .then(function onSuccess(response) {
                         $scope.interveneUserData = response.data.data.users;
@@ -418,7 +416,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if ($scope.formData.historySearch) {
                     param.search = $scope.formData.historySearch;
                 }
-                AuthService.getAllUserHistory(param,true)
+                AuthService.getAllUserHistory(param,"",true)
 
 
                     .then(function onSuccess(response) {

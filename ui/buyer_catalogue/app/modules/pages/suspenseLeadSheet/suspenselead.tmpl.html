@@ -5,15 +5,15 @@
   <nav-bar></nav-bar>
 </div>
 </br></br></br>
-<main ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
+<main class="suspense-lead-sheet-page" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
 
   <div class="" permission="[]">
-    <div class="breadcrumb" ncy-breadcrumb></div>
-  </div>
-  <div class="pageTitle">
-    <h3>Suspense Lead</h3>
+    <!-- <div class="breadcrumb" ncy-breadcrumb></div> -->
   </div>
   <div class="middle-section">
+  <div class="suspense-lead-sheet">
+    <h3>Suspense Lead</h3>
+  </div>
   <div class="wrapperBox" ng-init="getAllSuspenseLeads(); initialData() ">
     <!-- <div class="middle-section"> -->
     <div class="al-main">
@@ -78,6 +78,7 @@
                 <table class="table table-striped table-bordered table-suppliers release_plan_table"
                   data-ng-init="initTable()">
                   <thead>
+                    <!-- <button class="btn btn-danger" ng-click="showHideRow()">{{newRowShowHide?'Remove':'Add New'}}</button> -->
                     <tr>
                       <th>Sr No</th>
                       <th class="alignment">Phone Number</th>
@@ -104,25 +105,199 @@
                     </tr>
                   </thead>
                   <tbody ng-if="loading">
+                    <tr style="background-color:rgb(146 25 35 / 16%);">
+                    <td>New Row</td>                   
+                    <td class="alignment">
+                      <input type="text" ng-model="newRowData.phone_number" name="Phone Number"
+                      class="form-control" placeholder="Phone Number">
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control"
+                        ng-model="newRowData.sector"
+                        ng-change='suspenseLeadFilterData(newRowData.sector)'
+                        ng-options="sector.id as sector.business_type for sector in sectorList | orderBy: 'business_type'">
+                        <option value="">Select Sector</option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control"
+                        ng-model="newRowData.subSector"
+                        ng-options="subSector.id as subSector.business_sub_type for subSector in newRowSub_sectorList | orderBy: 'business_type'">
+                        <option value="">Select Sub Sector</option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" name="current_patner_{{$index}}" id="current_patner_id_{{$index}}"
+                        ng-model="newRowData.current_patner">
+                        <option value="" disabled>Select Current Partner</option>
+                        <option ng-repeat="cpartner in newRowPreferred_partnerList track by $index"
+                          value="{{cpartner.organisation_id}}">
+                          {{cpartner.name}}
+                        </option>
+                      </select>
+                      <input style="margin-top:10px" type="text" class="form-control"
+                        placeholder="Other Current Company"
+                        name="currentCompanyOther" id="currentCompanyOtherId_{{$index}}"
+                        ng-model="newRowData.current_patner_other">
+                    </td>
+                    <td class="alignment">
+                        <select class="form-control" name="current_patner_feedback" id="current_patner_feedback_id_{{$index}}"
+                        ng-model="newRowData.current_patner_feedback" >
+                        <option value="" disabled>Select Current Partner Feedback</option>
+                        <option ng-repeat="cpartnerfeedback in current_patner_feedback track by $index"
+                          value="{{cpartnerfeedback}}">
+                          {{cpartnerfeedback}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <input type="text" ng-model="newRowData.current_patner_feedback_reason"
+                        name="current_patner_feedback_reason" class="form-control"
+                        placeholder="Current Patner Feedback Reason"
+                        id="current_patner_feedback_reason_id_{{$index}}">
+                    </td>
+
+                    <td class="alignment">
+                      <span style="width:150px;" class="multiselectDropdown"
+                        style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
+                        options="newRowPreferred_partnerList" extra-settings="dropdownSettings"
+                        selected-model="newSelected_preferred_patner" ng-click="leadPreferredMulticheck($index)"
+                        translation-texts="selected_business_type" events="events"></span>
+                      <span ng-repeat="selectedName in newSelected_preferred_patner" class="custom-dropdown"
+                        style="text-align: left; display: inline-block">
+                        {{selectedName.name}}
+                        <span ng-if="!$last">,</span>
+                      </span>
+                      <input style="margin-top:10px" type="text" class="form-control"
+                        placeholder="Other Preferred Company"
+                        name="other_preferred_company" id="other_preferred_company_{{$index}}"
+                        ng-model="newRowData.prefered_patner_other">
+                    </td>
+
+                    <td class="alignment">
+                      <select class="form-control" name="implementation_{{$index}}" id="implementation_id_{{$index}}"
+                        ng-model="newRowData.implementation_timeline">
+                        <option value="" disabled>Select Implementation Time</option>
+                        <option ng-repeat="(key,value) in implementationTime track by $index" value="{{key}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+
+                    <td class="alignment" class="form-group">
+                      <select class="form-control" name="meating_time_{{$index}}" id="meating_time_id_{{$index}}"
+                        ng-model="newRowData.meating_timeline">
+                        <option value="" disabled>Select Meeting Time</option>
+                        <option ng-repeat="(key,value) in meetingTime track by $index" value="{{key}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+
+                    <td class="alignment">
+                      <select class="form-control" ng-model="newRowData.L4">
+                        <option value="" disabled>Select</option>
+                        <option ng-repeat="lead_L4 in filterLeadData[sector_id].L4" value="{{lead_L4}}">
+                          {{lead_L4}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" ng-model="newRowData.L5">
+                        <option value="" disabled>Select</option>
+                        <option ng-repeat="lead_L5 in filterLeadData[sector_id].L5" value="{{lead_L5}}">
+                          {{lead_L5}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" ng-model="newRowData.L6">
+                        <option value="" disabled>Select</option>
+                        <option ng-repeat="lead_L6 in filterLeadData[sector_id].L6" value="{{lead_L6}}">
+                          {{lead_L6}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      {{leadData.lead_status}}
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control"
+                        name="call_back_time_{{$index}}" id="call_back_time_id_{{$index}}"
+                        ng-model="newRowData.call_back_preference"
+                        style="width:150px;">
+                        <option value="" disabled>Select Call Back Time</option>
+                        <option ng-repeat="(key,value) in call_back_time track by $index"
+                          value="{{key}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
                     
-                    <!-- <tr ng-repeat="leadData in leadTabData track by $index"> -->
+                    <td class="alignment">
+                      <textarea placeholder="Comment" class="form-control" ng-model="newRowData.comment" rows="4"
+                        cols="50">
+                      </textarea>
+                    </td>
+                    <td class="alignment">
+                      <p> Submitted: {{leadData.created_at | date:'medium' }} </p>
+                    </td>
+                    <td class="alignment">
+                      <p> {{leadData.calling_state }} 
+
+                        {{leadData.calling_state_time }} 
+                      </p>
+                    </td>
+                    <td class="alignment">
+                      <textarea placeholder="Internal Comment" class="form-control" ng-model="newRowData.internal_comment" rows="4"
+                        cols="50">
+                      </textarea>
+                    </td>
+                   
+                    <td class="alignment">
+                      <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info" ng-click="SaveNewRowData(newRowData)">Save</button> -->
+                    </td>
+
+                    <td class="alignment">
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info" ng-click="SaveNewRowData(newRowData)">Save</button>
+                      <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
+                        data-target="#companyDetailModal" ng-click="supplierForAddUpdate($index)" data-toggle="modal">Add/Update Supplier</button> -->
+                    </td>
+
+                    <td class="alignment">
+                      <!-- <button style="margin-bottom:2px"  type="button" name="button" ng-click="opsVerify(leadData._id)" class="btn btn-success" ng-disabled="leadData.is_updated == 'False'">Ops
+                        Verify</button>-->
+                    </td>
+                  </tr>
+                    
                       <tr ng-if="leadTabData.length > 0 && loading"
                         dir-paginate="leadData in leadTabData | itemsPerPage:itemsPerPage"
                         total-items="totalCount" current-page="pagination.current" track by "$index">
-                    <!-- <tr ng-if="leadTabData.length > 0"
-                      dir-paginate="leadData in leadTabData | itemsPerPage:itemsPerPage" current-page="currentPage"> -->
-                      <td>{{$index+serial}}</td>
-                      <!-- <td> {{serial + $index }}</td> -->
-                     
-                      <!-- <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td> -->
+                      <td>{{$index+serial}}</td>                     
                       <td class="alignment">{{leadData.phone_number}}</td>
-                      <td class="alignment">{{leadData.sector_name}}</td>
+                      <td class="alignment">
+                        <select class="form-control" name="city" id="city_id" 
+                          ng-model="leadData.sector_id"
+                          ng-change='suspenseLeadFilterData(leadData.sector_id,$index)'
+                          ng-options="sector.id as sector.business_type for sector in sectorList | orderBy: 'business_type'">
+                          <option value="">Select Sector</option>
+                        </select>
+                      </td>
                       <td class="alignment">{{leadData.sub_sector_name}}</td>
+                      <!-- <td class="alignment">
+                        <select class="form-control"
+                          ng-model="leadData.sub_sector_name"
+                          ng-options="subSector.business_sub_type as subSector.business_sub_type for subSector in suspenseSub_sectorList | orderBy: 'business_type'">
+                          <option value="">Select Sub Sector</option>
+                        </select>
+                      </td> -->
                       <td class="alignment">
                         <select class="form-control" name="current_patner_{{$index}}" id="current_patner_id_{{$index}}"
                           ng-model="leadData.current_patner">
                           <option value="" disabled>Select Current Partner</option>
-                          <option ng-repeat="cpartner in companiesData track by $index"
+                          <option
+                            ng-if="leadData.sector_id==cpartner.business_type[0]" 
+                            ng-repeat="cpartner in companiesData track by $index"
                             value="{{cpartner.organisation_id}}">
                             {{cpartner.name}}
                           </option>
@@ -154,9 +329,10 @@
                       </td>
 
                       <td class="alignment">
+                        {{suspenseLeadsPreferredPartner(leadData.sector_id)}}
                         <span style="width:150px;" class="multiselectDropdown"
                           style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
-                          options="companiesData" extra-settings="dropdownSettings"
+                          options="companiessuspenseLeads" extra-settings="dropdownSettings"
                           selected-model="leadData.selected_preferred_patner" ng-click="leadPreferredMulticheck($index)"
                           translation-texts="selected_business_type" events="events"></span>
                         <span ng-repeat="selectedName in leadData.selected_preferred_patner" class="custom-dropdown"
@@ -190,24 +366,16 @@
                         </select>
                       </td>
 
-                      <td class="alignment">
-                        <!-- <textarea placeholder="L1 Answers" class="form-control" ng-model="leadData.l1_answers" rows="4"
-                          cols="50">
-                        </textarea> -->
+                      <!-- <td class="alignment">
                         <span>{{leadData.l1_answers}}
                           <p>{{leadData.l1_answer_2}}</p>
                         </span>
                       </td>
                       <td class="alignment">
-                        <!-- <textarea placeholder="L2 Answers" class="form-control" ng-model="leadData.l2_answers" rows="4"
-                          cols="50">
-                        </textarea> -->
                         <span>{{leadData.l2_answers}}
                           <p>{{leadData.l2_answer_2}}</p>
                         </span>
                       </td>
-
-                   
                         <td class="alignment">
                           <textarea placeholder="L3 Answer" class="form-control" ng-model="leadData.l3_answer_1" rows="4"
                             cols="50">
@@ -215,6 +383,30 @@
                           <span>
                             <p>{{leadData.l3_answer_2}}</p>
                           </span>
+                        </td> -->
+                        <td class="alignment">
+                          <select class="form-control" ng-model="leadData.l1_answers">
+                            <option value="" disabled>Select</option>
+                            <option ng-repeat="lead_L4 in filterLeadData[leadData.sector_id].L4" value="{{lead_L4}}">
+                              {{lead_L4}}
+                            </option>
+                          </select>
+                        </td>
+                        <td class="alignment">
+                          <select class="form-control" ng-model="leadData.l1_answer_2">
+                            <option value="" disabled>Select</option>
+                            <option ng-repeat="lead_L5 in filterLeadData[leadData.sector_id].L5" value="{{lead_L5}}">
+                              {{lead_L5}}
+                            </option>
+                          </select>
+                        </td>
+                        <td class="alignment">
+                          <select class="form-control" ng-model="leadData.l2_answers">
+                            <option value="" disabled>Select</option>
+                            <option ng-repeat="lead_L6 in filterLeadData[leadData.sector_id].L6" value="{{lead_L6}}">
+                              {{lead_L6}}
+                            </option>
+                          </select>
                         </td>
                         
                     

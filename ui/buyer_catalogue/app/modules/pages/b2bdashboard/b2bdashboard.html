@@ -7,7 +7,7 @@
         <h2>{{msg}}</h2>
       </div>
       <nav-bar></nav-bar>
-      <div class="middle-section">
+      <div class="middle-section" style="padding: 0%;">
 
         <div class="body-bg"></div>
 
@@ -410,8 +410,9 @@
                         <td class="alignment text-center">{{decisionPanding.primary_count}}</td>
                         <td class="alignment text-center">{{decisionPanding.area}}</td>
                         <td class="alignment text-center">{{decisionPanding.city}}</td>
-                        <td class="alignment text-center">{{decisionPanding.lead_timestamp}}</td>
+                        <td class="alignment text-center">{{decisionPanding.lead_timestamp.split(' ')[0]}}</td>
                         <td class="alignment text-center">
+                          <!-- {{machadaloClientStatus(decisionPanding.macchadalo_client_status)}} -->
                           <select
                             ng-change="setValue(value8,decisionPanding.client_comment,decisionPanding._id,decisionPanding.requirement_id)"
                             class="form-control client-status" ng-model="value8">
@@ -453,7 +454,7 @@
                           <td class="alignment text-center">{{data.primary_count}}</td>
                           <td class="alignment text-center">{{data.area}}</td>
                           <td class="alignment text-center">{{data.city}}</td>
-                          <td class="alignment text-center">{{data.lead_timestamp}}</td>
+                          <td class="alignment text-center">{{data.lead_timestamp.split(' ')[0]}}</td>
                           <td class="alignment text-center">
                             <select ng-change="setValue(value8,data.client_comment,data._id,data.requirement_id)"
                               class="form-control client-status" ng-model="value8">
@@ -1126,10 +1127,13 @@
                     <input type="text" class="form-control" ng-model="searchData" ng-if="purchasedTable"
                       placeholder="search">
                     <div class="table-responsive">
-                      <div>
+                      <div style="color: black;">
                         <center>
-                          <h2 style="color: black;">Leads of {{campaignName}}</h2>
+                          <h2>Leads of {{campaignName}}</h2>
                         </center>
+                        <div align="right">
+                          <button class="btn danger" ng-click="refeshFilters()">Refresh Filter</button>
+                        </div>
                       </div>
                       <div class="date_range_picker">
                         <div class="row">
@@ -1143,7 +1147,7 @@
                                   <input type="text" style="color:#000000;" class="field"
                                     uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                                     ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
-                                    is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
+                                    is-open="isDatepickerOpen" datepicker-options="submittedDateOptions" ng-required="true"
                                     close-text="Close" alt-input-formats="altInputFormats">
                                   <button type="button" class="smallBtn calendar"
                                     ng-click="isDatepickerOpen = !isDatepickerOpen">
@@ -1164,7 +1168,7 @@
                                   <input type="text" style="color:#000000;" class="field"
                                     uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                                     ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
-                                    is-open="isEndDateOpen" datepicker-options="options1" ng-required="true"
+                                    is-open="isEndDateOpen" datepicker-options="submittedDateOptions" ng-required="true"
                                     close-text="Close" alt-input-formats="altInputFormats">
                                   <button type="button" class="smallBtn calendar"
                                     ng-disabled="!dateRangeModel.start_dates" ng-click="isEndDateOpen = !isEndDateOpen">
@@ -1187,7 +1191,7 @@
                                   <input type="text" style="color:#000000;" class="field"
                                     uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                                     ng-change="changeAcceptanceStartDate()" ng-model="AcceptanceDateRange.start_dates"
-                                    is-open="isDatepickerOpen1" datepicker-options="datepickerOptions1"
+                                    is-open="isDatepickerOpen1" datepicker-options="AcceptanceOptions"
                                     ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
                                   <button type="button" class="smallBtn calendar"
                                     ng-click="isDatepickerOpen1 = !isDatepickerOpen1">
@@ -1233,7 +1237,7 @@
                                   <input type="text" style="color:#000000;" class="field"
                                     uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                                     ng-change="changeUpdateStartDate()" ng-model="UpdateDateRangeModel.start_dates"
-                                    is-open="isDatepickerOpen2" datepicker-options="datepickerOptions2"
+                                    is-open="isDatepickerOpen2" datepicker-options="UpdateOptions"
                                     ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
                                   <button type="button" class="smallBtn calendar"
                                     ng-click="isDatepickerOpen2 = !isDatepickerOpen2">
@@ -1401,7 +1405,8 @@
                               <span ng-if="leadDetail.value">{{leadDetail.value}}</span>
                               <span ng-if="!leadDetail.value">NA</span>
                             </td>
-                            <td class="col-md-2">{{machadaloClientStatus(lead[0].macchadalo_client_status)}}
+                            <td class="col-md-2">
+                              <!-- {{machadaloClientStatus(lead[0].macchadalo_client_status)}} -->
                               <select
                                 ng-change="setValue(value8,lead[0].macchadalo_client_comment,lead[0]._id,lead[0].requirement_id)"
                                 class="form-control client-status" ng-model="value8">
@@ -2572,12 +2577,16 @@
 
 
   <!-- Modal -->
-  <div class="modal fade modalForTAble b2b-dash-table" id="myModal" role="dialog">
+  <div class="modal fade modalForTAble b2b-dash-modal b2b-dash-table" id="myModal" role="dialog">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div style="background-color: #8e1921; color:#FFFFFF;" class="modal-header">
           <button style="color:#FFFFFF;" type="button" class="close" data-dismiss="modal">&times;</button>
           <h2 class="modal-title">Lead Details ({{req_id_detail}})</h2>
+          <div class="d-flex  pt-5 justify-content-between">
+            <span class="lead-date">Share Date: {{leadDetailDataList.sector.acceptance_date}}</span> &nbsp; 
+            <span class="lead-assigned-by">Assigned by: {{leadDetailDataList.sector.lead_assigned.assignedby}}</span> &nbsp; 
+            <span class="lead-assigned-to">Assigned to: {{leadDetailDataList.sector.lead_assigned.assignedto}}</span></div>
         </div>
         <div style="padding:15px;" class="modal-body">
           <div>
@@ -2696,10 +2705,10 @@
             </div><br>
             <div>
               <table class="table">
-                <tr>
-                  <th style="background-color: #8e1921; color: #fff;">
+                <tr >
+                  <th style="background-color: #8e1921; color: #fff;" class="d-flex align-item-center">
                     <h4>Comments :</h4>
-                    <select class="form-control" style="color: #000000" ng-click="filterComment(commentType)"
+                    <select class="form-control small-dropdown" style="color: #000000" ng-click="filterComment(commentType)"
                       ng-model="commentType">
                       <option value="all" ng-selected="true">All</option>
                       <option value="company_comment">Company comment</option>
@@ -2710,7 +2719,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <div class="modal-body">
+                    <div class="">
                       <div class="modalBodyBox">
                         <div class="table-h-scroll">
                           <table class="table-data">

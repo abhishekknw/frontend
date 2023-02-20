@@ -78,6 +78,22 @@ angular.module('catalogueApp')
       suspenseLeadService.getAllBeds = function () {
         return true;
       }
+      suspenseLeadService.getSector =function(){
+        let url = base_url + "accounts/create_business/load_business_types/";
+        return machadaloHttp.get(url);
+      }
+      suspenseLeadService.selectLeads = function(){
+        let url = base_url + "b2b/question-dropdown-filter/";
+        return machadaloHttp.get(url);
+      }
+      suspenseLeadService.filterPreferredPartner = function(id){
+        let url = base_url + "b2b/browsed-companies-list/?sector_id="+id;
+        return machadaloHttp.get(url);
+      }
+      suspenseLeadService.saveNewLeadTabSuspenseLead = function (data) {
+        var url = base_url + "b2b/suspense-leads-tab/";
+        return machadaloHttp.post(url,data);
+      }
   
       return suspenseLeadService;
     }]);

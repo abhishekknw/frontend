@@ -2,21 +2,24 @@
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
 
 <div ng-loading="loading"></div> <!--For displaying loading icon-->
-<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
+<!-- <main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading"> -->
+  <main ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
   <div class="wrapperBox">
-    <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
     <nav-bar></nav-bar>
     <div class="middle-section">
+      <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
       <div class="backBtn">
         <button class="smallBtn active" ng-click="goToCampaignList()">List Campaigns</button>
       </div>
       <div class="breadcrumb" ncy-breadcrumb></div>
-      <h2 class="heading" ng-hide="hideData || isEmpty">Campaign Decision Board</h2>
-
-      <div class="" ng-hide="hideData || isEmpty">
+      <!-- <h2 class="heading" ng-hide="hideData || isEmpty">Campaign Decision Board</h2> -->
+      <h2 class="heading" ng-hide="hideData">Campaign Decision Board</h2>
+      <!-- <div class="" ng-hide="hideData || isEmpty"> -->
+      <div class="" ng-hide="hideData">
         <div st-table="proposals" st-safe-src="Data">
           <div class="searchBox">
-            <input st-search="" placeholder="Search ..." class="field"  type="search">
+            <input placeholder="Search ..." class="field"  type="search"
+             ng-model="searchQuery" ng-change="searchProposalDetails(currentPage,searchQuery)">
             <button><i class="fas fa-search"></i></button>
           </div>
           <table class="table-data">
@@ -35,7 +38,7 @@
               <th>Edit Details</th>
               <th>Comments</th>
             </tr>
-             <tr st-select-row='proposal' dir-paginate="proposal in proposals | filter:f | filter:searchQuery | itemsPerPage:10"
+             <tr st-select-row='proposal' dir-paginate="proposal in proposals | filter:f  | itemsPerPage:10"
                   total-items="totalrecord" current-page="currentPage" track by "$index">
             <!-- <tr ng-repeat="proposal in proposals"> -->
               <td>{{$index+1}}</td>
@@ -94,7 +97,7 @@
             </tr>
           </table>
           <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"
-          on-page-change="pageChanged(newPageNumber)" >
+          on-page-change="pageChanged(newPageNumber,searchQuery)" >
           </dir-pagination-controls>
           <!-- <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div> -->
         </div>
