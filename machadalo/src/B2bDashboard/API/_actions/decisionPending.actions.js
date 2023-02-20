@@ -73,12 +73,23 @@ const decisionPendingActions = () => {
     });
   };
 
+  const AcceptDeclineLeads = (data) => {
+    return fetchWrapper.post(`${Apis.acceptDecline}/`, { data: data }).then((res) => {
+      if (res.status) {
+        alertActions.success(res.data);
+      } else {
+        alertActions.error(res.data);
+      }
+    });
+  };
+
   return {
     LeadDecisionPendingList,
     ClientStatusList,
     updateClientStatus,
     getCommentList,
     postComment,
+    AcceptDeclineLeads,
   };
 };
 export { decisionPendingActions };

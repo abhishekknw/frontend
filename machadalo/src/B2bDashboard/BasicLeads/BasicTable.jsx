@@ -7,6 +7,7 @@ import ClientStatusDropdown from '../common/ClientStatus';
 import ViewCommentModal from '../modals/ViewComment';
 import { useRecoilValue } from 'recoil';
 import { leadDecisionPendingListAtom } from '../API/_state';
+import AcceptDeclineLeads from './AcceptDecline';
 
 export default function BasicTable(props) {
   const ListData = useRecoilValue(leadDecisionPendingListAtom);
@@ -29,7 +30,11 @@ export default function BasicTable(props) {
       renderCell: (params) => (
         <>
           <div className="">
-            <Checkbox />
+            <Checkbox
+              onChange={(e) => {
+                console.log(params.row);
+              }}
+            />
           </div>
         </>
       ),
@@ -123,19 +128,9 @@ export default function BasicTable(props) {
       headerClassName: 'super-app-theme--header',
       cellClassName: 'super-app-theme--cell center-div',
       renderCell: (params) => (
-        <strong>
-          <Button variant="contained" size="small" className="theme-btn text-small">
-            Accept
-          </Button>
-          <Button
-            variant="contained"
-            size="small"
-            className="theme-btn text-small"
-            style={{ marginLeft: 5 }}
-          >
-            Decline
-          </Button>
-        </strong>
+        <>
+          <AcceptDeclineLeads data={params.row} />
+        </>
       ),
     },
   ];
