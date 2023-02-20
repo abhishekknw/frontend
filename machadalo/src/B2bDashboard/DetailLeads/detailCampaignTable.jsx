@@ -20,6 +20,7 @@ const LeadDetailTable = (props) => {
     filterData = { ...filterData, campaign_id: data.row.campaign_id };
     setFilters({ ...filters, campaign_id: data.row.campaign_id });
     await leadDetailApi.campaignViewLeads(filterData);
+    await leadDetailApi.getCampaignCityList(filterData);
     setShowViewLeads(true);
   }
 

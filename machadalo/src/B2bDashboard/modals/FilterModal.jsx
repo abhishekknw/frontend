@@ -14,6 +14,8 @@ import {
   MenuItem,
   FormControl,
   Select,
+  Checkbox,
+  ListItemText,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -21,23 +23,35 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dayjs from 'dayjs';
 import CloseIcon from '@mui/icons-material/Close';
-import { viewLeadFilters } from '../API/_state';
-import { useRecoilState } from 'recoil';
+import { viewLeadFilters, clientStatusAtom, campaignCitylist } from '../API/_state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { LeadDetailActions } from '../API/_actions';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 export default function FilterModal() {
+  const leadDetailApi = LeadDetailActions();
+  const clientStatusList = useRecoilValue(clientStatusAtom);
   const [filters, setFilters] = useRecoilState(viewLeadFilters);
-  const [value, setValue] = React.useState(dayjs('2023-03-15T21:11:54'));
+  const cityList = useRecoilValue(campaignCitylist);
+  // const [value, setValue] = React.useState(dayjs('2023-03-15T21:11:54'));
   const [state, setState] = React.useState({
     top: false,
     left: false,
     bottom: false,
     right: false,
   });
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    console.log(event.$d);
-  };
+  const [clientStatus, setClientStatus] = React.useState([]);
+  const [selectedCity, setSelectedCity] = React.useState([]);
 
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
@@ -46,15 +60,31 @@ export default function FilterModal() {
   const handleSearch = (e, data) => {
     alert(1);
   };
-  function applyFilters() {
-    console.log(filters, '111111111111111');
+
+  const handleChange = (event) => {
+    let {
+      target: { value },
+    } = event;
+    setClientStatus(typeof value === 'string' ? value.split(',') : value);
+    setFilters({ ...filters, client_status: value.join(', ') });
+  };
+
+  const selectedCityChange = (event) => {
+    let {
+      target: { value },
+    } = event;
+    setSelectedCity(typeof value === 'string' ? value.split(',') : value);
+    setFilters({ ...filters, city: value.join(', ') });
+  };
+
+  async function applyFilters() {
+    await leadDetailApi.campaignViewLeads(filters);
   }
+
   const list = (anchor) => (
     <Box
       sx={{ p: 3, height: 'auto', width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 460 }}
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(anchor, false)}
     >
       <Typography borderBottom={1} variant="h5" pb={1} mb={4}>
         Filters
@@ -224,37 +254,7 @@ export default function FilterModal() {
           >
             <Typography>Primary Count</Typography>
           </AccordionSummary>
-          <AccordionDetails>
-            {/* <Box className="d-flex justify-content-between">
-              <Box className="me-2 d-flex">
-                <Typography className='small-text me-2' variant='h6' >Start Date </Typography>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DesktopDatePicker
-                  className='date-range-d'
-                    label="Select Date"
-                    inputFormat="DD/MM/YYYY"
-                    value={value}
-                    onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
-              </Box>
-
-              <Box className="d-flex">      
-                <Typography className='small-text me-2' variant='h6' >End Date </Typography>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DesktopDatePicker
-                  className='date-range-d'
-                    label="Select Date"
-                    inputFormat="DD/MM/YYYY"
-                    value={value}
-                    onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
-              </Box>
-            </Box> */}
-          </AccordionDetails>
+          <AccordionDetails>jdfhjklda</AccordionDetails>
         </Accordion>
       </Box>
       <Box className="d-flex justify-content-between">
@@ -267,13 +267,19 @@ export default function FilterModal() {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={age}
-              label="Age"
+              multiple
+              value={clientStatus}
+              label="Client Status"
               onChange={handleChange}
+              renderValue={(selected) => selected.join(', ')}
+              MenuProps={MenuProps}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {clientStatusList.map((name) => (
+                <MenuItem key={name.status_name} value={name.status_name}>
+                  <Checkbox checked={clientStatus.indexOf(name.status_name) > -1} />
+                  <ListItemText primary={name.status_name} />
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </div>
@@ -286,13 +292,19 @@ export default function FilterModal() {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={age}
-              label="Age"
-              onChange={handleChange}
+              multiple
+              value={selectedCity}
+              label="City"
+              onChange={selectedCityChange}
+              renderValue={(selected) => selected.join(', ')}
+              MenuProps={MenuProps}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {cityList.map((name) => (
+                <MenuItem key={name.label} value={name.label}>
+                  <Checkbox checked={selectedCity.indexOf(name.label) > -1} />
+                  <ListItemText primary={name.label} />
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </div>

@@ -22,7 +22,7 @@ export default function ClientStatusDropdown(props) {
     if (checkTable == 'leadBasicTable') {
       await LeadBasicApi.updateClientStatus(arr);
     } else {
-      await LeadDetailApi.detailClientStatus(arr);
+      await LeadDetailApi.detailUpdateClientStatus(arr);
     }
   };
 

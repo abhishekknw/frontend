@@ -32,4 +32,9 @@ const campaignLeads = atom({
   default: [],
 });
 
-export { currentCampaign, viewLeadFilters, campaignLeads };
+const campaignCitylist = atom({
+  key: 'campaignCitylist',
+  default: [],
+});
+
+export { currentCampaign, viewLeadFilters, campaignLeads, campaignCitylist };

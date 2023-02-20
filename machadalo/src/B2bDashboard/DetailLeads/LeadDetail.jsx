@@ -10,12 +10,6 @@ import { viewLeadFilters } from '../API/_state';
 import { useRecoilState } from 'recoil';
 
 const LeadDetail = () => {
-  // const [params, setParams] = useState({
-  //   leadType: 'Leads',
-  //   supplierType: 'all',
-  //   tabname: '',
-  //   userType: '',
-  // });
   const [filters, setFilters] = useRecoilState(viewLeadFilters);
   const leadDetailApi = LeadDetailActions();
 

@@ -1,6 +1,12 @@
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import { useFetchWrapper } from '../_helpers/fetch-wrapper';
-import { currentCampaign, campaignLeads, viewLeadFilters, errorAtom } from '../_state';
+import {
+  currentCampaign,
+  campaignLeads,
+  viewLeadFilters,
+  errorAtom,
+  campaignCitylist,
+} from '../_state';
 import { Apis } from '../request';
 import { useAlertActions } from '../_actions/alert.actions';
 
@@ -10,6 +16,7 @@ const LeadDetailActions = () => {
   const [viewLeads, setViewLeads] = useRecoilState(campaignLeads);
   const [error, setError] = useRecoilState(errorAtom);
   const filters = useRecoilValue(viewLeadFilters);
+  const setCampaignCitylist = useSetRecoilState(campaignCitylist);
   const alertActions = useAlertActions();
 
   const CurrentCampaignList = (data) => {
@@ -22,7 +29,7 @@ const LeadDetailActions = () => {
   };
 
   const campaignViewLeads = (data) => {
-    let parmas =
+    let params =
       '?campaign_id=' +
       data.campaign_id +
       '&lead_type=' +
@@ -31,8 +38,28 @@ const LeadDetailActions = () => {
       data?.supplier_type +
       '&next_page=' +
       data.next_page;
+    if (data?.start_date && data?.end_date) {
+      params += '&start_date=' + data.start_date + '&end_date=' + data.end_date;
+    }
+    if (data?.start_acceptance_date && data?.end_acceptance_date) {
+      params +=
+        '&start_acceptance_date=' +
+        data.start_acceptance_date +
+        '&end_acceptance_date=' +
+        data.end_acceptance_date;
+    }
+    if (data?.start_update_date && data?.end_update_date) {
+      params +=
+        '&start_update_date=' + data.start_update_date + '&end_update_date=' + data.end_update_date;
+    }
+    if (data?.city) {
+      params += '&city=' + data.city;
+    }
+    if (data?.client_status) {
+      params += '&client_status=' + data.client_status;
+    }
 
-    return fetchWrapper.get(`${Apis.campaignViewLeads}/${parmas}`).then((res) => {
+    return fetchWrapper.get(`${Apis.campaignViewLeads}/${params}`).then((res) => {
       setViewLeads(res.data);
     });
   };
@@ -59,7 +86,7 @@ const LeadDetailActions = () => {
     });
   };
 
-  const detailClientStatus = (data) => {
+  const detailUpdateClientStatus = (data) => {
     let update = data;
     return fetchWrapper.post(`${Apis.updateClientStatus}/`, { data: data }).then((res) => {
       if (res.status) {
@@ -69,11 +96,24 @@ const LeadDetailActions = () => {
       }
     });
   };
+
+  const getCampaignCityList = (data) => {
+    let param = '?campaign_id=' + data.campaign_id;
+    return fetchWrapper.get(`${Apis.getCampaignCityList}/${param}`).then((res) => {
+      if (res.status) {
+        setCampaignCitylist(res.data);
+      } else {
+        alertActions.error(res.data);
+      }
+    });
+  };
+
   return {
     CurrentCampaignList,
     campaignViewLeads,
     sendEmails,
-    detailClientStatus,
+    detailUpdateClientStatus,
+    getCampaignCityList,
   };
 };
 export { LeadDetailActions };
