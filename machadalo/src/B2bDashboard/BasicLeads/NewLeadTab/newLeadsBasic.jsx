@@ -4,37 +4,67 @@ import TextField from '@mui/material/TextField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { Typography, Box, Button } from '@mui/material';
+import { Typography, Box, Button, Drawer } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
 import CampaignTable from './CamapignTable';
 import TuneIcon from '@mui/icons-material/Tune';
+import { useRecoilValue } from 'recoil';
+import { NewLeadsTabActions } from '../../API/_actions';
+import { LeadCount } from '../../API/_state';
 
 export default function NewLeadsBasic() {
-  const [value, setValue] = React.useState(dayjs('2023-03-15T21:11:54'));
-  const handleChange = (newValue) => {
-    setValue(newValue);
+  const NewLeadTabApi = NewLeadsTabActions();
+  const countLead = useRecoilValue(LeadCount);
+  const [searchDate, setSearchDate] = React.useState(dayjs('2023-03-15T21:11:54'));
+  const [open, setOpen] = React.useState(false);
+
+  const getLeadCount = async (e) => {
+    let data = { selectDate: '2023-02-06 00:00:00.0000' };
+    await NewLeadTabApi.leadCountByDate(data);
+    setSearchDate(dayjs(e?.$d).format('YYYY-MM-DD'));
   };
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    setOpen(open);
+  };
+
+  const Filters = (anchor) => (
+    <Box
+      sx={{ p: 3, height: 'auto', width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 460 }}
+      role="presentation"
+    >
+      <Typography borderBottom={1} variant="h5" pb={1} mb={4}>
+        Filters
+      </Typography>
+      <Button className="close-btn" onClick={(e) => setOpen(false)}>
+        <CloseIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+      </Button>
+      <Typography className="px-3">Select Date</Typography>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DesktopDatePicker
+          label="Select Date"
+          inputFormat="DD/MM/YYYY"
+          value={searchDate}
+          onChange={(e) => {
+            getLeadCount(e);
+          }}
+          renderInput={(params) => <TextField {...params} />}
+        />
+      </LocalizationProvider>
+    </Box>
+  );
 
   return (
     <>
       <Box className="d-flex pt-4 date-box justify-content-around">
-        {/* <Typography className="px-3">Select Date</Typography>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DesktopDatePicker
-            label="Select Date"
-            inputFormat="DD/MM/YYYY"
-            value={value}
-            onChange={handleChange}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider> */}
         <Box className="d-flex">
           <Box className="time-color-bg text-center mx-5">
             <Typography variant="h6" className="text-white pb-1 count-heading">
               Least Count
             </Typography>
             <Typography variant="h2" className="count">
-              12
+              {countLead?.lead_count ? countLead?.lead_count : 0}
             </Typography>
           </Box>
           <Box className="time-color-bg text-center mx-5">
@@ -42,7 +72,7 @@ export default function NewLeadsBasic() {
               Satisfaction Survey
             </Typography>
             <Typography variant="h2" className="count">
-              01
+              {countLead?.existing_client_count ? countLead?.existing_client_count : 0}
             </Typography>
           </Box>
         </Box>
@@ -52,7 +82,7 @@ export default function NewLeadsBasic() {
           <Button variant="outlined" className="btn btn-dark me-4">
             Lead Details (28-12-2022)
           </Button>
-          <Button>
+          <Button onClick={toggleDrawer('right', true)}>
             <TuneIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
           </Button>
         </Box>
@@ -67,7 +97,12 @@ export default function NewLeadsBasic() {
           />
         </Box>
       </Box>
+      <Drawer height={400} anchor={'right'} open={open} onClose={toggleDrawer('right', false)}>
+        {Filters('right')}
+      </Drawer>
       <CampaignTable />
     </>
   );
 }
+
+// date: 2023-02-06 00:00:00.0000

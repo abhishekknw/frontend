@@ -10,7 +10,7 @@ export default function CampaignTable() {
       headerName: 'Index',
       width: 240,
       textAlign: 'center',
-      renderCell: (index) => index.api.getRowIndex(index.row.id) + 2,
+      renderCell: (index) => index.api.getRowIndex(index.row.proposal_id) + 1,
     },
     {
       field: 'name',

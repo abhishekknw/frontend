@@ -13,4 +13,7 @@ export const Apis = {
   // Both lead Basic and Lead Detail APis
   updateClientStatus: 'v0/ui/b2b/update-machadalo-client-status',
   commentList: 'v0/ui/b2b/basic-client-comment',
+
+  // New-Lead-Tab-APIs
+  leadCountByDate: 'v0/ui/b2b/lead-count-by-date',
 };
