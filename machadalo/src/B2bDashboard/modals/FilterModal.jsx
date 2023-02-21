@@ -21,9 +21,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import dayjs from 'dayjs';
 import CloseIcon from '@mui/icons-material/Close';
-import { viewLeadFilters, clientStatusAtom, campaignCitylist } from '../API/_state';
+import { viewLeadFilters, clientStatusAtom, campaignCitylist, campaignLeads } from '../API/_state';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { LeadDetailActions } from '../API/_actions';
 
@@ -43,6 +42,7 @@ export default function FilterModal() {
   const clientStatusList = useRecoilValue(clientStatusAtom);
   const [filters, setFilters] = useRecoilState(viewLeadFilters);
   const cityList = useRecoilValue(campaignCitylist);
+  const totalLeads = useRecoilValue(campaignLeads);
   // const [value, setValue] = React.useState(dayjs('2023-03-15T21:11:54'));
   const [state, setState] = React.useState({
     top: false,
@@ -310,7 +310,11 @@ export default function FilterModal() {
         </div>
       </Box>
       <Typography className="pt-5 pb-4">
-        Based on your filter there are 700+ leads in “All” cities
+        Based on your filter there are {totalLeads.length ? totalLeads.length : 0} leads in “
+        {selectedCity.length == cityList.length || selectedCity.length == 0
+          ? 'All'
+          : selectedCity.join(',')}
+        ” cities
       </Typography>
       <Box className="d-flex justify-content-between">
         <Button variant="outlined " className="theme-btn text-white ">

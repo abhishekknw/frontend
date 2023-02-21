@@ -16,8 +16,13 @@ const LeadDetailTable = (props) => {
   const [filters, setFilters] = useRecoilState(viewLeadFilters);
 
   async function viewCampaignLeads(e, data) {
-    let filterData = filters;
-    filterData = { ...filterData, campaign_id: data.row.campaign_id };
+    let filterData = {
+      campaign_id: data.row?.campaign_id,
+      lead_type: filters?.lead_type,
+      supplier_type: filters?.supplier_type,
+      next_page: filters?.next_page,
+    };
+    // filterData = { ...filterData, campaign_id: data.row.campaign_id };
     setFilters({ ...filters, campaign_id: data.row.campaign_id });
     await leadDetailApi.campaignViewLeads(filterData);
     await leadDetailApi.getCampaignCityList(filterData);

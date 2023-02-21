@@ -32,7 +32,7 @@ const LeadDetailActions = () => {
   const campaignViewLeads = (data) => {
     let params =
       '?campaign_id=' +
-      data.campaign_id +
+      data?.campaign_id +
       '&lead_type=' +
       data?.lead_type +
       '&supplier_code=' +
