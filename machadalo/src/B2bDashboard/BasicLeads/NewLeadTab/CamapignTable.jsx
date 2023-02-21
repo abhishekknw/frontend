@@ -4,7 +4,7 @@ import { leadCampaignData } from '../../API/_state';
 import { useRecoilValue } from 'recoil';
 import { Typography } from '@mui/material';
 import { NewLeadsTabActions } from '../../API/_actions';
-
+import SupplierDataTable from './SupplierDataTable';
 export default function CampaignTable() {
   const tableData = useRecoilValue(leadCampaignData);
   const NewLeadTabApi = NewLeadsTabActions();
@@ -66,6 +66,7 @@ export default function CampaignTable() {
         styles={{ height: 400, width: '100%' }}
         classNames="small-height-table data-b2b-table center-data-table "
       />
+      <SupplierDataTable />
     </>
   );
 }

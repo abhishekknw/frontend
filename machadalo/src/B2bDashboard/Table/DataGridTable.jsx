@@ -10,7 +10,13 @@ const DataGridTable = (props) => {
         <DataGrid
           rows={TableData}
           getRowId={(row, index) =>
-            row.campaign_id ? row.campaign_id : row._id ? row._id : row.proposal_id
+            row.campaign_id
+              ? row.campaign_id
+              : row._id
+              ? row._id
+              : row.proposal_id
+              ? row.proposal_id
+              : row.supplier_id
           }
           columns={columns}
           pageSize={20}
