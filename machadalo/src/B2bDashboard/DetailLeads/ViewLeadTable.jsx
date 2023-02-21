@@ -25,34 +25,34 @@ const ViewLeadDetail = (props) => {
           <TableHead>
             <TableRow>
               <TableCell>Index</TableCell>
-              {Object.keys(headers).map((key) => (
-                <TableCell key={key}>{headers[key]}</TableCell>
-              ))}
+              {headers &&
+                Object.keys(headers).map((key) => <TableCell key={key}>{headers[key]}</TableCell>)}
               <TableCell>Current Status</TableCell>
               <TableCell>Client Comment </TableCell>
               <TableCell>Lead Details</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {tableData.map((row, index) => (
-              <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell component="th" scope="row">
-                  {index + 1}
-                </TableCell>
-                {row.map((data, index) =>
-                  index != 0 ? <TableCell key={index}>{data?.value}</TableCell> : null
-                )}
-                <TableCell>
-                  <ClientStatusDropdown data={row[0]} checkTable="leadDetailTable" />
-                </TableCell>
-                <TableCell>
-                  <ViewCommentModal data={row[0]} />
-                </TableCell>
-                <TableCell>
-                  <LeadDetailModal />
-                </TableCell>
-              </TableRow>
-            ))}
+            {tableData &&
+              tableData.map((row, index) => (
+                <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                  <TableCell component="th" scope="row">
+                    {index + 1}
+                  </TableCell>
+                  {row.map((data, index) =>
+                    index != 0 ? <TableCell key={index}>{data?.value}</TableCell> : null
+                  )}
+                  <TableCell>
+                    <ClientStatusDropdown data={row[0]} checkTable="leadDetailTable" />
+                  </TableCell>
+                  <TableCell>
+                    <ViewCommentModal data={row[0]} />
+                  </TableCell>
+                  <TableCell>
+                    <LeadDetailModal />
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

@@ -9,6 +9,7 @@ import {
 } from '../_state';
 import { Apis } from '../request';
 import { useAlertActions } from '../_actions/alert.actions';
+import dayjs from 'dayjs';
 
 const LeadDetailActions = () => {
   const fetchWrapper = useFetchWrapper();
@@ -39,18 +40,25 @@ const LeadDetailActions = () => {
       '&next_page=' +
       data.next_page;
     if (data?.start_date && data?.end_date) {
-      params += '&start_date=' + data.start_date + '&end_date=' + data.end_date;
+      params +=
+        '&start_date=' +
+        dayjs(data.start_date).format('DD-MM-YYYY') +
+        '&end_date=' +
+        dayjs(data.end_date).format('DD-MM-YYYY');
     }
     if (data?.start_acceptance_date && data?.end_acceptance_date) {
       params +=
         '&start_acceptance_date=' +
-        data.start_acceptance_date +
+        dayjs(data.start_acceptance_date).format('DD-MM-YYYY') +
         '&end_acceptance_date=' +
-        data.end_acceptance_date;
+        dayjs(data.end_acceptance_date).format('DD-MM-YYYY');
     }
     if (data?.start_update_date && data?.end_update_date) {
       params +=
-        '&start_update_date=' + data.start_update_date + '&end_update_date=' + data.end_update_date;
+        '&start_update_date=' +
+        dayjs(data.start_update_date).format('DD-MM-YYYY') +
+        '&end_update_date=' +
+        dayjs(data.end_update_date).format('DD-MM-YYYY');
     }
     if (data?.city) {
       params += '&city=' + data.city;
