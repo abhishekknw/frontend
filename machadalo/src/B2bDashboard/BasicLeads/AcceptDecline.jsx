@@ -37,15 +37,11 @@ export default function AcceptDeclineLeads(props) {
         onClick={(e) => {
           AcceptDecline(props.data, 'Decline');
         }}
-        // disabled={props.data?.client_status==='Decline'}
+        disabled={props.data?.client_status === 'Decline'}
       >
-        Decline
-        {/* {props.data?.client_status==='Decline'?'Currently Declined ':'Decline'} */}
+        {/* Decline */}
+        {props.data?.client_status === 'Decline' ? 'Currently Declined ' : 'Decline'}
       </Button>
     </>
   );
 }
-
-// client_status: "Accepted"
-// requirement_id: 9924
-// _id: "63ac281db3cf3b4ce7cd37eb"
