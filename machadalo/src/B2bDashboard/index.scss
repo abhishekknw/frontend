@@ -335,10 +335,10 @@ color: #fff;
 }
 .tab-wrapper-main{
     .main-b2b-tab {
-        padding: 5px 150px;
+        padding: 5px 100px;
     }
     &>.tab-content{
-        padding: 0 80px;
+        padding: 0 40px;
     }
 }
 table thead tr th {
@@ -365,6 +365,13 @@ table thead tr th {
     background-color: #fff;
     border-radius: 10px;
     padding: 2px;
+}
+.heading-with-bg{
+    background-color: #8e1921;
+    padding: 3px 7px;
+    color: #ffffff;
+    border-radius: 4px 4px 0px 0px;
+    margin-bottom: 10px !important;
 }
 .close-btn{
     position: absolute !important;
