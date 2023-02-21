@@ -5,4 +5,14 @@ const LeadCount = atom({
   default: {},
 });
 
-export { LeadCount };
+const leadCampaignData = atom({
+  key: 'leadCampaignData',
+  default: {},
+});
+
+const supplierData = atom({
+  key: 'supplierData',
+  default: [],
+});
+
+export { LeadCount, leadCampaignData, supplierData };

@@ -16,4 +16,6 @@ export const Apis = {
 
   // New-Lead-Tab-APIs
   leadCountByDate: 'v0/ui/b2b/lead-count-by-date',
+  leadCampaignData: 'v0/ui/b2b/lead-campaign-data',
+  getSupplierByCampaign: 'v0/ui/b2b/supplier-by-campaign',
 };

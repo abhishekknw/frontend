@@ -1,7 +1,17 @@
 import * as React from 'react';
 import DataGridTable from '../../Table/DataGridTable';
+import { leadCampaignData } from '../../API/_state';
+import { useRecoilValue } from 'recoil';
+import { Typography } from '@mui/material';
+import { NewLeadsTabActions } from '../../API/_actions';
 
 export default function CampaignTable() {
+  const tableData = useRecoilValue(leadCampaignData);
+  const NewLeadTabApi = NewLeadsTabActions();
+
+  async function supplierData(data) {
+    await NewLeadTabApi.getSupplierData(data.row);
+  }
   const header = [
     {
       field: 'Index',
@@ -19,6 +29,16 @@ export default function CampaignTable() {
       cellClassName: 'red-font',
       headerName: 'Campaign Name	',
       width: 240,
+      renderCell: (params) => (
+        <Typography
+          variant="subtitle2"
+          onClick={(e) => {
+            supplierData(params);
+          }}
+        >
+          {params.row.name}
+        </Typography>
+      ),
     },
     {
       field: 'purchased_count',
@@ -38,19 +58,10 @@ export default function CampaignTable() {
     },
   ];
 
-  const tableData = [
-    { name: 'Kriti test', not_purchased_count: 9, purchased_count: 0, proposal_id: 'KRIKRI4EF8' },
-    { name: 'Kriti test', not_purchased_count: 9, purchased_count: 0, proposal_id: 'KRIKRI4EF9' },
-    { name: 'Kriti test', not_purchased_count: 9, purchased_count: 0, proposal_id: 'KRIKRI4EF10' },
-    { name: 'Kriti test', not_purchased_count: 9, purchased_count: 0, proposal_id: 'KRIKRI4EF12' },
-    { name: 'Kriti test', not_purchased_count: 9, purchased_count: 0, proposal_id: 'KRIKRI4EF2' },
-    { name: 'Kriti test', not_purchased_count: 9, purchased_count: 0, proposal_id: 'KRIKRI4EF11' },
-  ];
-
   return (
     <>
       <DataGridTable
-        row={tableData}
+        row={tableData.campaigns}
         columns={header}
         styles={{ height: 400, width: '100%' }}
         classNames="small-height-table data-b2b-table center-data-table "
