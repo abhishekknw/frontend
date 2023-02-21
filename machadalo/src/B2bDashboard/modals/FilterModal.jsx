@@ -57,8 +57,15 @@ export default function FilterModal() {
     setState({ ...state, [anchor]: open });
   };
 
-  const handleSearch = (e, data) => {
-    alert(1);
+  const handleSearch = async (e) => {
+    let filterData = {
+      campaign_id: filters?.campaign_id,
+      lead_type: filters?.lead_type,
+      supplier_type: filters?.supplier_type,
+      next_page: filters?.next_page,
+      search: e.target.value,
+    };
+    await leadDetailApi.campaignViewLeads(filterData);
   };
 
   const handleChange = (event) => {

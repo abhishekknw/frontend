@@ -66,6 +66,9 @@ const LeadDetailActions = () => {
     if (data?.client_status) {
       params += '&client_status=' + data.client_status;
     }
+    if (data?.search) {
+      params += '&search=' + data.search;
+    }
 
     return fetchWrapper.get(`${Apis.campaignViewLeads}/${params}`).then((res) => {
       setViewLeads(res.data);
