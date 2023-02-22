@@ -12,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import ClientStatusDropdown from '../common/ClientStatus';
 import ViewCommentModal from '../modals/ViewComment';
 import LeadDetailModal from '../modals/leadDetailModal';
+
 const ViewLeadDetail = (props) => {
   const viewLeads = useRecoilValue(campaignLeads);
   const headers = viewLeads.header;
@@ -49,7 +50,7 @@ const ViewLeadDetail = (props) => {
                     <ViewCommentModal data={row[0]} />
                   </TableCell>
                   <TableCell>
-                    <LeadDetailModal />
+                    <LeadDetailModal data={row[0]} />
                   </TableCell>
                 </TableRow>
               ))}

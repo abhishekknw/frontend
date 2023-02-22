@@ -9,6 +9,7 @@ export const Apis = {
   campaignViewLeads: 'v0/ui/b2b/lead-form-headers',
   sendEmails: 'v0/ui/b2b/email-leads-summary',
   getCampaignCityList: 'v0/ui/b2b/city-list',
+  getLeadDetailsData: 'v0/ui/b2b/lead-details',
 
   // Both lead Basic and Lead Detail APis
   updateClientStatus: 'v0/ui/b2b/update-machadalo-client-status',

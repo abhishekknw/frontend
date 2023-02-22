@@ -6,6 +6,7 @@ import {
   viewLeadFilters,
   errorAtom,
   campaignCitylist,
+  leadDetailData,
 } from '../_state';
 import { Apis } from '../request';
 import { useAlertActions } from '../_actions/alert.actions';
@@ -18,6 +19,7 @@ const LeadDetailActions = () => {
   const [error, setError] = useRecoilState(errorAtom);
   const filters = useRecoilValue(viewLeadFilters);
   const setCampaignCitylist = useSetRecoilState(campaignCitylist);
+  const setLeadDetailData = useSetRecoilState(leadDetailData);
   const alertActions = useAlertActions();
 
   const CurrentCampaignList = (data) => {
@@ -119,12 +121,24 @@ const LeadDetailActions = () => {
     });
   };
 
+  const getLeadDetailsData = (id) => {
+    let param = '?_id=' + id;
+    return fetchWrapper.get(`${Apis.getLeadDetailsData}/${param}`).then((res) => {
+      if (res.status) {
+        setLeadDetailData(res.data);
+      } else {
+        alertActions.error(res.data);
+      }
+    });
+  };
+
   return {
     CurrentCampaignList,
     campaignViewLeads,
     sendEmails,
     detailUpdateClientStatus,
     getCampaignCityList,
+    getLeadDetailsData,
   };
 };
 export { LeadDetailActions };

@@ -37,4 +37,9 @@ const campaignCitylist = atom({
   default: [],
 });
 
-export { currentCampaign, viewLeadFilters, campaignLeads, campaignCitylist };
+const leadDetailData = atom({
+  key: 'leadDetailData',
+  default: {},
+});
+
+export { currentCampaign, viewLeadFilters, campaignLeads, campaignCitylist, leadDetailData };
