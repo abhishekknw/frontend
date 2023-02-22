@@ -8,8 +8,10 @@ import SupplierDataTable from './SupplierDataTable';
 export default function CampaignTable() {
   const tableData = useRecoilValue(leadCampaignData);
   const NewLeadTabApi = NewLeadsTabActions();
+  const [headerName, setHeaderName] = React.useState('');
 
   async function supplierData(data) {
+    setHeaderName(data.row.name);
     await NewLeadTabApi.getSupplierData(data.row);
   }
   const header = [
@@ -66,7 +68,7 @@ export default function CampaignTable() {
         styles={{ height: 400, width: '100%' }}
         classNames="small-height-table data-b2b-table center-data-table "
       />
-      <SupplierDataTable />
+      {headerName != '' && <SupplierDataTable data={headerName} />}
     </>
   );
 }

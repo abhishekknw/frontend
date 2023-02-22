@@ -2,11 +2,10 @@ import * as React from 'react';
 import DataGridTable from '../../Table/DataGridTable';
 import { supplierData } from '../../API/_state';
 import { useRecoilValue } from 'recoil';
-import { NewLeadsTabActions } from '../../API/_actions';
+import { Typography } from '@mui/material';
 
-export default function SupplierDataTable() {
+export default function SupplierDataTable(props) {
   const tableData = useRecoilValue(supplierData);
-  const NewLeadTabApi = NewLeadsTabActions();
   const header = [
     {
       field: 'supplier_name',
@@ -33,12 +32,15 @@ export default function SupplierDataTable() {
 
   return (
     <>
-      <DataGridTable
-        row={tableData}
-        columns={header}
-        styles={{ height: 400, width: '100%' }}
-        classNames="small-height-table data-b2b-table center-data-table "
-      />
+      <Typography> Supplier Details of {props?.data} Campaign </Typography>
+      {tableData.length > 0 && (
+        <DataGridTable
+          row={tableData}
+          columns={header}
+          styles={{ height: 400, width: '100%' }}
+          classNames="small-height-table data-b2b-table center-data-table "
+        />
+      )}
     </>
   );
 }

@@ -30,6 +30,10 @@ export default function NewLeadTabFilterModal() {
     setSearchDate(dayjs(e?.$d).format('YYYY-MM-DD'));
   };
 
+  // React.useEffect(() => {
+  //   getLeadCount(todayDate.format());
+  // },[]);
+
   const Filters = (anchor) => (
     <Box
       sx={{ p: 3, height: 'auto', width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 460 }}

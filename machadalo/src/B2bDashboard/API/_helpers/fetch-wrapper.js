@@ -2,13 +2,13 @@ import { useRecoilState } from 'recoil';
 
 // import { history } from '../_helpers';
 import { authAtom } from '../_state';
-// import { useAlertActions } from '../_actions';
+import { useAlertActions } from '../_actions';
 import API_URL from '../../../config';
 export { useFetchWrapper };
 
 function useFetchWrapper() {
   const auth = useRecoilState(authAtom);
-  // const alertActions = useAlertActions();
+  const alertActions = useAlertActions();
 
   return {
     get: request('GET'),
@@ -61,8 +61,8 @@ function useFetchWrapper() {
           history.push('/account/login');
         }
 
-        // const error = (data && data.message) || response.statusText;
-        // alertActions.error(error);
+        const error = (data && data.message) || response.statusText;
+        alertActions.error(error);
         return Promise.reject(error);
       }
       return data;
