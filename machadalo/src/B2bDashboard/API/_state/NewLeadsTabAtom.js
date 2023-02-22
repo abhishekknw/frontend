@@ -15,4 +15,9 @@ const supplierData = atom({
   default: [],
 });
 
-export { LeadCount, leadCampaignData, supplierData };
+const selectedDate = atom({
+  key: 'selectDate',
+  default: { selectDate: '' },
+});
+
+export { LeadCount, leadCampaignData, supplierData, selectedDate };

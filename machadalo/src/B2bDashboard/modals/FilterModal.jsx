@@ -116,6 +116,7 @@ export default function FilterModal() {
                 </Typography>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DesktopDatePicker
+                    size="small"
                     className="date-range-d"
                     label="Select Date"
                     inputFormat="DD/MM/YYYY"

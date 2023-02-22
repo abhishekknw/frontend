@@ -122,11 +122,11 @@ export default function BasicTable(props) {
     {
       field: 'Action',
       headerName: 'Action',
-      width: 150,
+      width: 200,
       sortable: false,
       headerAlign: 'center',
       headerClassName: 'super-app-theme--header',
-      cellClassName: 'super-app-theme--cell center-div',
+      cellClassName: 'super-app-theme--cell',
       renderCell: (params) => (
         <>
           <AcceptDeclineLeads data={params.row} />

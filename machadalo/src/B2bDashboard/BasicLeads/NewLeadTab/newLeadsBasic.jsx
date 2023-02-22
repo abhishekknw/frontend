@@ -3,21 +3,19 @@ import dayjs from 'dayjs';
 import { Typography, Box } from '@mui/material';
 import CampaignTable from './CamapignTable';
 import { NewLeadsTabActions } from '../../API/_actions';
-import { LeadCount } from '../../API/_state';
 import NewLeadTabFilterModal from '../../modals/NewLeadTabFilterModal';
-import { leadCampaignData } from '../../API/_state';
+import { leadCampaignData, selectedDate, LeadCount } from '../../API/_state';
 import { useRecoilValue } from 'recoil';
 
 export default function NewLeadsBasic() {
   const NewLeadTabApi = NewLeadsTabActions();
   const countLead = useRecoilValue(LeadCount);
   const tableData = useRecoilValue(leadCampaignData);
-  const [searchDate, setSearchDate] = React.useState(dayjs('2023-03-15T21:11:54'));
+  const Date = useRecoilValue(selectedDate);
 
   const getCampaignData = async (e) => {
-    let data = { selectDate: '2023-02-06 00:00:00.0000' };
+    let data = { selectDate: Date.selectDate };
     await NewLeadTabApi.getLeadCampaignData(data);
-    setSearchDate(dayjs(e?.$d).format('YYYY-MM-DD'));
   };
 
   return (
@@ -53,5 +51,3 @@ export default function NewLeadsBasic() {
     </>
   );
 }
-
-// date: 2023-02-06 00:00:00.0000

@@ -9,11 +9,13 @@ import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import TuneIcon from '@mui/icons-material/Tune';
 import { NewLeadsTabActions } from '../API/_actions';
+import { selectedDate } from '../API/_state';
+import { useRecoilState } from 'recoil';
 
 export default function NewLeadTabFilterModal() {
-  // 2023-03-15T21:11:54'
   let todayDate = dayjs();
   const [searchDate, setSearchDate] = React.useState(todayDate.format());
+  const [date, setDate] = useRecoilState(selectedDate);
   const [open, setOpen] = React.useState(false);
   const NewLeadTabApi = NewLeadsTabActions();
 
@@ -24,6 +26,7 @@ export default function NewLeadTabFilterModal() {
   const getLeadCount = async (e) => {
     let data = { selectDate: dayjs(e?.$d).format('YYYY-MM-DD') + ' 00:00:00.0000' };
     await NewLeadTabApi.leadCountByDate(data);
+    setDate({ selectDate: dayjs(e?.$d).format('YYYY-MM-DD') + ' 00:00:00.0000' });
     setSearchDate(dayjs(e?.$d).format('YYYY-MM-DD'));
   };
 
@@ -38,9 +41,13 @@ export default function NewLeadTabFilterModal() {
       <Button className="close-btn" onClick={(e) => setOpen(false)}>
         <CloseIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
       </Button>
-      <Typography className="px-3">Select Date</Typography>
+      <Typography className="pb-4" variant="h6">
+        Select Date
+      </Typography>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DesktopDatePicker
+          size="small"
+          className="date-range-d select-d"
           label="Select Date"
           inputFormat="DD/MM/YYYY"
           value={searchDate}
