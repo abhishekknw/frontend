@@ -7,12 +7,18 @@ import { useRecoilState } from 'recoil';
 export default function AcceptDeclineLeads(props) {
   const LeadBasicApi = decisionPendingActions();
   const [decisionPendingList, setDecisionPendingList] = useRecoilState(leadDecisionPendingListAtom);
-
   const AcceptDecline = async (data, status) => {
     let obj = [{ client_status: status, requirement_id: data?.requirement_id, _id: data?._id }];
     await LeadBasicApi.AcceptDeclineLeads(obj);
     if (status == 'Accept') {
       let newList = decisionPendingList.lead.filter((data) => data._id !== obj[0]?._id);
+      setDecisionPendingList({ ...decisionPendingList, lead: newList });
+    } else {
+      let newList = decisionPendingList.lead.map((data) => {
+        if (data._id == obj[0]._id) {
+          return { ...data, client_status: 'Decline' };
+        } else return data;
+      });
       setDecisionPendingList({ ...decisionPendingList, lead: newList });
     }
   };
@@ -39,7 +45,6 @@ export default function AcceptDeclineLeads(props) {
         }}
         disabled={props.data?.client_status === 'Decline'}
       >
-        {/* Decline */}
         {props.data?.client_status === 'Decline' ? 'Currently Declined ' : 'Decline'}
       </Button>
     </>
