@@ -2,7 +2,6 @@ import * as React from 'react';
 import DataGridTable from '../../Table/DataGridTable';
 import { supplierData } from '../../API/_state';
 import { useRecoilValue } from 'recoil';
-import { Typography } from '@mui/material';
 import { NewLeadsTabActions } from '../../API/_actions';
 
 export default function SupplierDataTable() {

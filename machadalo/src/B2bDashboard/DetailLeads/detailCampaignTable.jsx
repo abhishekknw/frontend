@@ -35,7 +35,7 @@ const LeadDetailTable = (props) => {
       headerName: 'Index',
       sortable: false,
       width: 50,
-      renderCell: (index) => index.api.getRowIndex(index.row.id) + 2,
+      renderCell: (index) => index.api.getRowIndex(index.row.campaign_id) + 1,
     },
     {
       field: 'name',
@@ -109,7 +109,6 @@ const LeadDetailTable = (props) => {
     {
       field: 'CreateField',
       headerName: 'Create Fields	',
-      description: 'This column has a value getter and is not sortable.',
       headerClassName: 'super-app-theme--header',
       sortable: false,
       width: 180,

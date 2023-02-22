@@ -346,6 +346,11 @@ table thead tr th {
     color: #ffffff !important;
     margin: 0 0;
     padding: 9px 10px !important;
+    white-space: nowrap;
+}
+table thead tr td{
+    padding: 4px;
+    white-space: nowrap;
 }
 .comment-all #demo-simple-select{
     padding: 8px 10px;

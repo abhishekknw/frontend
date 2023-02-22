@@ -11,7 +11,9 @@ import TuneIcon from '@mui/icons-material/Tune';
 import { NewLeadsTabActions } from '../API/_actions';
 
 export default function NewLeadTabFilterModal() {
-  const [searchDate, setSearchDate] = React.useState(dayjs('2023-03-15T21:11:54'));
+  // 2023-03-15T21:11:54'
+  let todayDate = dayjs();
+  const [searchDate, setSearchDate] = React.useState(todayDate.format());
   const [open, setOpen] = React.useState(false);
   const NewLeadTabApi = NewLeadsTabActions();
 
@@ -20,7 +22,7 @@ export default function NewLeadTabFilterModal() {
   };
 
   const getLeadCount = async (e) => {
-    let data = { selectDate: '2023-02-06 00:00:00.0000' };
+    let data = { selectDate: dayjs(e?.$d).format('YYYY-MM-DD') + ' 00:00:00.0000' };
     await NewLeadTabApi.leadCountByDate(data);
     setSearchDate(dayjs(e?.$d).format('YYYY-MM-DD'));
   };
@@ -55,7 +57,7 @@ export default function NewLeadTabFilterModal() {
       <Box className="d-flex justify-content-between align-items-center">
         <Box>
           <Button variant="outlined" className="btn btn-dark me-4">
-            Lead Details (28-12-2022)
+            Lead Details ({dayjs(searchDate).format('DD-MM-YYYY')})
           </Button>
           <Button onClick={toggleDrawer('right', true)}>
             <TuneIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
