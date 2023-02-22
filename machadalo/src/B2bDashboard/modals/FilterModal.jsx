@@ -37,7 +37,7 @@ const MenuProps = {
   },
 };
 
-export default function FilterModal() {
+export default function FilterModal(props) {
   const leadDetailApi = LeadDetailActions();
   const clientStatusList = useRecoilValue(clientStatusAtom);
   const [filters, setFilters] = useRecoilState(viewLeadFilters);
@@ -317,13 +317,13 @@ export default function FilterModal() {
           </FormControl>
         </div>
       </Box>
-      <Typography className="pt-5 pb-4">
+      {/* <Typography className="pt-5 pb-4">
         Based on your filter there are {totalLeads.length ? totalLeads.length : 0} leads in “
         {selectedCity.length == cityList.length || selectedCity.length == 0
           ? 'All'
           : selectedCity.join(',')}
         ” cities
-      </Typography>
+      </Typography> */}
       <Box className="d-flex justify-content-between">
         <Button variant="outlined " className="theme-btn text-white ">
           Download Leads
@@ -366,6 +366,11 @@ export default function FilterModal() {
             </Drawer>
           </React.Fragment>
         </Box>
+
+        <Box>
+          <Typography>LEADS OF {props?.headerName}</Typography>
+        </Box>
+
         <Box sx={{ m: 1, display: 'flex', alignItems: 'flex-end' }} className="input-col">
           <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
           <TextField

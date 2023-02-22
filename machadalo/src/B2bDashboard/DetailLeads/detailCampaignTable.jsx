@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ViewLeadDetail from './ViewLeadTable';
 import * as React from 'react';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import DataGridTable from '../Table/DataGridTable';
 import SendEmailModal from '../modals/sendEmailModal';
 import DownloadLeadsModal from '../modals/DownloadLeadsModal';
@@ -14,6 +14,7 @@ const LeadDetailTable = (props) => {
   const [showViewLeads, setShowViewLeads] = useState(false);
   const allCampaingn = useRecoilValue(currentCampaign);
   const [filters, setFilters] = useRecoilState(viewLeadFilters);
+  const [campaignData, setCampaignData] = useState({});
 
   async function viewCampaignLeads(e, data) {
     let filterData = {
@@ -24,6 +25,7 @@ const LeadDetailTable = (props) => {
     };
     // filterData = { ...filterData, campaign_id: data.row.campaign_id };
     setFilters({ ...filters, campaign_id: data.row.campaign_id });
+    setCampaignData(data?.row);
     await leadDetailApi.campaignViewLeads(filterData);
     await leadDetailApi.getCampaignCityList(filterData);
     setShowViewLeads(true);
@@ -132,13 +134,14 @@ const LeadDetailTable = (props) => {
 
   return (
     <>
+      <Typography>CURRENT CAMPAIGNS</Typography>
       <DataGridTable
         row={allCampaingn}
         columns={columns}
         styles={{ height: 400, width: '100%' }}
         classNames="small-height-table data-b2b-table center-data-table"
       />
-      {showViewLeads && <ViewLeadDetail />}
+      {showViewLeads && <ViewLeadDetail data={campaignData} />}
     </>
   );
 };

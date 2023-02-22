@@ -19,7 +19,7 @@ const ViewLeadDetail = (props) => {
 
   return (
     <>
-      <FilterModal />
+      <FilterModal headerName={props?.data?.name} />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
