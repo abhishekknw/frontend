@@ -346,6 +346,16 @@ table thead tr th {
     color: #ffffff !important;
     margin: 0 0;
     padding: 9px 10px !important;
+    white-space: nowrap;
+}
+table tbody tr td {
+    white-space: nowrap !important;
+    padding: 5px !important;
+    text-align: center !important;
+}
+table tbody tr th.MuiTableCell-root{
+    padding: 5px;
+    text-align: center !important;
 }
 .comment-all #demo-simple-select{
     padding: 8px 10px;
@@ -377,6 +387,18 @@ table thead tr th {
     position: absolute !important;
     top: 10px;
     right: 0;
+}
+.width-btn{
+    width: 100%;
+    min-width: 55px !important;
+    color: #ffffff !important;
+    max-width: max-content;
+}
+.date-range-d label{    
+    top: -9px;
+}
+.select-d.date-range-d label{
+    top: 0px
 }
 @media screen and (max-width: 767px) {
     .tab-wrapper-main{

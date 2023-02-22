@@ -32,7 +32,7 @@ export default function AcceptDeclineLeads(props) {
       <Button
         variant="contained"
         size="small"
-        className="theme-btn text-small"
+        className="theme-btn width-btn text-small"
         style={{ marginLeft: 5 }}
         onClick={(e) => {
           AcceptDecline(props.data, 'Decline');

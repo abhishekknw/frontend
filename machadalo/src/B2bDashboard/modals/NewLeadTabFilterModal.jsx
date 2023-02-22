@@ -36,9 +36,11 @@ export default function NewLeadTabFilterModal() {
       <Button className="close-btn" onClick={(e) => setOpen(false)}>
         <CloseIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
       </Button>
-      <Typography className="px-3">Select Date</Typography>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Typography className="pb-4" variant='h6'>Select Date</Typography>
+      <LocalizationProvider dateAdapter={AdapterDayjs} >
         <DesktopDatePicker
+        size="small"
+        className='date-range-d select-d'
           label="Select Date"
           inputFormat="DD/MM/YYYY"
           value={searchDate}
