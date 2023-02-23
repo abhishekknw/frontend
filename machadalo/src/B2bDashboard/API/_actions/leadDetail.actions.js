@@ -10,6 +10,8 @@ import {
 } from '../_state';
 import { Apis } from '../request';
 import { useAlertActions } from '../_actions/alert.actions';
+import API_URL from '../../../config';
+
 import dayjs from 'dayjs';
 
 const LeadDetailActions = () => {
@@ -132,6 +134,11 @@ const LeadDetailActions = () => {
     });
   };
 
+  const DownloadLeadsSummary = (id) => {
+    let url = `${API_URL.API_URL}/v0/ui/b2b/download-leads-summary/?lead_type=${filters.lead_type}&supplier_code=${filters.supplier_type}&campaign_id=${id}`;
+    window.open(url, '_blank');
+  };
+
   return {
     CurrentCampaignList,
     campaignViewLeads,
@@ -139,6 +146,7 @@ const LeadDetailActions = () => {
     detailUpdateClientStatus,
     getCampaignCityList,
     getLeadDetailsData,
+    DownloadLeadsSummary,
   };
 };
 export { LeadDetailActions };

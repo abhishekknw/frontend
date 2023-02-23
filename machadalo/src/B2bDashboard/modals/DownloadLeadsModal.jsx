@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -11,20 +10,31 @@ import IconButton from '@mui/material/IconButton';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 import { Typography } from '@mui/material';
+import { viewLeadFilters } from '../API/_state';
+import { useRecoilValue } from 'recoil';
+import { LeadDetailActions } from '../API/_actions';
 
 export default function DownloadLeadsModal(props) {
   const [open, setOpen] = React.useState(false);
+  const filters = useRecoilValue(viewLeadFilters);
+  const leadDetailApi = LeadDetailActions();
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  function downloadLeads() {
+    leadDetailApi.DownloadLeadsSummary(props.data.id);
+    //  let url = `https://stagingapi.machadalo.com/v0/ui/b2b/download-leads-summary/?lead_type=${filters.lead_type}&supplier_code=${filters.supplier_type}&campaign_id=${props.data.id}`
+    //   window.open(url,'_blank');
+  }
 
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
-    <div>
+    <>
       <Button
         className="theme-btn"
         variant="contained"
@@ -54,7 +64,13 @@ export default function DownloadLeadsModal(props) {
               <Typography className=" pb-3 text-black text-center red-font" variant="h6">
                 Download Leads
               </Typography>
-              <Button variant="contained" className="theme-btn">
+              <Button
+                variant="contained"
+                className="theme-btn"
+                onClick={(e) => {
+                  downloadLeads();
+                }}
+              >
                 Download Leads
               </Button>
             </Box>
@@ -77,11 +93,7 @@ export default function DownloadLeadsModal(props) {
             </Box>
           </Box>
         </DialogContent>
-        <DialogActions>
-          {/* <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button> */}
-        </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
