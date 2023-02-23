@@ -139,6 +139,16 @@ const LeadDetailActions = () => {
     window.open(url, '_blank');
   };
 
+  const uploadComments = (file) => {
+    return fetchWrapper.post(`${Apis.uploadComments}/`, file, true).then((res) => {
+      if (res.status) {
+        alertActions.success(res.data);
+      } else {
+        alertActions.error(res.data);
+      }
+    });
+  };
+
   return {
     CurrentCampaignList,
     campaignViewLeads,
@@ -147,6 +157,7 @@ const LeadDetailActions = () => {
     getCampaignCityList,
     getLeadDetailsData,
     DownloadLeadsSummary,
+    uploadComments,
   };
 };
 export { LeadDetailActions };

@@ -10,27 +10,25 @@ import IconButton from '@mui/material/IconButton';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 import { Typography } from '@mui/material';
-import { viewLeadFilters } from '../API/_state';
-import { useRecoilValue } from 'recoil';
 import { LeadDetailActions } from '../API/_actions';
 
 export default function DownloadLeadsModal(props) {
   const [open, setOpen] = React.useState(false);
-  const filters = useRecoilValue(viewLeadFilters);
   const leadDetailApi = LeadDetailActions();
+  const [file, setFile] = React.useState([]);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
   };
 
-  function downloadLeads() {
-    leadDetailApi.DownloadLeadsSummary(props.data.id);
-    //  let url = `https://stagingapi.machadalo.com/v0/ui/b2b/download-leads-summary/?lead_type=${filters.lead_type}&supplier_code=${filters.supplier_type}&campaign_id=${props.data.id}`
-    //   window.open(url,'_blank');
-  }
+  const uploadFile = () => {
+    const formData = new FormData();
+    formData.append('file', file);
+    leadDetailApi.uploadComments(formData);
+  };
 
-  const handleClose = () => {
-    setOpen(false);
+  const downloadLeads = () => {
+    leadDetailApi.DownloadLeadsSummary(props.data.id);
   };
 
   return (
@@ -42,16 +40,22 @@ export default function DownloadLeadsModal(props) {
         startIcon={<CloudDownloadIcon />}
         style={{}}
         onClick={(e) => {
-          handleClickOpen();
+          setOpen(true);
         }}
       >
         Download
       </Button>
-      <Dialog className="modal-comment" open={open} onClose={handleClose}>
+      <Dialog
+        className="modal-comment"
+        open={open}
+        onClose={(e) => {
+          setOpen(false);
+        }}
+      >
         <Button
           className="close-btn"
           onClick={(e) => {
-            handleClose();
+            setOpen(false);
           }}
         >
           <CloseIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
@@ -80,14 +84,19 @@ export default function DownloadLeadsModal(props) {
               </Typography>
               <Button variant="contained" className="theme-btn mx-4" component="label">
                 <IconButton color="" aria-label="upload picture" component="label">
-                  <input hidden accept="image/*" type="file" />
+                  <input hidden type="file" onChange={handleFileChange} />
                   <CloudUploadIcon style={{ fill: '#fff' }} />
                 </IconButton>
-                Upload
-                <input hidden accept="image/*" multiple type="file" />
+                Upload file
+                {/* <input hidden accept="image/*" multiple type="file" /> */}
               </Button>
-
-              <Button variant="contained" className="theme-btn">
+              <Button
+                variant="contained"
+                className="theme-btn"
+                onClick={(e) => {
+                  uploadFile(e);
+                }}
+              >
                 Upload Comments
               </Button>
             </Box>
