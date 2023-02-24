@@ -43,7 +43,7 @@ export default function SendEmailModal(props) {
 
   const sendEmails = async () => {
     setError(true);
-    await leadDetailApi.sendEmails(fields);
+    await leadDetailApi.sendEmails(fields, props?.sendWithFilter);
     setFields({ ...fields, emails: '', status: '' });
   };
 

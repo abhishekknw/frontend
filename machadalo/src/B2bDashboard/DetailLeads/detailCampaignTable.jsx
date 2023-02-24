@@ -91,7 +91,7 @@ const LeadDetailTable = (props) => {
       headerClassName: 'super-app-theme--header',
       renderCell: (params) => (
         <>
-          <SendEmailModal data={params} />
+          <SendEmailModal data={params} sendWithFilter={false} />
         </>
       ),
     },

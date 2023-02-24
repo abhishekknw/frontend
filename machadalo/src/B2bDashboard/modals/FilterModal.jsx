@@ -25,6 +25,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { viewLeadFilters, clientStatusAtom, campaignCitylist, campaignLeads } from '../API/_state';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { LeadDetailActions } from '../API/_actions';
+import SendEmailModal from '../modals/sendEmailModal';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -364,9 +365,10 @@ export default function FilterModal(props) {
         >
           Download Leads
         </Button>
-        <Button variant="outlined " className="theme-btn text-white ">
+        {/* <Button variant="outlined " className="theme-btn text-white ">
           Send Email
-        </Button>
+        </Button> */}
+        <SendEmailModal data={{ ...filters, id: filters.campaign_id }} sendWithFilter={true} />
         <Button
           variant="outlined "
           className="theme-btn text-white "

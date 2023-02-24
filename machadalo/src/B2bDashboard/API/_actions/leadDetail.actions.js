@@ -86,7 +86,8 @@ const LeadDetailActions = () => {
     });
   };
 
-  const sendEmails = (data) => {
+  const sendEmails = (data, check) => {
+    // check for filters and without filters
     let params =
       '?emails=' +
       data?.emails +
@@ -95,9 +96,49 @@ const LeadDetailActions = () => {
       '&Client_Status=' +
       data?.status +
       '&tabname=' +
-      filters?.tabname;
-    '&supplier_code=' + filters?.supplier_type;
-    '&lead_type=' + filters?.lead_type;
+      filters?.tabname +
+      '&supplier_code=' +
+      filters?.supplier_type +
+      '&lead_type=' +
+      filters?.lead_type;
+
+    if (check) {
+      if (filters?.start_date && filters?.end_date) {
+        params +=
+          '&start_date=' +
+          dayjs(filters.start_date).format('DD-MM-YYYY') +
+          '&end_date=' +
+          dayjs(filters.end_date).format('DD-MM-YYYY');
+      }
+      if (filters?.start_acceptance_date && filters?.end_acceptance_date) {
+        params +=
+          '&start_acceptance_date=' +
+          dayjs(filters.start_acceptance_date).format('DD-MM-YYYY') +
+          '&end_acceptance_date=' +
+          dayjs(filters.end_acceptance_date).format('DD-MM-YYYY');
+      }
+      if (filters?.start_update_date && filters?.end_update_date) {
+        params +=
+          '&start_update_date=' +
+          dayjs(filters.start_update_date).format('DD-MM-YYYY') +
+          '&end_update_date=' +
+          dayjs(filters.end_update_date).format('DD-MM-YYYY');
+      }
+      if (filters?.city) {
+        params += '&city=' + filters.city;
+      }
+      if (filters?.client_status) {
+        params += `&client_status=${filters.client_status}`;
+      }
+      if (filters?.from_primary_count && filters?.to_primary_count) {
+        params +=
+          '&from_primary_count=' +
+          filters.from_primary_count +
+          '&to_primary_count=' +
+          filters.to_primary_count;
+      }
+    }
+
     return fetchWrapper.get(`${Apis.sendEmails}/${params}`).then((res) => {
       if (res.status) {
         alertActions.success(res.data);
