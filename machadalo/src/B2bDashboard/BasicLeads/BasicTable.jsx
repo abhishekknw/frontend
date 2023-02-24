@@ -1,21 +1,59 @@
 import * as React from 'react';
 import DataGridTable from '../Table/DataGridTable';
-import { Button, Checkbox } from '@mui/material';
+import { Checkbox, Button } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import ClientStatusDropdown from '../common/ClientStatus';
 import ViewCommentModal from '../modals/ViewComment';
-import { useRecoilValue } from 'recoil';
-import { leadDecisionPendingListAtom } from '../API/_state';
+import { useRecoilState } from 'recoil';
+import { leadDecisionPendingListAtom, errorAtom } from '../API/_state';
 import AcceptDeclineLeads from './AcceptDecline';
+import { decisionPendingActions } from '../API/_actions';
 
 export default function BasicTable(props) {
-  const ListData = useRecoilValue(leadDecisionPendingListAtom);
+  const [ListData, setListData] = useRecoilState(leadDecisionPendingListAtom);
+  const [error, setError] = useRecoilState(errorAtom);
+  const LeadBasicApi = decisionPendingActions();
   const [page, setPage] = React.useState(1);
+  const [selected, setSelected] = React.useState([]);
 
   const handleChange = (event, value) => {
     setPage(value);
-    alert(value);
+  };
+
+  const multiSelectLeads = (lead, e) => {
+    let obj = { requirement_id: lead?.requirement_id, _id: lead?._id };
+    if (e.target.checked) {
+      setSelected([...selected, obj]);
+    } else {
+      setSelected((selected) =>
+        selected.filter((item) => item.requirement_id !== lead.requirement_id)
+      );
+    }
+  };
+  const allAcceptDecline = async (status) => {
+    let updateStatus = selected.map((v) => ({ ...v, client_status: status }));
+    let newList = [];
+    let RemoveIds = [];
+    updateStatus.map((item) => {
+      RemoveIds.push(item._id);
+    });
+    setError(true);
+    setSelected(updateStatus);
+    await LeadBasicApi.AcceptDeclineLeads(updateStatus);
+    if (status == 'Accept' && error == false) {
+      newList = ListData.lead.filter((data) => {
+        return !RemoveIds.includes(data._id);
+      });
+      setListData({ ...ListData, lead: newList });
+    } else {
+      newList = ListData.lead.map((data) => {
+        if (RemoveIds.includes(data._id)) {
+          return { ...data, client_status: 'Decline' };
+        } else return data;
+      });
+      setListData({ ...ListData, lead: newList });
+    }
   };
 
   const headCells = [
@@ -29,13 +67,11 @@ export default function BasicTable(props) {
       headerAlign: 'left',
       renderCell: (params) => (
         <>
-          <div className="">
-            <Checkbox
-              onChange={(e) => {
-                console.log(params.row);
-              }}
-            />
-          </div>
+          <Checkbox
+            onChange={(e) => {
+              multiSelectLeads(params.row, e);
+            }}
+          />
         </>
       ),
     },
@@ -145,6 +181,28 @@ export default function BasicTable(props) {
           classNames="data-b2b-table"
         />
       )}
+      <Button
+        variant="contained"
+        size="small"
+        className="theme-btn width-btn text-small"
+        style={{ marginLeft: 5 }}
+        onClick={(e) => {
+          allAcceptDecline('Accept');
+        }}
+      >
+        Accept All
+      </Button>
+      <Button
+        variant="contained"
+        size="small"
+        className="theme-btn width-btn text-small"
+        style={{ marginLeft: 5 }}
+        onClick={(e) => {
+          allAcceptDecline('Decline');
+        }}
+      >
+        Decline All
+      </Button>
       {ListData.length > 10 && (
         <Stack spacing={2}>
           <Pagination

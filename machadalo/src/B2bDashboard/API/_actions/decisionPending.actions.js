@@ -5,6 +5,7 @@ import {
   clientStatusAtom,
   commentListAtom,
 } from '../_state/decisionPending';
+import { errorAtom } from '../_state/alert';
 import { Apis } from '../request';
 import { useAlertActions } from '../_actions/alert.actions';
 
@@ -14,6 +15,7 @@ const decisionPendingActions = () => {
   const [decisionPendingList, setDecisionPendingList] = useRecoilState(leadDecisionPendingListAtom);
   const setClientStatusAtom = useSetRecoilState(clientStatusAtom);
   const [commentList, setCommentList] = useRecoilState(commentListAtom);
+  const [error, setErorr] = useRecoilState(errorAtom);
 
   const LeadDecisionPendingList = (data) => {
     let parmas =
@@ -77,8 +79,10 @@ const decisionPendingActions = () => {
     return fetchWrapper.post(`${Apis.acceptDecline}/`, { data: data }).then((res) => {
       if (res.status) {
         alertActions.success(res.data);
+        setErorr(false);
       } else {
         alertActions.error(res.data);
+        setErorr(true);
       }
     });
   };
