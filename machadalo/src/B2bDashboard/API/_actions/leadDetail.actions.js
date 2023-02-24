@@ -73,6 +73,13 @@ const LeadDetailActions = () => {
     if (data?.search) {
       params += '&search=' + data.search;
     }
+    if (data?.from_primary_count && data?.to_primary_count) {
+      params +=
+        '&from_primary_count=' +
+        data.from_primary_count +
+        '&to_primary_count=' +
+        data.to_primary_count;
+    }
 
     return fetchWrapper.get(`${Apis.campaignViewLeads}/${params}`).then((res) => {
       setViewLeads(res.data);

@@ -189,6 +189,7 @@ export default function BasicTable(props) {
         onClick={(e) => {
           allAcceptDecline('Accept');
         }}
+        disabled={selected.length < 1}
       >
         Accept All
       </Button>
@@ -200,6 +201,7 @@ export default function BasicTable(props) {
         onClick={(e) => {
           allAcceptDecline('Decline');
         }}
+        disabled={selected.length < 1}
       >
         Decline All
       </Button>

@@ -262,7 +262,40 @@ export default function FilterModal(props) {
           >
             <Typography>Primary Count</Typography>
           </AccordionSummary>
-          <AccordionDetails>jdfhjklda</AccordionDetails>
+          <AccordionDetails>
+            <Box className="d-flex justify-content-between">
+              <Box className="me-2 d-flex">
+                <TextField
+                  type="number"
+                  id="outlined-basic"
+                  label="Start"
+                  variant="outlined"
+                  InputProps={{ inputProps: { min: 0 } }}
+                  onChange={(e) => {
+                    setFilters({ ...filters, from_primary_count: e.target.value });
+                  }}
+                  value={filters.from_primary_count}
+                />
+              </Box>
+              <Box className="d-flex">
+                <TextField
+                  type="number"
+                  id="outlined-basic"
+                  label="End"
+                  variant="outlined"
+                  InputProps={{
+                    inputProps: {
+                      min: filters.from_primary_count ? filters.from_primary_count : 0,
+                    },
+                  }}
+                  onChange={(e) => {
+                    setFilters({ ...filters, to_primary_count: e.target.value });
+                  }}
+                  value={filters.to_primary_count}
+                />
+              </Box>
+            </Box>
+          </AccordionDetails>
         </Accordion>
       </Box>
       <Box className="d-flex justify-content-between">
