@@ -73,7 +73,7 @@ export default function FilterModal(props) {
       target: { value },
     } = event;
     setClientStatus(typeof value === 'string' ? value.split(',') : value);
-    setFilters({ ...filters, client_status: value.join(', ') });
+    setFilters({ ...filters, client_status: value.join(',') });
   };
 
   const selectedCityChange = (event) => {
@@ -81,11 +81,15 @@ export default function FilterModal(props) {
       target: { value },
     } = event;
     setSelectedCity(typeof value === 'string' ? value.split(',') : value);
-    setFilters({ ...filters, city: value.join(', ') });
+    setFilters({ ...filters, city: value.join(',') });
   };
 
   async function applyFilters() {
     await leadDetailApi.campaignViewLeads(filters);
+  }
+
+  function downloadLeadsByFilters() {
+    leadDetailApi.DownloadLeadsSummary(filters.campaign_id);
   }
 
   const list = (anchor) => (
@@ -350,15 +354,14 @@ export default function FilterModal(props) {
           </FormControl>
         </div>
       </Box>
-      {/* <Typography className="pt-5 pb-4">
-        Based on your filter there are {totalLeads.length ? totalLeads.length : 0} leads in “
-        {selectedCity.length == cityList.length || selectedCity.length == 0
-          ? 'All'
-          : selectedCity.join(',')}
-        ” cities
-      </Typography> */}
       <Box className="d-flex justify-content-between">
-        <Button variant="outlined " className="theme-btn text-white ">
+        <Button
+          variant="outlined "
+          className="theme-btn text-white "
+          onClick={(e) => {
+            downloadLeadsByFilters(e);
+          }}
+        >
           Download Leads
         </Button>
         <Button variant="outlined " className="theme-btn text-white ">

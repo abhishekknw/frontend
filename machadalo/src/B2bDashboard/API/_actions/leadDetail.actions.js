@@ -143,6 +143,44 @@ const LeadDetailActions = () => {
 
   const DownloadLeadsSummary = (id) => {
     let url = `${API_URL.API_URL}/v0/ui/b2b/download-leads-summary/?lead_type=${filters.lead_type}&supplier_code=${filters.supplier_type}&campaign_id=${id}`;
+
+    if (filters?.start_date && filters?.end_date) {
+      url +=
+        '&start_date=' +
+        dayjs(filters.start_date).format('DD-MM-YYYY') +
+        '&end_date=' +
+        dayjs(filters.end_date).format('DD-MM-YYYY');
+    }
+
+    if (filters?.start_acceptance_date && filters?.end_acceptance_date) {
+      url +=
+        '&start_acceptance_date=' +
+        dayjs(filters.start_acceptance_date).format('DD-MM-YYYY') +
+        '&end_acceptance_date=' +
+        dayjs(filters.end_acceptance_date).format('DD-MM-YYYY');
+    }
+    if (filters?.start_update_date && filters?.end_update_date) {
+      url +=
+        '&start_update_date=' +
+        dayjs(filters.start_update_date).format('DD-MM-YYYY') +
+        '&end_update_date=' +
+        dayjs(filters.end_update_date).format('DD-MM-YYYY');
+    }
+    if (filters?.city) {
+      url += '&city=' + filters.city;
+    }
+    if (filters?.client_status) {
+      url += `&client_status=${filters.client_status}`;
+      console.log(url, 'client_status');
+      console.log(filters.client_status, 'client_status');
+    }
+    if (filters?.from_primary_count && filters?.to_primary_count) {
+      url +=
+        '&from_primary_count=' +
+        filters.from_primary_count +
+        '&to_primary_count=' +
+        filters.to_primary_count;
+    }
     window.open(url, '_blank');
   };
 
