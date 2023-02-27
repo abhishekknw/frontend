@@ -355,10 +355,10 @@ export default function FilterModal(props) {
           </FormControl>
         </div>
       </Box>
-      <Box className="d-flex justify-content-between">
+      <Box className="d-flex justify-content-between pt-4">
         <Button
           variant="outlined "
-          className="theme-btn text-white "
+          className="theme-btn padding-small-btn text-white "
           onClick={(e) => {
             downloadLeadsByFilters(e);
           }}
@@ -371,7 +371,7 @@ export default function FilterModal(props) {
         <SendEmailModal data={{ ...filters, id: filters.campaign_id }} sendWithFilter={true} />
         <Button
           variant="outlined "
-          className="theme-btn text-white "
+          className="theme-btn text-white padding-small-btn"
           onClick={(e) => {
             applyFilters();
           }}
@@ -384,7 +384,7 @@ export default function FilterModal(props) {
 
   return (
     <div>
-      <Box className="b2b-container">
+      <Box className="b2b-container align-items-center">
         <Box sx={{ m: 1 }}>
           <React.Fragment key={'right'}>
             <Button
@@ -406,7 +406,7 @@ export default function FilterModal(props) {
         </Box>
 
         <Box>
-          <Typography>LEADS OF {props?.headerName}</Typography>
+          <Typography variant="h6">LEADS OF {props?.headerName}</Typography>
         </Box>
 
         <Box sx={{ m: 1, display: 'flex', alignItems: 'flex-end' }} className="input-col">

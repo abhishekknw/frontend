@@ -10,7 +10,7 @@ const PaginationConstant = (props) => {
   return (
     <Stack spacing={2}>
       <Pagination
-        className="page-link"
+        className="page-link pt-3 pb-3"
         variant="outlined"
         shape="rounded"
         showFirstButton

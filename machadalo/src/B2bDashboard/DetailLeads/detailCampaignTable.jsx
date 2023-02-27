@@ -123,12 +123,14 @@ const LeadDetailTable = (props) => {
 
   return (
     <>
-      <Typography>CURRENT CAMPAIGNS</Typography>
+      <Typography className="text-center pb-1" variant="h6">
+        CURRENT CAMPAIGNS
+      </Typography>
       <DataGridTable
         row={allCampaingn}
         columns={columns}
         styles={{ height: 400, width: '100%' }}
-        classNames="small-height-table data-b2b-table center-data-table"
+        classNames="small-height-table data-b2b-table center-data-table dheight-table"
       />
       {showViewLeads && <ViewLeadDetail data={campaignData} />}
     </>

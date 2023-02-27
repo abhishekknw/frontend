@@ -400,6 +400,28 @@ table tbody tr th.MuiTableCell-root{
 .select-d.date-range-d label{
     top: 0px
 }
+.page-link ul{
+    justify-content: center;
+}
+ html body .theme-btn.Mui-disabled{
+    background-color: #9a000073 !important;
+}
+.s-height-table{
+    min-height: 120px;
+    height: 400px;
+    overflow-y: scroll;
+}
+.dheight-table{
+    min-height: 120px;
+    height: 185px !important;
+    overflow-y: scroll;
+}
+.padding-small-btn{
+    padding: 1px 16px !important;
+}
+.MuiSelect-select{
+    width: 95px !important;
+}
 @media screen and (max-width: 767px) {
     .tab-wrapper-main{
         .main-b2b-tab {

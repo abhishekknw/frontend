@@ -1,6 +1,6 @@
 import * as React from 'react';
 import DataGridTable from '../Table/DataGridTable';
-import { Checkbox, Button } from '@mui/material';
+import { Checkbox, Button, Box } from '@mui/material';
 import PaginationConstant from '../Pagination';
 import ClientStatusDropdown from '../common/ClientStatus';
 import ViewCommentModal from '../modals/ViewComment';
@@ -182,36 +182,41 @@ export default function BasicTable(props) {
           classNames="data-b2b-table"
         />
       )}
-      <Button
-        variant="contained"
-        size="small"
-        className="theme-btn width-btn text-small"
-        style={{ marginLeft: 5 }}
-        onClick={(e) => {
-          allAcceptDecline('Accept');
-        }}
-        disabled={selected.length < 1}
-      >
-        Accept All
-      </Button>
-      <Button
-        variant="contained"
-        size="small"
-        className="theme-btn width-btn text-small"
-        style={{ marginLeft: 5 }}
-        onClick={(e) => {
-          allAcceptDecline('Decline');
-        }}
-        disabled={selected.length < 1}
-      >
-        Decline All
-      </Button>
-      <PaginationConstant
-        pageSize={20}
-        totalItems={ListData.length}
-        pageNo={page}
-        onPageChange={handleChange}
-      />
+      <Box className="d-flex align-items-center justify-content-between">
+        <Box>
+          <Button
+            variant="contained"
+            size="small"
+            className="theme-btn width-btn text-small mt-2 mb-2"
+            style={{ marginLeft: 5 }}
+            onClick={(e) => {
+              allAcceptDecline('Accept');
+            }}
+            disabled={selected.length < 1}
+          >
+            Accept All
+          </Button>
+          <Button
+            variant="contained"
+            size="small"
+            className="theme-btn width-btn text-small mt-2 mb-2"
+            style={{ marginLeft: 5 }}
+            onClick={(e) => {
+              allAcceptDecline('Decline');
+            }}
+            disabled={selected.length < 1}
+          >
+            Decline All
+          </Button>
+        </Box>
+        <PaginationConstant
+          pageSize={20}
+          totalItems={ListData.length}
+          pageNo={page}
+          onPageChange={handleChange}
+        />
+      </Box>
+      <Box></Box>
     </>
   );
 }

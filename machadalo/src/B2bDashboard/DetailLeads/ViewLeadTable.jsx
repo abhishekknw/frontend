@@ -36,14 +36,14 @@ const ViewLeadDetail = (props) => {
   return (
     <>
       <FilterModal headerName={props?.data?.name} />
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="s-height-table">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Index</TableCell>
               {headers &&
                 Object.keys(headers).map((key) => <TableCell key={key}>{headers[key]}</TableCell>)}
-              <TableCell>Current Status</TableCell>
+              <TableCell className="text-center">Current Status</TableCell>
               <TableCell>Client Comment </TableCell>
               <TableCell>Lead Details</TableCell>
             </TableRow>

@@ -66,7 +66,7 @@ export default function CampaignTable() {
         row={tableData.campaigns}
         columns={header}
         styles={{ height: 400, width: '100%' }}
-        classNames="small-height-table data-b2b-table center-data-table "
+        classNames="small-height-table data-b2b-table center-data-table dheight-table"
       />
       {headerName != '' && <SupplierDataTable data={headerName} />}
     </>

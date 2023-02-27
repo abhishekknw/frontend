@@ -24,7 +24,6 @@ export default function B2bRoutes(props) {
             path={`${match.path}/dashboard`}
             render={(componentProps) => <B2bDashboard {...props} {...componentProps} />}
           />
-          <Route path="/" element={<h1>Home Page Component</h1>} />
         </SnackbarProvider>
       </Switch>
     </>

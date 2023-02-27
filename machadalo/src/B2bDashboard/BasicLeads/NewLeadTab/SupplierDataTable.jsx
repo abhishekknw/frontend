@@ -32,7 +32,10 @@ export default function SupplierDataTable(props) {
 
   return (
     <>
-      <Typography> Supplier Details of {props?.data} Campaign </Typography>
+      <Typography className="text-center pt-2 pb-1" variant="h6">
+        {' '}
+        Supplier Details of {props?.data} Campaign{' '}
+      </Typography>
       {tableData.length > 0 && (
         <DataGridTable
           row={tableData}
