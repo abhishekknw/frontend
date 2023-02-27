@@ -15,10 +15,10 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 
-export default function Header() {
+export default function B2BHeader() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-
+  const userDetail = JSON.parse(localStorage.getItem('userInfo'));
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -27,7 +27,6 @@ export default function Header() {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
   function handleListKeyDown(event) {
@@ -58,65 +57,59 @@ export default function Header() {
         <Button color="inherit" startIcon={<HomeIcon />}>
           Home
         </Button>
-      
+
         <div>
-        <Button
-        color="inherit" 
-          ref={anchorRef}
-          id="composition-button"
-          aria-controls={open ? 'composition-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
-          aria-haspopup="true"
-          startIcon={<SettingsIcon />}
-          onClick={handleToggle} 
-        >
-          Setting
-        </Button>
-        <Popper
-          open={open}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          placement="bottom-start"
-          transition
-          disablePortal
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === 'bottom-start' ? 'left top' : 'left bottom',
-              }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList
-                    autoFocusItem={open}
-                    id="composition-menu"
-                    aria-labelledby="composition-button"
-                    onKeyDown={handleListKeyDown}
-                  >
-                    <MenuItem onClick={handleClose}>Change Password</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </div>
-
-
+          <Button
+            color="inherit"
+            ref={anchorRef}
+            id="composition-button"
+            aria-controls={open ? 'composition-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"
+            startIcon={<SettingsIcon />}
+            onClick={handleToggle}
+          >
+            Setting
+          </Button>
+          <Popper
+            open={open}
+            anchorEl={anchorRef.current}
+            role={undefined}
+            placement="bottom-start"
+            transition
+            disablePortal
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{
+                  transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom',
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleClose}>
+                    <MenuList
+                      autoFocusItem={open}
+                      id="composition-menu"
+                      aria-labelledby="composition-button"
+                      onKeyDown={handleListKeyDown}
+                    >
+                      <MenuItem>
+                        <a href="/#/changePassword">Change Password</a>
+                      </MenuItem>
+                      <MenuItem>
+                        <a href="/#/logout">Logout</a>
+                      </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </div>
         <Button color="inherit" startIcon={<AccountCircleIcon />}>
-          Kriti Harjika
+          {userDetail.first_name} {userDetail.last_name}
         </Button>
-        {/* <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-          {/*This is a simple Menu
-			Icon wrapped in Icon 
-          <MenuIcon />
-        </IconButton> */}
-        {/* The Typography component applies
-		default font weights and sizes */}
       </Toolbar>
     </AppBar>
   );
