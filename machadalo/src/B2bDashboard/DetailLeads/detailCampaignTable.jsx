@@ -23,7 +23,6 @@ const LeadDetailTable = (props) => {
       supplier_type: filters?.supplier_type,
       next_page: filters?.next_page,
     };
-    // filterData = { ...filterData, campaign_id: data.row.campaign_id };
     setFilters({ ...filters, campaign_id: data.row.campaign_id });
     setCampaignData(data?.row);
     await leadDetailApi.campaignViewLeads(filterData);
