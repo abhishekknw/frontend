@@ -1,19 +1,27 @@
 import React from 'react';
-import ReactPaginate from 'react-paginate';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
-const Pagination = (props) => {
-  const { pageSize, totalItems, handlePageClick } = props;
+const PaginationConstant = (props) => {
+  const { pageSize, totalItems, pageNo, onPageChange } = props;
   const numOfPages = Math.ceil(totalItems / pageSize);
   if (numOfPages <= 1) return null;
+
   return (
-    <ReactPaginate
-      pageCount={numOfPages}
-      initialPage={0}
-      onPageChange={handlePageClick}
-      activeClassName={'active'}
-      disableInitialCallback={true}
-    />
+    <Stack spacing={2}>
+      <Pagination
+        className="page-link"
+        variant="outlined"
+        shape="rounded"
+        showFirstButton
+        showLastButton
+        page={pageNo}
+        onChange={onPageChange}
+        rowsPerPage={pageSize}
+        count={numOfPages}
+      />
+    </Stack>
   );
 };
 
-export default Pagination;
+export default PaginationConstant;

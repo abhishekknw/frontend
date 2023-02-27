@@ -104,7 +104,7 @@ const LeadDecisionPending = () => {
           />
         </Box>
       </Box>
-      <BasicTable />
+      <BasicTable data={params} />
     </>
   );
 };

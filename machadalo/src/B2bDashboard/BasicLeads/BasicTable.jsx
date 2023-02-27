@@ -1,8 +1,7 @@
 import * as React from 'react';
 import DataGridTable from '../Table/DataGridTable';
 import { Checkbox, Button } from '@mui/material';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
+import PaginationConstant from '../Pagination';
 import ClientStatusDropdown from '../common/ClientStatus';
 import ViewCommentModal from '../modals/ViewComment';
 import { useRecoilState } from 'recoil';
@@ -16,9 +15,12 @@ export default function BasicTable(props) {
   const LeadBasicApi = decisionPendingActions();
   const [page, setPage] = React.useState(1);
   const [selected, setSelected] = React.useState([]);
+  const params = props.data;
 
-  const handleChange = (event, value) => {
+  const handleChange = async (event, value) => {
     setPage(value);
+    params.page = value - 1;
+    await LeadBasicApi.LeadDecisionPendingList(params);
   };
 
   const multiSelectLeads = (lead, e) => {
@@ -170,7 +172,6 @@ export default function BasicTable(props) {
       ),
     },
   ];
-
   return (
     <>
       {ListData.length > 0 && (
@@ -205,20 +206,12 @@ export default function BasicTable(props) {
       >
         Decline All
       </Button>
-      {ListData.length > 10 && (
-        <Stack spacing={2}>
-          <Pagination
-            className="page-link"
-            count={10}
-            variant="outlined"
-            shape="rounded"
-            showFirstButton
-            showLastButton
-            page={page}
-            onChange={handleChange}
-          />
-        </Stack>
-      )}
+      <PaginationConstant
+        pageSize={20}
+        totalItems={ListData.length}
+        pageNo={page}
+        onPageChange={handleChange}
+      />
     </>
   );
 }
