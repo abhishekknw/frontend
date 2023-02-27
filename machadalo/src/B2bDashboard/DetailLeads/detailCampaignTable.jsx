@@ -8,7 +8,7 @@ import DownloadLeadsModal from '../modals/DownloadLeadsModal';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { currentCampaign, viewLeadFilters } from '../API/_state';
 import { LeadDetailActions } from '../API/_actions';
-
+import CreateNewTemplate from '../modals/CreateNewTemplate';
 const LeadDetailTable = (props) => {
   const leadDetailApi = LeadDetailActions();
   const [showViewLeads, setShowViewLeads] = useState(false);
@@ -115,19 +115,9 @@ const LeadDetailTable = (props) => {
       sortable: false,
       width: 180,
       renderCell: (params) => (
-        <strong>
-          <Button
-            className="theme-btn"
-            variant="contained"
-            size="small"
-            style={{}}
-            onClick={(e) => {
-              handleShow(params);
-            }}
-          >
-            Create Field
-          </Button>
-        </strong>
+        <>
+          <CreateNewTemplate data={params} />
+        </>
       ),
     },
   ];

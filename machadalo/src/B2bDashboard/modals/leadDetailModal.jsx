@@ -65,8 +65,6 @@ export default function LeadDetailModal(props) {
 
   async function commentModal(row, type) {
     await LeadBasicApi.getCommentList(row, type);
-    setOpen(true);
-    setRowData({ ...row });
   }
 
   return (
