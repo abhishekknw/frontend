@@ -1,6 +1,21 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  List,
+  Divider,
+  DialogActions,
+  TextField,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+} from '@mui/material';
 import Dialog from '@mui/material/Dialog';
+import dayjs from 'dayjs';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -11,22 +26,48 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { LeadDetailActions } from '../API/_actions';
 import { leadDetailData } from '../API/_state';
 import { useRecoilValue } from 'recoil';
+import { commentListAtom } from '../API/_state';
+import { decisionPendingActions } from '../API/_actions';
 
 export default function LeadDetailModal(props) {
   const leadDetailApi = LeadDetailActions();
+  const LeadBasicApi = decisionPendingActions();
   const leadDetail = useRecoilValue(leadDetailData);
+  const commentList = useRecoilValue(commentListAtom);
+  const [commentType, setCommentType] = React.useState('all');
+  const [comment, setComment] = React.useState('');
   const { data } = props;
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = async () => {
     await leadDetailApi.getLeadDetailsData(data._id);
+    commentModal(data, commentType);
     setOpen(true);
-    console.log(leadDetail, 'leadDetail');
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleChange = async (event) => {
+    setCommentType(event.target.value);
+    await LeadBasicApi.getCommentList(data, event.target.value);
+  };
+
+  async function addComment() {
+    let commetDetail = [{ comment: comment, _id: data?._id, requirement_id: data?.requirement_id }];
+    if (comment.length > 0) {
+      await LeadBasicApi.postComment(commetDetail);
+      setComment('');
+      commentModal(data, commentType);
+    }
+  }
+
+  async function commentModal(row, type) {
+    await LeadBasicApi.getCommentList(row, type);
+    setOpen(true);
+    setRowData({ ...row });
+  }
 
   return (
     <>
@@ -106,6 +147,91 @@ export default function LeadDetailModal(props) {
                     {leadDetail?.adress_details?.lat}, {leadDetail?.adress_details?.long})
                   </Typography>
                 </Box>
+
+                {/* comment */}
+                <Box className="pb-3">
+                  <Typography variant="h6" className="heading-with-bg">
+                    Comment :
+                  </Typography>
+                  <Typography className="mb-2">
+                    <DialogContent className="content-modal">
+                      <DialogContentText
+                        className="text-black"
+                        variant="h5"
+                        textAlign={'center'}
+                      ></DialogContentText>
+                      <Box sx={{}} className="comment-all d-flex">
+                        <FormControl sx={{ mb: 2, mr: 2, width: 250 }}>
+                          <InputLabel id="demo-simple-select-label">All</InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={commentType}
+                            label="Age"
+                            onChange={handleChange}
+                          >
+                            <MenuItem value={'all'}>All</MenuItem>
+                            <MenuItem value={'company_comment'}>Company Comment</MenuItem>
+                            <MenuItem value={'machadalo_comment'}>Machadalo Comments</MenuItem>
+                            <MenuItem value={'company_client_comment'}>
+                              Company's client comment
+                            </MenuItem>
+                          </Select>
+                        </FormControl>
+                        <Box></Box>
+                      </Box>
+                      <Typography className="pb-2">{commentType} Comments</Typography>
+                      <Box sx={{ maxHeight: '250px', overflowX: 'hidden', overflowY: 'scroll' }}>
+                        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                          {commentList.map((data, index) => (
+                            <ListItem alignItems="flex-start" key={index}>
+                              <ListItemAvatar>
+                                <Avatar
+                                  alt={data.comment_by.charAt(0)}
+                                  src="/static/images/avatar/1.jpg"
+                                />
+                              </ListItemAvatar>
+                              <ListItemText
+                                primary={data.comment_by}
+                                secondary={
+                                  <React.Fragment>
+                                    <Typography
+                                      sx={{ display: 'inline' }}
+                                      component="span"
+                                      variant="body2"
+                                      color="text.primary"
+                                    >
+                                      {dayjs(data.created_at).format('MMM D, YYYY h:mm A')}
+                                    </Typography>
+                                    <Typography>{data.comment}</Typography>
+                                  </React.Fragment>
+                                }
+                              />
+                            </ListItem>
+                          ))}
+                          <Divider variant="inset" component="li" />
+                        </List>
+                      </Box>
+                    </DialogContent>
+                    <DialogActions className="modal-btn d-flex justify-content-between">
+                      <Box>
+                        <TextField
+                          sx={{ width: 400 }}
+                          className="textarea-modal"
+                          placeholder="Write Here"
+                          multiline
+                          rows={1}
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        />
+                      </Box>
+                      <Box>
+                        <Button onClick={(e) => addComment(e)}>Add Comment</Button>
+                      </Box>
+                    </DialogActions>
+                  </Typography>
+                </Box>
+                {/* Comment ENd */}
               </Box>
             </Box>
           </DialogContentText>

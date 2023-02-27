@@ -153,6 +153,19 @@ const LeadDetailActions = () => {
     let update = data;
     return fetchWrapper.post(`${Apis.updateClientStatus}/`, { data: data }).then((res) => {
       if (res.status) {
+        // let newList = [...viewLeads.values].map((items)=>{
+        //   if(items[0]._id == update[0]._id){
+        //     items.map((i)=>{
+        //       return [...items,{...i[0],macchadalo_client_status:update[0].macchadalo_client_status}]
+        //       return [...items,{...items[0],macchadalo_client_status:update[0].macchadalo_client_status}]
+        //     })
+        //   }
+        //   else{
+        //     return items;
+        //   }
+
+        // })
+        // console.log(newList)
         alertActions.success(res.data);
       } else {
         alertActions.error(res.data);
