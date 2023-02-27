@@ -38,6 +38,11 @@ export default function B2BHeader() {
     }
   }
 
+  function logout() {
+    localStorage.clear();
+    location.replace('/#/logout');
+  }
+
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
@@ -97,8 +102,12 @@ export default function B2BHeader() {
                       <MenuItem>
                         <a href="/#/changePassword">Change Password</a>
                       </MenuItem>
-                      <MenuItem>
-                        <a href="/#/logout">Logout</a>
+                      <MenuItem
+                        onClick={(e) => {
+                          logout(e);
+                        }}
+                      >
+                        Logout
                       </MenuItem>
                     </MenuList>
                   </ClickAwayListener>
