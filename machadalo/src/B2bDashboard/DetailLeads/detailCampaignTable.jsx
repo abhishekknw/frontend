@@ -9,6 +9,8 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { currentCampaign, viewLeadFilters } from '../API/_state';
 import { LeadDetailActions } from '../API/_actions';
 import CreateNewTemplate from '../modals/CreateNewTemplate';
+import dayjs from 'dayjs';
+
 const LeadDetailTable = (props) => {
   const leadDetailApi = LeadDetailActions();
   const [showViewLeads, setShowViewLeads] = useState(false);
@@ -49,14 +51,16 @@ const LeadDetailTable = (props) => {
       field: 'start_date',
       headerClassName: 'super-app-theme--header',
       headerName: 'Start Date',
-      width: 220,
+      width: 180,
+      renderCell: (params) => <>{dayjs(params?.row?.start_date).format('DD-MM-YYYY')}</>,
     },
     {
       field: 'supplier_count',
       headerClassName: 'super-app-theme--header',
-      headerName: 'Supplier Count',
+      headerName: 'SC',
+      description: 'Supplier Count',
       type: 'number',
-      width: 120,
+      width: 100,
     },
     {
       field: 'ViewLeads',
