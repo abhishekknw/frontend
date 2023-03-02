@@ -76,6 +76,15 @@
     $scope.primaryCount = { "start": '', "end": '' };
 
     $scope.clientStatusMachadalo = [
+      {"status_name":"Get Verified Leads"},
+      {"status_name":"About MCA"},
+      {"status_name":"About Machadalo"},
+      {"status_name":"Unsubscribe"},
+      {"status_name":"Schedule a demo"},
+      {"status_name":"Checkout sample leads"},
+      {"status_name":"Chat With Your RM"},
+      {"status_name":"Claim Your free dashboard"},
+      {"status_name":"Add Regional sales team"},
       { "status_name": "Verified By BD Head" },
       { "status_name": "Demo Completed" },
       { "status_name": "Proposal Sent" },
