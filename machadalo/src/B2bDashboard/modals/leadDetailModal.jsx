@@ -21,13 +21,14 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
-import { Typography } from '@mui/material';
+import { Typography, Tooltip } from '@mui/material';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { LeadDetailActions } from '../API/_actions';
 import { leadDetailData } from '../API/_state';
 import { useRecoilValue } from 'recoil';
 import { commentListAtom } from '../API/_state';
 import { decisionPendingActions } from '../API/_actions';
+// import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
 export default function LeadDetailModal(props) {
   const leadDetailApi = LeadDetailActions();
@@ -66,7 +67,12 @@ export default function LeadDetailModal(props) {
   async function commentModal(row, type) {
     await LeadBasicApi.getCommentList(row, type);
   }
+  console.log(leadDetail, 'leadDetailleadDetail');
 
+  function toolTipData(data) {
+    console.log(data, 'toolTipData');
+    return data;
+  }
   return (
     <>
       <Button
@@ -116,13 +122,64 @@ export default function LeadDetailModal(props) {
                     Sector Specific Questions :
                   </Typography>
                   <Typography className="d-flex justify-content-between mb-2">
-                    Q1.Response : <QuestionMarkIcon />
+                    Q1.Response :
+                    <Tooltip
+                      style={{}}
+                      title={
+                        <div>
+                          Question 1. {leadDetail?.lead_info?.L4_question.header}
+                          <br />
+                          A.{leadDetail?.lead_info?.L4_question.a}
+                          <br />
+                          B.{leadDetail?.lead_info?.L4_question.b}
+                          <br />
+                          C.{leadDetail?.lead_info?.L4_question.c}
+                          <br />
+                        </div>
+                      }
+                    >
+                      <QuestionMarkIcon />
+                    </Tooltip>
                   </Typography>
                   <Typography className="d-flex justify-content-between mb-2">
-                    Q2.Response : <QuestionMarkIcon />
+                    Q2.Response :
+                    <Tooltip
+                      style={{}}
+                      title={
+                        <div>
+                          Question 1. {leadDetail?.lead_info?.L5_question.header}
+                          <br />
+                          A.{leadDetail?.lead_info?.L5_question.a}
+                          <br />
+                          B.{leadDetail?.lead_info?.L5_question.b}
+                          <br />
+                          C.{leadDetail?.lead_info?.L5_question.c}
+                          <br />
+                        </div>
+                      }
+                    >
+                      <QuestionMarkIcon />
+                    </Tooltip>
                   </Typography>
                   <Typography className="d-flex justify-content-between mb-2">
-                    Q3.Response : <QuestionMarkIcon />
+                    Q3.Response :
+                    <Tooltip
+                      style={{}}
+                      title={
+                        <div>
+                          Question 1. {leadDetail?.lead_info?.L6_question.header}
+                          <br />
+                          A.{leadDetail?.lead_info?.L6_question.a}
+                          <br />
+                          B.{leadDetail?.lead_info?.L6_question.b}
+                          <br />
+                          C.{leadDetail?.lead_info?.L6_question.c}
+                          <br />
+                        </div>
+                      }
+                    >
+                      <QuestionMarkIcon />
+                    </Tooltip>
                   </Typography>
                 </Box>
                 <Box className="pb-3">
