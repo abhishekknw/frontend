@@ -67,12 +67,6 @@ export default function LeadDetailModal(props) {
   async function commentModal(row, type) {
     await LeadBasicApi.getCommentList(row, type);
   }
-  console.log(leadDetail, 'leadDetailleadDetail');
-
-  function toolTipData(data) {
-    console.log(data, 'toolTipData');
-    return data;
-  }
   return (
     <>
       <Button

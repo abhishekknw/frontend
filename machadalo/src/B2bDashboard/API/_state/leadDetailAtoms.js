@@ -29,7 +29,7 @@ const viewLeadFilters = atom({
 
 const campaignLeads = atom({
   key: 'campaignleads',
-  default: [],
+  default: {},
 });
 
 const campaignCitylist = atom({

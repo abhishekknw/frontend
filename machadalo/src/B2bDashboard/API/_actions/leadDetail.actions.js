@@ -153,19 +153,27 @@ const LeadDetailActions = () => {
     let update = data;
     return fetchWrapper.post(`${Apis.updateClientStatus}/`, { data: data }).then((res) => {
       if (res.status) {
-        // let newList = [...viewLeads.values].map((items)=>{
-        //   if(items[0]._id == update[0]._id){
-        //     items.map((i)=>{
-        //       return [...items,{...i[0],macchadalo_client_status:update[0].macchadalo_client_status}]
-        //       return [...items,{...items[0],macchadalo_client_status:update[0].macchadalo_client_status}]
-        //     })
-        //   }
-        //   else{
-        //     return items;
-        //   }
-
-        // })
-        // console.log(newList)
+        let newList = [];
+        let tempData = viewLeads['values'];
+        for (let i in tempData) {
+          if (tempData[i][0]._id == update[0]._id) {
+            let temp = [];
+            for (let j in tempData[i]) {
+              if (tempData[i][j]._id == update[0]._id) {
+                temp.push({
+                  ...tempData[i][j],
+                  macchadalo_client_status: update[0]['macchadalo_client_status'],
+                });
+              } else {
+                temp.push({ ...tempData[i][j] });
+              }
+            }
+            newList.push([...temp]);
+          } else {
+            newList.push(tempData[i]);
+          }
+        }
+        setViewLeads({ ...viewLeads, values: newList });
         alertActions.success(res.data);
       } else {
         alertActions.error(res.data);
