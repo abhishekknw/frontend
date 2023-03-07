@@ -422,6 +422,15 @@ table tbody tr th.MuiTableCell-root{
 .MuiSelect-select{
     width: 95px !important;
 }
+.modal-comment .createfieldb2b  {
+    max-width: 1200px !important;
+    width: 90%;
+}
+.modal-comment.create-table .MuiPaper-root {
+    max-width: 1200px !important;
+    width: 90%;
+    min-width: 1183px;
+}
 @media screen and (max-width: 767px) {
     .tab-wrapper-main{
         .main-b2b-tab {
