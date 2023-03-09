@@ -8,7 +8,7 @@ import DownloadLeadsModal from '../modals/DownloadLeadsModal';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { currentCampaign, viewLeadFilters } from '../API/_state';
 import { LeadDetailActions } from '../API/_actions';
-import CreateNewTemplate from '../modals/CreateNewTemplate';
+import CreateNewTemplate from '../modals/CreateTemplate/CreateNewTemplate';
 import dayjs from 'dayjs';
 
 const LeadDetailTable = (props) => {

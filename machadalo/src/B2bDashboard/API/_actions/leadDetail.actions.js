@@ -7,6 +7,7 @@ import {
   errorAtom,
   campaignCitylist,
   leadDetailData,
+  TemplateDataList,
 } from '../_state';
 import { Apis } from '../request';
 import { useAlertActions } from '../_actions/alert.actions';
@@ -23,6 +24,7 @@ const LeadDetailActions = () => {
   const setCampaignCitylist = useSetRecoilState(campaignCitylist);
   const setLeadDetailData = useSetRecoilState(leadDetailData);
   const alertActions = useAlertActions();
+  const [templateData, setTemplateData] = useRecoilState(TemplateDataList);
 
   const CurrentCampaignList = (data) => {
     let parmas = '?lead_type=' + data?.lead_type + '&supplier_code=' + data?.supplier_type;
@@ -246,12 +248,23 @@ const LeadDetailActions = () => {
     window.open(url, '_blank');
   };
 
-  const uploadComments = (file) => {
+  const uploadComments = (id) => {
     return fetchWrapper.post(`${Apis.uploadComments}/`, file, true).then((res) => {
       if (res.status) {
         alertActions.success(res.data);
       } else {
         alertActions.error(res.data);
+      }
+    });
+  };
+
+  const getTemplateList = (id) => {
+    return fetchWrapper.get(`${Apis.templateList}${id}`).then((res) => {
+      if (res.status) {
+        setTemplateData(res.data);
+        alertActions.success('Successfull');
+      } else {
+        alertActions.error('Failed');
       }
     });
   };
@@ -265,6 +278,7 @@ const LeadDetailActions = () => {
     getLeadDetailsData,
     DownloadLeadsSummary,
     uploadComments,
+    getTemplateList,
   };
 };
 export { LeadDetailActions };

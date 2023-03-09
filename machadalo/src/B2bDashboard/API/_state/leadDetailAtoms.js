@@ -42,4 +42,16 @@ const leadDetailData = atom({
   default: {},
 });
 
-export { currentCampaign, viewLeadFilters, campaignLeads, campaignCitylist, leadDetailData };
+const TemplateDataList = atom({
+  key: 'TemplateDataList',
+  default: {},
+});
+
+export {
+  currentCampaign,
+  viewLeadFilters,
+  campaignLeads,
+  campaignCitylist,
+  leadDetailData,
+  TemplateDataList,
+};
