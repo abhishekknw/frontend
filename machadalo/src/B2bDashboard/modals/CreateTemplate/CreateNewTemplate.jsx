@@ -23,18 +23,37 @@ import { TemplateHeader } from './getHeader';
 import { Select, FormControl, MenuItem, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
 
 export default function CreateNewTemplate(props) {
   const [open, setOpen] = React.useState(false);
   const leadDetailApi = LeadDetailActions();
   const [TemplateData, setTemplateData] = useRecoilState(TemplateDataList);
+  const [EditRow, setEditRow] = React.useState({});
+  const [rowId, setrowId] = React.useState();
 
   const getTemplateList = async () => {
     await leadDetailApi.getTemplateList(props?.data?.id);
     setOpen(true);
   };
 
-  function getFieldName(name, edit) {
+  function setEditRowData(key, value) {
+    let newList = [];
+    newList = [...TemplateData.rows].map((item, index) => {
+      if (rowId === item.md_id) {
+        if (key == 'field_name') return { ...item, field_name: value };
+        if (key == 'alias_name') return { ...item, alias_name: value };
+        if (key == 'g_templateType') return { ...item, g_templateType: value };
+        if (key == 'send_trigger') return { ...item, send_trigger: value };
+        if (key == 'comment') return { ...item, comment: value };
+        if (key == 'data') return { ...item, data: value };
+        if (key == 'param') return { ...item, param: value };
+      } else return item;
+    });
+    setTemplateData({ ...TemplateData, rows: newList });
+  }
+
+  const getFieldName = (name, edit) => {
     return (
       <>
         <FormControl sx={{ m: 1, minWidth: 100 }}>
@@ -42,7 +61,7 @@ export default function CreateNewTemplate(props) {
             disabled={!edit}
             value={name}
             className="select-menu"
-            // onChange={handleChange}
+            onChange={(e) => setEditRowData('field_name', e.target.value)}
             size="small"
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
@@ -57,7 +76,7 @@ export default function CreateNewTemplate(props) {
         </FormControl>
       </>
     );
-  }
+  };
   function getTemplateType(type, edit) {
     return (
       <>
@@ -66,7 +85,7 @@ export default function CreateNewTemplate(props) {
             disabled={!edit}
             value={type}
             className="select-menu"
-            // onChange={handleChange}
+            onChange={(e) => setEditRowData('g_templateType', e.target.value)}
             size="small"
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
@@ -91,7 +110,7 @@ export default function CreateNewTemplate(props) {
             disabled={!edit}
             value={trigger}
             className="select-menu"
-            // onChange={handleChange}
+            onChange={(e) => setEditRowData('send_trigger', e.target.value)}
             size="small"
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
@@ -118,7 +137,7 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={data.toString()}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(e) => setEditRowData('param', e.target.value.split(','))}
         />
       </>
     );
@@ -148,7 +167,7 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={name}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(e) => setEditRowData('alias_name', e.target.value)}
         />
       </>
     );
@@ -164,7 +183,7 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(e) => setEditRowData('comment', e.target.value)}
         />
       </>
     );
@@ -179,19 +198,38 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={message}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(e) => setEditRowData('data', e.target.value)}
         />
       </>
     );
   }
 
-  function rowEditAndUpdate(id) {
-    let newList = [...TemplateData.rows].map((item, index) => {
-      if (id === item.md_id) return { ...item, isEditing: true };
-      else return { ...item, isEditing: false };
-    });
-    setTemplateData({ ...TemplateData, rows: newList });
-  }
+  const rowEditAndUpdate = (id, mode) => {
+    setrowId(id);
+    if (mode === 'EDIT') {
+      let newList = [...TemplateData.rows].map((item, index) => {
+        if (id === item.md_id) {
+          return { ...item, isEditing: true };
+        } else {
+          return { ...item, isEditing: false };
+        }
+      });
+      setTemplateData({ ...TemplateData, rows: newList });
+    } else {
+      let newList = [...TemplateData.rows].map((item, index) => {
+        if (id === item.md_id) {
+          setEditRow({ ...item });
+          return { ...item, isEditing: false };
+        } else return { ...item, isEditing: false };
+      });
+      updateTemplate();
+      setTemplateData({ ...TemplateData, rows: newList });
+    }
+  };
+
+  const updateTemplate = async () => {
+    await leadDetailApi.UpdateTemplate(EditRow);
+  };
   return (
     <>
       <Button
@@ -233,58 +271,64 @@ export default function CreateNewTemplate(props) {
               />
           </div> */}
           <Box className="d-flex justify-content-around upload-btns">
-            <Box>
-              {/* <Typography className=" pb-3 text-black text-center red-font" variant="h6">
+            {/* <Typography className=" pb-3 text-black text-center red-font" variant="h6">
                 Create and Edit Leads
               </Typography> */}
 
-              <Paper
-                sx={{ width: '90%', overflow: 'hidden', maxWidth: '1100px' }}
-                className="createfieldb2b "
-              >
-                <TableContainer sx={{ maxHeight: 440 }}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        {TemplateHeader.map((column) => (
-                          <TableCell>{column.headerName}</TableCell>
-                        ))}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {TemplateData &&
-                        TemplateData.rows &&
-                        TemplateData.rows.map((row, index) => (
-                          <TableRow key={index}>
-                            <TableCell>{getFieldName(row.field_name, row?.isEditing)}</TableCell>
-                            <TableCell>{getAliasName(row.alias_name, row?.isEditing)}</TableCell>
-                            <TableCell>
-                              {getTemplateType(row.g_templateType, row?.isEditing)}
-                            </TableCell>
-                            <TableCell>{getComment(row.comment, row?.isEditing)}</TableCell>
-                            <TableCell>{sendTrigger(row.send_trigger, row?.isEditing)}</TableCell>
-                            <TableCell>{getTriggerMessage(row.data, row?.isEditing)}</TableCell>
-                            <TableCell>{getParams(row.param, row?.isEditing)}</TableCell>
-                            <TableCell>{getButtons(row.button, row?.isEditing)}</TableCell>
-                            <TableCell>
-                              <Button>
-                                <EditIcon
+            <Paper
+              sx={{ width: '90%', overflow: 'hidden', maxWidth: '1100px' }}
+              className="createfieldb2b "
+            >
+              <TableContainer sx={{ maxHeight: 440 }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      {TemplateHeader.map((column) => (
+                        <TableCell>{column.headerName}</TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {TemplateData &&
+                      TemplateData.rows &&
+                      TemplateData.rows.map((row, index) => (
+                        <TableRow key={index}>
+                          <TableCell>{getFieldName(row.field_name, row?.isEditing)}</TableCell>
+                          <TableCell>{getAliasName(row.alias_name, row?.isEditing)}</TableCell>
+                          <TableCell>
+                            {getTemplateType(row.g_templateType, row?.isEditing)}
+                          </TableCell>
+                          <TableCell>{getComment(row.comment, row?.isEditing)}</TableCell>
+                          <TableCell>{sendTrigger(row.send_trigger, row?.isEditing)}</TableCell>
+                          <TableCell>{getTriggerMessage(row.data, row?.isEditing)}</TableCell>
+                          <TableCell>{getParams(row.param, row?.isEditing)}</TableCell>
+                          <TableCell>{getButtons(row.button, row?.isEditing)}</TableCell>
+                          <TableCell>
+                            <Button>
+                              {row?.isEditing ? (
+                                <SaveIcon
                                   onClick={(e) => {
-                                    rowEditAndUpdate(row.md_id);
+                                    rowEditAndUpdate(row.md_id, 'SAVE');
                                   }}
                                 />
-                              </Button>
-                              <Button>
-                                <DeleteIcon />
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Paper>
-            </Box>
+                              ) : (
+                                <EditIcon
+                                  onClick={(e) => {
+                                    rowEditAndUpdate(row.md_id, 'EDIT');
+                                  }}
+                                />
+                              )}
+                            </Button>
+                            <Button>
+                              <DeleteIcon />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Paper>
           </Box>
         </DialogContent>
       </Dialog>

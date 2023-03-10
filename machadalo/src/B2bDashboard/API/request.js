@@ -11,7 +11,9 @@ export const Apis = {
   getCampaignCityList: 'v0/ui/b2b/city-list',
   getLeadDetailsData: 'v0/ui/b2b/lead-details',
   uploadComments: 'v0/ui/b2b/upload-lead-comments',
+
   templateList: 'v0/ui/template/?campaign_id=',
+  updateTemplate: 'v0/ui/template',
 
   // Both lead Basic and Lead Detail APis
   updateClientStatus: 'v0/ui/b2b/update-machadalo-client-status',

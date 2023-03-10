@@ -269,6 +269,16 @@ const LeadDetailActions = () => {
     });
   };
 
+  const UpdateTemplate = (data) => {
+    return fetchWrapper.put(`${Apis.updateTemplate}/`, { data: data }).then((res) => {
+      if (res.status) {
+        alertActions.success('Successfull');
+      } else {
+        alertActions.error('Failed');
+      }
+    });
+  };
+
   return {
     CurrentCampaignList,
     campaignViewLeads,
@@ -279,6 +289,7 @@ const LeadDetailActions = () => {
     DownloadLeadsSummary,
     uploadComments,
     getTemplateList,
+    UpdateTemplate,
   };
 };
 export { LeadDetailActions };
