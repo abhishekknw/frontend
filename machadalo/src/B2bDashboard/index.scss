@@ -443,6 +443,19 @@ table tbody tr th.MuiTableCell-root{
     padding-left: 0;
     text-align: left;
 }
+.button-modal-popup {
+    position: relative;
+}
+.button-modal-popup .MuiPopperUnstyled-root{
+    position: absolute !important; 
+    top: 30px !important;
+}
+.button-modal-popup .MuiPaper-root{
+    max-width: 200px !important;
+    width: 112px !important;
+    min-width: 100px !important;
+
+}
 @media screen and (max-width: 767px) {
     .tab-wrapper-main{
         .main-b2b-tab {

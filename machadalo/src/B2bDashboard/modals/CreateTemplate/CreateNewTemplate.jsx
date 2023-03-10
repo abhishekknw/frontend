@@ -12,7 +12,10 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  MenuList,
+  Popper, Grow
 } from '@mui/material';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 import CloseIcon from '@mui/icons-material/Close';
 import { Typography } from '@mui/material';
 import { LeadDetailActions } from '../../API/_actions';
@@ -24,6 +27,8 @@ import { Select, FormControl, MenuItem, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
+import SettingsIcon from '@mui/icons-material/Settings';
+
 
 export default function CreateNewTemplate(props) {
   const [open, setOpen] = React.useState(false);
@@ -36,7 +41,25 @@ export default function CreateNewTemplate(props) {
     await leadDetailApi.getTemplateList(props?.data?.id);
     setOpen(true);
   };
-
+  
+  const anchorRef = React.useRef(null);
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
+  };
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    } else if (event.key === 'Escape') {
+      setOpen(false);
+    }
+  }
   function setEditRowData(key, value) {
     let newList = [];
     newList = [...TemplateData.rows].map((item, index) => {
@@ -145,12 +168,66 @@ export default function CreateNewTemplate(props) {
   function getButtons(button) {
     return (
       <>
+      
+      <div className='button-modal-popup'>
+          <Button
+            color="inherit"
+            ref={anchorRef}
+            id="composition-button-modal"
+            aria-controls={open ? 'composition-menu-modal' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"
+           
+            onClick={handleToggle}
+          >
+            <SettingsIcon />
+          </Button>
+          <Popper
+            open={open}
+            anchorEl={anchorRef.current}
+            role={undefined}
+            placement="bottom-start"
+            transition
+            disablePortal
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{
+                  transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom',
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleClose}>
+                    <MenuList
+                      autoFocusItem={open}
+                      id="composition-menu-modal"
+                      aria-labelledby="composition-button-modal"
+                      onKeyDown={handleListKeyDown}
+                    >
+                      <MenuItem>
+                      <Button className='theme-btn text-white mb-2'>{button[0].name}</Button>
+                      </MenuItem>
+                      <MenuItem>
+                       <Button className='theme-btn text-white mb-2'>{button[1].name}</Button>
+                      </MenuItem>
+                      <MenuItem>
+                      <Button className='theme-btn text-white'>{button[2].name}</Button>
+                      </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </div>
+
         {/* {button.map((data,index) => { */}
-        <Button>{button[0].name}</Button>
+        {/* <Button className='theme-btn text-white mb-2'>{button[0].name}</Button>
         <br />
-        <Button>{button[1].name}</Button>
+        <Button className='theme-btn text-white mb-2'>{button[1].name}</Button>
         <br />
-        <Button>{button[2].name}</Button>
+        <Button className='theme-btn text-white'>{button[2].name}</Button> */}
 
         {/* })} */}
       </>
