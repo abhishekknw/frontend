@@ -369,6 +369,9 @@ table tbody tr th.MuiTableCell-root{
 .red-font{
     color: #8E1921;
 }
+.editicon{
+    color: #8E1921;
+}
 .close-btn svg{
     width: 18px;
     height: 18px;
@@ -455,6 +458,9 @@ table tbody tr th.MuiTableCell-root{
     width: 112px !important;
     min-width: 100px !important;
 
+}
+.save-edit-btn-modal button{
+ padding: 0;    min-width: 36px !important;
 }
 @media screen and (max-width: 767px) {
     .tab-wrapper-main{

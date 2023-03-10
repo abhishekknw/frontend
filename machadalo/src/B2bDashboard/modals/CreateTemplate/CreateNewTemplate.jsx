@@ -380,8 +380,8 @@ export default function CreateNewTemplate(props) {
                           <TableCell className='createCell'>{getTriggerMessage(row.data, row?.isEditing)}</TableCell>
                           <TableCell className='createCell'>{getParams(row.param, row?.isEditing)}</TableCell>
                           <TableCell className='createCell'>{getButtons(row.button, row?.isEditing)}</TableCell>
-                          <TableCell className='createCell'>
-                            <Button>
+                          <TableCell className='createCell save-edit-btn-modal'>
+                            <Button className='editicon'>
                               {row?.isEditing ? (
                                 <SaveIcon
                                   onClick={(e) => {
@@ -396,7 +396,7 @@ export default function CreateNewTemplate(props) {
                                 />
                               )}
                             </Button>
-                            <Button>
+                            <Button  className='deleteicon'>
                               <DeleteIcon />
                             </Button>
                           </TableCell>
