@@ -269,10 +269,20 @@ const LeadDetailActions = () => {
     });
   };
 
-  const UpdateTemplate = (data) => {
+  const AddUpdateTemplate = (data) => {
     return fetchWrapper.put(`${Apis.updateTemplate}/`, { data: data }).then((res) => {
       if (res.status) {
-        alertActions.success('Successfull');
+        alertActions.success(res.data);
+      } else {
+        alertActions.error('Failed');
+      }
+    });
+  };
+
+  const deleteTemplate = (id) => {
+    return fetchWrapper.delete(`${Apis.updateTemplate}/?md_id=${id}`).then((res) => {
+      if (res.status) {
+        alertActions.success(res.data);
       } else {
         alertActions.error('Failed');
       }
@@ -289,7 +299,8 @@ const LeadDetailActions = () => {
     DownloadLeadsSummary,
     uploadComments,
     getTemplateList,
-    UpdateTemplate,
+    AddUpdateTemplate,
+    deleteTemplate,
   };
 };
 export { LeadDetailActions };

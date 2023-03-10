@@ -1,37 +1,3 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Select from '@mui/material/Select';
-import { DataGrid, useGridApiContext } from '@mui/x-data-grid';
-
-const renderSelectEditInputCell = (params) => {
-  console.log(params);
-  return <SelectEditInputCell {...params} />;
-};
-
-function SelectEditInputCell(props) {
-  const { id, value, field } = props;
-  const apiRef = useGridApiContext();
-
-  const handleChange = async (event) => {
-    await apiRef.current.setEditCellValue({ id, field, value: event.target.value });
-    apiRef.current.stopCellEditMode({ id, field });
-  };
-
-  return (
-    <Select value={value} onChange={handleChange} size="small" sx={{ height: 1 }} native autoFocus>
-      <option>Back-end Developer</option>
-      <option>Front-end Developer</option>
-      <option>UX Designer</option>
-    </Select>
-  );
-}
-
-SelectEditInputCell.propTypes = {
-  field: PropTypes.string.isRequired,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  value: PropTypes.any,
-};
-
 export const TemplateHeader = [
   {
     field: 'field_name',

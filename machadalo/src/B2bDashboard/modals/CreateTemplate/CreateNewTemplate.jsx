@@ -13,8 +13,10 @@ import {
   TableCell,
   TableBody,
   MenuList,
-  Popper, Grow
+  Popper,
+  Grow,
 } from '@mui/material';
+import Popover from '@mui/material/Popover';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import CloseIcon from '@mui/icons-material/Close';
 import { Typography } from '@mui/material';
@@ -27,8 +29,8 @@ import { Select, FormControl, MenuItem, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
+import AddNewTemplate from './AddTemplate';
 import SettingsIcon from '@mui/icons-material/Settings';
-
 
 export default function CreateNewTemplate(props) {
   const [open, setOpen] = React.useState(false);
@@ -36,31 +38,59 @@ export default function CreateNewTemplate(props) {
   const [TemplateData, setTemplateData] = useRecoilState(TemplateDataList);
   const [EditRow, setEditRow] = React.useState({});
   const [rowId, setrowId] = React.useState();
+  const [newRow, setNewRow] = React.useState({
+    campaign_id: props?.data?.id,
+    field_name: '',
+    alias_name: '',
+    data: '',
+    comment: '',
+    g_templateType: '',
+    send_trigger: '',
+    param: [],
+    button: [],
+    buttonOne: '1',
+    buttonThree: '2',
+    buttonTwo: '3',
+    status_id: 5,
+  });
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openCard = Boolean(anchorEl);
+  const coardId = openCard ? 'simple-popover' : undefined;
+  const [showButton, setShowButton] = React.useState([]);
 
   const getTemplateList = async () => {
     await leadDetailApi.getTemplateList(props?.data?.id);
     setOpen(true);
   };
-  
-  const anchorRef = React.useRef(null);
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
+
+  // const anchorRef = React.useRef(null);
+  // const handleToggle = () => {
+  //   setOpen((prevOpen) => !prevOpen);
+  // };
+  // const handleClose = (event) => {
+  //   if (anchorRef.current && anchorRef.current.contains(event.target)) {
+  //     return;
+  //   }
+  //   setOpen(false);
+  // };
+  // function handleListKeyDown(event) {
+  //   if (event.key === 'Tab') {
+  //     event.preventDefault();
+  //     setOpen(false);
+  //   } else if (event.key === 'Escape') {
+  //     setOpen(false);
+  //   }
+  // }
+  function setEditRowData(key, value, check) {
+    if (check === 'NEW') {
+      if (key == 'field_name') setNewRow({ ...newRow, field_name: value });
+      if (key == 'alias_name') setNewRow({ ...newRow, alias_name: value });
+      if (key == 'g_templateType') setNewRow({ ...newRow, g_templateType: value });
+      if (key == 'send_trigger') setNewRow({ ...newRow, send_trigger: value });
+      if (key == 'comment') setNewRow({ ...newRow, comment: value });
+      if (key == 'data') setNewRow({ ...newRow, data: value });
+      if (key == 'param') setNewRow({ ...newRow, param: value });
     }
-    setOpen(false);
-  };
-  function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      setOpen(false);
-    } else if (event.key === 'Escape') {
-      setOpen(false);
-    }
-  }
-  function setEditRowData(key, value) {
     let newList = [];
     newList = [...TemplateData.rows].map((item, index) => {
       if (rowId === item.md_id) {
@@ -76,7 +106,7 @@ export default function CreateNewTemplate(props) {
     setTemplateData({ ...TemplateData, rows: newList });
   }
 
-  const getFieldName = (name, edit) => {
+  const getFieldName = (name, edit, check) => {
     return (
       <>
         <FormControl sx={{ m: 1, minWidth: 100 }}>
@@ -84,23 +114,24 @@ export default function CreateNewTemplate(props) {
             disabled={!edit}
             value={name}
             className="select-menu"
-            onChange={(e) => setEditRowData('field_name', e.target.value)}
+            onChange={(e) => setEditRowData('field_name', e.target.value, check)}
             size="small"
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
             sx={{ height: 1 }}
           >
-            {TemplateData.field_list.map((field, index) => (
-              <MenuItem key={index} value={field.name} className="select-menu-list">
-                {field.name}
-              </MenuItem>
-            ))}
+            {TemplateData.field_list &&
+              TemplateData.field_list.map((field, index) => (
+                <MenuItem key={index} value={field.name} className="select-menu-list">
+                  {field.name}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
       </>
     );
   };
-  function getTemplateType(type, edit) {
+  function getTemplateType(type, edit, check) {
     return (
       <>
         <FormControl sx={{ m: 1, minWidth: 100 }}>
@@ -108,24 +139,25 @@ export default function CreateNewTemplate(props) {
             disabled={!edit}
             value={type}
             className="select-menu"
-            onChange={(e) => setEditRowData('g_templateType', e.target.value)}
+            onChange={(e) => setEditRowData('g_templateType', e.target.value, check)}
             size="small"
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
             sx={{ height: 1 }}
           >
-            {TemplateData.template_type.map((type, index) => (
-              <MenuItem key={index} value={type} className="select-menu-list">
-                {type}
-              </MenuItem>
-            ))}
+            {TemplateData.template_type &&
+              TemplateData.template_type.map((type, index) => (
+                <MenuItem key={index} value={type} className="select-menu-list">
+                  {type}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
       </>
     );
   }
 
-  function sendTrigger(trigger, edit) {
+  function sendTrigger(trigger, edit, check) {
     return (
       <>
         <FormControl sx={{ m: 1, minWidth: 100 }}>
@@ -133,7 +165,7 @@ export default function CreateNewTemplate(props) {
             disabled={!edit}
             value={trigger}
             className="select-menu"
-            onChange={(e) => setEditRowData('send_trigger', e.target.value)}
+            onChange={(e) => setEditRowData('send_trigger', e.target.value, check)}
             size="small"
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
@@ -142,7 +174,7 @@ export default function CreateNewTemplate(props) {
             <MenuItem key={1} value={'YES'} className="select-menu-list">
               {'YES'}
             </MenuItem>
-            <MenuItem key={2} value={'no'} className="select-menu-list">
+            <MenuItem key={2} value={'No'} className="select-menu-list">
               {'NO'}
             </MenuItem>
           </Select>
@@ -150,7 +182,7 @@ export default function CreateNewTemplate(props) {
       </>
     );
   }
-  function getParams(data, edit) {
+  function getParams(data, edit, check) {
     return (
       <>
         <TextField
@@ -160,16 +192,49 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={data.toString()}
-          onChange={(e) => setEditRowData('param', e.target.value.split(','))}
+          onChange={(e) => setEditRowData('param', e.target.value.split(','), check)}
         />
       </>
     );
   }
-  function getButtons(button) {
+
+  const getButtons = (button, edit, check) => {
+    setShowButton(button);
     return (
       <>
-      
-      <div className='button-modal-popup'>
+        {/* <div>
+          <SettingsIcon aria-describedby={coardId} variant="contained" onClick={(e)=>{setAnchorEl(e.currentTarget)}}/>
+          <Popover
+            id={coardId}
+            open={openCard}
+            anchorEl={anchorEl}
+            onClose={(e)=>{setAnchorEl(null)}}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+            <TextField
+              label="Size"
+              id="outlined-size-small"
+              defaultValue={button[0]?.name}
+              size="small"
+            />
+            <TextField
+              label="Size"
+              id="outlined-size-small"
+              defaultValue={button[1]?.name}
+              size="small"
+            />
+            <TextField
+              label="Size"
+              id="outlined-size-small"
+              defaultValue={button[0]?.name}
+              size="small"
+            />
+          </Popover>
+        </div> */}
+        {/* <div className='button-modal-popup'>
           <Button
             color="inherit"
             ref={anchorRef}
@@ -206,13 +271,13 @@ export default function CreateNewTemplate(props) {
                       onKeyDown={handleListKeyDown}
                     >
                       <MenuItem>
-                      <Button className='theme-btn text-white mb-2'>{button[0].name}</Button>
+                      <Button className='theme-btn text-white mb-2'>{button[0]?.name}</Button>
                       </MenuItem>
                       <MenuItem>
-                       <Button className='theme-btn text-white mb-2'>{button[1].name}</Button>
+                       <Button className='theme-btn text-white mb-2'>{button[1]?.name}</Button>
                       </MenuItem>
                       <MenuItem>
-                      <Button className='theme-btn text-white'>{button[2].name}</Button>
+                      <Button className='theme-btn text-white'>{button[2]?.name}</Button>
                       </MenuItem>
                     </MenuList>
                   </ClickAwayListener>
@@ -220,7 +285,7 @@ export default function CreateNewTemplate(props) {
               </Grow>
             )}
           </Popper>
-        </div>
+        </div> */}
 
         {/* {button.map((data,index) => { */}
         {/* <Button className='theme-btn text-white mb-2'>{button[0].name}</Button>
@@ -232,9 +297,9 @@ export default function CreateNewTemplate(props) {
         {/* })} */}
       </>
     );
-  }
+  };
 
-  function getAliasName(name, edit) {
+  function getAliasName(name, edit, check) {
     return (
       <>
         <TextField
@@ -244,13 +309,13 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={name}
-          onChange={(e) => setEditRowData('alias_name', e.target.value)}
+          onChange={(e) => setEditRowData('alias_name', e.target.value, check)}
         />
       </>
     );
   }
 
-  function getComment(comment, edit) {
+  function getComment(comment, edit, check) {
     return (
       <>
         <TextField
@@ -260,12 +325,12 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={comment}
-          onChange={(e) => setEditRowData('comment', e.target.value)}
+          onChange={(e) => setEditRowData('comment', e.target.value, check)}
         />
       </>
     );
   }
-  function getTriggerMessage(message, edit) {
+  function getTriggerMessage(message, edit, check) {
     return (
       <>
         <TextField
@@ -275,7 +340,7 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={message}
-          onChange={(e) => setEditRowData('data', e.target.value)}
+          onChange={(e) => setEditRowData('data', e.target.value, check)}
         />
       </>
     );
@@ -295,7 +360,7 @@ export default function CreateNewTemplate(props) {
     } else {
       let newList = [...TemplateData.rows].map((item, index) => {
         if (id === item.md_id) {
-          setEditRow({ ...item });
+          setEditRow({ ...item, isEditing: false });
           return { ...item, isEditing: false };
         } else return { ...item, isEditing: false };
       });
@@ -305,7 +370,30 @@ export default function CreateNewTemplate(props) {
   };
 
   const updateTemplate = async () => {
-    await leadDetailApi.UpdateTemplate(EditRow);
+    await leadDetailApi.AddUpdateTemplate(EditRow);
+  };
+
+  const DeleteTemplate = async (id) => {
+    await leadDetailApi.deleteTemplate(id);
+  };
+
+  const AddNewRow = async () => {
+    console.log(newRow);
+    await leadDetailApi.AddUpdateTemplate(newRow);
+    setNewRow({
+      campaign_id: props?.data?.id,
+      field_name: '',
+      alias_name: '',
+      data: '',
+      comment: '',
+      g_templateType: '',
+      send_trigger: '',
+      param: [],
+      button: [],
+      buttonOne: '1',
+      buttonThree: '2',
+      buttonTwo: '3',
+    });
   };
   return (
     <>
@@ -361,27 +449,96 @@ export default function CreateNewTemplate(props) {
                   <TableHead>
                     <TableRow>
                       {TemplateHeader.map((column) => (
-                        <TableCell className='createHeader'>{column.headerName}</TableCell>
+                        <TableCell className="createHeader">{column.headerName}</TableCell>
                       ))}
                     </TableRow>
                   </TableHead>
                   <TableBody>
+                    {TemplateData && (
+                      <TableRow>
+                        <TableCell className="createCell">
+                          {getFieldName(newRow.field_name, true, 'NEW')}
+                        </TableCell>
+                        <TableCell className="createCell">
+                          {getAliasName(newRow.alias_name, true, 'NEW')}
+                        </TableCell>
+                        <TableCell className="createCell">
+                          {getTemplateType(newRow.g_templateType, true, 'NEW')}
+                        </TableCell>
+                        <TableCell className="createCell">
+                          {getComment(newRow.comment, true, 'NEW')}
+                        </TableCell>
+                        <TableCell className="createCell">
+                          {sendTrigger(newRow.send_trigger, true, 'NEW')}
+                        </TableCell>
+                        <TableCell className="createCell">
+                          {getTriggerMessage(newRow.data, true, 'NEW')}
+                        </TableCell>
+                        <TableCell className="createCell">
+                          {getParams(newRow.param, true, 'NEW')}
+                        </TableCell>
+                        <TableCell className="createCell">
+                          {/* {getButtons(newRow.button, true, 'NEW')} */}
+                          <SettingsIcon
+                            aria-describedby={coardId}
+                            variant="contained"
+                            onClick={(e) => {
+                              getButtons(newRow.button, true, 'NEW'), setAnchorEl(e.currentTarget);
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            className="theme-btn"
+                            variant="contained"
+                            size="small"
+                            onClick={(e) => {
+                              AddNewRow(e);
+                            }}
+                          >
+                            Save
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    )}
                     {TemplateData &&
                       TemplateData.rows &&
                       TemplateData.rows.map((row, index) => (
                         <TableRow key={index}>
-                          <TableCell className='createCell'>{getFieldName(row.field_name, row?.isEditing)}</TableCell>
-                          <TableCell className='createCell'>{getAliasName(row.alias_name, row?.isEditing)}</TableCell>
-                          <TableCell className='createCell'>
+                          <TableCell className="createCell">
+                            {getFieldName(row.field_name, row?.isEditing)}
+                          </TableCell>
+                          <TableCell className="createCell">
+                            {getAliasName(row.alias_name, row?.isEditing)}
+                          </TableCell>
+                          <TableCell className="createCell">
                             {getTemplateType(row.g_templateType, row?.isEditing)}
                           </TableCell>
-                          <TableCell className='createCell'>{getComment(row.comment, row?.isEditing)}</TableCell>
-                          <TableCell className='createCell'>{sendTrigger(row.send_trigger, row?.isEditing)}</TableCell>
-                          <TableCell className='createCell'>{getTriggerMessage(row.data, row?.isEditing)}</TableCell>
-                          <TableCell className='createCell'>{getParams(row.param, row?.isEditing)}</TableCell>
-                          <TableCell className='createCell'>{getButtons(row.button, row?.isEditing)}</TableCell>
-                          <TableCell className='createCell save-edit-btn-modal'>
-                            <Button className='editicon'>
+                          <TableCell className="createCell">
+                            {getComment(row.comment, row?.isEditing)}
+                          </TableCell>
+                          <TableCell className="createCell">
+                            {sendTrigger(row.send_trigger, row?.isEditing)}
+                          </TableCell>
+                          <TableCell className="createCell">
+                            {getTriggerMessage(row.data, row?.isEditing)}
+                          </TableCell>
+                          <TableCell className="createCell">
+                            {getParams(row.param, row?.isEditing)}
+                          </TableCell>
+                          <TableCell className="createCell">
+                            {/* {getButtons(row.button, row?.isEditing)} */}
+                            <SettingsIcon
+                              aria-describedby={coardId}
+                              variant="contained"
+                              onClick={(e) => {
+                                getButtons(row.button, row?.isEditing),
+                                  setAnchorEl(e.currentTarget);
+                              }}
+                            />
+                          </TableCell>
+                          <TableCell className="createCell">
+                            <Button>
                               {row?.isEditing ? (
                                 <SaveIcon
                                   onClick={(e) => {
@@ -396,6 +553,12 @@ export default function CreateNewTemplate(props) {
                                 />
                               )}
                             </Button>
+                            <Button>
+                              <DeleteIcon
+                                onClick={(e) => {
+                                  DeleteTemplate(row.md_id);
+                                }}
+                              />
                             <Button  className='deleteicon'>
                               <DeleteIcon />
                             </Button>
@@ -409,6 +572,52 @@ export default function CreateNewTemplate(props) {
           </Box>
         </DialogContent>
       </Dialog>
+      <div>
+        <Popover
+          className="btn-box"
+          id={coardId}
+          open={openCard}
+          anchorEl={anchorEl}
+          onClose={(e) => {
+            setAnchorEl(null);
+          }}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+        >
+          <Box>
+            {' '}
+            <span className="button-label">B1</span>
+            <TextField
+              label="Size"
+              id="outlined-size-small"
+              defaultValue={showButton[0]?.name}
+              size="small"
+            />
+          </Box>
+          <Box>
+            {' '}
+            <span className="button-label">B2</span>
+            <TextField
+              label="Size"
+              id="outlined-size-small"
+              defaultValue={showButton[1]?.name}
+              size="small"
+            />
+          </Box>
+          <Box>
+            {' '}
+            <span className="button-label">B3</span>
+            <TextField
+              label="Size"
+              id="outlined-size-small"
+              defaultValue={showButton[0]?.name}
+              size="small"
+            />
+          </Box>
+        </Popover>
+      </div>
     </>
   );
 }
