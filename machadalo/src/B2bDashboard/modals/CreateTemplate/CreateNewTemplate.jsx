@@ -284,7 +284,7 @@ export default function CreateNewTemplate(props) {
                   <TableHead>
                     <TableRow>
                       {TemplateHeader.map((column) => (
-                        <TableCell>{column.headerName}</TableCell>
+                        <TableCell className='createHeader'>{column.headerName}</TableCell>
                       ))}
                     </TableRow>
                   </TableHead>
@@ -293,17 +293,17 @@ export default function CreateNewTemplate(props) {
                       TemplateData.rows &&
                       TemplateData.rows.map((row, index) => (
                         <TableRow key={index}>
-                          <TableCell>{getFieldName(row.field_name, row?.isEditing)}</TableCell>
-                          <TableCell>{getAliasName(row.alias_name, row?.isEditing)}</TableCell>
-                          <TableCell>
+                          <TableCell className='createCell'>{getFieldName(row.field_name, row?.isEditing)}</TableCell>
+                          <TableCell className='createCell'>{getAliasName(row.alias_name, row?.isEditing)}</TableCell>
+                          <TableCell className='createCell'>
                             {getTemplateType(row.g_templateType, row?.isEditing)}
                           </TableCell>
-                          <TableCell>{getComment(row.comment, row?.isEditing)}</TableCell>
-                          <TableCell>{sendTrigger(row.send_trigger, row?.isEditing)}</TableCell>
-                          <TableCell>{getTriggerMessage(row.data, row?.isEditing)}</TableCell>
-                          <TableCell>{getParams(row.param, row?.isEditing)}</TableCell>
-                          <TableCell>{getButtons(row.button, row?.isEditing)}</TableCell>
-                          <TableCell>
+                          <TableCell className='createCell'>{getComment(row.comment, row?.isEditing)}</TableCell>
+                          <TableCell className='createCell'>{sendTrigger(row.send_trigger, row?.isEditing)}</TableCell>
+                          <TableCell className='createCell'>{getTriggerMessage(row.data, row?.isEditing)}</TableCell>
+                          <TableCell className='createCell'>{getParams(row.param, row?.isEditing)}</TableCell>
+                          <TableCell className='createCell'>{getButtons(row.button, row?.isEditing)}</TableCell>
+                          <TableCell className='createCell'>
                             <Button>
                               {row?.isEditing ? (
                                 <SaveIcon

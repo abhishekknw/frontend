@@ -431,6 +431,18 @@ table tbody tr th.MuiTableCell-root{
     width: 90%;
     min-width: 1183px;
 }
+.createCell .MuiInputBase-root{
+    padding: 5px 8px;
+    height: 35px;
+}
+.createCell .MuiInputBase-root.MuiInputBase-multiline {
+   position: relative;
+   top: 5px;
+}
+.createCell .MuiSelect-select{
+    padding-left: 0;
+    text-align: left;
+}
 @media screen and (max-width: 767px) {
     .tab-wrapper-main{
         .main-b2b-tab {
