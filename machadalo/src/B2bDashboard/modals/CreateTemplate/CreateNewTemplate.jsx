@@ -559,8 +559,6 @@ export default function CreateNewTemplate(props) {
                                   DeleteTemplate(row.md_id);
                                 }}
                               />
-                            <Button  className='deleteicon'>
-                              <DeleteIcon />
                             </Button>
                           </TableCell>
                         </TableRow>
