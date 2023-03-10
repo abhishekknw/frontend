@@ -48,10 +48,10 @@ export default function CreateNewTemplate(props) {
     send_trigger: '',
     param: [],
     button: [],
-    buttonOne: '1',
-    buttonThree: '2',
-    buttonTwo: '3',
-    status_id: 5,
+    buttonOne: '',
+    buttonThree: '',
+    buttonTwo: '',
+    status_id: '',
   });
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openCard = Boolean(anchorEl);
@@ -62,25 +62,6 @@ export default function CreateNewTemplate(props) {
     await leadDetailApi.getTemplateList(props?.data?.id);
     setOpen(true);
   };
-
-  // const anchorRef = React.useRef(null);
-  // const handleToggle = () => {
-  //   setOpen((prevOpen) => !prevOpen);
-  // };
-  // const handleClose = (event) => {
-  //   if (anchorRef.current && anchorRef.current.contains(event.target)) {
-  //     return;
-  //   }
-  //   setOpen(false);
-  // };
-  // function handleListKeyDown(event) {
-  //   if (event.key === 'Tab') {
-  //     event.preventDefault();
-  //     setOpen(false);
-  //   } else if (event.key === 'Escape') {
-  //     setOpen(false);
-  //   }
-  // }
   function setEditRowData(key, value, check) {
     if (check === 'NEW') {
       if (key == 'field_name') setNewRow({ ...newRow, field_name: value });
@@ -171,10 +152,10 @@ export default function CreateNewTemplate(props) {
             inputProps={{ 'aria-label': 'Without label' }}
             sx={{ height: 1 }}
           >
-            <MenuItem key={1} value={'YES'} className="select-menu-list">
+            <MenuItem key={1} value={'yes'} className="select-menu-list">
               {'YES'}
             </MenuItem>
-            <MenuItem key={2} value={'No'} className="select-menu-list">
+            <MenuItem key={2} value={'no'} className="select-menu-list">
               {'NO'}
             </MenuItem>
           </Select>
@@ -200,103 +181,6 @@ export default function CreateNewTemplate(props) {
 
   const getButtons = (button, edit, check) => {
     setShowButton(button);
-    return (
-      <>
-        {/* <div>
-          <SettingsIcon aria-describedby={coardId} variant="contained" onClick={(e)=>{setAnchorEl(e.currentTarget)}}/>
-          <Popover
-            id={coardId}
-            open={openCard}
-            anchorEl={anchorEl}
-            onClose={(e)=>{setAnchorEl(null)}}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-          >
-            <TextField
-              label="Size"
-              id="outlined-size-small"
-              defaultValue={button[0]?.name}
-              size="small"
-            />
-            <TextField
-              label="Size"
-              id="outlined-size-small"
-              defaultValue={button[1]?.name}
-              size="small"
-            />
-            <TextField
-              label="Size"
-              id="outlined-size-small"
-              defaultValue={button[0]?.name}
-              size="small"
-            />
-          </Popover>
-        </div> */}
-        {/* <div className='button-modal-popup'>
-          <Button
-            color="inherit"
-            ref={anchorRef}
-            id="composition-button-modal"
-            aria-controls={open ? 'composition-menu-modal' : undefined}
-            aria-expanded={open ? 'true' : undefined}
-            aria-haspopup="true"
-           
-            onClick={handleToggle}
-          >
-            <SettingsIcon />
-          </Button>
-          <Popper
-            open={open}
-            anchorEl={anchorRef.current}
-            role={undefined}
-            placement="bottom-start"
-            transition
-            disablePortal
-          >
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{
-                  transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom',
-                }}
-              >
-                <Paper>
-                  <ClickAwayListener onClickAway={handleClose}>
-                    <MenuList
-                      autoFocusItem={open}
-                      id="composition-menu-modal"
-                      aria-labelledby="composition-button-modal"
-                      onKeyDown={handleListKeyDown}
-                    >
-                      <MenuItem>
-                      <Button className='theme-btn text-white mb-2'>{button[0]?.name}</Button>
-                      </MenuItem>
-                      <MenuItem>
-                       <Button className='theme-btn text-white mb-2'>{button[1]?.name}</Button>
-                      </MenuItem>
-                      <MenuItem>
-                      <Button className='theme-btn text-white'>{button[2]?.name}</Button>
-                      </MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-        </div> */}
-
-        {/* {button.map((data,index) => { */}
-        {/* <Button className='theme-btn text-white mb-2'>{button[0].name}</Button>
-        <br />
-        <Button className='theme-btn text-white mb-2'>{button[1].name}</Button>
-        <br />
-        <Button className='theme-btn text-white'>{button[2].name}</Button> */}
-
-        {/* })} */}
-      </>
-    );
   };
 
   function getAliasName(name, edit, check) {
@@ -390,9 +274,9 @@ export default function CreateNewTemplate(props) {
       send_trigger: '',
       param: [],
       button: [],
-      buttonOne: '1',
-      buttonThree: '2',
-      buttonTwo: '3',
+      buttonOne: '',
+      buttonThree: '',
+      buttonTwo: '',
     });
   };
   return (
@@ -426,20 +310,7 @@ export default function CreateNewTemplate(props) {
         </Button>
         <DialogTitle className="title-modal">CREATE FIELDS</DialogTitle>
         <DialogContent className="content-modal">
-          {/* <div style={{ height: 300, width: '100%' }}>
-            <DataGrid 
-            editMode="row" 
-            rows={TemplateData.rows} 
-            columns={TemplateHeader} 
-            getRowId={(row, index) =>
-              row.md_id}
-              />
-          </div> */}
           <Box className="d-flex justify-content-around upload-btns">
-            {/* <Typography className=" pb-3 text-black text-center red-font" variant="h6">
-                Create and Edit Leads
-              </Typography> */}
-
             <Paper
               sx={{ width: '90%', overflow: 'hidden', maxWidth: '1100px' }}
               className="createfieldb2b "
@@ -586,30 +457,33 @@ export default function CreateNewTemplate(props) {
         >
           <Box>
             {' '}
-            <span className="button-label">B1</span>
+            {/* <span className="button-label">B1</span> */}
             <TextField
-              label="Size"
+              label="Button 1"
               id="outlined-size-small"
+              onChange={(e) => setNewRow({ ...newRow, buttonOne: e.target.value })}
               defaultValue={showButton[0]?.name}
               size="small"
             />
           </Box>
           <Box>
             {' '}
-            <span className="button-label">B2</span>
+            {/* <span className="button-label">B2</span> */}
             <TextField
-              label="Size"
+              label="Button 2"
               id="outlined-size-small"
+              onChange={(e) => setNewRow({ ...newRow, buttonTwo: e.target.value })}
               defaultValue={showButton[1]?.name}
               size="small"
             />
           </Box>
           <Box>
             {' '}
-            <span className="button-label">B3</span>
+            {/* <span className="button-label">B3</span> */}
             <TextField
-              label="Size"
+              label="Button 3"
               id="outlined-size-small"
+              onChange={(e) => setNewRow({ ...newRow, buttonThree: e.target.value })}
               defaultValue={showButton[0]?.name}
               size="small"
             />
