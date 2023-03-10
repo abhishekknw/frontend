@@ -95,6 +95,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.activesearch) {
             param.search = $scope.formData.activesearch;
           }
+          if(!entity){
+            entity = '';
+          }
 
           AuthService.getAllActiveUserData(param, entity)
 
@@ -167,6 +170,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.actionSearch) {
             param.search = $scope.formData.actionSearch;
           }
+          if(!entity){
+            entity = "";
+          }
           AuthService.getAllActionRequiredData(param, entity)
 
             .then(function onSuccess(response) {
@@ -200,6 +206,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
           if ($scope.formData.interveneSearch) {
             param.search = $scope.formData.interveneSearch;
+          }
+          if(!entity){
+            entity = '';
           }
           AuthService.getAllInterveneUserData(param, entity)
 
@@ -494,6 +503,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.historySearch) {
             param.search = $scope.formData.historySearch;
           }
+          if(!entity){
+            entity = ""
+          }
           AuthService.getAllUserHistory(param, entity)
 
 
@@ -622,28 +634,28 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.serial = newPageNumber * 10 - 9;
           $scope.contactDetail(newPageNumber);
         };
-        $scope.historyPageChanged = function (newPageNumber, tab) {
+        $scope.historyPageChanged = function (newPageNumber, entity) {
           $scope.serial = newPageNumber * 10 - 9;
-          $scope.historyDetail(newPageNumber);
+          $scope.historyDetail(newPageNumber,entity);
         };
 
 
 
-        $scope.liveChatPageChanged = function (newPageNumber, tab) {
+        $scope.liveChatPageChanged = function (newPageNumber, entity) {
           $scope.serial = newPageNumber * 10 - 9;
-          $scope.getActiveUser(newPageNumber);
+          $scope.getActiveUser(newPageNumber,entity);
         };
 
 
-        $scope.actionRequiredPageChanged = function (newPageNumber, tab) {
+        $scope.actionRequiredPageChanged = function (newPageNumber, entity) {
           $scope.serial = newPageNumber * 10 - 9;
-          $scope.getActionRequiredUser(newPageNumber);
+          $scope.getActionRequiredUser(newPageNumber,entity);
         };
 
-        $scope.interveneDataPageChanged = function (newPageNumber, tab) {
+        $scope.interveneDataPageChanged = function (newPageNumber, entity) {
 
           $scope.serial = newPageNumber * 10 - 9;
-          $scope.getInterveneUser(newPageNumber);
+          $scope.getInterveneUser(newPageNumber,entity);
         };
 
         $scope.templatePageChanged = function (newPageNumber, tab) {

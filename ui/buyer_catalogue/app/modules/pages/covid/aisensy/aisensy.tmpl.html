@@ -1446,7 +1446,7 @@
                         </table>
                         <div ng-if="tab.name == 'tabA'">
                           <center>
-                            <dir-pagination-controls max-size="2" ng-click="liveChatPageChanged(pagination.current)"
+                            <dir-pagination-controls max-size="2" ng-click="liveChatPageChanged(pagination.current,selectForActive)"
                               boundary-links="true">
                             </dir-pagination-controls>
                           </center>
@@ -1773,7 +1773,7 @@
                         <div ng-if="tab.name == 'tabB'">
                           <center>
                             <dir-pagination-controls max-size="2"
-                              ng-click="actionRequiredPageChanged(pagination.current)" boundary-links="true">
+                              ng-click="actionRequiredPageChanged(pagination.current,selectForAction)" boundary-links="true">
                             </dir-pagination-controls>
                           </center>
                         </div>
@@ -2072,7 +2072,7 @@
                           </tbody>
                         </table>
                         <center>
-                          <dir-pagination-controls max-size="2" ng-click="interveneDataPageChanged(pagination.current)"
+                          <dir-pagination-controls max-size="2" ng-click="interveneDataPageChanged(pagination.current,selectForIntervene)"
                             boundary-links="true">
                           </dir-pagination-controls>
                         </center>
@@ -2667,7 +2667,7 @@
               </tbody>
             </table>
             <center>
-              <dir-pagination-controls max-size="2" on-page-change="historyPageChanged(newPageNumber)"
+              <dir-pagination-controls max-size="2" on-page-change="historyPageChanged(newPageNumber,selectForHistory)"
                 boundary-links="true">
               </dir-pagination-controls>
             </center>
