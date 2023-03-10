@@ -24,20 +24,44 @@ import { Select, FormControl, MenuItem, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
-
+import AddNewTemplate from './AddTemplate';
 export default function CreateNewTemplate(props) {
   const [open, setOpen] = React.useState(false);
   const leadDetailApi = LeadDetailActions();
   const [TemplateData, setTemplateData] = useRecoilState(TemplateDataList);
   const [EditRow, setEditRow] = React.useState({});
   const [rowId, setrowId] = React.useState();
+  const [newRow, setNewRow] = React.useState({
+    campaign_id: props?.data?.id,
+    field_name: '',
+    alias_name: '',
+    data: '',
+    comment: '',
+    g_templateType: '',
+    send_trigger: '',
+    param: [],
+    button: [],
+    buttonOne: '1',
+    buttonThree: '2',
+    buttonTwo: '3',
+    status_id: 5,
+  });
 
   const getTemplateList = async () => {
     await leadDetailApi.getTemplateList(props?.data?.id);
     setOpen(true);
   };
 
-  function setEditRowData(key, value) {
+  function setEditRowData(key, value, check) {
+    if (check === 'NEW') {
+      if (key == 'field_name') setNewRow({ ...newRow, field_name: value });
+      if (key == 'alias_name') setNewRow({ ...newRow, alias_name: value });
+      if (key == 'g_templateType') setNewRow({ ...newRow, g_templateType: value });
+      if (key == 'send_trigger') setNewRow({ ...newRow, send_trigger: value });
+      if (key == 'comment') setNewRow({ ...newRow, comment: value });
+      if (key == 'data') setNewRow({ ...newRow, data: value });
+      if (key == 'param') setNewRow({ ...newRow, param: value });
+    }
     let newList = [];
     newList = [...TemplateData.rows].map((item, index) => {
       if (rowId === item.md_id) {
@@ -53,7 +77,7 @@ export default function CreateNewTemplate(props) {
     setTemplateData({ ...TemplateData, rows: newList });
   }
 
-  const getFieldName = (name, edit) => {
+  const getFieldName = (name, edit, check) => {
     return (
       <>
         <FormControl sx={{ m: 1, minWidth: 100 }}>
@@ -61,23 +85,24 @@ export default function CreateNewTemplate(props) {
             disabled={!edit}
             value={name}
             className="select-menu"
-            onChange={(e) => setEditRowData('field_name', e.target.value)}
+            onChange={(e) => setEditRowData('field_name', e.target.value, check)}
             size="small"
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
             sx={{ height: 1 }}
           >
-            {TemplateData.field_list.map((field, index) => (
-              <MenuItem key={index} value={field.name} className="select-menu-list">
-                {field.name}
-              </MenuItem>
-            ))}
+            {TemplateData.field_list &&
+              TemplateData.field_list.map((field, index) => (
+                <MenuItem key={index} value={field.name} className="select-menu-list">
+                  {field.name}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
       </>
     );
   };
-  function getTemplateType(type, edit) {
+  function getTemplateType(type, edit, check) {
     return (
       <>
         <FormControl sx={{ m: 1, minWidth: 100 }}>
@@ -85,24 +110,25 @@ export default function CreateNewTemplate(props) {
             disabled={!edit}
             value={type}
             className="select-menu"
-            onChange={(e) => setEditRowData('g_templateType', e.target.value)}
+            onChange={(e) => setEditRowData('g_templateType', e.target.value, check)}
             size="small"
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
             sx={{ height: 1 }}
           >
-            {TemplateData.template_type.map((type, index) => (
-              <MenuItem key={index} value={type} className="select-menu-list">
-                {type}
-              </MenuItem>
-            ))}
+            {TemplateData.template_type &&
+              TemplateData.template_type.map((type, index) => (
+                <MenuItem key={index} value={type} className="select-menu-list">
+                  {type}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
       </>
     );
   }
 
-  function sendTrigger(trigger, edit) {
+  function sendTrigger(trigger, edit, check) {
     return (
       <>
         <FormControl sx={{ m: 1, minWidth: 100 }}>
@@ -110,7 +136,7 @@ export default function CreateNewTemplate(props) {
             disabled={!edit}
             value={trigger}
             className="select-menu"
-            onChange={(e) => setEditRowData('send_trigger', e.target.value)}
+            onChange={(e) => setEditRowData('send_trigger', e.target.value, check)}
             size="small"
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
@@ -119,7 +145,7 @@ export default function CreateNewTemplate(props) {
             <MenuItem key={1} value={'YES'} className="select-menu-list">
               {'YES'}
             </MenuItem>
-            <MenuItem key={2} value={'no'} className="select-menu-list">
+            <MenuItem key={2} value={'No'} className="select-menu-list">
               {'NO'}
             </MenuItem>
           </Select>
@@ -127,7 +153,7 @@ export default function CreateNewTemplate(props) {
       </>
     );
   }
-  function getParams(data, edit) {
+  function getParams(data, edit, check) {
     return (
       <>
         <TextField
@@ -137,27 +163,27 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={data.toString()}
-          onChange={(e) => setEditRowData('param', e.target.value.split(','))}
+          onChange={(e) => setEditRowData('param', e.target.value.split(','), check)}
         />
       </>
     );
   }
-  function getButtons(button) {
+  function getButtons(button, edit, check) {
     return (
       <>
         {/* {button.map((data,index) => { */}
-        <Button>{button[0].name}</Button>
+        <Button>{button[0]?.name}</Button>
         <br />
-        <Button>{button[1].name}</Button>
+        <Button>{button[1]?.name}</Button>
         <br />
-        <Button>{button[2].name}</Button>
+        <Button>{button[2]?.name}</Button>
 
         {/* })} */}
       </>
     );
   }
 
-  function getAliasName(name, edit) {
+  function getAliasName(name, edit, check) {
     return (
       <>
         <TextField
@@ -167,13 +193,13 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={name}
-          onChange={(e) => setEditRowData('alias_name', e.target.value)}
+          onChange={(e) => setEditRowData('alias_name', e.target.value, check)}
         />
       </>
     );
   }
 
-  function getComment(comment, edit) {
+  function getComment(comment, edit, check) {
     return (
       <>
         <TextField
@@ -183,12 +209,12 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={comment}
-          onChange={(e) => setEditRowData('comment', e.target.value)}
+          onChange={(e) => setEditRowData('comment', e.target.value, check)}
         />
       </>
     );
   }
-  function getTriggerMessage(message, edit) {
+  function getTriggerMessage(message, edit, check) {
     return (
       <>
         <TextField
@@ -198,7 +224,7 @@ export default function CreateNewTemplate(props) {
           placeholder="Write Here"
           multiline
           value={message}
-          onChange={(e) => setEditRowData('data', e.target.value)}
+          onChange={(e) => setEditRowData('data', e.target.value, check)}
         />
       </>
     );
@@ -218,7 +244,7 @@ export default function CreateNewTemplate(props) {
     } else {
       let newList = [...TemplateData.rows].map((item, index) => {
         if (id === item.md_id) {
-          setEditRow({ ...item });
+          setEditRow({ ...item, isEditing: false });
           return { ...item, isEditing: false };
         } else return { ...item, isEditing: false };
       });
@@ -228,7 +254,30 @@ export default function CreateNewTemplate(props) {
   };
 
   const updateTemplate = async () => {
-    await leadDetailApi.UpdateTemplate(EditRow);
+    await leadDetailApi.AddUpdateTemplate(EditRow);
+  };
+
+  const DeleteTemplate = async (id) => {
+    await leadDetailApi.deleteTemplate(id);
+  };
+
+  const AddNewRow = async () => {
+    console.log(newRow);
+    await leadDetailApi.AddUpdateTemplate(newRow);
+    setNewRow({
+      campaign_id: props?.data?.id,
+      field_name: '',
+      alias_name: '',
+      data: '',
+      comment: '',
+      g_templateType: '',
+      send_trigger: '',
+      param: [],
+      button: [],
+      buttonOne: '1',
+      buttonThree: '2',
+      buttonTwo: '3',
+    });
   };
   return (
     <>
@@ -289,6 +338,30 @@ export default function CreateNewTemplate(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
+                    {TemplateData && (
+                      <TableRow>
+                        <TableCell>{getFieldName(newRow.field_name, true, 'NEW')}</TableCell>
+                        <TableCell>{getAliasName(newRow.alias_name, true, 'NEW')}</TableCell>
+                        <TableCell>{getTemplateType(newRow.g_templateType, true, 'NEW')}</TableCell>
+                        <TableCell>{getComment(newRow.comment, true, 'NEW')}</TableCell>
+                        <TableCell>{sendTrigger(newRow.send_trigger, true, 'NEW')}</TableCell>
+                        <TableCell>{getTriggerMessage(newRow.data, true, 'NEW')}</TableCell>
+                        <TableCell>{getParams(newRow.param, true, 'NEW')}</TableCell>
+                        <TableCell>{getButtons(newRow.button, true, 'NEW')}</TableCell>
+                        <TableCell>
+                          <Button
+                            className="theme-btn"
+                            variant="contained"
+                            size="small"
+                            onClick={(e) => {
+                              AddNewRow(e);
+                            }}
+                          >
+                            Save
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    )}
                     {TemplateData &&
                       TemplateData.rows &&
                       TemplateData.rows.map((row, index) => (
@@ -320,7 +393,11 @@ export default function CreateNewTemplate(props) {
                               )}
                             </Button>
                             <Button>
-                              <DeleteIcon />
+                              <DeleteIcon
+                                onClick={(e) => {
+                                  DeleteTemplate(row.md_id);
+                                }}
+                              />
                             </Button>
                           </TableCell>
                         </TableRow>
