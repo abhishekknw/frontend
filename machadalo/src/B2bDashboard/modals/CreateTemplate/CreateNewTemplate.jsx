@@ -76,20 +76,21 @@ export default function CreateNewTemplate(props) {
       if (key == 'comment') setNewRow({ ...newRow, comment: value });
       if (key == 'data') setNewRow({ ...newRow, data: value });
       if (key == 'param') setNewRow({ ...newRow, param: value });
+    } else {
+      let newList = [];
+      newList = [...TemplateData.rows].map((item, index) => {
+        if (rowId === item.md_id) {
+          if (key == 'field_name') return { ...item, field_name: value };
+          if (key == 'alias_name') return { ...item, alias_name: value };
+          if (key == 'g_templateType') return { ...item, g_templateType: value };
+          if (key == 'send_trigger') return { ...item, send_trigger: value };
+          if (key == 'comment') return { ...item, comment: value };
+          if (key == 'data') return { ...item, data: value };
+          if (key == 'param') return { ...item, param: value };
+        } else return item;
+      });
+      setTemplateData({ ...TemplateData, rows: newList });
     }
-    let newList = [];
-    newList = [...TemplateData.rows].map((item, index) => {
-      if (rowId === item.md_id) {
-        if (key == 'field_name') return { ...item, field_name: value };
-        if (key == 'alias_name') return { ...item, alias_name: value };
-        if (key == 'g_templateType') return { ...item, g_templateType: value };
-        if (key == 'send_trigger') return { ...item, send_trigger: value };
-        if (key == 'comment') return { ...item, comment: value };
-        if (key == 'data') return { ...item, data: value };
-        if (key == 'param') return { ...item, param: value };
-      } else return item;
-    });
-    setTemplateData({ ...TemplateData, rows: newList });
   }
 
   const getFieldName = (name, edit, check) => {
@@ -265,7 +266,7 @@ export default function CreateNewTemplate(props) {
     data.buttonOne = buttons?.buttonOne;
     data.buttonTwo = buttons?.buttonTwo;
     data.buttonThree = buttons?.buttonThree;
-    await leadDetailApi.UpdateTemplate(EditRow);
+    await leadDetailApi.UpdateTemplate(data);
   };
 
   const DeleteTemplate = async (id) => {
