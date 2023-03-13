@@ -24,7 +24,7 @@ const LeadDetailActions = () => {
   const setCampaignCitylist = useSetRecoilState(campaignCitylist);
   const setLeadDetailData = useSetRecoilState(leadDetailData);
   const alertActions = useAlertActions();
-  const [templateData, setTemplateData] = useRecoilState(TemplateDataList);
+  const [TemplateData, setTemplateData] = useRecoilState(TemplateDataList);
 
   const CurrentCampaignList = (data) => {
     let parmas = '?lead_type=' + data?.lead_type + '&supplier_code=' + data?.supplier_type;
@@ -269,19 +269,33 @@ const LeadDetailActions = () => {
     });
   };
 
-  const AddUpdateTemplate = (data) => {
+  const AddTemplate = (data) => {
+    return fetchWrapper.post(`${Apis.updateTemplate}/`, { data: data }).then((res) => {
+      if (res.status) {
+        alertActions.success(res.data);
+      } else {
+        alertActions.error('Failed');
+      }
+      getTemplateList(data?.campaign_id);
+    });
+  };
+
+  const UpdateTemplate = (data) => {
     return fetchWrapper.put(`${Apis.updateTemplate}/`, { data: data }).then((res) => {
       if (res.status) {
         alertActions.success(res.data);
       } else {
         alertActions.error('Failed');
       }
+      getTemplateList(data?.campaign_id);
     });
   };
 
   const deleteTemplate = (id) => {
     return fetchWrapper.delete(`${Apis.updateTemplate}/?md_id=${id}`).then((res) => {
       if (res.status) {
+        let newList = TemplateData.rows.filter((item) => id !== item.md_id);
+        setTemplateData({ ...TemplateData, rows: newList });
         alertActions.success(res.data);
       } else {
         alertActions.error('Failed');
@@ -299,8 +313,9 @@ const LeadDetailActions = () => {
     DownloadLeadsSummary,
     uploadComments,
     getTemplateList,
-    AddUpdateTemplate,
+    UpdateTemplate,
     deleteTemplate,
+    AddTemplate,
   };
 };
 export { LeadDetailActions };

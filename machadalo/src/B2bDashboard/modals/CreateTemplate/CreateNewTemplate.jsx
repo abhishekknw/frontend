@@ -53,6 +53,11 @@ export default function CreateNewTemplate(props) {
     buttonTwo: '',
     status_id: '',
   });
+  const [buttons, setButtons] = React.useState({
+    buttonOne: '',
+    buttonThree: '',
+    buttonTwo: '',
+  });
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openCard = Boolean(anchorEl);
   const coardId = openCard ? 'simple-popover' : undefined;
@@ -71,20 +76,21 @@ export default function CreateNewTemplate(props) {
       if (key == 'comment') setNewRow({ ...newRow, comment: value });
       if (key == 'data') setNewRow({ ...newRow, data: value });
       if (key == 'param') setNewRow({ ...newRow, param: value });
+    } else {
+      let newList = [];
+      newList = [...TemplateData.rows].map((item, index) => {
+        if (rowId === item.md_id) {
+          if (key == 'field_name') return { ...item, field_name: value };
+          if (key == 'alias_name') return { ...item, alias_name: value };
+          if (key == 'g_templateType') return { ...item, g_templateType: value };
+          if (key == 'send_trigger') return { ...item, send_trigger: value };
+          if (key == 'comment') return { ...item, comment: value };
+          if (key == 'data') return { ...item, data: value };
+          if (key == 'param') return { ...item, param: value };
+        } else return item;
+      });
+      setTemplateData({ ...TemplateData, rows: newList });
     }
-    let newList = [];
-    newList = [...TemplateData.rows].map((item, index) => {
-      if (rowId === item.md_id) {
-        if (key == 'field_name') return { ...item, field_name: value };
-        if (key == 'alias_name') return { ...item, alias_name: value };
-        if (key == 'g_templateType') return { ...item, g_templateType: value };
-        if (key == 'send_trigger') return { ...item, send_trigger: value };
-        if (key == 'comment') return { ...item, comment: value };
-        if (key == 'data') return { ...item, data: value };
-        if (key == 'param') return { ...item, param: value };
-      } else return item;
-    });
-    setTemplateData({ ...TemplateData, rows: newList });
   }
 
   const getFieldName = (name, edit, check) => {
@@ -248,13 +254,19 @@ export default function CreateNewTemplate(props) {
           return { ...item, isEditing: false };
         } else return { ...item, isEditing: false };
       });
-      updateTemplate();
       setTemplateData({ ...TemplateData, rows: newList });
+      updateTemplate();
     }
   };
 
   const updateTemplate = async () => {
-    await leadDetailApi.AddUpdateTemplate(EditRow);
+    let data = EditRow;
+    // data.triger_message = newRow?.data;
+    data.type_of_fields = EditRow?.g_templateType;
+    data.buttonOne = buttons?.buttonOne;
+    data.buttonTwo = buttons?.buttonTwo;
+    data.buttonThree = buttons?.buttonThree;
+    await leadDetailApi.UpdateTemplate(data);
   };
 
   const DeleteTemplate = async (id) => {
@@ -262,8 +274,14 @@ export default function CreateNewTemplate(props) {
   };
 
   const AddNewRow = async () => {
-    console.log(newRow);
-    await leadDetailApi.AddUpdateTemplate(newRow);
+    let data = newRow;
+    data.triger_message = newRow?.data;
+    data.type_of_fields = newRow?.g_templateType;
+    data.buttonOne = buttons?.buttonOne;
+    data.buttonTwo = buttons?.buttonTwo;
+    data.buttonThree = buttons?.buttonThree;
+
+    await leadDetailApi.AddTemplate(data);
     setNewRow({
       campaign_id: props?.data?.id,
       field_name: '',
@@ -461,7 +479,7 @@ export default function CreateNewTemplate(props) {
             <TextField
               label="Button 1"
               id="outlined-size-small"
-              onChange={(e) => setNewRow({ ...newRow, buttonOne: e.target.value })}
+              onChange={(e) => setButtons({ ...buttons, buttonOne: e.target.value })}
               defaultValue={showButton[0]?.name}
               size="small"
             />
@@ -472,7 +490,7 @@ export default function CreateNewTemplate(props) {
             <TextField
               label="Button 2"
               id="outlined-size-small"
-              onChange={(e) => setNewRow({ ...newRow, buttonTwo: e.target.value })}
+              onChange={(e) => setButtons({ ...buttons, buttonTwo: e.target.value })}
               defaultValue={showButton[1]?.name}
               size="small"
             />
@@ -483,7 +501,7 @@ export default function CreateNewTemplate(props) {
             <TextField
               label="Button 3"
               id="outlined-size-small"
-              onChange={(e) => setNewRow({ ...newRow, buttonThree: e.target.value })}
+              onChange={(e) => setButtons({ ...buttons, buttonThree: e.target.value })}
               defaultValue={showButton[0]?.name}
               size="small"
             />
