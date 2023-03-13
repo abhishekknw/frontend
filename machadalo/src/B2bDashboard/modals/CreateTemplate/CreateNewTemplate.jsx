@@ -29,7 +29,7 @@ import { Select, FormControl, MenuItem, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
-import AddNewTemplate from './AddTemplate';
+// import AddNewTemplate from './AddTemplate';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 export default function CreateNewTemplate(props) {
@@ -310,7 +310,7 @@ export default function CreateNewTemplate(props) {
         </Button>
         <DialogTitle className="title-modal">CREATE FIELDS</DialogTitle>
         <DialogContent className="content-modal">
-          <Box className="d-flex justify-content-around upload-btns">
+          <Box className="d-flex justify-content-around upload-btns create-modal-main-table">
             <Paper
               sx={{ width: '90%', overflow: 'hidden', maxWidth: '1100px' }}
               className="createfieldb2b "
@@ -326,7 +326,7 @@ export default function CreateNewTemplate(props) {
                   </TableHead>
                   <TableBody>
                     {TemplateData && (
-                      <TableRow>
+                      <TableRow className='main-head'>
                         <TableCell className="createCell">
                           {getFieldName(newRow.field_name, true, 'NEW')}
                         </TableCell>
@@ -409,7 +409,7 @@ export default function CreateNewTemplate(props) {
                             />
                           </TableCell>
                           <TableCell className="createCell">
-                            <Button>
+                            <Button className='cell-last-btn edit-save-btn'>
                               {row?.isEditing ? (
                                 <SaveIcon
                                   onClick={(e) => {
@@ -424,7 +424,7 @@ export default function CreateNewTemplate(props) {
                                 />
                               )}
                             </Button>
-                            <Button>
+                            <Button className='cell-last-btn delete-btn'>
                               <DeleteIcon
                                 onClick={(e) => {
                                   DeleteTemplate(row.md_id);

@@ -431,12 +431,12 @@ table tbody tr th.MuiTableCell-root{
 }
 .modal-comment.create-table .MuiPaper-root {
     max-width: 1200px !important;
-    width: 90%;
-    min-width: 1183px;
+    width: 100%;
+    // min-width: 1183px;
 }
 .createCell .MuiInputBase-root{
     padding: 5px 8px;
-    height: 35px;
+    height: 30px;
 }
 .createCell .MuiInputBase-root.MuiInputBase-multiline {
    position: relative;
@@ -445,6 +445,19 @@ table tbody tr th.MuiTableCell-root{
 .createCell .MuiSelect-select{
     padding-left: 0;
     text-align: left;
+    padding-right: 5px !important;
+}
+.MuiModal-root ul.MuiList-root{
+    max-height: 80px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.createCell .textarea-modal {
+    height: 45px;
+    width: 150px !important;
+}
+.createHeader{
+    text-align: center !important;
 }
 .button-modal-popup {
     position: relative;
@@ -482,6 +495,21 @@ table tbody tr th.MuiTableCell-root{
     padding: 6px 6px;
     width: 130px;
     
+}
+.edit-save-btn svg path{
+    fill : #000000
+}
+.delete-btn svg path{
+    fill : #8E1921
+}
+.cell-last-btn{
+    min-width: 30px !important;
+    width: 30px;
+    padding: 0 !important;
+}
+.create-modal-main-table .MuiTableContainer-root{
+    max-height: 330px !important;
+    overflow: scroll;
 }
 @media screen and (max-width: 767px) {
     .tab-wrapper-main{
