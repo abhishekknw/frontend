@@ -38,6 +38,7 @@ export default function CreateNewTemplate(props) {
   const [TemplateData, setTemplateData] = useRecoilState(TemplateDataList);
   const [EditRow, setEditRow] = React.useState({});
   const [rowId, setrowId] = React.useState();
+  const campaignId = props?.data?.id;
   const [newRow, setNewRow] = React.useState({
     campaign_id: props?.data?.id,
     field_name: '',
@@ -266,7 +267,7 @@ export default function CreateNewTemplate(props) {
     data.buttonOne = buttons?.buttonOne;
     data.buttonTwo = buttons?.buttonTwo;
     data.buttonThree = buttons?.buttonThree;
-    await leadDetailApi.UpdateTemplate(data);
+    await leadDetailApi.UpdateTemplate(data, campaignId);
   };
 
   const DeleteTemplate = async (id) => {
@@ -344,7 +345,7 @@ export default function CreateNewTemplate(props) {
                   </TableHead>
                   <TableBody>
                     {TemplateData && (
-                      <TableRow className='main-head'>
+                      <TableRow className="main-head">
                         <TableCell className="createCell">
                           {getFieldName(newRow.field_name, true, 'NEW')}
                         </TableCell>
@@ -427,7 +428,7 @@ export default function CreateNewTemplate(props) {
                             />
                           </TableCell>
                           <TableCell className="createCell">
-                            <Button className='cell-last-btn edit-save-btn'>
+                            <Button className="cell-last-btn edit-save-btn">
                               {row?.isEditing ? (
                                 <SaveIcon
                                   onClick={(e) => {
@@ -442,7 +443,7 @@ export default function CreateNewTemplate(props) {
                                 />
                               )}
                             </Button>
-                            <Button className='cell-last-btn delete-btn'>
+                            <Button className="cell-last-btn delete-btn">
                               <DeleteIcon
                                 onClick={(e) => {
                                   DeleteTemplate(row.md_id);

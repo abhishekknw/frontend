@@ -280,14 +280,14 @@ const LeadDetailActions = () => {
     });
   };
 
-  const UpdateTemplate = (data) => {
+  const UpdateTemplate = (data, campaignId) => {
     return fetchWrapper.put(`${Apis.updateTemplate}/`, { data: data }).then((res) => {
       if (res.status) {
         alertActions.success(res.data);
       } else {
         alertActions.error('Failed');
       }
-      getTemplateList(data?.campaign_id);
+      getTemplateList(campaignId);
     });
   };
 
