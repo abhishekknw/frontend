@@ -51,14 +51,19 @@ function useFetchWrapper() {
 
   function handleResponse(response) {
     return response.text().then((text) => {
+      if (response.status == 500) {
+        return alertActions.error('500' + ' ' + response.statusText);
+      }
       const data = text && JSON.parse(text);
-
       if (!response.ok) {
         if ([401, 403].includes(response.status) && auth[0]?.token) {
           // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
           localStorage.removeItem('user');
           setAuth(null);
           history.push('/account/login');
+        }
+        if ([500].includes(response.status) && auth[0]?.token) {
+          alertActions.error('500 Internal Server Error');
         }
 
         const error = (data && data.message) || response.statusText;

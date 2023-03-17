@@ -10,7 +10,7 @@ const useAlertActions = () => {
       setAlert({ open: true });
     },
     error: (message) => {
-      enqueueSnackbar(message, { variant: 'error' });
+      enqueueSnackbar(message, { variant: 'error', autoHideDuration: 5000 });
       setAlert({ open: true });
     },
   };
