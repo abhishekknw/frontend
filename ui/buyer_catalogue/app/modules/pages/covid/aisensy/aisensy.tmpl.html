@@ -1589,6 +1589,10 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
+                                  <span ng-if="chat.type == 'file'">
+                                    <i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                                    <a href="{{chat.content.url}}">Download</a>
+                                  </span>
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
                                       <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
@@ -1620,6 +1624,9 @@
                                     <video width="200" height="250" controls>
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
+                                  </span>
+                                  <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                                    <a href="{{chat.content.url}}">Download</a>
                                   </span>
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
@@ -1891,6 +1898,9 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
+                                  <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                                    <a href="{{chat.content.url}}">Download</a>
+                                  </span>
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
                                       <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
@@ -1922,6 +1932,9 @@
                                     <video width="200" height="250" controls>
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
+                                  </span>
+                                  <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                                    <a href="{{chat.content.url}}">Download</a>
                                   </span>
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
@@ -2153,6 +2166,9 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
+                                  <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                                    <a href="{{chat.content.url}}">Download</a>
+                                  </span>
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
                                       <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
@@ -2184,6 +2200,9 @@
                                     <video width="200" height="250" controls>
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
+                                  </span>
+                                  <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                                    <a href="{{chat.content.url}}">Download</a>
                                   </span>
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
@@ -2787,6 +2806,9 @@
                           <source ng-src="{{chat.content.url}}" type="video/mp4">
                         </video>
                       </span>
+                      <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                        <a href="{{chat.content.url}}">Download</a>
+                      </span>
                       <span ng-if="chat.content.types[0] == 'audio'">
                         <audio width="200" height="auto" controls>
                           <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
@@ -2818,6 +2840,9 @@
                       <video width="200" height="250" controls>
                         <source ng-src="{{chat.content.url}}" type="video/mp4">
                       </video>
+                    </span>
+                    <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                      <a href="{{chat.content.url}}">Download</a>
                     </span>
                     <span ng-if="chat.content.types[0] == 'audio'">
                       <audio width="200" height="auto" controls>
@@ -3340,6 +3365,9 @@
                     <source ng-src="{{chat.content.url}}" type="video/mp4">
                   </video>
                 </span>
+                <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                  <a href="{{chat.content.url}}">Download</a>
+                </span>
                 <span ng-if="chat.content.types[0] == 'audio'">
                   <audio width="200" height="auto" controls>
                     <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
@@ -3371,6 +3399,9 @@
                 <video width="200" height="250" controls>
                   <source ng-src="{{chat.content.url}}" type="video/mp4">
                 </video>
+              </span>
+              <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                <a href="{{chat.content.url}}">Download</a>
               </span>
               <span ng-if="chat.content.types[0] == 'audio'">
                 <audio width="200" height="auto" controls>
