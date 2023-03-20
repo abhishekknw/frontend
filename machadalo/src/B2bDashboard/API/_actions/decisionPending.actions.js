@@ -87,6 +87,16 @@ const decisionPendingActions = () => {
     });
   };
 
+  const supplierLeads = (id) => {
+    return fetchWrapper.get(`${Apis.supplierLeads}${id}`).then((res) => {
+      if (res.status) {
+        return res.data;
+      } else {
+        alertActions.error(res.data);
+      }
+    });
+  };
+
   return {
     LeadDecisionPendingList,
     ClientStatusList,
@@ -94,6 +104,7 @@ const decisionPendingActions = () => {
     getCommentList,
     postComment,
     AcceptDeclineLeads,
+    supplierLeads
   };
 };
 export { decisionPendingActions };
