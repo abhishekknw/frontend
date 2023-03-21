@@ -55,11 +55,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.NewsupplierAddUpdateData = {};
         $scope.societyNameList = [];
         $scope.searchSociety = "";
-
         $scope.tab = { name: 'tabA' };
-
+        $scope.selectedFilterSupplier = '';
         // AIsensy controller
-        $scope.getActiveUser = function (page, entity) {
+        $scope.getActiveUser = function (page) {
           $scope.tab.name = 'tabA';
           $scope.hideChatModule();
           $scope.formData.historySearch = "";
@@ -95,11 +94,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.activesearch) {
             param.search = $scope.formData.activesearch;
           }
-          if(!entity){
-            entity = '';
+          if(!$scope.selectedFilterSupplier){
+            $scope.selectedFilterSupplier = '';
           }
 
-          AuthService.getAllActiveUserData(param, entity)
+          AuthService.getAllActiveUserData(param, $scope.selectedFilterSupplier)
 
             .then(function onSuccess(response) {
               $scope.activeUserData = response.data.data.users;
@@ -115,14 +114,15 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             .then(function onSuccess(response) {
               let output = response.data.data;
               $scope.supplierFilterList = output.map(([id, lable]) => ({ id, lable }));
-              $scope.supplierFilterList.splice(0, 0, { 'id': 'undefined', "lable": "---Select Supplier---" });
+              $scope.supplierFilterList.splice(0, 0, { 'id': '', "lable": "---Select Supplier---" });
 
             }).catch(function onError(response) {
               console.log(response);
             })
         }
         $scope.selectedSupplier = function (select, type) {
-          if (!select) {
+          $scope.selectedFilterSupplier = select;
+          if (!select && select!='') {
             return 0;
           }
           else {
@@ -145,7 +145,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.formData = {};
-        $scope.getActionRequiredUser = function (page, entity) {
+        $scope.getActionRequiredUser = function (page) {
 
           $scope.tab.name = 'tabB';
           $scope.isUserProfile = false;
@@ -170,10 +170,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.actionSearch) {
             param.search = $scope.formData.actionSearch;
           }
-          if(!entity){
-            entity = "";
+          if(!$scope.selectedFilterSupplier ){
+            $scope.selectedFilterSupplier  = "";
           }
-          AuthService.getAllActionRequiredData(param, entity)
+          AuthService.getAllActionRequiredData(param, $scope.selectedFilterSupplier )
 
             .then(function onSuccess(response) {
               $scope.actionRequiredUserData = response.data.data.users;
@@ -207,10 +207,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.interveneSearch) {
             param.search = $scope.formData.interveneSearch;
           }
-          if(!entity){
-            entity = '';
+          // if(!entity){
+          //   entity = '';
+          // }
+          if(!$scope.selectedFilterSupplier){
+            $scope.selectedFilterSupplier = '';
           }
-          AuthService.getAllInterveneUserData(param, entity)
+          AuthService.getAllInterveneUserData(param, $scope.selectedFilterSupplier)
 
             .then(function onSuccess(response) {
               $scope.interveneUserData = response.data.data.users;

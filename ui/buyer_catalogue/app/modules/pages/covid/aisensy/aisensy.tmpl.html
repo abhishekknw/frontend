@@ -1396,7 +1396,7 @@
                       </div>
                       <div class="select">
                         <select ng-model="selectForActive" ng-change="selectedSupplier(selectForActive,'active')"
-                          ng-init="selectForActive='undefined'"
+                          ng-init="selectForActive=selectedFilterSupplier"
                           ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                         </select>
                       </div>
@@ -1727,10 +1727,14 @@
                           ng-model="formData.actionSearch" id="tab2search" name="search" type="text" />
                       </div>
                       <div class="select">
-                        <select ng-model="selectForAction" ng-change="selectedSupplier(selectForAction,'action')"
-                                ng-init="selectForAction='undefined'"
+                        <!-- <select ng-model="selectForAction" ng-change="selectedSupplier(selectForAction,'action')"
+                                ng-init="selectForAction = selectedFilterSupplier"
                                 ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
-                        </select>
+                        </select> -->
+                        <select ng-model="selectForAction" ng-change="selectedSupplier(selectForAction,'action')"
+                        ng-init="selectForAction=selectedFilterSupplier"
+                        ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
+                      </select>
                       </div>
                     </div>
                     <div class="fields-box">
@@ -2032,11 +2036,15 @@
                           ng-model="formData.interveneSearch" id="searchIn" name="search" type="text" />
                       </div>
                       <div class="select">
-                        <select ng-model="selectForIntervene"
+                        <!-- <select ng-model="selectForIntervene"
                           ng-change="selectedSupplier(selectForIntervene,'intervene')"
                           ng-init="selectForIntervene='undefined'"
                           ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
-                        </select>
+                        </select> -->
+                        <select ng-model="selectForActive" ng-change="selectedSupplier(selectForActive,'intervene')"
+                        ng-init="selectForActive=selectedFilterSupplier"
+                        ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
+                      </select>
                       </div>
                     </div>
                     <div class="fields-box">
