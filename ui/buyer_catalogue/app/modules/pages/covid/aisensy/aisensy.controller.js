@@ -58,6 +58,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.tab = { name: 'tabA' };
         $scope.selectedFilterSupplier = '';
         $scope.selectForHistory = "";
+        $scope.selectForContact = "";
         // AIsensy controller
         $scope.getActiveUser = function (page) {
           $scope.tab.name = 'tabA';
@@ -137,6 +138,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.getInterveneUser("", select);
             }
             else if (type === 'contact') {
+              $scope.selectForContact = select;
               $scope.contactDetail("", select)
             }
             else {
@@ -434,6 +436,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         };
 
+        $scope.contactDetailTab = function(){
+          $scope.selectForContact = '';
+          $scope.contactDetail();
+        }
+
         $scope.contactDetail = function (page, type_of_entity) {
           $scope.formData.historySearch = "";
           $scope.showcontactDetail = true;
@@ -639,9 +646,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
         }
 
-        $scope.pageChanged = function (newPageNumber, tab) {
+        $scope.pageChanged = function (newPageNumber,supplier) {
           $scope.serial = newPageNumber * 10 - 9;
-          $scope.contactDetail(newPageNumber);
+          $scope.contactDetail(newPageNumber,supplier);
         };
         $scope.historyPageChanged = function (newPageNumber, entity) {
           $scope.serial = newPageNumber * 10 - 9;

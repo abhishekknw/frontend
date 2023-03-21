@@ -1301,7 +1301,7 @@
 
             
           <li><a target="_blank" class="fa fa-user-circle" aria-hidden="true" style="font-size: large"
-              ng-click="contactDetail()">
+              ng-click="contactDetailTab()">
               Contact</a></li>
           <li> <a target="_blank" class="fa fa-history" aria-hidden="true" style="font-size: large"
               ng-click="historyDetailTab()">
@@ -3103,10 +3103,8 @@
         <input placeholder="Search here" ng-change="contactDetail()" ng-model="formData.contactSearch" type="text" />
       </div>
       <div class="select">
-        <select ng-model="selectForActive" ng-change="selectedSupplier(selectForActive,'contact')"
-                ng-init="selectForActive='undefined'"
+        <select ng-model="selectForContact" ng-change="selectedSupplier(selectForContact,'contact')"
                 ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
-
         </select>
       </div>
     </div>
@@ -3143,7 +3141,7 @@
         data-boundary-links="true"> -->
     </div>
     <center>
-      <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+      <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber,selectForContact)" boundary-links="true">
       </dir-pagination-controls>
     </center>
     <div ng-if="contactDetailData.length == 0">
