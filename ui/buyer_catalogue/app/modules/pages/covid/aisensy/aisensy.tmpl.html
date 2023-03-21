@@ -1304,7 +1304,7 @@
               ng-click="contactDetail()">
               Contact</a></li>
           <li> <a target="_blank" class="fa fa-history" aria-hidden="true" style="font-size: large"
-              ng-click="historyDetail()">
+              ng-click="historyDetailTab()">
               History</a> </li>
           <li> <a target="_blank" class="fa fa-file-text" aria-hidden="true" style="font-size: large"
               ng-click="templateDetail()">
@@ -2041,8 +2041,8 @@
                           ng-init="selectForIntervene='undefined'"
                           ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                         </select> -->
-                        <select ng-model="selectForActive" ng-change="selectedSupplier(selectForActive,'intervene')"
-                        ng-init="selectForActive=selectedFilterSupplier"
+                        <select ng-model="selectForIntervene" ng-change="selectedSupplier(selectForIntervene,'intervene')"
+                        ng-init="selectForIntervene=selectedFilterSupplier"
                         ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                       </select>
                       </div>
@@ -2656,7 +2656,6 @@
               </div>
               <div class="select">
                 <select ng-model="selectForHistory" ng-change="selectedSupplier(selectForHistory,'history')"
-                        ng-init="selectForHistory='undefined'"
                         ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                 </select>
               </div>

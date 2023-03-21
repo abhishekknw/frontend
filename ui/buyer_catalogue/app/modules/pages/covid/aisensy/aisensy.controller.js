@@ -57,6 +57,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.searchSociety = "";
         $scope.tab = { name: 'tabA' };
         $scope.selectedFilterSupplier = '';
+        $scope.selectForHistory = "";
         // AIsensy controller
         $scope.getActiveUser = function (page) {
           $scope.tab.name = 'tabA';
@@ -139,6 +140,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.contactDetail("", select)
             }
             else {
+              $scope.selectForHistory = select;
               $scope.historyDetail("", select);
             }
           }
@@ -476,8 +478,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             })
         }
 
-        $scope.historyDetail = function (page, entity) {
+        $scope.historyDetailTab = function(){
+          $scope.selectForHistory = '';
+          $scope.historyDetail();
+        }
 
+        $scope.historyDetail = function (page, entity) {
           $scope.formData.contactSearch = "";
           $scope.showcontactDetail = false;
           $scope.showhistoryDetail = true;
