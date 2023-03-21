@@ -101,7 +101,7 @@ export default function FilterModal(props) {
       <Typography borderBottom={1} variant="h5" pb={1} mb={4}>
         Filters
       </Typography>
-      <Button className="close-btn">
+      <Button className="close-btn" onClick={toggleDrawer('right',false)}>
         <CloseIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
       </Button>
       <Box className="accordion-box pt-3 pb-5">
@@ -405,9 +405,9 @@ export default function FilterModal(props) {
           </React.Fragment>
         </Box>
 
-        <Box>
+        {/* <Box>
           <Typography variant="h6">LEADS OF {props?.headerName}</Typography>
-        </Box>
+        </Box> */}
 
         <Box sx={{ m: 1, display: 'flex', alignItems: 'flex-end' }} className="input-col">
           <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />

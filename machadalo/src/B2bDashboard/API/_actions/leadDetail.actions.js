@@ -303,6 +303,17 @@ const LeadDetailActions = () => {
     });
   };
 
+  const getSupplierLeadDetails= (id) => {
+    let params = 'supplier_id='+id+'&campaign_id=' +filters?.campaign_id + '&supplier_type=' + filters?.supplier_type + '&next_page=' + filters?.next_page;
+    return fetchWrapper.get(`${Apis.supplierLeadDetails}${params}`).then((res) => {
+      if (res.status) {
+        return res.data;
+      } else {
+        alertActions.error('Failed');
+      }
+    });
+  };
+
   return {
     CurrentCampaignList,
     campaignViewLeads,
@@ -316,6 +327,7 @@ const LeadDetailActions = () => {
     UpdateTemplate,
     deleteTemplate,
     AddTemplate,
+    getSupplierLeadDetails,
   };
 };
 export { LeadDetailActions };

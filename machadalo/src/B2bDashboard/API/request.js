@@ -12,6 +12,7 @@ export const Apis = {
   getCampaignCityList: 'v0/ui/b2b/city-list',
   getLeadDetailsData: 'v0/ui/b2b/lead-details',
   uploadComments: 'v0/ui/b2b/upload-lead-comments',
+  supplierLeadDetails:"v0/ui/b2b/supplier-leads-details-page/?",
 
   templateList: 'v0/ui/template/?campaign_id=',
   updateTemplate: 'v0/ui/template',

@@ -87,7 +87,7 @@ const decisionPendingActions = () => {
     });
   };
 
-  const supplierLeads = (id) => {
+  const getSupplierLeads = (id) => {
     return fetchWrapper.get(`${Apis.supplierLeads}${id}`).then((res) => {
       if (res.status) {
         return res.data;
@@ -104,7 +104,7 @@ const decisionPendingActions = () => {
     getCommentList,
     postComment,
     AcceptDeclineLeads,
-    supplierLeads
+    getSupplierLeads
   };
 };
 export { decisionPendingActions };

@@ -186,7 +186,7 @@ export default function BasicTable(props) {
     } else if (_id != data._id) {
       set_id(data._id);
       setOpen(true);
-      let supplierData = await LeadBasicApi.supplierLeads(data?.supplier_id);
+      let supplierData = await LeadBasicApi.getSupplierLeads(data?.supplier_id);
       setSupplierLeads({...supplierData});
     }
   }
