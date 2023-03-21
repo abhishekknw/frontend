@@ -60,6 +60,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.selectForHistory = "";
         $scope.selectForContact = "";
         // AIsensy controller
+
+        $scope.getActiveUserTab = function (){
+          $scope.selectedFilterSupplier = '';
+          $scope.getActiveUser();
+        }
         $scope.getActiveUser = function (page) {
           $scope.tab.name = 'tabA';
           $scope.hideChatModule();
