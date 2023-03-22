@@ -5170,8 +5170,9 @@
               </div>
               <div class="col-md-8" style="margin-top: 10px">
                 <input type="text" placeholder="Add New Supplier " class="form-control" name="edit_supplier"
-                  id="edit_supplier_id" ng-model="NewsupplierAddUpdateData.supplier_name">
+                  id="edit_supplier_id" ng-model="NewsupplierAddUpdateData.supplier_name" ng-required="true">
               </div>
+              <span ng-show="myForm.edit_supplier.$dirty && myForm.edit_supplier.$invalid" class="error"></span>
             </div>
 
 
