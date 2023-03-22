@@ -3060,7 +3060,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.newSupplierPocModel = [];
                 $scope.Supplier_id = "";
                 $scope.newSelectedArea = [];
-                $scope.Areas = "";
+                // $scope.Areas = "";
+                // $scope.Cities = '';
+                // $scope.supplierTypes = '';
                 $scope.societyNameList = [];
 
               }
