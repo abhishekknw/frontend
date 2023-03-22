@@ -2855,9 +2855,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.NewsupplierForAddUpdate = function (data) {
-          $scope.NewsupplierAddUpdateData = {};
-          $scope.societyNameList = [];
-          $scope.searchSociety = "";
+          // $scope.NewsupplierAddUpdateData = {};
+          // $scope.societyNameList = [];
+          // $scope.searchSociety = "";
           AuthService.initialData()
             .then(function onSuccess(response) {
               $scope.Cities = response.data.cities;
@@ -2884,6 +2884,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         $scope.newSupplierPocModel = [];
         $scope.newSupplierAddPoc = function () {
+          alert(1)
           $scope.newSupplierPocModel.push({
             'mobile': '',
             'poc_name': '',
@@ -3029,7 +3030,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             "designation": $scope.NewsupplierAddUpdateData.designation,
             "poc_id": $scope.NewsupplierAddUpdateData.id,
           };
-          $scope.newSupplierPocModel.push(obj);
+          // $scope.newSupplierPocModel.push(obj);
+          poc.push(obj)
           for (let i in $scope.newSupplierPocModel) {
             poc.push($scope.newSupplierPocModel[i]);
           }
@@ -3039,25 +3041,29 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           AuthService.newAddUpdateSupplierSubmit(data)
             .then(function onSuccess(response) {
 
-              $scope.NewsupplierAddUpdateData = {};
-              $scope.newSupplierPocModel = [];
-              $scope.Supplier_id = "";
-              $scope.newSelectedArea = [];
-              $scope.Areas = "";
-              $scope.societyNameList = [];
+              // $scope.NewsupplierAddUpdateData = {};
+              // $scope.newSupplierPocModel = [];
+              // $scope.Supplier_id = "";
+              // $scope.newSelectedArea = [];
+              // $scope.Areas = "";
+              // $scope.societyNameList = [];
               if (response && response.data.data.error) {
                 swal(constants.name, response.data.data.error, constants.error);
-                $scope.NewsupplierAddUpdateData = {};
-                $scope.newSupplierPocModel = [];
-                $scope.newSelectedSupplierName = [];
-                $scope.newSelectedArea = [];
+                // $scope.NewsupplierAddUpdateData = {};
+                // $scope.newSupplierPocModel = [];
+                // $scope.newSelectedSupplierName = [];
+                // $scope.newSelectedArea = [];
               }
               else if (response.data.data.message) {
                 swal(constants.name, response.data.data.message, constants.success);
                 $scope.NewsupplierAddUpdateData = {};
                 $scope.newSupplierPocModel = [];
-                $scope.newSelectedSupplierName = [];
+                $scope.Supplier_id = "";
                 $scope.newSelectedArea = [];
+                // $scope.Areas = "";
+                // $scope.Cities = '';
+                // $scope.supplierTypes = '';
+                $scope.societyNameList = [];
 
               }
               else {
