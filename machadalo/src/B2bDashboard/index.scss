@@ -447,11 +447,11 @@ table tbody tr th.MuiTableCell-root{
     text-align: left;
     padding-right: 5px !important;
 }
-.MuiModal-root ul.MuiList-root{
-    max-height: 80px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
+// .MuiModal-root ul.MuiList-root{
+//     max-height: 80px;
+//     overflow-x: hidden;
+//     overflow-y: scroll;
+// }
 .createCell .textarea-modal {
     height: 45px;
     width: 150px !important;
@@ -510,6 +510,9 @@ table tbody tr th.MuiTableCell-root{
 .create-modal-main-table .MuiTableContainer-root{
     max-height: 330px !important;
     overflow: scroll;
+}
+.inner-drop-table .MuiBox-root.css-1ynyhby{
+    margin: 0px !important;
 }
 @media screen and (max-width: 767px) {
     .tab-wrapper-main{

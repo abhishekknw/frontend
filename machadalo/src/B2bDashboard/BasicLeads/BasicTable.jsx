@@ -204,25 +204,25 @@ export default function BasicTable(props) {
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">Select</TableCell>
-              <TableCell align="right">Entity Name</TableCell>
-              <TableCell align="right">TOE</TableCell>
-              <TableCell align="right">PC</TableCell>
-              <TableCell align="right">City</TableCell>
-              <TableCell align="right">Area</TableCell>
-              <TableCell align="right">Lead Stamp</TableCell>
-              <TableCell align="right">Current Status</TableCell>
-              <TableCell align="right">Phone Number</TableCell>
-              <TableCell align="right">Client Comment</TableCell>
-              <TableCell align="right">Action</TableCell>
+              <TableCell align='center' sx={{width: '150px'}} >Select</TableCell>
+              <TableCell align='center'  sx={{width: '250px'}} >Entity Name</TableCell>
+              <TableCell align='center' sx={{width: '100px'}} >TOE</TableCell>
+              <TableCell align='center' sx={{width: '60px'}} >PC</TableCell>
+              <TableCell align='center' sx={{width: '150px'}} >City</TableCell>
+              <TableCell align='center' sx={{width: '150px'}} >Area</TableCell>
+              <TableCell align='center'  sx={{width: '250px'}} >Lead Stamp</TableCell>
+              <TableCell align='center'  sx={{width: '250px'}} >Current Status</TableCell>
+              <TableCell align='center' sx={{width: '100px'}} >Phone Number</TableCell>
+              <TableCell align='center' sx={{width: '100px'}} >Client Comment</TableCell>
+              <TableCell align='center' sx={{width: '100px'}} >Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {ListData.length > 0 &&
               ListData.lead.map((row, index) => (
                 <React.Fragment>
-                  <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                    <TableCell>
+                  <TableRow>
+                    <TableCell sx={{width: '150px'}} >
                       <Checkbox
                         onChange={(e) => {
                           multiSelectLeads(row, e);
@@ -240,59 +240,56 @@ export default function BasicTable(props) {
                         )}
                       </IconButton>
                     </TableCell>
-                    <TableCell align="right">{row.entity_name}</TableCell>
-                    <TableCell align="right">{row.entity_type}</TableCell>
-                    <TableCell align="right">{row.primary_count}</TableCell>
-                    <TableCell align="right">{row.city}</TableCell>
-                    <TableCell align="right">{row.area}</TableCell>
-                    <TableCell align="right">{row.lead_timestamp}</TableCell>
-                    <TableCell align="right">
+                    <TableCell sx={{width: '250px'}} >{row.entity_name}</TableCell>
+                    <TableCell  sx={{width: '100px'}}>{row.entity_type}</TableCell>
+                    <TableCell sx={{width: '60px'}}>{row.primary_count}</TableCell>
+                    <TableCell sx={{width: '150px'}} >{row.city}</TableCell>
+                    <TableCell sx={{width: '150px'}}>{row.area}</TableCell>
+                    <TableCell  sx={{width: '250px'}}>{row.lead_timestamp}</TableCell>
+                    <TableCell  sx={{width: '250px'}} >
                       <ClientStatusDropdown data={row} checkTable="leadBasicTable" />
                     </TableCell>
-                    <TableCell align="right">{row.phone_number}</TableCell>
-                    <TableCell align="right">
+                    <TableCell  sx={{width: '100px'}}>{row.phone_number}</TableCell>
+                    <TableCell sx={{width: '100px'}} >
                       <ViewCommentModal data={row} />
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell sx={{width: '100px'}} >
                       <AcceptDeclineLeads data={row} />
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                      <Collapse in={open && row._id == _id} timeout="auto" unmountOnExit>
+                    <TableCell className='p-0 inner-drop-table' style={{  }} colSpan={11}>
+                      <Collapse in={open && row._id == _id} timeout="auto">
                         <Box sx={{ margin: 1 }}>
-                          {/* <Typography variant="h6" gutterBottom component="div">
-                        History
-                      </Typography> */}
                           <Table size="small" aria-label="purchases">
                             <TableBody>
                               {supplierLeads.length > 0 &&
                                 supplierLeads.lead.map((row, index) => (
                                   <TableRow key={index}>
-                                    <TableCell>
+                                    <TableCell sx={{width: '150px'}} >
                                       <Checkbox
                                         onChange={(e) => {
                                           multiSelectLeads(row, e);
                                         }}
                                       />
                                     </TableCell>
-                                    <TableCell align="right">{row.entity_name}</TableCell>
-                                    <TableCell align="right">{row.entity_type}</TableCell>
-                                    <TableCell align="right">{row.primary_count}</TableCell>
-                                    <TableCell align="right">{row.city}</TableCell>
-                                    <TableCell align="right">{row.area}</TableCell>
-                                    <TableCell align="right">{row.lead_timestamp}</TableCell>
-                                    <TableCell align="right">
+                                    <TableCell  sx={{width: '250px'}} >{row.entity_name}</TableCell>
+                                    <TableCell  sx={{width: '100px'}} >{row.entity_type}</TableCell>
+                                    <TableCell sx={{width: '60px'}} >{row.primary_count}</TableCell>
+                                    <TableCell sx={{width: '150px'}} >{row.city}</TableCell>
+                                    <TableCell sx={{width: '150px'}} >{row.area}</TableCell>
+                                    <TableCell  sx={{width: '250px'}} >{row.lead_timestamp}</TableCell>
+                                    <TableCell  sx={{width: '250px'}} >
                                       <ClientStatusDropdown
                                         data={row}
                                         checkTable="leadBasicTable"
                                       />
                                     </TableCell>
-                                    <TableCell align="right">{row.phone_number}</TableCell>
-                                    <TableCell align="right">
+                                    <TableCell  sx={{width: '100px'}}>{row.phone_number}</TableCell>
+                                    <TableCell  sx={{width: '100px'}}>
                                       <ViewCommentModal data={row} />
                                     </TableCell>
-                                    <TableCell align="right">
+                                    <TableCell  sx={{width: '100px'}}>
                                       <AcceptDeclineLeads data={row} />
                                     </TableCell>
                                   </TableRow>
