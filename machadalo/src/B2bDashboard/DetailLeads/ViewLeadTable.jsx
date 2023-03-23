@@ -58,7 +58,7 @@ const ViewLeadDetail = (props) => {
     <>
       {/* <FilterModal headerName={props?.data?.name} /> */}
       <FilterModal />
-      <Typography variant="h6"  component="div">LEADS OF {props?.data?.name}</Typography>
+      <Typography variant="h6" className='text-center pb-2'  component="div">LEADS OF {props?.data?.name}</Typography>
       <TableContainer component={Paper} className="s-height-table">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
