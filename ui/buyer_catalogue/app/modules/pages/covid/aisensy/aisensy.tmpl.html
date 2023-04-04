@@ -3671,7 +3671,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Requirement Details supplierName</h4>
+        <h4 class="modal-title">Requirement Details</h4>
         <hr />
         <div class="modal-body" style="width: 100%; min-height: 200px;">
           <div class="modal-body col-md-4 table-responsive submitted_lead_table"
@@ -3801,12 +3801,14 @@
                       <span style="width:150px;">Number: {{requirement.lead_by.mobile}} </span>
                     </td>
                     <td class="alignment">
-                      <!-- <select class="form-control" name="value" id="value"
-                        ng-model="subrequirement.lead_source" style="width:150px;">
-                        <option value="">Select Source</option>
-                        <option value="bot">BOT</option>
-                        <option value="feetonstreet">Feet on Street</option>
-                      </select> -->
+                      <select class="form-control"  name="organisation" id="organisation_id" 
+                        ng-model="subrequirement.organisation_id"
+                        ng-change="getSourceDataList(subrequirement.organisation_id)"
+                        ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'first_name'">
+                        <option value="" disabled>Select Organisation</option>
+                      </select>
+                    </td>
+                    <td class="alignment">
                       <select class="form-control" name="Source" id="Source_id" 
                               ng-model="subrequirement.lead_source"
                               ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
@@ -5365,7 +5367,7 @@
 
             <div class="row">
               <div class="col-md-4" style="margin-top: 10px">
-                <label> Organization : </label>
+                <label> Organisation : </label>
               </div>
               <div class="col-md-8" ng-style="{'margin-top': '10px'}">
                 <select class="form-control" style="width: 100%" name="organisation" id="organisation_id" 
@@ -5374,7 +5376,7 @@
                   ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'first_name'">
                   <option value="" disabled>Select Organisation</option>
                 </select>
-                <span ng-show="myForm.Source.$dirty && myForm.Source.$invalid" class="error">Select Organization</span>
+                <span ng-show="myForm.Source.$dirty && myForm.Source.$invalid" class="error">Select Organisation</span>
                 </select>
               </div>
             </div>

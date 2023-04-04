@@ -907,6 +907,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           { header: 'Comment' },
           { header: 'Internal Comment' },
           { header: 'Lead Given by' },
+          { header: 'Organisation' },
           { header: 'Lead Source' },
           { header: 'Call Status' },
           { header: 'Price' },
@@ -974,7 +975,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.SelectedCompany = [];
           $scope.preferred_partnerList = {};
           $scope.leads_Data_1 = {};
-          let organisation = JSON.parse(localStorage["userInfo"]);
+          // let organisation = JSON.parse(localStorage["userInfo"]);
           
           userService.getSector()
             .then(function onSuccess(response) {
@@ -987,12 +988,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.leads_Data = response.data.data;
             })
 
-          AuthService.getUserMinimalList(organisation.profile.organisation.organisation_id)
-          .then(function onSuccess(response) {
-            $scope.userMinimalList = response.data.data;
-          }).catch(function onError(response) {
-            console.log(response);
-          })  
+          AuthService.getOrganisationsForAssignment()
+            .then(function onSuccess(response) {
+              $scope.organisationList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+          // AuthService.getUserMinimalList(organisation.profile.organisation.organisation_id)
+          // .then(function onSuccess(response) {
+          //   $scope.userMinimalList = response.data.data;
+          // }).catch(function onError(response) {
+          //   console.log(response);
+          // })  
 
           releaseCampaignService.requirementDetail("", phone, supplier_id, supplierType)
             .then(function onSuccess(response) {
@@ -2306,7 +2313,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             })
 
           let organisation = JSON.parse(localStorage["userInfo"]);
-          
           AuthService.getUserMinimalList(organisation.profile.organisation.organisation_id)
             .then(function onSuccess(response) {
               $scope.userMinimalList = response.data.data;
