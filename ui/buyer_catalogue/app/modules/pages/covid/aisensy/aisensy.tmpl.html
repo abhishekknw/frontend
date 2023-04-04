@@ -3671,7 +3671,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Requirement Details supplierName</h4>
+        <h4 class="modal-title">Requirement Details</h4>
         <hr />
         <div class="modal-body" style="width: 100%; min-height: 200px;">
           <div class="modal-body col-md-4 table-responsive submitted_lead_table"
@@ -3801,12 +3801,14 @@
                       <span style="width:150px;">Number: {{requirement.lead_by.mobile}} </span>
                     </td>
                     <td class="alignment">
-                      <!-- <select class="form-control" name="value" id="value"
-                        ng-model="subrequirement.lead_source" style="width:150px;">
-                        <option value="">Select Source</option>
-                        <option value="bot">BOT</option>
-                        <option value="feetonstreet">Feet on Street</option>
-                      </select> -->
+                      <select class="form-control"  name="organisation" id="organisation_id" 
+                        ng-model="subrequirement.organisation_id"
+                        ng-change="getSourceDataList(subrequirement.organisation_id)"
+                        ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'first_name'">
+                        <option value="" disabled>Select Organisation</option>
+                      </select>
+                    </td>
+                    <td class="alignment">
                       <select class="form-control" name="Source" id="Source_id" 
                               ng-model="subrequirement.lead_source"
                               ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
@@ -5145,7 +5147,7 @@
               </div>
 
               <div class="col-md-4" style="margin-top: 10px">
-                <select class="form-control" name="supplier_type" id="society_name"
+                <select class="form-control" style="width: 100%" name="supplier_type" id="society_name"
                   ng-model="Supplier_id"
                   ng-change='getSupplierDataBySociety(Supplier_id)'
                   ng-disabled="NewsupplierAddUpdateData.isNewSupplier">
@@ -5262,38 +5264,6 @@
                   ng-model="NewsupplierAddUpdateData.area" ng-required="true">
               </div>
             </div>
-
-            <!-- <div class="row">
-              <div class="col-md-4" style="margin-top: 10px">
-                <label>Select Supplier & Edit : </label>
-              </div>
-
-              <div class="col-md-4" style="margin-top: 10px">
-                <span disabled="suppliersName == 0 || NewsupplierAddUpdateData.isNewSupplier"
-                  class="multiselectDropdown" ng-dropdown-multiselect="" options="suppliersName" search-filter=""
-                  ng-click="selectSupplierName()" extra-settings="areaSettings" 
-                  selected-model="newSelectedSupplierName"></span>
-                <span ng-if="suppliersName == 0" class="error">No supplier found</span>
-              </div>
-
-              <div class="col-md-4">
-                <md-switch ng-model="NewsupplierAddUpdateData.isNewSupplier" ng-change="addNewSupplier()"
-                  aria-label="Switch 1">
-                  <label>Add New Supplier11</label>
-                </md-switch>
-              </div>
-            </div> -->
-
-            <!-- <div class="row" ng-if="NewsupplierAddUpdateData.isNewSupplier">
-              <div class="col-md-4" style="margin-top: 10px">
-                <label>Edit Supplier: </label>
-              </div>
-              <div class="col-md-8" style="margin-top: 10px">
-                <input type="text" placeholder="Add New Supplier " class="form-control" name="edit_supplier"
-                  id="edit_supplier_id" ng-model="NewsupplierAddUpdateData.supplier_name" ng-required="true">
-              </div>
-            </div> -->
-
             <div class="row" ng-if="supplierForAddUpdateData.isNewSupplier">
               <div class="col-md-4" style="margin-top: 10px">
                 <label>Add New Supplier: </label>
@@ -5392,6 +5362,22 @@
               <div class="col-md-8" style="margin-top: 10px">
                 <input type="text"  placeholder="secondary count" class="form-control"
                   name="unit_secondary_count" id="unit_secondary_count" ng-model="NewsupplierAddUpdateData.unit_secondary_count" value="" ng-required="true">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Organisation : </label>
+              </div>
+              <div class="col-md-8" ng-style="{'margin-top': '10px'}">
+                <select class="form-control" style="width: 100%" name="organisation" id="organisation_id" 
+                  ng-model="NewsupplierAddUpdateData.organisation_id"
+                  ng-change="getSourceDataList(NewsupplierAddUpdateData.organisation_id)"
+                  ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'first_name'">
+                  <option value="" disabled>Select Organisation</option>
+                </select>
+                <span ng-show="myForm.Source.$dirty && myForm.Source.$invalid" class="error">Select Organisation</span>
+                </select>
               </div>
             </div>
 
