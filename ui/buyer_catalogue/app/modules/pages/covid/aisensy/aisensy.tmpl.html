@@ -5262,38 +5262,6 @@
                   ng-model="NewsupplierAddUpdateData.area" ng-required="true">
               </div>
             </div>
-
-            <!-- <div class="row">
-              <div class="col-md-4" style="margin-top: 10px">
-                <label>Select Supplier & Edit : </label>
-              </div>
-
-              <div class="col-md-4" style="margin-top: 10px">
-                <span disabled="suppliersName == 0 || NewsupplierAddUpdateData.isNewSupplier"
-                  class="multiselectDropdown" ng-dropdown-multiselect="" options="suppliersName" search-filter=""
-                  ng-click="selectSupplierName()" extra-settings="areaSettings" 
-                  selected-model="newSelectedSupplierName"></span>
-                <span ng-if="suppliersName == 0" class="error">No supplier found</span>
-              </div>
-
-              <div class="col-md-4">
-                <md-switch ng-model="NewsupplierAddUpdateData.isNewSupplier" ng-change="addNewSupplier()"
-                  aria-label="Switch 1">
-                  <label>Add New Supplier11</label>
-                </md-switch>
-              </div>
-            </div> -->
-
-            <!-- <div class="row" ng-if="NewsupplierAddUpdateData.isNewSupplier">
-              <div class="col-md-4" style="margin-top: 10px">
-                <label>Edit Supplier: </label>
-              </div>
-              <div class="col-md-8" style="margin-top: 10px">
-                <input type="text" placeholder="Add New Supplier " class="form-control" name="edit_supplier"
-                  id="edit_supplier_id" ng-model="NewsupplierAddUpdateData.supplier_name" ng-required="true">
-              </div>
-            </div> -->
-
             <div class="row" ng-if="supplierForAddUpdateData.isNewSupplier">
               <div class="col-md-4" style="margin-top: 10px">
                 <label>Add New Supplier: </label>
@@ -5392,6 +5360,22 @@
               <div class="col-md-8" style="margin-top: 10px">
                 <input type="text"  placeholder="secondary count" class="form-control"
                   name="unit_secondary_count" id="unit_secondary_count" ng-model="NewsupplierAddUpdateData.unit_secondary_count" value="" ng-required="true">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Organization : </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <select class="form-control" name="organisation" id="organisation_id" 
+                  ng-model="NewsupplierAddUpdateData.organisation_id"
+                  ng-change="getSourceDataList(NewsupplierAddUpdateData.organisation_id)"
+                  ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'first_name'">
+                  <option value="" disabled>Select Organisation</option>
+                </select>
+                <span ng-show="myForm.Source.$dirty && myForm.Source.$invalid" class="error">Select Organization</span>
+                </select>
               </div>
             </div>
 
