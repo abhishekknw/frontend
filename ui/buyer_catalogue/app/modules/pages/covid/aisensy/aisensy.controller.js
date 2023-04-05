@@ -907,8 +907,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           { header: 'Comment' },
           { header: 'Internal Comment' },
           { header: 'Lead Given by' },
-          { header: 'Organisation' },
-          { header: 'Lead Source' },
+          { header: 'Supplier Agency ' },
+          { header: 'Agency User' },
           { header: 'Call Status' },
           { header: 'Price' },
           { header: 'Timestamp' },
@@ -975,6 +975,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.SelectedCompany = [];
           $scope.preferred_partnerList = {};
           $scope.leads_Data_1 = {};
+          $scope.userMinimalList = [];
           // let organisation = JSON.parse(localStorage["userInfo"]);
           
           userService.getSector()

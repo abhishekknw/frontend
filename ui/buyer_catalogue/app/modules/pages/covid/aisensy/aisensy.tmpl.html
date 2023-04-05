@@ -3801,10 +3801,10 @@
                       <span style="width:150px;">Number: {{requirement.lead_by.mobile}} </span>
                     </td>
                     <td class="alignment">
-                      <select class="form-control"  name="organisation" id="organisation_id" 
-                        ng-model="subrequirement.organisation_id"
-                        ng-change="getSourceDataList(subrequirement.organisation_id)"
-                        ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'first_name'">
+                      <select class="form-control"  name="organisation" id="representative" 
+                        ng-model="subrequirement.representative"
+                        ng-change="getSourceDataList(subrequirement.representative)"
+                        ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'name'">
                         <option value="" disabled>Select Organisation</option>
                       </select>
                     </td>
@@ -3967,12 +3967,14 @@
                       <p> Phone:</p>
                     </td>
                     <td class="alignment">
-                      <!-- <select class="form-control" name="value" id="value"
-                        ng-model="newRequirement.lead_source" style="width:150px;">
-                        <option value="">Select Source</option>
-                        <option value="bot">BOT</option>
-                        <option value="feetonstreet">Feet on Street</option>
-                      </select> -->
+                      <select class="form-control"  name="organisation" id="representative" 
+                        ng-model="newRequirement.representative"
+                        ng-change="getSourceDataList(newRequirement.representative)"
+                        ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'name'">
+                        <option value="" disabled>Select Organisation</option>
+                      </select>
+                    </td>
+                    <td class="alignment">
                       <select class="form-control" name="Source" id="Source_id" 
                               ng-model="newRequirement.lead_source"
                               ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
