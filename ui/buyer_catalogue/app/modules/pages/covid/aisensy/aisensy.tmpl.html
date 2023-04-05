@@ -5371,9 +5371,9 @@
               </div>
               <div class="col-md-8" ng-style="{'margin-top': '10px'}">
                 <select class="form-control" style="width: 100%" name="organisation" id="organisation_id" 
-                  ng-model="NewsupplierAddUpdateData.organisation_id"
-                  ng-change="getSourceDataList(NewsupplierAddUpdateData.organisation_id)"
-                  ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'first_name'">
+                  ng-model="NewsupplierAddUpdateData.representative"
+                  ng-change="getSourceDataList(NewsupplierAddUpdateData.representative)"
+                  ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'name'">
                   <option value="" disabled>Select Organisation</option>
                 </select>
                 <span ng-show="myForm.Source.$dirty && myForm.Source.$invalid" class="error">Select Organisation</span>
@@ -5383,7 +5383,7 @@
 
             <div class="row">
               <div class="col-md-4" style="margin-top: 10px">
-                <label> Data Source *: </label>
+                <label> User: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
                 <select class="form-control" name="Source" id="Source_id" 
