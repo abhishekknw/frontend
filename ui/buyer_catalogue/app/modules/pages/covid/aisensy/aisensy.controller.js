@@ -2964,7 +2964,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.NewsupplierAddUpdateData.city = $scope.supplierData[0][0].city;
               $scope.NewsupplierAddUpdateData.area = $scope.supplierData[0][0].area;
               $scope.NewsupplierAddUpdateData.relationship_manager = $scope.supplierData[0][0]?.relationship_manager;
-              $scope.NewsupplierAddUpdateData.organisation_id = $scope.supplierData[0][0]?.organisation_id;
+              $scope.NewsupplierAddUpdateData.representative = $scope.supplierData[0][0]?.representative;
+              if($scope.NewsupplierAddUpdateData.representative){
+                $scope.getSourceDataList($scope.NewsupplierAddUpdateData.representative);
+              }
               if (response.data.data.area_id == null) {
                 $scope.NewsupplierAddUpdateData.area_id = "";
               }
@@ -3062,10 +3065,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.newSupplierPocModel = [];
                 $scope.Supplier_id = "";
                 $scope.newSelectedArea = [];
-                // $scope.Areas = "";
-                // $scope.Cities = '';
-                // $scope.supplierTypes = '';
                 $scope.societyNameList = [];
+                $scope.userMinimalList = [];
 
               }
               else {
