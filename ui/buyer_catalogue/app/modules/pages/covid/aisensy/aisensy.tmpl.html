@@ -2775,7 +2775,13 @@
                       <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
                         data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>
                     </div>
-
+                  <!--Send Template Button-->
+                    <!-- <div class="file-upload-1"> -->
+                      <div>
+                        <button data-toggle="modal" data-target="#TemplateModal" ng-click="getTemplateData()">Send Template</button>
+                      <!-- <i class="fa fa-address-card-o" data-target="#TemplateModal" data-toggle="modal" type="button"></i> -->
+                    </div>
+                  <!--end Template Buttont-->
                     <div>
                       <i class='fas fa-map-marker-alt' style='font-size:24px;color:red' ng-click="visitmap(userChatData.gmapLink)"></i>
                     </div>
@@ -5458,3 +5464,55 @@
   </div>
 </div>
 <!-- end of add supllier Model -->
+
+<!-- Start Send Template Modal -->
+<div id="TemplateModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-0">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+          style="opacity: 1; font-weight:bolder;"> &times;</button>
+
+        <h4 class="modal-title  theme-color" ng-if="!submitLeadType"
+          style="font-weight: bolder; font-size: 21px;">
+          Select Template you want to share</h4>
+        <hr>
+
+        <div class="input-wrapper search-input-wrapper"
+          style=" margin: 10px; background-color: #575758;top:21px;z-index: 10;">
+          <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px;"></i>
+          <input placeholder="Search here" ng-change="getTemplateData(getTemplateDataParams)"
+            ng-model="getTemplateDataParams.search" id="tab1search" name="searchcontact" type="text"
+            style="background-color: #ababab;margin: 5px; " />
+        </div>
+
+        <div class="modal-body">
+          <table class="table table-bordered table-hover">
+            <tbody ng-repeat="list in TemplateList.rows | limitTo:10">
+              <td>
+                <div class="friend-drawer templte-box-list friend-drawer--onhover">
+                  <div class="custom-control custom-checkbox"
+                    ng-click="getselectedTemplate(list)">
+                    <span class="text" style="float: left;">
+                      <h6 class="msg-title">{{list.alias_name}}</h6>
+                      <p class="text-muted">
+                          {{TemplateCollapseRow===list.id?list.data:list.data.substring(0,110)+'...'}}
+                        </p>
+                    </span>
+                  </div>
+                </div>
+                <div ng-if='TemplateCollapseRow===list.id' class="input-params">
+                  <label>Params</label>
+                  <p>{{list.param.toString()}}</p>
+                  <input type="text" ng-model="sendTemplateParams" />
+                  <button class="btn btn-primary" ng-click="setSendTemplateParams(sendTemplateParams,list)">Send</button>
+                 <p> <span style="font-weight: 600;">Note: </span> Enter Param With (,) Separated</p>
+              </td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Send Template Modal -->
