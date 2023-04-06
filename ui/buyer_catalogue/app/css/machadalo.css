@@ -1031,3 +1031,16 @@ h6.msg-title {
   top: -2px;
   position: relative;
 }
+.param-div{
+  background-color: #ffd1d1;
+  padding: 9px 5px;
+  margin-bottom: 15px;
+}
+.param-list{
+  padding: 4px 6px;
+    max-width: 535px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    font-weight: 600;
+    white-space: nowrap;
+}

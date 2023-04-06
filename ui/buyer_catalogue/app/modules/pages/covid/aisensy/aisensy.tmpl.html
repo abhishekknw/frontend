@@ -1292,14 +1292,15 @@
 
           <li>
             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
-                      data-target="#NewcompanyDetailModal" ng-click="NewsupplierForAddUpdate(NewsupplierAddUpdateData)"
-                      data-toggle="modal">Add/Update Supplier</button></li>
-          
+              data-target="#NewcompanyDetailModal" ng-click="NewsupplierForAddUpdate(NewsupplierAddUpdateData)"
+              data-toggle="modal">Add/Update Supplier</button>
+          </li>
+
           <li><a target="_blank" class="fa fa-comments" id="active-nav" aria-hidden="true" style="font-size: large"
               ng-click="getActiveUserTab()">
               Live chat</a> </li>
 
-            
+
           <li><a target="_blank" class="fa fa-user-circle" aria-hidden="true" style="font-size: large"
               ng-click="contactDetailTab()">
               Contact</a></li>
@@ -1312,7 +1313,7 @@
           <li> <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large"
               ng-click="filterTab()">
               Filter</a></li>
-         
+
 
         </ul>
 
@@ -1399,7 +1400,8 @@
                           ng-init="selectForActive=selectedFilterSupplier"
                           ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                         </select> -->
-                        <select ng-model="selectedFilterSupplier" ng-change="selectedSupplier(selectedFilterSupplier,'active')"
+                        <select ng-model="selectedFilterSupplier"
+                          ng-change="selectedSupplier(selectedFilterSupplier,'active')"
                           ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                         </select>
                       </div>
@@ -1449,8 +1451,8 @@
                         </table>
                         <div ng-if="tab.name == 'tabA'">
                           <center>
-                            <dir-pagination-controls max-size="2" ng-click="liveChatPageChanged(pagination.current,selectForActive)"
-                              boundary-links="true">
+                            <dir-pagination-controls max-size="2"
+                              ng-click="liveChatPageChanged(pagination.current,selectForActive)" boundary-links="true">
                             </dir-pagination-controls>
                           </center>
 
@@ -1537,6 +1539,12 @@
                                       d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
                                   </svg>
                                 </div>
+                                <!--Send Template Button-->
+                                <div>
+                                  <i class='fas fa-location-arrow' style="font-size:24px;color: #fff;;"
+                                    data-toggle="modal" data-target="#TemplateModal" ng-click="getTemplateData()"></i>
+                                </div>
+                                <!--end Template Buttont-->
                                 <div>
                                   <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)"
                                     data-toggle="modal" data-target="#SuspenseLeadsModel">Suspense Sheet</button>
@@ -1549,14 +1557,19 @@
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </div>
                                 <div>
-                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
-                                    data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>   
+                                  <button
+                                    ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
+                                    data-toggle="modal" data-target="#RequirementModel"
+                                    ng-disabled="userChatPayload.type_of_entity==undefined"
+                                    title={{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops
+                                    Verified</button>
                                 </div>
 
                                 <div>
-                                  <i class='fas fa-map-marker-alt' style='font-size:24px;color:red' ng-click="visitmap(userChatData.gmapLink)"></i>
+                                  <i class='fas fa-map-marker-alt' style='font-size:24px;color:red'
+                                    ng-click="visitmap(userChatData.gmapLink)"></i>
                                 </div>
-                                
+
                                 <div class="profile-image-chat">
                                   <span>
                                     {{userChatData.whatsapp_name |firstlater}}
@@ -1628,7 +1641,8 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-                                  <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                                  <span ng-if="chat.type == 'file'"><i
+                                      class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
                                     <a href="{{chat.content.url}}">Download</a>
                                   </span>
                                   <span ng-if="chat.content.types[0] == 'audio'">
@@ -1734,9 +1748,10 @@
                                 ng-init="selectForAction = selectedFilterSupplier"
                                 ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                         </select> -->
-                        <select ng-model="selectedFilterSupplier" ng-change="selectedSupplier(selectedFilterSupplier,'action')"
-                        ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
-                      </select>
+                        <select ng-model="selectedFilterSupplier"
+                          ng-change="selectedSupplier(selectedFilterSupplier,'action')"
+                          ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
+                        </select>
                       </div>
                     </div>
                     <div class="fields-box">
@@ -1786,7 +1801,8 @@
                         <div ng-if="tab.name == 'tabB'">
                           <center>
                             <dir-pagination-controls max-size="2"
-                              ng-click="actionRequiredPageChanged(pagination.current,selectForAction)" boundary-links="true">
+                              ng-click="actionRequiredPageChanged(pagination.current,selectForAction)"
+                              boundary-links="true">
                             </dir-pagination-controls>
                           </center>
                         </div>
@@ -1846,12 +1862,19 @@
                               <div ng-if="userChatData.whatsapp_name!=''" class="green-fixed-inner">
                                 <div class="icon-back">
                                   <svg viewBox="0 0 57.653 64.11" width="25" height="25"
-                                    xmlns="http://www.w3.org/2000/svg" ng-click="getActionRequiredUser(pagination.current)">
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    ng-click="getActionRequiredUser(pagination.current)">
 
                                     <path fill="#fff"
                                       d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
                                   </svg>
                                 </div>
+                                <!--Send Template Button-->
+                                <div>
+                                  <i class='fas fa-location-arrow' style="font-size:24px;color: #fff;;"
+                                    data-toggle="modal" data-target="#TemplateModal" ng-click="getTemplateData()"></i>
+                                </div>
+                                <!--end Template Buttont-->
                                 <div>
                                   <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)"
                                     data-toggle="modal" data-target="#SuspenseLeadsModel">Suspense Sheet</button>
@@ -1864,12 +1887,17 @@
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </div>
                                 <div>
-                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
-                                  data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>                                 
+                                  <button
+                                    ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
+                                    data-toggle="modal" data-target="#RequirementModel"
+                                    ng-disabled="userChatPayload.type_of_entity==undefined"
+                                    title={{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops
+                                    Verified</button>
                                 </div>
 
                                 <div>
-                                  <i class='fas fa-map-marker-alt' style='font-size:24px;color:red' ng-click="visitmap(userChatData.gmapLink)"></i>
+                                  <i class='fas fa-map-marker-alt' style='font-size:24px;color:red'
+                                    ng-click="visitmap(userChatData.gmapLink)"></i>
                                 </div>
 
                                 <div class="profile-image-chat">
@@ -1904,7 +1932,8 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-                                  <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                                  <span ng-if="chat.type == 'file'"><i
+                                      class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
                                     <a href="{{chat.content.url}}">Download</a>
                                   </span>
                                   <span ng-if="chat.content.types[0] == 'audio'">
@@ -1939,7 +1968,8 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-                                  <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                                  <span ng-if="chat.type == 'file'"><i
+                                      class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
                                     <a href="{{chat.content.url}}">Download</a>
                                   </span>
                                   <span ng-if="chat.content.types[0] == 'audio'">
@@ -2043,9 +2073,10 @@
                           ng-init="selectForIntervene='undefined'"
                           ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                         </select> -->
-                        <select ng-model="selectedFilterSupplier" ng-change="selectedSupplier(selectedFilterSupplier,'intervene')"
-                        ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
-                      </select>
+                        <select ng-model="selectedFilterSupplier"
+                          ng-change="selectedSupplier(selectedFilterSupplier,'intervene')"
+                          ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
+                        </select>
                       </div>
                     </div>
                     <div class="fields-box">
@@ -2094,7 +2125,8 @@
                           </tbody>
                         </table>
                         <center>
-                          <dir-pagination-controls max-size="2" ng-click="interveneDataPageChanged(pagination.current,selectForIntervene)"
+                          <dir-pagination-controls max-size="2"
+                            ng-click="interveneDataPageChanged(pagination.current,selectForIntervene)"
                             boundary-links="true">
                           </dir-pagination-controls>
                         </center>
@@ -2120,6 +2152,12 @@
                                       d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
                                   </svg>
                                 </div>
+                                <!--Send Template Button-->
+                                <div>
+                                  <i class='fas fa-location-arrow' style="font-size:24px;color: #fff;;"
+                                    data-toggle="modal" data-target="#TemplateModal" ng-click="getTemplateData()"></i>
+                                </div>
+                                <!--end Template Buttont-->
                                 <div>
                                   <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)"
                                     data-toggle="modal" data-target="#SuspenseLeadsModel">Suspense Sheet</button>
@@ -2132,12 +2170,17 @@
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </div>
                                 <div>
-                                  <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
-                                  data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>
+                                  <button
+                                    ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
+                                    data-toggle="modal" data-target="#RequirementModel"
+                                    ng-disabled="userChatPayload.type_of_entity==undefined"
+                                    title={{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops
+                                    Verified</button>
                                 </div>
 
                                 <div>
-                                  <i class='fas fa-map-marker-alt' style='font-size:24px;color:red' ng-click="visitmap(userChatData.gmapLink)"></i>
+                                  <i class='fas fa-map-marker-alt' style='font-size:24px;color:red'
+                                    ng-click="visitmap(userChatData.gmapLink)"></i>
                                 </div>
 
                                 <div class="profile-image-chat">
@@ -2175,7 +2218,8 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-                                  <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                                  <span ng-if="chat.type == 'file'"><i
+                                      class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
                                     <a href="{{chat.content.url}}">Download</a>
                                   </span>
                                   <span ng-if="chat.content.types[0] == 'audio'">
@@ -2210,7 +2254,8 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-                                  <span ng-if="chat.type == 'file'"><i class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
+                                  <span ng-if="chat.type == 'file'"><i
+                                      class="fa fa-file-pdf-o"></i>&nbsp;{{chat.content.name}}
                                     <a href="{{chat.content.url}}">Download</a>
                                   </span>
                                   <span ng-if="chat.content.types[0] == 'audio'">
@@ -2555,11 +2600,12 @@
                         <div class="info-table-covidhelp">
                           <table class="table table-striped">
                             <tbody>
-                                <select class="form-control" style="margin: 10px ;text-align: center;width:20%;" ng-model="selectedSector" ng-change="templateInStatus(userDetailData,selectedSector)">
-                                  <option value="" >Select Sector</option>
-                                  <option ng-repeat="sector in sectorForTemplate" value="{{sector.sector}}">
+                              <select class="form-control" style="margin: 10px ;text-align: center;width:20%;"
+                                ng-model="selectedSector" ng-change="templateInStatus(userDetailData,selectedSector)">
+                                <option value="">Select Sector</option>
+                                <option ng-repeat="sector in sectorForTemplate" value="{{sector.sector}}">
                                   {{sector.sector?sector.sector:"Null"}}</option>
-                                </select>
+                              </select>
                               <tr ng-if="templateInStatusData.length != 0">
                                 <th class="col-md-3">Template ID</th>
                                 <th class="col-md-3">Response At</th>
@@ -2657,7 +2703,7 @@
               </div>
               <div class="select">
                 <select ng-model="selectForHistory" ng-change="selectedSupplier(selectForHistory,'history')"
-                        ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
+                  ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
                 </select>
               </div>
             </div>
@@ -2759,6 +2805,13 @@
                           d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
                       </svg>
                     </div>
+
+                    <!--Send Template Button-->
+                    <div>
+                      <i class='fas fa-location-arrow' style="font-size:24px;color: #fff;;" data-toggle="modal"
+                        data-target="#TemplateModal" ng-click="getTemplateData()"></i>
+                    </div>
+                    <!--end Template Buttont-->
                     <div>
                       <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)" data-toggle="modal"
                         data-target="#SuspenseLeadsModel">Suspense Sheet</button>
@@ -2770,20 +2823,19 @@
                       <span
                         class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                     </div>
-                    
+
                     <div>
-                      <button ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
-                        data-toggle="modal" data-target="#RequirementModel" ng-disabled="userChatPayload.type_of_entity==undefined" title = {{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops Verified</button>
+                      <button
+                        ng-click="opsVerified(userChatData.phone_number,userChatPayload.supplier_id,userChatPayload.type_of_entity)"
+                        data-toggle="modal" data-target="#RequirementModel"
+                        ng-disabled="userChatPayload.type_of_entity==undefined"
+                        title={{userChatPayload.type_of_entity==undefined?supplierTypeUndefined:""}}>Ops
+                        Verified</button>
                     </div>
-                  <!--Send Template Button-->
-                    <!-- <div class="file-upload-1"> -->
-                      <div>
-                        <button data-toggle="modal" data-target="#TemplateModal" ng-click="getTemplateData()">Send Template</button>
-                      <!-- <i class="fa fa-address-card-o" data-target="#TemplateModal" data-toggle="modal" type="button"></i> -->
-                    </div>
-                  <!--end Template Buttont-->
+
                     <div>
-                      <i class='fas fa-map-marker-alt' style='font-size:24px;color:red' ng-click="visitmap(userChatData.gmapLink)"></i>
+                      <i class='fas fa-map-marker-alt' style='font-size:24px;color:red'
+                        ng-click="visitmap(userChatData.gmapLink)"></i>
                     </div>
 
                     <div class="profile-image-chat">
@@ -3111,7 +3163,7 @@
       </div>
       <div class="select">
         <select ng-model="selectForContact" ng-change="selectedSupplier(selectForContact,'contact')"
-                ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
+          ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
         </select>
       </div>
     </div>
@@ -3148,7 +3200,8 @@
         data-boundary-links="true"> -->
     </div>
     <center>
-      <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber,selectForContact)" boundary-links="true">
+      <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber,selectForContact)"
+        boundary-links="true">
       </dir-pagination-controls>
     </center>
     <div ng-if="contactDetailData.length == 0">
@@ -3807,7 +3860,7 @@
                       <span style="width:150px;">Number: {{requirement.lead_by.mobile}} </span>
                     </td>
                     <td class="alignment">
-                      <select class="form-control"  name="organisation" id="representative" 
+                      <select class="form-control" name="organisation" id="representative"
                         ng-model="subrequirement.representative"
                         ng-change="getSourceDataList(subrequirement.representative)"
                         ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'name'">
@@ -3815,11 +3868,10 @@
                       </select>
                     </td>
                     <td class="alignment">
-                      <select class="form-control" name="Source" id="Source_id" 
-                              ng-model="subrequirement.lead_source"
-                              ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
-                              <option value="" disabled>Select Data Source</option>
-                     </select>
+                      <select class="form-control" name="Source" id="Source_id" ng-model="subrequirement.lead_source"
+                        ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
+                        <option value="" disabled>Select Data Source</option>
+                      </select>
                     </td>
                     <td class="alignment">
                       <select class="form-control" name="value" id="value"
@@ -3884,17 +3936,19 @@
                         data-target="#pocModal" data-toggle="modal">Add POC</button>
                     </td>
                   </tr>
-                </tr>
-                </tr>
+                  </tr>
+                  </tr>
                 </tbody>
                 <tbody>
                   <tr ng-if="NewcountBrowsedRow==true">
                     <td class="alignment">
-                      <input type="checkbox" name="newBrowsedCheck" ng-click="newCheckboxSubmitted(newRequirement.newBrowsedCheck)"
-                        id="browsedCheckId" ng-model="newRequirement.newBrowsedCheck">
+                      <input type="checkbox" name="newBrowsedCheck"
+                        ng-click="newCheckboxSubmitted(newRequirement.newBrowsedCheck)" id="browsedCheckId"
+                        ng-model="newRequirement.newBrowsedCheck">
                     </td>
                     <td class="alignment">
-                      <select class="form-control" ng-model="SectorName" ng-click="NewbrowsedPreferredPartner(SectorName);"
+                      <select class="form-control" ng-model="SectorName"
+                        ng-click="NewbrowsedPreferredPartner(SectorName);"
                         ng-options="sector.business_type for sector in browsedSectorList" track by "$index">
                       </select>
                     </td>
@@ -3912,19 +3966,19 @@
                           placeholder="Other Current Company" ng-model="newRequirement.current_patner_other">
                     </td>
 
-                    <td class="alignment"> 
+                    <td class="alignment">
                       current_patner_feedback<br>
                       <span>Reason:NA</span>
                     </td>
                     <td class="alignment">
                       <span style="width:150px;"
-                      
                         class="multiselectDropdown multiselectDropdown-style multiselectDropdown-123"
                         style="color:red;width:100%;margin-left:20px;" ng-click="newbrowsedMulticheck($index)"
                         ng-dropdown-multiselect="" options="preferred_partnerList" extra-settings="settings"
                         selected-model="requirementCompany" events="events"
                         translation-texts="selected_business_type"></span>
-                      <span ng-repeat="selectedName in requirementCompany" style="text-align: left; display: inline-block">
+                      <span ng-repeat="selectedName in requirementCompany"
+                        style="text-align: left; display: inline-block">
                         {{selectedName.label}}
                         <span ng-if="!$last">,</span>
                       </span>
@@ -3973,7 +4027,7 @@
                       <p> Phone:</p>
                     </td>
                     <td class="alignment">
-                      <select class="form-control"  name="organisation" id="representative" 
+                      <select class="form-control" name="organisation" id="representative"
                         ng-model="newRequirement.representative"
                         ng-change="getSourceDataList(newRequirement.representative)"
                         ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'name'">
@@ -3981,11 +4035,10 @@
                       </select>
                     </td>
                     <td class="alignment">
-                      <select class="form-control" name="Source" id="Source_id" 
-                              ng-model="newRequirement.lead_source"
-                              ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
-                              <option value="" disabled>Select Data Source</option>
-                     </select>
+                      <select class="form-control" name="Source" id="Source_id" ng-model="newRequirement.lead_source"
+                        ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
+                        <option value="" disabled>Select Data Source</option>
+                      </select>
                     </td>
                     <td class="alignment">
                       <select class="form-control" name="value" id="value"
@@ -4008,7 +4061,8 @@
                       Null
                     </td>
                     <td class="alignment">
-                      <button style="margin-top:10px" type="button" name="button" class="btn btn-success" ng-disabled="!newRequirementCheckbox" ng-click="newLeadCreated(newRequirement)">Submit</button>
+                      <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
+                        ng-disabled="!newRequirementCheckbox" ng-click="newLeadCreated(newRequirement)">Submit</button>
                     </td>
                   </tr>
                 </tbody>
@@ -4016,7 +4070,8 @@
 
               <div class="">
                 <button class="btn btn-danger" ng-click="SubmittedaddBrowsedRow()">{{NewaddRemoveBtn}}</button>
-                <button class="btn btn-success" ng-disabled="!newRequirementCheckbox" ng-click="newLeadCreated(newRequirement)">Submit</button>
+                <button class="btn btn-success" ng-disabled="!newRequirementCheckbox"
+                  ng-click="newLeadCreated(newRequirement)">Submit</button>
               </div>
 
               <!-- test -->
@@ -4119,7 +4174,8 @@
                     <td class="alignment">
                       <select class="form-control" ng-model="browsed.l1_answers">
                         <option value="" disabled>Select</option>
-                        <option ng-repeat="lead_L4 in filterLeadData[browsed.sector_id].L4 track by $index" value="{{lead_L4}}">
+                        <option ng-repeat="lead_L4 in filterLeadData[browsed.sector_id].L4 track by $index"
+                          value="{{lead_L4}}">
                           {{lead_L4}}
                         </option>
                       </select>
@@ -4187,7 +4243,7 @@
                     </td>
                   </tr>
                   <tr ng-if="countBrowsedRow==true">
-                    
+
                     <td class="alignment">
                       <input type="checkbox" name="newBrowsedCheck" ng-click="newCheckboxBrowesLeadCheck($index)"
                         id="browsedCheckId" ng-model="newbrowsed.newBrowsedCheck">
@@ -4306,7 +4362,8 @@
               <div class="">
                 <button class="btn btn-danger" ng-click="addBrowsedRow()">{{addRemoveBtn}}</button>
                 <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="saveBrowsed()">Submit</button>
-                <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed(newbrowsed)">Update</button>
+                <button class="btn btn-success" ng-disabled="browsedCheck"
+                  ng-click="updateBrowsed(newbrowsed)">Update</button>
                 <button class="btn btn-danger" ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
               </div>
             </form>
@@ -4370,8 +4427,10 @@
                       <!-- <select class="form-control" ng-model="suspenseLeadSector" ng-click="suspenseLeadFilterData(suspenseLeadSector,$index);"
                         ng-options="sector.id as sector.business_type for sector in sectorList" track by "$index">
                       </select> -->
-                      <select class="form-control" ng-model="suspenseLeadSector" ng-click="suspenseLeadFilterData(suspenseLeadSector,$index);">
-                        <option value=""> {{leadData.sector_id?filterBrowsedLeadData(leadData.sector_id):"--Select Sector--"}}</option>
+                      <select class="form-control" ng-model="suspenseLeadSector"
+                        ng-click="suspenseLeadFilterData(suspenseLeadSector,$index);">
+                        <option value=""> {{leadData.sector_id?filterBrowsedLeadData(leadData.sector_id):"--Select
+                          Sector--"}}</option>
                         <option ng-repeat="sector in sectorList track by $index" value="{{sector}}">
                           {{sector.business_type}}
                         </option>
@@ -4474,11 +4533,10 @@
                         <option value="bot">BOT</option>
                         <option value="feetonstreet">Feet on Street</option>
                       </select> -->
-                      <select class="form-control" name="Source" id="Source_id" 
-                              ng-model="leadData.lead_source"
-                              ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
-                              <option value="" disabled>Select Data Source</option>
-                     </select>
+                      <select class="form-control" name="Source" id="Source_id" ng-model="leadData.lead_source"
+                        ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
+                        <option value="" disabled>Select Data Source</option>
+                      </select>
                     </td>
                     <!-- <td class="alignment">
                       <select class="form-control" name="call_back_time_{{$index}}" id="call_back_time_id_{{$index}}"
@@ -4521,7 +4579,7 @@
                         data-toggle="modal">Add/Update Supplier</button>
                       <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
                         data-target="#pocModal" ng-click="openAddPoc(leadData._id,leadData.supplier_type)"
-                         data-toggle="modal">Add POC</button>
+                        data-toggle="modal">Add POC</button>
                       <button style="margin-bottom:2px" type="button" ng-disabled="leadData.is_updated == 'False'"
                         name="button" class="btn btn-success btn-small">Add RE</button>
                     </td>
@@ -4585,8 +4643,10 @@
                     <td>{{$index+serial}}</td>
                     <td class="alignment">{{browseData.phone_number}}</td>
                     <td class="alignment">
-                      <select class="form-control" ng-model="suspenseBrowsedSector" ng-click="suspenseBrowsedLeadSector(suspenseBrowsedSector,$index);">
-                        <option value=""> {{browseData.sector_id?filterBrowsedLeadData(browseData.sector_id):"--Select Sector--"}}</option>
+                      <select class="form-control" ng-model="suspenseBrowsedSector"
+                        ng-click="suspenseBrowsedLeadSector(suspenseBrowsedSector,$index);">
+                        <option value=""> {{browseData.sector_id?filterBrowsedLeadData(browseData.sector_id):"--Select
+                          Sector--"}}</option>
                         <option ng-repeat="sector in sectorList track by $index" value="{{sector}}">
                           {{sector.business_type}}
                         </option>
@@ -4900,9 +4960,8 @@
                 <label> City *: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <select class="form-control" name="city" id="city_id"
-                  ng-model="supplierForAddUpdateData.city_id"
-                  ng-change='getArea()' ng-required="true" 
+                <select class="form-control" name="city" id="city_id" ng-model="supplierForAddUpdateData.city_id"
+                  ng-change='getArea()' ng-required="true"
                   ng-options="city.id as city.city_name for city in Cities | orderBy: 'city_name'">
                 </select>
                 <!-- <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"
@@ -5107,16 +5166,17 @@
         <!-- <h4 class="modal-title">Company Details:</h4>
         <hr /> -->
         <div class="modal-body">
-          <form role="form" class="form-inline" ng-submit="newAddUpdateSupplierSubmit()" name="myForm" >
+          <form role="form" class="form-inline" ng-submit="newAddUpdateSupplierSubmit()" name="myForm">
             <div class="row">
               <div class="col-md-4" style="margin-top: 10px">
                 <label> Phone Number *: </label>
               </div>
-              <div  class="col-md-8" style="margin-top: 10px">
+              <div class="col-md-8" style="margin-top: 10px">
                 <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Phone Number"
-                  class="form-control" name="phone_number" id="phone"
-                  ng-model="NewsupplierAddUpdateData.phone_number" ng-change="getSupplierDataByNumber(NewsupplierAddUpdateData.phone_number,false)">
-                <div ng-show="myForm.phone_number.$error.pattern" class="error" style="font-size:12px; color: red;" value="">
+                  class="form-control" name="phone_number" id="phone" ng-model="NewsupplierAddUpdateData.phone_number"
+                  ng-change="getSupplierDataByNumber(NewsupplierAddUpdateData.phone_number,false)">
+                <div ng-show="myForm.phone_number.$error.pattern" class="error" style="font-size:12px; color: red;"
+                  value="">
                   Phone number Invalid</div>
               </div>
             </div>
@@ -5124,11 +5184,9 @@
               <div class="col-md-4" style="margin-top: 10px">
                 <label> Search Society *: </label>
               </div>
-              <div  class="col-md-8" style="margin-top: 10px">
-                <input type="text" placeholder="Search..."
-                  class="form-control" name="Society" id="Society"
-                  minlength="3"
-                  ng-model="searchSociety" ng-change="getSupplierDataByNumber(false,searchSociety)">
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Search..." class="form-control" name="Society" id="Society"
+                  minlength="3" ng-model="searchSociety" ng-change="getSupplierDataByNumber(false,searchSociety)">
               </div>
             </div>
 
@@ -5156,12 +5214,10 @@
 
               <div class="col-md-4" style="margin-top: 10px">
                 <select class="form-control" style="width: 100%" name="supplier_type" id="society_name"
-                  ng-model="Supplier_id"
-                  ng-change='getSupplierDataBySociety(Supplier_id)'
+                  ng-model="Supplier_id" ng-change='getSupplierDataBySociety(Supplier_id)'
                   ng-disabled="NewsupplierAddUpdateData.isNewSupplier">
-                  <option value="" >Select Society</option>
-                  <option ng-repeat="society in societyNameList track by $index"
-                    value="{{society.supplier_id}}">
+                  <option value="">Select Society</option>
+                  <option ng-repeat="society in societyNameList track by $index" value="{{society.supplier_id}}">
                     {{society.supplier_name}}
                   </option>
                 </select>
@@ -5192,7 +5248,7 @@
               </div>
               <div class="col-md-8" style="margin-top: 10px">
                 <select class="form-control" name="supplier_type" id="supplier_type_id"
-                  ng-model="NewsupplierAddUpdateData.supplier_type"  ng-required="true"
+                  ng-model="NewsupplierAddUpdateData.supplier_type" ng-required="true"
                   ng-change='designationList(NewsupplierAddUpdateData.supplier_type)'>
                   <option value="" disabled>Select Supplier Type</option>
                   <option ng-repeat="suppliertype in supplierTypes track by $index"
@@ -5208,9 +5264,8 @@
                 <label> State *: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <select class="form-control" name="state" id="state_id" 
-                  ng-model="NewsupplierAddUpdateData.state_name"
-                  ng-required="true" 
+                <select class="form-control" name="state" id="state_id" ng-model="NewsupplierAddUpdateData.state_name"
+                  ng-required="true"
                   ng-options="state.state_name as state.state_name for state in StateList | orderBy: 'state_name'">
                   <option value="" disabled>Select State</option>
                 </select>
@@ -5225,9 +5280,8 @@
                 <label> City *: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <select class="form-control" name="city" id="city_id" 
-                  ng-model="NewsupplierAddUpdateData.city_id"
-                  ng-change='newGetCityArea()' ng-required="true" 
+                <select class="form-control" name="city" id="city_id" ng-model="NewsupplierAddUpdateData.city_id"
+                  ng-change='newGetCityArea()' ng-required="true"
                   ng-options="city.id as city.city_name for city in Cities | orderBy: 'city_name'">
                   <option value="" disabled>Select City</option>
                 </select>
@@ -5277,7 +5331,7 @@
                 <label>Add New Supplier: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <input type="text" placeholder="Add New Supplier " class="form-control" name="new_supplier"                             
+                <input type="text" placeholder="Add New Supplier " class="form-control" name="new_supplier"
                   id="new_supplier_id" ng-model="NewsupplierAddUpdateData.supplier_name">
               </div>
             </div>
@@ -5287,8 +5341,8 @@
                 <label> Add POC *: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <input type="text" placeholder="POC" class="form-control" name="poc" id="poc_id" 
-                  ng-model="NewsupplierAddUpdateData.poc_name" value="" ng-required="true">  
+                <input type="text" placeholder="POC" class="form-control" name="poc" id="poc_id"
+                  ng-model="NewsupplierAddUpdateData.poc_name" value="" ng-required="true">
               </div>
             </div>
 
@@ -5296,14 +5350,15 @@
               <div class="col-md-4" style="margin-top: 10px">
                 <label>Designation *: </label>
               </div>
-              
-              <div class="col-md-8" style="margin-top: 10px">                                   
-                 
-                <select id="Designation" name="designation" class="form-control" value="NewsupplierAddUpdateData.designation"                     
-                       ng-model="NewsupplierAddUpdateData.designation" ng-required="true">
-                       <option value="" disabled>Select Designation</option>
+
+              <div class="col-md-8" style="margin-top: 10px">
+
+                <select id="Designation" name="designation" class="form-control"
+                  value="NewsupplierAddUpdateData.designation" ng-model="NewsupplierAddUpdateData.designation"
+                  ng-required="true">
+                  <option value="" disabled>Select Designation</option>
                   <option ng-repeat="desig in poc_designation" ng-selected="desig==NewsupplierAddUpdateData.designation"
-                    value="{{desig}}" >
+                    value="{{desig}}">
                     {{desig}}</option>
                 </select>
                 <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error">Designation is
@@ -5327,7 +5382,8 @@
               </div>
               <div class="col-md-8" style="margin-top: 10px">
                 <input type="text" ng-pattern="/^[0-9_ ]{0,9}$/" placeholder="Pin Code" class="form-control"
-                  name="pin_code" id="pin_code_id" ng-model="NewsupplierAddUpdateData.pin_code" value="" ng-required="true">
+                  name="pin_code" id="pin_code_id" ng-model="NewsupplierAddUpdateData.pin_code" value=""
+                  ng-required="true">
                 <div ng-show="myForm.pin_code.$error.pattern" class="error" style="font-size:12px; color: red;">
                   Pin Code Invalid</div>
               </div>
@@ -5337,8 +5393,8 @@
                 <label> Latitude: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <input type="text" placeholder="Latitude" class="form-control"
-                  name="Latitude" id="Latitude" ng-model="NewsupplierAddUpdateData.latitude" value="" ng-required="true">
+                <input type="text" placeholder="Latitude" class="form-control" name="Latitude" id="Latitude"
+                  ng-model="NewsupplierAddUpdateData.latitude" value="" ng-required="true">
                 <!-- <div ng-show="myForm.pin_code.$error.pattern" class="error" style="font-size:12px; color: red;">
                   Latitude Invalid</div> -->
               </div>
@@ -5348,8 +5404,8 @@
                 <label> Longitude: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <input type="text"  placeholder="Longitude" class="form-control"
-                  name="Longitude" id="Longitude" ng-model="NewsupplierAddUpdateData.longitude" value="" ng-required="true">
+                <input type="text" placeholder="Longitude" class="form-control" name="Longitude" id="Longitude"
+                  ng-model="NewsupplierAddUpdateData.longitude" value="" ng-required="true">
                 <!-- <div ng-show="myForm.pin_code.$error.pattern" class="error" style="font-size:12px; color: red;">
                   Longitude Invalid</div> -->
               </div>
@@ -5359,8 +5415,9 @@
                 <label> Primary Count: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <input type="text"  placeholder="primary count" class="form-control"
-                  name="unit_primary_count" id="unit_primary_count" ng-model="NewsupplierAddUpdateData.unit_primary_count" value="" ng-required="true">
+                <input type="text" placeholder="primary count" class="form-control" name="unit_primary_count"
+                  id="unit_primary_count" ng-model="NewsupplierAddUpdateData.unit_primary_count" value=""
+                  ng-required="true">
               </div>
             </div>
             <div class="row">
@@ -5368,17 +5425,18 @@
                 <label> Secondary Count: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <input type="text"  placeholder="secondary count" class="form-control"
-                  name="unit_secondary_count" id="unit_secondary_count" ng-model="NewsupplierAddUpdateData.unit_secondary_count" value="" ng-required="true">
+                <input type="text" placeholder="secondary count" class="form-control" name="unit_secondary_count"
+                  id="unit_secondary_count" ng-model="NewsupplierAddUpdateData.unit_secondary_count" value=""
+                  ng-required="true">
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-4" style="margin-top: 10px">
-                <label> Supplier Agency  : </label>
+                <label> Supplier Agency : </label>
               </div>
               <div class="col-md-8" ng-style="{'margin-top': '10px'}">
-                <select class="form-control" style="width: 100%" name="organisation" id="organisation_id" 
+                <select class="form-control" style="width: 100%" name="organisation" id="organisation_id"
                   ng-model="NewsupplierAddUpdateData.representative"
                   ng-change="getSourceDataList(NewsupplierAddUpdateData.representative)"
                   ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'name'">
@@ -5394,7 +5452,7 @@
                 <label> Agency User: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <select class="form-control" name="Source" id="Source_id" 
+                <select class="form-control" name="Source" id="Source_id"
                   ng-model="NewsupplierAddUpdateData.relationship_manager"
                   ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
                   <option value="" disabled>Select Data Source</option>
@@ -5403,58 +5461,58 @@
                 </select>
               </div>
             </div>
-              <!-- ADD POC -->
-              <div ng-repeat="pocdata in newSupplierPocModel track by $index">
-                <div class="row">
-                  <div class="col-md-4" style="margin-top: 10px">
-                    <label> Phone Number *: </label>
-                  </div>
-                  <div class="col-md-6" style="margin-top: 10px">
-                    <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Phone Number"
-                      class="form-control" name="phone_number_{{$index}}" id="phone_number_{{$index}}"
-                      ng-model="pocdata.mobile" required>
-                    <div ng-show="pocForm.phone_number_{{$index}}.$error.pattern" class="error"
-                      style="font-size:12px; color: red;">
-                      Phone number Invalid</div>
-                  </div>
+            <!-- ADD POC -->
+            <div ng-repeat="pocdata in newSupplierPocModel track by $index">
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> Phone Number *: </label>
                 </div>
-  
-                <div class="row">
-                  <div class="col-md-4" style="margin-top: 10px">
-                    <label> POC Name *: </label>
-                  </div>
-                  <div class="col-md-6" style="margin-top: 10px">
-                    <input type="text" placeholder="POC Name" class="form-control" name="poc" id="poc_poc_{{$index}}"
-                      ng-model="pocdata.poc_name" required>
-                  </div>
+                <div class="col-md-6" style="margin-top: 10px">
+                  <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Phone Number"
+                    class="form-control" name="phone_number_{{$index}}" id="phone_number_{{$index}}"
+                    ng-model="pocdata.mobile" required>
+                  <div ng-show="pocForm.phone_number_{{$index}}.$error.pattern" class="error"
+                    style="font-size:12px; color: red;">
+                    Phone number Invalid</div>
                 </div>
-                <div class="row">
-                  <div class="col-md-4" style="margin-top: 10px">
-                    <label>Designation *: </label>
-                  </div>
-                  <div class="col-md-6" style="margin-top: 10px">
-                    <select name="designation" class="form-control" value="pocdata.contact_type"
-                      ng-model="pocdata.designation" ng-required="true">
-                      <option value="" disabled>Select Designation</option>
-                      <option ng-repeat="desig in poc_designation" ng-selected="desig == pocdata.contact_type"
-                        value="{{desig}}" required>
-                        {{desig}}</option>
-                    </select>
-                    <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error"> Designation is
-                      required.</span>
-                    </select>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <button type="button" ng-click="newSupplierRemovePoc($index)" id="remove_poc_{{$index}}"
-                    class="smallBtn pocBtn">-</button>
-                </div>
-                <hr>
               </div>
-              <!-- END Add POc -->
-            
+
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> POC Name *: </label>
+                </div>
+                <div class="col-md-6" style="margin-top: 10px">
+                  <input type="text" placeholder="POC Name" class="form-control" name="poc" id="poc_poc_{{$index}}"
+                    ng-model="pocdata.poc_name" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label>Designation *: </label>
+                </div>
+                <div class="col-md-6" style="margin-top: 10px">
+                  <select name="designation" class="form-control" value="pocdata.contact_type"
+                    ng-model="pocdata.designation" ng-required="true">
+                    <option value="" disabled>Select Designation</option>
+                    <option ng-repeat="desig in poc_designation" ng-selected="desig == pocdata.contact_type"
+                      value="{{desig}}" required>
+                      {{desig}}</option>
+                  </select>
+                  <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error"> Designation is
+                    required.</span>
+                  </select>
+                </div>
+              </div>
+              <div class="text-right">
+                <button type="button" ng-click="newSupplierRemovePoc($index)" id="remove_poc_{{$index}}"
+                  class="smallBtn pocBtn">-</button>
+              </div>
+              <hr>
+            </div>
+            <!-- END Add POc -->
+
             <div class="text-left">
-              <button type="submit" class="smallBtn" >Add/Update Supplier</button>
+              <button type="submit" class="smallBtn">Add/Update Supplier</button>
               <button type="button" ng-click="newSupplierAddPoc()" class="smallBtn pocBtn">+Add Poc</button>
             </div>
           </form>
@@ -5473,8 +5531,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
           style="opacity: 1; font-weight:bolder;"> &times;</button>
 
-        <h4 class="modal-title  theme-color" ng-if="!submitLeadType"
-          style="font-weight: bolder; font-size: 21px;">
+        <h4 class="modal-title  theme-color" ng-if="!submitLeadType" style="font-weight: bolder; font-size: 21px;">
           Select Template you want to share</h4>
         <hr>
 
@@ -5491,22 +5548,24 @@
             <tbody ng-repeat="list in TemplateList.rows | limitTo:10">
               <td>
                 <div class="friend-drawer templte-box-list friend-drawer--onhover">
-                  <div class="custom-control custom-checkbox"
-                    ng-click="getselectedTemplate(list)">
+                  <div class="custom-control custom-checkbox" ng-click="getselectedTemplate(list)">
                     <span class="text" style="float: left;">
                       <h6 class="msg-title">{{list.alias_name}}</h6>
                       <p class="text-muted">
-                          {{TemplateCollapseRow===list.id?list.data:list.data.substring(0,110)+'...'}}
-                        </p>
+                        {{TemplateCollapseRow===list.id?list.data:list.data.substring(0,110)+'...'}}
+                      </p>
                     </span>
                   </div>
                 </div>
                 <div ng-if='TemplateCollapseRow===list.id' class="input-params">
-                  <label>Params</label>
-                  <p>{{list.param.toString()}}</p>
+                  <div class="param-div">
+                    <label>Params</label>
+                    <p class="param-list">{{list.param.toString()}}</p>
+                  </div>
                   <input type="text" ng-model="sendTemplateParams" />
-                  <button class="btn btn-primary" ng-click="setSendTemplateParams(sendTemplateParams,list)">Send</button>
-                 <p> <span style="font-weight: 600;">Note: </span> Enter Param With (,) Separated</p>
+                  <button class="btn btn-primary"
+                    ng-click="setSendTemplateParams(sendTemplateParams,list)">Send</button>
+                  <p> <span style="font-weight: 600;">Note: </span> Enter Param With (,) Separated</p>
               </td>
             </tbody>
           </table>
