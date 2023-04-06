@@ -63,7 +63,7 @@ const ViewLeadDetail = (props) => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Index</TableCell>
+              <TableCell sx={{width: "100px"}}>Index</TableCell>
               {headers &&
                 Object.keys(headers).map((key) => <TableCell key={key}>{headers[key]}</TableCell>)}
               <TableCell className="text-center">Current Status</TableCell>
@@ -75,7 +75,7 @@ const ViewLeadDetail = (props) => {
             {tableData &&
               tableData.map((row, index) => (
                 <React.Fragment>
-                  <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                  <TableRow key={index} sx={{width: "100px", '&:last-child td, &:last-child th': { border: 0 } }}>
                     <TableCell component="th" scope="row">
                       {index + 1}
                       <IconButton
@@ -104,23 +104,23 @@ const ViewLeadDetail = (props) => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                      <Collapse in={open && row[0]?._id == _id} timeout="auto" unmountOnExit>
+                    <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} className="p-0" colSpan={11}>
+                      <Collapse in={open && row[0]?._id == _id} timeout="auto" >
                         <Box sx={{ margin: 1 }}>
                           <Table size="small" aria-label="purchases">
                             <TableBody>
                               {supplierLeads.length > 0 &&
                                 supplierLeads.lead.map((row, index) => (
                                   <TableRow key={index}>
-                                    <TableCell></TableCell>
-                                    <TableCell align="right">{row.entity_name}</TableCell>
-                                    <TableCell align="right">{row.entity_type}</TableCell>
-                                    <TableCell align="right">{row.area}</TableCell>
-                                    <TableCell align="right">{row.city}</TableCell>
-                                    <TableCell align="right">{row.primary_count}</TableCell>
-                                    <TableCell align="right">{row.lead_timestamp}</TableCell>
-                                    <TableCell align="right">{row?.supplier_secondary_count}</TableCell>
-                                    <TableCell align="right">
+                                    <TableCell  sx={{width: "100px"}}></TableCell>
+                                    <TableCell align="center">{row.entity_name}</TableCell>
+                                    <TableCell align="center">{row.entity_type}</TableCell>
+                                    <TableCell align="center">{row.area}</TableCell>
+                                    <TableCell align="center">{row.city}</TableCell>
+                                    <TableCell align="center">{row.primary_count}</TableCell>
+                                    <TableCell align="center">{row.lead_timestamp}</TableCell>
+                                    <TableCell align="center">{row?.supplier_secondary_count}</TableCell>
+                                    <TableCell align="center">
                                       <ClientStatusDropdown
                                         data={row}
                                         checkTable="leadDetailTable"
