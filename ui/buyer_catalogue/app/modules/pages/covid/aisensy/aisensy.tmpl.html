@@ -5558,14 +5558,15 @@
                   </div>
                 </div>
                 <div ng-if='TemplateCollapseRow===list.id' class="input-params">
+                  <label>Parameters:</label>
                   <div class="param-div">
-                    <label>Params</label>
                     <p class="param-list">{{list.param.toString()}}</p>
                   </div>
-                  <input type="text" ng-model="sendTemplateParams" />
-                  <button class="btn btn-primary"
-                    ng-click="setSendTemplateParams(sendTemplateParams,list)">Send</button>
-                  <p> <span style="font-weight: 600;">Note: </span> Enter Param With (,) Separated</p>
+                  <form name="parameters" ng-submit="setSendTemplateParams(sendTemplateParams,list)">
+                    <input type="text" ng-model="sendTemplateParams" name="sendTemplateParams" required/>
+                    <button class="btn btn-primary" type="submit">Send</button>
+                  </form>
+                  <p><span style="font-weight: 600;">Note: </span> Enter Param With (,) Separated</p>
               </td>
             </tbody>
           </table>

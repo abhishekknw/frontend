@@ -1039,7 +1039,7 @@ h6.msg-title {
 .param-list{
   padding: 4px 6px;
     max-width: 535px;
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
     font-weight: 600;
     white-space: nowrap;
