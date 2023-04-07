@@ -907,8 +907,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           { header: 'Comment' },
           { header: 'Internal Comment' },
           { header: 'Lead Given by' },
-          { header: 'Organisation' },
-          { header: 'Lead Source' },
+          { header: 'Supplier Agency ' },
+          { header: 'Agency User' },
           { header: 'Call Status' },
           { header: 'Price' },
           { header: 'Timestamp' },
@@ -975,6 +975,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.SelectedCompany = [];
           $scope.preferred_partnerList = {};
           $scope.leads_Data_1 = {};
+          $scope.userMinimalList = [];
           // let organisation = JSON.parse(localStorage["userInfo"]);
           
           userService.getSector()
@@ -3107,6 +3108,42 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
         $scope.visitmap = function (link) {
           window.open(link, '_blank');
+        }
+        $scope.getTemplateDataParams = {'page':0,'search':''};
+        $scope.getTemplateData = function () {
+          if(!$scope.getTemplateDataParams.page){
+            $scope.getTemplateDataParams.page = 0;
+          }
+          if(!$scope.getTemplateDataParams.search){
+            $scope.getTemplateDataParams.search = '';
+          }
+          $scope.TemplateCollapseRow = "";
+          AuthService.getTemplateTabData($scope.getTemplateDataParams)
+          .then(function onSuccess(response) {
+            $scope.TemplateList = response.data.data;
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+        }
+        $scope.getselectedTemplate = function (list){
+          $scope.TemplateCollapseRow = list.id
+          // $scope.sendTemplateParams = list.param.toString();
+        }
+        $scope.setSendTemplateParams = function(param,row){
+          let payload = [{
+            'template_id':row.id,
+            'phone_number':$scope.userChatData.phone_number,
+            'params':param.split(','),
+            'default_params':row.param
+          }];
+          AuthService.sendTemplateToUser(payload)
+          .then(function onSuccess(response) {
+            $('#TemplateModal').modal('hide');
+            swal("Success",'Sent successfully', constants.success);
+          }).catch(function onError(response) {
+            console.log(response);
+            swal("Error", constants.errorMsg, constants.error);
+          })
         }
 
       }]);
