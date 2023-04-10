@@ -1,338 +1,393 @@
 <link rel="stylesheet" href="/modules/pages/leads/campaignLeads.tmpl.css">
-<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
+<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
 
 <div ng-loading="loading"></div> <!--For displaying loading icon-->
 <main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
-<div class="wrapperBox">
-  <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
-  <nav-bar></nav-bar>
-  <div class="middle-section">
-    <div class="backBtn" ng-show="!views.campaigns && !(views.createForm || views.selectSuppliers || views.enterLeads || views.viewLeadsBySupplier)">
-      <button type="button" class="smallBtn" ng-click="changeView('campaigns',campaign)">Back To Campaign Details Page</button>
+  <div class="wrapperBox">
+    <div ng-show="isEmpty" style="text-align:center;">
+      <h2>{{msg}}</h2>
     </div>
-    <div class="backBtn" ng-show="views.createForm || views.selectSuppliers || views.importLeads">
-      <button type="button" class="smallBtn" ng-click="changeView('viewLeadForms',campaignInfo)">Back To Form Details Page</button>
-    </div>  
-    <div class="backBtn" ng-show="views.enterLeads">
-      <button type="button" class="smallBtn" ng-click="changeView('selectSuppliers',campaignInfo)">Back To Suppliers Details Page</button>
-    </div>
-    <div class="backBtn" ng-show="views.viewLeadsBySupplier">
-      <button type="button" class="smallBtn" ng-click="changeView('enterLeads',campaignInfo)">Back To Enter Leads Page</button>
-    </div>
-    <div class="breadcrumb" ncy-breadcrumb></div>
-    <div class="campaignLeadSection" ng-if="views.campaigns">
-      <h2 class="heading">List of All Campaign Details</h2>
-      <div class="campaignBox" st-table="campaigns" st-safe-src="Data">
-        <div class="searchBox">
-          <input st-search="" placeholder="Search ..." class="field"  type="search">
-          <button><i class="fas fa-search"></i></button>
+    <nav-bar></nav-bar>
+    <div class="middle-section">
+      <div class="backBtn"
+        ng-show="!views.campaigns && !(views.createForm || views.selectSuppliers || views.enterLeads || views.viewLeadsBySupplier)">
+        <button type="button" class="smallBtn" ng-click="changeView('campaigns',campaign)">Back To Campaign Details
+          Page</button>
+      </div>
+      <div class="backBtn" ng-show="views.createForm || views.selectSuppliers || views.importLeads">
+        <button type="button" class="smallBtn" ng-click="changeView('viewLeadForms',campaignInfo)">Back To Form Details
+          Page</button>
+      </div>
+      <div class="backBtn" ng-show="views.enterLeads">
+        <button type="button" class="smallBtn" ng-click="changeView('selectSuppliers',campaignInfo)">Back To Suppliers
+          Details Page</button>
+      </div>
+      <div class="backBtn" ng-show="views.viewLeadsBySupplier">
+        <button type="button" class="smallBtn" ng-click="changeView('enterLeads',campaignInfo)">Back To Enter Leads
+          Page</button>
+      </div>
+      <div class="breadcrumb" ncy-breadcrumb></div>
+      <div class="campaignLeadSection" ng-if="views.campaigns">
+        <h2 class="heading">List of All Campaign Details</h2>
+        <div class="campaignBox" st-table="campaigns" st-safe-src="Data">
+          <div class="searchBox">
+            <input st-search="" placeholder="Search ..." class="field" type="search"
+            ng-model="searchQuery" ng-change="searchProposalDetails(searchQuery)">
+            <button><i class="fas fa-search"></i></button>
+          </div>
+          <table class="table-data">
+            <tr>
+              <th ng-repeat="header in campaignHeaders">{{header.header}}</th>
+            </tr>
+            <tr st-select-row='proposal' dir-paginate="campaign in campaigns | filter:f | filter:searchQuery | itemsPerPage:10"
+            total-items="loading.count" current-page="loading.current_page" track by "$index">
+            <!-- <tr ng-repeat="campaign in campaigns"> -->
+              <td width="60%">{{campaign.campaign.name}}</td>
+              <td>{{campaign.campaign.tentative_start_date|limitTo:10}}</td>
+              <td>{{campaign.campaign.tentative_end_date|limitTo:10}}</td>
+              <td>
+                <a href="javascript:void(0);" ng-click="changeView('viewLeadForms',campaign)"
+                  class="linkBtn">Create/Edit Lead Form</a>
+              </td>
+            </tr>
+          </table>
+          <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"
+            on-page-change="pageChanged(newPageNumber)">
+          </dir-pagination-controls>
+          <!-- <div class="paginationBox" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div> -->
         </div>
-        <table class="table-data">
-          <tr>
-            <th ng-repeat="header in campaignHeaders">{{header.header}}</th>
-          </tr>
-          <tr ng-repeat="campaign in campaigns">
-            <td width="60%">{{campaign.campaign.name}}</td>
-            <td>{{campaign.campaign.tentative_start_date|limitTo:10}}</td>
-            <td>{{campaign.campaign.tentative_end_date|limitTo:10}}</td>
-            <td>
-              <a href="javascript:void(0);" ng-click="changeView('viewLeadForms',campaign)" class="linkBtn">Create/Edit Lead Form</a>
-            </td>
-          </tr>
-        </table>
-        <div class="paginationBox" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div>
-      </div>
-    </div><!-- campaignLeadSection -->
+      </div><!-- campaignLeadSection -->
 
-<!--start: leads  -->
-    <div class="campaignLeadSection" ng-if="views.viewLeads">
-      <h2 class="heading">Leads Data of Campaign {{campaignName}}</h2>
-      <div class="campaignBox" export-csv="csv" separator=";" ng-if="leadsData.leads.length">
-        <table class="table-data">
-          <tr>
-            <th>Index</th>
-            <th ng-repeat="header in leadsData.alias_data">{{header.alias}}</th>
-          </tr>
-          <tr ng-repeat="lead in leadsData.leads">
-            <td>{{$index + 1}}</td>
-            <td ng-repeat="alias in leadsData.alias_data" ng-if="lead[alias.original_name] != true && lead[alias.original_name] != false">{{lead[alias.original_name]}}</td>
-            <td ng-repeat="alias in leadsData.alias_data" ng-if="lead[alias.original_name] == true">Yes</td>
-            <td ng-repeat="alias in leadsData.alias_data" ng-if="lead[alias.original_name] == false">No</td>
-          </tr>
-        </table>
-        <a class="smallBtn" title="{{campaignName}} Leads" ng-click='csv.generate()' ng-href="{{ csv.link() }}" download="{{campaignName}}_leads.csv" ng-if="leadsData.leads.length">
-          <i class="glyphicon glyphicon-new-window"></i> &#160;Download As Excel
-        </a>
-      </div>
-    </div><!-- campaignLeadSection -->
-<!--end: leads  -->
-
-<!--start : view lead forms -->
-    <div class="campaignLeadSection" ng-if="views.viewLeadForms">
-      <h2 class="heading">{{campaignName}} Lead Form List</h2>
-      <button class="smallBtn top" ng-click="getLeadForm()">Create Lead Form</button>
-      <div class="campaignBox" st-table="campaigns" st-safe-src="Data">
-        <table class="table-data">
-          <tr>
-            <th>Index</th>
-            <th>Form Name</th>
-            <th>Action</th>
-            <th>View Leads</th>
-            <th>Leads</th>
-            <th>Import</th>
-          </tr>
-          <tr ng-repeat="item in leadForms">
-            <td>{{$index+1}}</td>
-            <td>{{item.leads_form_name}}</td>
-            <td><a href="javascript:void(0);" class="linkBtn" ng-click="getLeadForm(item)">Form Details</a></td>
-            <td><a href="javascript:void(0);" class="linkBtn" ng-click="changeView('viewLeadsByFormCampaign',item)" >View Leads</a></td>
-            <td><a href="javascript:void(0);" class="linkBtn" ng-click=" changeView('selectSuppliers',campaignInfo,item)">Enter Leads</a></td>
-            <td><a href="javascript:void(0);" class="linkBtn" ng-click="changeView('importLeads',campaignInfo,item)">Import Leads</a></td>
-          </tr>
-        </table>
-      </div>
-    </div><!-- campaignLeadSection -->
-<!--end : view lead forms -->
-
-<!--start: enter leads data -->
-    <div class="campaignLeadSection" ng-if="views.selectSuppliers">
-      <h2 class="heading">List of All Suppliers Of Campaign {{campaignName}}</h2>
-      <div class="campaignBox">
-        <div class="searchBox">
-          <input type="text" ng-model="searchSupplier" class="field" placeholder="Search">
-          <button><i class="fas fa-search"></i></button>
+      <!--start: leads  -->
+      <div class="campaignLeadSection" ng-if="views.viewLeads">
+        <h2 class="heading">Leads Data of Campaign {{campaignName}}</h2>
+        <div class="campaignBox" export-csv="csv" separator=";" ng-if="leadsData.leads.length">
+          <table class="table-data">
+            <tr>
+              <th>Index</th>
+              <th ng-repeat="header in leadsData.alias_data">{{header.alias}}</th>
+            </tr>
+            <tr ng-repeat="lead in leadsData.leads">
+              <td>{{$index + 1}}</td>
+              <td ng-repeat="alias in leadsData.alias_data"
+                ng-if="lead[alias.original_name] != true && lead[alias.original_name] != false">
+                {{lead[alias.original_name]}}</td>
+              <td ng-repeat="alias in leadsData.alias_data" ng-if="lead[alias.original_name] == true">Yes</td>
+              <td ng-repeat="alias in leadsData.alias_data" ng-if="lead[alias.original_name] == false">No</td>
+            </tr>
+          </table>
+          <a class="smallBtn" title="{{campaignName}} Leads" ng-click='csv.generate()' ng-href="{{ csv.link() }}"
+            download="{{campaignName}}_leads.csv" ng-if="leadsData.leads.length">
+            <i class="glyphicon glyphicon-new-window"></i> &#160;Download As Excel
+          </a>
         </div>
-        <table class="table-data">
-          <tr>
-            <th>Index</th>
-            <th>Supplier Name</th>
-            <th>Area</th>
-            <th>Subarea</th>
-            <th>Address</th>
-            <th>Platform Link</th>
-            <th>Mobile Link</th>
-          </tr>
-          <tr ng-repeat="supplier in suppliers|filter : searchSupplier">
-            <td>{{$index+1}}</td>
-            <td>{{supplier.name}}</td>
-            <td>{{supplier.area}}</td>
-            <td>{{supplier.subarea}}</td>
-            <td>{{supplier.address1}} {{supplier.address2}}</td>
-            <td><a href="javascript:void(0);" class="linkBtn" ng-click="enterLeads(supplier)">Click Here To Enter Leads</a></td>
-            <td><a href="javascript:void(0);" class="linkBtn" ng-href="#/enterLeadsFromApplication/{{leadFormFields.leads_form_id}}/{{supplier.supplier_id}}" target="_blank">Go To Link</a></td>
-          </tr>
-        </table>
-      </div>
-    </div><!-- campaignLeadSection -->
-<!--end: enter leads data  -->
+      </div><!-- campaignLeadSection -->
+      <!--end: leads  -->
 
-<!--start: create form  -->
-    <div class="campaignLeadSection" ng-if="views.createForm">          
-      <h2 class="heading">Create/Edit Form</h2>
-      <div class="campaignBox">
-        <div class="campaignFormBox">
-          <form name="$root.fieldForm">
-            <div class="fieldBoxFull">
-              <label>Enter Name For Lead Form<span>*</span>:</label>
-              <input type="text" class="field" placeholder="Enter Name For Lead Form" ng-model="formName.name" required>
-            </div>
-            <div class="formBox">
-              <div class="formBoxRepeat" ng-repeat="(indexKey,model) in leadFormFields">
-                <label for="email">Field Name:</label>
-                <input type="text" class="field" placeholder="Field Name" ng-model="model.key_name" required>
-                <label for="pwd">Field Type:</label> 
-                <select class="field" ng-model="model.key_type" required>
-                  <option  disabled="true" value="">Select Filed Type</option>
-                  <option ng-repeat="type in leadKeyTypes"  value="{{type.name}}">{{type.name}}</option>
-                </select>
-                <div class="formBoxBottom">
-                  <div class="fbbBox" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
-                    <div class="fieldBox">
-                      <label>Add Options:</label>
-                      <input type="text" class="field" ng-model="model.optionForm.option">
-                      <button class="smallBtn" ng-disabled="!model.optionForm.option" ng-click="addKeyOption(model.optionForm.option,indexKey)">+</button> 
-                    </div>
-                    <div class="option" ng-repeat="option in model.key_options track by $index" style="display:inline-block;">
-                      <button class="smallBtn">{{option}}</button>
-                      <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
+      <!--start : view lead forms -->
+      <div class="campaignLeadSection" ng-if="views.viewLeadForms">
+        <h2 class="heading">{{campaignName}} Lead Form List</h2>
+        <button class="smallBtn top" ng-click="getLeadForm()">Create Lead Form</button>
+        <div class="campaignBox" st-table="campaigns" st-safe-src="Data">
+          <table class="table-data">
+            <tr>
+              <th>Index</th>
+              <th>Form Name</th>
+              <th>Action</th>
+              <th>View Leads</th>
+              <th>Leads</th>
+              <th>Import</th>
+            </tr>
+            <tr ng-repeat="item in leadForms">
+              <td>{{$index+1}}</td>
+              <td>{{item.leads_form_name}}</td>
+              <td><a href="javascript:void(0);" class="linkBtn" ng-click="getLeadForm(item)">Form Details</a></td>
+              <td><a href="javascript:void(0);" class="linkBtn"
+                  ng-click="changeView('viewLeadsByFormCampaign',item)">View Leads</a></td>
+              <td><a href="javascript:void(0);" class="linkBtn"
+                  ng-click=" changeView('selectSuppliers',campaignInfo,item)">Enter Leads</a></td>
+              <td><a href="javascript:void(0);" class="linkBtn"
+                  ng-click="changeView('importLeads',campaignInfo,item)">Import Leads</a></td>
+            </tr>
+          </table>
+        </div>
+      </div><!-- campaignLeadSection -->
+      <!--end : view lead forms -->
+
+      <!--start: enter leads data -->
+      <div class="campaignLeadSection" ng-if="views.selectSuppliers">
+        <h2 class="heading">List of All Suppliers Of Campaign {{campaignName}}</h2>
+        <div class="campaignBox">
+          <div class="searchBox">
+            <input type="text" ng-model="searchSupplier" class="field" placeholder="Search">
+            <button><i class="fas fa-search"></i></button>
+          </div>
+          <table class="table-data">
+            <tr>
+              <th>Index</th>
+              <th>Supplier Name</th>
+              <th>Area</th>
+              <th>Subarea</th>
+              <th>Address</th>
+              <th>Platform Link</th>
+              <th>Mobile Link</th>
+            </tr>
+            <tr ng-repeat="supplier in suppliers|filter : searchSupplier">
+              <td>{{$index+1}}</td>
+              <td>{{supplier.name}}</td>
+              <td>{{supplier.area}}</td>
+              <td>{{supplier.subarea}}</td>
+              <td>{{supplier.address1}} {{supplier.address2}}</td>
+              <td><a href="javascript:void(0);" class="linkBtn" ng-click="enterLeads(supplier)">Click Here To Enter
+                  Leads</a></td>
+              <td><a href="javascript:void(0);" class="linkBtn"
+                  ng-href="#/enterLeadsFromApplication/{{leadFormFields.leads_form_id}}/{{supplier.supplier_id}}"
+                  target="_blank">Go To Link</a></td>
+            </tr>
+          </table>
+        </div>
+      </div><!-- campaignLeadSection -->
+      <!--end: enter leads data  -->
+
+      <!--start: create form  -->
+      <div class="campaignLeadSection" ng-if="views.createForm">
+        <h2 class="heading">Create/Edit Form</h2>
+        <div class="campaignBox">
+          <div class="campaignFormBox">
+            <form name="$root.fieldForm">
+              <div class="fieldBoxFull">
+                <label>Enter Name For Lead Form<span>*</span>:</label>
+                <input type="text" class="field" placeholder="Enter Name For Lead Form" ng-model="formName.name"
+                  required>
+              </div>
+              <div class="formBox">
+                <div class="formBoxRepeat" ng-repeat="(indexKey,model) in leadFormFields">
+                  <label for="email">Field Name:</label>
+                  <input type="text" class="field" placeholder="Field Name" ng-model="model.key_name" required>
+                  <label for="pwd">Field Type:</label>
+                  <select class="field" ng-model="model.key_type" required>
+                    <option disabled="true" value="">Select Filed Type</option>
+                    <option ng-repeat="type in leadKeyTypes" value="{{type.name}}">{{type.name}}</option>
+                  </select>
+                  <div class="formBoxBottom">
+                    <div class="fbbBox"
+                      ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
+                      <div class="fieldBox">
+                        <label>Add Options:</label>
+                        <input type="text" class="field" ng-model="model.optionForm.option">
+                        <button class="smallBtn" ng-disabled="!model.optionForm.option"
+                          ng-click="addKeyOption(model.optionForm.option,indexKey)">+</button>
+                      </div>
+                      <div class="option" ng-repeat="option in model.key_options track by $index"
+                        style="display:inline-block;">
+                        <button class="smallBtn">{{option}}</button>
+                        <span ng-click="model.key_options.splice($index,1)"
+                          class="glyphicon glyphicon-remove-circle"></span>
+                      </div>
                     </div>
                   </div>
+                  <div class="action">
+                    <label>Action</label>
+                    <label class="checkbox">
+                      Hot Lead
+                      <input type="checkbox" name="" value="true" ng-model="model.isHotLead">
+                      <span class="checkmark"></span>
+                    </label>
+                    <input type="text" class="field" ng-model="model.hot_lead_criteria" ng-if="model.isHotLead">
+                  </div>
+                  <button type="button" class="closeBtn" ng-click="removeField($index)" ng-if="!updateForm"><i
+                      class="fas fa-times-circle"></i></button>
+                  <button type="button" class="closeBtn" ng-click="removeFieldFromForm(model)" ng-if="updateForm"><i
+                      class="fas fa-times-circle"></i></button>
                 </div>
-                <div class="action">
-                  <label>Action</label>
+              </div>
+
+              <div class="clearfix bottomButtonSection">
+                <button class="smallBtn" ng-click="addLeadFormFields()" ng-if="!updateForm">Add New Fields</button>
+                <button class="smallBtn" data-target="#addNewLeadFormFields" data-toggle="modal" ng-if="updateForm">Add
+                  New Fields</button>
+                <button class="smallBtn" ng-click="updateFormFields()" ng-disabled="$root.fieldForm.$invalid"
+                  ng-if="updateForm">Update Fields</button>
+                <button class="smallBtn" ng-disabled="$root.fieldForm.$invalid" ng-click="saveLeadForm()"
+                  ng-if="!updateForm">Submit </button>
+                <button class="smallBtn" data-target="#globalHotLeadsCriteria" ng-disabled="!updateForm"
+                  data-toggle="modal">Global Hot Leads Criteria</button>
+                <p class="red" ng-if="!updateForm">Please submit form first to add global hot lead criteria.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div><!-- campaignLeadSection -->
+      <!--end: create form  -->
+
+      <!--start: enter leads  -->
+      <div class="campaignLeadSection" ng-if="views.enterLeads || editLeads">
+        <h2 class="heading">Leads</h2>
+        <div class="campaignBox">
+          <table class="table-data leadTable">
+            <tr>
+              <th>Name of Society </th>
+              <th>Area</th>
+              <th>Subarea</th>
+            </tr>
+            <tr>
+              <td>{{supplierData.name}}</td>
+              <td>{{supplierData.area}}</td>
+              <td>{{supplierData.subarea}}</td>
+            </tr>
+          </table>
+          <form name="leadForm">
+            <div class="item" ng-repeat="item in leadModelData">
+              <div
+                ng-if="item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'TEXTAREA' && item.key_type != 'DATE' && item.key_type != 'BOOLEAN' && !item.hot_lead_criteria">
+                <label class="capitalize">{{item.key_name}}</label>
+                <input type="{{keyTypesMap[item.key_type]}}" placeholder="{{item.key_name}}" class="form-control field"
+                  ng-model="item.value" />
+              </div>
+              <div ng-if="item.key_type == 'BOOLEAN'">
+                <label class="capitalize">{{item.key_name}}</label>
+                <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field"
+                  ng-model="item.value" value="true" />TRUE
+                <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field"
+                  ng-model="item.value" value="false" />FALSE
+              </div>
+
+              <div ng-if="item.key_type == 'DATE'">
+                <label class="capitalize">{{item.key_name}}</label>
+                <!-- <input autocomplete type="date"   name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value"  /> -->
+
+                <input type="text" readonly autocomplete name="{{keyTypesMap[item.key_type]}}" class="field"
+                  uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy" ng-model="item.value"
+                  is-open="isDatepickerOpen" datepicker-options="datepickerOptions" close-text="Close"
+                  alt-input-formats="altInputFormats">
+                <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+
+              </div>
+              <div ng-if="item.key_type == 'PHONE'">
+                <label class="capitalize">{{item.key_name}}</label>
+                <input type="text" name="contact_phone" placeholder="{{item.key_name}}" class="field"
+                  ng-pattern="/^(\d{10})$/" ng-model="item.value" />
+                <span class="show-error" ng-show="leadForm.contact_phone.$error.pattern">Please Enter Valid 10 Digit
+                  Mobile Number</span>
+              </div>
+              <div ng-class="{ 'has-error' : leadForm.email.$invalid && !leadForm.email.$pristine }">
+                <div ng-if="item.key_type == 'EMAIL'">
+                  <label class="capitalize">{{item.key_name}}</label>
+                  <input type="email" name="contact_email" placeholder="{{item.key_name}}" id="contact_email"
+                    class="field" ng-model="item.value" />
+                  <span class="show-error" ng-show="leadForm.contact_email.$error.email">Please Enter Valid Email</span>
+                </div>
+              </div>
+              <div ng-if="item.key_type == 'TEXTAREA'">
+                <label class="capitalize">{{item.key_name}}</label>
+                <textarea class="form-control field" placeholder="{{item.key_name}}" rows="5" id="comment"
+                  ng-model="item.value"></textarea>
+              </div>
+              <div ng-if="item.key_type == 'RADIO' && !item.hot_lead_criteria">
+                <label class="capitalize">{{item.key_name}}</label>
+                <div ng-repeat="option in item.key_options">
+                  <input type="{{keyTypesMap[item.key_type]}}" class="form-check-input" value="{{option}}" name="radio"
+                    ng-model="item.value" />{{option}}
+                </div>
+              </div>
+              <div ng-if="item.key_type == 'CHECKBOX' && !item.hot_lead_criteria"
+                ng-init="getCheckBoxValues(item.key_options)">
+                <label class="capitalize">{{item.key_name}}</label>
+                <div ng-repeat="option in leadChBoxKeyOptions">
+                  <input type="checkbox" class="form-check-input" value="{{option}}" name="chbox"
+                    ng-model="option.selected"
+                    ng-click="setCheckBoxValue(option.selected,$index,item)" />{{option.name}}
+                </div>
+              </div>
+              <div ng-if="item.hot_lead_criteria">
+                <label class="capitalize">{{item.key_name}}</label>
+                <div>
                   <label class="checkbox">
-                    Hot Lead
-                    <input type="checkbox" name="" value="true"  ng-model="model.isHotLead">
+                    {{item.hot_lead_criteria}}
+                    <input type="checkbox" class="form-check-input" value="{{item.hot_lead_criteria}}"
+                      ng-model="hotLeadValue" ng-click="setHotLeadValue(item,hotLeadValue)" name="hot_lead" />
                     <span class="checkmark"></span>
                   </label>
-                  <input type="text" class="field" ng-model="model.hot_lead_criteria" ng-if="model.isHotLead">
                 </div>
-                <button type="button" class="closeBtn" ng-click="removeField($index)" ng-if="!updateForm"><i class="fas fa-times-circle"></i></button>
-                <button type="button" class="closeBtn" ng-click="removeFieldFromForm(model)" ng-if="updateForm"><i class="fas fa-times-circle"></i></button>
+              </div>
+              <div ng-if="!item.hot_lead_criteria">
+                <label ng-if="item.key_type == 'DROPDOWN'" class="capitalize">{{item.key_name}}</label>
+                <select ng-if="item.key_type == 'DROPDOWN'" class="field" ng-model="item.value">
+                  <option value="" ng-disabled="true">Select Option</option>
+                  <option ng-repeat="option in item.key_options" value="{{option}}">{{option}}</option>
+                </select>
               </div>
             </div>
-             
-            <div class="clearfix bottomButtonSection">
-              <button class="smallBtn" ng-click="addLeadFormFields()" ng-if="!updateForm">Add New Fields</button>
-              <button class="smallBtn" data-target="#addNewLeadFormFields" data-toggle="modal" ng-if="updateForm">Add New Fields</button>
-              <button class="smallBtn" ng-click="updateFormFields()" ng-disabled="$root.fieldForm.$invalid" ng-if="updateForm">Update Fields</button>
-              <button class="smallBtn"  ng-disabled="$root.fieldForm.$invalid"  ng-click="saveLeadForm()" ng-if="!updateForm">Submit </button>
-              <button class="smallBtn"  data-target="#globalHotLeadsCriteria" ng-disabled="!updateForm" data-toggle="modal">Global Hot Leads Criteria</button>
-              <p class="red" ng-if="!updateForm">Please submit form first to add global hot lead criteria.</p>
+            <div class="item">
+              <button ng-if="! views.viewleadForEdit" class="smallBtn" ng-disabled="leadForm.$invalid"
+                ng-click="saveLeads()">Submit </button>
+              <button ng-if="views.viewleadForEdit" class="smallBtn"
+                ng-disabled="leadForm.$invalid || leadForm.$pristine" ng-click="updateLeadDetails()">Update</button>
+              <button class="smallBtn" ng-click="changeView('viewLeadsBySupplier',campaignInfo,'viewleadForEdit')">View
+                Leads</button>
+              <h6>Lead Count: {{supplierLeadsCount}}</h6>
             </div>
           </form>
         </div>
       </div>
-    </div><!-- campaignLeadSection -->
-<!--end: create form  -->
+      <!-- campaignLeadSection -->
+      <!--end: enter leads  -->
 
-<!--start: enter leads  -->
-    <div class="campaignLeadSection" ng-if="views.enterLeads || editLeads">
-      <h2 class="heading">Leads</h2>
-      <div class="campaignBox">
-        <table class="table-data leadTable">
-          <tr>
-            <th>Name of Society </th>
-            <th>Area</th>
-            <th>Subarea</th>
-          </tr>
-          <tr>
-            <td>{{supplierData.name}}</td>
-            <td>{{supplierData.area}}</td>
-            <td>{{supplierData.subarea}}</td>
-          </tr>
-        </table>
-        <form  name="leadForm">
-          <div class="item" ng-repeat="item in leadModelData">
-            <div ng-if="item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'TEXTAREA' && item.key_type != 'DATE' && item.key_type != 'BOOLEAN' && !item.hot_lead_criteria">
-              <label class="capitalize">{{item.key_name}}</label>
-              <input type="{{keyTypesMap[item.key_type]}}" placeholder="{{item.key_name}}"  class="form-control field" ng-model="item.value" />
-            </div>
-            <div ng-if="item.key_type == 'BOOLEAN'">
-              <label class="capitalize">{{item.key_name}}</label>
-              <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" value="true" />TRUE
-              <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" value="false"  />FALSE
-            </div> 
-
-            <div ng-if="item.key_type == 'DATE'">
-              <label class="capitalize">{{item.key_name}}</label>
-              <!-- <input autocomplete type="date"   name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value"  /> -->
-              
-                <input type="text" readonly autocomplete name="{{keyTypesMap[item.key_type]}}" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy"  ng-model="item.value" is-open="isDatepickerOpen" datepicker-options="datepickerOptions" close-text="Close"  alt-input-formats="altInputFormats">
-                <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
-                  <i class="glyphicon glyphicon-calendar"></i>
-                </button>
-              
-            </div>     
-            <div ng-if="item.key_type == 'PHONE'">
-              <label class="capitalize">{{item.key_name}}</label>
-              <input type="text" name="contact_phone"  placeholder="{{item.key_name}}" class="field" ng-pattern="/^(\d{10})$/" ng-model="item.value" />
-              <span class="show-error" ng-show="leadForm.contact_phone.$error.pattern">Please Enter Valid 10 Digit Mobile Number</span>
-            </div>
-            <div ng-class="{ 'has-error' : leadForm.email.$invalid && !leadForm.email.$pristine }">
-              <div ng-if="item.key_type == 'EMAIL'">
-                <label class="capitalize">{{item.key_name}}</label>
-                <input type="email" name="contact_email" placeholder="{{item.key_name}}" id="contact_email" class="field" ng-model="item.value"   />
-                <span class="show-error" ng-show="leadForm.contact_email.$error.email">Please Enter Valid Email</span>
-              </div>
-            </div>
-            <div ng-if="item.key_type == 'TEXTAREA'">
-              <label class="capitalize">{{item.key_name}}</label>
-              <textarea class="form-control field" placeholder="{{item.key_name}}" rows="5" id="comment" ng-model="item.value" ></textarea>
-            </div>
-            <div ng-if="item.key_type == 'RADIO' && !item.hot_lead_criteria">
-              <label class="capitalize">{{item.key_name}}</label>
-              <div ng-repeat="option in item.key_options">
-                <input type="{{keyTypesMap[item.key_type]}}" class="form-check-input" value="{{option}}" name="radio" ng-model="item.value" />{{option}}
-              </div>
-            </div>
-            <div ng-if="item.key_type == 'CHECKBOX' && !item.hot_lead_criteria" ng-init="getCheckBoxValues(item.key_options)">
-              <label class="capitalize">{{item.key_name}}</label>
-              <div ng-repeat="option in leadChBoxKeyOptions">
-                <input type="checkbox" class="form-check-input"  value="{{option}}"  name="chbox" ng-model="option.selected"  ng-click="setCheckBoxValue(option.selected,$index,item)" />{{option.name}}
-              </div>
-            </div>
-            <div ng-if="item.hot_lead_criteria">
-              <label class="capitalize">{{item.key_name}}</label>
-              <div>
-                <label class="checkbox">
-                  {{item.hot_lead_criteria}}
-                  <input type="checkbox" class="form-check-input"  value="{{item.hot_lead_criteria}}"  ng-model="hotLeadValue" ng-click="setHotLeadValue(item,hotLeadValue)" name="hot_lead" />
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-            </div>
-            <div ng-if="!item.hot_lead_criteria">
-              <label ng-if="item.key_type == 'DROPDOWN'" class="capitalize">{{item.key_name}}</label>
-              <select ng-if="item.key_type == 'DROPDOWN'" class="field" ng-model="item.value" >
-                <option value="" ng-disabled="true">Select Option</option>
-                <option ng-repeat="option in item.key_options" value="{{option}}">{{option}}</option>
-              </select>
-            </div>
+      <!--Start : view leads by supplier  -->
+      <div class="campaignLeadSection" ng-if="views.viewLeadsBySupplier || views.viewLeadsByFormCampaign">
+        <h2 class="heading">Lead Details for {{supplierData.name}} Supplier</h2>
+        <div class="campaignBox">
+          <div class="searchBox">
+            <input type="text" class="field" ng-model="query" placeholder="Search" />
+            <button><i class="fas fa-search"></i></button>
           </div>
-          <div class="item">
-            <button ng-if="! views.viewleadForEdit" class="smallBtn" ng-disabled="leadForm.$invalid" ng-click="saveLeads()" >Submit </button>
-            <button ng-if="views.viewleadForEdit" class="smallBtn" ng-disabled="leadForm.$invalid || leadForm.$pristine"  ng-click="updateLeadDetails()">Update</button>
-            <button class="smallBtn" ng-click="changeView('viewLeadsBySupplier',campaignInfo,'viewleadForEdit')">View Leads</button>
-            <h6>Lead Count: {{supplierLeadsCount}}</h6>
+          <table class="table-data" ng-if="entryListLeadsData.values.length">
+            <tr>
+              <th ng-repeat="header in entryListLeadsData.headers">{{header.key_name}}</th>
+              <th ng-if="views.viewleadForEdit">Action</th>
+            </tr>
+            <tr ng-repeat="lead in entryListLeadsData.values | filter : query track by $index">
+              <td ng-repeat="alias in lead">{{alias.value}}</td>
+              <td ng-if="views.viewleadForEdit"><button class="linkBtn"
+                  ng-click="getEditLeads(lead[0].value)">Edit</button></td>
+            </tr>
+          </table>
+          <div ng-if="!entryListLeadsData.values.length">
+            <label>No Leads Found</label>
           </div>
-        </form>
-      </div>
-    </div>
-    <!-- campaignLeadSection -->
-<!--end: enter leads  -->
-
-<!--Start : view leads by supplier  -->
-    <div class="campaignLeadSection" ng-if="views.viewLeadsBySupplier || views.viewLeadsByFormCampaign">
-      <h2 class="heading">Lead Details for {{supplierData.name}} Supplier</h2>
-      <div class="campaignBox">
-        <div class="searchBox">
-          <input type="text" class="field" ng-model="query" placeholder="Search"/>
-          <button><i class="fas fa-search"></i></button>
         </div>
-        <table class="table-data" ng-if="entryListLeadsData.values.length">
-          <tr>
-            <th ng-repeat="header in entryListLeadsData.headers">{{header.key_name}}</th>
-            <th ng-if="views.viewleadForEdit">Action</th>
-          </tr>
-           <tr ng-repeat="lead in entryListLeadsData.values | filter : query track by $index">
-             <td  ng-repeat="alias in lead">{{alias.value}}</td>
-             <td ng-if="views.viewleadForEdit"><button class="linkBtn" ng-click="getEditLeads(lead[0].value)">Edit</button></td>
-           </tr>
-        </table>
-        <div ng-if="!entryListLeadsData.values.length">
-          <label>No Leads Found</label>
+      </div><!-- campaignLeadSection -->
+      <!--End : view leads by supplier  -->
+
+      <!--start : import leads  -->
+      <div class="campaignLeadSection" ng-show="views.importLeads">
+        <h2 class="heading">Import Leads for {{campaignName}} Campaign</h2>
+        <div class="campaignBox">
+          <div class="importLeadOuterBox">
+            <label>Select Lead Sheet</label>
+            <div class="upload">
+              <span>Upload File</span>
+              <input type="file" class="buttonfile" accept=".xlsx" ngf-select="uploadFiles($file)" />
+            </div>
+            <span class="attachedFileName">{{file.name}}</span>
+            <button ng-click="importLeadsThroughSheet()" class="submit-btn"
+              ng-disabled="importLeadsSuccess">Submit</button>
+            <div class="importBottom">
+              <button ng-click="getExportedSheet()" class="smallBtn">Export Sample Sheet To Enter Leads</button>
+              <a href="{{exportedFile}}" class="smallBtn" ng-if="exportedFile" target="_blank" download>Download</a>
+            </div>
+          </div><!-- importLeadOuterBox -->
         </div>
-      </div>
-    </div><!-- campaignLeadSection -->
-<!--End : view leads by supplier  -->
-
-<!--start : import leads  -->
-    <div class="campaignLeadSection" ng-show="views.importLeads">
-      <h2 class="heading">Import Leads for {{campaignName}} Campaign</h2>
-      <div class="campaignBox">
-        <div class="importLeadOuterBox">
-          <label>Select Lead Sheet</label>
-          <div class="upload">
-            <span>Upload File</span>
-            <input type="file" class="buttonfile"  accept=".xlsx" ngf-select="uploadFiles($file)"/>
-          </div>
-          <span class="attachedFileName">{{file.name}}</span>
-          <button ng-click="importLeadsThroughSheet()" class="submit-btn" ng-disabled="importLeadsSuccess">Submit</button>
-          <div class="importBottom">
-            <button  ng-click="getExportedSheet()" class="smallBtn">Export Sample Sheet To Enter Leads</button>
-            <a href="{{exportedFile}}" class="smallBtn" ng-if="exportedFile" target="_blank" download>Download</a>
-          </div>
-        </div><!-- importLeadOuterBox -->
-      </div>
-    </div><!-- campaignLeadSection -->
-<!--end : import leads  -->
+      </div><!-- campaignLeadSection -->
+      <!--end : import leads  -->
 
 
-  </div><!-- middle-section -->
-  <div class="fixfooter"></div>
-</div><!-- wrapperBox -->
-<footer-bar></footer-bar>
+    </div><!-- middle-section -->
+    <div class="fixfooter"></div>
+  </div><!-- wrapperBox -->
+  <footer-bar></footer-bar>
 </main>
 
 <div id="addNewLeadFormFields" class="modal fade">
@@ -351,15 +406,19 @@
                 <option ng-repeat="type in leadKeyTypes" value="{{type.name}}">{{type.name}}</option>
               </select>
               <div class="formBoxBottom">
-                <div class="fbbBox" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
+                <div class="fbbBox"
+                  ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
                   <div class="fieldBox">
                     <label>Add Options:</label>
                     <input type="text" class="field" ng-model="model.optionForm.option">
-                    <button class="smallBtn" ng-disabled="!model.optionForm.option" ng-click="addNewKeyOption(model.optionForm.option,$index)">+</button>
+                    <button class="smallBtn" ng-disabled="!model.optionForm.option"
+                      ng-click="addNewKeyOption(model.optionForm.option,$index)">+</button>
                   </div>
-                  <div class="option" ng-repeat="option in model.key_options track by $index" style="display:inline-block;">
+                  <div class="option" ng-repeat="option in model.key_options track by $index"
+                    style="display:inline-block;">
                     <button class="smallBtn">{{option}}</button>
-                    <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
+                    <span ng-click="model.key_options.splice($index,1)"
+                      class="glyphicon glyphicon-remove-circle"></span>
                   </div>
                 </div>
               </div>
@@ -367,7 +426,7 @@
                 <label>Action</label>
                 <label class="checkbox">
                   Hot Lead
-                  <input type="checkbox" name="" value="true"  ng-model="model.isHotLead">
+                  <input type="checkbox" name="" value="true" ng-model="model.isHotLead">
                   <span class="checkmark"></span>
                 </label>
                 <input type="text" class="field" ng-model="model.hot_lead_criteria" ng-if="model.isHotLead">
@@ -402,7 +461,8 @@
                 <option ng-repeat="type in leadKeyTypes" value="{{type.name}}">{{type.name}}</option>
               </select>
               <div class="formBoxBottom">
-                <div class="fbbBox" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
+                <div class="fbbBox"
+                  ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
                   <div class="fieldBox">
                     <label>Add Options:</label>
                     <input type="text" class="field" ng-model="model.optionForm.option">
@@ -410,7 +470,8 @@
                   </div>
                   <div class="option" ng-repeat="option in model.key_options" style="display:inline-block;">
                     <button class="smallBtn">{{option}}</button>
-                    <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
+                    <span ng-click="model.key_options.splice($index,1)"
+                      class="glyphicon glyphicon-remove-circle"></span>
                   </div>
                 </div>
               </div>
@@ -418,7 +479,7 @@
                 <label>Action</label>
                 <label class="checkbox">
                   Hot Lead
-                  <input type="checkbox" name="" value="true"  ng-model="model.isHotLead">
+                  <input type="checkbox" name="" value="true" ng-model="model.isHotLead">
                   <span class="checkmark"></span>
                 </label>
                 <input type="text" class="field" ng-model="model.hot_lead_criteria" ng-if="model.isHotLead">
@@ -503,18 +564,20 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">Global Hot Leads Criteria</h4>
-        <hr/>
+        <hr />
         <form name="hotLeadCriteria">
-          <div class = "modal-body">
+          <div class="modal-body">
             <div>
               <table class="table table-responsive table-bordered">
                 <tr ng-repeat="item in globalHotLeadCriteria">
-                  <td>Hotness Level Criteria {{$index + 1}} 
-                    <input type="text" placeholder="Enter Alias" id="level_criteria{{$index + 1}}" name="level_criteria{{$index + 1}}" ng-model="hotnessMapping[item.name]" class="form-control" ng-required="true">
+                  <td>Hotness Level Criteria {{$index + 1}}
+                    <input type="text" placeholder="Enter Alias" id="level_criteria{{$index + 1}}"
+                      name="level_criteria{{$index + 1}}" ng-model="hotnessMapping[item.name]" class="form-control"
+                      ng-required="true">
                   </td>
                   <!-- <div ng-repeat="(itemKey,itemVal) in values"> -->
-                    
-                  <td>             
+
+                  <td>
                     <div ng-repeat="op in item.operation">
                       <!-- <div class="row">
                         <div class="col-md-4">
@@ -539,32 +602,36 @@
                         </div>
                         <div class="col-md-6">
                           <select ng-model="fieldVal" class="form-control">
-                            <option  disabled="true" value="">Select Field </option>
-                              <option  ng-repeat="(k,v) in leadFormFields" ng-if="v.key_name && v.isHotLead" value="{{k}}">{{v.key_name}}</option>
+                            <option disabled="true" value="">Select Field </option>
+                            <option ng-repeat="(k,v) in leadFormFields" ng-if="v.key_name && v.isHotLead" value="{{k}}">
+                              {{v.key_name}}</option>
                           </select><br>
-                          
+
                         </div>
                         <div class="col-md-2">
-                            
-                        </div>                      
+
+                        </div>
                       </div>
 
-                      <div ng-repeat="itm in op.items">                      
+                      <div ng-repeat="itm in op.items">
                         <div class="row">
                           <div class="col-md-4">
                             {{$index + 1}}. {{leadFormFields[itm.id]['key_name']}}
-                          </div> 
-                          <div class="col-md-2">
-                              <input type="text" class="form-control" id="value{{$index}}{{item.name}}" name="textValueField{{$index}}" placeholder="Enter Values" ng-model="textValue['value'+item.name+$index]">  
                           </div>
                           <div class="col-md-2">
-                              <button class="btn btn-danger" ng-disabled="!textValue['value'+item.name+$index]" ng-click="itm.values.push(textValue['value'+item.name+$index]) && clearTextValue()">Add</button> 
+                            <input type="text" class="form-control" id="value{{$index}}{{item.name}}"
+                              name="textValueField{{$index}}" placeholder="Enter Values"
+                              ng-model="textValue['value'+item.name+$index]">
                           </div>
                           <div class="col-md-2">
-                              <button class="btn btn-danger" ng-click="op.items.splice($index,1)">
-                                  <span  class="glyphicon glyphicon-trash"></span>
-                              </button>
-                            </div>
+                            <button class="btn btn-danger" ng-disabled="!textValue['value'+item.name+$index]"
+                              ng-click="itm.values.push(textValue['value'+item.name+$index]) && clearTextValue()">Add</button>
+                          </div>
+                          <div class="col-md-2">
+                            <button class="btn btn-danger" ng-click="op.items.splice($index,1)">
+                              <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                          </div>
                         </div>
                         <br>
                         <div class="row">
@@ -573,35 +640,38 @@
                           </div>
                           <div class="col-md-8" style="display: flex; flex-wrap: wrap;">
                             <div ng-repeat="val in itm.values track by $index">
-                                <button class="btn btn-primary" style="margin-right: 10px">{{val}}                         
-                                  <span ng-click="itm.values.splice($index,1)" class="glyphicon glyphicon-trash"></span>
-                                </button>        
+                              <button class="btn btn-primary" style="margin-right: 10px">{{val}}
+                                <span ng-click="itm.values.splice($index,1)" class="glyphicon glyphicon-trash"></span>
+                              </button>
                             </div>
                           </div>
                         </div>
-                        <br>                      
+                        <br>
                       </div>
                       <br><br>
-                        <button ng-click="addFieldInCriteria(op.items,fieldVal)" ng-disabled="!fieldVal" class="btn btn-danger">Add Field</button>
-                        <!-- <button class="btn btn-danger" ng-click="globalHotLeadCriteria.splice($parent.$index,1)">
+                      <button ng-click="addFieldInCriteria(op.items,fieldVal)" ng-disabled="!fieldVal"
+                        class="btn btn-danger">Add Field</button>
+                      <!-- <button class="btn btn-danger" ng-click="globalHotLeadCriteria.splice($parent.$index,1)">
                             <span  class="glyphicon glyphicon-trash"></span>
                         </button> -->
-                        <button class="btn btn-danger" ng-click="removeglobalHot($parent.$index,item)">
-                          <span  class="glyphicon glyphicon-trash"></span>
+                      <button class="btn btn-danger" ng-click="removeglobalHot($parent.$index,item)">
+                        <span class="glyphicon glyphicon-trash"></span>
                       </button>
-                    </div>                  
+                    </div>
                     <br>
                   </td>
-               
+
                   <!-- </div> -->
-                  
+
                 </tr>
 
               </table>
             </div>
             <button class="btn btn-danger" ng-click="addCriteria()">Add More Criteria</button>
-            <button class="btn btn-danger" ng-click="hotLeadCriteria.$valid && updateFormFields()" ng-if="updateForm" >Update Fields</button>
-            <button class="btn btn-danger" ng-click="hotLeadCriteria.$valid && updateFormFields()" ng-click="saveLeadForm()" ng-if="!updateForm">Submit </button>
+            <button class="btn btn-danger" ng-click="hotLeadCriteria.$valid && updateFormFields()"
+              ng-if="updateForm">Update Fields</button>
+            <button class="btn btn-danger" ng-click="hotLeadCriteria.$valid && updateFormFields()"
+              ng-click="saveLeadForm()" ng-if="!updateForm">Submit </button>
             <button class="btn btn-danger" data-dismiss="modal">Close</button>
           </div>
         </form>

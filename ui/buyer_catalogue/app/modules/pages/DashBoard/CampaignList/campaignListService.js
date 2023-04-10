@@ -14,8 +14,8 @@ function (machadaloHttp, $stateParams, $rootScope,$window, $routeParams, $locati
       return machadaloHttp.get(url);
     }
 
-  campaignListService.getAllCampaignDetails = function(fetch_all){
-    var url = url_base + "campaign-assignment/?fetch_all=" + fetch_all;
+  campaignListService.getAllCampaignDetails = function(fetch_all,page,search){
+    var url = url_base + "campaign-assignment/?fetch_all=" + fetch_all + "&next_page=" + page + "&search=" + search;
       return machadaloHttp.get(url);
     }
 

@@ -200,21 +200,38 @@ angular.module('catalogueApp')
       $scope.removeNewField = function(index){
         $scope.newLeadFormFields.splice(index,1);
       }
-      var assigned_by = '0';
-      var fetch_all = '0';
-      var userId = $rootScope.globals.currentUser.user_id;
-      $scope.Data = [];
-      campaignLeadsService.getCampaignDetails(assigned_by,userId,fetch_all)
-        .then(function onSuccess(response){
-          $scope.campaigns = response.data.data;
-          $scope.Data = $scope.campaigns;
-          $scope.loading = response.data.data;
-
-        })
-        .catch(function onError(response){
-          console.log(response);
-        });
-      $scope.addField();  
+      $scope.addField();
+      let getCampaignDetails = function(page,search){
+        let assigned_by = '0';
+        let fetch_all = '0';
+        let userId = $rootScope.globals.currentUser.user_id;
+        if (!page){
+          page = 1;
+        }
+        if (!search){
+          search = '';
+        }
+        $scope.Data = [];
+        campaignLeadsService.getCampaignDetails(assigned_by,userId,fetch_all,page,search)
+          .then(function onSuccess(response){
+            $scope.campaigns = response.data.data.list;
+            $scope.Data = $scope.campaigns;
+            $scope.loading = response.data.data;
+          })
+          .catch(function onError(response){
+            console.log(response);
+          });
+      }
+      getCampaignDetails();
+      
+      $scope.pageChanged = function (page,search) {
+        getCampaignDetails(page,search);
+      }
+      $scope.searchProposalDetails = function(search){
+        if(search.length == 0 || search.length > 2){
+          getCampaignDetails(1,search);
+        }
+      } 
 
       $scope.changeView = function(view,campaign,formFields){
         $scope.views = {
