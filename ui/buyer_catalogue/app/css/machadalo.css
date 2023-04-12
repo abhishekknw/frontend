@@ -1059,6 +1059,9 @@ h6.msg-title {
 .mobile-p-0{
   padding: 0px !important;
 }
+.mobile-p-10 {
+  padding-bottom: 20px;
+}
 }
 
 
@@ -1067,4 +1070,5 @@ h6.msg-title {
 .al-main.b2b-dash {
     padding-top: 70px !important;
 }
+
 }

@@ -1417,35 +1417,35 @@
                         <h5><b>Template ID: </b>{{view_template.template_id}}</h5>
                       </div>
                       <!--clender + back button-->
-                      <div class="col-md-12" print-remove style="margin-top: 10px;">
-                        <div class="col-md-5 col-sm-5">
-                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                      <div class="col-md-12" print-remove style="margin-top: 10px; margin-bottom: 10px;">
+                        <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
+                          <input type="text" style="color:#000000; margin-bottom: 0px;" class="field" uib-datepicker-popup="dd/MM/yyyy"
                             placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
                             is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
                             close-text="Close" alt-input-formats="altInputFormats">
-                          <button type="button" class="smallBtn calendar"
+                          <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px" class="pl-2 smallBtn calendar"
                             ng-click="isDatepickerOpen = !isDatepickerOpen">
                             <i class="glyphicon glyphicon-calendar"></i>
                           </button>
                         </div>
-                        <div class="col-md-5 col-sm-5">
-                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                        <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
+                          <input type="text" style="color:#000000; margin-bottom: 0px;" class="field" uib-datepicker-popup="dd/MM/yyyy"
                             placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
                             is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
                             alt-input-formats="altInputFormats">
-                          <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                          <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px" class="pl-2 smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
                             ng-click="isEndDateOpen = !isEndDateOpen">
                             <i class="glyphicon glyphicon-calendar"></i>
                           </button>
                         </div>
-                        <div col-md-1 col-sm-1>
+                        <div class="col-md-1 col-sm-1">
                           <button class="btn btn-danger"
                             ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
                             ng-click="getTransactionalTemplateViewDetail(view_template.template_id,next_page,view_template.template_name,dateRangeModel.start_dates,dateRangeModel.end_dates)">
                             Submit</button>
                         </div>
-                        <div col-md-1 col-sm-1>
-                          <div style="margin: 10px;text-align: right;">
+                        <div class="col-md-5 col-sm-5 mobile-p-10 mobile-m-5">
+                          <div style="text-align: right;">
                             <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
                           </div>
                         </div>
