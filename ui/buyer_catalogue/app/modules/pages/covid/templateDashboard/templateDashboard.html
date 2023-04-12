@@ -1269,29 +1269,45 @@
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
-                          <th style="padding:10px">Template ID</th>
-                          <th style="padding:10px">Template Name</th>
-                          <th style="padding:10px">Template Sent(Unique Count)</th>
-                          <th style="padding:10px">Template Delivered</th>
-                          <th style="padding:10px">Template Read</th>
-                          <th style="padding:10px">Days sent</th>
-                          <th>Positive</th>
-                          <th>Neutral</th>
-                          <th>Negative</th>
+                          <!-- <th style="padding:10px">Template ID</th> -->
+                          <th style="padding:10px" ng-click="Sort('template_name')">Name
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('days_count')">Days sent
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_read')">Read
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th ng-click="Sort('total_positive')">Positive
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th ng-click="Sort('total_neutral')">Neutral
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th ng-click="Sort('total_negative')">Negative
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px">Details</th>
                           <th style="padding:10px">Download</th>
-                          <th style="padding:10px; padding-right: 25px;">Send Template</th>
+                          <th style="padding:10px; padding-right: 25px;">Send</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr ng-repeat="ttemplate in transactionalTemplateData " track by "$index">
+                        <tr ng-repeat="ttemplate in transactionalTemplateData | orderBy:sort:reversesort" track by "$index">
                           <td>{{$index+serial}}</td>
-                          <td style="text-align: center;">{{ttemplate.template_id}}</td>
+                          <!-- <td style="text-align: center;">{{ttemplate.template_id}}</td> -->
                           <td style="text-align: center; text-transform: capitalize;">{{ttemplate.template_name}}</td>
+                          <td style="text-align: center;">{{ttemplate.days_count}}</td>
                           <td style="text-align: center;">{{ttemplate.total_users}}({{tttemplate.Unique_send}})</td>
                           <td style="text-align: center;">{{ttemplate.total_delivered}}</td>
                           <td style="text-align: center;">{{ttemplate.total_read}}</td>
-                          <td style="text-align: center;">{{ttemplate.days_count}}</td>
                           <td style="text-align: center;">{{ttemplate.total_positive}}</td>
                           <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{ttemplate.total_negative}}</td>
@@ -1463,19 +1479,33 @@
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
-                          <th style="padding:10px" ng-click="Sort('start_date')">Sent Date</th>
-                          <th style="padding:10px">Template Sent(Unique Count)</th>
-                          <th style="padding:10px">Template Delivered</th>
-                          <th style="padding:10px">Template Read</th>
-                          <th style="padding:10px">Positive</th>
-                          <th style="padding:10px">Neutral</th>
-                          <th style="padding:10px">Negative</th>
+                          <th style="padding:10px" ng-click="Sort('start_date')">Sent Date
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px"  ng-click="Sort('total_delivered')">Delivered
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px"  ng-click="Sort('total_read')">Read
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_positive')">Positive
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_neutral')">Neutral
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_negative')">Negative
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px">View</th>
                           <th style="padding:10px">Download User</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
+                        <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | orderBy:sort:reversesort | itemsPerPage:itemsPerPage"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
 
                           <td style="text-align: center;">{{$index+serial}}</td>
