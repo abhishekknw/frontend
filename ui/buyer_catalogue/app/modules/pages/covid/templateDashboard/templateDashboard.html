@@ -1290,6 +1290,9 @@
                           <th style="padding:10px" ng-click="Sort('total_read')">Read
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
+                          <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count 
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th ng-click="Sort('total_positive')">Positive
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
@@ -1313,6 +1316,7 @@
                           <td style="text-align: center;">{{ttemplate.total_users}}({{tttemplate.Unique_send}})</td>
                           <td style="text-align: center;">{{ttemplate.total_delivered}}</td>
                           <td style="text-align: center;">{{ttemplate.total_read}}</td>
+                          <td style="text-align: center;">{{ttemplate.unique_button_count}}</td>
                           <td style="text-align: center;">{{ttemplate.total_positive}}</td>
                           <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{ttemplate.total_negative}}</td>
