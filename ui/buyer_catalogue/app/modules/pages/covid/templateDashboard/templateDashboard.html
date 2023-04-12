@@ -187,7 +187,7 @@
                         </div>
 
                         <div class="container py-5">
-                          <table class="table table-bordered table-hover line-h-table">
+                          <table class="table table-responsive table-bordered table-hover line-h-table">
                             <thead class="thead-dark">
                               <tr>
                                 <th scope="col">Sr. No.</th>
@@ -1220,41 +1220,46 @@
                 <div ng-if="viewAllTemplateSummaryTable">
 
 
-                  <div class="panel panel-default">
-                    <div class="col-md-12 ">
+                  <div class="search-div " style="margin-top: 0px !important;margin-bottom: 0px !important;">
+                    <div class="d-flex f-div justify-content-between">
+                      <div>
+                        <input type="text" class="form-control search-b mobile-m-5" style="max-width: 200px;" placeholder="search"
+                        ng-change="getTransactionalTemplate(TransactionalTemplateSearch)"
+                        ng-model="TransactionalTemplateSearch">
+                      </div>
                       <!--clender-->
-                      <div class="col-md-12" print-remove style="margin-top: 10px;">
-                        <div class="col-md-5 col-sm-5">
-                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                      <div class="col-md-12" print-remove >
+                        <div class="row">
+                          <div class="col-md-3 col-sm-3 d-flex mobile-p-0 mobile-m-5" >
+                          <input type="text" style="color:#000000; margin-bottom: 0px" class="field mobile-m-5" uib-datepicker-popup="dd/MM/yyyy"
                             placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
                             is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
                             close-text="Close" alt-input-formats="altInputFormats">
-                          <button type="button" class="smallBtn calendar"
+                          <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px" class=" pl-2 smallBtn calendar"
                             ng-click="isDatepickerOpen = !isDatepickerOpen">
                             <i class="glyphicon glyphicon-calendar"></i>
                           </button>
                         </div>
-                        <div class="col-md-5 col-sm-5">
-                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                        <div class="col-md-3 col-sm-3 d-flex mobile-p-0 mobile-m-5" >
+                          <input type="text" style="color:#000000; margin-bottom: 0px" class="field mobile-m-5" uib-datepicker-popup="dd/MM/yyyy"
                             placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
                             is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
                             alt-input-formats="altInputFormats">
-                          <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                          <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px" class=" pl-2 smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
                             ng-click="isEndDateOpen = !isEndDateOpen">
                             <i class="glyphicon glyphicon-calendar"></i>
                           </button>
                         </div>
-                        <div col-md-2 col-sm-2>
+                        <div class="col-md-2 col-sm-2">
                           <button class="btn btn-danger"
                             ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
                             ng-click="getTransactionalTemplate(search,dateRangeModel.start_dates,dateRangeModel.end_dates)">
                             Submit</button>
                         </div>
+                        </div>
                       </div>
                       <!--end of clender-->
-                      <input type="text" class="form-control " placeholder="search"
-                        ng-change="getTransactionalTemplate(TransactionalTemplateSearch)"
-                        ng-model="TransactionalTemplateSearch">
+                    
                       <br>
                     </div>
                   </div>
@@ -1269,29 +1274,49 @@
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
-                          <th style="padding:10px">Template ID</th>
-                          <th style="padding:10px">Template Name</th>
-                          <th style="padding:10px">Template Sent(Unique Count)</th>
-                          <th style="padding:10px">Template Delivered</th>
-                          <th style="padding:10px">Template Read</th>
-                          <th style="padding:10px">Days sent</th>
-                          <th>Positive</th>
-                          <th>Neutral</th>
-                          <th>Negative</th>
+                          <!-- <th style="padding:10px">Template ID</th> -->
+                          <th style="padding:10px" ng-click="Sort('template_name')">Name
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('days_count')">Days sent
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_read')">Read
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count 
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th ng-click="Sort('total_positive')">Positive
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th ng-click="Sort('total_neutral')">Neutral
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th ng-click="Sort('total_negative')">Negative
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px">Details</th>
                           <th style="padding:10px">Download</th>
-                          <th style="padding:10px; padding-right: 25px;">Send Template</th>
+                          <th style="padding:10px; padding-right: 25px;">Send</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr ng-repeat="ttemplate in transactionalTemplateData " track by "$index">
+                        <tr ng-repeat="ttemplate in transactionalTemplateData | orderBy:sort:reversesort" track by "$index">
                           <td>{{$index+serial}}</td>
-                          <td style="text-align: center;">{{ttemplate.template_id}}</td>
+                          <!-- <td style="text-align: center;">{{ttemplate.template_id}}</td> -->
                           <td style="text-align: center; text-transform: capitalize;">{{ttemplate.template_name}}</td>
+                          <td style="text-align: center;">{{ttemplate.days_count}}</td>
                           <td style="text-align: center;">{{ttemplate.total_users}}({{tttemplate.Unique_send}})</td>
                           <td style="text-align: center;">{{ttemplate.total_delivered}}</td>
                           <td style="text-align: center;">{{ttemplate.total_read}}</td>
-                          <td style="text-align: center;">{{ttemplate.days_count}}</td>
+                          <td style="text-align: center;">{{ttemplate.unique_button_count}}</td>
                           <td style="text-align: center;">{{ttemplate.total_positive}}</td>
                           <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{ttemplate.total_negative}}</td>
@@ -1392,35 +1417,35 @@
                         <h5><b>Template ID: </b>{{view_template.template_id}}</h5>
                       </div>
                       <!--clender + back button-->
-                      <div class="col-md-12" print-remove style="margin-top: 10px;">
-                        <div class="col-md-5 col-sm-5">
-                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                      <div class="col-md-12" print-remove style="margin-top: 10px; margin-bottom: 10px;">
+                        <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
+                          <input type="text" style="color:#000000; margin-bottom: 0px;" class="field" uib-datepicker-popup="dd/MM/yyyy"
                             placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
                             is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
                             close-text="Close" alt-input-formats="altInputFormats">
-                          <button type="button" class="smallBtn calendar"
+                          <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px" class="pl-2 smallBtn calendar"
                             ng-click="isDatepickerOpen = !isDatepickerOpen">
                             <i class="glyphicon glyphicon-calendar"></i>
                           </button>
                         </div>
-                        <div class="col-md-5 col-sm-5">
-                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                        <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
+                          <input type="text" style="color:#000000; margin-bottom: 0px;" class="field" uib-datepicker-popup="dd/MM/yyyy"
                             placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
                             is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
                             alt-input-formats="altInputFormats">
-                          <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                          <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px" class="pl-2 smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
                             ng-click="isEndDateOpen = !isEndDateOpen">
                             <i class="glyphicon glyphicon-calendar"></i>
                           </button>
                         </div>
-                        <div col-md-1 col-sm-1>
+                        <div class="col-md-1 col-sm-1">
                           <button class="btn btn-danger"
                             ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
                             ng-click="getTransactionalTemplateViewDetail(view_template.template_id,next_page,view_template.template_name,dateRangeModel.start_dates,dateRangeModel.end_dates)">
                             Submit</button>
                         </div>
-                        <div col-md-1 col-sm-1>
-                          <div style="margin: 10px;text-align: right;">
+                        <div class="col-md-5 col-sm-5 mobile-p-10 mobile-m-5">
+                          <div style="text-align: right;">
                             <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
                           </div>
                         </div>
@@ -1463,19 +1488,33 @@
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
-                          <th style="padding:10px" ng-click="Sort('start_date')">Sent Date</th>
-                          <th style="padding:10px">Template Sent(Unique Count)</th>
-                          <th style="padding:10px">Template Delivered</th>
-                          <th style="padding:10px">Template Read</th>
-                          <th style="padding:10px">Positive</th>
-                          <th style="padding:10px">Neutral</th>
-                          <th style="padding:10px">Negative</th>
+                          <th style="padding:10px" ng-click="Sort('start_date')">Sent Date
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px"  ng-click="Sort('total_delivered')">Delivered
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px"  ng-click="Sort('total_read')">Read
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_positive')">Positive
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_neutral')">Neutral
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_negative')">Negative
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px">View</th>
                           <th style="padding:10px">Download User</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
+                        <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | orderBy:sort:reversesort | itemsPerPage:itemsPerPage"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
 
                           <td style="text-align: center;">{{$index+serial}}</td>

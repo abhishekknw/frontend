@@ -3868,7 +3868,7 @@
                       </select>
                     </td>
                     <td class="alignment">
-                      <select class="form-control" name="Source" id="Source_id" ng-model="subrequirement.lead_source"
+                      <select class="form-control" name="Source" id="Source_id" ng-model="subrequirement.relationship_manager"
                         ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
                         <option value="" disabled>Select Data Source</option>
                       </select>
@@ -4035,7 +4035,7 @@
                       </select>
                     </td>
                     <td class="alignment">
-                      <select class="form-control" name="Source" id="Source_id" ng-model="newRequirement.lead_source"
+                      <select class="form-control" name="Source" id="Source_id" ng-model="newRequirement.relationship_manager"
                         ng-options="data.username as data.first_name +' '+ data.last_name for data in userMinimalList | orderBy: 'first_name'">
                         <option value="" disabled>Select Data Source</option>
                       </select>

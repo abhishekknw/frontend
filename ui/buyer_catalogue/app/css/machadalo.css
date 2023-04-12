@@ -1044,3 +1044,31 @@ h6.msg-title {
     font-weight: 600;
     white-space: nowrap;
 }
+.search-div input{
+  padding: 8px 9px  !important;
+}
+
+@media only screen and (max-width: 767px){
+.search-div .d-flex.f-div{
+  display: block;
+}
+
+.mobile-m-5{
+  margin-bottom: 15px !important;
+}
+.mobile-p-0{
+  padding: 0px !important;
+}
+.mobile-p-10 {
+  padding-bottom: 20px;
+}
+}
+
+
+@media screen and (max-width: 1024px)
+{
+.al-main.b2b-dash {
+    padding-top: 70px !important;
+}
+
+}
