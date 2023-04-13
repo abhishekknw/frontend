@@ -682,6 +682,7 @@
         $scope.showTable = true;
         $scope.showCampaigns = true;
         $scope.leadBasics (tabName);
+        $scope.surveyLeadFilter('Leads');
         $scope.viewClientStatus();
       }
 
@@ -3562,6 +3563,7 @@
         B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code, "admin",tabName)
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
+            cfpLoadingBar.complete();  
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -3601,6 +3603,7 @@
               $scope.totalCountLead = $scope.leadDecisionPandingData.length;
               $scope.itemsPerPageLead = 20;
               $scope.currentPageLead = page;
+              cfpLoadingBar.complete();
             })
         }
         else {
@@ -6744,8 +6747,6 @@
           $scope.viewCampaignLeads();
         }
       }
-      $scope.surveyLeadFilter('Leads');
-
 
       $scope.filterComment =function(type){
         B2BDashboardService.viewCommentsDetails($scope.id_detail, $scope.req_id_detail,type)
