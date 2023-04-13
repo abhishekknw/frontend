@@ -640,11 +640,15 @@
           console.log(response);
         })
     }
-
-    $scope.viewCampaignLeads = function () {
+    $scope.viewCampaignLeads = function (campaign_id) {
+      $scope.listClientStatus = [];
+      $scope.listClientStatusObj = [];
       let storeData = JSON.parse(localStorage.userInfo);
-      if ($scope.listClientStatus.length == 0 && storeData.username!="machadalosales") {
-        B2BDashboardService.listClientStatus().then(function onSuccess(response) {
+      if(!campaign_id){
+        campaign_id = '';
+      }
+      if (storeData.username!="machadalosales") {
+        B2BDashboardService.listClientStatus(campaign_id).then(function onSuccess(response) {
           var listData = response.data.data.client_status;
           for (var k in listData) {
             $scope.listClientStatus.push(listData[k].status_name);
@@ -652,7 +656,7 @@
           }
         });
       }
-      else if($scope.listClientStatus.length == 0){
+      else {
         var listData = $scope.clientStatusMachadalo;
         for (let k in listData) {
           $scope.listClientStatus.push(listData[k].status_name);
@@ -668,7 +672,6 @@
             $scope.userName = response.data.data[0].name;
             $scope.campaign_id = $scope.leadsDataCampaigns[0].campaign_id;
           }
-
         });
     }
     // $scope.machadaloClientStatus = function (data) {
@@ -951,6 +954,7 @@
         $scope.decisionPendingTab = true;
         $scope.newLeadsTab = false;
         $scope.leadDecisionPanding();
+        $scope.viewCampaignLeads();
       }
       else if (value == 'sync') {
         $scope.decisionPendingTab = false;
@@ -1643,6 +1647,7 @@
       }, 90);
       $scope.getPurchasedNotPurchasedLead(campaign_id, campaign_name);
       $scope.getCityList(campaign_id);
+      $scope.viewCampaignLeads(campaign_id)
       //remove if show 2 butoon
     }
 
