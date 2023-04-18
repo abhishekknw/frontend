@@ -2767,8 +2767,8 @@
         </div>
         <div class="modal-body">
           <div class="modalBodyBox">
-            <label  ng-if="checkForEmailModal">Select Email Type:</label>
-            <select class="field"  ng-if="checkForEmailModal" ng-model="emailModel.selected">
+            <label  ng-show="checkForEmailModal">Select Email Type:</label>
+            <select class="field"  ng-show="checkForEmailModal" ng-model="emailModel.selected">
               <option value="" disabled selected hidden>Email Type</option>
               <option ng-repeat="option in listClientStatus" track by "$index" value="{{option}}">{{option}}</option>
             </select>
