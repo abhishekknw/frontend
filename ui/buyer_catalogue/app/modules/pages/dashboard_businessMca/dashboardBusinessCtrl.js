@@ -47,7 +47,7 @@
       $scope.printLeadsInExcelData = {};
       $scope.viewTab = false;
       $scope.leadBasicShow = false;
-      var conditionForTable = true;
+      $scope.conditionForTable = true;
       $scope.page = '';
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
@@ -655,7 +655,7 @@
       $scope.getCampaigns = function (tabName) {
         $scope.tabName = tabName;
         cfpLoadingBar.start();
-        conditionForTable = false;
+        $scope.conditionForTable = false;
         $scope.showSupplierTypeCountChart = false;
         $scope.selectedBookingCampaignName = undefined;
         $scope.showTableForAllCampaignDisplay = false;
@@ -666,7 +666,7 @@
 
       $scope.leadBasics = function (tabName) {
         $scope.showCampaigns = true;
-        conditionForTable = true;
+        $scope.conditionForTable = true;
         B2BDashboardService.basicCampaignList(tabName)
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
@@ -3594,7 +3594,7 @@
           endDate = "";
         }
         $scope.currentPageLead = page;
-        if (conditionForTable == true) {
+        if ($scope.conditionForTable == true) {
           $scope.leadBasicShow = true;
           B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page,city,startDate,endDate,search)
             .then(function onSuccess(response) {
