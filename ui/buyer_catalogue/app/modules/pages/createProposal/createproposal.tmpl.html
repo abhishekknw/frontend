@@ -34,6 +34,11 @@
             class="form-control spacing"></div>
       </div>
       <div class="row basic-info">
+        <div class="col-md-3"><label class="spacing">Cost Of Leads</label></div>
+        <div class="col-md-3"><input type="number" placeholder="Cost Of Leads" ng-change="tentativeBudget()" min="0" ng-model="model.cost_of_lead"
+            class="form-control spacing"></div>
+      </div>
+      <div class="row basic-info">
         <div class="col-md-3"><label class="spacing">Principal Vendor</label></div>
         <div class="col-md-3">
           <select name="createPrincipalVendor" class="form-control input-size" ng-click="getVendors()"
