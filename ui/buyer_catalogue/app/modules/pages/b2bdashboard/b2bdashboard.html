@@ -1042,15 +1042,14 @@
                       <table class="table ">
                         <thead>
                           <tr>
-                            <th style="width: 60px;min-width: 60px;">Index</th>
+                            <th style="width: 60px;min-width: 60px;">S.No.</th>
                             <th style="width:200px;" class="col-md-2">Campaign Name</th>
                             <th ng-click="Sort('start_date')">Start Date <a><i class="icon-sort"
                                   style="color:white;"></i></a></th>
                             <!-- <th>End Date</th> -->
                             <!-- <th>Phase</br>Completed</th> -->
                             <!-- <th>Campaign Status</th> -->
-                            <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br>
-                              Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Lead Count <a><i class="icon-sort" style="color:white;"></i></a></th>
                             </th>
                             <th class="btn_box_lead_survey_th">View {{filterType}}</th>
                             <th class="btn_box_lead_survey_th">Email {{filterType}}</th>
@@ -1132,7 +1131,7 @@
                           <h2>Leads of {{campaignName}}</h2>
                         </center>
                         <div align="right">
-                          <button class="btn danger" ng-click="refeshFilters()">Refresh Filter</button>
+                          <button class="btn danger" ng-click="refeshFilters()">Reset</button>
                         </div>
                       </div>
                       <div class="date_range_picker">
@@ -1378,7 +1377,7 @@
                         class="table table_content viewLeadstable-new b2b-table-style">
                         <thead>
                           <tr>
-                            <th style="width: 60px;min-width: 60px !important;">Index</th>
+                            <th style="width: 60px;min-width: 60px !important;">S.No.</th>
                             <th class="col-md-2"
                               ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
                               <span> {{key}} </span>
@@ -2768,8 +2767,8 @@
         </div>
         <div class="modal-body">
           <div class="modalBodyBox">
-            <label  ng-if="checkForEmailModal">Select Email Type:</label>
-            <select class="field"  ng-if="checkForEmailModal" ng-model="emailModel.selected">
+            <label  ng-show="checkForEmailModal">Select Email Type:</label>
+            <select class="field"  ng-show="checkForEmailModal" ng-model="emailModel.selected">
               <option value="" disabled selected hidden>Email Type</option>
               <option ng-repeat="option in listClientStatus" track by "$index" value="{{option}}">{{option}}</option>
             </select>
