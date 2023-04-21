@@ -931,6 +931,9 @@ angular
         } else if (category == 'BUSINESS') {
           // $location.path("/dashboard");
           $location.path("/b2b/dashboard");
+        } else if (category == 'SUPPLIER_AGENCY') {
+          // location.replace("/r/supplier/dashboard");
+          window.location.href = "/r/supplier/dashboard";
         } else if (category != 'BUSINESS') {
           $location.path(whence);
         }
