@@ -47,7 +47,7 @@
       $scope.printLeadsInExcelData = {};
       $scope.viewTab = false;
       $scope.leadBasicShow = false;
-      var conditionForTable = true;
+      $scope.conditionForTable = true;
       $scope.page = '';
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
@@ -655,7 +655,7 @@
       $scope.getCampaigns = function (tabName) {
         $scope.tabName = tabName;
         cfpLoadingBar.start();
-        conditionForTable = false;
+        $scope.conditionForTable = false;
         $scope.showSupplierTypeCountChart = false;
         $scope.selectedBookingCampaignName = undefined;
         $scope.showTableForAllCampaignDisplay = false;
@@ -666,7 +666,7 @@
 
       $scope.leadBasics = function (tabName) {
         $scope.showCampaigns = true;
-        conditionForTable = true;
+        $scope.conditionForTable = true;
         B2BDashboardService.basicCampaignList(tabName)
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
@@ -682,6 +682,7 @@
         $scope.showTable = true;
         $scope.showCampaigns = true;
         $scope.leadBasics (tabName);
+        $scope.surveyLeadFilter('Leads');
         $scope.viewClientStatus();
       }
 
@@ -3562,6 +3563,7 @@
         B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code, "admin",tabName)
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
+            cfpLoadingBar.complete();  
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -3592,7 +3594,7 @@
           endDate = "";
         }
         $scope.currentPageLead = page;
-        if (conditionForTable == true) {
+        if ($scope.conditionForTable == true) {
           $scope.leadBasicShow = true;
           B2BDashboardService.basicLeadsOfCampaigns(campaignId, "all", page,city,startDate,endDate,search)
             .then(function onSuccess(response) {
@@ -3601,6 +3603,7 @@
               $scope.totalCountLead = $scope.leadDecisionPandingData.length;
               $scope.itemsPerPageLead = 20;
               $scope.currentPageLead = page;
+              cfpLoadingBar.complete();
             })
         }
         else {
@@ -6744,8 +6747,6 @@
           $scope.viewCampaignLeads();
         }
       }
-      $scope.surveyLeadFilter('Leads');
-
 
       $scope.filterComment =function(type){
         B2BDashboardService.viewCommentsDetails($scope.id_detail, $scope.req_id_detail,type)

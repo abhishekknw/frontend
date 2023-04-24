@@ -1410,6 +1410,7 @@
                                   style="color:white;"></i></a></th>
                             <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br>
                               Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th ng-show="!conditionForTable">Revenue</th>
                             <th>View Leads</th>
                             <th>Email Leads</th>
                             <th>Download Leads</th>
@@ -1423,6 +1424,7 @@
                             <td style="width:140px;" class="col-md-2">{{campaign.name}}</td>
                             <td style="width:140px;">{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
                             <td class="col-md-2">{{campaign.supplier_count}}({{campaign.unique_count}})</td>
+                            <td  ng-show="!conditionForTable">{{campaign.revenue}}</td>
                             <td>
                               <button class="btn btn-danger"
                                 ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View

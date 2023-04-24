@@ -3219,7 +3219,7 @@
       <button type="button" class="btn btn-info">Add+</button>
     </div>
 
-    <h3 style="padding: 5px; margin-bottom: 20px;"><b>TEMPLATE</b></h3>
+    <h3 style="padding: 5px; margin-bottom: 20px;"><b>Summary</b></h3>
 
     <div class="search-box">
       <div class="input-wrapper">
@@ -3235,18 +3235,70 @@
       <table class="table table-bordered table-hover">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Sr. No.</th>
-            <th scope="col">Template ID</th>
+            <th scope="col">#</th>
+            <!-- <th scope="col">Template ID</th> -->
             <th scope="col">Name</th>
-            <th scope="col">Template Message</th>
-            <th scope="col">Status</th>
-            <th scope="col">Created At</th>
-            <th scope="col">Bot Name</th>
-            <th scope="col">Action</th>
+            <!-- <th scope="col">Template Message</th> -->
+            <th scope="col">Last Response</th>
+            <th scope="col">Read</th>
+            <th scope="col">L0</th>
+            <th scope="col">L1</th>
+            <th scope="col">L2</th>
+            <th scope="col">L3</th>
+            <th scope="col">L4</th>
+            <th scope="col">L5</th>
+            <th scope="col">L6</th>
+            <th scope="col">Ops Verified</th>
+            <th scope="col">Client Verified</th>
           </tr>
         </thead>
         <tbody>
-          <tr dir-paginate="template in templateDetailData| itemsPerPage:itemsPerPage" total-items="totalCount"
+          <tr>
+            <td>1</td>
+            <td>followup_sales_4</td>
+            <td> 12 April 2023 12:44:39</td>
+            <td>265</td>
+            <td>200</td>
+            <td>180</td>
+            <td>159</td>
+            <td>100</td>
+            <td>55</td>
+            <td>45</td>
+            <td>34</td>
+            <td>4</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>meeting_confirmed_link</td>
+            <td> 12 April 2023 12:44:39</td>
+            <td>265</td>
+            <td>200</td>
+            <td>180</td>
+            <td>159</td>
+            <td>100</td>
+            <td>55</td>
+            <td>45</td>
+            <td>34</td>
+            <td>6</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>subscription_template	</td>
+            <td> 12 April 2023 12:44:39</td>
+            <td>265</td>
+            <td>200</td>
+            <td>180</td>
+            <td>157</td>
+            <td>126</td>
+            <td>51</td>
+            <td>35</td>
+            <td>22</td>
+            <td>3</td>
+            <td>4</td>
+          </tr>
+          <!-- <tr dir-paginate="template in templateDetailData| itemsPerPage:itemsPerPage" total-items="totalCount"
             current-page="pagination.current" track by "$index">
             <td>{{$index+serial}}</td>
             <td>{{template.template_code}}</td>
@@ -3256,7 +3308,7 @@
             <td>{{template.date}}</td>
             <td>{{template.bot_name}}</td>
             <td><button type="button" class="btn btn-success" style="align-items: center;">View More</button></td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
