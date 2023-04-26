@@ -10,6 +10,7 @@
     "@mui/x-date-pickers": "^5.0.17",
     "@mui/x-date-pickers-pro": "^5.0.17",
     "@react-google-maps/api": "^2.18.1",
+    "apexcharts": "^3.39.0",
     "bootstrap": "^5.2.3",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.7",
