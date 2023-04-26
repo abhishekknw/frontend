@@ -1,6 +1,13 @@
+.lead-first-container{
+    max-width: 95% !important;
+    width: 95% !important;
+}
 .db-image-icon svg{
     width: 50px;
     height: 50px;
+}
+.db-image-icon{
+  color:   rgb(111 66 193);
 }
 .top-main-tab li button{
     color: #000;
@@ -18,5 +25,37 @@
 box-shadow: 3px -3px 8px rgba(0 0 0/ 10%)
 }
 .bg-color{
-    background-color: #3b82f680;
+    background-color: rgb(59 130 246 / 12%);
+}
+h4.lead-h4 {
+    font-weight: 700;
+}
+.lead-box-first {
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid;
+}
+
+table thead tr th {
+    background-color: #8E1921;
+    color: #0f0606 !important;
+    margin: 0 0;
+    font-size: 16px;
+    padding: 9px 10px !important;
+    white-space: nowrap;
+}
+table.dashboard-table {
+ background-color: #fff;   
+}
+table.dashboard-table th, table.dashboard-table td{
+    vertical-align: middle;
+    height: 60px;
+}
+.graph-img {
+ max-width: 100%;
+}
+.dropdown-btn button,.dropdown-btn button:hover,.dropdown-btn button:active{
+    color:   rgb(255, 255, 255) !important;
+    background-color: rgb(111 66 193) !important;
+    font-size: 16px;
 }
