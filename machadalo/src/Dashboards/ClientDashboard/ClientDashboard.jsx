@@ -19,8 +19,12 @@ import lastmicon from '../ClientDashboard/clientimage/lastmonth.png';
 import Cxicon from '../ClientDashboard/clientimage/cx.png'; 
 import Table from 'react-bootstrap/Table';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { colors } from '@mui/material';
+import GraphChart from './Graph';
+import UserWiseList from './Tables/UserWiseList';
 const ClientDashboard = (props) => {
+  const [TabKey, setTabKey] = useState('lead');
+  const [layers, setLayers] = useState({ firstLayer: true, secondLayer: false ,thirdLayer: false});
+
   return (<>
     <ClientHeader />
 
@@ -40,7 +44,7 @@ const ClientDashboard = (props) => {
 
                   <Dropdown>
                     <Dropdown.Toggle variant="" id="dropdown-basic">
-                      Dropdown Button
+                      Select
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
@@ -53,8 +57,9 @@ const ClientDashboard = (props) => {
               </div>
 
               <div className='pt-2'>
+              { layers.firstLayer &&
                 <Row className='pt-3 '>
-                  <Col sm={3} >
+                  <Col sm={3} onClick={(e)=>{setLayers({...layers, secondLayer: true})}}>
                     <div className="d-flex lead-box-first">
                       <div class="icon-box">
                         <span class="db-image-icon"><BsCloudDownload /></span>
@@ -99,9 +104,11 @@ const ClientDashboard = (props) => {
                     </div>
                   </Col>
                 </Row>
+                }
+                 { layers.secondLayer &&
                 <Row className='p-3 text-center city-row ms-1 me-1 justify-content-center'>
 
-                  <Col sm={3}>
+                  <Col sm={3} onClick={(e)=>{setLayers({...layers,thirdLayer:true})}}>
 
                     <div className="d-flex lead-box-first">
                       <div class="icon-box">
@@ -137,60 +144,66 @@ const ClientDashboard = (props) => {
                   </Col>
 
                 </Row>
-
+                }
+              { layers.thirdLayer &&
                 <div className="graph-img text-center">
-                  <img src={Graph} alt="graph" />
+                  {/* <img src={Graph} alt="graph" /> */}
+                  <GraphChart />
                 </div>
-                <Table responsive striped bordered hover className='dashboard-table'  >
-                  <thead>
-                    <tr className='text-center'>
-                      <th>S.No.</th>
-                      <th>City Name</th>
-                      <th>Total Leads count</th>
-                      <th>Current week count</th>
-                      <th>Last week count</th>
-                      <th>Current month count</th>
-                      <th>This quarter count</th>
-                      <th> Total comment updated count</th>
-                      <th>Total status updated count</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td><button className='btn btn-theme'>View detail</button></td>
-                      <td><button className='btn btn-theme'> Email</button></td>
-                      <td><button className='btn btn-theme'>Download</button></td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td><button className='btn btn-theme'>View detail</button></td>
-                      <td><button className='btn btn-theme'> Email</button></td>
-                      <td><button className='btn btn-theme'>Download</button></td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td >Larry the Bird</td>
-                      <td>@twitter</td>
-                      <td>Larry the Bird</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td><button className='btn btn-theme'>View detail</button></td>
-                      <td><button className='btn btn-theme'> Email</button></td>
-                      <td><button className='btn btn-theme'>Download</button></td>
-                    </tr>
-                  </tbody>
-                </Table>
+                }
+               { layers.thirdLayer &&  
+               <UserWiseList />
+                // <Table responsive striped bordered hover className='dashboard-table'  >
+                //   <thead>
+                //     <tr className='text-center'>
+                //       <th>S.No.</th>
+                //       <th>City Name</th>
+                //       <th>Total Leads count</th>
+                //       <th>Current week count</th>
+                //       <th>Last week count</th>
+                //       <th>Current month count</th>
+                //       <th>This quarter count</th>
+                //       <th> Total comment updated count</th>
+                //       <th>Total status updated count</th>
+                //     </tr>
+                //   </thead>
+                //   <tbody>
+                //     <tr>
+                //       <td>1</td>
+                //       <td>Mark</td>
+                //       <td>Otto</td>
+                //       <td>@mdo</td>
+                //       <td>Otto</td>
+                //       <td>@mdo</td>
+                //       <td><button className='btn btn-theme'>View detail</button></td>
+                //       <td><button className='btn btn-theme'> Email</button></td>
+                //       <td><button className='btn btn-theme'>Download</button></td>
+                //     </tr>
+                //     <tr>
+                //       <td>2</td>
+                //       <td>Jacob</td>
+                //       <td>Thornton</td>
+                //       <td>@fat</td>
+                //       <td>Otto</td>
+                //       <td>@mdo</td>
+                //       <td><button className='btn btn-theme'>View detail</button></td>
+                //       <td><button className='btn btn-theme'> Email</button></td>
+                //       <td><button className='btn btn-theme'>Download</button></td>
+                //     </tr>
+                //     <tr>
+                //       <td>3</td>
+                //       <td >Larry the Bird</td>
+                //       <td>@twitter</td>
+                //       <td>Larry the Bird</td>
+                //       <td>Otto</td>
+                //       <td>@mdo</td>
+                //       <td><button className='btn btn-theme'>View detail</button></td>
+                //       <td><button className='btn btn-theme'> Email</button></td>
+                //       <td><button className='btn btn-theme'>Download</button></td>
+                //     </tr>
+                //   </tbody>
+                // </Table>
+              }
               </div>
             </div>
           </Tab>
