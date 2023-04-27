@@ -5,14 +5,18 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { BsCloudDownload } from "react-icons/bs";  
-import { BsPeople } from "react-icons/bs";import { BsPinMapFill } from "react-icons/bs";import { BsPersonCheck } from "react-icons/bs"; 
+import { BsPersonCheck } from "react-icons/bs"; 
+import { BsPeople } from "react-icons/bs";
+import { BsPinMapFill } from "react-icons/bs";
 import { BsFillArrowDownLeftCircleFill } from "react-icons/bs";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Graph from '../ClientDashboard/Graph.png';
 import B2bicon from '../ClientDashboard/clientimage/b2b.png'; 
 import B2cicon from '../ClientDashboard/clientimage/b2c.png'; 
+import Cityicon from '../ClientDashboard/clientimage/city.png'; 
 import lastmicon from '../ClientDashboard/clientimage/lastmonth.png'; 
+import Cxicon from '../ClientDashboard/clientimage/cx.png'; 
 import Table from 'react-bootstrap/Table';
 import Dropdown from 'react-bootstrap/Dropdown';
 import GraphChart from './Graph';
@@ -108,7 +112,7 @@ const ClientDashboard = (props) => {
 
                     <div className="d-flex lead-box-first">
                       <div class="icon-box">
-                        <span class="db-image-icon"><BsPeople /></span>
+                        <span class="db-image-icon"><BsPersonCheck /></span>
                       </div>
                       <div>
                         <h2 className='h2-heading'>25,000</h2>
@@ -119,7 +123,7 @@ const ClientDashboard = (props) => {
                   <Col sm={3}>
                     <div className="d-flex lead-box-first">
                       <div class="icon-box">
-                        <span class="db-image-icon"><BsPinMapFill /></span>
+                        <span class="db-image-icon"><img src={Cityicon} alt="cityicon" /></span>
                       </div>
                       <div>
                         <h2 className='h2-heading'>25,000</h2>
@@ -130,7 +134,7 @@ const ClientDashboard = (props) => {
                   <Col sm={3}>
                     <div className="d-flex lead-box-first">
                       <div class="icon-box">
-                        <span class="db-image-icon"><BsPersonCheck /></span>
+                        <span class="db-image-icon"><img src={Cxicon} alt="cxicon" /></span>
                       </div>
                       <div>
                         <h2 className='h2-heading'>25,000</h2>
