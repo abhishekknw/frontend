@@ -18,7 +18,7 @@ const data = [
   {
     key:"2",
     address: '261 Erdman Ford',
-    city: 'Indore',
+    city: 'Ujjain',
     Total_Leads_count:"5000",
     Current_week_count :"1000",
     Last_week_count:"300",
@@ -29,7 +29,7 @@ const data = [
   }, {
     key:"3",
     address: '261 Erdman Ford',
-    city: 'Indore',
+    city: 'Ahemdabad',
     Total_Leads_count:"5000",
     Current_week_count :"1000",
     Last_week_count:"300",
@@ -40,7 +40,7 @@ const data = [
   }, {
     key:"4",
     address: '261 Erdman Ford',
-    city: 'Indore',
+    city: 'Mumbai',
     Total_Leads_count:"5000",
     Current_week_count :"1000",
     Last_week_count:"300",
@@ -51,7 +51,7 @@ const data = [
   }, {
     key:"5",
     address: '261 Erdman Ford',
-    city: 'Indore',
+    city: 'Bhopal',
     Total_Leads_count:"5000",
     Current_week_count :"1000",
     Last_week_count:"300",
@@ -69,10 +69,13 @@ const UserWiseList = () => {
       {
         accessorKey: 'key', //access nested data with dot notation
         header: 'S.No.',
+        enableColumnActions: false,
+        size:40,
       },
       {
         accessorKey: 'city',
         header: 'City Name',
+        size:120
       },
       {
         accessorKey: 'Total_Leads_count', //normal accessorKey
@@ -105,21 +108,28 @@ const UserWiseList = () => {
       {
         // accessorKey: 'Total_status_updated_count',
         header: 'View',
+        enableColumnActions: false,
         accessorFn: rowData => <Button>View</Button>
       },
       {
         accessorFn: rowData => <Button>Download</Button>,
+        enableColumnActions: false,
         header: 'Download',
       },
       {
         header: 'Email',
+        enableColumnActions: false,
+        enableHiding: false,
         accessorFn: rowData => <Button>Email</Button>,
       },
     ],
     [],
   );
 
-  return <MaterialReactTable columns={columns} data={data} />;
+  return <MaterialReactTable 
+  columns={columns} 
+  data={data}
+  />;
 };
 
 export default UserWiseList;
