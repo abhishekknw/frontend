@@ -3,16 +3,21 @@
 //     width: 95% !important;
 // }
 .db-image-icon svg, .db-image-icon img{
-    width: 60px;
+    width: 70px;
     height: 70px;
     object-fit: contain;
+    border: 1px solid #bacde9;
+    padding: 10px;
+    border-radius: 5px;
 }
 .h2-heading{
     font-size: 35px;
     font-weight: 700;
+    text-align: left;
 }
 .span-heading-text{
     font-size: 15px;
+    text-align: left;
     color: #868ba1;
 }
 .bg-white{
@@ -24,7 +29,7 @@
 }
 
 .db-image-icon{
-  color:   rgb(111 66 193);
+  color:   #9c81cc;
 }
 .top-main-tab li button{
     color: #000;
@@ -54,7 +59,7 @@ box-shadow: 3px -3px 8px rgba(0 0 0/ 10%)
     background-color: rgb(59 130 246 / 12%);
 }
 .icon-box {
-    margin-right: 8px;
+    margin-right: 20px;
 }
 h4.lead-h4 {
     font-weight: 700;
@@ -113,6 +118,9 @@ table.dashboard-table th, table.dashboard-table td{
     }
     .span-heading-text {
         font-size: 12px;
+    }
+    .icon-box {
+        margin-right: 8px;
     }
     
 }
