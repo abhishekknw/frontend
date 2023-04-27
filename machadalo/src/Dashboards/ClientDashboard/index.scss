@@ -26,6 +26,7 @@
 .main-ul-tab{
     padding: 20px 0px 20px 0px;
     border: 1px solid #cbcbcb;
+    padding:20px 50px 20px 50px;
 }
 
 .db-image-icon{
@@ -46,6 +47,8 @@
     border: 1px solid #e3e3e3;
     text-transform: uppercase;
     font-weight: 600;
+    font-size: 13px;
+    padding: 16px 0;
 }
 .top-main-tab.nav-tabs li{
    margin: 0 10px ;
@@ -66,13 +69,32 @@ h4.lead-h4 {
     margin: 0;
     border-left: 3px solid #000;
     padding-left: 20px;
-    line-height: 2;
+    line-height: 1;
 }
 .lead-box-first {
     border: 1px solid #dad9d9;
     padding: 20px;
     background-color: #ffffff;
     align-items: center;
+}
+table thead tr th {
+    background-color: #f8f9fa !important;
+    color: #000 !important;
+    margin: 0 0;
+    font-size: 16px;
+    padding: 9px 10px !important;
+    white-space: nowrap;
+    font-weight: 500 !important;
+    border: 1px solid #dae0e5 ;
+    border-width: 1px 0px 1px 0px !important;
+    text-transform: uppercase;
+}
+.graph-img canvas{
+    max-width: 478px !important;
+    max-height: 220px !important;
+    margin: 0 auto;
+    width: 478px !important;
+    height: 220px !important;
 }
 
 table.dashboard-table thead tr th {
