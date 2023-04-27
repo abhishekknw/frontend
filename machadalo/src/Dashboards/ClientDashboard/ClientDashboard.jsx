@@ -4,11 +4,15 @@ import './index.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { BsFillCloudDownloadFill } from "react-icons/bs";
+import { BsCloudDownload } from "react-icons/bs";  
+import { BsPeople } from "react-icons/bs";import { BsPinMapFill } from "react-icons/bs";import { BsPersonCheck } from "react-icons/bs"; 
 import { BsFillArrowDownLeftCircleFill } from "react-icons/bs";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Graph from '../ClientDashboard/Graph.png';
+import B2bicon from '../ClientDashboard/clientimage/b2b.png'; 
+import B2cicon from '../ClientDashboard/clientimage/b2c.png'; 
+import lastmicon from '../ClientDashboard/clientimage/lastmonth.png'; 
 import Table from 'react-bootstrap/Table';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { colors } from '@mui/material';
@@ -16,16 +20,16 @@ const ClientDashboard = (props) => {
   return (<>
     <ClientHeader />
 
-    <div className='bg-color'>
-      <Container className='pt-4 lead-first-container'>
+    <div className='bg-color '>
+      <Container fluid className=' lead-first-container p-0'>
         <Tabs
           defaultActiveKey="profile"
           id="main-tab"
-          className="mb-3 top-main-tab"
+          className="mb-3 top-main-tab main-ul-tab bg-white"
           fill
         >
-          <Tab eventKey="lead" title="Leads">
-            <div className='pt-4'>
+          <Tab eventKey="lead" title="Leads" className='p-4 '>
+            <div className='pt-2'>
               <div className="text-dropdwn d-flex justify-content-between">
                 <h4 className='lead-h4'>WELCOME BACK, KATHERINE</h4>
                 <div className="dropdown-btn">
@@ -45,85 +49,85 @@ const ClientDashboard = (props) => {
               </div>
 
               <div className='pt-2'>
-                <Row className='pt-5 '>
+                <Row className='pt-3 '>
                   <Col sm={3} >
                     <div className="d-flex lead-box-first">
-                      <div class="me-3">
-                        <span class="db-image-icon"><BsFillCloudDownloadFill /></span>
+                      <div class="icon-box">
+                        <span class="db-image-icon"><BsCloudDownload /></span>
                       </div>
                       <div>
-                        <h1>250000</h1>
-                        <p>Total Leads</p>
+                        <h2 className='h2-heading'>25,000</h2>
+                        <p className='span-heading-text'>Total Leads</p>
                       </div>
                     </div>
                   </Col>
                   <Col sm={3}>
                     <div className="d-flex lead-box-first">
-                      <div class="me-3">
-                        <span class="db-image-icon"><BsFillCloudDownloadFill /></span>
+                      <div class="icon-box">
+                        <span class="db-image-icon"> <img src={B2bicon} alt="b2b" /> </span>
                       </div>
                       <div>
-                        <h1>250000</h1>
-                        <p>B2B Leads</p>
+                        <h2 className='h2-heading'>25,000</h2>
+                        <p className='span-heading-text'>B2B Leads</p>
                       </div>
                     </div>
                   </Col>
                   <Col sm={3}>
                     <div className="d-flex lead-box-first">
-                      <div class="me-3">
-                        <span class="db-image-icon"><BsFillCloudDownloadFill /></span>
+                      <div class="icon-box">
+                        <span class="db-image-icon"><img src={B2cicon} alt="b2c" /></span>
                       </div>
                       <div>
-                        <h1>250000</h1>
-                        <p>B2C Leads</p>
+                        <h2 className='h2-heading'>25,000</h2>
+                        <p className='span-heading-text'>B2C Leads</p>
                       </div>
                     </div>
                   </Col>
                   <Col sm={3}>
                     <div className="d-flex lead-box-first">
-                      <div class="me-3">
-                        <span class="db-image-icon"><BsFillCloudDownloadFill /></span>
+                      <div class="icon-box">
+                        <span class="db-image-icon"><img src={lastmicon} alt="lastmicon" /></span>
                       </div>
                       <div>
-                        <h1>250000</h1>
-                        <p>Last Month</p>
+                        <h2 className='h2-heading'>25,000</h2>
+                        <p className='span-heading-text'>Last Month</p>
                       </div>
                     </div>
                   </Col>
                 </Row>
-                <Row className='p-5 text-center city-row ms-1 me-1'>
+                <Row className='p-3 text-center city-row ms-1 me-1 justify-content-center'>
 
-                  <Col sm={4}>
+                  <Col sm={3}>
 
                     <div className="d-flex lead-box-first">
-                      <div class="me-3">
-                        <span class="db-image-icon"><BsFillArrowDownLeftCircleFill /></span>
+                      <div class="icon-box">
+                        <span class="db-image-icon"><BsPeople /></span>
                       </div>
                       <div>
-                        <h1>250000</h1>
-                        <p>User wise</p>
+                        <h2 className='h2-heading'>25,000</h2>
+                        <p className='span-heading-text'>User wise</p>
                       </div>
                     </div>
                   </Col>
-                  <Col sm={4}>
+                  <Col sm={3}>
                     <div className="d-flex lead-box-first">
-                      <div class="me-3">
-                        <span class="db-image-icon"><BsFillCloudDownloadFill /></span>
+                      <div class="icon-box">
+                        <span class="db-image-icon"><BsPinMapFill /></span>
                       </div>
                       <div>
-                        <h1>250000</h1>
-                        <p>City wise</p>
+                        <h2 className='h2-heading'>25,000</h2>
+                        <p className='span-heading-text'>City wise</p>
                       </div>
                     </div>
                   </Col>
-                  <Col sm={4}>
+                  <Col sm={3}>
                     <div className="d-flex lead-box-first">
-                      <div class="me-3">
-                        <span class="db-image-icon"><BsFillCloudDownloadFill /></span>
+                      <div class="icon-box">
+                        <span class="db-image-icon"><BsPersonCheck /></span>
                       </div>
                       <div>
-                        <h1>250000</h1>
-                        <p>Customer type wise</p>
+                        <h2 className='h2-heading'>25,000</h2>
+                        <p className='span-heading-text'>Customer type wise</p>
                       </div>
                     </div>
                   </Col>
@@ -155,9 +159,9 @@ const ClientDashboard = (props) => {
                       <td>@mdo</td>
                       <td>Otto</td>
                       <td>@mdo</td>
-                      <td><button className='btn btn-info'>View detail</button></td>
-                      <td><button className='btn btn-info'> Email</button></td>
-                      <td><button className='btn btn-info'>Download</button></td>
+                      <td><button className='btn btn-theme'>View detail</button></td>
+                      <td><button className='btn btn-theme'> Email</button></td>
+                      <td><button className='btn btn-theme'>Download</button></td>
                     </tr>
                     <tr>
                       <td>2</td>
@@ -166,9 +170,9 @@ const ClientDashboard = (props) => {
                       <td>@fat</td>
                       <td>Otto</td>
                       <td>@mdo</td>
-                      <td><button className='btn btn-info'>View detail</button></td>
-                      <td><button className='btn btn-info'> Email</button></td>
-                      <td><button className='btn btn-info'>Download</button></td>
+                      <td><button className='btn btn-theme'>View detail</button></td>
+                      <td><button className='btn btn-theme'> Email</button></td>
+                      <td><button className='btn btn-theme'>Download</button></td>
                     </tr>
                     <tr>
                       <td>3</td>
@@ -177,9 +181,9 @@ const ClientDashboard = (props) => {
                       <td>Larry the Bird</td>
                       <td>Otto</td>
                       <td>@mdo</td>
-                      <td><button className='btn btn-info'>View detail</button></td>
-                      <td><button className='btn btn-info'> Email</button></td>
-                      <td><button className='btn btn-info'>Download</button></td>
+                      <td><button className='btn btn-theme'>View detail</button></td>
+                      <td><button className='btn btn-theme'> Email</button></td>
+                      <td><button className='btn btn-theme'>Download</button></td>
                     </tr>
                   </tbody>
                 </Table>
