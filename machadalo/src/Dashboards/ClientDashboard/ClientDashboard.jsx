@@ -33,12 +33,12 @@ const ClientDashboard = (props) => {
         <Tabs
           defaultActiveKey="profile"
           id="main-tab"
-          className="mb-3 top-main-tab main-ul-tab bg-white"
+          className="mb-3 ps-4 top-main-tab main-ul-tab bg-white"
           fill
         >
           <Tab eventKey="lead" title="Leads" className='p-4 '>
             <div className='pt-2'>
-              <div className="text-dropdwn d-flex justify-content-between">
+              <div className="text-dropdwn align-items-center d-flex justify-content-between">
                 <h4 className='lead-h4'>WELCOME BACK, KATHERINE</h4>
                 <div className="dropdown-btn">
 
@@ -58,7 +58,7 @@ const ClientDashboard = (props) => {
 
               <div className='pt-2'>
               { layers.firstLayer &&
-                <Row className='pt-3 '>
+                <Row className='pt-3 show-leads-box'>
                   <Col sm={3} onClick={(e)=>{setLayers({...layers, secondLayer: true})}}>
                     <div className="d-flex lead-box-first">
                       <div class="icon-box">

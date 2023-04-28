@@ -119,7 +119,7 @@ const UserWiseList = () => {
     [],
   );
 
-  return <MaterialReactTable columns={columns} data={data} />;
+  return <MaterialReactTable className="dashboard-table" columns={columns} data={data} />;
 };
 
 export default UserWiseList;
