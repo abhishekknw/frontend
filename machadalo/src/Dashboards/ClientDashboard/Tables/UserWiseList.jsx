@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react';
 import MaterialReactTable from 'material-react-table';
-import { Button } from 'react-bootstrap';
+import { Box, IconButton } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EmailIcon from '@mui/icons-material/Email';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 //nested data is ok, see accessorKeys in ColumnDef below
 const data = [
   {
@@ -70,6 +73,7 @@ const UserWiseList = () => {
         accessorKey: 'key', //access nested data with dot notation
         header: 'S.No.',
         enableColumnActions: false,
+        enableSorting: false, 
         size:40,
       },
       {
@@ -80,55 +84,132 @@ const UserWiseList = () => {
       {
         accessorKey: 'Total_Leads_count', //normal accessorKey
         header: 'Total Leads count',
+        size:100,
       },
       {
         accessorKey: 'Current_week_count',
         header: 'Current week count',
+        size:100,
       },
       {
         accessorKey: 'Last_week_count',
         header: 'Last week count',
+        size:100,
+
       },
       {
         accessorKey: 'Current_month_count',
         header: 'Current month count',
+        size:100,
+
       },
       {
         accessorKey: 'This_quarter_count',
         header: 'This quarter count',
+        size:100,
+
       },
       {
         accessorKey: 'Total_comment_updated_count',
         header: 'Total comment updated count',
+        size:200,
       },
       {
         accessorKey: 'Total_status_updated_count',
         header: 'Total status updated count',
+        size:200,
       },
-      {
-        // accessorKey: 'Total_status_updated_count',
-        header: 'View',
-        enableColumnActions: false,
-        accessorFn: rowData => <Button>View</Button>
-      },
-      {
-        accessorFn: rowData => <Button>Download</Button>,
-        enableColumnActions: false,
-        header: 'Download',
-      },
-      {
-        header: 'Email',
-        enableColumnActions: false,
-        enableHiding: false,
-        accessorFn: rowData => <Button>Email</Button>,
-      },
+    //   {
+    //     // accessorKey: 'Total_status_updated_count',
+    //     header: 'View',
+    //     enableColumnActions: false,
+    //     enableSorting: false, 
+    //     accessorFn: rowData => <Button>View</Button>
+    //   },
+    //   {
+    //     accessorFn: rowData => <Button>Download</Button>,
+    //     enableColumnActions: false,
+    //     enableSorting: false, 
+    //     header: 'Download',
+    //   },
+    //   {
+    //     header: 'Email',
+    //     enableColumnActions: false,
+    //     enableSorting: false,
+    //     accessorFn: rowData => <Button>Email</Button>,
+    //   },
     ],
     [],
   );
-
+const Searching = (e)=>{
+    console.log(e)
+}
   return <MaterialReactTable 
   columns={columns} 
   data={data}
+  enableDensityToggle={false}
+  showColumnFilters={false}
+  initialState={{ density: 'comfortable' }}
+  enableRowActions
+  positionActionsColumn="last"
+  renderRowActions={({ row, table }) => (
+    <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
+          <IconButton
+            color="primary"
+            // onClick={() => {
+            //   table.setEditingRow(row);
+            // }}
+          >
+            <VisibilityIcon />
+          </IconButton>
+          <IconButton
+            color="primary"
+             onClick={() =>
+              window.open(
+                `mailto:kevinvandy@mailinator.com?subject=Hello ${row.original.firstName}!`,
+              )
+            }
+          >
+            <EmailIcon />
+          </IconButton>
+          <IconButton
+            color="primary"
+            onClick={() => {
+              data.splice(row.index, 1); //assuming simple data table
+              setData([...data]);
+            }}
+          >
+            <DownloadForOfflineIcon />
+          </IconButton>
+        </Box>
+  )}
+//   muiSearchTextFieldProps={{
+//     placeholder: 'Search all users',
+//     sx: { minWidth: '100px' },
+//     variant: 'outlined',
+//   }}
+  onGlobalFilterChange={Searching}
+  enableHiding={false}
+//   muiTablePaperProps={{
+//     elevation: 0, //change the mui box shadow
+//     //customize paper styles
+//     sx: {
+//       borderRadius: '1',
+//       border: '3px dashed #e0e0e0',
+//     },
+//   }}
+  muiTableHeadCellProps={{
+    //easier way to create media queries, no useMediaQuery hook needed.
+    sx: {
+      fontSize: {
+        xs: '10px',
+        sm: '11px',
+        md: '12px',
+        lg: '13px',
+        xl: '14px',
+      },
+    },
+  }}
   />;
 };
 
