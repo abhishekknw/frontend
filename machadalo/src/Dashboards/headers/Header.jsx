@@ -14,6 +14,11 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { theme,styles } from './Theme';
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/material/IconButton';
+
 
 export default function ClientHeader() {
   const [open, setOpen] = React.useState(false);
@@ -52,13 +57,14 @@ export default function ClientHeader() {
 
     prevOpen.current = open;
   }, [open]);
+  const DesktopNavigation = () => {
+    const [value, setValue] = React.useState(0);
 
-  return (
-    <AppBar position="static" className="header-b2b">
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <img src={Logo} alt="Machadalo" />
-        </Typography>
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+    return (
+      <>
         <Button color="inherit" startIcon={<HomeIcon />}>
           Home
         </Button>
@@ -117,8 +123,90 @@ export default function ClientHeader() {
           </Popper>
         </div>
         <Button color="inherit" startIcon={<AccountCircleIcon />}>
-         "TESTING"
+          "TESTING"
         </Button>
+      </>
+    );
+  };
+
+  const MobileNavigation = () => {
+      const hamburgerRef = React.useRef(null);
+      const [openDrawer, setOpenDrawer] = React.useState(false);
+      const prevOpen1 = React.useRef(openDrawer);
+      React.useEffect(() => {
+        if (prevOpen1.current === true && open === false) {
+          hamburgerRef.current.focus();
+        }
+    
+        prevOpen1.current = openDrawer;
+      }, [openDrawer]);
+      const iOS =
+        typeof navigator !== 'undefined' &&
+        /iPad|iPhone|iPod/.test(navigator.userAgent);
+    
+      return (
+        <React.Fragment>
+          <IconButton
+            sx={styles.menuIconContainer}
+            ref={hamburgerRef}
+            onClick={() => setOpenDrawer(!openDrawer)}
+            disableRipple
+          >
+            <MenuIcon sx={styles.hamburgerMenuIcon} />
+          </IconButton>
+          <Popper
+            open={openDrawer}
+            anchorEl={hamburgerRef.current}
+            role={undefined}
+            placement="bottom-start"
+            transition
+            disablePortal
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{
+                  transformOrigin: "placement === 'bottom-start' ? 'left top' : 'left bottom'",
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleClose}>
+                    <MenuList
+                      autoFocusItem={open}
+                      id="composition-menu"
+                      aria-labelledby="composition-button"
+                      onKeyDown={handleListKeyDown}
+                    >
+                      <MenuItem>
+                        <a href="/#/changePassword">Home</a>
+                      </MenuItem>
+                      <MenuItem>
+                        <a href="/#/changePassword">Change Password</a>
+                      </MenuItem>
+                      <MenuItem
+                        onClick={(e) => {
+                          logout(e);
+                        }}
+                      >
+                        Logout
+                      </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </React.Fragment>
+      );
+    };
+  const isMobileMode = useMediaQuery(theme.breakpoints.down('sm'));
+  return (
+    <AppBar position="static" className="header-b2b">
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <img src={Logo} alt="Machadalo" />
+        </Typography>
+        {isMobileMode ? <MobileNavigation /> : <DesktopNavigation />}
       </Toolbar>
     </AppBar>
   );
