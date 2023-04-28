@@ -153,7 +153,7 @@ const Searching = (e)=>{
   enableRowActions
   positionActionsColumn="last"
   renderRowActions={({ row, table }) => (
-    <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
+    <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '0px' }}>
           <IconButton
             color="primary"
             // onClick={() => {

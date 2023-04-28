@@ -50,9 +50,9 @@ const ClientDashboard = (props) => {
             className="mb-3 top-main-tab main-ul-tab bg-white"
             fill
           >
-            <Tab eventKey="lead" title="Leads" className="p-4 ">
+            <Tab eventKey="lead" title="Leads" className="p-4 pt-0">
               <div className="pt-2">
-                <div className="text-dropdwn d-flex justify-content-between">
+                <div className="text-dropdwn d-flex justify-content-between align-items-center">
                   <h4 className="lead-h4">WELCOME BACK, KATHERINE</h4>
                   <div className="dropdown-btn">
                     <Dropdown>
@@ -69,7 +69,7 @@ const ClientDashboard = (props) => {
                   </div>
                 </div>
 
-                <div className="pt-2">
+                <div className="pt-2 show-leads-box">
                   {layers.firstLayer && (
                     <Row className="pt-3 ">
                       <Col

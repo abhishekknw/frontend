@@ -26,7 +26,20 @@
 .main-ul-tab{
     padding: 20px 0px 20px 0px;
     border: 1px solid #cbcbcb;
-    padding:20px 50px 20px 50px;
+    padding:20px 0 20px 0;
+}
+.show-leads-box .lead-box-first.active  {
+    background-color: #9d87c2;
+    color: #fff !important;
+}
+.show-leads-box .lead-box-first.active .span-heading-text{
+    color: #fff !important;
+}
+.show-leads-box .lead-box-first.active .icon-box {
+    background-color: #fff;
+}
+.show-leads-box .lead-box-first.active .h2-heading{
+    color: #fff;
 }
 
 .db-image-icon{
@@ -91,10 +104,10 @@ table thead tr th {
 }
 .graph-img canvas{
     max-width: 478px !important;
-    max-height: 220px !important;
+    max-height: 300px !important;
     margin: 0 auto;
     width: 478px !important;
-    height: 220px !important;
+    height: 300px !important;
 }
 
 table.dashboard-table thead tr th {
@@ -104,6 +117,9 @@ table.dashboard-table thead tr th {
     font-size: 16px;
     padding: 9px 10px !important;
     white-space: nowrap;
+}
+table tbody tr td{
+    text-align: left !important;
 }
 .btn-theme{
     background-color: #8E1921 !important;
