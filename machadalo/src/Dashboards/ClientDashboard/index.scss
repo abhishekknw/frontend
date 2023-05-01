@@ -24,9 +24,8 @@
     background-color: #fff;
 }
 .main-ul-tab{
-    padding: 20px 0px 20px 0px;
+    padding: 20px 20px 20px 20px;
     border: 1px solid #cbcbcb;
-    padding:20px 0 20px 0;
 }
 .show-leads-box .lead-box-first.active  {
     background-color: #9d87c2;
@@ -64,7 +63,7 @@
     padding: 16px 0;
 }
 .top-main-tab.nav-tabs li{
-   margin: 0 10px ;
+   margin: 0 1px ;
 }
 .lead-tab li{
     margin: 0px 10px;
@@ -121,6 +120,9 @@ table.dashboard-table thead tr th {
 table tbody tr td{
     text-align: left !important;
 }
+table tbody tr th{
+    vertical-align: middle !important;
+}
 .btn-theme{
     background-color: #8E1921 !important;
     color: #fff;
@@ -146,6 +148,9 @@ table.dashboard-table th, table.dashboard-table td{
     color:   rgb(255, 255, 255) !important;
     background-color: rgb(111 66 193) !important;
     font-size: 16px;
+}
+table tbody tr td, table tbody tr th{
+    padding: 6px 15px !important;
 }
 @media only screen and (max-width:1024px) {
     .h2-heading {
