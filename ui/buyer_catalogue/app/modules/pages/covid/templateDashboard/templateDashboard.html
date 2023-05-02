@@ -1599,6 +1599,8 @@
                           <th style="padding:10px">Status</th>
                           <!-- <th style="padding:10px">Created At</th> -->
                           <th style="padding:10px">Responsed At</th>
+                          <th style="padding:10px">Call Status</th>
+                          <th style="padding:10px">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1615,7 +1617,20 @@
                           <td style="text-align: center;">{{tmp.status}}</td>
                           <!-- <td style="text-align: center;">{{tmp.created_at}}</td> -->
                           <td style="text-align: center;">{{tmp.updated_at}}</td>
-
+                          <td style="text-align: center;"> 
+                            <select 
+                              class="form-control"
+                              value="tmp.call_status"
+                              ng-model="tmp.call_status"
+                              ng-change="updateCallStatus(tmp.call_status,tmp)">
+                              <option value="">Select Status</option>
+                              <option value="{{value}}" ng-repeat="value in CallStatusList">{{value}}</option>
+                            </select>
+                          </td>
+                          <td style="text-align: center;">
+                            <i class='fas fa-phone-alt' ng-click="CallTemplate(tmp)"></i>
+                            <i class='far fa-comment' ng-click="viewAddComments(tmp)"></i>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -1635,6 +1650,74 @@
                     </dir-pagination-controls>
                   </center>
                 </div>
+                <!-- CallTemplate Modal Start -->
+                <div id="CallTemplate" class="modal fade theme-modal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Call Status</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group" style="padding-top: 15px;">
+                          <!-- <label> Select Campaign</label> -->
+                          <select class="form-control">
+                            <option value="">Select Campaign</option>
+                            <option>Campaign</option>
+                            <option>Campaign</option>
+                            <option>Campaign</option>
+                            <option>Campaign</option>
+                          </select>
+                          </div>
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Send</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--CallTemplate Modal End  -->
+                <!-- Comment Modal start -->
+                <div id="viewAddComments" class="modal fade theme-modal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4>View Comments</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="modalBodyBox">
+                          <div class="table-h-scroll">
+                            <table class="table-data">
+                              <tr ng-repeat="item in viewComments.comment">
+                                <td>
+                                  <div>
+                                    <p style="color: #000;">{{item.comment}}</p>
+                                  </div>
+                                  <div>
+                                    <img ng-src="{{userIcon}}">
+                                    <!-- <b>{{userInfo.username}}:</b> -->
+                                    <b>{{item.user}}:</b>
+                                    <span><small>{{item.date|date:'medium'}}</small></span>
+                                  </div>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div style="margin-top: 15px;">
+                            <textarea class="field" rows="2" cols="200" ng-model="UserComment.comment" value="UserComment"
+                              placeholder="Write here.."></textarea>
+                            <button class="smallBtn" type="button"
+                              ng-click="AddUserComment(UserComment)">Add Comment</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Comment Modal End -->
                 <!--/Third Page-->
 
                 <!-- </div> -->
@@ -1658,90 +1741,6 @@
                         </div>
                         <div class="modal-body">
                           <div>
-
-                            <!-- <div>
-                                  <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
-                                  <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
-                                  <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black"><h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4></span><br>
-                                  <span ng-show="transactionalTemplateDropdown.typeofCustomer" style="color:black"><h4>Type of Customer:{{transactionalTemplateDropdown.typeofCustomer}}</h4></span><br>
-                                  <span ng-show="transactionalTemplateDropdown.category" style="color:black"><h4>Category:{{transactionalTemplateDropdown.category}}</h4></span><br>
-                                </div> -->
-                            <!-- <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
-                                  <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
-                                    {{form_name.leads_form_name}}</option>
-                                </select> -->
-                            <!-- <div class="top-select-option-mca">
-                                  <div class="row">
-                                    <div class="col-xs-12">
-                                      <div class="form-group">
-                                       
-                                        <select class="form-control"  name="category" id="category"
-                                          ng-model="category_code">
-                                          <option value="" disabled> Select Attribute</option>
-                                          <option>Updated At</option>
-                                          <option>Created At</option>
-          
-          
-          
-                                        </select>
-                                      </div>
-                                    </div>
-          
-          
-          
-                                  </div>
-                                </div> -->
-
-                            <!-- <div class="table" style="margin-top: 10px; margin-bottom: 10px;">
-          
-                              <table class="table">
-                                <thead>
-                                  <tr>
-          
-                                    <th>Index</th>
-                                    <th></th>
-                                    <th>User Name</th>
-                                    <th>Positive</th>
-                                    <th>Neutral</th>
-                                    <th>Negative</th>
-          
-          
-          
-                                  </tr>
-                                  <tr>
-                                    <td style="text-align: center;">1</td>
-                                    <td style="text-align: center;">5</td>
-                                    <td style="text-align: center;">100</td>
-                                    <td style="text-align: center;">200</td>
-                                    <td style="text-align: center;">200</td>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                              </table>
-          
-                            </div> -->
-                            <!-- <tr>
-                                  <td class="col-md-2">
-                                    <p class="input-group">
-                                      Select Start Date(Optional): <input type="date" class="form-control"
-                                        ng-model="emailCampaignLeadsModel.start_date" required>
-                                    </p>
-                                  </td>
-                                  <td class="col-md-2">
-                                    <p class="input-group">
-                                      Select End Date(Optional) : <input type="date" class="form-control"
-                                        ng-model="emailCampaignLeadsModel.end_date" required>
-                                    </p>
-                                  </td>
-                                  <td style="text-align: center; padding-top: 20px;">
-                                    <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()"
-                                        ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
-                                      <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
-                                        ng-disabled="!emailCampaignLeadsModel.leads_form_id"
-                                        ng-if="!submitLeadType">Download</button>
-                                  </td>
-                                </tr> -->
-
                             <div class="check-field" style="padding: 10px;">
                               <table class="table">
                                 <thead>
