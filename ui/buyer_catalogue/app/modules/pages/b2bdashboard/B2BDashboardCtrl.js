@@ -2214,6 +2214,10 @@
           swal(constants.name, "Error", constants.error);
         });
     }
+    $scope.toggleClassFilter = false;
+    $scope.toggleFilterClass =function(){
+      $scope.toggleClassFilter = $scope.toggleClassFilter?false:true;
+    }
     $scope.refeshFilters = function () {
       $scope.selected_cities_list = [];
       $scope.selected_clientStatus = [];

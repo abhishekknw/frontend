@@ -1062,6 +1062,10 @@ h6.msg-title {
 .mobile-p-10 {
   padding-bottom: 20px;
 }
+.db-nav-tab ul{
+  display: flex;
+  flex-direction: row;
+}
 }
 
 
@@ -1070,5 +1074,62 @@ h6.msg-title {
 .al-main.b2b-dash {
     padding-top: 70px !important;
 }
+.filter-box {
+  padding: 20px;
+}
 
+}
+.date_range_picker.date_range_picker_open{
+  right: 0;
+  /* display: block; */
+  transition: 0.3s ease;
+}
+.date_range_picker {
+  position: fixed;
+  background: #fff;
+  right: -101%;
+  top: 80px;
+  height: 100%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  padding: 20px;
+  transition: 0.3s ease;
+  max-width: 500px;
+  width: 100%;
+  color: #000;
+  overflow-y: scroll;
+  /* display: none; */
+}
+.filter-box .date_wrapper button.smallBtn.calendar {
+  position: absolute;
+  /* top: 6px; */
+  right: 10px;
+  top: auto;
+  bottom: 27px;
+}
+.filter-box h5 {
+  font-size: 15px;
+  padding: 0;
+  padding: 0 !important;
+  margin: 7px 00px !important;
+}
+.filter-box button.btn.btn-primary, .filter-box button.btn.btn-primary:hover, .filter-box button.btn.btn-primary:active, .filter-box button.btn.btn-primary:focus, .filter-box button.btn.btn-primary:target{  
+  background: #8e1921;
+  border-color: #8e1921;
+}
+.close-btn{
+  position: absolute;
+  right: 25px;
+  top: 14px;
+  font-size: 24px;
+}
+.multibox-filter-select .multiselect-parent{
+  width: 100%;
+}
+.multibox-filter-select .multiselect-parent .btn{
+  text-align: left;
+}
+.multibox-filter-select .multiselect-parent .btn .caret{
+  right: 14px;
+  position: absolute;
+  top: 20px;
 }
