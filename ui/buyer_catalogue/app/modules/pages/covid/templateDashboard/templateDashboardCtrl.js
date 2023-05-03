@@ -60,6 +60,7 @@
       $scope.printLeadsInExcelData = {};
       $scope.APIBaseUrl = Config.APIBaseUrl;
       $scope.UserComment = {};
+      $scope.CallModel = {};
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
         { id: 2, name: 'High' },
@@ -6599,10 +6600,26 @@
           .then(function onSuccess(response) {
             let lastIndex = response.data.data.length - 1;
             $scope.CallStatusList = response.data.data[lastIndex].call_status;
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+        templateDashboardService.getDialerCallerIds()
+          .then(function onSuccess(response) {
+            $scope.DialerCallerIds = response.data.data;
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+          templateDashboardService.getDialerAgents()
+          .then(function onSuccess(response) {
+            $scope.DialerAgentList = response.data.data;
+            console.log($scope.DialerAgentList)
+          }).catch(function onError(response) {
+            console.log(response);
           })
       }
 
       $scope.CallTemplate = function (row) {
+        $scope.CallModel = { 'destination_number': row.phone_number };
         $('#CallTemplate').modal('show');
       }
       $scope.viewAddComments = function (row) {
@@ -6644,6 +6661,16 @@
           $scope.UserComment = {};
         }, 1000);
         // $('#viewAddComments').modal('hide');
+      }
+
+      $scope.OnQuickCall = function (data){
+        console.log(data)
+        templateDashboardService.postDataOnQuickCall(data)
+          .then(function onSuccess(response) {
+            console.log(response)
+          }).catch(function onError(response) {
+            console.log(response);
+          })
       }
       $scope.gettransactionalTemplateSummaryDownload = function (value) {
         let param = {

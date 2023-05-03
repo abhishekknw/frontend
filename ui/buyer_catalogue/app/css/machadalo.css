@@ -1133,3 +1133,13 @@ h6.msg-title {
   position: absolute;
   top: 20px;
 }
+.quick-call-model.modal-dialog{
+  max-width: 400px;
+}
+
+.quick-call-form {
+  padding: 25px;
+}
+.quick-call-form label{
+  padding-bottom: 5px;
+}

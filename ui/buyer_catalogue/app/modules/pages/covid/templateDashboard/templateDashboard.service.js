@@ -78,6 +78,21 @@ angular.module('catalogueApp')
         return machadaloHttp.post(url,data);
       }
 
+      DashboardService.getDialerCallerIds = function(){
+        let url = "v0/ui/mca-bot/dailer-caller-ids/";
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.getDialerAgents = function(){
+        let url = "v0/ui/mca-bot/dailer-agents/";
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.postDataOnQuickCall = function(data){
+        let url = "v0/ui/mca-bot/dailer-call/";
+        return machadaloHttp.post(url,data);
+      }
+
       return DashboardService;
 
     }]);
