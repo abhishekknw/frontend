@@ -6620,6 +6620,7 @@
 
       $scope.CallTemplate = function (row) {
         $scope.CallModel = { 'destination_number': row.phone_number };
+        $scope.viewComments = row;
         $('#CallTemplate').modal('show');
       }
       $scope.viewAddComments = function (row) {
@@ -6637,6 +6638,7 @@
             );
           }).catch(function onError(response) {
             console.log(response);
+            swal("Error", constants.errorMsg, constants.error);
           })
       }
 
@@ -6653,6 +6655,7 @@
             swal("", response.data.data, constants.success);
           }).catch(function onError(response) {
             console.log(response);
+            swal("Error", constants.errorMsg, constants.error);
           })
         $timeout(function () {
           let tempObj = $scope.transactionalTemplateUserData.map(obj =>
@@ -6660,16 +6663,15 @@
           $scope.viewComments = tempObj[0];
           $scope.UserComment = {};
         }, 1000);
-        // $('#viewAddComments').modal('hide');
       }
 
       $scope.OnQuickCall = function (data){
-        console.log(data)
         templateDashboardService.postDataOnQuickCall(data)
           .then(function onSuccess(response) {
-            console.log(response)
+            swal("", response.data.data.message, constants.success);
           }).catch(function onError(response) {
             console.log(response);
+            swal("Error", constants.errorMsg, constants.error);
           })
       }
       $scope.gettransactionalTemplateSummaryDownload = function (value) {
