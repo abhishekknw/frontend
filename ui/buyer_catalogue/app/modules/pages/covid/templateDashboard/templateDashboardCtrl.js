@@ -6623,11 +6623,7 @@
         $scope.viewComments = row;
         $('#CallTemplate').modal('show');
       }
-      $scope.viewAddComments = function (row) {
-        $scope.viewComments = row;
-        $('#viewAddComments').modal('show');
-      }
-
+      
       $scope.updateCallStatus = function (status, row) {
         row.call_status = status
         templateDashboardService.updateCallStatus(row)
