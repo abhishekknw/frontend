@@ -1607,7 +1607,7 @@
                           <th style="padding:10px">Negative</th>
                           <th style="padding:10px">Status</th>
                           <!-- <th style="padding:10px">Created At</th> -->
-                          <th style="padding:10px">Responsed At</th>
+                          <th style="padding:10px;">Responsed At</th>
                           <th style="padding:10px">Call Status</th>
                           <th style="padding:10px">Actions</th>
                         </tr>
@@ -1625,7 +1625,7 @@
                           <td style="text-align: center;">{{tmp.total_negative}}</td>
                           <td style="text-align: center;">{{tmp.status}}</td>
                           <!-- <td style="text-align: center;">{{tmp.created_at}}</td> -->
-                          <td style="text-align: center;">{{tmp.updated_at}}</td>
+                          <td style="text-align: center; line-height: 1.5; width: 100px;">{{tmp.updated_at}}</td>
                           <td style="text-align: center;">
                             <select class="form-control" value="tmp.call_status" ng-model="tmp.call_status"
                               ng-change="updateCallStatus(tmp.call_status,tmp)">
