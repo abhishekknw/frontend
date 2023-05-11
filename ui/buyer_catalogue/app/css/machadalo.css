@@ -1134,7 +1134,7 @@ h6.msg-title {
   top: 20px;
 }
 .quick-call-model.modal-dialog{
-  max-width: 400px;
+  max-width: 550px;
 }
 
 .quick-call-form {
@@ -1142,4 +1142,12 @@ h6.msg-title {
 }
 .quick-call-form label{
   padding-bottom: 5px;
+}
+.smll-btn-cmt{
+  padding: 5px 25px  !important;
+  width: 100%;
+  font-size: 14px  !important;
+}
+.align-items-center{
+  align-items: center;
 }
