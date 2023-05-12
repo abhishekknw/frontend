@@ -12,7 +12,9 @@ angular.module('machadaloPages')
      
       $scope.getCampaignDetails = function () {
         var fetch_all = '1';
-          campaignListService.getAllCampaignDetails(fetch_all)
+        let page = 1;
+        let search = ''
+          campaignListService.getAllCampaignDetails(fetch_all,page,search)
             .then(function onSuccess(response) {
               $scope.campaignData = response.data.data;
             }).catch(function onError(response) {

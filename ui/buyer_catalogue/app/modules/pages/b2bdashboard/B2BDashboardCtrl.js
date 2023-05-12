@@ -76,15 +76,41 @@
     $scope.primaryCount = { "start": '', "end": '' };
 
     $scope.clientStatusMachadalo = [
+      {"status_name":"Get Verified Leads"},
+      {"status_name":"About MCA"},
+      {"status_name":"Unsubscribe"},
+      {"status_name":"Schedule a demo"},
+      // {"status_name":"Checkout sample leads"},
+      // {"status_name":"Chat With Your RM"},
+      // {"status_name":"Claim Your free dashboard"},
+      // {"status_name":"Add Regional sales team"},
       { "status_name": "Verified By BD Head" },
+      { "status_name": "Demo Scheduled" },
+      { "status_name": "Lead format shared" },
+      { "status_name": "Dashboard Credential Shared" },
       { "status_name": "Demo Completed" },
-      { "status_name": "Proposal Sent" },
-      { "status_name": "Under PO Processing" },
-      { "status_name": "Invoice Raised" },
-      { "status_name": "Payment Recieved" },
-      { "status_name": "Payment Delay 7+" },
-      { "status_name": "Payment Delay 15+" },
-      { "status_name": "Payment Delay 30+" },
+      { "status_name": "Hot" },
+      { "status_name": "Warm" },
+      { "status_name": "Cold" },
+      { "status_name": "proposal sent" },
+      { "status_name": "Sales team added" },
+      { "status_name": "free leads sharing initiated" },
+      { "status_name": "Under negotiation" },
+      { "status_name": "PO Under Processing" },
+      { "status_name": "Lead sharing Initiated" },
+      { "status_name": "Invoice raised" },
+      { "status_name": "Advance Payment Received" },
+      { "status_name": "Payment Received" },
+      { "status_name": "Payment Delayed" },
+      { "status_name": "Payment Delayed 7+" },
+      { "status_name": "Payment Delayed 15+" },
+      { "status_name": "Payment Delayed 21+" },
+      // { "status_name": "Under PO Processing" },
+      // { "status_name": "Invoice Raised" },
+      // { "status_name": "Payment Recieved" },
+      // { "status_name": "Payment Delay 7+" },
+      // { "status_name": "Payment Delay 15+" },
+      // { "status_name": "Payment Delay 30+" },
     ]
 
     $scope.changeStartDate = function () {
@@ -614,11 +640,15 @@
           console.log(response);
         })
     }
-
-    $scope.viewCampaignLeads = function () {
+    $scope.viewCampaignLeads = function (campaign_id) {
+      $scope.listClientStatus = [];
+      $scope.listClientStatusObj = [];
       let storeData = JSON.parse(localStorage.userInfo);
-      if ($scope.listClientStatus.length == 0 && storeData.username!="machadalosales") {
-        B2BDashboardService.listClientStatus().then(function onSuccess(response) {
+      if(!campaign_id){
+        campaign_id = '';
+      }
+      if (storeData.username!="machadalosales") {
+        B2BDashboardService.listClientStatus(campaign_id).then(function onSuccess(response) {
           var listData = response.data.data.client_status;
           for (var k in listData) {
             $scope.listClientStatus.push(listData[k].status_name);
@@ -626,7 +656,7 @@
           }
         });
       }
-      else if($scope.listClientStatus.length == 0){
+      else {
         var listData = $scope.clientStatusMachadalo;
         for (let k in listData) {
           $scope.listClientStatus.push(listData[k].status_name);
@@ -642,17 +672,16 @@
             $scope.userName = response.data.data[0].name;
             $scope.campaign_id = $scope.leadsDataCampaigns[0].campaign_id;
           }
-
         });
     }
-    $scope.machadaloClientStatus = function (data) {
-      if (data == null) {
-        $scope.value8 = $scope.listClientStatus[0];
-      }
-      else {
-        $scope.value8 = data;
-      }
-    }
+    // $scope.machadaloClientStatus = function (data) {
+    //   if (data == null) {
+    //     $scope.value8 = $scope.listClientStatus[0];
+    //   }
+    //   else {
+    //     $scope.value8 = data;
+    //   }
+    // }
     $scope.getPurchasedLead = function (CampaignId, campaignName) {
       $scope.purchasedTable = true;
       $scope.notPurchasedTable = false;
@@ -925,6 +954,7 @@
         $scope.decisionPendingTab = true;
         $scope.newLeadsTab = false;
         $scope.leadDecisionPanding();
+        $scope.viewCampaignLeads();
       }
       else if (value == 'sync') {
         $scope.decisionPendingTab = false;
@@ -1617,6 +1647,7 @@
       }, 90);
       $scope.getPurchasedNotPurchasedLead(campaign_id, campaign_name);
       $scope.getCityList(campaign_id);
+      $scope.viewCampaignLeads(campaign_id)
       //remove if show 2 butoon
     }
 
@@ -2182,6 +2213,10 @@
         .catch(function onError(response) {
           swal(constants.name, "Error", constants.error);
         });
+    }
+    $scope.toggleClassFilter = false;
+    $scope.toggleFilterClass =function(){
+      $scope.toggleClassFilter = $scope.toggleClassFilter?false:true;
     }
     $scope.refeshFilters = function () {
       $scope.selected_cities_list = [];

@@ -219,6 +219,9 @@ angular.module('catalogueApp')
     if(!$scope.model.tentative_cost){
 			$scope.model.tentative_cost ="";
 		}
+	if(!$scope.model.cost_of_lead){
+			$scope.model.cost_of_lead ="";
+		}
 	}
 
 	$scope.submit = function(){

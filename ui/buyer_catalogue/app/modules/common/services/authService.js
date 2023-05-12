@@ -686,6 +686,9 @@ angular.module('Authentication')
                if (param.search) {
                   url += '&search=' + param.search
                }
+               if (param.type_of_entity) {
+                  url += '&type_of_entity=' + param.type_of_entity;
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -892,18 +895,47 @@ angular.module('Authentication')
                var url = "v0/ui/b2c-bot/all-templates-send/?phone_number=" + phoneNumber;
                return machadaloHttp.get(url);
 
-             };
-             authService.getSupplierDataByNumber = function (number) {
-               let url = "v0/ui/b2b/supplier-list/?phone_number="+number;
+            };
+            authService.getSupplierDataByNumber = function (number, society) {
+               let url = "v0/ui/b2b/supplier-list/"
+               if (number) {
+                  url = url + "?phone_number=" + number;
+               }
+               else {
+                  url = url + "?society_name=" + society;
+               }
+               // let url = "v0/ui/b2b/supplier-list/?phone_number="+number+"&society_name="+society;
                return machadaloHttp.get(url);
-             };
-             authService.getSupplierDataBySociety = function (id) {
-               let url = "v0/ui/b2b/suspense-tab-by-supplier/?supplier_id="+id;
+            };
+            authService.getSupplierDataBySociety = function (id) {
+               let url = "v0/ui/b2b/suspense-tab-by-supplier/?supplier_id=" + id;
 
                return machadaloHttp.get(url);
             };
             authService.newAddUpdateSupplierSubmit = function (data) {
                let url = "v0/ui/b2b/suspense-to-supplier-for-new/";
+               return machadaloHttp.post(url, data);
+            };
+
+            authService.initialStateList = function () {
+               let url = "v0/ui/state/";
+               return machadaloHttp.get(url);
+            };
+            authService.getUserMinimalList = function (org_id) {
+               let url = "v0/ui/website/get-users-minimal-list/?org_id=" + org_id;
+               return machadaloHttp.get(url);
+            };
+            authService.getOrganisationsForAssignment = function () {
+               let url = "v0/ui/website/organisation/get_organisations_for_assignment/";
+               return machadaloHttp.get(url);
+            }
+
+            authService.getTemplateTabData = function (params) {
+               let url = "v0/ui/template/view-template/?next_page=" + params.page + "&search=" + params.search;
+               return machadaloHttp.get(url);
+            }
+            authService.sendTemplateToUser = function (data) {
+               let url = "v0/ui/template/send-template/";
                return machadaloHttp.post(url, data);
             };
 

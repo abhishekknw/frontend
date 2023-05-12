@@ -45,8 +45,8 @@
           return machadaloHttp.get(url);
         }
         
-        campaignLeadsService.getCampaignDetails = function(assigned_by,userId,fetch_all){
-          var url = url_base + "campaign-assignment/?include_assigned_by="+ assigned_by +  "&to="+userId + "&fetch_all=" + fetch_all;
+        campaignLeadsService.getCampaignDetails = function(assigned_by,userId,fetch_all,page,search){
+          var url = url_base + "campaign-assignment/?include_assigned_by="+ assigned_by +  "&to="+userId + "&fetch_all=" + fetch_all +"&next_page="+page+"&search="+search;
           return machadaloHttp.get(url);
         }
 

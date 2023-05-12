@@ -187,7 +187,7 @@
                         </div>
 
                         <div class="container py-5">
-                          <table class="table table-bordered table-hover line-h-table">
+                          <table class="table table-responsive table-bordered table-hover line-h-table">
                             <thead class="thead-dark">
                               <tr>
                                 <th scope="col">Sr. No.</th>
@@ -255,7 +255,8 @@
                                       <label> Sector:</label>
                                       <select class="form-control " ng-model="templateData.sector">
                                         <option value="">Select Sector</option>
-                                        <option ng-repeat="item in sectorList" value="{{item.business_type}}">{{item.business_type}}</option>
+                                        <option ng-repeat="item in sectorList" value="{{item.business_type}}">
+                                          {{item.business_type}}</option>
                                       </select>
                                     </div>
                                   </div>
@@ -420,10 +421,12 @@
                                       </div>
                                     </div>
                                     <div class="col-sm-2">
-                                      <button ng-if="!checkForLoader" type="button" class="btn btn-danger" value="Upload"
-                                             ng-click="uploadSendTemplate()">Send</button>
-                                      <button ng-if="checkForLoader" type="button" class="btn btn-danger" value="Upload" disabled>
-                                          <i class="fa fa-spinner fa-spin" style="margin-left: -10px; margin-right:4px;"></i>Send</button>
+                                      <button ng-if="!checkForLoader" type="button" class="btn btn-danger"
+                                        value="Upload" ng-click="uploadSendTemplate()">Send</button>
+                                      <button ng-if="checkForLoader" type="button" class="btn btn-danger" value="Upload"
+                                        disabled>
+                                        <i class="fa fa-spinner fa-spin"
+                                          style="margin-left: -10px; margin-right:4px;"></i>Send</button>
                                     </div>
                                     <div class="col-sm-7" style="text-align: right;">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -1220,41 +1223,48 @@
                 <div ng-if="viewAllTemplateSummaryTable">
 
 
-                  <div class="panel panel-default">
-                    <div class="col-md-12 ">
+                  <div class="search-div " style="margin-top: 0px !important;margin-bottom: 0px !important;">
+                    <div class="d-flex f-div justify-content-between">
+                      <div>
+                        <input type="text" class="form-control search-b mobile-m-5" style="max-width: 200px;"
+                          placeholder="search" ng-change="getTransactionalTemplate(TransactionalTemplateSearch)"
+                          ng-model="TransactionalTemplateSearch">
+                      </div>
                       <!--clender-->
-                      <div class="col-md-12" print-remove style="margin-top: 10px;">
-                        <div class="col-md-5 col-sm-5">
-                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                            placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
-                            is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
-                            close-text="Close" alt-input-formats="altInputFormats">
-                          <button type="button" class="smallBtn calendar"
-                            ng-click="isDatepickerOpen = !isDatepickerOpen">
-                            <i class="glyphicon glyphicon-calendar"></i>
-                          </button>
-                        </div>
-                        <div class="col-md-5 col-sm-5">
-                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                            placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
-                            is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
-                            alt-input-formats="altInputFormats">
-                          <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
-                            ng-click="isEndDateOpen = !isEndDateOpen">
-                            <i class="glyphicon glyphicon-calendar"></i>
-                          </button>
-                        </div>
-                        <div col-md-2 col-sm-2>
-                          <button class="btn btn-danger"
-                            ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
-                            ng-click="getTransactionalTemplate(search,dateRangeModel.start_dates,dateRangeModel.end_dates)">
-                            Submit</button>
+                      <div class="col-md-12" print-remove>
+                        <div class="row">
+                          <div class="col-md-3 col-sm-3 d-flex mobile-p-0 mobile-m-5">
+                            <input type="text" style="color:#000000; margin-bottom: 0px" class="field mobile-m-5"
+                              uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeStartDate()"
+                              ng-model="dateRangeModel.start_dates" is-open="isDatepickerOpen"
+                              datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
+                              alt-input-formats="altInputFormats">
+                            <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"
+                              class=" pl-2 smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                          </div>
+                          <div class="col-md-3 col-sm-3 d-flex mobile-p-0 mobile-m-5">
+                            <input type="text" style="color:#000000; margin-bottom: 0px" class="field mobile-m-5"
+                              uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeEndDate()"
+                              ng-model="dateRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="options"
+                              ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
+                            <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"
+                              class=" pl-2 smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                              ng-click="isEndDateOpen = !isEndDateOpen">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                          </div>
+                          <div class="col-md-2 col-sm-2">
+                            <button class="btn btn-danger"
+                              ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
+                              ng-click="getTransactionalTemplate(search,dateRangeModel.start_dates,dateRangeModel.end_dates)">
+                              Submit</button>
+                          </div>
                         </div>
                       </div>
                       <!--end of clender-->
-                      <input type="text" class="form-control " placeholder="search"
-                        ng-change="getTransactionalTemplate(TransactionalTemplateSearch)"
-                        ng-model="TransactionalTemplateSearch">
+
                       <br>
                     </div>
                   </div>
@@ -1269,29 +1279,50 @@
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
-                          <th style="padding:10px">Template ID</th>
-                          <th style="padding:10px">Template Name</th>
-                          <th style="padding:10px">Template Sent(Unique Count)</th>
-                          <th style="padding:10px">Template Delivered</th>
-                          <th style="padding:10px">Template Read</th>
-                          <th style="padding:10px">Days sent</th>
-                          <th>Positive</th>
-                          <th>Neutral</th>
-                          <th>Negative</th>
+                          <!-- <th style="padding:10px">Template ID</th> -->
+                          <th style="padding:10px" ng-click="Sort('template_name')">Name
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('days_count')">Days sent
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_read')">Read
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th ng-click="Sort('total_positive')">Positive
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th ng-click="Sort('total_neutral')">Neutral
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th ng-click="Sort('total_negative')">Negative
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px">Details</th>
                           <th style="padding:10px">Download</th>
-                          <th style="padding:10px; padding-right: 25px;">Send Template</th>
+                          <th style="padding:10px; padding-right: 25px;">Send</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr ng-repeat="ttemplate in transactionalTemplateData " track by "$index">
+                        <tr ng-repeat="ttemplate in transactionalTemplateData | orderBy:sort:reversesort" track
+                          by "$index">
                           <td>{{$index+serial}}</td>
-                          <td style="text-align: center;">{{ttemplate.template_id}}</td>
+                          <!-- <td style="text-align: center;">{{ttemplate.template_id}}</td> -->
                           <td style="text-align: center; text-transform: capitalize;">{{ttemplate.template_name}}</td>
-                          <td style="text-align: center;">{{ttemplate.total_users}}({{tttemplate.Unique_send}})</td>
-                          <td style="text-align: center;">{{ttemplate.total_template_delivered}}</td>
-                          <td style="text-align: center;">{{ttemplate.total_template_read}}</td>
                           <td style="text-align: center;">{{ttemplate.days_count}}</td>
+                          <td style="text-align: center;">{{ttemplate.total_users}}({{tttemplate.Unique_send}})</td>
+                          <td style="text-align: center;">{{ttemplate.total_delivered}}</td>
+                          <td style="text-align: center;">{{ttemplate.total_read}}</td>
+                          <td style="text-align: center;">{{ttemplate.unique_button_count}}</td>
                           <td style="text-align: center;">{{ttemplate.total_positive}}</td>
                           <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{ttemplate.total_negative}}</td>
@@ -1373,8 +1404,8 @@
                     </div>
                   </div>
                   <center>
-                    <a href=" {{APIBaseUrl}}v0/ui/mca-bot/download-template-summary/"><button
-                        style="margin: 10px;" data-toggle="modal" type="button" class="btn btn-danger">Download
+                    <a href=" {{APIBaseUrl}}v0/ui/mca-bot/download-template-summary/"><button style="margin: 10px;"
+                        data-toggle="modal" type="button" class="btn btn-danger">Download
                         Summary
                       </button>
                     </a>
@@ -1392,35 +1423,37 @@
                         <h5><b>Template ID: </b>{{view_template.template_id}}</h5>
                       </div>
                       <!--clender + back button-->
-                      <div class="col-md-12" print-remove style="margin-top: 10px;">
-                        <div class="col-md-5 col-sm-5">
-                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                            placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
-                            is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
-                            close-text="Close" alt-input-formats="altInputFormats">
-                          <button type="button" class="smallBtn calendar"
-                            ng-click="isDatepickerOpen = !isDatepickerOpen">
+                      <div class="col-md-12" print-remove style="margin-top: 10px; margin-bottom: 10px;">
+                        <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
+                          <input type="text" style="color:#000000; margin-bottom: 0px;" class="field"
+                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeStartDate()"
+                            ng-model="dateRangeModel.start_dates" is-open="isDatepickerOpen"
+                            datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
+                            alt-input-formats="altInputFormats">
+                          <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"
+                            class="pl-2 smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
                             <i class="glyphicon glyphicon-calendar"></i>
                           </button>
                         </div>
-                        <div class="col-md-5 col-sm-5">
-                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                            placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
-                            is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
-                            alt-input-formats="altInputFormats">
-                          <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                        <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
+                          <input type="text" style="color:#000000; margin-bottom: 0px;" class="field"
+                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeEndDate()"
+                            ng-model="dateRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="options"
+                            ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
+                          <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"
+                            class="pl-2 smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
                             ng-click="isEndDateOpen = !isEndDateOpen">
                             <i class="glyphicon glyphicon-calendar"></i>
                           </button>
                         </div>
-                        <div col-md-1 col-sm-1>
+                        <div class="col-md-1 col-sm-1">
                           <button class="btn btn-danger"
                             ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
                             ng-click="getTransactionalTemplateViewDetail(view_template.template_id,next_page,view_template.template_name,dateRangeModel.start_dates,dateRangeModel.end_dates)">
                             Submit</button>
                         </div>
-                        <div col-md-1 col-sm-1>
-                          <div style="margin: 10px;text-align: right;">
+                        <div class="col-md-5 col-sm-5 mobile-p-10 mobile-m-5">
+                          <div style="text-align: right;">
                             <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
                           </div>
                         </div>
@@ -1463,26 +1496,41 @@
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
-                          <th style="padding:10px" ng-click="Sort('start_date')">Sent Date</th>
-                          <th style="padding:10px">Template Sent(Unique Count)</th>
-                          <th style="padding:10px">Template Delivered</th>
-                          <th style="padding:10px">Template Read</th>
-                          <th style="padding:10px">Positive</th>
-                          <th style="padding:10px">Neutral</th>
-                          <th style="padding:10px">Negative</th>
+                          <th style="padding:10px" ng-click="Sort('start_date')">Sent Date
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_read')">Read
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_positive')">Positive
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_neutral')">Neutral
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_negative')">Negative
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px">View</th>
                           <th style="padding:10px">Download User</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
+                        <tr
+                          dir-paginate="tdtemplate in transactionalTemplateDataDetail | orderBy:sort:reversesort | itemsPerPage:itemsPerPage"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
 
                           <td style="text-align: center;">{{$index+serial}}</td>
                           <td style="text-align: center;">{{tdtemplate.sent_date | date : "dd-MM-yyyy"}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_users}}({{tdtemplate.Unique_send}})</td>
-                          <td style="text-align: center;">{{tdtemplate.total_template_delivered}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_template_read}}</td>
+                          <td style="text-align: center;">{{tdtemplate.total_delivered}}</td>
+                          <td style="text-align: center;">{{tdtemplate.total_read}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_positive}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_negative}}</td>
@@ -1559,7 +1607,9 @@
                           <th style="padding:10px">Negative</th>
                           <th style="padding:10px">Status</th>
                           <!-- <th style="padding:10px">Created At</th> -->
-                          <th style="padding:10px">Responsed At</th>
+                          <th style="padding:10px;">Responsed At</th>
+                          <th style="padding:10px">Call Status</th>
+                          <th style="padding:10px">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1575,8 +1625,17 @@
                           <td style="text-align: center;">{{tmp.total_negative}}</td>
                           <td style="text-align: center;">{{tmp.status}}</td>
                           <!-- <td style="text-align: center;">{{tmp.created_at}}</td> -->
-                          <td style="text-align: center;">{{tmp.updated_at}}</td>
-
+                          <td style="text-align: center; line-height: 1.5; width: 100px;">{{tmp.updated_at}}</td>
+                          <td style="text-align: center;">
+                            <select class="form-control" value="tmp.call_status" ng-model="tmp.call_status"
+                              ng-change="updateCallStatus(tmp.call_status,tmp)">
+                              <option value="">Select Status</option>
+                              <option value="{{value}}" ng-repeat="value in CallStatusList">{{value}}</option>
+                            </select>
+                          </td>
+                          <td style="text-align: center;">
+                            <i class='fas fa-phone-alt'style="font-size:20px" ng-click="CallTemplate(tmp)"></i>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -1596,6 +1655,97 @@
                     </dir-pagination-controls>
                   </center>
                 </div>
+                <!-- CallTemplate Modal Start -->
+                <div id="CallTemplate" class="modal fade theme-modal">
+                  <div class="modal-dialog quick-call-model">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Quick Call</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+                      <div class="row quick-call-form">
+                        <!-- <hr style="border: 1px solid ; border-width: 1px 0px 0px 0px"> -->
+                        <div class="col-md-6" style="border-right: 1px solid #0000008c">
+                          <form name="myForm" ng-submit="OnQuickCall(CallModel)">                       
+                            <div class=" ">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <div class="form-group">
+                                    <label> Phone Number</label>
+                                    <input class="form-control" disabled ng-model="CallModel.destination_number"
+                                      placeholder="Phone Number" type="text">
+                                  </div>
+                                </div>
+                                <div class="col-md-12">
+                                  <div class="form-group">
+                                    <label> Select Agent</label>
+                                    <select class="form-control" ng-model="CallModel.agent_number" name="Agent" required>
+                                      <option value="">Select Agent</option>
+                                      <option value="{{value.follow_me_number}}" ng-repeat="value in DialerAgentList.data">
+                                        {{value.name}}</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-md-12">
+                                  <div class="form-group">
+                                    <label> Select Number</label>
+                                    <select class="form-control" ng-model="CallModel.caller_id" name="Number" required>
+                                      <option value="">Select Number</option>
+                                      <option value="{{value.tollfree_number}}" ng-repeat="value in DialerCallerIds">
+                                        {{value.tollfree_number}}</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                
+                              </div>
+                            </div>
+                            <div class="modal-footer text-center">
+                              <button type="submit" style="margin-top: 10px;" class="btn btn-danger smll-btn-cmt">Call</button>
+                            </div>
+                          </form>                          
+                        </div>
+                        <div class="col-md-6">
+                            <div class="">
+                              <div class="form-group d-flex align-items-center">
+                                <label style="    white-space: nowrap; margin-right: 12px;"> Select Status</label>
+                                <select class="form-control" value="viewComments.call_status" ng-model="viewComments.call_status"
+                                  ng-change="updateCallStatus(viewComments.call_status,viewComments)">
+                                  <option value="">Select Status</option>
+                                  <option value="{{value}}" ng-repeat="value in CallStatusList">{{value}}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <h4 style="font-size: 14x !important; font-weight: 600;">View Comments</h4>
+                            <div class="table-h-scroll">
+                              <table class="table-data">
+                                <tr ng-repeat="item in viewComments.comment">
+                                  <td>
+                                    <div>
+                                      <p style="color: #000;">{{item.comment}}</p>
+                                    </div>
+                                    <div>
+                                      <img ng-src="{{userIcon}}">
+                                      <!-- <b>{{userInfo.username}}:</b> -->
+                                      <b>{{item.user}}:</b>
+                                      <span><small>{{item.date|date:'medium'}}</small></span>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+                            <div style="margin-top: 10px;">
+                              <textarea style="margin-bottom: 0px !important;" class="field" rows="2" cols="200" ng-model="UserComment.comment"
+                                value="UserComment" placeholder="Write here.."></textarea>
+                              <button style="margin-top: 10px;" class="btn btn-danger smll-btn-cmt" type="button" ng-click="AddUserComment(UserComment)">Add
+                                Comment</button>
+                            </div>
+                        </div>
+                      </div>
+                  
+                    </div>
+                  </div>
+                </div>
+                <!--CallTemplate Modal End  -->
                 <!--/Third Page-->
 
                 <!-- </div> -->
@@ -1619,90 +1769,6 @@
                         </div>
                         <div class="modal-body">
                           <div>
-
-                            <!-- <div>
-                                  <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
-                                  <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
-                                  <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black"><h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4></span><br>
-                                  <span ng-show="transactionalTemplateDropdown.typeofCustomer" style="color:black"><h4>Type of Customer:{{transactionalTemplateDropdown.typeofCustomer}}</h4></span><br>
-                                  <span ng-show="transactionalTemplateDropdown.category" style="color:black"><h4>Category:{{transactionalTemplateDropdown.category}}</h4></span><br>
-                                </div> -->
-                            <!-- <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
-                                  <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
-                                    {{form_name.leads_form_name}}</option>
-                                </select> -->
-                            <!-- <div class="top-select-option-mca">
-                                  <div class="row">
-                                    <div class="col-xs-12">
-                                      <div class="form-group">
-                                       
-                                        <select class="form-control"  name="category" id="category"
-                                          ng-model="category_code">
-                                          <option value="" disabled> Select Attribute</option>
-                                          <option>Updated At</option>
-                                          <option>Created At</option>
-          
-          
-          
-                                        </select>
-                                      </div>
-                                    </div>
-          
-          
-          
-                                  </div>
-                                </div> -->
-
-                            <!-- <div class="table" style="margin-top: 10px; margin-bottom: 10px;">
-          
-                              <table class="table">
-                                <thead>
-                                  <tr>
-          
-                                    <th>Index</th>
-                                    <th></th>
-                                    <th>User Name</th>
-                                    <th>Positive</th>
-                                    <th>Neutral</th>
-                                    <th>Negative</th>
-          
-          
-          
-                                  </tr>
-                                  <tr>
-                                    <td style="text-align: center;">1</td>
-                                    <td style="text-align: center;">5</td>
-                                    <td style="text-align: center;">100</td>
-                                    <td style="text-align: center;">200</td>
-                                    <td style="text-align: center;">200</td>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                              </table>
-          
-                            </div> -->
-                            <!-- <tr>
-                                  <td class="col-md-2">
-                                    <p class="input-group">
-                                      Select Start Date(Optional): <input type="date" class="form-control"
-                                        ng-model="emailCampaignLeadsModel.start_date" required>
-                                    </p>
-                                  </td>
-                                  <td class="col-md-2">
-                                    <p class="input-group">
-                                      Select End Date(Optional) : <input type="date" class="form-control"
-                                        ng-model="emailCampaignLeadsModel.end_date" required>
-                                    </p>
-                                  </td>
-                                  <td style="text-align: center; padding-top: 20px;">
-                                    <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()"
-                                        ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
-                                      <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
-                                        ng-disabled="!emailCampaignLeadsModel.leads_form_id"
-                                        ng-if="!submitLeadType">Download</button>
-                                  </td>
-                                </tr> -->
-
                             <div class="check-field" style="padding: 10px;">
                               <table class="table">
                                 <thead>

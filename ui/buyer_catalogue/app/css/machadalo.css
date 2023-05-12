@@ -941,8 +941,213 @@ header .topRight .top-menu {
 .suspense-lead-sheet-page .dashboard-tab h5{
   margin: 0;
 }
+.small-dropdown{
+  max-width: 250px;margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+}
+.d-flex{
+  display: flex;
+}
+.align-item-center{
+  align-items: center;
+}
+.b2b-dash-modal{
+  text-align: left;
+}
+.b2b-dash-modal h4{
+  font-size: 14px;    text-align: left;
+  margin: 5px 0px;
+}
+.pt-5{
+  padding-top: 5px;
+}
+.justify-content-between{
+  justify-content: space-between;
+}
+.font-14{
+  font-size: 14px;
+}
+.b2b-dash-modal table tr th, .b2b-dash-modal table tr td{
+  pad: 6px 10px ;
+}
+.text-left{
+  text-align: left;
+}
 @media screen and (max-width: 767px) {
   #SuspenseLeadsModel .modal-dialog,  #RequirementModel .modal-dialog{
     width: auto;
   }
+}
+
+.search-input-wrapper{
+  background-color: #fff !important;
+  border: 1px solid #cbcbcb;
+  border-radius: 5px;
+  width: 50%;
+}
+.search-input-wrapper input{
+  background-color: #fff !important;
+  margin: 0px 8px !important;
+}
+.theme-color{
+  background-color: #8e1921;
+  color: #fff;
+  padding: 8px 9px;
+  font-size: 19px !important;
+}
+.p-0{
+  padding: 0 ;
+}
+#TemplateModal .modal-header .close {
+  margin-top: 2px;
+  left: -9px;
+  color: #fff;
+  position: relative;
+}
+#TemplateModal .text-muted{
+  font-weight: 500 ;font-size: 13px;
+  padding-top: 3px;
+}
+h6.msg-title {
+  color: #8e1921 !important;
+  font-weight: 500 !important;
+}
+.templte-box-list {
+  padding: 3px 0px  !important;
+}
+.input-params{
+  padding: 8px
+}
+.input-params input{
+  border: 1px solid #e0e0e0;    padding: 6px 5px;
+  font-size: 13px;
+  border-radius: 3px;
+}
+.input-params .btn-primary{
+  padding: 3px 9px;
+  margin-left: 8px;
+  height: 30px;
+  top: -2px;
+  position: relative;
+}
+.param-div{
+  background-color: #ffd1d1;
+  padding: 9px 5px;
+  margin-bottom: 15px;
+}
+.param-list{
+  padding: 4px 6px;
+    max-width: 535px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.search-div input{
+  padding: 8px 9px  !important;
+}
+
+@media only screen and (max-width: 767px){
+.search-div .d-flex.f-div{
+  display: block;
+}
+
+.mobile-m-5{
+  margin-bottom: 15px !important;
+}
+.mobile-p-0{
+  padding: 0px !important;
+}
+.mobile-p-10 {
+  padding-bottom: 20px;
+}
+.db-nav-tab ul{
+  display: flex;
+  flex-direction: row;
+}
+}
+
+
+@media screen and (max-width: 1024px)
+{
+.al-main.b2b-dash {
+    padding-top: 70px !important;
+}
+.filter-box {
+  padding: 20px;
+}
+
+}
+.date_range_picker.date_range_picker_open{
+  right: 0;
+  /* display: block; */
+  transition: 0.3s ease;
+}
+.date_range_picker {
+  position: fixed;
+  background: #fff;
+  right: -101%;
+  top: 80px;
+  height: 100%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  padding: 20px;
+  transition: 0.3s ease;
+  max-width: 500px;
+  width: 100%;
+  color: #000;
+  overflow-y: scroll;
+  /* display: none; */
+}
+.filter-box .date_wrapper button.smallBtn.calendar {
+  position: absolute;
+  /* top: 6px; */
+  right: 10px;
+  top: auto;
+  bottom: 27px;
+}
+.filter-box h5 {
+  font-size: 15px;
+  padding: 0;
+  padding: 0 !important;
+  margin: 7px 00px !important;
+}
+.filter-box button.btn.btn-primary, .filter-box button.btn.btn-primary:hover, .filter-box button.btn.btn-primary:active, .filter-box button.btn.btn-primary:focus, .filter-box button.btn.btn-primary:target{  
+  background: #8e1921;
+  border-color: #8e1921;
+}
+.close-btn{
+  position: absolute;
+  right: 25px;
+  top: 14px;
+  font-size: 24px;
+}
+.multibox-filter-select .multiselect-parent{
+  width: 100%;
+}
+.multibox-filter-select .multiselect-parent .btn{
+  text-align: left;
+}
+.multibox-filter-select .multiselect-parent .btn .caret{
+  right: 14px;
+  position: absolute;
+  top: 20px;
+}
+.quick-call-model.modal-dialog{
+  max-width: 550px;
+}
+
+.quick-call-form {
+  padding: 25px;
+}
+.quick-call-form label{
+  padding-bottom: 5px;
+}
+.smll-btn-cmt{
+  padding: 5px 25px  !important;
+  width: 100%;
+  font-size: 14px  !important;
+}
+.align-items-center{
+  align-items: center;
 }

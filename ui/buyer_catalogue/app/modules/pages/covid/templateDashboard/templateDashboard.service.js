@@ -61,7 +61,37 @@ angular.module('catalogueApp')
       DashboardService.supplierFilterList = function(){
         let url ="v0/ui/b2c-bot/supliers-filter-list/";
         return machadaloHttp.get(url);
-      }  
+      }
+      
+      DashboardService.getCallStatusList = function(){
+        let url ="v0/ui/b2b/question-dropdown-filter/";
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.updateCallStatus =function(data){
+        let url = "v0/ui/template/update-call-status-template";
+        return machadaloHttp.post(url,data);
+      }
+
+      DashboardService.UpdateAddComments =function(data){
+        let url = "v0/ui/template/update-comment-template";
+        return machadaloHttp.post(url,data);
+      }
+
+      DashboardService.getDialerCallerIds = function(){
+        let url = "v0/ui/mca-bot/dailer-caller-ids/";
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.getDialerAgents = function(){
+        let url = "v0/ui/mca-bot/dailer-agents/";
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.postDataOnQuickCall = function(data){
+        let url = "v0/ui/mca-bot/dailer-call/";
+        return machadaloHttp.post(url,data);
+      }
 
       return DashboardService;
 

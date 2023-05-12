@@ -522,8 +522,8 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
       
-      DashboardService.listClientStatus = function () {
-        var url = url_root + "b2b/machadalo-client-status-list/";
+      DashboardService.listClientStatus = function (campaign_id) {
+        var url = url_root + "b2b/machadalo-client-status-list/?campaign_id="+campaign_id;
         return machadaloHttp.get(url);
       }
       
