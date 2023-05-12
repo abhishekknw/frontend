@@ -801,6 +801,11 @@
           .then(function onSuccess(response) {
             $scope.externalComment = response.data.data.external_comments;
           })
+        
+        B2BDashboardService.viewStatusFunnel(req_id)
+          .then(function onSuccess(response) {
+            $scope.StatusFunnel = response.data.data;
+          })
       }
 
 
