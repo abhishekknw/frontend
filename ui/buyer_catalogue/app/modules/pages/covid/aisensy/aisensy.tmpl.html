@@ -5016,15 +5016,7 @@
                   ng-change='getArea()' ng-required="true"
                   ng-options="city.id as city.city_name for city in Cities | orderBy: 'city_name'">
                 </select>
-                <!-- <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"
-                  ng-model="supplierForAddUpdateData.city_id" ng-required="true">
-                  <option value="" disabled>Select City</option>
-                  <option ng-repeat="city in Cities | orderBy: 'city_name'"
-                    ng-selected="supplierForAddUpdateData.city_id == city.id" value="{{city.id}}" required>
-                    {{city.city_name}}</option>
-                </select> -->
                 <span ng-show="myForm.city.$dirty && myForm.city.$invalid" class="error">Select a City</span>
-                <!-- </select> -->
               </div>
             </div>
 
@@ -5241,24 +5233,6 @@
                   minlength="3" ng-model="searchSociety" ng-change="getSupplierDataByNumber(false,searchSociety)">
               </div>
             </div>
-
-            <!-- <div class="row" ng-if="showSelectSocietyField">
-              <div class="col-md-4" style="margin-top: 10px">
-                <label> Select Society *: </label>
-              </div>
-              <div class="col-md-8" style="margin-top: 10px">
-                <select class="form-control" name="supplier_type" id="society_name"
-                  ng-model="Supplier_id"
-                  ng-change='getSupplierDataBySociety(Supplier_id)'>
-                  <option value="" disabled>Select Society</option>
-                  <option ng-repeat="society in societyNameList track by $index"
-                    value="{{society.supplier_id}}">
-                    {{society.society_name?society.society_name:society.supplier_name}}
-                  </option>
-                </select>
-              </div>
-            </div> -->
-
             <div class="row">
               <div class="col-md-4" style="margin-top: 10px">
                 <label>Select Society *:</label>

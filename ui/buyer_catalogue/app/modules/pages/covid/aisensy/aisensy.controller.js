@@ -247,6 +247,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
           $scope.showChatModule = true;
 
+          $scope.NewsupplierAddUpdateData = {};
+          $scope.newSupplierPocModel = [];
+          $scope.Supplier_id = "";
+          $scope.societyNameList = [];
+          $scope.newSelectedArea = [];
+          $scope.Areas = ""
+
           let param = {
             nextPage: 1,
             phoneNumber: value,
@@ -264,6 +271,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             .then(function onSuccess(response) {
               $scope.userDetailData = response.data.data;
               $scope.userChatPayload = $scope.userDetailData.payload;
+              $scope.NewsupplierAddUpdateData.phone_number = $scope.userDetailData.phone_number;
+              $scope.getSupplierDataByNumber($scope.userDetailData.phone_number);
             }).catch(function onError(response) {
               console.log(response);
             })
@@ -3046,19 +3055,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           data.data = $scope.NewsupplierAddUpdateData;
           AuthService.newAddUpdateSupplierSubmit(data)
             .then(function onSuccess(response) {
-
-              // $scope.NewsupplierAddUpdateData = {};
-              // $scope.newSupplierPocModel = [];
-              // $scope.Supplier_id = "";
-              // $scope.newSelectedArea = [];
-              // $scope.Areas = "";
-              // $scope.societyNameList = [];
               if (response && response.data.data.error) {
                 swal(constants.name, response.data.data.error, constants.error);
-                // $scope.NewsupplierAddUpdateData = {};
-                // $scope.newSupplierPocModel = [];
-                // $scope.newSelectedSupplierName = [];
-                // $scope.newSelectedArea = [];
               }
               else if (response.data.data.message) {
                 swal(constants.name, response.data.data.message, constants.success);
@@ -3092,6 +3090,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           AuthService.getSupplierDataByNumber(number, society)
             .then(function onSuccess(response) {
               $scope.societyNameList = response.data.data;
+              if($scope.societyNameList.length == 1){
+                $scope.getSupplierDataBySociety($scope.societyNameList[0].supplier_id);
+                $scope.Supplier_id = $scope.societyNameList[0].supplier_id;
+              }
             }).catch(function onError(response) {
               console.log(response);
             });
