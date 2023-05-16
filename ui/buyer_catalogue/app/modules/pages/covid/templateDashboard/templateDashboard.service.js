@@ -93,6 +93,11 @@ angular.module('catalogueApp')
         return machadaloHttp.post(url,data);
       }
 
+      DashboardService.DeleteTemplate = function(id){
+        let url = "v0/ui/mca-bot/dailer-call/?template_id="+id;
+        return machadaloHttp.delete(url);
+      }
+
       return DashboardService;
 
     }]);

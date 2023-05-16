@@ -6609,7 +6609,7 @@
           }).catch(function onError(response) {
             console.log(response);
           })
-          templateDashboardService.getDialerAgents()
+        templateDashboardService.getDialerAgents()
           .then(function onSuccess(response) {
             $scope.DialerAgentList = response.data.data;
             console.log($scope.DialerAgentList)
@@ -6623,7 +6623,7 @@
         $scope.viewComments = row;
         $('#CallTemplate').modal('show');
       }
-      
+
       $scope.updateCallStatus = function (status, row) {
         row.call_status = status
         templateDashboardService.updateCallStatus(row)
@@ -6661,7 +6661,7 @@
         }, 1000);
       }
 
-      $scope.OnQuickCall = function (data){
+      $scope.OnQuickCall = function (data) {
         templateDashboardService.postDataOnQuickCall(data)
           .then(function onSuccess(response) {
             swal("", response.data.data.message, constants.success);
@@ -6869,15 +6869,17 @@
           $scope.optineFileName = $scope.optinFile[0].name;
         }, 1);
       }
-      $scope.sendOptinUserFile = function () {
+      $scope.sendOptinUserFile = function (optinUserNumbers, FileCheckSelect) {
         let formdata = new FormData();
         let myHeaders = new Headers();
         myHeaders.append("Authorization", 'JWT ' + $rootScope.globals.currentUser.token)
-        formdata.append("excel_file", $scope.optinFile[0]);
+        formdata.append("excel_file", FileCheckSelect?$scope.optinFile[0]:"");
         let requestOptions = {
           headers: myHeaders,
           method: 'POST',
-          body: formdata,
+          body: FileCheckSelect ? formdata : JSON.stringify({
+            number_list: optinUserNumbers.split(','),
+          }),
           redirect: 'follow'
         };
         let url = Config.APIBaseUrl + "v0/ui/mca-bot/optin-users/";
@@ -6895,6 +6897,34 @@
             }
           })
           .catch(error => console.log('error', error));
+      }
+
+      $scope.deleteTemplate = function (data) {
+        swal({
+          title: 'Are you sure ?',
+          text: 'Delete Template',
+          type: constants.warning,
+          showCancelButton: true,
+          confirmButtonClass: "btn-success",
+          confirmButtonText: "Yes, Remove!",
+          closeOnConfirm: false,
+          closeOnCancel: true
+        },
+          function (confirm) {
+            if (confirm) {
+              templateDashboardService.DeleteTemplate(data.md_id)
+                .then(function onSuccess() {
+                  $scope.templateDetailData = $scope.templateDetailData.filter(object => {
+                    return object.md_id !== data.md_id;
+                  });
+                  swal(constants.name, constants.delete_success, constants.success);
+                }).catch(function onError(response) {
+                  console.log(response);
+                  swal(constants.name, constants.errorMsg, constants.error);
+                })
+            }
+          }
+        );
       }
 
       $scope.templateDetail();
