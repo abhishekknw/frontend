@@ -1744,10 +1744,6 @@
                           ng-model="formData.actionSearch" id="tab2search" name="search" type="text" />
                       </div>
                       <div class="select">
-                        <!-- <select ng-model="selectForAction" ng-change="selectedSupplier(selectForAction,'action')"
-                                ng-init="selectForAction = selectedFilterSupplier"
-                                ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
-                        </select> -->
                         <select ng-model="selectedFilterSupplier"
                           ng-change="selectedSupplier(selectedFilterSupplier,'action')"
                           ng-options="supplier.id as supplier.lable for supplier in supplierFilterList">
@@ -1764,11 +1760,7 @@
                               <td>
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
-
-                                  <!-- <div class="profile-image" style="float: left;">
-                                    {{user.whatsapp_name |firstlater}}
-                                  </div> -->
-
+                                  
                                   <div class="profile-image">
                                     <span ng-if="user.whatsapp_name!=''">
                                       {{user.whatsapp_name |firstlater}}</span>

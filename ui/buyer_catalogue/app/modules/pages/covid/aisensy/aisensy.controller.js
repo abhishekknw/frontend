@@ -345,6 +345,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.showChatModule = false;
           $scope.isUserProfile = false;
           $scope.messageBox = false;
+          $scope.NewsupplierAddUpdateData = {};
+          $scope.societyNameList = [];
+          $scope.Supplier_id = "";
         }
 
         $scope.writeMessage = function (data, tabValue) {
