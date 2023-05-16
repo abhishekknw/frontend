@@ -1602,18 +1602,27 @@
                           <th style="padding:10px">User Name</th>
                           <th style="padding:10px">What's app Name</th>
                           <th style="padding:10px">Phone Number</th>
-                          <th style="padding:10px">Positive</th>
-                          <th style="padding:10px">Neutral</th>
-                          <th style="padding:10px">Negative</th>
-                          <th style="padding:10px">Status</th>
-                          <!-- <th style="padding:10px">Created At</th> -->
-                          <th style="padding:10px;">Responsed At</th>
+                          <th style="padding:10px" ng-click="Sort('total_positive')">Positive
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px"  ng-click="Sort('total_neutral')">Neutral
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px"  ng-click="Sort('total_negative')">Negative
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px"  ng-click="Sort('status')">Status
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px;" ng-click="Sort('updated_at')">Responsed At
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px">Call Status</th>
                           <th style="padding:10px">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr dir-paginate=" tmp in transactionalTemplateUserData| itemsPerPage:itemsPerPage"
+                        <tr dir-paginate=" tmp in transactionalTemplateUserData| itemsPerPage:itemsPerPage | orderBy:sort:reversesort"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
 
                           <td style="text-align: center;">{{$index+serial}}</td>
