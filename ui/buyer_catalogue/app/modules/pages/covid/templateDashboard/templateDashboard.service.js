@@ -94,7 +94,7 @@ angular.module('catalogueApp')
       }
 
       DashboardService.DeleteTemplate = function(id){
-        let url = "v0/ui/mca-bot/dailer-call/?template_id="+id;
+        let url = "v0/ui/template/?md_id=" + id;
         return machadaloHttp.delete(url);
       }
 
