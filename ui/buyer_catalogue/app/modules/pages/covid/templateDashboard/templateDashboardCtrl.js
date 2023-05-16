@@ -6864,7 +6864,6 @@
 
       $scope.getOptinFiles = function (data) {
         $timeout(function () {
-          // $scope.excelColumnError = "";
           $scope.optinFile = data;
           $scope.optineFileName = $scope.optinFile[0].name;
         }, 1);
@@ -6899,6 +6898,12 @@
           .catch(error => console.log('error', error));
       }
 
+      $scope.removeOptinFiles = function(){
+        let fileElement = angular.element('#optinFile');
+        angular.element(fileElement).val(null);
+        $scope.optineFileName = "";
+        $scope.optinFile = "";
+      }    
       $scope.deleteTemplate = function (data) {
         swal({
           title: 'Are you sure ?',

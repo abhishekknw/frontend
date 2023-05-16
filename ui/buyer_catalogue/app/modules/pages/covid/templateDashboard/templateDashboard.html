@@ -464,14 +464,16 @@
                                     <b>Send Excel File : </b><input type="checkbox" ng-model="FileCheckSelect"><br /><br />
                                     <div style="padding:10px; border:1px solid black; width:100%; font-weight:bold" ng-show='FileCheckSelect'>
                                       <div class="chose-file">
-                                        <span style="color:#000;">{{optineFileName}}</span>
-                                        <input class="custom-file-input" type="file" name="file" size="60" multiple
+                                        <span style="color:#000;">
+                                          <span style='font-size:10px;' ng-if="optineFileName" ng-click="removeOptinFiles()">&#10060;</span>	&nbsp;{{optineFileName}}
+                                        </span>
+                                        <input class="custom-file-input" type="file" name="file" id="optinFile" size="60" ng-required="FileCheckSelect" multiple
                                           ng-files="getOptinFiles($files)" />
                                       </div>
                                     </div>
                                   </div>
                                   <div class="modal-s-input" ng-show='!FileCheckSelect'>
-                                    <input style="color:#000;width:100%;border:1px solid black;" type="text" ng-model="optinUserNumbers" placeholder="Enter Number , Separated" />
+                                    <input style="color:#000;width:100%;border:1px solid black;" type="text" ng-model="optinUserNumbers" placeholder="Enter Number , Separated" ng-required="!FileCheckSelect"/>
                                   </div>
                                   <div class="modal-footer text-center" style="border-top: 0px; padding: 0;">
                                     <button type="submit" style="margin-top: 10px;"
