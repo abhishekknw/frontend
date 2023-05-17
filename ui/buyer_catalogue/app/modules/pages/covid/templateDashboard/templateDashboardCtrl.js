@@ -6869,16 +6869,18 @@
         }, 1);
       }
       $scope.sendOptinUserFile = function (optinUserNumbers, FileCheckSelect) {
+        if (!FileCheckSelect) {
+          sendOptinUserNumber(optinUserNumbers);
+          return 0;
+        }
         let formdata = new FormData();
         let myHeaders = new Headers();
         myHeaders.append("Authorization", 'JWT ' + $rootScope.globals.currentUser.token)
-        formdata.append("excel_file", FileCheckSelect?$scope.optinFile[0]:"");
+        formdata.append("excel_file", $scope.optinFile[0]);
         let requestOptions = {
           headers: myHeaders,
           method: 'POST',
-          body: FileCheckSelect ? formdata : JSON.stringify({
-            number_list: optinUserNumbers.split(','),
-          }),
+          body: formdata,
           redirect: 'follow'
         };
         let url = Config.APIBaseUrl + "v0/ui/mca-bot/optin-users/";
@@ -6898,12 +6900,30 @@
           .catch(error => console.log('error', error));
       }
 
-      $scope.removeOptinFiles = function(){
+      let sendOptinUserNumber = function (data) {
+        let obj = { 'number_list': data.split(',') }
+        templateDashboardService.sendOptinuser(obj)
+          .then(function onSuccess(response) {
+            console.log(response.data.data);
+            let value = "Not opted in users:" + response.data.data["not opted in users"];
+            let value2 = "successfully opted in users:" + response.data.data["successfully opted in users"];
+            if (response.data.status) {
+              swal(constants.name, value + '\n' + value2, constants.success);
+            }
+            else {
+              swal(constants.name, response.data.data.general_error.errors, constants.error);
+            }
+          }).catch(function onError(response) {
+            swal(constants.name, constants.errorMsg, constants.error);
+          })
+      }
+
+      $scope.removeOptinFiles = function () {
         let fileElement = angular.element('#optinFile');
         angular.element(fileElement).val(null);
         $scope.optineFileName = "";
         $scope.optinFile = "";
-      }    
+      }
       $scope.deleteTemplate = function (data) {
         swal({
           title: 'Are you sure ?',
