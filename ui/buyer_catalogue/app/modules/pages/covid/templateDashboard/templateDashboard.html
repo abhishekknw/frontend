@@ -431,35 +431,30 @@
                                       <button ng-if="!checkForLoader" type="button" class="btn btn-danger"
                                         value="Upload" ng-click="uploadSendTemplate()">Send</button>
                                       <button ng-if="checkForLoader" type="button" class="btn btn-danger" value="Upload"
-                                        disabled>
-                                        <i class="fa fa-spinner fa-spin"
-                                          style="margin-left: -10px; margin-right:4px;"></i>Send</button>
+                                        disabled><i class="fa fa-spinner fa-spin"
+                                        style="margin-left: -10px; margin-right:4px;"></i>Send</button>
                                     </div>
-                                   
-                                  </div>
-
-
+                                    <div style="text-align: left; padding-left: 23px; padding-top:5px;">
+                                      {{selectedFileName}}</div>
+                                    <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
+                                      {{excelColumnError}}</div>
+                                  <div>
                                     <div class="input-params send-text-box" >
                                       <label>Parameters:</label>
                                       <div class="param-div">
-                                        <p class="param-list">Text</p>
+                                        <p class="param-list">{{templateData.param.toString()}}</p>
                                       </div>
-                                      <form name="parameters" ng-submit="setSendTemplateParams(sendTemplateParams,list)">
-                                        <input type="text" placeholder="Phone Number" style=" margin-bottom: 10px;" />
-                                        <input type="text" ng-model=  "sendTemplateParams" name="sendTemplateParams" required/>
-                                        <button class="btn btn-primary" type="submit">Send</button>
-                                       
+                                      <form name="parameters">
+                                        <input type="text" placeholder="Phone Number" style="margin-bottom: 10px;" ng-model="sendTemplateModel.phone_number" required/>
+                                        <input type="text" ng-model="sendTemplateModel.params" name="sendTemplateParams" placeholder="Entert Params" required/>
+                                        <p style="font-weight: 600;color: #000;"><span>Note: </span> Enter Param With (,) Separated</p>
+                                        <button class="btn btn-primary" type="submit" ng-Click="setSendTemplateParams(sendTemplateModel,templateData)">Send</button>
                                       </form>
-                                      <p><span style="font-weight: 600;">Note: </span> Enter Param With (,) Separated</p>
                                     </div> 
                                     <!-- <div class="col-sm-7" style="text-align: right;">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                     </div> -->
                                   </div>
-                                  <div style="text-align: left; padding-left: 23px; padding-top:5px;">
-                                    {{selectedFileName}}</div>
-                                  <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
-                                    {{excelColumnError}}</div>
                                 </div>
                               </div>
                             </form>
