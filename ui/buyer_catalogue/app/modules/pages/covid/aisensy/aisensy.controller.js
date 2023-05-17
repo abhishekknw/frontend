@@ -2012,6 +2012,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         swal(constants.name, response.data.data.error, constants.error);
                       }
                       else {
+                        $scope.opsVerifiedValidation.phoneNumber = "";
                         $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
                         swal(constants.name, response.data.data.message, constants.success);
                       }
@@ -2191,6 +2192,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                       else {
                         swal(constants.name, constants.save_success, constants.success);
                         if ($scope.new_data_check == true) {
+                          $scope.opsVerifiedValidation.phoneNumber = "";
                           $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
                           $scope.SelectedCompany = [];
                           $scope.countBrowsedRow = false;
@@ -2847,6 +2849,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 swal(constants.name, response.data.data.error, constants.error);
               }
               else {
+                $scope.opsVerifiedValidation.phoneNumber = "";
                 $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
                 $scope.newRequirement = {};
                 $scope.NewcountBrowsedRow = false;
