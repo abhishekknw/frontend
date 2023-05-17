@@ -1266,6 +1266,38 @@ h6.msg-title {
   margin-right: 50px;
   padding: 10px 4px  ;
 }
+ .send-text-box {
+  text-align: left;
+  margin-top: 50px;
+ }
+.send-text-box .param-div{
+
+}
+.send-text-box  .param-list{
+  color: #000 !important;
+
+}
+/* .send-text-box .param-div{
+  background-color: #fff !important;
+  border: 1px solid #ccc;
+} */
+.send-text-box label{
+  text-align: left;
+}
+.send-text-box .param-list{
+  min-height: 20px;
+  text-align: left;
+  color: #000;
+}
+.send-text-box.input-params input{
+  border: 1px solid #000;
+  display: block;
+  width: 50%;
+}
+.send-text-box.input-params button{
+  margin-top: 10px;
+  margin-left: 0;
+}
 /* iPhone X ----------------------------------- */
 @media only screen and (device-width : 375px) and (device-height : 812px) and (-webkit-device-pixel-ratio : 3) {
    .subline:before {top: -43px;}
