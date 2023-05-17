@@ -85,6 +85,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.NewaddRemoveBtn = "Add row";
           $scope.supplierTypeUndefined = "supplier not found";
           $scope.newRequirement = {};
+          $scope.opsVerifiedValidation.phoneNumber = "";
 
           let param = {
             next_page: 1
@@ -164,6 +165,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.formData.activesearch = '';
           $scope.showChatModule = false;
           $scope.showfilterDetail = false;
+          $scope.opsVerifiedValidation.phoneNumber = "";
           let param = {
             next_page: 1,
           }
@@ -201,6 +203,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.formData.activesearch = '';
           $scope.showChatModule = false;
           $scope.showfilterDetail = false;
+          $scope.opsVerifiedValidation.phoneNumber = "";
           let param = {
             next_page: 1
           }
@@ -506,6 +509,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         $scope.historyDetailTab = function(){
           $scope.selectForHistory = '';
+          $scope.opsVerifiedValidation.phoneNumber = "";
           $scope.historyDetail();
         }
 
