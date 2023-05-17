@@ -438,7 +438,7 @@
                                       {{selectedFileName}}</div>
                                     <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
                                       {{excelColumnError}}</div>
-                                  <div>
+                                  </div>
                                     <div class="input-params send-text-box" >
                                       <label>Parameters:</label>
                                       <div class="param-div">
@@ -448,7 +448,7 @@
                                         <input type="text" placeholder="Phone Number" style="margin-bottom: 10px;" ng-model="sendTemplateModel.phone_number" required/>
                                         <input type="text" ng-model="sendTemplateModel.params" name="sendTemplateParams" placeholder="Entert Params" required/>
                                         <p style="font-weight: 600;color: #000;"><span>Note: </span> Enter Param With (,) Separated</p>
-                                        <button class="btn btn-primary" type="submit" ng-Click="setSendTemplateParams(sendTemplateModel,templateData)">Send</button>
+                                        <button class="btn btn-primary" type="submit" ng-click="setSendTemplateParams(sendTemplateModel,templateData)">Send</button>
                                       </form>
                                     </div> 
                                     <!-- <div class="col-sm-7" style="text-align: right;">
