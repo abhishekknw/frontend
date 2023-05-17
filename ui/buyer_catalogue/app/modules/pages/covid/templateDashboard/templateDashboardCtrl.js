@@ -6609,7 +6609,7 @@
           }).catch(function onError(response) {
             console.log(response);
           })
-          templateDashboardService.getDialerAgents()
+        templateDashboardService.getDialerAgents()
           .then(function onSuccess(response) {
             $scope.DialerAgentList = response.data.data;
             console.log($scope.DialerAgentList)
@@ -6623,7 +6623,7 @@
         $scope.viewComments = row;
         $('#CallTemplate').modal('show');
       }
-      
+
       $scope.updateCallStatus = function (status, row) {
         row.call_status = status
         templateDashboardService.updateCallStatus(row)
@@ -6661,7 +6661,7 @@
         }, 1000);
       }
 
-      $scope.OnQuickCall = function (data){
+      $scope.OnQuickCall = function (data) {
         templateDashboardService.postDataOnQuickCall(data)
           .then(function onSuccess(response) {
             swal("", response.data.data.message, constants.success);
@@ -6864,12 +6864,15 @@
 
       $scope.getOptinFiles = function (data) {
         $timeout(function () {
-          // $scope.excelColumnError = "";
           $scope.optinFile = data;
           $scope.optineFileName = $scope.optinFile[0].name;
         }, 1);
       }
-      $scope.sendOptinUserFile = function () {
+      $scope.sendOptinUserFile = function (optinUserNumbers, FileCheckSelect) {
+        if (!FileCheckSelect) {
+          sendOptinUserNumber(optinUserNumbers);
+          return 0;
+        }
         let formdata = new FormData();
         let myHeaders = new Headers();
         myHeaders.append("Authorization", 'JWT ' + $rootScope.globals.currentUser.token)
@@ -6895,6 +6898,58 @@
             }
           })
           .catch(error => console.log('error', error));
+      }
+
+      let sendOptinUserNumber = function (data) {
+        let obj = { 'number_list': data.split(',') }
+        templateDashboardService.sendOptinuser(obj)
+          .then(function onSuccess(response) {
+            console.log(response.data.data);
+            let value = "Not opted in users:" + response.data.data["not opted in users"];
+            let value2 = "successfully opted in users:" + response.data.data["successfully opted in users"];
+            if (response.data.status) {
+              swal(constants.name, value + '\n' + value2, constants.success);
+            }
+            else {
+              swal(constants.name, response.data.data.general_error.errors, constants.error);
+            }
+          }).catch(function onError(response) {
+            swal(constants.name, constants.errorMsg, constants.error);
+          })
+      }
+
+      $scope.removeOptinFiles = function () {
+        let fileElement = angular.element('#optinFile');
+        angular.element(fileElement).val(null);
+        $scope.optineFileName = "";
+        $scope.optinFile = "";
+      }
+      $scope.deleteTemplate = function (data) {
+        swal({
+          title: 'Are you sure ?',
+          text: 'Delete Template',
+          type: constants.warning,
+          showCancelButton: true,
+          confirmButtonClass: "btn-success",
+          confirmButtonText: "Yes, Remove!",
+          closeOnConfirm: false,
+          closeOnCancel: true
+        },
+          function (confirm) {
+            if (confirm) {
+              templateDashboardService.DeleteTemplate(data.md_id)
+                .then(function onSuccess() {
+                  $scope.templateDetailData = $scope.templateDetailData.filter(object => {
+                    return object.md_id !== data.md_id;
+                  });
+                  swal(constants.name, constants.delete_success, constants.success);
+                }).catch(function onError(response) {
+                  console.log(response);
+                  swal(constants.name, constants.errorMsg, constants.error);
+                })
+            }
+          }
+        );
       }
 
       $scope.templateDetail();

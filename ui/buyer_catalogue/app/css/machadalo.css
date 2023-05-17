@@ -1256,6 +1256,16 @@ h6.msg-title {
 	background-color: #ececec;
 	cursor: pointer;
 }
+.justify-content-center{
+  justify-content: center;
+}
+.modal-s-input{
+  margin-bottom: 10px
+}
+.modal-s-input input{
+  margin-right: 50px;
+  padding: 10px 4px  ;
+}
 /* iPhone X ----------------------------------- */
 @media only screen and (device-width : 375px) and (device-height : 812px) and (-webkit-device-pixel-ratio : 3) {
    .subline:before {top: -43px;}

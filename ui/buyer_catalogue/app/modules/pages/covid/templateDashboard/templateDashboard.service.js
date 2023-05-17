@@ -93,6 +93,16 @@ angular.module('catalogueApp')
         return machadaloHttp.post(url,data);
       }
 
+      DashboardService.DeleteTemplate = function(id){
+        let url = "v0/ui/template/?md_id=" + id;
+        return machadaloHttp.delete(url);
+      }
+
+      DashboardService.sendOptinuser = function(data){
+        let url = "v0/ui/mca-bot/optin-users/";
+        return machadaloHttp.post(url,data);
+      }
+
       return DashboardService;
 
     }]);
