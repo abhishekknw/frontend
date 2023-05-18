@@ -85,6 +85,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.NewaddRemoveBtn = "Add row";
           $scope.supplierTypeUndefined = "supplier not found";
           $scope.newRequirement = {};
+          $scope.opsVerifiedValidation.phoneNumber = "";
 
           let param = {
             next_page: 1
@@ -164,6 +165,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.formData.activesearch = '';
           $scope.showChatModule = false;
           $scope.showfilterDetail = false;
+          $scope.opsVerifiedValidation.phoneNumber = "";
           let param = {
             next_page: 1,
           }
@@ -201,6 +203,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.formData.activesearch = '';
           $scope.showChatModule = false;
           $scope.showfilterDetail = false;
+          $scope.opsVerifiedValidation.phoneNumber = "";
           let param = {
             next_page: 1
           }
@@ -506,6 +509,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         $scope.historyDetailTab = function(){
           $scope.selectForHistory = '';
+          $scope.opsVerifiedValidation.phoneNumber = "";
           $scope.historyDetail();
         }
 
@@ -2012,6 +2016,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         swal(constants.name, response.data.data.error, constants.error);
                       }
                       else {
+                        $scope.opsVerifiedValidation.phoneNumber = "";
                         $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
                         swal(constants.name, response.data.data.message, constants.success);
                       }
@@ -2191,6 +2196,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                       else {
                         swal(constants.name, constants.save_success, constants.success);
                         if ($scope.new_data_check == true) {
+                          $scope.opsVerifiedValidation.phoneNumber = "";
                           $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
                           $scope.SelectedCompany = [];
                           $scope.countBrowsedRow = false;
@@ -2847,6 +2853,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 swal(constants.name, response.data.data.error, constants.error);
               }
               else {
+                $scope.opsVerifiedValidation.phoneNumber = "";
                 $scope.opsVerified($scope.phoneNumber, $scope.supplierId, $scope.userChatPayload.type_of_entity);
                 $scope.newRequirement = {};
                 $scope.NewcountBrowsedRow = false;

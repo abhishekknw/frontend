@@ -716,6 +716,7 @@
       $scope.show1 = false;
       $scope.sendTemplates = function (templateData, message, id, template, name, md_id) {
         $scope.templateData = templateData;
+        console.log($scope.templateData,"$scope.templateData");
         $scope.templateName = name;
         $scope.selectedFileName = "";
         $scope.excelColumnError = "";
@@ -6951,7 +6952,23 @@
           }
         );
       }
-
+      $scope.sendTemplateModel = {"params":'',"phone_number":''};
+      $scope.setSendTemplateParams = function(data,templateData){
+        let payload = [{
+          'template_id':templateData.id,
+          'phone_number':data.phone_number,
+          'params':data.params.split(','),
+          'default_params':templateData.param
+        }];
+        AuthService.sendTemplateToUser(payload)
+        .then(function onSuccess(response) {
+          swal("Success",'Sent successfully', constants.success);
+          $scope.sendTemplateModel = {"params":'',"phone_number":''};
+        }).catch(function onError(response) {
+          console.log(response);
+          swal("Error", constants.errorMsg, constants.error);
+        })
+      }
       $scope.templateDetail();
       // Template Dashboard end
 

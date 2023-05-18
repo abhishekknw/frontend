@@ -380,9 +380,9 @@
                                 {{templateData.data}}
                               </div>
                               <div>
-                                <button style="width: 70px;">{{templateData.button[0].name}}</button>
-                                <button style="width:70px">{{templateData.button[1].name}}</button>
-                                <button style="width:70px">{{templateData.button[2].name}}</button>
+                                <button style="width:100px;" ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
+                                <button style="width:100px" ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
+                                <button style="width:100px" ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
                               </div>
                             </div>
                             <!-- Modal footer -->
@@ -409,15 +409,16 @@
                                   {{message}}
                                 </div>
                                 <div>
-                                  <button style="width: 70px;">{{templateData.button[0].name}}</button>
-                                  <button style="width:70px">{{templateData.button[1].name}}</button>
-                                  <button style="width:70px">{{templateData.button[2].name}}</button>
+                                  <button style="width:100px;" ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
+                                  <button style="width:100px" ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
+                                  <button style="width:100px" ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
                                 </div>
                               </div>
                               <div class="modal-footer">
                                 <div class="row clearfix">
                                   <div class="clearfix">
-                                    <div class="col-sm-3">
+                                    <div >
+                                    <div class="col-sm-3" >
                                       <div style="position: relative; text-align: left; height: 38px;">
                                         <input class="btn btn-danger"
                                           style="position: absolute; z-index: 16; opacity: 0; width:123px; cursor: pointer;"
@@ -430,18 +431,30 @@
                                       <button ng-if="!checkForLoader" type="button" class="btn btn-danger"
                                         value="Upload" ng-click="uploadSendTemplate()">Send</button>
                                       <button ng-if="checkForLoader" type="button" class="btn btn-danger" value="Upload"
-                                        disabled>
-                                        <i class="fa fa-spinner fa-spin"
-                                          style="margin-left: -10px; margin-right:4px;"></i>Send</button>
+                                        disabled><i class="fa fa-spinner fa-spin"
+                                        style="margin-left: -10px; margin-right:4px;"></i>Send</button>
                                     </div>
-                                    <div class="col-sm-7" style="text-align: right;">
-                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div>
+                                    <div style="text-align: left; padding-left: 23px; padding-top:5px;">
+                                      {{selectedFileName}}</div>
+                                    <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
+                                      {{excelColumnError}}</div>
                                   </div>
-                                  <div style="text-align: left; padding-left: 23px; padding-top:5px;">
-                                    {{selectedFileName}}</div>
-                                  <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
-                                    {{excelColumnError}}</div>
+                                    <div class="input-params send-text-box" >
+                                      <label>Parameters:</label>
+                                      <div class="param-div">
+                                        <p class="param-list">{{templateData.param.toString()}}</p>
+                                      </div>
+                                      <form name="parameters">
+                                        <input type="text" placeholder="Phone Number" style="margin-bottom: 10px;" ng-model="sendTemplateModel.phone_number" required/>
+                                        <input type="text" ng-model="sendTemplateModel.params" name="sendTemplateParams" placeholder="Entert Params" required/>
+                                        <p style="font-weight: 600;color: #000;"><span>Note: </span> Enter Param With (,) Separated</p>
+                                        <button class="btn btn-primary" type="submit" ng-click="setSendTemplateParams(sendTemplateModel,templateData)">Send</button>
+                                      </form>
+                                    </div> 
+                                    <!-- <div class="col-sm-7" style="text-align: right;">
+                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div> -->
+                                  </div>
                                 </div>
                               </div>
                             </form>
