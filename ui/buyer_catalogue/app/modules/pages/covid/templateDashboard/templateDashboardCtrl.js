@@ -6554,7 +6554,7 @@
           })
       }
 
-      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search) {
+      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search,sortingObj) {
         $scope.viewUserSummary()
         $scope.user_view = {
           template_id: value,
@@ -6568,9 +6568,9 @@
           template_id: value,
           date: date,
           next_page: 1,
-          search: search
+          search: search,
         }
-
+        Object.assign(param, sortingObj);
         if (!search) {
           param.search = ""
         }
@@ -6968,6 +6968,24 @@
           console.log(response);
           swal("Error", constants.errorMsg, constants.error);
         })
+      }
+
+      $scope.paramsForSorting = {'buttonName':'null','sort':'no'};
+      $scope.SortFromBackend = function(type){
+        if(type == 'total_positive'){
+          $scope.paramsForSorting.sort = $scope.paramsForSorting.sort=='no'?'yes':'no';
+          $scope.paramsForSorting.buttonName = 'positive';
+        }
+        else if(type == 'total_neutral'){
+          $scope.paramsForSorting.sort = $scope.paramsForSorting.sort=='no'?'yes':'no';
+          $scope.paramsForSorting.buttonName = 'neutral';
+        }
+        else if(type == 'total_negative'){
+          $scope.paramsForSorting.sort = $scope.paramsForSorting.sort=='no'?'yes':'no';
+          $scope.paramsForSorting.buttonName = 'negative';
+        }
+      $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id , $scope.user_view.sent_date, $scope.user_view.page, $scope.user_view.template_name, $scope.user_view.search,$scope.paramsForSorting); 
+      console.log($scope.paramsForSorting,"$scope.paramsForSorting")  
       }
       $scope.templateDetail();
       // Template Dashboard end
