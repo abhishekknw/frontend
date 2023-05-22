@@ -6984,8 +6984,7 @@
           $scope.paramsForSorting.sort = $scope.paramsForSorting.sort=='no'?'yes':'no';
           $scope.paramsForSorting.buttonName = 'negative';
         }
-      $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id , $scope.user_view.sent_date, $scope.user_view.page, $scope.user_view.template_name, $scope.user_view.search,$scope.paramsForSorting); 
-      console.log($scope.paramsForSorting,"$scope.paramsForSorting")  
+      $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id , $scope.user_view.sent_date, null, $scope.user_view.template_name, $scope.user_view.search,$scope.paramsForSorting); 
       }
       $scope.templateDetail();
       // Template Dashboard end
