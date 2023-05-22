@@ -1423,8 +1423,12 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <!-- <tbody dir-paginate="campaign in leadsDataCampaigns | itemsPerPage:20"
+                          total-items="paginationForCampaign.totalItems" current-page="paginationForCampaign.currentPage"  pagination-id="paginate2" track by "$index"> -->
                           <tr style="text-align: center;"
-                            dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:50 track by $index ">
+                            dir-paginate="campaign in CampaignDataList | itemsPerPage:20" 
+                            total-items="paginationForCampaign.totalItems" current-page="paginationForCampaign.currentPage"  pagination-id="paginate2"
+                            track by "$index">
                             <td style="width:62px;">{{$index + 1}}</td>
                             <td style="width:140px;" class="col-md-2">{{campaign.name}}</td>
                             <td style="width:140px;">{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
@@ -1449,6 +1453,11 @@
                         </tbody>
                       </table>
                     </div>
+                  </div>
+                  <div style="text-align:center">
+                    <dir-pagination-controls pagination-id="paginate2"  max-size="7" direction-links="true"
+                      boundary-links="true" on-page-change="pageChangedCampaigns(newPageNumber)">
+                    </dir-pagination-controls>
                   </div>
                   <!-- fiter -->
                   <!-- <div ng-if="!showCampaigns && !leadBasicShow" class="date_range_picker">
