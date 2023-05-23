@@ -674,6 +674,7 @@
               'currentPage': 1,
               'totalItems': $scope.leadsDataCampaigns.length,
             }
+            $scope.pageChangedCampaigns(1);
           })
       }
       $scope.pageChangedCampaigns = function(p){
@@ -3587,6 +3588,7 @@
               'currentPage': 1,
               'totalItems': $scope.leadsDataCampaigns.length,
             }
+            $scope.pageChangedCampaigns(1);
             cfpLoadingBar.complete();  
           }).catch(function onError(response) {
             console.log(response);
