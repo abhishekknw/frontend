@@ -939,5 +939,20 @@ angular.module('Authentication')
                return machadaloHttp.post(url, data);
             };
 
+            authService.getDialerCallerIds = function(){
+               let url = "v0/ui/mca-bot/dailer-caller-ids/";
+               return machadaloHttp.get(url);
+             }
+       
+             authService.getDialerAgents = function(){
+               let url = "v0/ui/mca-bot/dailer-agents/";
+               return machadaloHttp.get(url);
+             }
+
+             authService.postDataOnQuickCall = function(data){
+               let url = "v0/ui/mca-bot/dailer-call/";
+               return machadaloHttp.post(url,data);
+             }
+
             return authService;
          }])
