@@ -654,12 +654,12 @@
       }
       $scope.getCampaigns = function (tabName) {
         $scope.tabName = tabName;
-        cfpLoadingBar.start();
         $scope.conditionForTable = false;
         $scope.showSupplierTypeCountChart = false;
         $scope.selectedBookingCampaignName = undefined;
         $scope.showTableForAllCampaignDisplay = false;
         $scope.leadBasicShow = false;
+        $scope.filterType = 'Leads';
         $scope.viewCampaignLeads(tabName);
 
       }
@@ -674,6 +674,7 @@
               'currentPage': 1,
               'totalItems': $scope.leadsDataCampaigns.length,
             }
+            $scope.pageChangedCampaigns(1);
           })
       }
       $scope.pageChangedCampaigns = function(p){
@@ -697,7 +698,7 @@
         $scope.showTable = true;
         $scope.showCampaigns = true;
         $scope.leadBasics (tabName);
-        $scope.surveyLeadFilter('Leads');
+        // $scope.surveyLeadFilter('Leads');
         $scope.viewClientStatus();
       }
 
@@ -3587,9 +3588,11 @@
               'currentPage': 1,
               'totalItems': $scope.leadsDataCampaigns.length,
             }
+            $scope.pageChangedCampaigns(1);
             cfpLoadingBar.complete();  
           }).catch(function onError(response) {
             console.log(response);
+            cfpLoadingBar.complete();  
           })
       }
       $scope.viewLeadsForSelectedCampaign = function (data,campaignId,page,city,startDate,endDate,search) {
