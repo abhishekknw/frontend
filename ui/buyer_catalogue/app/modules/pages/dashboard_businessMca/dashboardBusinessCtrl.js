@@ -670,7 +670,22 @@
         B2BDashboardService.basicCampaignList(tabName)
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
+            $scope.paginationForCampaign = {
+              'currentPage': 1,
+              'totalItems': $scope.leadsDataCampaigns.length,
+            }
           })
+      }
+      $scope.pageChangedCampaigns = function(p){
+        $scope.CampaignDataList = [];
+        $scope.paginationForCampaign.currentPage = p;
+        let start= (p-1)*20;
+        let end = start+20;
+            for (let i=start;i<end;i++){
+              if($scope.leadsDataCampaigns[i]){
+                $scope.CampaignDataList.push( $scope.leadsDataCampaigns[i]);
+              }
+            }
       }
       $scope.optionNewTab = function (tabName) {
         $scope.tabName = tabName;
@@ -3568,6 +3583,10 @@
         B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code, "admin",tabName)
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
+            $scope.paginationForCampaign = {
+              'currentPage': 1,
+              'totalItems': $scope.leadsDataCampaigns.length,
+            }
             cfpLoadingBar.complete();  
           }).catch(function onError(response) {
             console.log(response);

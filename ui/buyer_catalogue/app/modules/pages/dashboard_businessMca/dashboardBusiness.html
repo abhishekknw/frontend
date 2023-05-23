@@ -1423,8 +1423,12 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <!-- <tbody dir-paginate="campaign in leadsDataCampaigns | itemsPerPage:20"
+                          total-items="paginationForCampaign.totalItems" current-page="paginationForCampaign.currentPage"  pagination-id="paginate2" track by "$index"> -->
                           <tr style="text-align: center;"
-                            dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:50 track by $index ">
+                            dir-paginate="campaign in CampaignDataList | itemsPerPage:20" 
+                            total-items="paginationForCampaign.totalItems" current-page="paginationForCampaign.currentPage"  pagination-id="paginate2"
+                            track by "$index">
                             <td style="width:62px;">{{$index + 1}}</td>
                             <td style="width:140px;" class="col-md-2">{{campaign.name}}</td>
                             <td style="width:140px;">{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
@@ -1450,8 +1454,13 @@
                       </table>
                     </div>
                   </div>
+                  <div style="text-align:center">
+                    <dir-pagination-controls pagination-id="paginate2"  max-size="7" direction-links="true"
+                      boundary-links="true" on-page-change="pageChangedCampaigns(newPageNumber)">
+                    </dir-pagination-controls>
+                  </div>
                   <!-- fiter -->
-                  <div ng-if="!showCampaigns && !leadBasicShow" class="date_range_picker">
+                  <!-- <div ng-if="!showCampaigns && !leadBasicShow" class="date_range_picker">
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="row">
@@ -1505,9 +1514,18 @@
                     <center>
                       <h2 style="color: black;">Leads of {{CampaignNameofLeads}}</h2>
                     </center>
-                  </div>
+                  </div> -->
                   <div class="viewLeadstable" ng-if="!showCampaigns && !leadBasicShow">
                     </br><br>
+                    <div style="margin-top: 20px;">
+                      <center>
+                        <h2 style="color: black; margin: 0;">Leads of {{CampaignNameofLeads}}</h2>
+                      </center>
+                      <span style="display: block;margin: 5px; max-width: 300px;margin-left: auto;">
+                        <input type="text" class="form-control" ng-model="searchForLead"
+                          ng-keyup="searchForDetails(searchForLead)" placeholder="search">
+                      </span>
+                    </div>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -1600,7 +1618,7 @@
 
                   </div>
                   <!-- table for lead basic -->
-                  <div ng-if="leadBasicShow==true && showTable==true" class="date_range_picker">
+                  <!-- <div ng-if="leadBasicShow==true && showTable==true" class="date_range_picker">
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="row">
@@ -1647,16 +1665,17 @@
                         </div>
                       </div>
                     </div>
-                    <span style="display: block;margin: 15px;">
-                      <input type="text" class="form-control" ng-model="searchForLead"
-                        ng-keyup="searchForDetails(searchForLead)" placeholder="search">
-                    </span>
-                    <center>
-                      <h2 style="color: black;">Leads of {{CampaignNameofLeads}}</h2>
-                    </center>
-                  </div>
+                  </div> -->
                   <div class="" ng-if="leadBasicShow==true && showTable==true">
-                    </br><br>
+                    <div style="margin-top: 20px;">
+                      <center>
+                        <h2 style="color: black; margin: 0;">Leads of {{CampaignNameofLeads}}</h2>
+                      </center>
+                      <span style="display: block;margin: 5px; max-width: 300px;margin-left: auto;">
+                        <input type="text" class="form-control" ng-model="searchForLead"
+                          ng-keyup="searchForDetails(searchForLead)" placeholder="search">
+                      </span>
+                    </div>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>

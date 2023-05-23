@@ -28,8 +28,9 @@ angular.module('catalogueApp')
       DashboardService.transactionalTemplateUserDetail = function (param){
         let url="v0/ui/mca-bot/template-user-summary-list/?template_id="+ param.template_id+ 
                 "&date="+param.date+"&next_page="+param.next_page+"&search="+param.search;
- 
-
+        if(param.buttonName!==undefined){
+          url+= `&${param.buttonName}=`+param.sort;
+        }
         return machadaloHttp.get( url);
 
       }
