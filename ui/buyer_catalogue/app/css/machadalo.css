@@ -1321,3 +1321,19 @@ h6.msg-title {
 @media (max-width: 480px){
    .subline:before {top: -43px;}
 }
+.call-modal .modal-dialog{
+  width: 320px;
+}
+.call-modal .modal-header{
+  background-color: #8e1921;
+  color: #FFFFFF;
+}
+
+.call-modal  .modal-header .close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #fff;
+  opacity: 1;
+  text-shadow: none;
+}
