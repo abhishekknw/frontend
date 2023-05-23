@@ -3877,8 +3877,15 @@
                           {{lead_L4}}
                         </option>
                         <option ng-if="leads_Data_1.L4.length==0" selected="true" value="NA">NA</option>
-
                       </select>
+                      <div class="tool-tip" ng-init="tips1=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tips1=true" ng-mouseleave="tips1=false"></i>
+                          <div ng-show="tips1" class="tool-popup">
+                            <div>{{leads_Data_1['L4 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
                     <td class="alignment">
                       <select class="form-control" name="lead_L5" id="lead_L5" ng-model="subrequirement.L5"
@@ -3888,6 +3895,14 @@
                         </option>
                         <option ng-if="leads_Data_1.L5.length==0" selected="true" value="NA">NA</option>
                       </select>
+                      <div class="tool-tip" ng-init="tips2=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tips2=true" ng-mouseleave="tips2=false"></i>
+                          <div ng-show="tips2" class="tool-popup">
+                            <div>{{leads_Data_1['L5 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
 
                     <td class="alignment">
@@ -3898,6 +3913,14 @@
                         </option>
                         <option ng-if="leads_Data_1.L6.length==0" selected="true" value="NA">NA</option>
                       </select>
+                      <div class="tool-tip" ng-init="tips3=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tips3=true" ng-mouseleave="tips3=false"></i>
+                          <div ng-show="tips3" class="tool-popup">
+                            <div>{{leads_Data_1['L6 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
                     <td class="alignment">
                       {{subrequirement.lead_status}}
@@ -4047,7 +4070,15 @@
                         <option ng-repeat="lead_L4 in leads_Data_1.L4" value="{{lead_L4}}">
                           {{lead_L4}}
                         </option>
-
+                       </select> 
+                       <div class="tool-tip" ng-init="tipsL4=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tipsL4=true" ng-mouseleave="tipsL4=false"></i>
+                          <div ng-show="tipsL4 && leads_Data_1['L4 question'].length>0" class="tool-popup" style="position: inherit;">
+                            <div>{{leads_Data_1['L4 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
 
                     <td class="alignment">
@@ -4055,8 +4086,16 @@
                         <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L5 in leads_Data_1.L5" value="{{lead_L5}}">
                           {{lead_L5}}
-                        </option>>
+                        </option>
                       </select>
+                      <div class="tool-tip" ng-init="tipsL5=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tipsL5=true" ng-mouseleave="tipsL5=false"></i>
+                          <div ng-show="tipsL5 && leads_Data_1['L5 question'].length>0" class="tool-popup" style="position: inherit;">
+                            <div>{{leads_Data_1['L5 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
                     <td class="alignment">
                       <select class="form-control" ng-model="newRequirement.l2_answers">
@@ -4065,6 +4104,14 @@
                           {{lead_L6}}
                         </option>
                       </select>
+                      <div class="tool-tip"  ng-init="tipsL6=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tipsL6=true" ng-mouseleave="tipsL6=false"></i>
+                          <div ng-show="tipsL6 && leads_Data_1['L6 question'].length>0" class="tool-popup" style="position: inherit;">
+                            <div>{{leads_Data_1['L6 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
                     <td class="alignment">
                       Lead
