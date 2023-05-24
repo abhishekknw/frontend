@@ -654,12 +654,12 @@
       }
       $scope.getCampaigns = function (tabName) {
         $scope.tabName = tabName;
-        cfpLoadingBar.start();
         $scope.conditionForTable = false;
         $scope.showSupplierTypeCountChart = false;
         $scope.selectedBookingCampaignName = undefined;
         $scope.showTableForAllCampaignDisplay = false;
         $scope.leadBasicShow = false;
+        $scope.filterType = 'Leads';
         $scope.viewCampaignLeads(tabName);
 
       }
@@ -670,7 +670,23 @@
         B2BDashboardService.basicCampaignList(tabName)
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
+            $scope.paginationForCampaign = {
+              'currentPage': 1,
+              'totalItems': $scope.leadsDataCampaigns.length,
+            }
+            $scope.pageChangedCampaigns(1);
           })
+      }
+      $scope.pageChangedCampaigns = function(p){
+        $scope.CampaignDataList = [];
+        $scope.paginationForCampaign.currentPage = p;
+        let start= (p-1)*20;
+        let end = start+20;
+            for (let i=start;i<end;i++){
+              if($scope.leadsDataCampaigns[i]){
+                $scope.CampaignDataList.push( $scope.leadsDataCampaigns[i]);
+              }
+            }
       }
       $scope.optionNewTab = function (tabName) {
         $scope.tabName = tabName;
@@ -682,7 +698,7 @@
         $scope.showTable = true;
         $scope.showCampaigns = true;
         $scope.leadBasics (tabName);
-        $scope.surveyLeadFilter('Leads');
+        // $scope.surveyLeadFilter('Leads');
         $scope.viewClientStatus();
       }
 
@@ -800,6 +816,11 @@
         B2BDashboardService.viewCommentsDetails(_id, req_id)
           .then(function onSuccess(response) {
             $scope.externalComment = response.data.data.external_comments;
+          })
+        
+        B2BDashboardService.viewStatusFunnel(req_id)
+          .then(function onSuccess(response) {
+            $scope.StatusFunnel = response.data.data;
           })
       }
 
@@ -3563,9 +3584,15 @@
         B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code, "admin",tabName)
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
+            $scope.paginationForCampaign = {
+              'currentPage': 1,
+              'totalItems': $scope.leadsDataCampaigns.length,
+            }
+            $scope.pageChangedCampaigns(1);
             cfpLoadingBar.complete();  
           }).catch(function onError(response) {
             console.log(response);
+            cfpLoadingBar.complete();  
           })
       }
       $scope.viewLeadsForSelectedCampaign = function (data,campaignId,page,city,startDate,endDate,search) {

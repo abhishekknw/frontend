@@ -59,6 +59,8 @@
       $scope.flat = "Unit Primary";
       $scope.printLeadsInExcelData = {};
       $scope.APIBaseUrl = Config.APIBaseUrl;
+      $scope.UserComment = {};
+      $scope.CallModel = {};
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
         { id: 2, name: 'High' },
@@ -707,13 +709,14 @@
         $scope.templateData = templateData;
         $('#viewMoreDetail').modal('show');
       }
-      $scope.download_sample_sheet = function(id){
-        $window.open(Config.APIBaseUrl+"v0/ui/template/download-sample-sheet/?id="+id );
+      $scope.download_sample_sheet = function (id) {
+        $window.open(Config.APIBaseUrl + "v0/ui/template/download-sample-sheet/?id=" + id);
       }
       $scope.uploadId = 0;
       $scope.show1 = false;
-      $scope.sendTemplates = function (templateData,message, id, template, name,md_id) {
+      $scope.sendTemplates = function (templateData, message, id, template, name, md_id) {
         $scope.templateData = templateData;
+        console.log($scope.templateData,"$scope.templateData");
         $scope.templateName = name;
         $scope.selectedFileName = "";
         $scope.excelColumnError = "";
@@ -727,7 +730,7 @@
         $scope.uploadId = id;
         $scope.md_id = md_id;
         let fileElement = angular.element('#file1');
-         angular.element(fileElement).val(null);   
+        angular.element(fileElement).val(null);
         $('#sendTemplates').modal('show');
         $scope.checkForLoader = false;
       }
@@ -743,33 +746,33 @@
         $scope.checkForLoader = true;
         if ($scope.show1 == false) {
 
-            let myHeaders = new Headers();
-            myHeaders.append("Authorization",'JWT ' + $rootScope.globals.currentUser.token)
-            let formdata = new FormData();
-            formdata.append("file", $scope.file[0], $scope.selectedFileName);
-            
-            let requestOptions = {
-              method: 'POST',
-              headers: myHeaders,
-              body: formdata,
-              redirect: 'follow'
-            };
-              fetch(Config.APIBaseUrl+"v0/ui/template/generate-template-excel-download-hash/?md_id="+$scope.md_id, requestOptions)
-              .then(response =>response.text())
-              .then(result =>{
-                const obj = JSON.parse(result);
-                $scope.one_time_hash = obj.data.one_time_hash;
-                $scope.checkForLoader = false;
-                let fileElement = angular.element('#file1');
-                angular.element(fileElement).val(null);
-                $scope.selectedFileName = ""; 
-                $window.open(Config.APIBaseUrl+"v0/ui/template/check-users/?one_time_hash="+$scope.one_time_hash);
+          let myHeaders = new Headers();
+          myHeaders.append("Authorization", 'JWT ' + $rootScope.globals.currentUser.token)
+          let formdata = new FormData();
+          formdata.append("file", $scope.file[0], $scope.selectedFileName);
+
+          let requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow'
+          };
+          fetch(Config.APIBaseUrl + "v0/ui/template/generate-template-excel-download-hash/?md_id=" + $scope.md_id, requestOptions)
+            .then(response => response.text())
+            .then(result => {
+              const obj = JSON.parse(result);
+              $scope.one_time_hash = obj.data.one_time_hash;
+              $scope.checkForLoader = false;
+              let fileElement = angular.element('#file1');
+              angular.element(fileElement).val(null);
+              $scope.selectedFileName = "";
+              $window.open(Config.APIBaseUrl + "v0/ui/template/check-users/?one_time_hash=" + $scope.one_time_hash);
             })
-              .catch(error => console.log('error', error));
+            .catch(error => console.log('error', error));
         }
-        else{
-            let uploadurl = {
-            url: Config.APIBaseUrl+'v0/ui/template/send-template-by-sheet/?id=' + $scope.uploadId.trim(),
+        else {
+          let uploadurl = {
+            url: Config.APIBaseUrl + 'v0/ui/template/send-template-by-sheet/?id=' + $scope.uploadId.trim(),
             method: "POST",
             timeout: 0,
             data: {
@@ -788,15 +791,15 @@
               $scope.checkForLoader = false;
               let fileElement = angular.element('#file1');
               angular.element(fileElement).val(null);
-              $scope.selectedFileName = "";   
+              $scope.selectedFileName = "";
               swal(constants.name, response.data.data, constants.success);
             })
               .catch(function onError(response) {
-                $scope.file ="";
+                $scope.file = "";
                 $scope.excelColumnError = response.data.data.general_error.errors;
               });
           }
-        }        
+        }
       }
       $scope.optionForTemplate = ['APPROVED', 'REJECTED'];
 
@@ -3654,7 +3657,7 @@
               $scope.selectedInvForView = $scope.viewInvForComments[0];
               $('#viewComments').modal('show');
             }
-            
+
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -4131,12 +4134,12 @@
       $scope.getCampaignWiseSummary = function () {
         var dateRanges = {}
         if ($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates) {
-          
+
           dateRanges.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_dates);
           dateRanges.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_dates);
-    
+
         }
-        
+
         $scope.getVendorWiseSummary();
         $scope.getDynamicGraphsStatics();
 
@@ -4979,8 +4982,8 @@
           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
         } else if ($scope.graphSelection.dateRange.startDate &&
           ($scope.selectedbookingParameters.length && $scope.selectedDynamicCampaigns.length)) {
-         
-          angular.forEach($scope.selectedbookingParameters, function (data) {                     
+
+          angular.forEach($scope.selectedbookingParameters, function (data) {
             $scope.xValues.value = 'campaign_name';
             specificXValue = 'binary_fields';
           });
@@ -5494,7 +5497,7 @@
             angular.forEach($scope.selectedTypeOfSocieties, function (data) {
               reqData.data_point.value_ranges.qualitytype.push(data.name);
             });
-            
+
           }
         } else if ($scope.graphSelection.phaseRange.start
           && $scope.selectedDynamicCampaigns.length) {
@@ -6013,7 +6016,7 @@
                 })
                 .attr('y', function () {
                   var height = this.getBBox().height;
-                  return parseFloat(b.attr('y')) - 2; 
+                  return parseFloat(b.attr('y')) - 2;
                 })
                 .attr('x', function () {
                   var width = this.getBBox().width;
@@ -6511,11 +6514,11 @@
         $scope.viewTemplateSummary();
         $scope.changeStartDate();
         $scope.changeEndDate();
+        getCallStatusList();
         $scope.view_template = {
           template_id: value,
           template_name: name
         }
-        console.log("12345", $scope.view_template.template_id, $scope.view_template.template_name)
         let param = {
           template_id: value,
           start_date: s_date,
@@ -6551,21 +6554,23 @@
           })
       }
 
-      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search) {
+      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search,sortingObj) {
         $scope.viewUserSummary()
         $scope.user_view = {
           template_id: value,
           template_name: name,
           sent_date: date,
+          page: page,
+          search: search
         }
 
         let param = {
           template_id: value,
           date: date,
           next_page: 1,
-          search: search
+          search: search,
         }
-
+        Object.assign(param, sortingObj);
         if (!search) {
           param.search = ""
         }
@@ -6591,6 +6596,81 @@
           })
       }
 
+      let getCallStatusList = function () {
+        templateDashboardService.getCallStatusList()
+          .then(function onSuccess(response) {
+            let lastIndex = response.data.data.length - 1;
+            $scope.CallStatusList = response.data.data[lastIndex].call_status;
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+        templateDashboardService.getDialerCallerIds()
+          .then(function onSuccess(response) {
+            $scope.DialerCallerIds = response.data.data;
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+        templateDashboardService.getDialerAgents()
+          .then(function onSuccess(response) {
+            $scope.DialerAgentList = response.data.data;
+            console.log($scope.DialerAgentList)
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+      }
+
+      $scope.CallTemplate = function (row) {
+        $scope.CallModel = { 'destination_number': row.phone_number };
+        $scope.viewComments = row;
+        $('#CallTemplate').modal('show');
+      }
+
+      $scope.updateCallStatus = function (status, row) {
+        row.call_status = status
+        templateDashboardService.updateCallStatus(row)
+          .then(function onSuccess(response) {
+            swal("", response.data.data, constants.success);
+            $scope.transactionalTemplateUserData = $scope.transactionalTemplateUserData.map(obj =>
+              obj.phone_number === row.phone_number ? { ...obj, call_status: status } : obj
+            );
+          }).catch(function onError(response) {
+            console.log(response);
+            swal("Error", constants.errorMsg, constants.error);
+          })
+      }
+
+      $scope.AddUserComment = function (comment) {
+        let addComment = {
+          "template_id": $scope.viewComments.template_id,
+          "phone_number": $scope.viewComments.phone_number,
+          "template_date": $scope.viewComments.template_date,
+          "comment": $scope.UserComment.comment
+        }
+        templateDashboardService.UpdateAddComments(addComment)
+          .then(function onSuccess(response) {
+            $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id, $scope.user_view.sent_date, $scope.user_view.page, $scope.user_view.template_name, $scope.user_view.search);
+            swal("", response.data.data, constants.success);
+          }).catch(function onError(response) {
+            console.log(response);
+            swal("Error", constants.errorMsg, constants.error);
+          })
+        $timeout(function () {
+          let tempObj = $scope.transactionalTemplateUserData.map(obj =>
+            obj.phone_number === addComment.phone_number ? obj : null);
+          $scope.viewComments = tempObj[0];
+          $scope.UserComment = {};
+        }, 1000);
+      }
+
+      $scope.OnQuickCall = function (data) {
+        templateDashboardService.postDataOnQuickCall(data)
+          .then(function onSuccess(response) {
+            swal("", response.data.data.message, constants.success);
+          }).catch(function onError(response) {
+            console.log(response);
+            swal("Error", constants.errorMsg, constants.error);
+          })
+      }
       $scope.gettransactionalTemplateSummaryDownload = function (value) {
         let param = {
           template_id: value
@@ -6694,7 +6774,7 @@
       $scope.pagination = {
         current: 1
       };
-      $scope.addTemplateModal =function(){
+      $scope.addTemplateModal = function () {
         $scope.choices = [{ "id": 1, "type": "Button", "name": "" },];
         $scope.index = $scope.choices.length;
         $('#addTemplate').modal('show');
@@ -6705,11 +6785,11 @@
             console.log(response);
           })
         templateDashboardService.supplierFilterList()
-            .then(function onSuccess(response) {
-              $scope.supplierList = response.data.data;
-            }).catch(function onError(response) {
-              console.log(response);
-            })
+          .then(function onSuccess(response) {
+            $scope.supplierList = response.data.data;
+          }).catch(function onError(response) {
+            console.log(response);
+          })
       }
 
       $scope.addNewChoice = function () {
@@ -6717,7 +6797,7 @@
         if ($scope.input_length > 3 == false) {
           let newItemNo = ++$scope.index;
           $scope.choices.push({ 'id': newItemNo, "type": "Button", "name": "" });
-        }      
+        }
       };
 
       $scope.removeChoice = function (id) {
@@ -6754,46 +6834,49 @@
       }
 
       $scope.templateData = {};
-      $scope.multipleButtons = function(data){
-        if(data.id==1){ 
+      $scope.multipleButtons = function (data) {
+        if (data.id == 1) {
           $scope.templateData.buttonOne = data.name;
         }
-        else if(data.id==2){
+        else if (data.id == 2) {
           $scope.templateData.buttonTwo = data.name;
         }
-        else{
+        else {
           $scope.templateData.buttonThree = data.name;
         }
       }
-      $scope.createTemplate = function(data){
-        if(data.param){
+      $scope.createTemplate = function (data) {
+        if (data.param) {
           data.param = data.param.split(',');
         }
         data.type_of_fields = 'TEXT';
-        if(data.alias_name && data.elementName){
+        if (data.alias_name && data.elementName) {
           templateDashboardService.createTemplate(data)
-          .then(function onSuccess(response) {
-            swal("Template", response.data.data, constants.success);
-            $scope.templateData = {};
-            $('#addTemplate').modal('hide');
-            $scope.templateDetail();
-          }).catch(function onError(response) {
-            console.log(response);
-          })
+            .then(function onSuccess(response) {
+              swal("Template", response.data.data, constants.success);
+              $scope.templateData = {};
+              $('#addTemplate').modal('hide');
+              $scope.templateDetail();
+            }).catch(function onError(response) {
+              console.log(response);
+            })
         }
       }
 
-      $scope.getOptinFiles = function(data){
+      $scope.getOptinFiles = function (data) {
         $timeout(function () {
-          // $scope.excelColumnError = "";
           $scope.optinFile = data;
           $scope.optineFileName = $scope.optinFile[0].name;
         }, 1);
       }
-      $scope.sendOptinUserFile = function(){
+      $scope.sendOptinUserFile = function (optinUserNumbers, FileCheckSelect) {
+        if (!FileCheckSelect) {
+          sendOptinUserNumber(optinUserNumbers);
+          return 0;
+        }
         let formdata = new FormData();
         let myHeaders = new Headers();
-        myHeaders.append("Authorization",'JWT ' + $rootScope.globals.currentUser.token)
+        myHeaders.append("Authorization", 'JWT ' + $rootScope.globals.currentUser.token)
         formdata.append("excel_file", $scope.optinFile[0]);
         let requestOptions = {
           headers: myHeaders,
@@ -6801,23 +6884,108 @@
           body: formdata,
           redirect: 'follow'
         };
-        let url = Config.APIBaseUrl+"v0/ui/mca-bot/optin-users/";
-        fetch(url,requestOptions)
-              .then(response =>response.text())
-              .then(result =>{
-                const obj = JSON.parse(result);
-                let value = "Not opted in users:"+obj.data["not opted in users"];
-                let value2 = "successfully opted in users:"+obj.data["successfully opted in users"];
-                if(obj.status){
-                  swal("Success",value+'\n'+value2,constants.success);
-                }
-                if(obj.data.general_error.errors){
-                  swal("Error",obj.data.general_error.errors,constants.error);
-                }
-            })
-              .catch(error => console.log('error', error));
+        let url = Config.APIBaseUrl + "v0/ui/mca-bot/optin-users/";
+        fetch(url, requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            const obj = JSON.parse(result);
+            let value = "Not opted in users:" + obj.data["not opted in users"];
+            let value2 = "successfully opted in users:" + obj.data["successfully opted in users"];
+            if (obj.status) {
+              swal("Success", value + '\n' + value2, constants.success);
+            }
+            if (obj.data.general_error.errors) {
+              swal("Error", obj.data.general_error.errors, constants.error);
+            }
+          })
+          .catch(error => console.log('error', error));
       }
 
+      let sendOptinUserNumber = function (data) {
+        let obj = { 'number_list': data.split(',') }
+        templateDashboardService.sendOptinuser(obj)
+          .then(function onSuccess(response) {
+            console.log(response.data.data);
+            let value = "Not opted in users:" + response.data.data["not opted in users"];
+            let value2 = "successfully opted in users:" + response.data.data["successfully opted in users"];
+            if (response.data.status) {
+              swal(constants.name, value + '\n' + value2, constants.success);
+            }
+            else {
+              swal(constants.name, response.data.data.general_error.errors, constants.error);
+            }
+          }).catch(function onError(response) {
+            swal(constants.name, constants.errorMsg, constants.error);
+          })
+      }
+
+      $scope.removeOptinFiles = function () {
+        let fileElement = angular.element('#optinFile');
+        angular.element(fileElement).val(null);
+        $scope.optineFileName = "";
+        $scope.optinFile = "";
+      }
+      $scope.deleteTemplate = function (data) {
+        swal({
+          title: 'Are you sure ?',
+          text: 'Delete Template',
+          type: constants.warning,
+          showCancelButton: true,
+          confirmButtonClass: "btn-success",
+          confirmButtonText: "Yes, Remove!",
+          closeOnConfirm: false,
+          closeOnCancel: true
+        },
+          function (confirm) {
+            if (confirm) {
+              templateDashboardService.DeleteTemplate(data.md_id)
+                .then(function onSuccess() {
+                  $scope.templateDetailData = $scope.templateDetailData.filter(object => {
+                    return object.md_id !== data.md_id;
+                  });
+                  swal(constants.name, constants.delete_success, constants.success);
+                }).catch(function onError(response) {
+                  console.log(response);
+                  swal(constants.name, constants.errorMsg, constants.error);
+                })
+            }
+          }
+        );
+      }
+      $scope.sendTemplateModel = {"params":'',"phone_number":''};
+      $scope.setSendTemplateParams = function(data,templateData){
+        let payload = [{
+          'template_id':templateData.id,
+          'phone_number':data.phone_number,
+          'params':data.params.split(','),
+          'default_params':templateData.param
+        }];
+        AuthService.sendTemplateToUser(payload)
+        .then(function onSuccess(response) {
+          swal("Success",'Sent successfully', constants.success);
+          $scope.sendTemplateModel = {"params":'',"phone_number":''};
+        }).catch(function onError(response) {
+          console.log(response);
+          swal("Error", constants.errorMsg, constants.error);
+        })
+      }
+
+      $scope.paramsForSorting = {'buttonName':'null','sort':'no'};
+      $scope.SortFromBackend = function(type){
+        if(type == 'total_positive'){
+          $scope.paramsForSorting.sort = $scope.paramsForSorting.sort=='no'?'yes':'no';
+          $scope.paramsForSorting.buttonName = 'positive';
+        }
+        else if(type == 'total_neutral'){
+          $scope.paramsForSorting.sort = $scope.paramsForSorting.sort=='no'?'yes':'no';
+          $scope.paramsForSorting.buttonName = 'neutral';
+        }
+        else if(type == 'total_negative'){
+          $scope.paramsForSorting.sort = $scope.paramsForSorting.sort=='no'?'yes':'no';
+          $scope.paramsForSorting.buttonName = 'negative';
+        }
+      $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id , $scope.user_view.sent_date, null, $scope.user_view.template_name, $scope.user_view.search,$scope.paramsForSorting); 
+      }
       $scope.templateDetail();
       // Template Dashboard end
 

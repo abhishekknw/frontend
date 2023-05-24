@@ -755,6 +755,11 @@
         .then(function onSuccess(response) {
           $scope.externalComment = response.data.data;
         })
+
+      B2BDashboardService.viewStatusFunnel(req_id)
+        .then(function onSuccess(response) {
+          $scope.StatusFunnel = response.data.data;
+        })  
     }
 
     $scope.deleteBasicComment = function (comment_id, req_id) {
@@ -2213,6 +2218,10 @@
         .catch(function onError(response) {
           swal(constants.name, "Error", constants.error);
         });
+    }
+    $scope.toggleClassFilter = false;
+    $scope.toggleFilterClass =function(){
+      $scope.toggleClassFilter = $scope.toggleClassFilter?false:true;
     }
     $scope.refeshFilters = function () {
       $scope.selected_cities_list = [];

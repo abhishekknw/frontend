@@ -634,6 +634,11 @@ angular.module('catalogueApp')
         "&city="+selectCity+"&client_status="+selectedClientStatus+"&from_primary_count="+countStart+"&to_primary_count="+countEnd;
         return machadaloHttp.get(url);
       }
+
+      DashboardService.viewStatusFunnel = function(lead_id){
+        var url = url_root +"b2b/status-funnel/?lead_id=" + lead_id;
+        return machadaloHttp.get(url);
+      }
       return DashboardService;
 
     }]);
