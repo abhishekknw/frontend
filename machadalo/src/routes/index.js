@@ -9,6 +9,7 @@ import {
 import LayoutContainer from './../containers/LayoutContainer';
 import SupplierRoutes from '../Dashboards/SupplierAgency/routes';
 import ClientRoutes from '../Dashboards/ClientDashboard/routes';
+import MachadaloRoutes from '../Dashboards/MachadaloDashboard/routes';
 export default function Routes() {
   // let userInfo = JSON.parse(localStorage.getItem('userInfo'))
   let userInfo = 'BUSINESS';
@@ -23,6 +24,7 @@ export default function Routes() {
           userInfo === "BUSINESS" &&
           <Route path='/r/Client' component={ClientRoutes} />
         }
+        <Route path="/r/machadalo" component={MachadaloRoutes} />
         <Route path="/r" component={LayoutContainer} />
         <Route path="*">
           <Redirect to="/r/404" />
