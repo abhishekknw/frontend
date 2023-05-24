@@ -19,7 +19,7 @@
         link: fn_link
       }
     }])
-    .controller('TemplateDashboardCtrl', function (machadaloHttp, $scope, NgMap, $rootScope, baConfig, colorHelper, AuthService, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
+    .controller('TemplateDashboardCtrl', function (machadaloHttp, $scope, NgMap, $rootScope, baConfig, colorHelper, AuthService, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window, socketService) {
       $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
       $scope.itemsByPage = 15;
       $scope.permissions = permissions.dashboard;
@@ -6609,7 +6609,7 @@
           }).catch(function onError(response) {
             console.log(response);
           })
-          templateDashboardService.getDialerAgents()
+        templateDashboardService.getDialerAgents()
           .then(function onSuccess(response) {
             $scope.DialerAgentList = response.data.data;
             console.log($scope.DialerAgentList)
@@ -6623,7 +6623,7 @@
         $scope.viewComments = row;
         $('#CallTemplate').modal('show');
       }
-      
+
       $scope.updateCallStatus = function (status, row) {
         row.call_status = status
         templateDashboardService.updateCallStatus(row)
@@ -6661,7 +6661,7 @@
         }, 1000);
       }
 
-      $scope.OnQuickCall = function (data){
+      $scope.OnQuickCall = function (data) {
         templateDashboardService.postDataOnQuickCall(data)
           .then(function onSuccess(response) {
             swal("", response.data.data.message, constants.success);
@@ -6899,7 +6899,25 @@
 
       $scope.templateDetail();
       // Template Dashboard end
-
+      // const socket = new WebSocket('ws://localhost:8000/ws/livec/');
+      // console.log(socket,"11111111")
+      // socket.onmessage = (e) => {
+      //   $scope.result = JSON.parse(e.data).result;
+      //   console.log($scope.result)
+      //   document.getElementById("results").value += "Server: " + $scope.result + "\n";
+      // }
+      // socket.onclose = (e) => {
+      //   	console.log("Socket closed!");
+      //   }
+      // $scope.socketServicetest = function (data) {
+      //   socket.send(JSON.stringify(
+      //     {
+      //       expression: data
+      //     }
+      //   ))
+      //   document.querySelector("#results").value += "You: " + data + "\n";  
+      //   socketService.connect();
+      // }
     })
 })();
 app.factory('Excel', function ($window) {
