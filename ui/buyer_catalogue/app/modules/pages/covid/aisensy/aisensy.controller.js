@@ -3155,4 +3155,34 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           })
         }
 
+        $scope.CallTemplate = function (data) {
+          $scope.CallModel = { 'destination_number': data.phone_number };
+          getCallStatusList();
+          // $('#CallTemplate').modal('show');
+        }
+        let getCallStatusList = function () {
+          AuthService.getDialerCallerIds()
+            .then(function onSuccess(response) {
+              $scope.DialerCallerIds = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+            AuthService.getDialerAgents()
+            .then(function onSuccess(response) {
+              $scope.DialerAgentList = response.data.data;
+              console.log($scope.DialerAgentList)
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+        $scope.OnQuickCall = function (data) {
+          AuthService.postDataOnQuickCall(data)
+            .then(function onSuccess(response) {
+              swal("", response.data.data.message, constants.success);
+            }).catch(function onError(response) {
+              console.log(response);
+              swal("Error", constants.errorMsg, constants.error);
+            })
+        }
+
       }]);

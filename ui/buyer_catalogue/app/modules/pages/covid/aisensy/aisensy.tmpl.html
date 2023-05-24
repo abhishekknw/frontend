@@ -1539,12 +1539,16 @@
                                       d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
                                   </svg>
                                 </div>
-                                <!--Send Template Button-->
+                               <!--Send Template Button-->
                                 <div>
                                   <i class='fas fa-location-arrow' style="font-size:24px;color: #fff;;"
                                     data-toggle="modal" data-target="#TemplateModal" ng-click="getTemplateData()"></i>
                                 </div>
+                                <div>
+                                  <i class='fas fa-phone-alt' style="font-size:24px;color: #fff;" data-toggle="modal" data-target="#CallTemplate" ng-click="CallTemplate(userChatData)"></i>
+                                </div>
                                 <!--end Template Buttont-->
+
                                 <div>
                                   <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)"
                                     data-toggle="modal" data-target="#SuspenseLeadsModel">Suspense Sheet</button>
@@ -1866,6 +1870,9 @@
                                   <i class='fas fa-location-arrow' style="font-size:24px;color: #fff;;"
                                     data-toggle="modal" data-target="#TemplateModal" ng-click="getTemplateData()"></i>
                                 </div>
+                                <div>
+                                  <i class='fas fa-phone-alt' style="font-size:24px;color: #fff;" data-toggle="modal" data-target="#CallTemplate" ng-click="CallTemplate(userChatData)"></i>
+                                </div>
                                 <!--end Template Buttont-->
                                 <div>
                                   <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)"
@@ -2148,6 +2155,9 @@
                                 <div>
                                   <i class='fas fa-location-arrow' style="font-size:24px;color: #fff;;"
                                     data-toggle="modal" data-target="#TemplateModal" ng-click="getTemplateData()"></i>
+                                </div>
+                                <div>
+                                  <i class='fas fa-phone-alt' style="font-size:24px;color: #fff;" data-toggle="modal" data-target="#CallTemplate" ng-click="CallTemplate(userChatData)"></i>
                                 </div>
                                 <!--end Template Buttont-->
                                 <div>
@@ -2802,6 +2812,9 @@
                     <div>
                       <i class='fas fa-location-arrow' style="font-size:24px;color: #fff;;" data-toggle="modal"
                         data-target="#TemplateModal" ng-click="getTemplateData()"></i>
+                    </div>
+                    <div>
+                      <i class='fas fa-phone-alt' style="font-size:24px;color: #fff;" data-toggle="modal" data-target="#CallTemplate" ng-click="CallTemplate(userChatData)"></i>
                     </div>
                     <!--end Template Buttont-->
                     <div>
@@ -3864,8 +3877,15 @@
                           {{lead_L4}}
                         </option>
                         <option ng-if="leads_Data_1.L4.length==0" selected="true" value="NA">NA</option>
-
                       </select>
+                      <div class="tool-tip" ng-init="tips1=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tips1=true" ng-mouseleave="tips1=false"></i>
+                          <div ng-show="tips1" class="tool-popup">
+                            <div>{{leads_Data_1['L4 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
                     <td class="alignment">
                       <select class="form-control" name="lead_L5" id="lead_L5" ng-model="subrequirement.L5"
@@ -3875,6 +3895,14 @@
                         </option>
                         <option ng-if="leads_Data_1.L5.length==0" selected="true" value="NA">NA</option>
                       </select>
+                      <div class="tool-tip" ng-init="tips2=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tips2=true" ng-mouseleave="tips2=false"></i>
+                          <div ng-show="tips2" class="tool-popup">
+                            <div>{{leads_Data_1['L5 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
 
                     <td class="alignment">
@@ -3885,6 +3913,14 @@
                         </option>
                         <option ng-if="leads_Data_1.L6.length==0" selected="true" value="NA">NA</option>
                       </select>
+                      <div class="tool-tip" ng-init="tips3=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tips3=true" ng-mouseleave="tips3=false"></i>
+                          <div ng-show="tips3" class="tool-popup">
+                            <div>{{leads_Data_1['L6 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
                     <td class="alignment">
                       {{subrequirement.lead_status}}
@@ -4034,7 +4070,15 @@
                         <option ng-repeat="lead_L4 in leads_Data_1.L4" value="{{lead_L4}}">
                           {{lead_L4}}
                         </option>
-
+                       </select> 
+                       <div class="tool-tip" ng-init="tipsL4=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tipsL4=true" ng-mouseleave="tipsL4=false"></i>
+                          <div ng-show="tipsL4 && leads_Data_1['L4 question'].length>0" class="tool-popup" style="position: inherit;">
+                            <div>{{leads_Data_1['L4 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
 
                     <td class="alignment">
@@ -4042,8 +4086,16 @@
                         <option value="" disabled>Select</option>
                         <option ng-repeat="lead_L5 in leads_Data_1.L5" value="{{lead_L5}}">
                           {{lead_L5}}
-                        </option>>
+                        </option>
                       </select>
+                      <div class="tool-tip" ng-init="tipsL5=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tipsL5=true" ng-mouseleave="tipsL5=false"></i>
+                          <div ng-show="tipsL5 && leads_Data_1['L5 question'].length>0" class="tool-popup" style="position: inherit;">
+                            <div>{{leads_Data_1['L5 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
                     <td class="alignment">
                       <select class="form-control" ng-model="newRequirement.l2_answers">
@@ -4052,6 +4104,14 @@
                           {{lead_L6}}
                         </option>
                       </select>
+                      <div class="tool-tip"  ng-init="tipsL6=false">
+                        <h5>Question:<i class="fa fa-question tool-icon"
+                            ng-mouseover="tipsL6=true" ng-mouseleave="tipsL6=false"></i>
+                          <div ng-show="tipsL6 && leads_Data_1['L6 question'].length>0" class="tool-popup" style="position: inherit;">
+                            <div>{{leads_Data_1['L6 question']}}</div>
+                          </div>
+                        </h5>
+                      </div>
                     </td>
                     <td class="alignment">
                       Lead
@@ -5549,7 +5609,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
           style="opacity: 1; font-weight:bolder;"> &times;</button>
 
-        <h4 class="modal-title  theme-color" ng-if="!submitLeadType" style="font-weight: bolder; font-size: 21px;">
+        <h4 class="modal-title  theme-color" ng-if="!submitLeadType" style=" font-size: 21px;">
           Select Template you want to share</h4>
         <hr>
 
@@ -5594,4 +5654,98 @@
     </div>
   </div>
 </div>
+
+<!-- CallTemplate Modal Start -->
+<div id="CallTemplate" class="modal fade call-modal theme-modal">
+  <div class="modal-dialog quick-call-model">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Quick Call</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="row quick-call-form">
+        <!-- <hr style="border: 1px solid ; border-width: 1px 0px 0px 0px"> style="border-right: 1px solid #0000008c"-->
+        <div class="col-md-12">
+          <form name="myForm" ng-submit="OnQuickCall(CallModel)">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label> Phone Number</label>
+                    <input class="form-control" disabled ng-model="CallModel.destination_number"
+                      placeholder="Phone Number" type="text">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label> Select Agent</label>
+                    <select class="form-control" ng-model="CallModel.agent_number" name="Agent"
+                      required>
+                      <option value="">Select Agent</option>
+                      <option value="{{value.follow_me_number}}"
+                        ng-repeat="value in DialerAgentList.data">
+                        {{value.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label> Select Number</label>
+                    <select class="form-control" ng-model="CallModel.caller_id" name="Number" required>
+                      <option value="">Select Number</option>
+                      <option value="{{value.tollfree_number}}" ng-repeat="value in DialerCallerIds">
+                        {{value.tollfree_number}}</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+            <div class="modal-footer text-center">
+              <button type="submit" style="margin-top: 10px;"
+                class="btn btn-danger smll-btn-cmt">Call</button>
+            </div>
+          </form>
+        </div>
+        <!-- <div class="col-md-6">
+          <div class="">
+            <div class="form-group d-flex align-items-center">
+              <label style="    white-space: nowrap; margin-right: 12px;"> Select Status</label>
+              <select class="form-control" value="viewComments.call_status"
+                ng-model="viewComments.call_status"
+                ng-change="updateCallStatus(viewComments.call_status,viewComments)">
+                <option value="">Select Status</option>
+                <option value="{{value}}" ng-repeat="value in CallStatusList">{{value}}</option>
+              </select>
+            </div>
+          </div>
+          <h4 style="font-size: 14x !important; font-weight: 600;">View Comments</h4>
+          <div class="table-h-scroll">
+            <table class="table-data">
+              <tr ng-repeat="item in viewComments.comment">
+                <td>
+                  <div>
+                    <p style="color: #000;">{{item.comment}}</p>
+                  </div>
+                  <div>
+                    <img ng-src="{{userIcon}}">
+                    <b>{{item.user}}:</b>
+                    <span><small>{{item.date|date:'medium'}}</small></span>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div style="margin-top: 10px;">
+            <textarea style="margin-bottom: 0px !important;" class="field" rows="2" cols="200"
+              ng-model="UserComment.comment" value="UserComment" placeholder="Write here.."></textarea>
+            <button style="margin-top: 10px;" class="btn btn-danger smll-btn-cmt" type="button"
+              ng-click="AddUserComment(UserComment)">Add
+              Comment</button>
+          </div>
+        </div> -->
+      </div>
+
+    </div>
+  </div>
+</div>
+<!--CallTemplate Modal End  -->
 <!-- End Send Template Modal -->
