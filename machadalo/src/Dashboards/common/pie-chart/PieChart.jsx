@@ -1,30 +1,32 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
+import './pie-chart.css';
 ChartJS.register(ArcElement, Tooltip, Legend);
 export default function PieChart() {
   const data = {
-    labels: ['B2B','B2C'],
+    // labels: ['B2B', 'B2C'],
     datasets: [
       {
         label: 'Leads',
         data: [12, 2],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
+          "#3C1EB5",
+          '#0174D8',
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
+          '#3C1EB5',
+          '#0174D8',
         ],
         borderWidth: 1,
       },
     ],
-  };
 
+    labels: ['B2B', 'B2C'],
+  };
   return (
     <>
-    <Pie data={data} />
+      <Pie data={data} />
     </>
   );
 }

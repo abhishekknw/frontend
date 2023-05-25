@@ -11,34 +11,38 @@ import './header.css';
 export default function MachadaloHeader(props) {
 
   return (
-    <>    <Container>
+    <>    <Container className='pt-5'>
       <Row>
-        <Col sm={6}>
-
-          <span>
-            <div className="header__links">
-              <ul>
-                <li>
-                  <span >
-                    <i className="fa fa-bars" />
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </span>
-          <span>
-            <div className='header-content'>
-              <img src={Logo} />
-            </div>
-          </span>
-        </Col>
-
-        <Col sm={3}
-          className='right-heder-content'> <span><BsFillBellFill /> </span> <span>  <BsFillHouseDoorFill /></span> <span><BsGearFill /></span></Col>
         <Col sm={3}>
-          <div className='welcome-box' ><BsFillPersonFill /><span>Welcome back ,Kriti</span></div>
+          <div className='d-flex align-items-center'>
+            <span>
+              <div className="header__links">
+                <ul>
+                  <li>
+                    <span >
+                      <i className="fa fa-bars" />
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </span>
+            <span>
+              <div className='header-content'>
+                <img src={Logo} />
+              </div>
+            </span>
+          </div>
+
         </Col>
-      </Row>
+
+
+        <Col sm={9} className='right-heder-content'>
+          <div className='d-flex justify-content-end align-items-center'>
+            <span><BsFillBellFill /> </span> <span>  <BsFillHouseDoorFill /></span> <span><BsGearFill /></span>
+            <div className='welcome-box' ><BsFillPersonFill /><span>Welcome back ,Kriti</span></div>          </div>
+
+        </Col>
+      </Row >
 
 
       <div className="second-header">
