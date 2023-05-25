@@ -2,7 +2,8 @@
 //     max-width: 95% !important;
 //     width: 95% !important;
 // }
-.db-image-icon svg, .db-image-icon img{
+.db-image-icon svg,
+.db-image-icon img {
     width: 70px;
     height: 70px;
     object-fit: contain;
@@ -10,51 +11,62 @@
     padding: 10px;
     border-radius: 5px;
 }
-.h2-heading{
+
+.h2-heading {
     font-size: 35px;
     font-weight: 700;
     text-align: left;
 }
-.span-heading-text{
+
+.span-heading-text {
     font-size: 15px;
     text-align: left;
     color: #868ba1;
 }
-.bg-white{
+
+.bg-white {
     background-color: #fff;
 }
-.main-ul-tab{
+
+.main-ul-tab {
     padding: 20px 20px 20px 20px;
     border: 1px solid #cbcbcb;
 }
-.show-leads-box .lead-box-first.active  {
+
+.show-leads-box .lead-box-first.active {
     background-color: #9d87c2;
     color: #fff !important;
 }
-.show-leads-box .lead-box-first.active .span-heading-text{
+
+.show-leads-box .lead-box-first.active .span-heading-text {
     color: #fff !important;
 }
+
 .show-leads-box .lead-box-first.active .icon-box {
     background-color: #fff;
 }
-.show-leads-box .lead-box-first.active .h2-heading{
+
+.show-leads-box .lead-box-first.active .h2-heading {
     color: #fff;
 }
 
-.db-image-icon{
-  color:   #9c81cc;
+.db-image-icon {
+    color: #9c81cc;
 }
-.top-main-tab li button{
+
+.top-main-tab li button {
     color: #000;
     border-radius: 0px 0px 0px 0px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     padding: 20px 0;
 }
-.top-main-tab.nav-tabs .nav-link.active{
+
+.top-main-tab.nav-tabs .nav-link.active {
     background-color: #f2f2f2;
 }
-.top-main-tab.nav-tabs .nav-link{
+
+.top-main-tab.nav-tabs .nav-link {
     background-color: #ffffff;
     border: 1px solid #e3e3e3;
     text-transform: uppercase;
@@ -62,20 +74,25 @@
     font-size: 13px;
     padding: 16px 0;
 }
-.top-main-tab.nav-tabs li{
-   margin: 0 1px ;
+
+.top-main-tab.nav-tabs li {
+    margin: 0 1px;
 }
-.lead-tab li{
+
+.lead-tab li {
     margin: 0px 10px;
     background-color: #ffffff;
-box-shadow: 3px -3px 8px rgba(0 0 0/ 10%)
+    box-shadow: 3px -3px 8px rgba(0 0 0/ 10%)
 }
-.bg-color{
+
+.bg-color {
     background-color: rgb(59 130 246 / 12%);
 }
+
 .icon-box {
     margin-right: 20px;
 }
+
 h4.lead-h4 {
     font-weight: 700;
     margin: 0;
@@ -83,12 +100,14 @@ h4.lead-h4 {
     padding-left: 20px;
     line-height: 1;
 }
+
 .lead-box-first {
     border: 1px solid #dad9d9;
     padding: 20px;
     background-color: #ffffff;
     align-items: center;
 }
+
 table thead tr th {
     background-color: #f8f9fa !important;
     color: #000 !important;
@@ -97,11 +116,12 @@ table thead tr th {
     padding: 9px 10px !important;
     white-space: nowrap;
     font-weight: 500 !important;
-    border: 1px solid #dae0e5 ;
+    border: 1px solid #dae0e5;
     border-width: 1px 0px 1px 0px !important;
     text-transform: uppercase;
 }
-.graph-img canvas{
+
+.graph-img canvas {
     max-width: 478px !important;
     max-height: 300px !important;
     margin: 0 auto;
@@ -117,65 +137,86 @@ table.dashboard-table thead tr th {
     padding: 9px 10px !important;
     white-space: nowrap;
 }
-table tbody tr td{
+
+table tbody tr td {
     text-align: left !important;
 }
-table tbody tr th{
+
+table tbody tr th {
     vertical-align: middle !important;
 }
-.btn-theme{
+
+.btn-theme {
     background-color: #8E1921 !important;
     color: #fff;
     font-weight: 600;
 }
+
 table.dashboard-table {
- background-color: #fff;   
+    background-color: #fff;
 }
-table.dashboard-table th, table.dashboard-table td{
+
+table.dashboard-table th,
+table.dashboard-table td {
     vertical-align: middle;
     height: 60px;
 }
+
 .graph-img {
-  background-color: #fff;
- border: 1px solid #dad9d9;
- margin-bottom: 20px;
- padding: 25px !important
+    background-color: #fff;
+    border: 1px solid #dad9d9;
+    margin-bottom: 20px;
+    padding: 25px !important
 }
-.graph-img img{
-    max-width: 100% !important; 
+
+.graph-img img {
+    max-width: 100% !important;
 }
-.dropdown-btn button,.dropdown-btn button:hover,.dropdown-btn button:active{
-    color:   rgb(255, 255, 255) !important;
+
+.dropdown-btn button,
+.dropdown-btn button:hover,
+.dropdown-btn button:active {
+    color: rgb(255, 255, 255) !important;
     background-color: rgb(111 66 193) !important;
     font-size: 16px;
 }
-table tbody tr td, table tbody tr th{
+
+table tbody tr td,
+table tbody tr th {
     padding: 6px 15px !important;
 }
+
 @media only screen and (max-width:1024px) {
     .h2-heading {
         font-size: 20px;
     }
-    .db-image-icon svg, .db-image-icon img{
+
+    .db-image-icon svg,
+    .db-image-icon img {
         width: 40px;
     }
+
     .span-heading-text {
         font-size: 12px;
     }
+
     .icon-box {
         margin-right: 8px;
     }
-    
+
 }
+
 @media only screen and (max-width:767px) {
     .lead-box-first {
         margin: 20px;
     }
-    .top-main-tab.nav-tabs .nav-link{        
-    white-space: nowrap;
-    padding: 10px 10px;
+
+    .top-main-tab.nav-tabs .nav-link {
+        white-space: nowrap;
+        padding: 10px 10px;
     }
-    .top-main-tab.nav.nav-tabs{
+
+    .top-main-tab.nav.nav-tabs {
         display: flex;
         flex-direction: row;
         overflow-x: scroll;
@@ -187,14 +228,93 @@ table tbody tr td, table tbody tr th{
         align-items: center;
         flex-wrap: unset;
     }
+
     .top-main-tab.nav-tabs li {
         margin: 0 4px;
     }
-    .text-dropdwn{
+
+    .text-dropdwn {
         display: block !important;
         text-align: center;
     }
-    h4.lead-h4{
+
+    h4.lead-h4 {
         margin-bottom: 10px;
     }
+}
+
+// 24/05/23
+.header-content {
+    // padding: 10px;
+}
+
+.right-heder-content {
+    text-align: right;
+    padding-top: 27px;
+    color: #273F87;
+
+}
+
+.right-heder-content span {
+    padding-left: 10px;
+}
+
+.welcome-box {
+    border: 1px solid #273F87;
+    padding: 11px;
+    margin-top: 15px;
+    border-radius: 20px;
+    width: 211px;
+    color: #273F87;
+}
+
+.welcome-box span {
+    margin-left: 10px;
+}
+
+// header
+
+.MachadaloHeader {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+
+
+
+// headerr
+// datefilter
+.main-content .calander {
+    padding-top: 10px;
+    margin-left: 10px;
+}
+
+.main-content .calander span {
+    padding-left: 10px;
+}
+
+.main-content {
+    border: 1px solid black;
+    width: 100%;
+    border-radius: 20px;
+    padding-top: 10px;
+    background-color: #F7F7F7;
+}
+
+.main-content .timing {
+    width: 55%;
+    text-align: 10px;
+    margin-left: auto;
+    margin-bottom: 20px;
+}
+
+.main-content .timing .time-btn {
+    padding: 10px;
+}
+
+.time-btn:hover {
+    background-color: #2B2B2B;
+    border-radius: 20px;
+    color: #fff;
+    text-align: center;
 }
