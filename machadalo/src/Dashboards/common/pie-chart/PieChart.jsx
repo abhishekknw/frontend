@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function PieChart(props) {
+export default function PieChart() {
 
   return (
     <>

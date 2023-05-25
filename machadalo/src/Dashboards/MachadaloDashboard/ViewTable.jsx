@@ -1,6 +1,4 @@
 import React from 'react';
-import MachadaloHeader from './Header';
-import DateFilter from './dateFilter';
 import MaterialTable from '../Table/MaterialTable';
 
 export default function ViewTable(props) {

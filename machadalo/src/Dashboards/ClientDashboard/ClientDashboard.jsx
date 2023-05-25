@@ -11,7 +11,6 @@ import { BsPinMapFill } from 'react-icons/bs';
 import { BsFillArrowDownLeftCircleFill } from 'react-icons/bs';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Graph from '../ClientDashboard/Graph.png';
 import B2bicon from '../ClientDashboard/clientimage/b2b.png';
 import B2cicon from '../ClientDashboard/clientimage/b2c.png';
 import Cityicon from '../ClientDashboard/clientimage/city.png';

@@ -4,7 +4,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { BsFillBellFill, BsFillPersonFill, BsFillPersonPlusFill, BsPcDisplay, BsChatRightHeart, BsPhoneVibrate, BsPersonVideo3, BsFillHouseDoorFill, BsGearFill, BsSliders2 } from 'react-icons/bs';
-import Logo from '../MachadaloDashboard/logo.png';
+import Logo from './logo.png';
+import './header.css';
 
 
 export default function MachadaloHeader(props) {
