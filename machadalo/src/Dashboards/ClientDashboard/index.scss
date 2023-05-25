@@ -250,19 +250,19 @@ table tbody tr th {
 
 .right-heder-content {
     text-align: right;
-    padding-top: 27px;
+    // padding-top: 27px;
     color: #273F87;
 
 }
 
 .right-heder-content span {
-    // padding-left: 10px;
+    padding-left: 10px;
 }
 
 .welcome-box {
     border: 1px solid #273F87;
     padding: 11px;
-    margin-top: 15px;
+    margin-left: 15px;
     border-radius: 20px;
     width: 211px;
     color: #273F87;
@@ -292,25 +292,28 @@ table tbody tr th {
 // headerr
 // datefilter
 .main-content .calander {
-    padding-top: 10px;
-    margin-left: 10px;
+    // padding-top: 10px;
+    // margin-left: 10px;
 }
 
 .main-content .calander span {
     padding-left: 10px;
+    padding-top: 10px;
 }
 
 .main-content {
+
     border: 1px solid black;
     width: 100%;
+    height: 40px;
     border-radius: 20px;
-    padding-top: 10px;
+    // padding-top: 10px;
     background-color: #F7F7F7;
 }
 
 .main-content .timing {
     width: 55%;
-    text-align: 10px;
+    text-align: center;
     margin-left: auto;
     margin-bottom: 20px;
 }
@@ -320,6 +323,7 @@ table tbody tr th {
 }
 
 .time-btn:hover {
+    height: 30px;
     background-color: #2B2B2B;
     border-radius: 20px;
     color: #fff;

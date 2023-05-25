@@ -12,16 +12,16 @@ export default function DateFilter(props) {
         <Container>
           <h4><b>DateFilter</b></h4>
           <div >
-            <Row className="main-content">
+            <Row className="main-content ">
               <Col sm={6}>
-                <div className='calander'>
+                <div className='calander '>
                   <BsFillCalendarDateFill />
                   <span>      April</span>
                 </div>
               </Col>
               <Col sm={6}>
                 <div>
-                  <Row className='timing'>
+                  <Row className='timing pb-2'>
                     <Col sm={3} className='time-btn'>Days</Col>
                     <Col sm={3} className='time-btn'>Week</Col>
                     <Col sm={3} className='time-btn'>Month</Col>

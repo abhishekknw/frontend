@@ -15,12 +15,14 @@ export default function MachadaloDashboard(props) {
         {/* <h2>Machadalo Dashboard</h2> */}
 
         <DateFilter />
-        <div className='dx'>
+        <div className='dx d-flex'>
           <div className='graph-chart'>
             <GraphChart />
           </div>
-          <div>
-            <PieChart />
+          <div className='pc p-5'>
+            <div className="piechart">
+              <PieChart />
+            </div>
           </div>
         </div>
         <LeadsTable />
