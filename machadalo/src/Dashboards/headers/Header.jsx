@@ -15,7 +15,7 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { theme,styles } from './Theme';
+import { theme, styles } from './Theme';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 
@@ -130,75 +130,75 @@ export default function ClientHeader() {
   };
 
   const MobileNavigation = () => {
-      const hamburgerRef = React.useRef(null);
-      const [openDrawer, setOpenDrawer] = React.useState(false);
-      const prevOpen1 = React.useRef(openDrawer);
-      React.useEffect(() => {
-        if (prevOpen1.current === true && open === false) {
-          hamburgerRef.current.focus();
-        }
-    
-        prevOpen1.current = openDrawer;
-      }, [openDrawer]);
-      const iOS =
-        typeof navigator !== 'undefined' &&
-        /iPad|iPhone|iPod/.test(navigator.userAgent);
-    
-      return (
-        <React.Fragment>
-          <IconButton
-            sx={styles.menuIconContainer}
-            ref={hamburgerRef}
-            onClick={() => setOpenDrawer(!openDrawer)}
-            disableRipple
-          >
-            <MenuIcon sx={styles.hamburgerMenuIcon} />
-          </IconButton>
-          <Popper
-            open={openDrawer}
-            anchorEl={hamburgerRef.current}
-            role={undefined}
-            placement="bottom-start"
-            transition
-            disablePortal
-          >
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{
-                  transformOrigin: "placement === 'bottom-start' ? 'left top' : 'left bottom'",
-                }}
-              >
-                <Paper>
-                  <ClickAwayListener onClickAway={handleClose}>
-                    <MenuList
-                      autoFocusItem={open}
-                      id="composition-menu"
-                      aria-labelledby="composition-button"
-                      onKeyDown={handleListKeyDown}
+    const hamburgerRef = React.useRef(null);
+    const [openDrawer, setOpenDrawer] = React.useState(false);
+    const prevOpen1 = React.useRef(openDrawer);
+    React.useEffect(() => {
+      if (prevOpen1.current === true && open === false) {
+        hamburgerRef.current.focus();
+      }
+
+      prevOpen1.current = openDrawer;
+    }, [openDrawer]);
+    const iOS =
+      typeof navigator !== 'undefined' &&
+      /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+    return (
+      <React.Fragment>
+        <IconButton
+          sx={styles.menuIconContainer}
+          ref={hamburgerRef}
+          onClick={() => setOpenDrawer(!openDrawer)}
+          disableRipple
+        >
+          <MenuIcon sx={styles.hamburgerMenuIcon} />
+        </IconButton>
+        <Popper
+          open={openDrawer}
+          anchorEl={hamburgerRef.current}
+          role={undefined}
+          placement="bottom-start"
+          transition
+          disablePortal
+        >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin: "placement === 'bottom-start' ? 'left top' : 'left bottom'",
+              }}
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList
+                    autoFocusItem={open}
+                    id="composition-menu"
+                    aria-labelledby="composition-button"
+                    onKeyDown={handleListKeyDown}
+                  >
+                    <MenuItem>
+                      <a href="/#/changePassword">Home</a>
+                    </MenuItem>
+                    <MenuItem>
+                      <a href="/#/changePassword">Change Password</a>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(e) => {
+                        logout(e);
+                      }}
                     >
-                      <MenuItem>
-                        <a href="/#/changePassword">Home</a>
-                      </MenuItem>
-                      <MenuItem>
-                        <a href="/#/changePassword">Change Password</a>
-                      </MenuItem>
-                      <MenuItem
-                        onClick={(e) => {
-                          logout(e);
-                        }}
-                      >
-                        Logout
-                      </MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-        </React.Fragment>
-      );
-    };
+                      Logout
+                    </MenuItem>
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+      </React.Fragment>
+    );
+  };
   const isMobileMode = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <AppBar position="static" className="header-b2b">

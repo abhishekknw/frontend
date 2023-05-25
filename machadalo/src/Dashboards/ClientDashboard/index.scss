@@ -256,7 +256,7 @@ table tbody tr th {
 }
 
 .right-heder-content span {
-    padding-left: 10px;
+    // padding-left: 10px;
 }
 
 .welcome-box {
@@ -279,7 +279,14 @@ table tbody tr th {
     text-align: center;
 }
 
+.header__links {
+    width: 30px;
+}
 
+.header__links ul li span {
+    width: 30px;
+    color: #000 !important;
+}
 
 
 // headerr

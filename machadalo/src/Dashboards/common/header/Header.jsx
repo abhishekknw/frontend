@@ -13,7 +13,7 @@ export default function MachadaloHeader(props) {
   return (
     <>    <Container>
       <Row>
-        <Col sm={6}>
+        <Col sm={3}>
 
           <span>
             <div className="header__links">
@@ -26,6 +26,8 @@ export default function MachadaloHeader(props) {
               </ul>
             </div>
           </span>
+        </Col>
+        <Col sm={3}>
           <span>
             <div className='header-content'>
               <img src={Logo} />
@@ -33,12 +35,13 @@ export default function MachadaloHeader(props) {
           </span>
         </Col>
 
+
         <Col sm={3}
           className='right-heder-content'> <span><BsFillBellFill /> </span> <span>  <BsFillHouseDoorFill /></span> <span><BsGearFill /></span></Col>
         <Col sm={3}>
           <div className='welcome-box' ><BsFillPersonFill /><span>Welcome back ,Kriti</span></div>
         </Col>
-      </Row>
+      </Row >
 
 
       <div className="second-header">

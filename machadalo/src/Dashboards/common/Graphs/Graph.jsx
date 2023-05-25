@@ -28,7 +28,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Chart.js Bar Chart',
+
     },
   },
 };
@@ -40,17 +40,19 @@ export const data = {
   datasets: [
     {
       label: 'Dataset 1',
-      data: [2000,3458,8645,9574,3948,4949,2230],
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      data: [2000, 3458, 8645, 9574, 3948, 4949, 2230],
+      backgroundColor: "#3C1EB5",
     },
     {
       label: 'Dataset 2',
-      data: [2000,3458,8645,4574,3748,4949,2230],
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      data: [2000, 3458, 8645, 4574, 3748, 4949, 2230],
+      backgroundColor: '#0174D8',
     },
   ],
 };
 
 export default function GraphChart() {
-  return <Bar options={options} data={data} />;
+  return <>
+    <Bar options={options} data={data} />
+  </>
 }
