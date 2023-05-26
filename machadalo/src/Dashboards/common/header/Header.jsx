@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import { BsFillBellFill, BsFillPersonFill, BsFillPersonPlusFill, BsPcDisplay, BsChatRightHeart, BsPhoneVibrate, BsPersonVideo3, BsFillHouseDoorFill, BsGearFill, BsSliders2 } from 'react-icons/bs';
 import Logo from './logo.png';
 import './header.css';
-
+import SideNavBar from '../sidebar/sideBar';
 
 export default function MachadaloHeader(props) {
 
@@ -15,7 +15,7 @@ export default function MachadaloHeader(props) {
       <Row>
         <Col sm={3}>
           <div className='d-flex align-items-center'>
-            <span>
+            {/* <span>
               <div className="header__links">
                 <ul>
                   <li>
@@ -25,7 +25,8 @@ export default function MachadaloHeader(props) {
                   </li>
                 </ul>
               </div>
-            </span>
+            </span> */}
+            <SideNavBar />
             <span>
               <div className='header-content'>
                 <img src={Logo} />
