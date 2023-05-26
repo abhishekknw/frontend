@@ -36,9 +36,16 @@ export default function MachadaloHeader(props) {
         </Col>
 
 
-        <Col sm={9} className='right-heder-content'>
+        <Col sm={9} className='right-heder-content pe-5'>
           <div className='d-flex justify-content-end align-items-center'>
-            <span><BsFillBellFill /> </span> <span>  <BsFillHouseDoorFill /></span> <span><BsGearFill /></span>
+            <ul className='d-flex justify-content-end align-items-center'>
+              <li> <span>  <BsFillHouseDoorFill /></span></li>
+              <li><span><BsGearFill /></span></li>
+              <li>   <span><BsFillBellFill /> </span></li>
+            </ul>
+
+
+
             <div className='welcome-box' ><BsFillPersonFill /><span>Welcome back ,Kriti</span></div>          </div>
 
         </Col>

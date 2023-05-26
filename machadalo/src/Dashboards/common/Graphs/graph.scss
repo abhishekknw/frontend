@@ -2,4 +2,24 @@
     width: 700px !important;
     height: 300px !important;
     display: block;
+
+    padding: 30px;
+}
+
+.graph-chart {
+    // margin-top: 37px;
+    border: 1px solid #EFEFEF;
+
+}
+
+.graph-chart-content-dropdown {
+    padding: 20px;
+}
+
+.graph-dropdown-btn {
+    margin-left: auto;
+    max-width: fit-content;
+    background-color: light;
+    border: 1px solid black;
+    border-radius: 20px;
 }

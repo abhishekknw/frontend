@@ -26,7 +26,13 @@ export default function PieChart() {
   };
   return (
     <>
-      <Pie data={data} />
+      <div className="pie-chart">
+        <h6>Annually Lead chart</h6>
+      </div>
+      <div className="chart">
+
+        <Pie data={data} />
+      </div>
     </>
   );
 }

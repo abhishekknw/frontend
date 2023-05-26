@@ -8,13 +8,13 @@ export default function DateFilter(props) {
 
   return (
     <>
-      <div className='dateFilter pt-5'>
-        <Container>
-          <h4><b>DateFilter</b></h4>
+      <Container>
+        <div className='dateFilter pt-5'>
+          <h4><b>Date Filter</b></h4>
           <div >
             <Row className="main-content ">
               <Col sm={6}>
-                <div className='calander '>
+                <div className='calander pt-2 ps-3'>
                   <BsFillCalendarDateFill />
                   <span>      April</span>
                 </div>
@@ -32,8 +32,8 @@ export default function DateFilter(props) {
             </Row>
 
           </div>
-        </Container >
-      </div >
+        </div >
+      </Container >
 
     </>
 

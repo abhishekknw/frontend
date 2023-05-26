@@ -1,5 +1,20 @@
+.pc {
+    width: 700px;
+    height: 378px;
+    border: 1px solid #EFEFEF;
+
+}
+
+.piechart canvas {
+
+    margin-bottom: 40px;
+    margin-left: 109px;
+}
+
 .piechart {
-    width: 243px !important;
+    width: 400px !important;
     height: 243px !important;
     display: block;
+    padding: 20px;
+
 }

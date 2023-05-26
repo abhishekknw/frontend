@@ -11,22 +11,26 @@ export default function MachadaloDashboard(props) {
   return (
     <>
       <div className='container'>
-        <MachadaloHeader />
-        {/* <h2>Machadalo Dashboard</h2> */}
+        <div className="machadalo-deshboard">
+          <MachadaloHeader />
+          {/* <h2>Machadalo Dashboard</h2> */}
 
-        <DateFilter />
-        <div className='dx d-flex'>
-          <div className='graph-chart'>
-            <GraphChart />
-          </div>
-          <div className='pc p-5'>
-            <div className="piechart">
-              <PieChart />
+          <DateFilter />
+          <div className='dx d-flex'>
+            <div className='graph-chart'>
+              <GraphChart />
+            </div>
+            <div className='pc'>
+              <div className="piechart">
+
+                <PieChart />
+              </div>
+
             </div>
           </div>
+          <LeadsTable />
+          <ViewTable />
         </div>
-        <LeadsTable />
-        <ViewTable />
       </div>
     </>
   );
