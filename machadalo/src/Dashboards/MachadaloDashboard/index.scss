@@ -1,6 +1,7 @@
 // 24/05/23
 .container {
     max-width: 1400px !important;
+
     width: 100% !important;
 }
 
@@ -17,7 +18,7 @@
 
 .right-heder-content ul li {
     // display: flex;
-    padding-left: 10px;
+    // padding-left: 10px;
 }
 
 .welcome-box {
@@ -25,13 +26,14 @@
     padding: 11px;
     margin-left: 15px;
     border-radius: 20px;
-    width: 190px;
+
+    width: 203px;
     color: #273F87;
     margin-bottom: 13px;
 }
 
 .welcome-box span {
-    padding-left: 10px;
+    // padding-left: 10px;
 }
 
 // header
@@ -53,7 +55,7 @@
 
 // headerr
 // datefilter
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
 
     .css-1oqqzyl-MuiContainer-root {
         max-width: 1400px !important;
@@ -92,8 +94,7 @@
 }
 
 .time-btn:hover {
-    margin-top: 5px;
-    height: 30px;
+    padding: 10px;
     background-color: #2B2B2B;
     border-radius: 20px;
     color: #fff;
@@ -101,6 +102,26 @@
 }
 
 .dx {
+    display: flex;
     margin-top: 97px;
     margin-bottom: 136px;
+}
+
+@media only screen and (max-width: 600px) and (max-width: 992px) {
+    .dx {
+
+        display: block;
+    }
+
+    .graph-chart canvas {
+        width: 571px !important;
+        height: 300px !important;
+        display: block;
+
+        padding: 30px;
+    }
+
+    .right-heder-content ul li {
+        padding-left: 0px;
+    }
 }

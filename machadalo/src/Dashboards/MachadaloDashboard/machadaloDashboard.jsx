@@ -16,7 +16,7 @@ export default function MachadaloDashboard(props) {
           {/* <h2>Machadalo Dashboard</h2> */}
 
           <DateFilter />
-          <div className='dx d-flex'>
+          <div className='dx'>
             <div className='graph-chart'>
               <GraphChart />
             </div>
