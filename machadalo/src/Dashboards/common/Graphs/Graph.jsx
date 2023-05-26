@@ -1,4 +1,7 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Dropdown from 'react-bootstrap/Dropdown';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -53,6 +56,34 @@ export const data = {
 
 export default function GraphChart() {
   return <>
-    <Bar options={options} data={data} />
+    <div className="graph-chart-content-dropdown">
+      <div className="row">
+        <div className="col-sm-6"> <h6>Monthly Lead Report</h6></div>
+        <div className="col-sm-6  graph-dropdown-btn">
+          <Dropdown as={ButtonGroup}>
+            <Button variant="light">month</Button>
+
+            <Dropdown.Toggle split variant="light" id="dropdown-split-basic" />
+
+            <Dropdown.Menu>
+              <Dropdown.Item href="#/action-1">January</Dropdown.Item>
+              <Dropdown.Item href="#/action-3">February,</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">March,</Dropdown.Item>
+              <Dropdown.Item href="#/action-2"> April</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">May</Dropdown.Item>
+              <Dropdown.Item href="#/action-2"> June,</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">July</Dropdown.Item>
+              {/* <Dropdown.Item href="#/action-2">August</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">September</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">October</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">November</Dropdown.Item>
+              <Dropdown.Item href="#/action-2"> December</Dropdown.Item> */}
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      </div>
+
+      <Bar options={options} data={data} />
+    </div>
   </>
 }

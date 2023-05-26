@@ -1,0 +1,106 @@
+// 24/05/23
+.container {
+    max-width: 1400px !important;
+    width: 100% !important;
+}
+
+.header-content {
+    // padding: 10px;
+}
+
+.right-heder-content {
+    text-align: right;
+    // padding-top: 27px;
+    color: #273F87;
+
+}
+
+.right-heder-content ul li {
+    // display: flex;
+    padding-left: 30px;
+}
+
+.welcome-box {
+    border: 1px solid #273F87;
+    padding: 11px;
+    margin-left: 15px;
+    border-radius: 20px;
+    width: 190px;
+    color: #273F87;
+    margin-bottom: 13px;
+}
+
+.welcome-box span {
+    padding-left: 10px;
+}
+
+// header
+
+.MachadaloHeader {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.header__links {
+    width: 30px;
+}
+
+.header__links ul li span {
+    width: 30px;
+    color: #000 !important;
+}
+
+
+// headerr
+// datefilter
+@media (min-width: 1200px) {
+
+    .css-1oqqzyl-MuiContainer-root {
+        max-width: 1400px !important;
+    }
+}
+
+.dateFilter {
+    max-width: 1400px !important;
+    width: 100% !important;
+}
+
+.main-content .calander span {
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.main-content {
+
+    border: 1px solid black;
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
+    // padding-top: 10px;
+    background-color: #F7F7F7;
+}
+
+.main-content .timing {
+    width: 55%;
+    text-align: center;
+    margin-left: auto;
+    margin-bottom: 20px;
+}
+
+.main-content .timing .time-btn {
+    padding: 10px;
+}
+
+.time-btn:hover {
+    margin-top: 5px;
+    height: 30px;
+    background-color: #2B2B2B;
+    border-radius: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+.dx {
+    margin-top: 97px;
+    margin-bottom: 136px;
+}
