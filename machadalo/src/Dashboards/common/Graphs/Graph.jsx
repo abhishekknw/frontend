@@ -61,7 +61,7 @@ export default function GraphChart() {
         <div className="col-sm-6"> <h6>Monthly Lead Report</h6></div>
         <div className="col-sm-6  graph-dropdown-btn">
           <Dropdown as={ButtonGroup}>
-            <Button variant="light">month</Button>
+            <Button variant="light" className='month-btn'><b>Month</b></Button>
 
             <Dropdown.Toggle split variant="light" id="dropdown-split-basic" />
 
