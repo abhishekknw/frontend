@@ -34,6 +34,11 @@ export const options = {
 
     },
   },
+  scales: {
+    y: {
+      beginAtZero: true
+    }
+  }
 };
 
 const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July','Aug','Sept','Oct','Nov','Dec'];
@@ -43,13 +48,15 @@ export const data = {
   datasets: [
     {
       label: 'Dataset 1',
-      data: [2000, 3458, 8645, 9574, 3948, 4949, 2230,2000, 3458, 8645, 9574, 3948, 4949, ],
+      data: [2000, 3458, 8645, 9574, 3948, 4949, 2230,2000, 3458, 8645, 9574, 3948],
       backgroundColor: "#3C1EB5",
+      barThickness:'10'
     },
     {
       label: 'Dataset 2',
-      data: [2000, 3458, 8645, 4574, 3748, 4949, 2230,2000, 3458, 8645, 9574, 3948, 4949, ],
+      data: [2000, 3458, 8645, 4574, 3748, 4949, 2230,2000, 3458, 8645, 9574, 3948],
       backgroundColor: '#0174D8',
+      barThickness:'10'
     },
   ],
 };
