@@ -33,19 +33,19 @@ export const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July','Aug','Sept','Oct','Nov','Dec'];
 
 export const data = {
   labels,
   datasets: [
     {
       label: 'Dataset 1',
-      data: [2000, 3458, 8645, 9574, 3948, 4949, 2230],
+      data: [2000, 3458, 8645, 9574, 3948, 4949, 2230,2000, 3458, 8645, 9574, 3948, 4949, ],
       backgroundColor: "#3C1EB5",
     },
     {
       label: 'Dataset 2',
-      data: [2000, 3458, 8645, 4574, 3748, 4949, 2230],
+      data: [2000, 3458, 8645, 4574, 3748, 4949, 2230,2000, 3458, 8645, 9574, 3948, 4949, ],
       backgroundColor: '#0174D8',
     },
   ],
