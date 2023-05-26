@@ -59,18 +59,18 @@ export default function SideNavBar() {
 
   return (
     <>
-      <IconContext.Provider value={{ color: "#FFF" }}>
+      <IconContext.Provider value={{}} className="navbar-icon">
         {/* All the icons now are white */}
         <div className="navbar">
           <Link to="#" className="menu-bars">
-            <FaIcons.FaBars onClick={showSidebar} />
+            <span> <FaIcons.FaBars onClick={showSidebar} /></span>
           </Link>
         </div>
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
           <ul className="nav-menu-items" onClick={showSidebar}>
             <li className="navbar-toggle">
               <Link to="#" className="menu-bars">
-                <AiIcons.AiOutlineClose />
+                <AiIcons.AiOutlineClose className="main-icon" />
               </Link>
             </li>
 
