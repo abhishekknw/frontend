@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import * as FaIcons from "react-icons/fa"; //Now i get access to all the icons
 import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
+import { BsChevronRight } from 'react-icons/bs';
 
 import { IconContext } from "react-icons";
 
@@ -20,39 +21,47 @@ export default function SideNavBar() {
 
   const SidebarData = [
     {
-      title: "Home",
+      title: "Dashboard",
       path: "/",
-      icon: <AiIcons.AiFillHome />,
-      cName: "nav-text"
+      cName: "nav-text",
+      icon: <BsChevronRight />
     },
     {
-      title: "Reports",
+      title: "Campaign Planning",
       path: "/reports",
-      icon: <IoIcons.IoIosPaper />,
+      icon: <BsChevronRight />,
       cName: "nav-text"
     },
     {
-      title: "Products",
+      title: "Campaign Execution",
       path: "/products",
-      icon: <FaIcons.FaCartPlus />,
+      icon: <BsChevronRight />,
       cName: "nav-text"
     },
     {
-      title: "Team",
+      icon: <BsChevronRight />,
+      title: "Static Form",
       path: "/team",
-      icon: <IoIcons.IoMdPeople />,
       cName: "nav-text"
     },
     {
-      title: "Messages",
+      title: "Management",
       path: "/",
-      icon: <FaIcons.FaEnvelopeOpenText />,
       cName: "nav-text"
     },
     {
-      title: "Support",
+      title: "Leads Data",
       path: "/support",
-      icon: <IoIcons.IoMdHelpCircle />,
+      cName: "nav-text"
+    },
+    {
+      title: "Intervene MCA",
+      path: "/",
+      cName: "nav-text"
+    },
+    {
+      title: "Dashboard",
+      path: "/",
       cName: "nav-text"
     }
   ];
