@@ -44,7 +44,7 @@ export default function LeadsTable(props) {
           </tr>
           {isExpandRow.b2b &&
             <tr>
-              <td colSpan={6}  >
+              <td colSpan={9}  >
                 <Table striped bordered hover className='nested-leads-table '>
                   <thead className='leads-tbody'>
                     <tr>
