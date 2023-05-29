@@ -1,72 +1,54 @@
 import React from 'react';
-import MaterialTable from '../Table/MaterialTable';
+
+
+import Table from 'react-bootstrap/Table';
+import './index.css';
 
 export default function ViewTable(props) {
-  const columns = [
-    {
-      accessorKey: 'index',
-      header: 'S.No.',
-    },
-    {
-      accessorKey: 'name',
-      header: 'Client Name',
-    },
-    {
-      accessorKey: 'shared',
-      header: 'TO BE SHARED',
-    },
-    {
-      accessorKey: 'count',
-      header: 'COUNT',
-    },
-    {
-      accessorKey: 'QA',
-      header: 'Accepted by QA',
-    },
-    {
-      accessorKey: 'client',
-      header: 'Accepted by Client',
-    },
-    {
-      accessorKey: 'comment',
-      header: 'COMMENT UPDATED',
-    },
-    {
-      accessorKey: 'status',
-      header: 'STATUS UPDATED',
-    },
-    {
-      accessorKey: 'revenue',
-      header: 'REVENUE EARNED',
-    },
-    {
-      accessorKey: 'campaign',
-      header: 'VIEW CAMPAOGN',
-    },
-    {
-      accessorKey: 'action',
-      header: 'ACTION',
-    },
-  ];
 
-  const data = [
-    {
-      index: 1,
-      name: 'C1',
-      shared: 6000,
-      count: 5000,
-      QA: 2500,
-      client: 2000,
-      comment: 1000,
-      status: 700,
-      revenue: '20K',
-    },
-  ];
 
   return (
     <>
       <h2 style={{ paddingTop: '10px' }}>ViewTable</h2>
-      <MaterialTable columns={columns} data={data} />
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>S.No.</th>
+            <th>Lead type</th>
+            <th>Lead Count</th>
+            <th>Lead accepted by QA</th>
+            <th>Lead Accepted by Client</th>
+            <th>View Client Wise</th>
+            <th>View Agency Wise</th>
+            <th>Action</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+
+        </tbody>
+      </Table>
     </>
   );
 }
