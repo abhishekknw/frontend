@@ -1,119 +1,119 @@
-import MaterialTable from '../Table/MaterialTable';
 import React, { useMemo } from 'react';
-import MaterialReactTable from 'material-react-table';
-import { Box, Typography, Button, IconButton } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import EmailIcon from '@mui/icons-material/Email';
-import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import Table from 'react-bootstrap/Table';
 import './index.css';
+import Button from 'react-bootstrap/Button';
+import { BsChevronDown, BsEnvelopeFill, BsArrowDownCircle, BsWhatsapp } from 'react-icons/bs';
 export default function LeadsTable(props) {
-  const columns = [
-    {
-      accessorKey: 'index',
-      header: 'S.No.',
-    },
-    {
-      accessorKey: 'type',
-      header: 'Lead Type',
-    },
-    {
-      accessorKey: 'count',
-      header: 'Lead Count',
-    },
-    {
-      accessorKey: 'QA',
-      header: 'Lead Accepted by QA',
-    },
-    {
-      accessorKey: 'client',
-      header: 'Lead Accepted by Client',
-    },
-    {
-      accessorKey: 'client_wise',
-      header: 'View Client Wise',
-      Cell: ({ cell, row }) => (<><Button>View Client Wise</Button></>)
-    },
-    {
-      accessorKey: 'agency_wise',
-      header: 'View Agency Wise',
-      Cell: ({ cell, row }) => (<><Button>View Agency Wise</Button></>)
 
-    },
-    {
-      accessorKey: 'action',
-      header: 'Action',
-      Cell: ({ cell, row }) => (<><Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '0px' }}>
-        <IconButton
-          color="primary"
-        // onClick={() => {
-        //   table.setEditingRow(row);
-        // }}
-        >
-          <VisibilityIcon />
-        </IconButton>
-        <IconButton
-          color="primary"
-        //  onClick={() =>
-        //   window.open(
-        //     `mailto:kevinvandy@mailinator.com?subject=Hello ${row.original.firstName}!`,
-        //   )
-        // }
-        >
-          <EmailIcon />
-        </IconButton>
-        <IconButton
-          color="primary"
-          onClick={() => {
-            data.splice(row.index, 1); //assuming simple data table
-            setData([...data]);
-          }}
-        >
-          <DownloadForOfflineIcon />
-        </IconButton>
-      </Box></>)
-    },
-  ];
-
-
+  const [isExpandRow, setIsExpandRow] = React.useState({ 'b2b': false, 'b2c': false });
 
   return (
     <>
-      <Table striped bordered hover>
-        <thead>
+      <h2 style={{ paddingTop: '10px' }}>Leads</h2>
+      <Table striped bordered hover className='leads-table '>
+        <thead className='leads-tbody'>
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-            <th>Username</th>
-            <th>Username</th>
-            <th>Username</th>
-            <th>Username</th>
-            <th>Username</th>
+            <th></th>
+            <th>S.No.</th>
+            <th>Lead type</th>
+            <th>Lead Count</th>
+            <th>Lead accepted by QA</th>
+            <th>Lead Accepted by Client</th>
+            <th>View Client Wise</th>
+            <th>View Agency Wise</th>
+            <th>Action</th>
 
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+          <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}><BsChevronDown /></td>
+            <td>01</td>
+            <td>B2B</td>
+            <td>5000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>    <Button variant="outline-dark" className='lead-btn'>View Client Wise</Button></td>
+            <td>    <Button variant="outline-dark" className='lead-btn'>View Agency Wise</Button></td>
+            <td><div className='action-icon'>
+              <span><BsEnvelopeFill /></span>
+              <span><BsArrowDownCircle /></span>
+              <span><BsWhatsapp /></span>
+            </div>
+            </td>
           </tr>
+          {isExpandRow.b2b &&
+            <tr>
+              <td colSpan={6}  >
+                <Table striped bordered hover className='nested-leads-table '>
+                  <thead className='leads-tbody'>
+                    <tr>
+
+                      <th>S.No.</th>
+                      <th>Lead Source</th>
+                      <th>Total Lead Count Shared</th>
+                      <th>Lead accepted by QA</th>
+                      <th>Lead Accepted by Client</th>
+                      <th > Action</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+
+                      <td>1.1</td>
+                      <td>FOS</td>
+                      <td>5000</td>
+                      <td>2500</td>
+                      <td>2000</td>
+                      <td><div className='action-icon'>
+                        <span><BsEnvelopeFill /></span>
+                        <span><BsArrowDownCircle /></span>
+                        <span><BsWhatsapp /></span>
+                      </div>
+                      </td>
+
+
+                    </tr>
+                    <tr>
+
+                      <td>2.1</td>
+                      <td>RM</td>
+                      <td>5000</td>
+                      <td>2500</td>
+                      <td>2000</td>
+                      <td><div className='action-icon'>
+                        <span><BsEnvelopeFill /></span>
+                        <span><BsArrowDownCircle /></span>
+                        <span><BsWhatsapp /></span>
+                      </div>
+                      </td>
+
+                    </tr>
+
+                  </tbody>
+                </Table>
+              </td>
+            </tr>
+
+
+          }
+
           <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td><BsChevronDown /></td>
+            <td>02</td>
+            <td>B2C</td>
+            <td>5000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>    <Button variant="outline-dark" className='lead-btn'>View Client Wise</Button></td>
+            <td>    <Button variant="outline-dark" className='lead-btn'>View Agency Wise</Button></td>
+            <td><div className='action-icon'>
+              <span><BsEnvelopeFill /></span>
+              <span><BsArrowDownCircle /></span>
+              <span><BsWhatsapp /></span>
+            </div>
+            </td>
           </tr>
 
         </tbody>
