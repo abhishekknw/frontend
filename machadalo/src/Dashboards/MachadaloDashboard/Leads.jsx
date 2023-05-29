@@ -5,6 +5,7 @@ import { Box, Typography, Button, IconButton } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EmailIcon from '@mui/icons-material/Email';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import Table from 'react-bootstrap/Table';
 import './index.css';
 export default function LeadsTable(props) {
   const columns = [
@@ -74,44 +75,49 @@ export default function LeadsTable(props) {
     },
   ];
 
-  const data = [
-    {
-      index: 1,
-      type: 'B2B',
-      count: 5000,
-      QA: 3000,
-      client: 3000,
-    },
-    {
-      index: 2,
-      type: 'B2C',
-      count: 5000,
-      QA: 3000,
-      client: 3000,
-    },
-  ];
+
 
   return (
     <>
-      <MaterialReactTable
-        columns={columns}
-        data={data}
-        renderDetailPanel={({ row }) => (
-          <Box
-            sx={{
-              display: 'grid',
-              margin: 'auto',
-              gridTemplateColumns: '1fr 1fr',
-              width: '100%',
-            }}
-          >
-            <Typography>Address: {row.count}</Typography>
-            <Typography>City: {row.QA}</Typography>
-            <Typography>State: {row.client}</Typography>
-            <Typography>Country: {row.original.country}</Typography>
-          </Box>
-        )}
-      />
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Username</th>
+            <th>Username</th>
+            <th>Username</th>
+            <th>Username</th>
+            <th>Username</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+
+        </tbody>
+      </Table>
       {/* <MaterialTable data={data} columns={columns}/> */}
     </>
   );

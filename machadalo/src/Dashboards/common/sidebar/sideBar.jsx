@@ -16,7 +16,7 @@ import "./Navbar.css";
 
 export default function SideNavBar() {
   const [sidebar, setSidebar] = useState(false);
-  alert(sidebar)
+
 
   const showSidebar = () => setSidebar(!sidebar);
 
