@@ -3,7 +3,6 @@ import MachadaloHeader from '../common/header/Header';
 import DateFilter from '../common/date-range-filter/dateFilter';
 import GraphChart from '../common/Graphs/Graph';
 import LeadsTable from './Leads';
-import ViewTable from './ViewTable';
 import PieChart from '../common/pie-chart/PieChart';
 
 export default function MachadaloDashboard(props) {
@@ -25,11 +24,9 @@ export default function MachadaloDashboard(props) {
 
                 <PieChart />
               </div>
-
             </div>
           </div>
           <LeadsTable />
-          <ViewTable />
         </div>
       </div>
     </>

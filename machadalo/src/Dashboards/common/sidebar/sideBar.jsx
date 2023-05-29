@@ -80,13 +80,9 @@ export default function SideNavBar() {
           <ul className="nav-menu-items">
             <li className="navbar-toggle">
               <Link to="#" className="menu-bars" >
-                <AiIcons.AiOutlineClose className="main-icon" />
-
+                <AiIcons.AiOutlineClose className="main-icon" onClick={showSidebar}/>
               </Link>
-
             </li>
-
-
             {SidebarData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
