@@ -5,7 +5,6 @@ import './pie-chart.css';
 ChartJS.register(ArcElement, Tooltip, Legend);
 export default function PieChart() {
   const data = {
-    // labels: ['B2B', 'B2C'],
     datasets: [
       {
         label: 'Leads',
@@ -21,7 +20,6 @@ export default function PieChart() {
         borderWidth: 1,
       },
     ],
-
     labels: ['B2B', 'B2C'],
   };
   return (

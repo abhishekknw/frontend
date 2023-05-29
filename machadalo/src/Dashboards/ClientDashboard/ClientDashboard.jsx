@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ClientHeader from '../../Dashboards/headers/Header';
+import ClientHeader from './headers/Header';
 import './index.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';

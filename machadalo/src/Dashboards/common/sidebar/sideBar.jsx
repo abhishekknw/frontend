@@ -78,9 +78,9 @@ export default function SideNavBar() {
           </Link>
         </div>
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
-          <ul className="nav-menu-items" onClick={showSidebar}>
+          <ul className="nav-menu-items">
             <li className="navbar-toggle">
-              <Link to="#" className="menu-bars">
+              <Link to="#" className="menu-bars" onClick={showSidebar}>
                 <AiIcons.AiOutlineClose className="main-icon" />
 
               </Link>
