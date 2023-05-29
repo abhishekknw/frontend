@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import Table from 'react-bootstrap/Table';
 import './index.css';
 import Button from 'react-bootstrap/Button';
-import { BsChevronDown, BsEnvelopeFill, BsArrowDownCircle, BsWhatsapp } from 'react-icons/bs';
+import { BsChevronDown,BsChevronUp, BsEnvelopeFill, BsArrowDownCircle, BsWhatsapp } from 'react-icons/bs';
 export default function LeadsTable(props) {
 
   const [isExpandRow, setIsExpandRow] = React.useState({ 'b2b': false, 'b2c': false });
@@ -27,7 +27,15 @@ export default function LeadsTable(props) {
         </thead>
         <tbody>
           <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}><BsChevronDown /></td>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+           
+           {isExpandRow.b2b && 
+            <BsChevronUp />
+           }
+           {!isExpandRow.b2b &&
+            <BsChevronDown />
+           }
+              </td>
             <td>01</td>
             <td>B2B</td>
             <td>5000</td>
