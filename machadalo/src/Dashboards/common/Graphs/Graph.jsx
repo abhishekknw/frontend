@@ -36,19 +36,19 @@ export const options = {
   },
 };
 
-const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July','Aug','Sept','Oct','Nov','Dec'];
+const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
 export const data = {
   labels,
   datasets: [
     {
       label: 'Dataset 1',
-      data: [2000, 3458, 8645, 9574, 3948, 4949, 2230,2000, 3458, 8645, 9574, 3948, 4949, ],
+      data: [2000, 3458, 8645, 9574, 3948, 4949, 2230, 2000, 3458, 8645, 9574, 3948, 4949,],
       backgroundColor: "#3C1EB5",
     },
     {
       label: 'Dataset 2',
-      data: [2000, 3458, 8645, 4574, 3748, 4949, 2230,2000, 3458, 8645, 9574, 3948, 4949, ],
+      data: [2000, 3458, 8645, 4574, 3748, 4949, 2230, 2000, 3458, 8645, 9574, 3948, 4949,],
       backgroundColor: '#0174D8',
     },
   ],
@@ -66,18 +66,8 @@ export default function GraphChart() {
             <Dropdown.Toggle split variant="light" id="dropdown-split-basic" />
 
             <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">January</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">February,</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">March,</Dropdown.Item>
-              <Dropdown.Item href="#/action-2"> April</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">May</Dropdown.Item>
-              <Dropdown.Item href="#/action-2"> June,</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">July</Dropdown.Item>
-              {/* <Dropdown.Item href="#/action-2">August</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">September</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">October</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">November</Dropdown.Item>
-              <Dropdown.Item href="#/action-2"> December</Dropdown.Item> */}
+              <Dropdown.Item href="#/action-1">Month</Dropdown.Item>
+              <Dropdown.Item href="#/action-3">Week</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
