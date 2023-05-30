@@ -25,36 +25,6 @@ export default function MachadaloDashboard(props) {
           <div className="pb-5">
             <LeadsTable />
           </div>
-          {/* Breadcrumb */}
-          <nav>
-            <ol class="breadcrumb " itemscope itemtype="http://schema.org/BreadcrumbList">
-              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="#">
-                  <span itemprop="name">View Client</span>
-                </a>
-                <meta itemprop="position" content="1" />
-              </li>
-              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="#">
-                  <span itemprop="name">View Campaign</span>
-                </a>
-                <meta itemprop="position" content="2" />
-              </li>
-              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="#">
-                  <span itemprop="name">View City</span>
-                </a>
-                <meta itemprop="position" content="3" />
-              </li>
-              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="#">
-                  <span itemprop="name">View Leads</span>
-                </a>
-                <meta itemprop="position" content="4" />
-              </li>
-            </ol>
-          </nav>
-          {/* Breadcrumb */}
         </div>
       </div>
     </>
