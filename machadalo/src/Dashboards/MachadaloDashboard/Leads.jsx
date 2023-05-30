@@ -15,67 +15,138 @@ import { useRecoilState } from 'recoil';
 import { showHideTable } from '../Recoil/States/Machadalo';
 import ViewEndCustomerCityTable from './ViewEndCustomerCityTable';
 import ViewLeadDetailTable from './LeadDetailTable';
+import CommonTable from '../Table/CommonTable';
 export default function LeadsTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
 
-  return (
-    <>
-      <h4 >Leads</h4>
-      <Table striped bordered hover className="leads-table ">
-        <thead className="leads-tbody">
-          <tr>
-            <th></th>
-            <th>S.No.</th>
-            <th>Lead type</th>
-            <th>Lead Count</th>
-            <th>Lead accepted by QA</th>
-            <th>Lead Accepted by Client</th>
-            <th>View Client Wise</th>
-            <th>View Agency Wise</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
+  const headerData = [
+    {
+      name: 'S.No.',
+    },
+    {
+      name: 'Lead type',
+    },
+    {
+      name: 'Lead Count',
+    },
+    {
+      name: 'Lead accepted by QA',
+    },
+    {
+      name: 'Lead Accepted by Client',
+    },
+    {
+      name: 'View Client Wise',
+    },
+    {
+      name: 'View Agency Wise',
+    },
+    {
+      name: 'Action',
+    },
+  ];
+
+  const bodyData = () => {
+    let data = [
+      {
+        sno: '01',
+        type: 'B2B',
+        leadCount: '5000',
+        leadQA: '3000',
+        leadClient: '3000',
+        clientWise: (
+          <div>
+            <Button
+              variant="outline-dark"
+              className="lead-btn"
+              onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewClientWise: true })}
+            >
+              View Client Wise
+            </Button>
+          </div>
+        ),
+        agencyWise: (
+          <div>
+            <Button variant="outline-dark" className="lead-btn">
+              View Agency Wise
+            </Button>
+          </div>
+        ),
+        action: (
+          <div>
+            <div className="action-icon">
+              <span>
+                <BsEnvelopeFill />
+              </span>
+              <span>
+                <BsArrowDownCircle />
+              </span>
+              <span>
+                <BsWhatsapp />
+              </span>
+            </div>
+          </div>
+        ),
+      },
+      {
+        sno: '02',
+        type: 'B2C',
+        leadCount: '5000',
+        leadQA: '3000',
+        leadClient: '3000',
+        clientWise: (
+          <div>
+            <Button
+              variant="outline-dark"
+              className="lead-btn"
+              onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewClientWise: true })}
+            >
+              View Client Wise
+            </Button>
+          </div>
+        ),
+        agencyWise: (
+          <div>
+            <Button variant="outline-dark" className="lead-btn">
+              View Agency Wise
+            </Button>
+          </div>
+        ),
+        action: (
+          <div>
+            <div className="action-icon">
+              <span>
+                <BsEnvelopeFill />
+              </span>
+              <span>
+                <BsArrowDownCircle />
+              </span>
+              <span>
+                <BsWhatsapp />
+              </span>
+            </div>
+          </div>
+        ),
+      },
+    ];
+
+    let body = data.map((ele, key) => {
+      return (
+        <>
           <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
             <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
               {isExpandRow.b2b && <BsChevronUp />}
               {!isExpandRow.b2b && <BsChevronDown />}
             </td>
-            <td>01</td>
-            <td>B2B</td>
-            <td>5000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>
-              {' '}
-              <Button
-                variant="outline-dark"
-                className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewClientWise: true })}
-              >
-                View Client Wise
-              </Button>
-            </td>
-            <td>
-              {' '}
-              <Button variant="outline-dark" className="lead-btn">
-                View Agency Wise
-              </Button>
-            </td>
-            <td>
-              <div className="action-icon">
-                <span>
-                  <BsEnvelopeFill />
-                </span>
-                <span>
-                  <BsArrowDownCircle />
-                </span>
-                <span>
-                  <BsWhatsapp />
-                </span>
-              </div>
-            </td>
+            <td>{ele.sno}</td>
+            <td>{ele.type}</td>
+            <td>{ele.leadCount}</td>
+            <td>{ele.leadQA}</td>
+            <td>{ele.leadClient}</td>
+            <td>{ele.clientWise}</td>
+            <td>{ele.agencyWise}</td>
+            <td>{ele.action}</td>
           </tr>
           {isExpandRow.b2b && (
             <tr>
@@ -137,44 +208,17 @@ export default function LeadsTable(props) {
               </td>
             </tr>
           )}
+        </>
+      );
+    });
+    return body;
+  };
 
-          <tr>
-            <td>
-              <BsChevronDown />
-            </td>
-            <td>02</td>
-            <td>B2C</td>
-            <td>5000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>
-              {' '}
-              <Button variant="outline-dark" className="lead-btn">
-                View Client Wise
-              </Button>
-            </td>
-            <td>
-              {' '}
-              <Button variant="outline-dark" className="lead-btn">
-                View Agency Wise
-              </Button>
-            </td>
-            <td>
-              <div className="action-icon">
-                <span>
-                  <BsEnvelopeFill />
-                </span>
-                <span>
-                  <BsArrowDownCircle />
-                </span>
-                <span>
-                  <BsWhatsapp />
-                </span>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </Table>
+  return (
+    <>
+      <h4>Leads</h4>
+
+      <CommonTable headerData={headerData} bodyData={bodyData} />
 
       {showHideTableObj.ViewClientWise && <ViewClientAgencyTable />}
       {showHideTableObj.ViewCampaignWise && <ViewCampaignTable />}
