@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Accordion from 'react-bootstrap/Accordion';
+import Dropdown from 'react-bootstrap/Dropdown';
 // ICONS
 import * as FaIcons from "react-icons/fa"; //Now i get access to all the icons
 import * as AiIcons from "react-icons/ai";
@@ -19,7 +19,7 @@ export default function SideNavBar() {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const SidebarData = [
+  const [SidebarData, setSidebarData] = useState([
     {
       title: "Dashboard",
       path: "/",
@@ -28,20 +28,20 @@ export default function SideNavBar() {
     },
     {
       title: "Campaign Planning",
-      path: "/reports",
+      path: "/",
       icon: <BsChevronRight />,
       cName: "nav-text"
     },
     {
       title: "Campaign Execution",
-      path: "/products",
+      path: "/",
       icon: <BsChevronRight />,
       cName: "nav-text"
     },
     {
       icon: <BsChevronRight />,
       title: "Static Form",
-      path: "/team",
+      path: "/",
       cName: "nav-text"
     },
     {
@@ -51,7 +51,7 @@ export default function SideNavBar() {
     },
     {
       title: "Leads Data",
-      path: "/support",
+      path: "/",
       cName: "nav-text"
     },
     {
@@ -64,8 +64,15 @@ export default function SideNavBar() {
       path: "/",
       cName: "nav-text"
     }
-  ];
+  ]);
 
+  function addRemoveClass(data) {
+    let updatedData = SidebarData.map(x => (x.title === data.title ? { ...x, cName: 'nav-text nav-text-active' } : x));
+    setSidebarData(updatedData);
+    console.log(updatedData);
+    console.log(SidebarData)
+
+  }
 
   return (
     <>
@@ -80,46 +87,115 @@ export default function SideNavBar() {
           <ul className="nav-menu-items">
             <li className="navbar-toggle">
               <Link to="#" className="menu-bars" >
-                <AiIcons.AiOutlineClose className="main-icon" onClick={showSidebar}/>
+                <AiIcons.AiOutlineClose className="main-icon" onClick={showSidebar} />
               </Link>
             </li>
-            {SidebarData.map((item, index) => {
+            {/* {SidebarData.map((item, index) => {
               return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    {item.icon}
+                <li key={index} className={item.cName} onClick={(e) => { addRemoveClass(item) }}  >
+
+                  <Link to="#">
+
                     <span>{item.title}</span>
+                    <i>{item.icon}</i>
                   </Link>
+                  <div className="first-class">
+                    <ul className="first-class-ul">
+                      <li className="first-class-li">Campaign Planning</li>
+                      <li className="first-class-li">Campaign Execution</li>
+                    </ul>
+                  </div>
                 </li>
               );
-            })}
+            })} */}
 
-            <Accordion defaultActiveKey="0">
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Accordion Item #1</Accordion.Header>
-                <Accordion.Body>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                  minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                  aliquip ex ea commodo consequat. Duis aute irure dolor in
-                  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                  culpa qui officia deserunt mollit anim id est laborum.
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Accordion Item #2</Accordion.Header>
-                <Accordion.Body>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                  minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                  aliquip ex ea commodo consequat. Duis aute irure dolor in
-                  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                  culpa qui officia deserunt mollit anim id est laborum.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+            <li className="nav-text" onClick={(e) => { addRemoveClass(item) }}  >
+              <Link to="#">
+                <span>Dashboard</span>
+                <i> <BsChevronRight /></i>
+              </Link>
+              <div className="first-class">
+                <ul className="first-class-ul">
+                  <li className="first-class-li">Business</li>
+                  <li className="first-class-li">Business MCA</li>
+                  <li className="first-class-li">B2B Client  Dashboard</li>
+                  <li className="first-class-li">Operational</li>
+                </ul>
+              </div>
+            </li>
+            <li className="nav-text">
+              <Link to="#">
+                <span>Campaign Planning</span>
+                <i> <BsChevronRight /></i>
+              </Link>
+              <div className="first-class">
+                <ul className="first-class-ul">
+                  <li className="first-class-li">Static</li>
+                  <li className="first-class-li">Dynamic</li>
+                </ul>
+              </div>
+            </li>
+            <li className="nav-text">
+              <Link to="#">
+                <span>Campaign Execution</span>
+                <i> <BsChevronRight /></i>
+              </Link>
+              <div className="first-class">
+                <ul className="first-class-ul">
+                  <li className="first-class-li">Campaign Checklist</li>
+                  <li className="first-class-li">Leads</li>
+                </ul>
+              </div>
+            </li>
+
+            <li className="nav-text">
+              <Link to="#">
+                <span>Static Form</span>
+                <i> <BsChevronRight /></i>
+              </Link>
+              <div className="first-class">
+                <ul className="first-class-ul">
+                  <li className="first-class-li">Manage Supplier</li>
+                </ul>
+              </div>
+            </li>
+
+            <li className="nav-text">
+              <Link to="#">
+                <span>Management</span>
+                <i> <BsChevronRight /></i>
+              </Link>
+              <div className="first-class">
+                <ul className="first-class-ul">
+                  <li className="first-class-li">My Profile</li>
+                  <li className="first-class-li">Organisations</li>
+                  <li className="first-class-li">Manage Profile</li>
+                  <li className="first-class-li">Roles</li>
+                  <li className="first-class-li">Users</li>
+                </ul>
+              </div>
+            </li>
+            <li className="nav-text">
+              <Link to="#">
+                <span>Leads Data</span>
+              </Link>
+            </li>
+            <li className="nav-text">
+              <Link to="#">
+                <span>Intervene MCA</span>
+              </Link>
+            </li>
+            <li className="nav-text">
+              <Link to="#">
+                <span>Intervene MEA</span>
+              </Link>
+            </li>
+            <li className="nav-text">
+              <Link to="#">
+                <span>Dashboard</span>
+              </Link>
+            </li>
+
           </ul>
         </nav>
       </IconContext.Provider>
