@@ -13,8 +13,8 @@ import ViewClientAgencyTable from './ViewClientAgencyTable';
 import ViewCampaignTable from './ViewCampaignTable';
 import { useRecoilState } from 'recoil';
 import { showHideTable } from '../Recoil/States/Machadalo';
-import ViewEndCustomerCityTable from '../common/Tables/ViewEndCustomerCityTable';
-import ViewLeadDetailTable from '../common/Tables/LeadDetailTable';
+import ViewEndCustomerCityTable from './ViewEndCustomerCityTable';
+import ViewLeadDetailTable from './LeadDetailTable';
 export default function LeadsTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);

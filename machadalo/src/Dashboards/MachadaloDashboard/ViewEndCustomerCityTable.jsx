@@ -10,8 +10,8 @@ import {
   BsWhatsapp,
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
-import { showHideTable } from '../../Recoil/States/Machadalo';
-export default function ViewLeadDetailTable(props) {
+import { showHideTable } from '../Recoil/States/Machadalo';
+export default function ViewEndCustomerCityTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
@@ -24,15 +24,14 @@ export default function ViewLeadDetailTable(props) {
           <tr>
             <th></th>
             <th>S.No.</th>
-            <th>Entity Name</th>
-            <th>Entity Type</th>
-            <th>Primary Count</th>
-            <th>Lead Source</th>
-            <th>Organization Name</th>
-            <th>date of lead</th>
-            <th>Status</th>
+            <th>End Customer Name</th>
+            <th>Count</th>
+            <th>Lead accepted by QA</th>
+            <th>Lead Accepted by Client</th>
+            <th>Comment updated</th>
+            <th>Status updated</th>
             <th>Revenue Earned</th>
-            <th>View detail</th>
+            <th>View Leads</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -43,20 +42,19 @@ export default function ViewLeadDetailTable(props) {
               {!isExpandRow.b2b && <BsChevronDown />}
             </td>
             <td>01</td>
-            <td>Name 1</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>FOS</td>
-            <td>Machadalo</td>
-            <td>12/12/2020</td>
-            <td>Verified</td>
-            <td>20k</td>
+            <td>Customer 1</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
             <td>
               {' '}
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
+                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewLeadDetail: true })}
               >
                 View Leads
               </Button>
@@ -139,20 +137,19 @@ export default function ViewLeadDetailTable(props) {
           <tr>
             <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}><BsChevronDown />  </td>
             <td>01</td>
-            <td>Name 1</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>FOS</td>
-            <td>Machadalo</td>
-            <td>12/12/2020</td>
-            <td>Verified</td>
-            <td>20k</td>
+            <td>End Customer 2</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
             <td>
               {' '}
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
+                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewLeadDetail: true })}
               >
                 View Leads
               </Button>
