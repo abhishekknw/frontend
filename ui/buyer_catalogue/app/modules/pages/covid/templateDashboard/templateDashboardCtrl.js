@@ -716,6 +716,7 @@
       $scope.show1 = false;
       $scope.sendTemplates = function (templateData, message, id, template, name, md_id) {
         $scope.templateData = templateData;
+        console.log($scope.templateData, "$scope.templateData");
         $scope.templateName = name;
         $scope.selectedFileName = "";
         $scope.excelColumnError = "";
@@ -6553,7 +6554,7 @@
           })
       }
 
-      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search) {
+      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search, sortingObj) {
         $scope.viewUserSummary()
         $scope.user_view = {
           template_id: value,
@@ -6567,9 +6568,9 @@
           template_id: value,
           date: date,
           next_page: 1,
-          search: search
+          search: search,
         }
-
+        Object.assign(param, sortingObj);
         if (!search) {
           param.search = ""
         }
@@ -6864,12 +6865,17 @@
 
       $scope.getOptinFiles = function (data) {
         $timeout(function () {
-          // $scope.excelColumnError = "";
           $scope.optinFile = data;
           $scope.optineFileName = $scope.optinFile[0].name;
         }, 1);
       }
-      $scope.sendOptinUserFile = function () {
+      $scope.optinUserLoader = true;
+      $scope.sendOptinUserFile = function (optinUserNumbers, FileCheckSelect) {
+        $scope.optinUserLoader = false;
+        if (!FileCheckSelect) {
+          sendOptinUserNumber(optinUserNumbers);
+          return 0;
+        }
         let formdata = new FormData();
         let myHeaders = new Headers();
         myHeaders.append("Authorization", 'JWT ' + $rootScope.globals.currentUser.token)
@@ -6893,10 +6899,99 @@
             if (obj.data.general_error.errors) {
               swal("Error", obj.data.general_error.errors, constants.error);
             }
+            $scope.optinUserLoader = true;
           })
           .catch(error => console.log('error', error));
+        $scope.optinUserLoader = true;
       }
 
+      let sendOptinUserNumber = function (data) {
+        let obj = { 'number_list': data.split(',') }
+        templateDashboardService.sendOptinuser(obj)
+          .then(function onSuccess(response) {
+            console.log(response.data.data);
+            let value = "Not opted in users:" + response.data.data["not opted in users"];
+            let value2 = "successfully opted in users:" + response.data.data["successfully opted in users"];
+            if (response.data.status) {
+              swal(constants.name, value + '\n' + value2, constants.success);
+            }
+            else {
+              swal(constants.name, response.data.data.general_error.errors, constants.error);
+            }
+          }).catch(function onError(response) {
+            swal(constants.name, constants.errorMsg, constants.error);
+          })
+        $scope.optinUserLoader = true;
+
+      }
+
+      $scope.removeOptinFiles = function () {
+        let fileElement = angular.element('#optinFile');
+        angular.element(fileElement).val(null);
+        $scope.optineFileName = "";
+        $scope.optinFile = "";
+      }
+      $scope.deleteTemplate = function (data) {
+        swal({
+          title: 'Are you sure ?',
+          text: 'Delete Template',
+          type: constants.warning,
+          showCancelButton: true,
+          confirmButtonClass: "btn-success",
+          confirmButtonText: "Yes, Remove!",
+          closeOnConfirm: false,
+          closeOnCancel: true
+        },
+          function (confirm) {
+            if (confirm) {
+              templateDashboardService.DeleteTemplate(data.md_id)
+                .then(function onSuccess() {
+                  $scope.templateDetailData = $scope.templateDetailData.filter(object => {
+                    return object.md_id !== data.md_id;
+                  });
+                  swal(constants.name, constants.delete_success, constants.success);
+                }).catch(function onError(response) {
+                  console.log(response);
+                  swal(constants.name, constants.errorMsg, constants.error);
+                })
+            }
+          }
+        );
+      }
+      $scope.sendTemplateModel = { "params": '', "phone_number": '' };
+      $scope.setSendTemplateParams = function (data, templateData) {
+        let payload = [{
+          'template_id': templateData.id,
+          'phone_number': data.phone_number,
+          'params': data.params.split(','),
+          'default_params': templateData.param
+        }];
+        AuthService.sendTemplateToUser(payload)
+          .then(function onSuccess(response) {
+            swal("Success", 'Sent successfully', constants.success);
+            $scope.sendTemplateModel = { "params": '', "phone_number": '' };
+          }).catch(function onError(response) {
+            console.log(response);
+            swal("Error", constants.errorMsg, constants.error);
+          })
+      }
+
+      $scope.paramsForSorting = { 'buttonName': 'null', 'sort': 'no' };
+      $scope.SortFromBackend = function (type) {
+        if (type == 'total_positive') {
+          $scope.paramsForSorting.sort = $scope.paramsForSorting.sort == 'no' ? 'yes' : 'no';
+          $scope.paramsForSorting.buttonName = 'positive';
+        }
+        else if (type == 'total_neutral') {
+          $scope.paramsForSorting.sort = $scope.paramsForSorting.sort == 'no' ? 'yes' : 'no';
+          $scope.paramsForSorting.buttonName = 'neutral';
+        }
+        else if (type == 'total_negative') {
+          $scope.paramsForSorting.sort = $scope.paramsForSorting.sort == 'no' ? 'yes' : 'no';
+          $scope.paramsForSorting.buttonName = 'negative';
+        }
+        $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id, $scope.user_view.sent_date, null, $scope.user_view.template_name, $scope.user_view.search, $scope.paramsForSorting);
+      }
       $scope.templateDetail();
       // Template Dashboard end
       // const socket = new WebSocket('ws://localhost:8000/ws/livec/');

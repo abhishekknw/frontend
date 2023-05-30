@@ -182,13 +182,16 @@
                             <input type="button" id="submit" value="Get Results" ng-model="testsocket" ng-click="socketServicetest(testsocket)">
                           </div> -->
                           <div style="margin-left: auto;display: flex;">
+                            <!-- <input  style="color:#000;" type="text" placeholder="Enter Number , Separated"/>
                             <div class="chose-file">
                               <span style="color:#000;">{{optineFileName}}</span>
                               <input class="custom-file-input" type="file" name="file" size="80" multiple
                                 ng-files="getOptinFiles($files)" />
-                            </div>
-                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                              ng-click="sendOptinUserFile();">Optin Users</button>
+                            </div> -->
+                            <!-- <button type="button" class="btn btn-danger"
+                              ng-click="sendOptinUserFile();">Optin Users</button> -->
+                            <button type="button" class="btn btn-danger" data-target="#OptinUserModal"
+                              data-toggle="modal">Optin Users</button>
                           </div>
                         </div>
 
@@ -229,6 +232,9 @@
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
                                       ng-click="sendTemplates(template,template.data,template.id,'template',template.elementName)">Send
                                       templates</button>
+                                    <button type="button" class="btn btn-primary" style="align-items: center;"
+                                      ng-click="deleteTemplate(template)">
+                                      Delete</button>
                                   </div>
                                 </td>
                               </tr>
@@ -380,9 +386,9 @@
                                 {{templateData.data}}
                               </div>
                               <div>
-                                <button style="width: 70px;">{{templateData.button[0].name}}</button>
-                                <button style="width:70px">{{templateData.button[1].name}}</button>
-                                <button style="width:70px">{{templateData.button[2].name}}</button>
+                                <button style="width:100px;" ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
+                                <button style="width:100px" ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
+                                <button style="width:100px" ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
                               </div>
                             </div>
                             <!-- Modal footer -->
@@ -409,15 +415,16 @@
                                   {{message}}
                                 </div>
                                 <div>
-                                  <button style="width: 70px;">{{templateData.button[0].name}}</button>
-                                  <button style="width:70px">{{templateData.button[1].name}}</button>
-                                  <button style="width:70px">{{templateData.button[2].name}}</button>
+                                  <button style="width:100px;" ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
+                                  <button style="width:100px" ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
+                                  <button style="width:100px" ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
                                 </div>
                               </div>
                               <div class="modal-footer">
                                 <div class="row clearfix">
                                   <div class="clearfix">
-                                    <div class="col-sm-3">
+                                    <div >
+                                    <div class="col-sm-3" >
                                       <div style="position: relative; text-align: left; height: 38px;">
                                         <input class="btn btn-danger"
                                           style="position: absolute; z-index: 16; opacity: 0; width:123px; cursor: pointer;"
@@ -430,18 +437,30 @@
                                       <button ng-if="!checkForLoader" type="button" class="btn btn-danger"
                                         value="Upload" ng-click="uploadSendTemplate()">Send</button>
                                       <button ng-if="checkForLoader" type="button" class="btn btn-danger" value="Upload"
-                                        disabled>
-                                        <i class="fa fa-spinner fa-spin"
-                                          style="margin-left: -10px; margin-right:4px;"></i>Send</button>
+                                        disabled><i class="fa fa-spinner fa-spin"
+                                        style="margin-left: -10px; margin-right:4px;"></i>Send</button>
                                     </div>
-                                    <div class="col-sm-7" style="text-align: right;">
-                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div>
+                                    <div style="text-align: left; padding-left: 23px; padding-top:5px;">
+                                      {{selectedFileName}}</div>
+                                    <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
+                                      {{excelColumnError}}</div>
                                   </div>
-                                  <div style="text-align: left; padding-left: 23px; padding-top:5px;">
-                                    {{selectedFileName}}</div>
-                                  <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
-                                    {{excelColumnError}}</div>
+                                    <div class="input-params send-text-box" >
+                                      <label>Parameters:</label>
+                                      <div class="param-div">
+                                        <p class="param-list">{{templateData.param.toString()}}</p>
+                                      </div>
+                                      <form name="parameters">
+                                        <input type="text" placeholder="Phone Number" style="margin-bottom: 10px;" ng-model="sendTemplateModel.phone_number" required/>
+                                        <input type="text" ng-model="sendTemplateModel.params" name="sendTemplateParams" placeholder="Entert Params" required/>
+                                        <p style="font-weight: 600;color: #000;"><span>Note: </span> Enter Param With (,) Separated</p>
+                                        <button class="btn btn-primary" type="submit" ng-click="setSendTemplateParams(sendTemplateModel,templateData)">Send</button>
+                                      </form>
+                                    </div> 
+                                    <!-- <div class="col-sm-7" style="text-align: right;">
+                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div> -->
+                                  </div>
                                 </div>
                               </div>
                             </form>
@@ -449,6 +468,45 @@
                         </div>
                       </div>
                       <!-- modal end send template -->
+                      <!-- Optin User Modal Start -->
+                      <div id="OptinUserModal" class="modal fade theme-modal">
+                        <div class="modal-dialog quick-call-model" style="width: 400px;">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Optin User</h4>
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="row" style="margin: 0px; padding: 15px;">
+                              <div>
+                                <form name="myForm" ng-submit="sendOptinUserFile(optinUserNumbers,FileCheckSelect)">
+                                  <div>
+                                    <b>Send Excel File : </b><input type="checkbox" ng-model="FileCheckSelect"><br /><br />
+                                    <div style="padding:10px; border:1px solid black; width:100%; font-weight:bold" ng-show='FileCheckSelect'>
+                                      <div class="chose-file">
+                                        <span style="color:#000;">
+                                          <span style='font-size:10px;' ng-if="optineFileName" ng-click="removeOptinFiles()">&#10060;</span>	&nbsp;{{optineFileName}}
+                                        </span>
+                                        <input class="custom-file-input" type="file" name="file" id="optinFile" size="60" ng-required="FileCheckSelect" multiple
+                                          ng-files="getOptinFiles($files)" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-s-input" ng-show='!FileCheckSelect'>
+                                    <input style="color:#000;width:100%;border:1px solid black;" type="text" ng-model="optinUserNumbers" placeholder="Enter Number , Separated" ng-required="!FileCheckSelect"/>
+                                  </div>
+                                  <div class="modal-footer text-center" style="border-top: 0px; padding: 0;">
+                                    <button type="submit" style="margin-top: 10px;"
+                                      class="btn btn-danger smll-btn-cmt" ng-disabled="!optinUserLoader">
+                                      <i class="fa fa-spinner fa-spin" style="margin-left: -10px; margin-right:4px;" ng-if="!optinUserLoader"></i>Send</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <!--Optin User Modal End  -->
 
                       <br />
                       <br />
@@ -1608,18 +1666,28 @@
                           <th style="padding:10px">User Name</th>
                           <th style="padding:10px">What's app Name</th>
                           <th style="padding:10px">Phone Number</th>
-                          <th style="padding:10px">Positive</th>
-                          <th style="padding:10px">Neutral</th>
-                          <th style="padding:10px">Negative</th>
-                          <th style="padding:10px">Status</th>
-                          <!-- <th style="padding:10px">Created At</th> -->
-                          <th style="padding:10px;">Responsed At</th>
+                          <th style="padding:10px" ng-click="SortFromBackend('total_positive')">Positive
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="SortFromBackend('total_neutral')">Neutral
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="SortFromBackend('total_negative')">Negative
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px">Status
+                            <!-- <i class="icon-sort" style="color:white;"></i> -->
+                          </th>
+                          <th style="padding:10px;" ng-click="Sort('updated_at')">Responsed At
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px">Call Status</th>
                           <th style="padding:10px">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr dir-paginate=" tmp in transactionalTemplateUserData| itemsPerPage:itemsPerPage"
+                        <tr
+                          dir-paginate=" tmp in transactionalTemplateUserData| itemsPerPage:itemsPerPage | orderBy:sort:reversesort"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
 
                           <td style="text-align: center;">{{$index+serial}}</td>
@@ -1640,7 +1708,7 @@
                             </select>
                           </td>
                           <td style="text-align: center;">
-                            <i class='fas fa-phone-alt'style="font-size:20px" ng-click="CallTemplate(tmp)"></i>
+                            <i class='fas fa-phone-alt' style="font-size:20px" ng-click="CallTemplate(tmp)"></i>
                           </td>
                         </tr>
                       </tbody>
@@ -1672,7 +1740,7 @@
                       <div class="row quick-call-form">
                         <!-- <hr style="border: 1px solid ; border-width: 1px 0px 0px 0px"> -->
                         <div class="col-md-6" style="border-right: 1px solid #0000008c">
-                          <form name="myForm" ng-submit="OnQuickCall(CallModel)">                       
+                          <form name="myForm" ng-submit="OnQuickCall(CallModel)">
                             <div class=" ">
                               <div class="row">
                                 <div class="col-md-12">
@@ -1685,9 +1753,11 @@
                                 <div class="col-md-12">
                                   <div class="form-group">
                                     <label> Select Agent</label>
-                                    <select class="form-control" ng-model="CallModel.agent_number" name="Agent" required>
+                                    <select class="form-control" ng-model="CallModel.agent_number" name="Agent"
+                                      required>
                                       <option value="">Select Agent</option>
-                                      <option value="{{value.follow_me_number}}" ng-repeat="value in DialerAgentList.data">
+                                      <option value="{{value.follow_me_number}}"
+                                        ng-repeat="value in DialerAgentList.data">
                                         {{value.name}}</option>
                                     </select>
                                   </div>
@@ -1702,52 +1772,55 @@
                                     </select>
                                   </div>
                                 </div>
-                                
+
                               </div>
                             </div>
                             <div class="modal-footer text-center">
-                              <button type="submit" style="margin-top: 10px;" class="btn btn-danger smll-btn-cmt">Call</button>
+                              <button type="submit" style="margin-top: 10px;"
+                                class="btn btn-danger smll-btn-cmt">Call</button>
                             </div>
-                          </form>                          
+                          </form>
                         </div>
                         <div class="col-md-6">
-                            <div class="">
-                              <div class="form-group d-flex align-items-center">
-                                <label style="    white-space: nowrap; margin-right: 12px;"> Select Status</label>
-                                <select class="form-control" value="viewComments.call_status" ng-model="viewComments.call_status"
-                                  ng-change="updateCallStatus(viewComments.call_status,viewComments)">
-                                  <option value="">Select Status</option>
-                                  <option value="{{value}}" ng-repeat="value in CallStatusList">{{value}}</option>
-                                </select>
-                              </div>
+                          <div class="">
+                            <div class="form-group d-flex align-items-center">
+                              <label style="    white-space: nowrap; margin-right: 12px;"> Select Status</label>
+                              <select class="form-control" value="viewComments.call_status"
+                                ng-model="viewComments.call_status"
+                                ng-change="updateCallStatus(viewComments.call_status,viewComments)">
+                                <option value="">Select Status</option>
+                                <option value="{{value}}" ng-repeat="value in CallStatusList">{{value}}</option>
+                              </select>
                             </div>
-                            <h4 style="font-size: 14x !important; font-weight: 600;">View Comments</h4>
-                            <div class="table-h-scroll">
-                              <table class="table-data">
-                                <tr ng-repeat="item in viewComments.comment">
-                                  <td>
-                                    <div>
-                                      <p style="color: #000;">{{item.comment}}</p>
-                                    </div>
-                                    <div>
-                                      <img ng-src="{{userIcon}}">
-                                      <!-- <b>{{userInfo.username}}:</b> -->
-                                      <b>{{item.user}}:</b>
-                                      <span><small>{{item.date|date:'medium'}}</small></span>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </table>
-                            </div>
-                            <div style="margin-top: 10px;">
-                              <textarea style="margin-bottom: 0px !important;" class="field" rows="2" cols="200" ng-model="UserComment.comment"
-                                value="UserComment" placeholder="Write here.."></textarea>
-                              <button style="margin-top: 10px;" class="btn btn-danger smll-btn-cmt" type="button" ng-click="AddUserComment(UserComment)">Add
-                                Comment</button>
-                            </div>
+                          </div>
+                          <h4 style="font-size: 14x !important; font-weight: 600;">View Comments</h4>
+                          <div class="table-h-scroll">
+                            <table class="table-data">
+                              <tr ng-repeat="item in viewComments.comment">
+                                <td>
+                                  <div>
+                                    <p style="color: #000;">{{item.comment}}</p>
+                                  </div>
+                                  <div>
+                                    <img ng-src="{{userIcon}}">
+                                    <!-- <b>{{userInfo.username}}:</b> -->
+                                    <b>{{item.user}}:</b>
+                                    <span><small>{{item.date|date:'medium'}}</small></span>
+                                  </div>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div style="margin-top: 10px;">
+                            <textarea style="margin-bottom: 0px !important;" class="field" rows="2" cols="200"
+                              ng-model="UserComment.comment" value="UserComment" placeholder="Write here.."></textarea>
+                            <button style="margin-top: 10px;" class="btn btn-danger smll-btn-cmt" type="button"
+                              ng-click="AddUserComment(UserComment)">Add
+                              Comment</button>
+                          </div>
                         </div>
                       </div>
-                  
+
                     </div>
                   </div>
                 </div>

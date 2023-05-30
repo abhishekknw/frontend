@@ -28,8 +28,9 @@ angular.module('catalogueApp')
       DashboardService.transactionalTemplateUserDetail = function (param){
         let url="v0/ui/mca-bot/template-user-summary-list/?template_id="+ param.template_id+ 
                 "&date="+param.date+"&next_page="+param.next_page+"&search="+param.search;
- 
-
+        if(param.buttonName!==undefined){
+          url+= `&${param.buttonName}=`+param.sort;
+        }
         return machadaloHttp.get( url);
 
       }
@@ -90,6 +91,16 @@ angular.module('catalogueApp')
 
       DashboardService.postDataOnQuickCall = function(data){
         let url = "v0/ui/mca-bot/dailer-call/";
+        return machadaloHttp.post(url,data);
+      }
+
+      DashboardService.DeleteTemplate = function(id){
+        let url = "v0/ui/template/?md_id=" + id;
+        return machadaloHttp.delete(url);
+      }
+
+      DashboardService.sendOptinuser = function(data){
+        let url = "v0/ui/mca-bot/optin-users/";
         return machadaloHttp.post(url,data);
       }
 

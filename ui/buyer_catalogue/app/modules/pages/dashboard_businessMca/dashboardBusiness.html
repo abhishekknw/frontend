@@ -549,14 +549,18 @@
                                             </thead>
                                             <tbody ng-repeat="supplier in suppliers.extra_leads_data">
                                               <h6 style="text-align:center" ng-if="suppliers.extra_leads_data.length">
-                                                <b>{{suppliers.supplier.name}}</b></h6>
+                                                <b>{{suppliers.supplier.name}}</b>
+                                              </h6>
                                               <tr style="text-align:center">
                                                 <td ng-if="suppliers.extra_leads_data.length">
-                                                  <small>{{supplier.created_at | date:'medium'}}</small></td>
+                                                  <small>{{supplier.created_at | date:'medium'}}</small>
+                                                </td>
                                                 <td ng-if="suppliers.extra_leads_data.length">
-                                                  <small>{{supplier.extra_leads}}</small></td>
+                                                  <small>{{supplier.extra_leads}}</small>
+                                                </td>
                                                 <td ng-if="suppliers.extra_leads_data.length">
-                                                  <small>{{supplier.extra_hot_leads}}</small></td>
+                                                  <small>{{supplier.extra_hot_leads}}</small>
+                                                </td>
                                               </tr>
                                             </tbody>
                                           </table>
@@ -785,7 +789,8 @@
                                           ng-if="supplier.supplier.society_locality">{{supplier.supplier.society_locality}}</span>
                                         <span
                                           ng-if="supplier.supplier.locality_rating">{{supplier.supplier.locality_rating}}</span>
-                                        <small>({{supplier.supplier.subarea}})</small></td>
+                                        <small>({{supplier.supplier.subarea}})</small>
+                                      </td>
 
                                       <td class="col-md-2"><span
                                           ng-if="supplier.supplier.society_type_quality">{{supplier.supplier.society_type_quality}}</span>
@@ -1418,13 +1423,17 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <!-- <tbody dir-paginate="campaign in leadsDataCampaigns | itemsPerPage:20"
+                          total-items="paginationForCampaign.totalItems" current-page="paginationForCampaign.currentPage"  pagination-id="paginate2" track by "$index"> -->
                           <tr style="text-align: center;"
-                            dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:50 track by $index ">
+                            dir-paginate="campaign in CampaignDataList | itemsPerPage:20" 
+                            total-items="paginationForCampaign.totalItems" current-page="paginationForCampaign.currentPage"  pagination-id="paginate2"
+                            track by "$index">
                             <td style="width:62px;">{{$index + 1}}</td>
                             <td style="width:140px;" class="col-md-2">{{campaign.name}}</td>
                             <td style="width:140px;">{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
                             <td class="col-md-2">{{campaign.supplier_count}}({{campaign.unique_count}})</td>
-                            <td  ng-show="!conditionForTable">{{campaign.revenue}}</td>
+                            <td ng-show="!conditionForTable">{{campaign.revenue}}</td>
                             <td>
                               <button class="btn btn-danger"
                                 ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View
@@ -1445,8 +1454,13 @@
                       </table>
                     </div>
                   </div>
+                  <div style="text-align:center">
+                    <dir-pagination-controls pagination-id="paginate2"  max-size="7" direction-links="true"
+                      boundary-links="true" on-page-change="pageChangedCampaigns(newPageNumber)">
+                    </dir-pagination-controls>
+                  </div>
                   <!-- fiter -->
-                  <div ng-if="!showCampaigns && !leadBasicShow" class="date_range_picker">
+                  <!-- <div ng-if="!showCampaigns && !leadBasicShow" class="date_range_picker">
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="row">
@@ -1500,9 +1514,18 @@
                     <center>
                       <h2 style="color: black;">Leads of {{CampaignNameofLeads}}</h2>
                     </center>
-                  </div>
+                  </div> -->
                   <div class="viewLeadstable" ng-if="!showCampaigns && !leadBasicShow">
                     </br><br>
+                    <div style="margin-top: 20px;">
+                      <center>
+                        <h2 style="color: black; margin: 0;">Leads of {{CampaignNameofLeads}}</h2>
+                      </center>
+                      <span style="display: block;margin: 5px; max-width: 300px;margin-left: auto;">
+                        <input type="text" class="form-control" ng-model="searchForLead"
+                          ng-keyup="searchForDetails(searchForLead)" placeholder="search">
+                      </span>
+                    </div>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -1595,7 +1618,7 @@
 
                   </div>
                   <!-- table for lead basic -->
-                  <div ng-if="leadBasicShow==true && showTable==true" class="date_range_picker">
+                  <!-- <div ng-if="leadBasicShow==true && showTable==true" class="date_range_picker">
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="row">
@@ -1642,16 +1665,17 @@
                         </div>
                       </div>
                     </div>
-                    <span style="display: block;margin: 15px;">
-                      <input type="text" class="form-control" ng-model="searchForLead"
-                        ng-keyup="searchForDetails(searchForLead)" placeholder="search">
-                    </span>
-                    <center>
-                      <h2 style="color: black;">Leads of {{CampaignNameofLeads}}</h2>
-                    </center>
-                  </div>
+                  </div> -->
                   <div class="" ng-if="leadBasicShow==true && showTable==true">
-                    </br><br>
+                    <div style="margin-top: 20px;">
+                      <center>
+                        <h2 style="color: black; margin: 0;">Leads of {{CampaignNameofLeads}}</h2>
+                      </center>
+                      <span style="display: block;margin: 5px; max-width: 300px;margin-left: auto;">
+                        <input type="text" class="form-control" ng-model="searchForLead"
+                          ng-keyup="searchForDetails(searchForLead)" placeholder="search">
+                      </span>
+                    </div>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -1916,7 +1940,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.verbally_booked.supplier_data.length != 0">
@@ -1929,7 +1954,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.verbally_booked.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.followup_required.supplier_data.length != 0">
@@ -1941,7 +1967,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.followup_required.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length != 0">
@@ -1950,10 +1977,12 @@
                                           {{bookingPhases.last_completed_phase.total_pipeline.supplier_count}}
                                           ({{bookingPhases.last_completed_phase.total_pipeline.flat_count}})
                                         </a>
-                                      </small></td>
+                                      </small>
+                                    </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                   </tr>
                                   <tr ng-if="bookingPhases.ongoing_phase">
@@ -1974,7 +2003,8 @@
                                         </a></small>
                                     </td>
                                     <td ng-if="bookingPhases.ongoing_phase.confirmed_booked.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
                                     <td ng-if="bookingPhases.ongoing_phase.verbally_booked.supplier_data.length != 0">
                                       <small><a
                                           ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.verbally_booked.supplier_data,'Ongoing Phase')">
@@ -1983,14 +2013,17 @@
                                       </a>
                                     </td>
                                     <td ng-if="bookingPhases.ongoing_phase.verbally_booked.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
                                     <td ng-if="bookingPhases.ongoing_phase.followup_required.supplier_data.length != 0">
                                       <small><a
                                           ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.followup_required.supplier_data,'Ongoing Phase')">
                                           {{bookingPhases.ongoing_phase.followup_required.supplier_count}}
-                                          ({{bookingPhases.ongoing_phase.followup_required.flat_count}})</small></td>
+                                          ({{bookingPhases.ongoing_phase.followup_required.flat_count}})</small>
+                                    </td>
                                     <td ng-if="bookingPhases.ongoing_phase.followup_required.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td ng-if="bookingPhases.ongoing_phase.total_pipeline.supplier_data.length != 0">
                                       <small><a
@@ -1998,9 +2031,11 @@
                                           {{bookingPhases.ongoing_phase.total_pipeline.supplier_count}}
                                           ({{bookingPhases.ongoing_phase.total_pipeline.flat_count}})
                                         </a>
-                                      </small></td>
+                                      </small>
+                                    </td>
                                     <td ng-if="bookingPhases.ongoing_phase.total_pipeline.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                   </tr>
                                   <tr ng-repeat="item in bookingPhases.upcoming_phases"
@@ -2081,7 +2116,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.decision_pending.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.meeting_fixed.supplier_data.length != 0">
@@ -2094,7 +2130,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.meeting_fixed.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.meeting_converted.supplier_data.length != 0">
@@ -2106,7 +2143,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.meeting_converted.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length != 0">
@@ -2115,10 +2153,12 @@
                                           {{bookingPhases.last_completed_phase.total_pipeline.supplier_count}}
                                           ({{bookingPhases.last_completed_phase.total_pipeline.flat_count}})
                                         </a>
-                                      </small></td>
+                                      </small>
+                                    </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                   </tr>
                                   <tr ng-if="bookingPhases.ongoing_phase">
@@ -2139,7 +2179,8 @@
                                         </a></small>
                                     </td>
                                     <td ng-if="bookingPhases.ongoing_phase.decision_pending.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
                                     <td ng-if="bookingPhases.ongoing_phase.meeting_fixed.supplier_data.length != 0">
                                       <small><a
                                           ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.meeting_fixed.supplier_data,'Ongoing Phase')">
@@ -2148,14 +2189,17 @@
                                       </a>
                                     </td>
                                     <td ng-if="bookingPhases.ongoing_phase.meeting_fixed.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
                                     <td ng-if="bookingPhases.ongoing_phase.meeting_converted.supplier_data.length != 0">
                                       <small><a
                                           ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.meeting_converted.supplier_data,'Ongoing Phase')">
                                           {{bookingPhases.ongoing_phase.meeting_converted.supplier_count}}
-                                          ({{bookingPhases.ongoing_phase.meeting_converted.flat_count}})</small></td>
+                                          ({{bookingPhases.ongoing_phase.meeting_converted.flat_count}})</small>
+                                    </td>
                                     <td ng-if="bookingPhases.ongoing_phase.meeting_converted.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td ng-if="bookingPhases.ongoing_phase.total_pipeline.supplier_data.length != 0">
                                       <small><a
@@ -2163,9 +2207,11 @@
                                           {{bookingPhases.ongoing_phase.total_pipeline.supplier_count}}
                                           ({{bookingPhases.ongoing_phase.total_pipeline.flat_count}})
                                         </a>
-                                      </small></td>
+                                      </small>
+                                    </td>
                                     <td ng-if="bookingPhases.ongoing_phase.total_pipeline.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                   </tr>
                                   <tr ng-repeat="item in bookingPhases.upcoming_phases"
@@ -2248,7 +2294,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.complete_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.emergency_situation.supplier_data.length != 0">
@@ -2261,7 +2308,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.emergency_situation.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td ng-if="bookingPhases.last_completed_phase.open.supplier_data.length != 0">
                                       <small><a
@@ -2271,7 +2319,8 @@
                                         </a></small>
                                     </td>
                                     <td ng-if="bookingPhases.last_completed_phase.open.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.partial_building_lockdown.supplier_data.length != 0">
@@ -2283,7 +2332,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.partial_building_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.partial_floor_lockdown.supplier_data.length != 0">
@@ -2295,7 +2345,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.partial_floor_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.partial_house_lockdown.supplier_data.length != 0">
@@ -2307,7 +2358,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.partial_house_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length != 0">
@@ -2316,10 +2368,12 @@
                                           {{bookingPhases.last_completed_phase.total_pipeline.supplier_count}}
                                           ({{bookingPhases.last_completed_phase.total_pipeline.flat_count}})
                                         </a>
-                                      </small></td>
+                                      </small>
+                                    </td>
                                     <td
                                       ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                   </tr>
                                   <tr ng-if="bookingPhases.ongoing_phase">
@@ -2340,7 +2394,8 @@
                                         </a></small>
                                     </td>
                                     <td ng-if="bookingPhases.ongoing_phase.complete_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.ongoing_phase.emergency_situation.supplier_data.length != 0">
@@ -2352,13 +2407,15 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.ongoing_phase.emergency_situation.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
                                     <td ng-if="bookingPhases.ongoing_phase.open.supplier_data.length != 0"><small><a
                                           ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.open.supplier_data,'Ongoing Phase')">
                                           {{bookingPhases.ongoing_phase.open.supplier_count}}
                                           ({{bookingPhases.ongoing_phase.open.flat_count}})</small></td>
                                     <td ng-if="bookingPhases.ongoing_phase.open.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
                                     <td
@@ -2370,7 +2427,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.ongoing_phase.partial_building_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
                                     <td
@@ -2382,7 +2440,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.ongoing_phase.partial_floor_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
                                     <td
@@ -2394,7 +2453,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.ongoing_phase.partial_house_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
 
@@ -2404,9 +2464,11 @@
                                           {{bookingPhases.ongoing_phase.total_pipeline.supplier_count}}
                                           ({{bookingPhases.ongoing_phase.total_pipeline.flat_count}})
                                         </a>
-                                      </small></td>
+                                      </small>
+                                    </td>
                                     <td ng-if="bookingPhases.ongoing_phase.total_pipeline.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                   </tr>
                                   <tr ng-repeat="item in bookingPhases.upcoming_phases"
@@ -2445,7 +2507,8 @@
                                           ({{item.partial_building_lockdown.flat_count}})</a>
                                       </small> </td>
                                     <td ng-if="item.partial_building_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
                                     <td ng-if="item.partial_floor_lockdown.supplier_data.length != 0"><small><a
@@ -2527,7 +2590,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.confirmed_booked.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
 
@@ -2537,10 +2601,12 @@
                                       <small><a
                                           ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.not_initiated.supplier_data,'Pipelined')">
                                           {{bookingPhases.pipeline_suppliers.not_initiated.supplier_count}}
-                                          ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count}})</small></td>
+                                          ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count}})</small>
+                                    </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length == 0">
-                                      <small>0</small></td> -->
+                                      <small>0</small>
+                                    </td> -->
 
 
 
@@ -2553,7 +2619,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.followup_required.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
 
@@ -2569,7 +2636,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
 
@@ -2578,9 +2646,11 @@
                                       <small><a
                                           ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.rejected.supplier_data,'Pipelined')">
                                           {{bookingPhases.pipeline_suppliers.rejected.supplier_count}}
-                                          ({{bookingPhases.pipeline_suppliers.rejected.flat_count}})</small></td>
+                                          ({{bookingPhases.pipeline_suppliers.rejected.flat_count}})</small>
+                                    </td>
                                     <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
                                     <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length != 0">
@@ -2589,9 +2659,11 @@
                                           {{bookingPhases.pipeline_suppliers.total_booked.supplier_count}}
                                           ({{bookingPhases.pipeline_suppliers.total_booked.flat_count}})
                                         </a>
-                                      </small></td>
+                                      </small>
+                                    </td>
                                     <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                   </tr>
                                 </tbody>
@@ -2649,17 +2721,20 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.decision_pending.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length != 0">
                                       <small><a
                                           ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.not_initiated.supplier_data,'Pipelined')">
                                           {{bookingPhases.pipeline_suppliers.not_initiated.supplier_count}}
-                                          ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count}})</small></td>
+                                          ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count}})</small>
+                                    </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
                                     <td
@@ -2671,7 +2746,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.meeting_converted.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
                                     <td
@@ -2684,16 +2760,19 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.meeting_fixed.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
                                     <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length != 0">
                                       <small><a
                                           ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.rejected.supplier_data,'Pipelined')">
                                           {{bookingPhases.pipeline_suppliers.rejected.supplier_count}}
-                                          ({{bookingPhases.pipeline_suppliers.rejected.flat_count}})</small></td>
+                                          ({{bookingPhases.pipeline_suppliers.rejected.flat_count}})</small>
+                                    </td>
                                     <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
                                     <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length != 0">
@@ -2702,9 +2781,11 @@
                                           {{bookingPhases.pipeline_suppliers.total_booked.supplier_count}}
                                           ({{bookingPhases.pipeline_suppliers.total_booked.flat_count}})
                                         </a>
-                                      </small></td>
+                                      </small>
+                                    </td>
                                     <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                   </tr>
                                 </tbody>
@@ -2760,7 +2841,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.complete_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.emergency_situation.supplier_data.length != 0">
@@ -2771,15 +2853,18 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.emergency_situation.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td ng-if="bookingPhases.pipeline_suppliers.open.supplier_data.length != 0">
                                       <small><a
                                           ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.open.supplier_data,'Pipelined')">
                                           {{bookingPhases.pipeline_suppliers.open.supplier_count}}
-                                          ({{bookingPhases.pipeline_suppliers.open.flat_count}})</small></td>
+                                          ({{bookingPhases.pipeline_suppliers.open.flat_count}})</small>
+                                    </td>
                                     <td ng-if="bookingPhases.pipeline_suppliers.open.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.partial_building_lockdown.supplier_data.length != 0">
@@ -2790,7 +2875,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.partial_building_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
                                     <td
@@ -2802,7 +2888,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.partial_floor_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.partial_house_lockdown.supplier_data.length != 0">
@@ -2813,7 +2900,8 @@
                                     </td>
                                     <td
                                       ng-if="bookingPhases.pipeline_suppliers.partial_house_lockdown.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
 
 
@@ -2824,9 +2912,11 @@
                                           {{bookingPhases.pipeline_suppliers.total_booked.supplier_count}}
                                           ({{bookingPhases.pipeline_suppliers.total_booked.flat_count}})
                                         </a>
-                                      </small></td>
+                                      </small>
+                                    </td>
                                     <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length == 0">
-                                      <small>0</small></td>
+                                      <small>0</small>
+                                    </td>
 
                                   </tr>
                                 </tbody>
@@ -3534,7 +3624,8 @@
                                       <td><small style="font-weight:bold">Total Leads (%)</small></td>
                                       <td ng-if="Data.overall_data.total_leads">{{Data.overall_data.total_leads}} <br>
                                         <small style="font-weight:bold">({{(Data.overall_data.total_leads /
-                                          Data.overall_data.flat_count) * 100 |limitTo:5}} %)</small> </td>
+                                          Data.overall_data.flat_count) * 100 |limitTo:5}} %)</small>
+                                      </td>
                                       <td ng-if="!Data.overall_data.total_leads">NA</td>
 
                                       <td
@@ -3544,13 +3635,15 @@
                                           style="font-weight:bold">({{(Data.flat_data[Data.overall_data.supplier_size_categories.min.type].total
                                           /
                                           Data.flat_data[Data.overall_data.supplier_size_categories.min.type]['flat_count'])
-                                          * 100 |limitTo:5}} %)</small> </td>
+                                          * 100 |limitTo:5}} %)</small>
+                                      </td>
                                       <td
                                         ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.min.type]['flat_count'] == 0">
                                         {{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].total}}
                                         <br> <small
                                           style="font-weight:bold">({{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].total}}
-                                          %)</small> </td>
+                                          %)</small>
+                                      </td>
 
                                       <td
                                         ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.medium.type]['flat_count'] != 0">
@@ -3559,13 +3652,15 @@
                                           style="font-weight:bold">({{(Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].total
                                           /
                                           Data.flat_data[Data.overall_data.supplier_size_categories.medium.type]['flat_count'])
-                                          * 100 |limitTo:5}} %)</small> </td>
+                                          * 100 |limitTo:5}} %)</small>
+                                      </td>
                                       <td
                                         ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.medium.type]['flat_count'] == 0">
                                         {{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].total}}
                                         <br> <small
                                           style="font-weight:bold">({{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].total
-                                          }} %)</small> </td>
+                                          }} %)</small>
+                                      </td>
 
                                       <td
                                         ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.max.type]['flat_count'] != 0">
@@ -3574,13 +3669,15 @@
                                           style="font-weight:bold">({{(Data.flat_data[Data.overall_data.supplier_size_categories.max.type].total
                                           /
                                           Data.flat_data[Data.overall_data.supplier_size_categories.max.type]['flat_count'])
-                                          * 100 |limitTo:5}} %)</small> </td>
+                                          * 100 |limitTo:5}} %)</small>
+                                      </td>
                                       <td
                                         ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.max.type]['flat_count'] == 0">
                                         {{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].total}}
                                         <br> <small
                                           style="font-weight:bold">({{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].total}}
-                                          %)</small> </td>
+                                          %)</small>
+                                      </td>
 
                                     </tr>
                                   </tbody>
@@ -3673,7 +3770,8 @@
                                       <th style="background:#8e1921 !important;color:#ffffff !important">
                                         {{flat_count_header}}</th>
                                       <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads
-                                        <br>(%)</th>
+                                        <br>(%)
+                                      </th>
                                       <th style="background:#8e1921 !important;color:#ffffff !important">
                                         {{Data.overall_data.hot_level_keys['is_hot_level_1']}} <br> (%)</th>
                                       <th style="background:#8e1921 !important;color:#ffffff !important">
@@ -4514,7 +4612,8 @@
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Leads <br>
                                     (%)</th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Hot Leads
-                                    <br> (%)</th>
+                                    <br> (%)
+                                  </th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Booking
                                     Confirmed <br> (%)</th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Order
@@ -4539,7 +4638,8 @@
                                   <td>{{roundOfPrecisionTwo(data['flat*cost_flat/hot_lead'])}} <br>
                                     ({{roundOfPrecisionTwo(data['hot_lead/flat*100'])}})</td>
                                   <td>{{roundOfPrecisionTwo(data['flat*cost_flat/total_booking_confirmed'])}}
-                                    <br>({{roundOfPrecisionTwo(data['total_booking_confirmed/flat*100'])}})</td>
+                                    <br>({{roundOfPrecisionTwo(data['total_booking_confirmed/flat*100'])}})
+                                  </td>
                                   <td>{{roundOfPrecisionTwo(data['flat*cost_flat/total_orders_punched'])}} <br>
                                     ({{roundOfPrecisionTwo(data['total_orders_punched/flat*100'])}})</td>
                                 </tr>
@@ -6113,7 +6213,8 @@
                 <label>Select Email Type:</label>
                 <select class="field" ng-model="emailModel.selected">
                   <option value="" disabled selected hidden>Email Type</option>
-                  <option ng-repeat="option in listClientStatus" track by "$index" value="{{option}}">{{option}}</option>
+                  <option ng-repeat="option in listClientStatus" track by "$index" value="{{option}}">{{option}}
+                  </option>
                 </select>
                 <div class="sendEmail1">
                   <input type="email" class="field" placeholder="Enter Multiple User's Email To Send Mail "
@@ -6428,7 +6529,8 @@
               <div class="modalBodyBox">
                 <h3>Comments</h3>
                 <div>
-                  <select class="form-control" style="color: #000000;margin-bottom: 15px;" ng-click="filterComment(commentType)" ng-model="commentType">
+                  <select class="form-control" style="color: #000000;margin-bottom: 15px;"
+                    ng-click="filterComment(commentType)" ng-model="commentType">
                     <option value="all" ng-selected="true">All</option>
                     <option value="company_comment">Company comment</option>
                     <option value="machadalo_comment">Machadalo Comments</option>
@@ -6476,11 +6578,14 @@
             <div style="background-color: #8e1921; color:#FFFFFF;" class="modal-header">
               <button style="color:#FFFFFF;" type="button" class="close" data-dismiss="modal">&times;</button>
               <h2 class="modal-title">Lead Details ({{req_id_detail}})</h2>
-               <div class="d-flex font-14 pt-5 justify-content-between">
+              <div class="d-flex font-14 pt-5 justify-content-between">
                 <span class="lead-date">Share Date: {{leadDetailDataList.sector.acceptance_date}}</span> &nbsp;
-                <span class="lead-assigned-by">Assigned by: {{leadDetailDataList.sector.lead_assigned.assignedby}}</span> &nbsp;
-                 <span class="lead-assigned-to">Assigned to: {{leadDetailDataList.sector.lead_assigned.assignedto}}</span></div>
-                      
+                <span class="lead-assigned-by">Assigned by:
+                  {{leadDetailDataList.sector.lead_assigned.assignedby}}</span> &nbsp;
+                <span class="lead-assigned-to">Assigned to:
+                  {{leadDetailDataList.sector.lead_assigned.assignedto}}</span>
+              </div>
+
             </div>
             <div style="padding:15px;" class="modal-body">
               <div>
@@ -6488,8 +6593,8 @@
                   <table class="table">
                     <tr>
                       <th style="background-color: #8e1921; color: #fff;" bgcolor="#8e1921">
-                        <h4>Sector : </h4> 
-                       </th>
+                        <h4>Sector : </h4>
+                      </th>
                     </tr>
                     <tr>
                       <td>
@@ -6591,11 +6696,39 @@
                   </table>
                 </div><br>
                 <div>
+                  <div style="background-color: #8e1921; color: #fff;padding: 10px;">
+                    <h4>Status History :</h4>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <td>
+                          <div class="line_box stav_projektu" style="margin: 10px 0 0px 0;">
+                            <div class="text_circle done" ng-repeat="data in StatusFunnel">
+                              <div class="circle">
+                                <h4>{{data.macchadalo_client_status}}</h4>
+                              </div>
+                              <a class="tvar"><span data-toggle="popover" title="Sample text" data-trigger="hover"
+                                  data-placement="top" data-content="Ukázkový text při hover"></span></a>
+                              <div class="subline">
+                                <p>{{data.updated_at | date:'medium'}}</p>
+                                <p>{{data.updated_by}}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <br>
+                <div>
                   <table class="table">
                     <tr>
                       <th style="background-color: #8e1921; color: #fff;" class="d-flex align-item-center">
                         <h4>Comments :</h4>
-                        <select class="form-control small-dropdown" style="color: #000000" ng-click="filterComment(commentType)" ng-model="commentType">
+                        <select class="form-control small-dropdown" style="color: #000000"
+                          ng-click="filterComment(commentType)" ng-model="commentType">
                           <option value="all" ng-selected="true">All</option>
                           <option value="company_comment">Company comment</option>
                           <option value="machadalo_comment">Machadalo Comments</option>
