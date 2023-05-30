@@ -9,25 +9,29 @@ import {
   BsArrowDownCircle,
   BsWhatsapp,
 } from 'react-icons/bs';
-import ViewClientAgencyTable from './ViewClientAgencyTable';
-export default function LeadsTable(props) {
+import './index.css';
+
+export default function ViewClientAgencyTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
 
   return (
     <>
-      <h2 style={{ paddingTop: '10px' }}>Leads</h2>
+      <h2 style={{ paddingTop: '10px' }}>ViewTable</h2>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
             <th></th>
             <th>S.No.</th>
-            <th>Lead type</th>
-            <th>Lead Count</th>
+            <th>Client Name</th>
+            <th>To be Shared</th>
+            <th>Count</th>
             <th>Lead accepted by QA</th>
             <th>Lead Accepted by Client</th>
-            <th>View Client Wise</th>
-            <th>View Agency Wise</th>
+            <th>Comment updated</th>
+            <th>Status updated</th>
+            <th>Revenue Earned</th>
+            <th>View Campaign</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -38,20 +42,22 @@ export default function LeadsTable(props) {
               {!isExpandRow.b2b && <BsChevronDown />}
             </td>
             <td>01</td>
-            <td>B2B</td>
+            <td>Clinet 1</td>
             <td>5000</td>
             <td>3000</td>
             <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
             <td>
               {' '}
-              <Button variant="outline-dark" className="lead-btn" onClick={() => setshowTable({ ...showTable, first: true })}>
-                View Client Wise
-              </Button>
-            </td>
-            <td>
-              {' '}
-              <Button variant="outline-dark" className="lead-btn">
-                View Agency Wise
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() => setshowTable({ ...showTable, first: true })}
+              >
+                View Campaign
               </Button>
             </td>
             <td>
@@ -129,25 +135,28 @@ export default function LeadsTable(props) {
             </tr>
           )}
 
-          <tr>
-            <td>
-              <BsChevronDown />
+          <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              {isExpandRow.b2b && <BsChevronUp />}
+              {!isExpandRow.b2b && <BsChevronDown />}
             </td>
-            <td>02</td>
-            <td>B2C</td>
+            <td>01</td>
+            <td>Clinet 1</td>
             <td>5000</td>
             <td>3000</td>
             <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
             <td>
               {' '}
-              <Button variant="outline-dark" className="lead-btn">
-                View Client Wise
-              </Button>
-            </td>
-            <td>
-              {' '}
-              <Button variant="outline-dark" className="lead-btn">
-                View Agency Wise
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() => setshowTable({ ...showTable, first: true })}
+              >
+                View Campaign
               </Button>
             </td>
             <td>
@@ -166,12 +175,6 @@ export default function LeadsTable(props) {
           </tr>
         </tbody>
       </Table>
-
-      {showTable.first && (
-        <div>
-          <ViewClientAgencyTable />
-        </div>
-      )}
     </>
   );
 }
