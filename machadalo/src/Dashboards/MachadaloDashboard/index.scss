@@ -146,7 +146,11 @@
     font-weight: 500;
     text-transform: uppercase;
     padding: 12px !important;
-    padding-left: 10px 10px !important;
+    white-space: break-spaces;
+    align-items: start;
+    vertical-align: unset;
+    text-align: center;
+    line-height: 1.3;
 }
 
 .nested-table {
@@ -214,3 +218,89 @@ th {
     padding: 0px 40px !important;
     padding-bottom: 20px !important;
 }
+
+
+/* Breadcrumb */
+
+
+title-definiton {
+    width: 500px;
+    margin-bottom: 30px;
+}
+
+.breadcrumb {
+    list-style-type: none;
+    padding: 0;
+}
+
+.breadcrumb li {
+    display: inline-block;
+    position: relative;
+    margin: 10px 10px;
+
+    // Last child
+    &:last-child {
+        a {
+            cursor: default;
+        }
+
+        &::before,
+        &::after {
+            background: #444343;
+        }
+    }
+
+    // :Hover
+    &:not(:last-child):hover {
+
+        &::before,
+        &::after {
+            background: #444343;
+            color: #fff;
+        }
+    }
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        height: 56%;
+        width: 100%;
+        background: white;
+        border-left: 2px solid #666;
+        border-right: 2px solid #666;
+        z-index: -2;
+    }
+
+    &::before {
+        top: -2px;
+        transform: skew(30deg);
+        border-top: 2px solid #666;
+    }
+
+    &::after {
+        bottom: -2px;
+        transform: skew(-30deg);
+        border-bottom: 2px solid #666;
+    }
+}
+
+.breadcrumb a {
+    display: inline-block;
+    position: relative;
+    line-height: 1.9;
+    padding: 1px 20px;
+    color: #070000;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    color: #fff;
+}
+
+
+
+
+/* Breadcrumb */

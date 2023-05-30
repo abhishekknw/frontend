@@ -18,21 +18,49 @@ export default function ViewClientAgencyTable(props) {
 
   return (
     <>
-      {/* <h4 className='pt-5'>ViewTable</h4> */}
-      <Breadcrumb className='pt-5'>
-        <Breadcrumb.Item href="#">View Client</Breadcrumb.Item>
-        <Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
-          View Campaign
-        </Breadcrumb.Item>
-        <Breadcrumb.Item active>View City</Breadcrumb.Item>
-      </Breadcrumb>
+      <h4 className='pt-5'>ViewTable</h4>
+      {/* Breadcrumb */}
+      <nav>
+        <ol class="breadcrumb " itemscope itemtype="http://schema.org/BreadcrumbList">
+
+          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="#">
+              <span itemprop="name">View Client</span>
+            </a>
+            <meta itemprop="position" content="1" />
+          </li>
+
+          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="#">
+              <span itemprop="name">View Campaign</span>
+            </a>
+            <meta itemprop="position" content="2" />
+          </li>
+
+          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="#">
+              <span itemprop="name">View City</span>
+            </a>
+            <meta itemprop="position" content="3" />
+          </li>
+
+          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="#">
+              <span itemprop="name">View Leads</span>
+            </a>
+            <meta itemprop="position" content="4" />
+          </li>
+
+        </ol>
+      </nav>
+      {/* Breadcrumb */}
 
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
             <th></th>
             <th>S.No.</th>
-            <th>Client Name</th>
+            <th>Client  Name</th>
             <th>To be Shared</th>
             <th>Count</th>
             <th> accepted by QA</th>
