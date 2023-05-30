@@ -43,6 +43,7 @@
   padding: 8px 0 8px 16px;
   list-style: none;
   height: 60px;
+  position: relative;
 }
 
 .nav-text a {
@@ -84,4 +85,29 @@ span {
 
 .main-icon {
   color: #f5f5f5;
+}
+
+
+.first-class {
+  display: none;
+  width: 320px;
+  position: absolute;
+  top: 0px;
+  left: 319px;
+  background-color: #1A2B5B;
+  height: 300px;
+}
+
+.first-class-li {
+  line-height: 51px;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.nav-menu li a {
+  justify-content: space-between;
+}
+
+.nav-text:hover .first-class {
+  display: block;
 }
