@@ -75,7 +75,7 @@ export default function ViewEndCustomerCityTable(props) {
           </tr>
           {isExpandRow.b2b && (
             <tr>
-              <td colSpan={9}>
+              <td colSpan={12} className="nested-leads-table-colspan ">
                 <Table striped bordered hover className="nested-leads-table ">
                   <thead className="leads-tbody">
                     <tr>
