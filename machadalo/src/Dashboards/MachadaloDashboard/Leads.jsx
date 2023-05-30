@@ -16,7 +16,7 @@ export default function LeadsTable(props) {
 
   return (
     <>
-      <h2 style={{ paddingTop: '10px' }}>Leads</h2>
+      <h2 >Leads</h2>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
@@ -70,7 +70,7 @@ export default function LeadsTable(props) {
           </tr>
           {isExpandRow.b2b && (
             <tr>
-              <td colSpan={9}>
+              <td colSpan={9} className="nested-leads-table-colspan ">
                 <Table striped bordered hover className="nested-leads-table ">
                   <thead className="leads-tbody">
                     <tr>
@@ -104,7 +104,7 @@ export default function LeadsTable(props) {
                       </td>
                     </tr>
                     <tr>
-                      <td>2.1</td>
+                      <td>1.2</td>
                       <td>RM</td>
                       <td>5000</td>
                       <td>2500</td>
