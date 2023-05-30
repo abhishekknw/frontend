@@ -25,7 +25,6 @@ export default function MachadaloDashboard(props) {
             </div>
           </div>
           <div className="pb-5">
-
             <LeadsTable />
           </div>
         </div>

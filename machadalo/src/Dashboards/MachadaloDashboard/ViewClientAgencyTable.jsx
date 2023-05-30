@@ -11,10 +11,12 @@ import {
   BsWhatsapp,
 } from 'react-icons/bs';
 import './index.css';
-
+import { useRecoilState } from 'recoil';
+import { showHideTable } from '../Recoil/States/Machadalo';
 export default function ViewClientAgencyTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
+  const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
 
   return (
     <>
@@ -92,7 +94,7 @@ export default function ViewClientAgencyTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowTable({ ...showTable, first: true })}
+                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
               >
                 View Campaign
               </Button>
@@ -172,11 +174,8 @@ export default function ViewClientAgencyTable(props) {
             </tr>
           )}
 
-          <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
-              {isExpandRow.b2b && <BsChevronUp />}
-              {!isExpandRow.b2b && <BsChevronDown />}
-            </td>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}><BsChevronDown />  </td>
             <td>01</td>
             <td>Clinet 1</td>
             <td>5000</td>
@@ -191,7 +190,7 @@ export default function ViewClientAgencyTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowTable({ ...showTable, first: true })}
+                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
               >
                 View Campaign
               </Button>

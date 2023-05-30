@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import Table from 'react-bootstrap/Table';
-import './index.css';
+// import './index.css';
 import Button from 'react-bootstrap/Button';
 import {
   BsChevronDown,
@@ -9,30 +9,29 @@ import {
   BsArrowDownCircle,
   BsWhatsapp,
 } from 'react-icons/bs';
-import ViewClientAgencyTable from './ViewClientAgencyTable';
-import ViewCampaignTable from './ViewCampaignTable';
 import { useRecoilState } from 'recoil';
 import { showHideTable } from '../Recoil/States/Machadalo';
-import ViewEndCustomerCityTable from './ViewEndCustomerCityTable';
-import ViewLeadDetailTable from './LeadDetailTable';
-export default function LeadsTable(props) {
+export default function ViewEndCustomerCityTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
+  const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
 
   return (
     <>
-      <h4 >Leads</h4>
+      <h2 style={{ paddingTop: '10px' }}>ViewTable</h2>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
             <th></th>
             <th>S.No.</th>
-            <th>Lead type</th>
-            <th>Lead Count</th>
+            <th>End Customer Name</th>
+            <th>Count</th>
             <th>Lead accepted by QA</th>
             <th>Lead Accepted by Client</th>
-            <th>View Client Wise</th>
-            <th>View Agency Wise</th>
+            <th>Comment updated</th>
+            <th>Status updated</th>
+            <th>Revenue Earned</th>
+            <th>View Leads</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -43,8 +42,11 @@ export default function LeadsTable(props) {
               {!isExpandRow.b2b && <BsChevronDown />}
             </td>
             <td>01</td>
-            <td>B2B</td>
-            <td>5000</td>
+            <td>Customer 1</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
             <td>3000</td>
             <td>3000</td>
             <td>
@@ -52,15 +54,9 @@ export default function LeadsTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewClientWise: true })}
+                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewLeadDetail: true })}
               >
-                View Client Wise
-              </Button>
-            </td>
-            <td>
-              {' '}
-              <Button variant="outline-dark" className="lead-btn">
-                View Agency Wise
+                View Leads
               </Button>
             </td>
             <td>
@@ -79,7 +75,7 @@ export default function LeadsTable(props) {
           </tr>
           {isExpandRow.b2b && (
             <tr>
-              <td colSpan={9} className="nested-leads-table-colspan ">
+              <td colSpan={9}>
                 <Table striped bordered hover className="nested-leads-table ">
                   <thead className="leads-tbody">
                     <tr>
@@ -113,7 +109,7 @@ export default function LeadsTable(props) {
                       </td>
                     </tr>
                     <tr>
-                      <td>1.2</td>
+                      <td>2.1</td>
                       <td>RM</td>
                       <td>5000</td>
                       <td>2500</td>
@@ -139,24 +135,23 @@ export default function LeadsTable(props) {
           )}
 
           <tr>
-            <td>
-              <BsChevronDown />
-            </td>
-            <td>02</td>
-            <td>B2C</td>
-            <td>5000</td>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}><BsChevronDown />  </td>
+            <td>01</td>
+            <td>End Customer 2</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
             <td>3000</td>
             <td>3000</td>
             <td>
               {' '}
-              <Button variant="outline-dark" className="lead-btn">
-                View Client Wise
-              </Button>
-            </td>
-            <td>
-              {' '}
-              <Button variant="outline-dark" className="lead-btn">
-                View Agency Wise
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewLeadDetail: true })}
+              >
+                View Leads
               </Button>
             </td>
             <td>
@@ -175,11 +170,6 @@ export default function LeadsTable(props) {
           </tr>
         </tbody>
       </Table>
-
-      {showHideTableObj.ViewClientWise && <ViewClientAgencyTable />}
-      {showHideTableObj.ViewCampaignWise && <ViewCampaignTable />}
-      {showHideTableObj.ViewEndCustomerWise && <ViewEndCustomerCityTable />}
-      {showHideTableObj.ViewLeadDetail && <ViewLeadDetailTable />}
     </>
   );
 }
