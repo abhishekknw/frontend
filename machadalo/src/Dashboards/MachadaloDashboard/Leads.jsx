@@ -16,7 +16,7 @@ export default function LeadsTable(props) {
 
   return (
     <>
-      <h2 >Leads</h2>
+      <h4 >Leads</h4>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>

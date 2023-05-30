@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import Table from 'react-bootstrap/Table';
 import './index.css';
 import Button from 'react-bootstrap/Button';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import {
   BsChevronDown,
   BsChevronUp,
@@ -17,7 +18,15 @@ export default function ViewClientAgencyTable(props) {
 
   return (
     <>
-      <h2 style={{ paddingTop: '10px' }}>ViewTable</h2>
+      {/* <h4 className='pt-5'>ViewTable</h4> */}
+      <Breadcrumb className='pt-5'>
+        <Breadcrumb.Item href="#">View Client</Breadcrumb.Item>
+        <Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
+          View Campaign
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>View City</Breadcrumb.Item>
+      </Breadcrumb>
+
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
@@ -26,8 +35,8 @@ export default function ViewClientAgencyTable(props) {
             <th>Client Name</th>
             <th>To be Shared</th>
             <th>Count</th>
-            <th>Lead accepted by QA</th>
-            <th>Lead Accepted by Client</th>
+            <th> accepted by QA</th>
+            <th> Accepted by Client</th>
             <th>Comment updated</th>
             <th>Status updated</th>
             <th>Revenue Earned</th>
@@ -76,7 +85,7 @@ export default function ViewClientAgencyTable(props) {
           </tr>
           {isExpandRow.b2b && (
             <tr>
-              <td colSpan={9}>
+              <td colSpan={12} className="nested-leads-table-colspan ">
                 <Table striped bordered hover className="nested-leads-table ">
                   <thead className="leads-tbody">
                     <tr>
