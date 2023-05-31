@@ -12,7 +12,7 @@ const CommonTable = ({ headerData, bodyData }) => {
           <tr>
             <th></th>
             {headerData.map((ele, key) => {
-              return <th key={key}>{ele.name}</th>;
+              return <th key={key}><div data-toggle="tooltip" data-placement="top" title={ele.tooltip}>{ele.name}</div></th>;
             })}
           </tr>
         </thead>

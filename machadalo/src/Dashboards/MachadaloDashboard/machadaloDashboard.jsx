@@ -6,20 +6,18 @@ import LeadsTable from './Leads';
 import PieChart from '../common/pie-chart/PieChart';
 
 export default function MachadaloDashboard(props) {
-
   return (
     <>
-      <div className='container'>
+      <div className="container">
         <div className="machadalo-deshboard">
           <MachadaloHeader />
           <DateFilter />
-          <div className='dx'>
-            <div className='graph-chart'>
+          <div className="dx">
+            <div className="graph-chart">
               <GraphChart />
             </div>
-            <div className='pc'>
+            <div className="pc">
               <div className="piechart">
-
                 <PieChart />
               </div>
             </div>
