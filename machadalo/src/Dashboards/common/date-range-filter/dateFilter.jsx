@@ -8,15 +8,27 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import Box from '@mui/material/Box';
+import dayjs from 'dayjs';
 
 export default function DateFilter(props) {
   const [selectedDate, setSelectedDate] = React.useState([
-    'Tue May 09 2023 00:00:00 GMT+0530 (India Standard Time)',
-    'Tue May 09 2023 00:00:00 GMT+0530 (India Standard Time)',
+    dayjs(new Date()).$d,
+    dayjs(new Date()).$d,
   ]);
-
+  let dateArr = []
   function handleDateChange(date) {
-    console.log(date);
+    dateArr[0] = date[0]?.$d;
+    dateArr[1] = date[1]?.$d;
+    setSelectedDate(dateArr);
+  }
+
+  const getPreviousDate = (prevDays) => {
+    let now = dayjs();
+    // console.log( now.subtract(prevDays, 'day').toDate());
+    dateArr[0] = now.subtract(prevDays, 'day').toDate();
+    dateArr[1] = dayjs(new Date()).$d;
+    setSelectedDate(dateArr);
+    // return now.subtract(prevDays, 'day').toDate();
   }
 
   return (
@@ -51,7 +63,7 @@ export default function DateFilter(props) {
                   </LocalizationProvider>
 
                   <div className='calander-date ms-4'>
-                    11/12/2023 - 20/12/2023
+                  {dayjs(selectedDate[0]).format('DD/MM/YYYY')} - {dayjs(selectedDate[1]).format('DD/MM/YYYY')}
                   </div>
 
                 </div>
@@ -63,10 +75,10 @@ export default function DateFilter(props) {
                     <Col sm={3} className="time-btn">
                       Days
                     </Col>
-                    <Col sm={3} className="time-btn">
+                    <Col sm={3} className="time-btn" onClick={(e)=>{getPreviousDate(7)}}>
                       Week
                     </Col>
-                    <Col sm={3} className="time-btn">
+                    <Col sm={3} className="time-btn" onClick={(e)=>{getPreviousDate(30)}}>
                       Month
                     </Col>
                     <Col sm={3} className="time-btn">
