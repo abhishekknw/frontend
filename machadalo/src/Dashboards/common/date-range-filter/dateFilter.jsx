@@ -29,28 +29,31 @@ export default function DateFilter(props) {
           <div>
             <Row className="main-content ">
               <Col sm={6}>
-                <div className="calander pt-2 ps-3">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DateRangePicker
-                        label="Advanced keyboard"
-                        value={selectedDate}
-                        onChange={(newValue) => handleDateChange(newValue)}
-                        renderInput={(startProps, endProps) => (
-                          <React.Fragment>
-                            <BsFillCalendarDateFill
-                              ref={startProps.inputRef}
-                              {...startProps.inputProps}
-                            />
-                            {/* <input ref={startProps.inputRef} {...startProps.inputProps} />
+                <div className="calander pt-2 ps-3 d-flex ">
+
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateRangePicker
+                      label="Advanced keyboard"
+                      value={selectedDate}
+                      onChange={(newValue) => handleDateChange(newValue)}
+                      renderInput={(startProps, endProps) => (
+                        <React.Fragment>
+                          <BsFillCalendarDateFill
+                            ref={startProps.inputRef}
+                            {...startProps.inputProps}
+                          />
+                          {/* <input ref={startProps.inputRef} {...startProps.inputProps} />
                         <Box sx={{ mx: 1 }}> to </Box>
                         <input ref={endProps.inputRef} {...endProps.inputProps} /> */}
-                          </React.Fragment>
-                        )}
-                      />
-                    </LocalizationProvider>
-                    <div>
+                        </React.Fragment>
+                      )}
+                    />
+                  </LocalizationProvider>
+
+                  <div className='calander-date ms-4'>
                     11/12/2023 - 20/12/2023
-                    </div>
+                  </div>
+
                 </div>
               </Col>
 
