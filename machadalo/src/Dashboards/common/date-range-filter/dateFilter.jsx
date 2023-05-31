@@ -10,7 +10,7 @@ import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import dayjs from 'dayjs';
 import {GetPreviousDates} from './CalenderData';
 export default function DateFilter(props) {
-  GetPreviousDates(15);
+
   const [selectedDate, setSelectedDate] = React.useState([
     dayjs(new Date()).$d,
     dayjs(new Date()).$d,
@@ -38,11 +38,7 @@ export default function DateFilter(props) {
     );
     setTimeBtns(updateTime);
   };
-
-  function getNumberOfDays() {
-    let date = dayjs(new Date()).$d;
-    return dayjs(date).format('YYYY-MM-DD')
-  }
+  const DateArrayList = GetPreviousDates(14);
   props.onDateChange(selectedDate);
 
   return (
@@ -104,7 +100,14 @@ export default function DateFilter(props) {
         </div>
         <div className="multi-date-calender d-flex">
           <div className="innner-calender d-flex">
-            <div className="date-content ">sat<div className='pt-2'>01</div></div>
+            {DateArrayList.map((item,index)=>{
+              return(
+                <div className="date-content ">{dayjs(DateArrayList[index].$d).format('ddd')}<div className='pt-2'>{DateArrayList[index].$D}</div></div>
+              )
+            })
+
+            }
+            {/* <div className="date-content ">sat<div className='pt-2'>01</div></div>
             <div className="date-content">sat <div className='pt-2'>01</div></div>
             <div className="date-content">sat <div className='pt-2'>01</div></div>
             <div className="date-content">sat <div className='pt-2'>01</div></div>
@@ -119,7 +122,7 @@ export default function DateFilter(props) {
             <div className="date-content">sat <div className='pt-2'>01</div></div>
             <div className="date-content">sat <div className='pt-2'>01</div></div>
             <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
+            <div className="date-content">sat <div className='pt-2'>01</div></div> */}
           </div>
           <div className="date-content-btn m-2 "><button><BsChevronLeft /></button><div className='pt-2'><button><BsChevronRight /></button></div></div>
 

@@ -9,7 +9,7 @@ import Calendar from '../common/Calendar/Calendar';
 export default function MachadaloDashboard(props) {
 
   function getDates(date){
-    console.log(date)
+    // console.log(date)
   }
   return (
     <>
