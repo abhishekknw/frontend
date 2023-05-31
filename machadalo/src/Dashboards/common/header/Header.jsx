@@ -47,7 +47,7 @@ export default function MachadaloHeader(props) {
 
 
 
-            <div className='welcome-box' ><BsFillPersonFill /><span>Welcome back ,Kriti</span></div>          </div>
+            <div className='welcome-box' ><span><BsFillPersonFill /></span>Welcome back ,Kriti</div>          </div>
 
         </Col>
       </Row >

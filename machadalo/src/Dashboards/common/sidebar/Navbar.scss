@@ -19,6 +19,7 @@
 }
 
 .nav-menu {
+  z-index: 99;
   background-color: #273F87;
   width: 320px;
   height: 100vh;
@@ -85,6 +86,7 @@ span {
 
 .main-icon {
   color: #f5f5f5;
+  margin-left: 32px !important;
 }
 
 
