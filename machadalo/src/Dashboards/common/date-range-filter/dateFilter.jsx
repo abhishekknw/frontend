@@ -29,7 +29,7 @@ export default function DateFilter(props) {
           <div>
             <Row className="main-content ">
               <Col sm={6}>
-                <div className="calander pt-2 ps-3 d-flex ">
+                <div className="calander pt-3 ps-3 d-flex ">
 
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateRangePicker
@@ -50,7 +50,7 @@ export default function DateFilter(props) {
                     />
                   </LocalizationProvider>
 
-                  <div className='calander-date ms-4'>
+                  <div className='calander-date ms-4 '>
                     11/12/2023 - 20/12/2023
                   </div>
 
@@ -60,7 +60,7 @@ export default function DateFilter(props) {
               <Col sm={6}>
                 <div>
                   <Row className="timing pb-2">
-                    <Col sm={3} className="time-btn">
+                    <Col sm={3} className="time-btn active-btn">
                       Days
                     </Col>
                     <Col sm={3} className="time-btn">

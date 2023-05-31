@@ -5,10 +5,6 @@
     width: 100% !important;
 }
 
-.header-content {
-    // padding: 10px;
-}
-
 .right-heder-content {
     text-align: right;
     margin-top: 10px;
@@ -21,9 +17,8 @@
     color: #872727;
 }
 
-.right-heder-content ul li {
-    // display: flex;
-    // padding-left: 10px;
+.right-heder-content ul li span {
+    font-size: 20px !important;
 }
 
 .welcome-box {
@@ -31,14 +26,15 @@
     padding: 11px;
     margin-left: 15px;
     border-radius: 20px;
-
-    width: 203px;
+    padding-right: 10px;
+    width: 210px;
     color: #273F87;
     margin-bottom: 13px;
 }
 
 .welcome-box span {
-    // padding-left: 10px;
+    font-size: 20px !important;
+    padding-right: 5px;
 }
 
 // header
@@ -80,10 +76,11 @@
 
     border: 1px solid black;
     width: 100%;
-    height: 40px;
+    height: 45px;
     border-radius: 20px;
     // padding-top: 10px;
     background-color: #F7F7F7;
+    padding-bottom: 10px;
 }
 
 .main-content .timing {
@@ -97,13 +94,17 @@
     padding: 10px;
 }
 
+
 .time-btn:hover {
     padding: 10px;
     background-color: #2B2B2B;
     border-radius: 20px;
     color: #fff;
+    height: 32px;
+    margin-top: 3px;
     text-align: center;
 }
+
 
 .dx {
     display: flex;
@@ -134,9 +135,14 @@
     border: 1px #D3D3D3 solid;
 }
 
+.lead-btn {
+    font-weight: 600 !important;
+}
+
 .lead-btn:hover {
     background-color: black !important;
     color: #fff;
+
 }
 
 .leads-table .leads-tbody tr th {
@@ -295,7 +301,7 @@ title-definiton {
     position: relative;
     line-height: 1.9;
     padding: 1px 20px;
-    color: #070000;
+    color: #0e0000;
     font-weight: 600;
     text-decoration: none;
 }
