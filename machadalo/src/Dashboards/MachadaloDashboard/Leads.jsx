@@ -16,6 +16,7 @@ import { showHideTable } from '../Recoil/States/Machadalo';
 import ViewEndCustomerCityTable from './ViewEndCustomerCityTable';
 import ViewLeadDetailTable from './LeadDetailTable';
 import CommonTable from '../Table/CommonTable';
+import FosRmTable from './FosRmTable';
 export default function LeadsTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
@@ -238,65 +239,66 @@ export default function LeadsTable(props) {
             <td>{ele.action}</td>
           </tr>
           {isExpandRow.b2b && (
+            <FosRmTable />
           // <CommonTable headerData={NestedHeaderData} bodyData={FosRmBodyData} />
-            <tr>
-              <td colSpan={9} className="nested-leads-table-colspan ">
-                <Table striped bordered hover className="nested-leads-table ">
-                  <thead className="leads-tbody">
-                    <tr>
-                      <th>S.No.</th>
-                      <th>Lead Source</th>
-                      <th>Total Lead Count Shared</th>
-                      <th>Lead accepted by QA</th>
-                      <th>Lead Accepted by Client</th>
-                      <th> Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1.1</td>
-                      <td>FOS</td>
-                      <td>5000</td>
-                      <td>2500</td>
-                      <td>2000</td>
-                      <td>
-                        <div className="action-icon">
-                          <span>
-                            <BsEnvelopeFill />
-                          </span>
-                          <span>
-                            <BsArrowDownCircle />
-                          </span>
-                          <span>
-                            <BsWhatsapp />
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1.2</td>
-                      <td>RM</td>
-                      <td>5000</td>
-                      <td>2500</td>
-                      <td>2000</td>
-                      <td>
-                        <div className="action-icon">
-                          <span>
-                            <BsEnvelopeFill />
-                          </span>
-                          <span>
-                            <BsArrowDownCircle />
-                          </span>
-                          <span>
-                            <BsWhatsapp />
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </td>
-            </tr>
+            // <tr>
+            //   <td colSpan={9} className="nested-leads-table-colspan ">
+            //     <Table striped bordered hover className="nested-leads-table ">
+            //       <thead className="leads-tbody">
+            //         <tr>
+            //           <th>S.No.</th>
+            //           <th>Lead Source</th>
+            //           <th>Total Lead Count Shared</th>
+            //           <th>Lead accepted by QA</th>
+            //           <th>Lead Accepted by Client</th>
+            //           <th> Action</th>
+            //         </tr>
+            //       </thead>
+            //       <tbody>
+            //         <tr>
+            //           <td>1.1</td>
+            //           <td>FOS</td>
+            //           <td>5000</td>
+            //           <td>2500</td>
+            //           <td>2000</td>
+            //           <td>
+            //             <div className="action-icon">
+            //               <span>
+            //                 <BsEnvelopeFill />
+            //               </span>
+            //               <span>
+            //                 <BsArrowDownCircle />
+            //               </span>
+            //               <span>
+            //                 <BsWhatsapp />
+            //               </span>
+            //             </div>
+            //           </td>
+            //         </tr>
+            //         <tr>
+            //           <td>1.2</td>
+            //           <td>RM</td>
+            //           <td>5000</td>
+            //           <td>2500</td>
+            //           <td>2000</td>
+            //           <td>
+            //             <div className="action-icon">
+            //               <span>
+            //                 <BsEnvelopeFill />
+            //               </span>
+            //               <span>
+            //                 <BsArrowDownCircle />
+            //               </span>
+            //               <span>
+            //                 <BsWhatsapp />
+            //               </span>
+            //             </div>
+            //           </td>
+            //         </tr>
+            //       </tbody>
+            //     </Table>
+            //   </td>
+            // </tr>
           )}
         </>
       );
