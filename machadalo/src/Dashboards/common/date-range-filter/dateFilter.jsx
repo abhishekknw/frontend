@@ -10,60 +10,72 @@ import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import Box from '@mui/material/Box';
 
 export default function DateFilter(props) {
-  const [selectedDate,setSelectedDate] = React.useState(['Tue May 09 2023 00:00:00 GMT+0530 (India Standard Time)','Tue May 09 2023 00:00:00 GMT+0530 (India Standard Time)']);
+  const [selectedDate, setSelectedDate] = React.useState([
+    'Tue May 09 2023 00:00:00 GMT+0530 (India Standard Time)',
+    'Tue May 09 2023 00:00:00 GMT+0530 (India Standard Time)',
+  ]);
 
-
-  function handleDateChange (date){
-    console.log(date)
+  function handleDateChange(date) {
+    console.log(date);
   }
 
   return (
     <>
       <Container>
-        <div className='dateFilter pt-5'>
-          <h4><b>Date Filter</b></h4>
-          <div >
+        <div className="dateFilter pt-5">
+          <h4>
+            <b>Date Filter</b>
+          </h4>
+          <div>
             <Row className="main-content ">
               <Col sm={6}>
-                <div className='calander pt-2 ps-3'>
-                  <BsFillCalendarDateFill />
-                  <div className="form-control">
+                <div className="calander pt-2 ps-3">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateRangePicker
-                    label="Advanced keyboard"
-                    value={selectedDate}
-                    onChange={(newValue) => handleDateChange(newValue)}
-                    renderInput={(startProps, endProps) => (
-                      <React.Fragment>
-                        <input ref={startProps.inputRef} {...startProps.inputProps} />
+                      <DateRangePicker
+                        label="Advanced keyboard"
+                        value={selectedDate}
+                        onChange={(newValue) => handleDateChange(newValue)}
+                        renderInput={(startProps, endProps) => (
+                          <React.Fragment>
+                            <BsFillCalendarDateFill
+                              ref={startProps.inputRef}
+                              {...startProps.inputProps}
+                            />
+                            {/* <input ref={startProps.inputRef} {...startProps.inputProps} />
                         <Box sx={{ mx: 1 }}> to </Box>
-                        <input ref={endProps.inputRef} {...endProps.inputProps} />
-                      </React.Fragment>
-                    )}
-                  />
-                </LocalizationProvider>
-                {/* <CustomDateRangeInputs SelectedDate={{"start":this.state.startDate,"end":this.state.endDate}} handleChange={e=>this.handleDateChange(e)} /> */}
-                {/* <DatetimeRangePicker className="dateTimePicker" onChange={this.handleDateChange} /> */}
-              </div>
+                        <input ref={endProps.inputRef} {...endProps.inputProps} /> */}
+                          </React.Fragment>
+                        )}
+                      />
+                    </LocalizationProvider>
+                    <div>
+                    11/12/2023 - 20/12/2023
+                    </div>
                 </div>
               </Col>
-              
+
               <Col sm={6}>
                 <div>
-                  <Row className='timing pb-2'>
-                    <Col sm={3} className='time-btn'>Days</Col>
-                    <Col sm={3} className='time-btn'>Week</Col>
-                    <Col sm={3} className='time-btn'>Month</Col>
-                    <Col sm={3} className='time-btn'>Year</Col>
+                  <Row className="timing pb-2">
+                    <Col sm={3} className="time-btn">
+                      Days
+                    </Col>
+                    <Col sm={3} className="time-btn">
+                      Week
+                    </Col>
+                    <Col sm={3} className="time-btn">
+                      Month
+                    </Col>
+                    <Col sm={3} className="time-btn">
+                      Year
+                    </Col>
                   </Row>
                 </div>
               </Col>
             </Row>
           </div>
-        </div >
-      </Container >
-
+        </div>
+      </Container>
     </>
-
   );
 }
