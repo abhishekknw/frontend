@@ -8,8 +8,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import dayjs from 'dayjs';
-
+import {GetPreviousDates} from './CalenderData';
 export default function DateFilter(props) {
+  GetPreviousDates(30);
   const [selectedDate, setSelectedDate] = React.useState([
     dayjs(new Date()).$d,
     dayjs(new Date()).$d,
@@ -17,7 +18,7 @@ export default function DateFilter(props) {
   const [timeBtns, setTimeBtns] = React.useState([
     { name: 'Days', class: 'time-btn active-btn', count: 0 },
     { name: 'Week', class: 'time-btn', count: 7 },
-    { name: 'Month', class: 'time-btn', count: dayjs(getNumberOfDays()).daysInMonth() },
+    { name: 'Month', class: 'time-btn', count: 30 },
   ]);
 
   let dateArr = [];
@@ -38,10 +39,6 @@ export default function DateFilter(props) {
     setTimeBtns(updateTime);
   };
 
-  function getNumberOfDays(){ 
-    let date  = dayjs(new Date()).$d;
-    return dayjs(date).format('YYYY-MM-DD')
-  }
   props.onDateChange(selectedDate);
 
   return (
