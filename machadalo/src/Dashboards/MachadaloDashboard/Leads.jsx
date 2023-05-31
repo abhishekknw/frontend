@@ -33,11 +33,11 @@ export default function LeadsTable(props) {
     },
     {
       name: 'Lead accepted by QA',
-      tooltip:"Lead accepted by QA",
+      tooltip: "Lead accepted by QA",
     },
     {
       name: 'Lead Accepted by Client',
-      tooltip:"Lead accepted by Client",
+      tooltip: "Lead accepted by Client",
     },
     {
       name: 'View Client Wise',
@@ -71,7 +71,7 @@ export default function LeadsTable(props) {
     },
   ];
 
-  const FosRmBodyData = ()=>{
+  const FosRmBodyData = () => {
     let data = [
       {
         sno: '1.1',
@@ -122,15 +122,15 @@ export default function LeadsTable(props) {
     let body = data.map((ele, key) => {
       return (<>
         <tr>
-            <td></td>
-            <td>{ele.sno}</td>
-            <td>{ele.type}</td>
-            <td>{ele.leadCount}</td>
-            <td>{ele.leadQA}</td>
-            <td>{ele.leadClient}</td>
-            <td>{ele.action}</td>
-          </tr>
-        </>
+          <td></td>
+          <td>{ele.sno}</td>
+          <td>{ele.type}</td>
+          <td>{ele.leadCount}</td>
+          <td>{ele.leadQA}</td>
+          <td>{ele.leadClient}</td>
+          <td>{ele.action}</td>
+        </tr>
+      </>
       )
     })
 
@@ -240,65 +240,6 @@ export default function LeadsTable(props) {
           </tr>
           {isExpandRow.b2b && (
             <FosRmTable />
-          // <CommonTable headerData={NestedHeaderData} bodyData={FosRmBodyData} />
-            // <tr>
-            //   <td colSpan={9} className="nested-leads-table-colspan ">
-            //     <Table striped bordered hover className="nested-leads-table ">
-            //       <thead className="leads-tbody">
-            //         <tr>
-            //           <th>S.No.</th>
-            //           <th>Lead Source</th>
-            //           <th>Total Lead Count Shared</th>
-            //           <th>Lead accepted by QA</th>
-            //           <th>Lead Accepted by Client</th>
-            //           <th> Action</th>
-            //         </tr>
-            //       </thead>
-            //       <tbody>
-            //         <tr>
-            //           <td>1.1</td>
-            //           <td>FOS</td>
-            //           <td>5000</td>
-            //           <td>2500</td>
-            //           <td>2000</td>
-            //           <td>
-            //             <div className="action-icon">
-            //               <span>
-            //                 <BsEnvelopeFill />
-            //               </span>
-            //               <span>
-            //                 <BsArrowDownCircle />
-            //               </span>
-            //               <span>
-            //                 <BsWhatsapp />
-            //               </span>
-            //             </div>
-            //           </td>
-            //         </tr>
-            //         <tr>
-            //           <td>1.2</td>
-            //           <td>RM</td>
-            //           <td>5000</td>
-            //           <td>2500</td>
-            //           <td>2000</td>
-            //           <td>
-            //             <div className="action-icon">
-            //               <span>
-            //                 <BsEnvelopeFill />
-            //               </span>
-            //               <span>
-            //                 <BsArrowDownCircle />
-            //               </span>
-            //               <span>
-            //                 <BsWhatsapp />
-            //               </span>
-            //             </div>
-            //           </td>
-            //         </tr>
-            //       </tbody>
-            //     </Table>
-            //   </td>
-            // </tr>
           )}
         </>
       );
@@ -312,36 +253,36 @@ export default function LeadsTable(props) {
 
       <CommonTable headerData={headerData} bodyData={bodyData} />
 
-    {/* Breadcrumb */}
-    <nav>
-            <ol class="breadcrumb " itemscope itemtype="http://schema.org/BreadcrumbList">
-              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="#">
-                  <span itemprop="name">View Client</span>
-                </a>
-                <meta itemprop="position" content="1" />
-              </li>
-              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="#">
-                  <span itemprop="name">View Campaign</span>
-                </a>
-                <meta itemprop="position" content="2" />
-              </li>
-              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="#">
-                  <span itemprop="name">View City</span>
-                </a>
-                <meta itemprop="position" content="3" />
-              </li>
-              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="#">
-                  <span itemprop="name">View Leads</span>
-                </a>
-                <meta itemprop="position" content="4" />
-              </li>
-            </ol>
-          </nav>
-          {/* Breadcrumb */}
+      {/* Breadcrumb */}
+      <nav>
+        <ol class="breadcrumb " itemscope itemtype="http://schema.org/BreadcrumbList">
+          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="#">
+              <span itemprop="name">View Client</span>
+            </a>
+            <meta itemprop="position" content="1" />
+          </li>
+          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="#">
+              <span itemprop="name">View Campaign</span>
+            </a>
+            <meta itemprop="position" content="2" />
+          </li>
+          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="#">
+              <span itemprop="name">View City</span>
+            </a>
+            <meta itemprop="position" content="3" />
+          </li>
+          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="#">
+              <span itemprop="name">View Leads</span>
+            </a>
+            <meta itemprop="position" content="4" />
+          </li>
+        </ol>
+      </nav>
+      {/* Breadcrumb */}
 
       {showHideTableObj.ViewClientWise && <ViewClientAgencyTable />}
       {showHideTableObj.ViewCampaignWise && <ViewCampaignTable />}
