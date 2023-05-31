@@ -7,7 +7,6 @@ import './date-range.css';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import Box from '@mui/material/Box';
 import dayjs from 'dayjs';
 
 export default function DateFilter(props) {
@@ -15,21 +14,35 @@ export default function DateFilter(props) {
     dayjs(new Date()).$d,
     dayjs(new Date()).$d,
   ]);
-  let dateArr = []
+  const [timeBtns, setTimeBtns] = React.useState([
+    { name: 'Days', class: 'time-btn active-btn', count: 0 },
+    { name: 'Week', class: 'time-btn', count: 7 },
+    { name: 'Month', class: 'time-btn', count: dayjs(getNumberOfDays()).daysInMonth() },
+  ]);
+
+  let dateArr = [];
   function handleDateChange(date) {
     dateArr[0] = date[0]?.$d;
     dateArr[1] = date[1]?.$d;
     setSelectedDate(dateArr);
   }
 
-  const getPreviousDate = (prevDays) => {
+  const getPreviousDate = (time) => {
     let now = dayjs();
-    // console.log( now.subtract(prevDays, 'day').toDate());
-    dateArr[0] = now.subtract(prevDays, 'day').toDate();
+    dateArr[0] = now.subtract(time.count, 'day').toDate();
     dateArr[1] = dayjs(new Date()).$d;
     setSelectedDate(dateArr);
-    // return now.subtract(prevDays, 'day').toDate();
+    let updateTime = timeBtns.map((x) =>
+      x.name === time.name ? { ...x, class: 'time-btn active-btn' } : { ...x, class: 'time-btn' }
+    );
+    setTimeBtns(updateTime);
+  };
+
+  function getNumberOfDays(){ 
+    let date  = dayjs(new Date()).$d;
+    return dayjs(date).format('YYYY-MM-DD')
   }
+  props.onDateChange(selectedDate);
 
   return (
     <>
@@ -42,7 +55,6 @@ export default function DateFilter(props) {
             <Row className="main-content ">
               <Col sm={6}>
                 <div className="calander pt-3 ps-3 d-flex ">
-
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateRangePicker
                       label="Advanced keyboard"
@@ -54,36 +66,35 @@ export default function DateFilter(props) {
                             ref={startProps.inputRef}
                             {...startProps.inputProps}
                           />
-                          {/* <input ref={startProps.inputRef} {...startProps.inputProps} />
-                        <Box sx={{ mx: 1 }}> to </Box>
-                        <input ref={endProps.inputRef} {...endProps.inputProps} /> */}
                         </React.Fragment>
                       )}
                     />
                   </LocalizationProvider>
 
-                  <div className='calander-date ms-4'>
-                  {dayjs(selectedDate[0]).format('DD/MM/YYYY')} - {dayjs(selectedDate[1]).format('DD/MM/YYYY')}
+                  <div className="calander-date ms-4">
+                    {dayjs(selectedDate[0]).format('DD/MM/YYYY')} -{' '}
+                    {dayjs(selectedDate[1]).format('DD/MM/YYYY')}
                   </div>
-
                 </div>
               </Col>
 
               <Col sm={6}>
                 <div>
                   <Row className="timing pb-2">
-                    <Col sm={3} className="time-btn active-btn">
-                      Days
-                    </Col>
-                    <Col sm={3} className="time-btn" onClick={(e)=>{getPreviousDate(7)}}>
-                      Week
-                    </Col>
-                    <Col sm={3} className="time-btn" onClick={(e)=>{getPreviousDate(30)}}>
-                      Month
-                    </Col>
-                    <Col sm={3} className="time-btn">
-                      Year
-                    </Col>
+                    {timeBtns.map((item, index) => {
+                      return (
+                        <Col
+                          key={index}
+                          sm={3}
+                          className={item.class}
+                          onClick={(e) => {
+                            getPreviousDate(item);
+                          }}
+                        >
+                          {item.name}
+                        </Col>
+                      );
+                    })}
                   </Row>
                 </div>
               </Col>

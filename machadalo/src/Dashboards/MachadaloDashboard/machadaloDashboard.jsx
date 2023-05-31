@@ -6,12 +6,16 @@ import LeadsTable from './Leads';
 import PieChart from '../common/pie-chart/PieChart';
 
 export default function MachadaloDashboard(props) {
+
+  function getDates(date){
+    console.log(date)
+  }
   return (
     <>
       <div className="container">
         <div className="machadalo-deshboard">
           <MachadaloHeader />
-          <DateFilter />
+          <DateFilter onDateChange={getDates} />
           <div className="dx">
             <div className="graph-chart">
               <GraphChart />
