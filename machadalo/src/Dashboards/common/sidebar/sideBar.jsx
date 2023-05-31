@@ -143,7 +143,8 @@ export default function SideNavBar() {
               <div className="first-class">
                 <ul className="first-class-ul">
                   <li className="first-class-li">Campaign Checklist</li>
-                  <li className="first-class-li">Leads</li>
+                  <li className="first-class-li">Leads  <i> <BsChevronRight /></i></li>
+
                 </ul>
               </div>
             </li>
@@ -173,7 +174,11 @@ export default function SideNavBar() {
                   <li className="first-class-li">Roles</li>
                   <li className="first-class-li">Users</li>
                 </ul>
+                <li>
+
+                </li>
               </div>
+
             </li>
             <li className="nav-text">
               <Link to="#">

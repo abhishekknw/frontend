@@ -19,6 +19,7 @@ export default function ViewCampaignTable(props) {
 
   return (
     <>
+      <h4 style={{ paddingTop: '10px' }}>ViewTable</h4>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>

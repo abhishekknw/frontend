@@ -18,7 +18,7 @@ export default function ViewEndCustomerCityTable(props) {
 
   return (
     <>
-      <h2 style={{ paddingTop: '10px' }}>ViewTable</h2>
+      <h4 style={{ paddingTop: '10px' }}>ViewTable</h4>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
