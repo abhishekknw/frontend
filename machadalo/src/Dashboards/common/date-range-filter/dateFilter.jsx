@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import React from 'react';
-import { BsFillCalendarDateFill } from 'react-icons/bs';
+import { BsFillCalendarDateFill, BsChevronRight, BsChevronLeft } from 'react-icons/bs';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './date-range.css';
@@ -77,6 +77,26 @@ export default function DateFilter(props) {
               </Col>
             </Row>
           </div>
+        </div>
+        <div className="multi-date-calender d-flex">
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content ">sat <div className='pt-2'>01</div></div>
+          <div className="date-content-btn m-3 "><button><BsChevronLeft /></button><div className='pt-2'><button><BsChevronRight /></button></div></div>
+
         </div>
       </Container>
     </>

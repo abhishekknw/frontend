@@ -19,7 +19,7 @@ export default function ViewCampaignTable(props) {
 
   return (
     <>
-      <h4 style={{ paddingTop: '10px' }}>ViewTable</h4>
+      <h4 style={{ paddingTop: '10px' }}>ViewTable-2</h4>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
@@ -147,6 +147,7 @@ export default function ViewCampaignTable(props) {
               </td>
             </tr>
           )}
+
 
           <tr>
             <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}><BsChevronDown />  </td>
