@@ -11,4 +11,9 @@ const showHideTable = atom({
     ViewLeadDetail:false,
   },
 });
-export { showHideTable };
+
+const DateArray = atom({
+  key: 'DateArray',
+  default:[],
+});
+export { showHideTable,DateArray };

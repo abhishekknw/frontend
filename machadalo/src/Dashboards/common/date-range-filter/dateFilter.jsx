@@ -10,7 +10,7 @@ import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import dayjs from 'dayjs';
 import {GetPreviousDates} from './CalenderData';
 export default function DateFilter(props) {
-  GetPreviousDates(30);
+  GetPreviousDates(15);
   const [selectedDate, setSelectedDate] = React.useState([
     dayjs(new Date()).$d,
     dayjs(new Date()).$d,
