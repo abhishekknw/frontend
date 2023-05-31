@@ -38,8 +38,8 @@ export default function DateFilter(props) {
     setTimeBtns(updateTime);
   };
 
-  function getNumberOfDays(){ 
-    let date  = dayjs(new Date()).$d;
+  function getNumberOfDays() {
+    let date = dayjs(new Date()).$d;
     return dayjs(date).format('YYYY-MM-DD')
   }
   props.onDateChange(selectedDate);
@@ -80,12 +80,12 @@ export default function DateFilter(props) {
 
               <Col sm={6}>
                 <div>
-                  <Row className="timing pb-2">
+                  <Row className="timing">
                     {timeBtns.map((item, index) => {
                       return (
                         <Col
                           key={index}
-                          sm={3}
+                          sm={4}
                           className={item.class}
                           onClick={(e) => {
                             getPreviousDate(item);
@@ -102,23 +102,25 @@ export default function DateFilter(props) {
           </div>
         </div>
         <div className="multi-date-calender d-flex">
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content ">sat <div className='pt-2'>01</div></div>
-          <div className="date-content-btn m-3 "><button><BsChevronLeft /></button><div className='pt-2'><button><BsChevronRight /></button></div></div>
+          <div className="innner-calender d-flex">
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+            <div className="date-content ">sat <div className=''>01</div></div>
+          </div>
+          <div className="date-content-btn m-2 "><button><BsChevronLeft /></button><div className='pt-2'><button><BsChevronRight /></button></div></div>
 
         </div>
       </Container>

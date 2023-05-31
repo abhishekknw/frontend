@@ -29,3 +29,9 @@
     padding: 8px;
     border: none !important;
 }
+
+.innner-calender {
+    width: calc(100% - 50px);
+    overflow: hidden;
+
+}
