@@ -69,8 +69,6 @@ export default function SideNavBar() {
   function addRemoveClass(data) {
     let updatedData = SidebarData.map(x => (x.title === data.title ? { ...x, cName: 'nav-text nav-text-active' } : x));
     setSidebarData(updatedData);
-    console.log(updatedData);
-    console.log(SidebarData)
 
   }
 
