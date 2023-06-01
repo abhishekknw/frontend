@@ -37,8 +37,9 @@ export default function DateFilter(props) {
       selectDatePicker: true,
       selectDateSlider: false,
     });
-
     CalederAction.getSelectedDateArray(dateArr[0], dateArr[1]);
+    // let temp = CalederAction.createFromStartDate(date[0]);
+    // setDateArrayList(temp);
   }
 
   const getPreviousDate = (time) => {
@@ -55,6 +56,7 @@ export default function DateFilter(props) {
       selectDatePicker: false,
       selectDateSlider: true,
     });
+    // CalederAction.GetPreviousDates(14);
     CalederAction.getSelectedDateArray(dateArr[0], dateArr[1]);
   };
 
@@ -146,21 +148,26 @@ export default function DateFilter(props) {
         </div>
         <div className="multi-date-calender d-flex">
           <div className="innner-calender d-flex">
-            {customCalenderDates.map((item, index) => {
+            {DateArrayList.map((item, index) => {
               return (
                 <div
                   className={
-                    getClassName(customCalenderDates[index].$d)
+                    getClassName(DateArrayList[index].$d)
                       ? 'date-content'
                       : 'date-content active-border'
                   }
                   key={index}
                   onClick={(e) => {
-                    CalederAction.getSelectedDateArray(customCalenderDates[index].$d);
+                    CalederAction.getSelectedDateArray(DateArrayList[index].$d)
+                    setCalenderVaidations({
+                      ...CalenderVaidations,
+                      selectDatePicker: false,
+                      selectDateSlider: true,
+                    });;
                   }}
                 >
-                  {dayjs(customCalenderDates[index].$d).format('ddd')}
-                  <div className="pt-2">{customCalenderDates[index].$D}</div>
+                  {dayjs(DateArrayList[index].$d).format('ddd')}
+                  <div className="pt-2">{DateArrayList[index].$D}</div>
                 </div>
               );
             })}
@@ -168,16 +175,16 @@ export default function DateFilter(props) {
           <div className="date-content-btn mt-3 ">
             <button
               onClick={(e) => {
-                oneDayPreviousDate(DateArrayList);
+                oneDayNextDate(DateArrayList);
               }}
             >
               <BsChevronLeft />
             </button>
             <div className="pt-2">
               <button
-                onClick={(e) => {
-                  oneDayNextDate(DateArrayList);
-                }}
+              onClick={(e) => {
+                oneDayPreviousDate(DateArrayList);
+              }}
               >
                 <BsChevronRight />
               </button>

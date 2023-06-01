@@ -44,18 +44,29 @@ const CalenderActions = () => {
             let date1 = dayjs(dayjs(end).format('YYYY-MM-DD'));
             let date2 = dayjs(start).format('YYYY-MM-DD');
             let numDays = date1.diff(date2, 'day');
-            for (let i=0;i<numDays;i++){
+            for (let i=0;i<=numDays;i++){
                 let d = dayjs(start).add(i,'day');
                 selected.push(dayjs(d).format('DD/MM/YYYY'))
             }
             setSelectedDateAtom(selected);
         }
     }
+
+    const createFromStartDate = (start) =>{
+        let DateArray = [];
+        for (let i=0;i<=14;i++){
+            DateArray.push(start.add(i, 'day'))
+        }
+        setCustomCalenderDates(DateArray);
+        console.log(DateArray)
+        // return DateArray;
+    }
     return {
         GetPreviousDates,
         GetOneDayPreviousDate,
         GetOneDayNextDate,
         getSelectedDateArray,
+        createFromStartDate
     }
 }
 
