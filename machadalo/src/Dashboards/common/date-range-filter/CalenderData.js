@@ -1,15 +1,16 @@
 import dayjs from 'dayjs';
-import { useRecoilState } from 'recoil';
-import { CalenderDatesAtom } from './CalenderAtom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { CalenderDatesAtom ,SelectedDateAtom} from './CalenderAtom';
 const CalenderActions = () => {
     const Today = dayjs();
-    const [customCalenderDates,setCustomCalenderDates] = useRecoilState(CalenderDatesAtom)
+    const [customCalenderDates,setCustomCalenderDates] = useRecoilState(CalenderDatesAtom);
+    const setSelectedDateAtom = useSetRecoilState(SelectedDateAtom);
     const GetPreviousDates =(number)=>{
         let DateArray = [];
         for (let i=0;i<=number;i++){
             DateArray.push(Today.subtract(i, 'day'))
         }
-        // setCustomCalenderDates(DateArray)
+        setCustomCalenderDates(DateArray)
         return DateArray;
     }
     
@@ -29,10 +30,16 @@ const CalenderActions = () => {
         filtereddate.splice(0, 0,next);
         return filtereddate;
     }
+
+    const getSelectedDateArray = ()=>{
+        let selected = [Today];
+        setSelectedDateAtom(selected)
+    }
     return {
         GetPreviousDates,
         GetOneDayPreviousDate,
-        GetOneDayNextDate
+        GetOneDayNextDate,
+        getSelectedDateArray,
     }
 }
 

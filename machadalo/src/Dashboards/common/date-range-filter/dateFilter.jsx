@@ -9,12 +9,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import dayjs from 'dayjs';
 import { CalenderActions } from './CalenderData';
-import { CalenderDatesAtom } from './CalenderAtom';
-import { useRecoilValue } from 'recoil';
+import { CalenderDatesAtom, CalenderVaidationAtom ,SelectedDateAtom} from './CalenderAtom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 export default function DateFilter(props) {
   const CalederAction = CalenderActions();
   const customCalenderDates = useRecoilValue(CalenderDatesAtom);
+  const selectedDateArray = useRecoilValue(SelectedDateAtom);
+  const [CalenderVaidations, setCalenderVaidations] = useRecoilState(CalenderVaidationAtom);
   const [selectedDate, setSelectedDate] = React.useState([
     dayjs(new Date()).$d,
     dayjs(new Date()).$d,
@@ -30,6 +32,7 @@ export default function DateFilter(props) {
     dateArr[0] = date[0]?.$d;
     dateArr[1] = date[1]?.$d;
     setSelectedDate(dateArr);
+    setCalenderVaidations({...CalenderVaidations,selectDatePicker:true,selectDateSlider:false})
   }
 
   const getPreviousDate = (time) => {
@@ -48,7 +51,10 @@ export default function DateFilter(props) {
     setDateArrayList(temp);
   }
 
-  function oneDayNextDate(arr){
+  function oneDayNextDate(arr) {
+    if(dayjs(arr[0].$d).format('DD/MM/YYYY') === dayjs((new Date()).$d).format('DD/MM/YYYY')){
+      return 0;
+    }
     let temp = CalederAction.GetOneDayNextDate(arr);
     setDateArrayList(temp);
   }
@@ -56,6 +62,7 @@ export default function DateFilter(props) {
   React.useEffect(() => {
     let temp = CalederAction.GetPreviousDates(14);
     setDateArrayList(temp);
+    CalederAction.getSelectedDateArray();
   }, []);
 
   props.onDateChange(selectedDate);
@@ -75,6 +82,7 @@ export default function DateFilter(props) {
                       label="Advanced keyboard"
                       value={selectedDate}
                       onChange={(newValue) => handleDateChange(newValue)}
+                      disableFuture
                       renderInput={(startProps, endProps) => (
                         <React.Fragment>
                           <BsFillCalendarDateFill
@@ -85,11 +93,17 @@ export default function DateFilter(props) {
                       )}
                     />
                   </LocalizationProvider>
-
-                  <div className="calander-date ms-4">
-                    {dayjs(selectedDate[0]).format('DD/MM/YYYY')} -{' '}
-                    {dayjs(selectedDate[1]).format('DD/MM/YYYY')}
-                  </div>
+                  {CalenderVaidations.selectDatePicker && (
+                    <div className="calander-date ms-4">
+                      {dayjs(selectedDate[0]).format('DD/MM/YYYY')} -{' '}
+                      {dayjs(selectedDate[1]).format('DD/MM/YYYY')}
+                    </div>
+                  )}
+                  {CalenderVaidations.selectDateSlider && (
+                    <div className="calander-date ms-4">
+                      {dayjs().format('DD/MM/YYYY')}
+                      </div>
+                  )}
                 </div>
               </Col>
 
@@ -120,7 +134,7 @@ export default function DateFilter(props) {
           <div className="innner-calender d-flex">
             {DateArrayList.map((item, index) => {
               return (
-                <div className="date-content ">
+                <div className="date-content" key={index}>
                   {dayjs(DateArrayList[index].$d).format('ddd')}
                   <div className="pt-2">{DateArrayList[index].$D}</div>
                 </div>
@@ -128,10 +142,10 @@ export default function DateFilter(props) {
             })}
           </div>
           <div className="date-content-btn mt-3 ">
-            <button 
-            onClick={(e) => {
-              oneDayNextDate(DateArrayList);
-            }}
+            <button
+              onClick={(e) => {
+                oneDayNextDate(DateArrayList);
+              }}
             >
               <BsChevronLeft />
             </button>
