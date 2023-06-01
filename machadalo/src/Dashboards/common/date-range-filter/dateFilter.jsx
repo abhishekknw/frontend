@@ -8,9 +8,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import dayjs from 'dayjs';
-import {GetPreviousDates} from './CalenderData';
-export default function DateFilter(props) {
+import { CalenderActions } from './CalenderData';
+import { CalenderDatesAtom } from '../../Recoil/States/Machadalo';
+import { useRecoilValue } from 'recoil';
 
+export default function DateFilter(props) {
+  const CalederAction = CalenderActions();
+  const customCalenderDates = useRecoilValue(CalenderDatesAtom);
   const [selectedDate, setSelectedDate] = React.useState([
     dayjs(new Date()).$d,
     dayjs(new Date()).$d,
@@ -20,7 +24,7 @@ export default function DateFilter(props) {
     { name: 'Week', class: 'time-btn', count: 7 },
     { name: 'Month', class: 'time-btn', count: 30 },
   ]);
-
+  const [DateArrayList, setDateArrayList] = React.useState(customCalenderDates);
   let dateArr = [];
   function handleDateChange(date) {
     dateArr[0] = date[0]?.$d;
@@ -38,9 +42,23 @@ export default function DateFilter(props) {
     );
     setTimeBtns(updateTime);
   };
-  const DateArrayList = GetPreviousDates(14);
-  props.onDateChange(selectedDate);
 
+  function oneDayPreviousDate(arr) {
+    let temp = CalederAction.GetOneDayPreviousDate(arr);
+    setDateArrayList(temp);
+  }
+
+  function oneDayNextDate(arr){
+    let temp = CalederAction.GetOneDayNextDate(arr);
+    setDateArrayList(temp);
+  }
+
+  React.useEffect(() => {
+    let temp = CalederAction.GetPreviousDates(14);
+    setDateArrayList(temp);
+  }, []);
+
+  props.onDateChange(selectedDate);
   return (
     <>
       <Container>
@@ -100,32 +118,33 @@ export default function DateFilter(props) {
         </div>
         <div className="multi-date-calender d-flex">
           <div className="innner-calender d-flex">
-            {DateArrayList.map((item,index)=>{
-              return(
-                <div className="date-content ">{dayjs(DateArrayList[index].$d).format('ddd')}<div className='pt-2'>{DateArrayList[index].$D}</div></div>
-              )
-            })
-
-            }
-            {/* <div className="date-content ">sat<div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div>
-            <div className="date-content">sat <div className='pt-2'>01</div></div> */}
+            {DateArrayList.map((item, index) => {
+              return (
+                <div className="date-content ">
+                  {dayjs(DateArrayList[index].$d).format('ddd')}
+                  <div className="pt-2">{DateArrayList[index].$D}</div>
+                </div>
+              );
+            })}
           </div>
-          <div className="date-content-btn mt-3 "><button><BsChevronLeft /></button><div className='pt-2'><button><BsChevronRight /></button></div></div>
-
+          <div className="date-content-btn mt-3 ">
+            <button 
+            onClick={(e) => {
+              oneDayNextDate(DateArrayList);
+            }}
+            >
+              <BsChevronLeft />
+            </button>
+            <div className="pt-2">
+              <button
+                onClick={(e) => {
+                  oneDayPreviousDate(DateArrayList);
+                }}
+              >
+                <BsChevronRight />
+              </button>
+            </div>
+          </div>
         </div>
       </Container>
     </>
