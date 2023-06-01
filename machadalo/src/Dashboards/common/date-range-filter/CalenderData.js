@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useRecoilState } from 'recoil';
-import { CalenderDatesAtom } from '../../Recoil/States/Machadalo';
+import { CalenderDatesAtom } from './CalenderAtom';
 const CalenderActions = () => {
     const Today = dayjs();
     const [customCalenderDates,setCustomCalenderDates] = useRecoilState(CalenderDatesAtom)

@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import dayjs from 'dayjs';
 import { CalenderActions } from './CalenderData';
-import { CalenderDatesAtom } from '../../Recoil/States/Machadalo';
+import { CalenderDatesAtom } from './CalenderAtom';
 import { useRecoilValue } from 'recoil';
 
 export default function DateFilter(props) {

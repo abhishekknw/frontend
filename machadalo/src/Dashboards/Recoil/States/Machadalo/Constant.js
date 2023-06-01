@@ -12,8 +12,4 @@ const showHideTable = atom({
   },
 });
 
-const CalenderDatesAtom = atom({
-  key: 'CalenderDatesAtom',
-  default:[],
-});
-export { showHideTable,CalenderDatesAtom };
+export { showHideTable };
