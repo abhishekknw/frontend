@@ -55,7 +55,7 @@ const CalenderActions = () => {
 
     const createFromStartDate = (start) =>{
         let DateArray = [];
-        for (let i=14;i>=0;i--){
+        for (let i=0;i<=14;i++){
             DateArray.push(start.add(i, 'day'))
         }
         setCustomCalenderDates(DateArray);

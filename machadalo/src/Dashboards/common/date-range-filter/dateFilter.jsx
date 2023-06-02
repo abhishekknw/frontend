@@ -38,8 +38,8 @@ export default function DateFilter(props) {
       selectDateSlider: false,
     });
     CalederAction.getSelectedDateArray(dateArr[0], dateArr[1]);
-    // let temp = CalederAction.createFromStartDate(date[0]);
-    // setDateArrayList(temp);
+    let temp = CalederAction.createFromStartDate(date[0]);
+    setDateArrayList(temp);
   }
 
   const getPreviousDate = (time) => {
@@ -56,7 +56,8 @@ export default function DateFilter(props) {
       selectDatePicker: true,
       selectDateSlider: false,
     });
-    // CalederAction.GetPreviousDates(14);
+    let temp = CalederAction.GetPreviousDates(14);
+    setDateArrayList(temp)
     CalederAction.getSelectedDateArray(dateArr[0], dateArr[1]);
   };
 
