@@ -11,8 +11,8 @@ import {
 } from 'react-icons/bs';
 import ViewClientAgencyTable from './ViewClientAgencyTable';
 import ViewCampaignTable from './ViewCampaignTable';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { showHideTable, breadcrumbAtom, showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
+import { useRecoilState } from 'recoil';
+import { showHideTable, showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
 import ViewEndCustomerCityTable from './ViewEndCustomerCityTable';
 import ViewLeadDetailTable from './LeadDetailTable';
 import CommonTable from '../Table/CommonTable';
@@ -22,7 +22,6 @@ export default function LeadsTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
-  const BreadCrumbs = useRecoilValue(breadcrumbAtom);
 
   const headerData = [
     {
@@ -139,9 +138,21 @@ export default function LeadsTable(props) {
 
   //   return body;
   // }
-  async function onClientAgency(btnName) {
-    await setshowHideTableObj({ ...showHideTableObj, ViewClientWise: true });
-    setShowHideBreadCrumbs({ ...showHideBreadCrumbs, first: { show: true ,tableName:btnName} });
+  function onClientAgency(btnName) {
+    setshowHideTableObj({
+      ...showHideTableObj,
+      ViewClientWise: true,
+      ViewEndCustomerWise: false,
+      ViewLeadDetail: false,
+      ViewCampaignWise: false,
+    });
+    setShowHideBreadCrumbs({
+      ...showHideBreadCrumbs,
+      first: { show: true, tableName: btnName },
+      second: { show: false, tableName: btnName },
+      third: { show: false, tableName: btnName },
+      fourth: { show: false, tableName: btnName },
+    });
   }
   const bodyData = () => {
     let data = [
@@ -200,7 +211,7 @@ export default function LeadsTable(props) {
             <Button
               variant="outline-dark"
               className="lead-btn"
-              onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewClientWise: true })}
+              onClick={() => onClientAgency('View Client Wise')}
             >
               View Client Wise
             </Button>
@@ -208,7 +219,11 @@ export default function LeadsTable(props) {
         ),
         agencyWise: (
           <div>
-            <Button variant="outline-dark" className="lead-btn">
+            <Button
+              variant="outline-dark"
+              className="lead-btn"
+              onClick={() => onClientAgency('View Client Wise')}
+            >
               View Agency Wise
             </Button>
           </div>
@@ -266,47 +281,7 @@ export default function LeadsTable(props) {
         showHideTableObj.ViewCampaignWise ||
         showHideTableObj.ViewEndCustomerWise ||
         showHideTableObj.ViewLeadDetail) && (
-        <nav>
-          <ol class="breadcrumb">
-            {/* {BreadCrumbs.map((item,index) => {
-           return (
-           <li key={index}>
-              <a>
-                <span>{item}</span>
-              </a>
-            </li>
-            )
-          })} */}
-            {showHideBreadCrumbs.first.show && (
-              <li>
-                <a>
-                  <span>{showHideBreadCrumbs.first.tableName}</span>
-                </a>
-              </li>
-            )}
-            {showHideBreadCrumbs.second.show && (
-              <li>
-                <a>
-                  <span>{showHideBreadCrumbs.second.tableName}</span>
-                </a>
-              </li>
-            )}
-            {showHideBreadCrumbs.third.show && (
-              <li>
-                <a>
-                  <span>{showHideBreadCrumbs.third.tableName}</span>
-                </a>
-              </li>
-            )}
-            {showHideBreadCrumbs.fourth.show && (
-              <li>
-                <a>
-                  <span>{showHideBreadCrumbs.fourth.tableName}</span>
-                </a>
-              </li>
-            )}
-          </ol>
-        </nav>
+        <BreadCrumbData />
       )}
       {/* Breadcrumb */}
 

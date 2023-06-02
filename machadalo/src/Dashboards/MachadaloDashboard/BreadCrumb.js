@@ -1,22 +1,46 @@
 import { useRecoilState,useRecoilValue } from "recoil";
-import { breadcrumbAtom,showHideTable } from '../Recoil/States/Machadalo';
+import { showHideBreadcrumbsAtom} from '../Recoil/States/Machadalo';
+import React from 'react';
+
 const BreadCrumbData = () => {
+    const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
 
-    const [breadCrumb,setBreadCrumb] = useRecoilState(breadcrumbAtom);
-    const showHideTableObj = useRecoilValue(showHideTable);
-
-    const GetDataArray =(btnName)=>{
-        console.log(showHideTableObj);
-        if(!showHideTableObj.ViewClientWise){
-            setBreadCrumb([...breadCrumb,btnName]);
-        }
-        else if(!showHideTableObj.ViewCampaignWise){
-            setBreadCrumb([...breadCrumb,btnName]);
-        }
-        }
-    return {
-        GetDataArray,
-    }
+    return(
+        <>
+        <nav>
+          <ol className="breadcrumb">
+            {showHideBreadCrumbs.first.show && (
+              <li>
+                <a>
+                  <span>{showHideBreadCrumbs.first.tableName}</span>
+                </a>
+              </li>
+            )}
+            {showHideBreadCrumbs.second.show && (
+              <li>
+                <a>
+                  <span>{showHideBreadCrumbs.second.tableName}</span>
+                </a>
+              </li>
+            )}
+            {showHideBreadCrumbs.third.show && (
+              <li>
+                <a>
+                  <span>{showHideBreadCrumbs.third.tableName}</span>
+                </a>
+              </li>
+            )}
+            {showHideBreadCrumbs.fourth.show && (
+              <li>
+                <a>
+                  <span>{showHideBreadCrumbs.fourth.tableName}</span>
+                </a>
+              </li>
+            )}
+          </ol>
+        </nav>
+        </>
+    )
 
 }
 
