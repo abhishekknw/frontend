@@ -66,7 +66,7 @@ export default function DateFilter(props) {
   }
 
   function oneDayNextDate(arr) {
-    if (dayjs(arr[0].$d).format('DD/MM/YYYY') === dayjs(new Date().$d).format('DD/MM/YYYY')) {
+    if (dayjs(arr[14].$d).format('DD/MM/YYYY') === dayjs(new Date().$d).format('DD/MM/YYYY')) {
       return 0;
     }
     let temp = CalederAction.GetOneDayNextDate(arr);
@@ -175,7 +175,7 @@ export default function DateFilter(props) {
           <div className="date-content-btn mt-3 ">
             <button
               onClick={(e) => {
-                oneDayNextDate(DateArrayList);
+                oneDayPreviousDate(DateArrayList);
               }}
             >
               <BsChevronLeft />
@@ -183,7 +183,7 @@ export default function DateFilter(props) {
             <div className="pt-2">
               <button
               onClick={(e) => {
-                oneDayPreviousDate(DateArrayList);
+                oneDayNextDate(DateArrayList);
               }}
               >
                 <BsChevronRight />
