@@ -39,7 +39,6 @@ const CalenderActions = () => {
         let selected = [];
         if(!end){
             selected.push(dayjs(start).format('DD/MM/YYYY'));
-            console.log(selected);
             setSelectedDateAtom(selected)
         }
         else{
@@ -56,12 +55,11 @@ const CalenderActions = () => {
 
     const createFromStartDate = (start) =>{
         let DateArray = [];
-        for (let i=0;i<=14;i++){
+        for (let i=14;i>=0;i--){
             DateArray.push(start.add(i, 'day'))
         }
         setCustomCalenderDates(DateArray);
-        console.log(DateArray)
-        // return DateArray;
+        return DateArray;
     }
     return {
         GetPreviousDates,

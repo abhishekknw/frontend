@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import './index.css';
 import Button from 'react-bootstrap/Button';
@@ -11,15 +11,18 @@ import {
 } from 'react-icons/bs';
 import ViewClientAgencyTable from './ViewClientAgencyTable';
 import ViewCampaignTable from './ViewCampaignTable';
-import { useRecoilState } from 'recoil';
-import { showHideTable } from '../Recoil/States/Machadalo';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { showHideTable, breadcrumbAtom, showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
 import ViewEndCustomerCityTable from './ViewEndCustomerCityTable';
 import ViewLeadDetailTable from './LeadDetailTable';
 import CommonTable from '../Table/CommonTable';
 import FosRmTable from './FosRmTable';
+import { BreadCrumbData } from './BreadCrumb';
 export default function LeadsTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
+  const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
+  const BreadCrumbs = useRecoilValue(breadcrumbAtom);
 
   const headerData = [
     {
@@ -33,11 +36,11 @@ export default function LeadsTable(props) {
     },
     {
       name: 'Lead accepted by QA',
-      tooltip: "Lead accepted by QA",
+      tooltip: 'Lead accepted by QA',
     },
     {
       name: 'Lead Accepted by Client',
-      tooltip: "Lead accepted by Client",
+      tooltip: 'Lead accepted by Client',
     },
     {
       name: 'View Client Wise',
@@ -136,7 +139,10 @@ export default function LeadsTable(props) {
 
   //   return body;
   // }
-
+  async function onClientAgency(btnName) {
+    await setshowHideTableObj({ ...showHideTableObj, ViewClientWise: true });
+    setShowHideBreadCrumbs({ ...showHideBreadCrumbs, first: { show: true ,tableName:btnName} });
+  }
   const bodyData = () => {
     let data = [
       {
@@ -150,7 +156,7 @@ export default function LeadsTable(props) {
             <Button
               variant="outline-dark"
               className="lead-btn"
-              onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewClientWise: true })}
+              onClick={() => onClientAgency('View Client Wise')}
             >
               View Client Wise
             </Button>
@@ -158,7 +164,11 @@ export default function LeadsTable(props) {
         ),
         agencyWise: (
           <div>
-            <Button variant="outline-dark" className="lead-btn">
+            <Button
+              variant="outline-dark"
+              className="lead-btn"
+              onClick={() => onClientAgency('View Agency Wise')}
+            >
               View Agency Wise
             </Button>
           </div>
@@ -238,9 +248,7 @@ export default function LeadsTable(props) {
             <td>{ele.agencyWise}</td>
             <td>{ele.action}</td>
           </tr>
-          {isExpandRow.b2b && (
-            <FosRmTable />
-          )}
+          {isExpandRow.b2b && <FosRmTable />}
         </>
       );
     });
@@ -254,34 +262,52 @@ export default function LeadsTable(props) {
       <CommonTable headerData={headerData} bodyData={bodyData} />
 
       {/* Breadcrumb */}
-      <nav>
-        <ol class="breadcrumb " itemscope itemtype="http://schema.org/BreadcrumbList">
-          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-            <a itemprop="item" href="#">
-              <span itemprop="name">View Client</span>
-            </a>
-            <meta itemprop="position" content="1" />
-          </li>
-          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-            <a itemprop="item" href="#">
-              <span itemprop="name">View Campaign</span>
-            </a>
-            <meta itemprop="position" content="2" />
-          </li>
-          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-            <a itemprop="item" href="#">
-              <span itemprop="name">View City</span>
-            </a>
-            <meta itemprop="position" content="3" />
-          </li>
-          <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-            <a itemprop="item" href="#">
-              <span itemprop="name">View Leads</span>
-            </a>
-            <meta itemprop="position" content="4" />
-          </li>
-        </ol>
-      </nav>
+      {(showHideTableObj.ViewClientWise ||
+        showHideTableObj.ViewCampaignWise ||
+        showHideTableObj.ViewEndCustomerWise ||
+        showHideTableObj.ViewLeadDetail) && (
+        <nav>
+          <ol class="breadcrumb">
+            {/* {BreadCrumbs.map((item,index) => {
+           return (
+           <li key={index}>
+              <a>
+                <span>{item}</span>
+              </a>
+            </li>
+            )
+          })} */}
+            {showHideBreadCrumbs.first.show && (
+              <li>
+                <a>
+                  <span>{showHideBreadCrumbs.first.tableName}</span>
+                </a>
+              </li>
+            )}
+            {showHideBreadCrumbs.second.show && (
+              <li>
+                <a>
+                  <span>{showHideBreadCrumbs.second.tableName}</span>
+                </a>
+              </li>
+            )}
+            {showHideBreadCrumbs.third.show && (
+              <li>
+                <a>
+                  <span>{showHideBreadCrumbs.third.tableName}</span>
+                </a>
+              </li>
+            )}
+            {showHideBreadCrumbs.fourth.show && (
+              <li>
+                <a>
+                  <span>{showHideBreadCrumbs.fourth.tableName}</span>
+                </a>
+              </li>
+            )}
+          </ol>
+        </nav>
+      )}
       {/* Breadcrumb */}
 
       {showHideTableObj.ViewClientWise && <ViewClientAgencyTable />}

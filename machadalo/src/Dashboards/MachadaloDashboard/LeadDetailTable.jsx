@@ -18,7 +18,7 @@ export default function ViewLeadDetailTable(props) {
 
   return (
     <>
-      <h4 style={{ paddingTop: '10px' }}>ViewTable-1</h4>
+      <h4 style={{ paddingTop: '10px' }}>Leads Table</h4>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
@@ -56,9 +56,9 @@ export default function ViewLeadDetailTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
+                // onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
               >
-                View Leads
+                View Detail
               </Button>
             </td>
             <td>
@@ -152,9 +152,9 @@ export default function ViewLeadDetailTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
+                // onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
               >
-                View Leads
+                View Detail
               </Button>
             </td>
             <td>

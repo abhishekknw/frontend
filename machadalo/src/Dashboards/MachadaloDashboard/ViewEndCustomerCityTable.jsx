@@ -10,15 +10,23 @@ import {
   BsWhatsapp,
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
-import { showHideTable } from '../Recoil/States/Machadalo';
+import { showHideTable,showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
+import { BreadCrumbData } from './BreadCrumb';
+
 export default function ViewEndCustomerCityTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
+  const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
 
+  async function onClientLeadBtn(btnName) {
+    await setshowHideTableObj({ ...showHideTableObj, ViewLeadDetail: true,ViewEndCustomerWise:false });
+    setShowHideBreadCrumbs({ ...showHideBreadCrumbs, fourth: { show: true,tableName:btnName } });
+
+  }
   return (
     <>
-      <h4 style={{ paddingTop: '10px' }}>ViewTable-4</h4>
+      <h4 style={{ paddingTop: '10px' }}>EndCustomer-4</h4>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
@@ -54,7 +62,7 @@ export default function ViewEndCustomerCityTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewLeadDetail: true })}
+                onClick={() => onClientLeadBtn('View Leads')}
               >
                 View Leads
               </Button>
@@ -149,7 +157,7 @@ export default function ViewEndCustomerCityTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewLeadDetail: true })}
+                onClick={() => onClientLeadBtn('View Leads')}
               >
                 View Leads
               </Button>

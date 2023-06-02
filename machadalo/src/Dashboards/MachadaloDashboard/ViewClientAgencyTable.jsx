@@ -12,15 +12,23 @@ import {
 } from 'react-icons/bs';
 import './index.css';
 import { useRecoilState } from 'recoil';
-import { showHideTable } from '../Recoil/States/Machadalo';
+import { showHideTable,showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
+import {BreadCrumbData} from './BreadCrumb';
+
 export default function ViewClientAgencyTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
+  const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
+
+  async function onClickCampaign (btnName){
+    await setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true,ViewClientWise:false })
+       setShowHideBreadCrumbs({ ...showHideBreadCrumbs, second: { show: true ,tableName:btnName} });
+  }
 
   return (
     <>
-      <h4 style={{ paddingTop: '10px' }}>ViewTable-3</h4>
+      <h4 style={{ paddingTop: '10px' }}>Client Wise</h4>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
@@ -58,7 +66,7 @@ export default function ViewClientAgencyTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
+                onClick={() => onClickCampaign("View Campaign Wise")}
               >
                 View Campaign
               </Button>
@@ -154,7 +162,7 @@ export default function ViewClientAgencyTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
+                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true ,ViewClientWise:false})}
               >
                 View Campaign
               </Button>

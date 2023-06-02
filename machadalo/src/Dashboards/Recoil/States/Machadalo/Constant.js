@@ -12,4 +12,19 @@ const showHideTable = atom({
   },
 });
 
-export { showHideTable };
+const breadcrumbAtom = atom({
+  key: 'breadcrumbKey',
+  default: []
+});
+
+const showHideBreadcrumbsAtom = atom({
+  key: 'showHideBreadcrumbsAtom',
+  default: {
+    first:{show:false,tableName:""},
+    second:{show:false,tableName:""},
+    third:{show:false,tableName:""},
+    fourth:{show:false,tableName:""},
+  }
+});
+
+export { showHideTable ,breadcrumbAtom,showHideBreadcrumbsAtom};

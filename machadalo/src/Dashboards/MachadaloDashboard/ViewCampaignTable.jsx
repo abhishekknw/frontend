@@ -11,15 +11,23 @@ import {
 } from 'react-icons/bs';
 import './index.css';
 import { useRecoilState } from 'recoil';
-import { showHideTable } from '../Recoil/States/Machadalo';
+import { showHideTable,showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
+import { BreadCrumbData } from './BreadCrumb';
+
 export default function ViewCampaignTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
+  const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
 
+  async function onClickCustomerCity (btnName){
+    await setshowHideTableObj({ ...showHideTableObj, ViewEndCustomerWise: true,ViewCampaignWise:false })
+       setShowHideBreadCrumbs({ ...showHideBreadCrumbs, third: { show: true,tableName:btnName} });
+
+  }
   return (
     <>
-      <h4 style={{ paddingTop: '10px' }}>ViewTable-2</h4>
+      <h4 style={{ paddingTop: '10px' }}>View Campaign</h4>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
@@ -58,7 +66,7 @@ export default function ViewCampaignTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewEndCustomerWise: true })}
+                onClick={() =>onClickCustomerCity('View End Customer') }
               >
                 View End Customer
               </Button>
@@ -68,7 +76,7 @@ export default function ViewCampaignTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewEndCustomerWise: true })}
+                onClick={() => onClickCustomerCity('View City')}
               >
                 View City
               </Button>
@@ -165,7 +173,7 @@ export default function ViewCampaignTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewEndCustomerWise: true })}
+                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewEndCustomerWise: true,ViewCampaignWise:false })}
               >
                 View End Customer
               </Button>
@@ -175,7 +183,7 @@ export default function ViewCampaignTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewEndCustomerWise: true })}
+                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewEndCustomerWise: true,ViewCampaignWise:false })}
               >
                 View City
               </Button>

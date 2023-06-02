@@ -53,8 +53,8 @@ export default function DateFilter(props) {
     setTimeBtns(updateTime);
     setCalenderVaidations({
       ...CalenderVaidations,
-      selectDatePicker: false,
-      selectDateSlider: true,
+      selectDatePicker: true,
+      selectDateSlider: false,
     });
     // CalederAction.GetPreviousDates(14);
     CalederAction.getSelectedDateArray(dateArr[0], dateArr[1]);
