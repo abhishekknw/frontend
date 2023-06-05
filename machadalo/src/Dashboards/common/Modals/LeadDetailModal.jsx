@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { showHideModalAtom } from '../../Recoil/States/Machadalo/Constant';
 import { useRecoilState } from 'recoil';
+import Dropdown from 'react-bootstrap/Dropdown';
 function LeadDetailModal() {
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
   const [showModal, setShow] = useState(showHideModal.email);
@@ -17,41 +18,62 @@ function LeadDetailModal() {
           Launch demo modal
         </Button>
       </div> */}
-      <Modal show={showHideModal.leadDetail.show} onHide={handleClose}>
+      <Modal show={showHideModal.leadDetail.show} onHide={handleClose} className='wpModal'>
         <Modal.Header closeButton>
           <Modal.Title>leadDetail Modal</Modal.Title>
+
         </Modal.Header>
         <Modal.Body>
-          <form>
-            <div class="form-group">
-              <label for="exampleInputEmail1">LEad Detail Modals</label>
-              <input
-                type="email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
-              {/* <small id="emailHelp" class="form-text text-muted">
-                We'll never share your email with anyone else.
-              </small> */}
+          <div className='row'>
+            <div className='col-md-4'><p>Share Date:</p></div>
+            <div className='col-md-4'><p>Assigned by: </p></div>
+            <div className='col-md-4'><p>Assigned to:</p></div>
+          </div>
+          <div>
+              <p className='strip-div'> Sector:</p>
+              <p>Test Sector</p>
+          </div>
+          <div>
+              <p className='strip-div'> Sector Specific Questions :</p>
+              <p className='d-flex justify-content-between'><span>Q1.Response :</span><span>?</span></p>
+              <p className='d-flex justify-content-between'><span>Q2.Response :</span><span>?</span></p>
+              <p className='d-flex justify-content-between'><span>Q3.Response :</span><span>?</span></p>
+          </div>
+          <div>
+              <p className='strip-div'>User Details:</p>
+              <p>aman, 9752276168 , Secretary</p>
+          </div>
+          <div>
+              <p className='strip-div'>Address :</p>
+              <p>testadddress Prayagraj, Uttar Pradesh 211011,Prayagraj, Allahabad,Uttar Pradesh,India, 110002,(18.222,72.0)</p>
+          </div>
+          <div className='status-div'>
+              <p className='strip-div'>Status History :</p>
+              <textarea rows={4} className='fullwidth' ></textarea>   
+          </div>
+          <div className='status-div'>
+            <div className='d-flex align-items-center strip-div justify-content-between'>
+              <p className='p-0'>Comments :</p>
+              <div  class="form-group email-dropdown">
+              <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Email Type
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#"> Email Type </Dropdown.Item>
+                  <Dropdown.Item href="#"> Email Type 2</Dropdown.Item>
+                  <Dropdown.Item href="#"> Email Type 3</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              </div>
             </div>
-            {/* <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" />
-            </div> */}
-            {/* <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-              <label class="form-check-label" for="exampleCheck1">
-                Check me out
-              </label>
-            </div> */}
-            <button type="submit" class="btn btn-primary">
-              Submit
-            </button>
-          </form>
+              <textarea rows={4} className='fullwidth' ></textarea>   
+          </div>
+       
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" className='submit-btn' onClick={handleClose}>
             Close
           </Button>
           {/* <Button variant="primary" onClick={handleClose}>
