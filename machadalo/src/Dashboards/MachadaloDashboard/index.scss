@@ -80,14 +80,12 @@
     border-radius: 20px;
     // padding-top: 10px;
     background-color: #F7F7F7;
-    padding-bottom: 10px;
 }
 
 .main-content .timing {
     width: 55%;
     text-align: center;
     margin-left: auto;
-    margin-bottom: 20px;
 }
 
 .main-content .timing .time-btn {
@@ -101,7 +99,6 @@
     border-radius: 20px;
     color: #fff;
     height: 32px;
-    margin-top: 3px;
     text-align: center;
 }
 
@@ -111,8 +108,35 @@
     margin-top: 97px;
     margin-bottom: 58px;
 }
-
-@media only screen and (max-width: 600px) and (max-width: 992px) {
+.nav-lead-tab{    
+    // background-color: #3c1eb5;
+}
+.nav-lead-tab li{
+    width: 50%;
+}
+.nav-lead-tab button.nav-link.active{
+    width: 100%;
+    color: #fff;
+    background: #0174d8 !important;
+}
+.nav-lead-tab button{
+    width: 100%;
+    color: #fff;
+    background-color: #3c1eb5 !important;
+    border: 0px solid !important;
+    padding: 20px 10px;
+}
+.nav-lead-tab button:hover{
+    color: #fff;
+}
+.dash-table tr th {
+    background: rgb(43, 43, 43);
+    background: linear-gradient(0deg, rgb(43, 43, 43) 35%, rgb(105, 102, 102) 100%);
+    color: #ffffff !important;
+    font-size: 13px;
+    padding: 15px 19px !important;
+}
+@media only screen and (max-width: 600px) and (min-width: 992px) {
     .dx {
 
         display: block;
