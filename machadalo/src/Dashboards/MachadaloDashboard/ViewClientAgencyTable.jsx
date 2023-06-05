@@ -12,29 +12,42 @@ import {
 } from 'react-icons/bs';
 import './index.css';
 import { useRecoilState } from 'recoil';
-import { showHideTable,showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
-import {BreadCrumbData} from './BreadCrumb';
+import {
+  showHideTable,
+  showHideBreadcrumbsAtom,
+  showHideModalAtom,
+} from '../Recoil/States/Machadalo';
+import { BreadCrumbData } from './BreadCrumb';
+import EmailModal from '../common/Modals/EmailModal';
+import WhatsappModal from '../common/Modals/WhatsappModal';
 
 export default function ViewClientAgencyTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
+  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
-  async function onClickCampaign (btnName){
-    await setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true,ViewClientWise:false })
-       setShowHideBreadCrumbs({ ...showHideBreadCrumbs, second: { show: true ,tableName:btnName} });
+  async function onClickCampaign(btnName) {
+    await setshowHideTableObj({
+      ...showHideTableObj,
+      ViewCampaignWise: true,
+      ViewClientWise: false,
+    });
+    setShowHideBreadCrumbs({ ...showHideBreadCrumbs, second: { show: true, tableName: btnName } });
   }
 
   return (
     <>
+      <EmailModal />
+      <WhatsappModal />
       <h4 style={{ paddingTop: '10px' }}>Client Wise</h4>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
             <th></th>
             <th>S.No.</th>
-            <th>Client  Name</th>
+            <th>Client Name</th>
             <th>To be Shared</th>
             <th>Count</th>
             <th> accepted by QA</th>
@@ -66,20 +79,28 @@ export default function ViewClientAgencyTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => onClickCampaign("View Campaign Wise")}
+                onClick={() => onClickCampaign('View Campaign Wise')}
               >
                 View Campaign
               </Button>
             </td>
             <td>
               <div className="action-icon">
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
                   <BsEnvelopeFill />
                 </span>
                 <span>
                   <BsArrowDownCircle />
                 </span>
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
                   <BsWhatsapp />
                 </span>
               </div>
@@ -108,13 +129,21 @@ export default function ViewClientAgencyTable(props) {
                       <td>2000</td>
                       <td>
                         <div className="action-icon">
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                            }}
+                          >
                             <BsEnvelopeFill />
                           </span>
                           <span>
                             <BsArrowDownCircle />
                           </span>
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                            }}
+                          >
                             <BsWhatsapp />
                           </span>
                         </div>
@@ -128,13 +157,21 @@ export default function ViewClientAgencyTable(props) {
                       <td>2000</td>
                       <td>
                         <div className="action-icon">
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                            }}
+                          >
                             <BsEnvelopeFill />
                           </span>
                           <span>
                             <BsArrowDownCircle />
                           </span>
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                            }}
+                          >
                             <BsWhatsapp />
                           </span>
                         </div>
@@ -147,7 +184,9 @@ export default function ViewClientAgencyTable(props) {
           )}
 
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}><BsChevronDown />  </td>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
             <td>01</td>
             <td>Clinet 1</td>
             <td>5000</td>
@@ -162,20 +201,34 @@ export default function ViewClientAgencyTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true ,ViewClientWise:false})}
+                onClick={() =>
+                  setshowHideTableObj({
+                    ...showHideTableObj,
+                    ViewCampaignWise: true,
+                    ViewClientWise: false,
+                  })
+                }
               >
                 View Campaign
               </Button>
             </td>
             <td>
               <div className="action-icon">
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
                   <BsEnvelopeFill />
                 </span>
                 <span>
                   <BsArrowDownCircle />
                 </span>
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
                   <BsWhatsapp />
                 </span>
               </div>

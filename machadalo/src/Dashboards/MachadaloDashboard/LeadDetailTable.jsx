@@ -10,14 +10,17 @@ import {
   BsWhatsapp,
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
-import { showHideTable } from '../Recoil/States/Machadalo';
+import { showHideTable,showHideModalAtom } from '../Recoil/States/Machadalo';
+import LeadDetailModal from '../common/Modals/LeadDetailModal';
 export default function ViewLeadDetailTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
+  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
   return (
     <>
+    <LeadDetailModal />
       <h4 style={{ paddingTop: '10px' }}>Leads Table</h4>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
@@ -56,7 +59,7 @@ export default function ViewLeadDetailTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                // onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
+                onClick={(e)=>{setshowHideModal({...showHideModal, leadDetail: { show: true },})}}
               >
                 View Detail
               </Button>
@@ -152,7 +155,7 @@ export default function ViewLeadDetailTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                // onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewCampaignWise: true })}
+                onClick={(e)=>{setshowHideModal({...showHideModal, leadDetail: { show: true },})}}
               >
                 View Detail
               </Button>

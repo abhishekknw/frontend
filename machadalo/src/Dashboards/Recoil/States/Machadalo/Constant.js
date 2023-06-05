@@ -23,4 +23,13 @@ const showHideBreadcrumbsAtom = atom({
   }
 });
 
-export { showHideTable ,showHideBreadcrumbsAtom};
+const showHideModalAtom = atom({
+  key: 'showHideModalAtom',
+  default: {
+    email:{show:false},
+    whatsapp:{show:false},
+    leadDetail:{show:false}
+  }
+})
+
+export { showHideTable ,showHideBreadcrumbsAtom,showHideModalAtom};

@@ -12,16 +12,19 @@ import {
 import ViewClientAgencyTable from './ViewClientAgencyTable';
 import ViewCampaignTable from './ViewCampaignTable';
 import { useRecoilState } from 'recoil';
-import { showHideTable, showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
+import { showHideTable, showHideBreadcrumbsAtom,showHideModalAtom } from '../Recoil/States/Machadalo';
 import ViewEndCustomerCityTable from './ViewEndCustomerCityTable';
 import ViewLeadDetailTable from './LeadDetailTable';
 import CommonTable from '../Table/CommonTable';
 import FosRmTable from './FosRmTable';
 import { BreadCrumbData } from './BreadCrumb';
+import EmailModal from '../common/Modals/EmailModal';
+import WhatsappModal from '../common/Modals/WhatsappModal';
 export default function LeadsTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
+  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
   const headerData = [
     {
@@ -187,13 +190,13 @@ export default function LeadsTable(props) {
         action: (
           <div>
             <div className="action-icon">
-              <span>
+              <span onClick={(e)=>{setshowHideModal({...showHideModal, email: { show: true },})}}>
                 <BsEnvelopeFill />
               </span>
               <span>
                 <BsArrowDownCircle />
               </span>
-              <span>
+              <span onClick={(e)=>{setshowHideModal({...showHideModal, whatsapp: { show: true },})}}>
                 <BsWhatsapp />
               </span>
             </div>
@@ -231,13 +234,13 @@ export default function LeadsTable(props) {
         action: (
           <div>
             <div className="action-icon">
-              <span>
+            <span onClick={(e)=>{setshowHideModal({...showHideModal, email: { show: true },})}}>
                 <BsEnvelopeFill />
               </span>
               <span>
                 <BsArrowDownCircle />
               </span>
-              <span>
+              <span onClick={(e)=>{setshowHideModal({...showHideModal, whatsapp: { show: true },})}}>
                 <BsWhatsapp />
               </span>
             </div>
@@ -273,7 +276,8 @@ export default function LeadsTable(props) {
   return (
     <>
       <h4>Leads</h4>
-
+      <EmailModal />
+      <WhatsappModal />
       <CommonTable headerData={headerData} bodyData={bodyData} />
 
       {/* Breadcrumb */}
