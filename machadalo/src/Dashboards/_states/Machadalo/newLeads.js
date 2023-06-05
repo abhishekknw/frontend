@@ -5,4 +5,16 @@ const AllCampaingsAtom = atom({
   default: []
 });
 
-export {AllCampaingsAtom}
+const LeadByCampaignsAtom = atom({
+  key: 'LeadByCampaignsKey',
+  default: {}
+});
+
+const showHideTableAtom = atom({
+  key: 'showHideTablekey',
+  default: {
+    viewLeads:{show:false},
+  }
+});
+
+export {AllCampaingsAtom,LeadByCampaignsAtom,showHideTableAtom}
