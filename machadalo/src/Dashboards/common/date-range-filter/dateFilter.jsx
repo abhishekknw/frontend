@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 import React from 'react';
 import { BsFillCalendarDateFill, BsChevronRight, BsChevronLeft } from 'react-icons/bs';
 import Row from 'react-bootstrap/Row';
@@ -87,15 +87,15 @@ export default function DateFilter(props) {
   props.onDateChange(selectedDate);
   return (
     <>
-      <Container>
+      <Box>
         <div className="dateFilter pt-5">
           <h4>
             <b>Date Filter</b>
           </h4>
-          <div>
-            <Row className="main-content ">
+          <div >
+            <Row className="main-content align-items-center ">
               <Col sm={6}>
-                <div className="calander pt-3 ps-3 d-flex ">
+                <div className="calander d-flex ">
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateRangePicker
                       label="Advanced keyboard"
@@ -126,12 +126,13 @@ export default function DateFilter(props) {
 
               <Col sm={6}>
                 <div>
-                  <Row className="timing">
+                  <Row className="timing justifyend" >
                     {timeBtns.map((item, index) => {
                       return (
                         <Col
+                        
                           key={index}
-                          sm={4}
+                          sm={3}
                           className={item.class}
                           onClick={(e) => {
                             getPreviousDate(item);
@@ -192,7 +193,7 @@ export default function DateFilter(props) {
             </div>
           </div>
         </div>
-      </Container>
+      </Box>
     </>
   );
 }
