@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
 // 24/05/23
 .container {
     max-width: 1400px !important;
@@ -23,18 +26,21 @@
 
 .welcome-box {
     border: 1px solid #273F87;
-    padding: 11px;
-    margin-left: 15px;
+    padding: 10px 15px;
+    margin-left: 20px;
     border-radius: 20px;
-    padding-right: 10px;
+    text-align: center;
     width: 210px;
     color: #273F87;
     margin-bottom: 13px;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .welcome-box span {
     font-size: 20px !important;
-    padding-right: 5px;
+    padding-right: 10px;
+    margin: 0;
 }
 
 // header
@@ -117,12 +123,12 @@
 .nav-lead-tab button.nav-link.active{
     width: 100%;
     color: #fff;
-    background: #0174d8 !important;
+    background: #1a2b5b !important;
 }
 .nav-lead-tab button{
     width: 100%;
     color: #fff;
-    background-color: #3c1eb5 !important;
+    background-color: #273f87 !important;
     border: 0px solid !important;
     padding: 20px 10px;
 }
@@ -338,3 +344,146 @@ title-definiton {
 
 
 /* Breadcrumb */
+
+// modal css
+
+
+.wpModal .modal-header {
+    background-color: #3c1eb5;
+  }
+  
+  .wpModal .modal-header .modal-title {
+    background-color: #3c1eb5;
+  }
+  
+  .wpModal .wp-form label {
+    margin-bottom: 15px !important;
+  }
+  
+  .wpModal .modal-body button {
+    margin-top: 20px;
+    padding: 10px 22px;
+    font-size: 14px !important;
+    text-transform: uppercase;
+    background-color: #3c1eb5 !important;
+  }
+  
+  .wpModal button.dropdown-toggle ,.wpModal button.dropdown-toggle:hover {
+    width: 100%;
+    background-color: #fff;
+    color: #000000 !important;
+    background-color: #3c1eb500 !important;
+    padding: 9px 10px;
+    font-size: 14px !important;
+    margin-top: 20px;
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    font-family: "Segoe UI", Roboto;
+    font-weight: 400;
+  }
+  
+  .email-dropdown .dropdown-menu.show {
+    width: 100%;
+  }
+  
+  .email-dropdown .dropdown-item {
+    font-size: 14px !important;
+  }
+  
+  .email-dropdown .dropdown-toggle:hover {
+    border-color: #ced4da !important;
+  }
+  
+  .btn:focus-visible {
+    box-shadow: none !important;
+    outline: none;
+  }
+  
+  .email-dropdown .dropdown-toggle:first-child:active {
+    background-color: inherit;
+    color: #000000;
+  }
+  
+  .email-modal .email-form-control label {
+    padding-bottom: 10px;
+  }
+  
+  .email-dropdown .dropdown-toggle::after {
+    right: 13px;
+    position: absolute;
+    top: 16px;
+  }
+  
+  .modal .btn:hover, .modal .submit-btn {  
+    margin-top: 20px;
+    padding: 10px 22px;
+    font-size: 14px !important;
+    text-transform: uppercase;
+    background-color: #3c1eb5 !important;
+    color: #ffffff !important;
+  
+  }
+  .email-btn-group{
+    align-items: center;
+    text-align: center;
+  }
+  .email-btn-group .btn{
+    margin-top: 20px;
+    padding: 10px 22px;
+    font-size: 14px !important;
+    text-transform: uppercase;
+    background-color: #3c1eb5 !important;
+    white-space: normal;
+    text-align: center;
+  }
+  .strip-div {
+    background-color: #3c1eb5;
+    color: #fff;
+    margin-top: 20px !important;
+    padding: 5px 10px;
+  }
+  .fullwidth{
+    width: 100%;
+  }
+  .status-div textarea{
+    border: 1px solid #ced4da;
+  }
+  html body .status-div .dropdown-toggle, html body .status-div .dropdown-toggle:hover{
+    width: 100%;
+    color: #000000 !important;
+    background-color: #ffffff !important;
+    padding: 9px 10px;
+    font-size: 14px !important;
+    margin: 5px 3px !important;
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    font-family: "Segoe UI", Roboto;
+    font-weight: 400;
+    max-width: 200px;
+    width: 100%;
+    min-width: 150px;
+    text-transform: capitalize !important;
+  }
+  .p-0{
+    padding: 0px !important;
+    margin: 0px ;
+  }
+//   modal css ends
+.breadcrumb a:not([href]):not([class]):hover
+{
+    color: #ffffff;
+}
+.breadcrumb li:last-child a{
+    color: #ffffff;
+}
+.wpModal .btn-close{
+    color: #ffffff;
+    background: none;
+}
+.wpModal .btn-close:before{
+    content: "+";
+
+
+}

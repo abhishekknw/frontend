@@ -7,6 +7,7 @@ import PieChart from '../common/pie-chart/PieChart';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
+ 
 
 export default function MachadaloDashboard(props) {
 
