@@ -46,7 +46,7 @@ export default function ViewLeadsTable(props) {
                     className="lead-btn"
                     onClick={() => getLeadsByCampaign(item)}
                   >
-                    View Leads
+                    Comment
                   </Button>
                 </td>
                 <td>
