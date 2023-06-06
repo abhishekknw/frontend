@@ -117,7 +117,8 @@ export default function SideNavBar() {
                   <li className="first-class-li">Business</li>
                   <li className="first-class-li">Business MCA</li>
                   <li className="first-class-li">B2B Client  Dashboard</li>
-                  <li className="first-class-li">Operational</li>
+                  <li className="first-class-li">Operational
+                  </li>
                 </ul>
               </div>
             </li>

@@ -30,7 +30,7 @@
 
 .date-content {
     margin: 8px;
-    padding: 14px 17px;
+    padding: 8px 17px;
     border-radius: 10px;
     background-color: #e0e0e0;
     font-size: 12px;
@@ -38,9 +38,11 @@
     flex-direction: column;
     display: flex;
     justify-content: center;
+    min-width: 61px;
+    border: 2px solid transparent;
 }
 .active-border{
-    border: 1px solid black;
+    border: 2px solid black;
 }
 
 .date-content-btn button {
@@ -57,7 +59,9 @@
 .innner-calender {
     width: calc(100% - 50px);
     overflow: hidden;
-
+    justify-content: flex-end;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .date-btn-right span p{
     padding: 5px 12px;
