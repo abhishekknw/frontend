@@ -18,12 +18,12 @@ function WhatsappModal() {
           Launch demo modal
         </Button>
       </div> */}
-      <Modal show={showHideModal.whatsapp.show} onHide={handleClose}>
+      <Modal show={showHideModal.whatsapp.show} onHide={handleClose} className='wpModal'>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
+          <form className='wp-form'>
             <div class="form-group">
               <label for="exampleInputEmail1">whatsapp Number</label>
               <input
@@ -46,13 +46,13 @@ function WhatsappModal() {
                 Check me out
               </label>
             </div> */}
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary submit-btn">
               Submit
             </button>
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" className='submit-btn' onClick={handleClose}>
             Close
           </Button>
           {/* <Button variant="primary" onClick={handleClose}>

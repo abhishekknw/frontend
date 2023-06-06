@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { showHideModalAtom } from '../../Recoil/States/Machadalo/Constant';
 import { useRecoilState } from 'recoil';
+import Dropdown from 'react-bootstrap/Dropdown';
 function EmailModal() {
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
   const [showModal, setShow] = useState(showHideModal.email);
@@ -18,13 +19,13 @@ function EmailModal() {
           Launch demo modal
         </Button>
       </div> */}
-      <Modal show={showHideModal.email.show} onHide={handleClose}>
+      <Modal show={showHideModal.email.show} onHide={handleClose} className='wpModal'>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
-            <div class="form-group">
+          <form className='email-modal'>
+            <div class="form-group email-form-control">
               <label for="exampleInputEmail1">Email address</label>
               <input
                 type="email"
@@ -32,9 +33,31 @@ function EmailModal() {
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
               />
-              {/* <small id="emailHelp" class="form-text text-muted">
-                We'll never share your email with anyone else.
-              </small> */}
+            </div>
+            <div class="form-group email-dropdown">
+              <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Email Type
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#"> Email Type </Dropdown.Item>
+                  <Dropdown.Item href="#"> Email Type 2</Dropdown.Item>
+                  <Dropdown.Item href="#"> Email Type 3</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+            <div>
+              <p>Note :- Use comma separation between emails to send multiple emails to users at the same time</p>
+            </div>
+            <div className='row email-btn-group'>
+              <div className='col-sm-5'>
+                <button className='btn btn-primary'>Send email for given user</button>
+              </div>
+              <div className='col-sm-2'><p >Or</p></div>
+              <div className='col-sm-5'>
+                <button className='btn btn-primary'>Send email for given user</button>
+              </div>
             </div>
             {/* <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
@@ -46,13 +69,13 @@ function EmailModal() {
                 Check me out
               </label>
             </div> */}
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary ">
               Submit
             </button>
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" className='submit-btn' onClick={handleClose}>
             Close
           </Button>
           {/* <Button variant="primary" onClick={handleClose}>
