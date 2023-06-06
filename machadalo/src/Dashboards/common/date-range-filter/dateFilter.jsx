@@ -56,7 +56,7 @@ export default function DateFilter(props) {
       selectDatePicker: true,
       selectDateSlider: false,
     });
-    let temp = CalederAction.GetPreviousDates(14);
+    let temp = CalederAction.GetPreviousDates(24);
     setDateArrayList(temp)
     CalederAction.getSelectedDateArray(dateArr[0], dateArr[1]);
   };
@@ -67,7 +67,7 @@ export default function DateFilter(props) {
   }
 
   function oneDayNextDate(arr) {
-    if (dayjs(arr[14].$d).format('DD/MM/YYYY') === dayjs(new Date().$d).format('DD/MM/YYYY')) {
+    if (dayjs(arr[24].$d).format('DD/MM/YYYY') === dayjs(new Date().$d).format('DD/MM/YYYY')) {
       return 0;
     }
     let temp = CalederAction.GetOneDayNextDate(arr);
@@ -79,7 +79,7 @@ export default function DateFilter(props) {
   }
 
   React.useEffect(() => {
-    let temp = CalederAction.GetPreviousDates(14);
+    let temp = CalederAction.GetPreviousDates(24);
     setDateArrayList(temp);
     CalederAction.getSelectedDateArray(dayjs(new Date()).$d);
   }, []);
@@ -88,7 +88,7 @@ export default function DateFilter(props) {
   return (
     <>
       <Box>
-        <div className="dateFilter pt-5">
+        <div className="dateFilter pt-2">
           <h4>
             <b>Date Filter</b>
           </h4>
@@ -113,22 +113,40 @@ export default function DateFilter(props) {
                     />
                   </LocalizationProvider>
                   {CalenderVaidations.selectDatePicker && (
-                    <div className="calander-date ms-4">
+                    <div className="calander-date ms-3">
                       {dayjs(selectedDate[0]).format('DD/MM/YYYY')} -{' '}
                       {dayjs(selectedDate[1]).format('DD/MM/YYYY')}
                     </div>
                   )}
                   {CalenderVaidations.selectDateSlider && (
-                    <div className="calander-date ms-4">{selectedDateArray[0]}</div>
+                    <div className="calander-date ms-3">{selectedDateArray[0]}</div>
                   )}
                 </div>
               </Col>
 
               <Col sm={6}>
-                <div>
-                  <Row className="timing justifyend" >
+                  <div className='date-btn-right'>
+                  {timeBtns.map((item, index) => {
+                      return (
+                    <span
+                    
+                    key={index}
+                    sm={3}
+                    className={item.class}
+                    onClick={(e) => {
+                      getPreviousDate(item);
+                    }}>
+                         <p>
+                          {item.name}
+                          </p>
+                    </span>
+                     );
+                    })}
+                  </div>
+                  {/* <Row className="timing justifyend" >
                     {timeBtns.map((item, index) => {
                       return (
+                        
                         <Col
                         
                           key={index}
@@ -138,18 +156,19 @@ export default function DateFilter(props) {
                             getPreviousDate(item);
                           }}
                         >
+                          <p>
                           {item.name}
+                          </p>
                         </Col>
                       );
                     })}
-                  </Row>
-                </div>
+                  </Row> */}
               </Col>
             </Row>
           </div>
         </div>
-        <div className="multi-date-calender d-flex">
-          <div className="innner-calender d-flex">
+        <div className="multi-date-calender d-flex justify-content-between">
+          <div className="innner-calender d-flex ">
             {DateArrayList.map((item, index) => {
               return (
                 <div
@@ -174,7 +193,7 @@ export default function DateFilter(props) {
               );
             })}
           </div>
-          <div className="date-content-btn mt-3 ">
+          <div className="date-content-btn ">
             <button
               onClick={(e) => {
                 oneDayPreviousDate(DateArrayList);

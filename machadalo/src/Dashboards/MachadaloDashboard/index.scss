@@ -3,11 +3,14 @@
 
 // 24/05/23
 .container {
-    max-width: 1400px !important;
-
+    max-width: 100% !important;
+    padding: 0px 30px !important;
     width: 100% !important;
 }
-
+body{
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+}
 .right-heder-content {
     text-align: right;
     margin-top: 10px;
@@ -63,15 +66,11 @@
 // datefilter
 @media (min-width: 1400px) {
 
-    .css-1oqqzyl-MuiContainer-root {
-        max-width: 1400px !important;
-    }
+    // .css-1oqqzyl-MuiContainer-root {
+    //     max-width: 1400px !important;
+    // }
 }
 
-.dateFilter {
-    max-width: 1400px !important;
-    width: 100% !important;
-}
 
 .main-content .calander span {
     padding-left: 10px;
@@ -79,13 +78,14 @@
 }
 
 .main-content {
-
+    margin: 0px;
     border: 1px solid black;
     width: 100%;
-    height: 45px;
+    height: 40px;
     border-radius: 20px;
     // padding-top: 10px;
     background-color: #F7F7F7;
+    padding: 5px 15px;
 }
 
 .main-content .timing {
@@ -94,19 +94,8 @@
     margin-left: auto;
 }
 
-.main-content .timing .time-btn {
-    padding: 10px;
-}
 
 
-.time-btn:hover {
-    padding: 10px;
-    background-color: #2B2B2B;
-    border-radius: 20px;
-    color: #fff;
-    height: 32px;
-    text-align: center;
-}
 
 
 .dx {
@@ -116,6 +105,7 @@
 }
 .nav-lead-tab{    
     // background-color: #3c1eb5;
+    margin-top: 30px;
 }
 .nav-lead-tab li{
     width: 50%;
@@ -131,6 +121,9 @@
     background-color: #273f87 !important;
     border: 0px solid !important;
     padding: 20px 10px;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 0px !important;
+    font-size: 14px;
 }
 .nav-lead-tab button:hover{
     color: #fff;
