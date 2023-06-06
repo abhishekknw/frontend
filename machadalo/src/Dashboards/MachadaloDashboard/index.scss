@@ -363,11 +363,11 @@ table .btn{
 
 
 .wpModal .modal-header {
-    background-color: #3c1eb5;
+    background-color: #1a2b5b;
   }
   
   .wpModal .modal-header .modal-title {
-    background-color: #3c1eb5;
+    background-color: #1a2b5b;
   }
   
   .wpModal .wp-form label {
@@ -379,14 +379,14 @@ table .btn{
     padding: 10px 22px;
     font-size: 14px !important;
     text-transform: uppercase;
-    background-color: #3c1eb5 !important;
+    background-color: #1a2b5b !important;
   }
   
   .wpModal button.dropdown-toggle ,.wpModal button.dropdown-toggle:hover {
     width: 100%;
     background-color: #fff;
     color: #000000 !important;
-    background-color: #3c1eb500 !important;
+    background-color: #1a2b5b00 !important;
     padding: 9px 10px;
     font-size: 14px !important;
     margin-top: 20px;
@@ -434,7 +434,7 @@ table .btn{
     padding: 10px 22px;
     font-size: 14px !important;
     text-transform: uppercase;
-    background-color: #3c1eb5 !important;
+    background-color: #1a2b5b !important;
     color: #ffffff !important;
   
   }
@@ -447,12 +447,12 @@ table .btn{
     padding: 10px 22px;
     font-size: 14px !important;
     text-transform: uppercase;
-    background-color: #3c1eb5 !important;
+    background-color: #1a2b5b !important;
     white-space: normal;
     text-align: center;
   }
   .strip-div {
-    background-color: #3c1eb5;
+    background-color: #1a2b5b;
     color: #fff;
     margin-top: 20px !important;
     padding: 5px 10px;
@@ -495,9 +495,19 @@ table .btn{
 .wpModal .btn-close{
     color: #ffffff;
     background: none;
+    transform: rotate(45deg);
+    font-size: 30px;
 }
 .wpModal .btn-close:before{
     content: "+";
-
-
+}
+.table-dropdown-status .btn-success,.table-dropdown-status .btn-success:hover{
+    background-color: #1a2b5b;
+    font-size: 12px;
+}
+.table-dropdown-status .dropdown-item{
+    font-size: 12px !important;
+}
+.table-dropdown-status .dropdown-item.active{
+    background-color: #1a2b5b;
 }
