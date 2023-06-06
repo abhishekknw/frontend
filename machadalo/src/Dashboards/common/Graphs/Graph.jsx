@@ -83,7 +83,7 @@ export default function GraphChart() {
     <div className="graph-chart-content-dropdown">
       <div className="row">
         <div className="col-sm-6"> <h6>Monthly Lead Report</h6></div>
-        <div className="col-sm-6  graph-dropdown-btn">
+        {/* <div className="col-sm-6  graph-dropdown-btn">
           <Dropdown as={ButtonGroup}>
             <Button variant="" className='month-btn'><b>Month</b></Button>
 
@@ -96,7 +96,7 @@ export default function GraphChart() {
 
             </Dropdown.Menu>
           </Dropdown>
-        </div>
+        </div> */}
       </div>
 
       <Bar options={options} data={data} />

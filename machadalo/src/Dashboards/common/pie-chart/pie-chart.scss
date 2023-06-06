@@ -7,16 +7,17 @@
 
 .piechart canvas {
 
-    margin-bottom: 40px;
-    margin-left: 109px;
+    // margin-bottom: 40px;
+    // margin-left: 109px;
 }
 .piechart .chart   canvas {
     width: 350px !important;
     height: 350px !important;
+    margin: 0 auto;
 }
 .piechart {
     display: block;
-    padding: 20px;    
-    border: 1px solid #EFEFEF;
+    // padding: 20px;    
+    // border: 1px solid #EFEFEF;
 
 }

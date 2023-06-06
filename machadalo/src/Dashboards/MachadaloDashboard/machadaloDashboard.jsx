@@ -32,13 +32,13 @@ export default function MachadaloDashboard(props) {
             </Tab>
             <Tab eventKey="LeadDetail" title="Lead Detail">
               <DateFilter onDateChange={getDates} />
-              <div className='row pt-5'>
-                <div className='col-md-8'>
+              <div className='row pt-5 align-items-center'>
+                <div className='col-md-7'>
                 <div className="graph-chart">
                   <GraphChart />
                 </div>
                 </div> 
-                <div className='col-md-4'>
+                <div className='col-md-5'>
                 <div className="piechart">
                     <PieChart />
                   </div>
