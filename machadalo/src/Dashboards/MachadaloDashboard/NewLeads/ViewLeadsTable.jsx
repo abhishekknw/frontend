@@ -44,7 +44,9 @@ export default function ViewLeadsTable(props) {
                   <Button
                     variant="outline-dark"
                     className="lead-btn"
-                    onClick={() => getLeadsByCampaign(item)}
+                    onClick={(e) => {
+                      setshowHideModal({ ...showHideModal, comment: { show: true } });
+                    }}
                   >
                     Comment
                   </Button>
