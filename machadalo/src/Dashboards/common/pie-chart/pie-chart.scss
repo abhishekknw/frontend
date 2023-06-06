@@ -10,9 +10,9 @@
     margin-bottom: 40px;
     margin-left: 109px;
 }
-.piechart .chart{
-    width: 400px !important;
-    height: 243px !important;
+.piechart .chart   canvas {
+    width: 350px !important;
+    height: 350px !important;
 }
 .piechart {
     display: block;

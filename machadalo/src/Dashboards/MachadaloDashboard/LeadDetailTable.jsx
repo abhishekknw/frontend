@@ -8,11 +8,12 @@ import {
   BsChevronUp,
   BsEnvelopeFill,
   BsArrowDownCircle,
-  BsWhatsapp,
+  BsWhatsapp, BsFillEyeFill,
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
-import { showHideTable,showHideModalAtom } from '../Recoil/States/Machadalo';
+import { showHideTable, showHideModalAtom } from '../Recoil/States/Machadalo';
 import LeadDetailModal from '../common/Modals/LeadDetailModal';
+import { GrFormView } from "react-icons/gr";
 export default function ViewLeadDetailTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
@@ -21,7 +22,7 @@ export default function ViewLeadDetailTable(props) {
 
   return (
     <>
-    <LeadDetailModal />
+      <LeadDetailModal />
       <h4 style={{ paddingTop: '10px' }}>Leads Table</h4>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
@@ -36,7 +37,7 @@ export default function ViewLeadDetailTable(props) {
             <th>date of lead</th>
             <th>Status</th>
             <th>Revenue Earned</th>
-            <th>View detail</th>
+            {/* <th>View detail</th> */}
             <th>Action</th>
           </tr>
         </thead>
@@ -54,9 +55,9 @@ export default function ViewLeadDetailTable(props) {
             <td>Machadalo</td>
             <td>12/12/2020</td>
             <td>
-               <Dropdown className='table-dropdown-status'>
+              <Dropdown className='table-dropdown-status'>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Leads Verified by Machadalo
+                  Leads Verified by Machadalo
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
@@ -66,18 +67,22 @@ export default function ViewLeadDetailTable(props) {
                 </Dropdown.Menu>
               </Dropdown></td>
             <td>20k</td>
-            <td>
+            {/* <td>
               {' '}
               <Button
                 variant="outline-dark"
                 className="lead-btn"
                 onClick={(e)=>{setshowHideModal({...showHideModal, leadDetail: { show: true },})}}
               >
-                View Detail
+                 View Detail 
               </Button>
-            </td>
+            </td> */}
             <td>
               <div className="action-icon">
+                <span onClick={(e) => { setshowHideModal({ ...showHideModal, leadDetail: { show: true }, }) }}
+                >
+                  <BsFillEyeFill />
+                </span>
                 <span>
                   <BsEnvelopeFill />
                 </span>
@@ -162,18 +167,22 @@ export default function ViewLeadDetailTable(props) {
             <td>12/12/2020</td>
             <td>Verified</td>
             <td>20k</td>
-            <td>
+            {/* <td>
               {' '}
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={(e)=>{setshowHideModal({...showHideModal, leadDetail: { show: true },})}}
+                onClick={(e) => { setshowHideModal({ ...showHideModal, leadDetail: { show: true }, }) }}
               >
                 View Detail
               </Button>
-            </td>
+            </td> */}
             <td>
               <div className="action-icon">
+                <span onClick={(e) => { setshowHideModal({ ...showHideModal, leadDetail: { show: true }, }) }}
+                >
+                  <BsFillEyeFill />
+                </span>
                 <span>
                   <BsEnvelopeFill />
                 </span>
