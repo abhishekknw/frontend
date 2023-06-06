@@ -20,7 +20,7 @@ function LeadDetailModal() {
       </div> */}
       <Modal show={showHideModal.leadDetail.show} onHide={handleClose} className='wpModal'>
         <Modal.Header closeButton>
-          <Modal.Title>leadDetail Modal</Modal.Title>
+          <Modal.Title>Lead Detail</Modal.Title>
 
         </Modal.Header>
         <Modal.Body>
@@ -35,9 +35,9 @@ function LeadDetailModal() {
           </div>
           <div>
               <p className='strip-div'> Sector Specific Questions :</p>
-              <p className='d-flex justify-content-between'><span>Q1.Response :</span><span>?</span></p>
-              <p className='d-flex justify-content-between'><span>Q2.Response :</span><span>?</span></p>
-              <p className='d-flex justify-content-between'><span>Q3.Response :</span><span>?</span></p>
+              <p className='d-flex justify-content-between'><span>Q1&nbsp;. &nbsp;Response :</span><span>?</span></p>
+              <p className='d-flex justify-content-between'><span>Q2&nbsp;. &nbsp;Response :</span><span>?</span></p>
+              <p className='d-flex justify-content-between'><span>Q3&nbsp;. &nbsp;Response :</span><span>?</span></p>
           </div>
           <div>
               <p className='strip-div'>User Details:</p>
@@ -57,13 +57,13 @@ function LeadDetailModal() {
               <div  class="form-group email-dropdown">
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  Email Type
+                  All
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#"> Email Type </Dropdown.Item>
-                  <Dropdown.Item href="#"> Email Type 2</Dropdown.Item>
-                  <Dropdown.Item href="#"> Email Type 3</Dropdown.Item>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item href="#">Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Client</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               </div>

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import Table from 'react-bootstrap/Table';
 // import './index.css';
 import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown';
 import {
   BsChevronDown,
   BsChevronUp,
@@ -52,7 +53,18 @@ export default function ViewLeadDetailTable(props) {
             <td>FOS</td>
             <td>Machadalo</td>
             <td>12/12/2020</td>
-            <td>Verified</td>
+            <td>
+               <Dropdown className='table-dropdown-status'>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item active href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown></td>
             <td>20k</td>
             <td>
               {' '}

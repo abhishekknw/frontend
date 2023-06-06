@@ -41,7 +41,7 @@ export default function ViewClientAgencyTable(props) {
     <>
       <EmailModal />
       <WhatsappModal />
-      <h4 style={{ paddingTop: '10px' }}>Client Wise</h4>
+      {/* <h4 style={{ paddingTop: '10px' }}>Client Wise</h4> */}
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>

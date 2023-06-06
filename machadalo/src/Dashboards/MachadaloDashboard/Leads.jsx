@@ -253,7 +253,7 @@ export default function LeadsTable(props) {
       return (
         <>
           <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+            <td className='sn-table' onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
               {isExpandRow.b2b && <BsChevronUp />}
               {!isExpandRow.b2b && <BsChevronDown />}
             </td>
@@ -275,7 +275,7 @@ export default function LeadsTable(props) {
 
   return (
     <>
-      <h4>Leads</h4>
+      <h4 className='h4-heading'>Leads</h4>
       <EmailModal />
       <WhatsappModal />
       <CommonTable headerData={headerData} bodyData={bodyData} />

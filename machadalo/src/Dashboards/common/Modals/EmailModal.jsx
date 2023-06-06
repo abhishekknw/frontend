@@ -21,7 +21,7 @@ function EmailModal() {
       </div> */}
       <Modal show={showHideModal.email.show} onHide={handleClose} className='wpModal'>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Send Email</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className='email-modal'>
@@ -37,13 +37,13 @@ function EmailModal() {
             <div class="form-group email-dropdown">
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  Email Type
+                  All
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#"> Email Type </Dropdown.Item>
-                  <Dropdown.Item href="#"> Email Type 2</Dropdown.Item>
-                  <Dropdown.Item href="#"> Email Type 3</Dropdown.Item>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
@@ -69,9 +69,7 @@ function EmailModal() {
                 Check me out
               </label>
             </div> */}
-            <button type="submit" class="btn btn-primary ">
-              Submit
-            </button>
+
           </form>
         </Modal.Body>
         <Modal.Footer>

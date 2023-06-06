@@ -16,7 +16,7 @@ const CalenderActions = () => {
     }
     
     const GetOneDayPreviousDate = (arr) =>{
-        let dates = {fisrt:arr[0],last:arr[14]};
+        let dates = {fisrt:arr[0],last:arr[24]};
         let previous = dates.fisrt.subtract(1, 'day');
         let filtereddate = arr.filter((item) => item.$d !== dates.last.$d);
         // filtereddate.push(previous);
@@ -26,7 +26,7 @@ const CalenderActions = () => {
     }
 
     const GetOneDayNextDate = (arr) =>{
-        let dates = {fisrt:arr[0],last:arr[14]};
+        let dates = {fisrt:arr[0],last:arr[24]};
         let next = dates.last.add(1, 'day');
         let filtereddate = arr.filter((item) => item.$d !== dates.fisrt.$d);
         // filtereddate.splice(0, 0,next);
@@ -55,7 +55,7 @@ const CalenderActions = () => {
 
     const createFromStartDate = (start) =>{
         let DateArray = [];
-        for (let i=0;i<=14;i++){
+        for (let i=0;i<=24;i++){
             DateArray.push(start.add(i, 'day'))
         }
         setCustomCalenderDates(DateArray);

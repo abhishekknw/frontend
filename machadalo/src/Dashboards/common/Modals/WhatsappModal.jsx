@@ -20,12 +20,12 @@ function WhatsappModal() {
       </div> */}
       <Modal show={showHideModal.whatsapp.show} onHide={handleClose} className='wpModal'>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Share on WhatsApp</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className='wp-form'>
             <div class="form-group">
-              <label for="exampleInputEmail1">whatsapp Number</label>
+              <label for="exampleInputEmail1">Whatsapp Number</label>
               <input
                 type="email"
                 class="form-control"
