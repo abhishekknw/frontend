@@ -266,7 +266,8 @@ export default function LeadsTable(props) {
             <td>{ele.agencyWise}</td>
             <td>{ele.action}</td>
           </tr>
-          {isExpandRow.b2b && <FosRmTable />}
+          {ele.type=='B2B' && isExpandRow.b2b && <FosRmTable />}
+          {/* {ele.type=='B2C' && isExpandRow.b2b && <FosRmTable />} */}
         </>
       );
     });

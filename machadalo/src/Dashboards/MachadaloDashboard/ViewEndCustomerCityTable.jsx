@@ -10,7 +10,7 @@ import {
   BsWhatsapp,
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
-import { showHideTable,showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
+import { showHideTable, showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
 import { BreadCrumbData } from './BreadCrumb';
 
 export default function ViewEndCustomerCityTable(props) {
@@ -20,19 +20,24 @@ export default function ViewEndCustomerCityTable(props) {
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
 
   async function onClientLeadBtn(btnName) {
-    await setshowHideTableObj({ ...showHideTableObj, ViewLeadDetail: true,ViewEndCustomerWise:false });
-    setShowHideBreadCrumbs({ ...showHideBreadCrumbs, fourth: { show: true,tableName:btnName } });
-
+    await setshowHideTableObj({
+      ...showHideTableObj,
+      ViewLeadDetail: true,
+      ViewEndCustomerWise: false,
+    });
+    setShowHideBreadCrumbs({ ...showHideBreadCrumbs, fourth: { show: true, tableName: btnName } });
   }
+  console.log(showHideBreadCrumbs, 'showHideBreadCrumbs');
+
   return (
     <>
-      <h4 style={{ paddingTop: '10px' }}>EndCustomer-4</h4>
+      {/* <h4 style={{ paddingTop: '10px' }}>EndCustomer-4</h4> */}
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
             <th></th>
             <th>S.No.</th>
-            <th>End Customer Name</th>
+            <th>{showHideBreadCrumbs.third.tableName === 'View End Customer'?"End Customer Name":"City Name"}</th>
             <th>Count</th>
             <th>Lead accepted by QA</th>
             <th>Lead Accepted by Client</th>
@@ -69,13 +74,21 @@ export default function ViewEndCustomerCityTable(props) {
             </td>
             <td>
               <div className="action-icon">
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
                   <BsEnvelopeFill />
                 </span>
                 <span>
                   <BsArrowDownCircle />
                 </span>
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
                   <BsWhatsapp />
                 </span>
               </div>
@@ -143,7 +156,9 @@ export default function ViewEndCustomerCityTable(props) {
           )}
 
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}><BsChevronDown />  </td>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
             <td>01</td>
             <td>End Customer 2</td>
             <td>3000</td>

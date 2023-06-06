@@ -11,7 +11,11 @@ import {
 } from 'react-icons/bs';
 import './index.css';
 import { useRecoilState } from 'recoil';
-import { showHideTable,showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
+import {
+  showHideTable,
+  showHideBreadcrumbsAtom,
+  showHideModalAtom,
+} from '../Recoil/States/Machadalo';
 import { BreadCrumbData } from './BreadCrumb';
 
 export default function ViewCampaignTable(props) {
@@ -19,15 +23,19 @@ export default function ViewCampaignTable(props) {
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
+  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
-  async function onClickCustomerCity (btnName){
-    await setshowHideTableObj({ ...showHideTableObj, ViewEndCustomerWise: true,ViewCampaignWise:false })
-       setShowHideBreadCrumbs({ ...showHideBreadCrumbs, third: { show: true,tableName:btnName} });
-
+  async function onClickCustomerCity(btnName) {
+    await setshowHideTableObj({
+      ...showHideTableObj,
+      ViewEndCustomerWise: true,
+      ViewCampaignWise: false,
+    });
+    setShowHideBreadCrumbs({ ...showHideBreadCrumbs, third: { show: true, tableName: btnName } });
   }
   return (
     <>
-      <h4 style={{ paddingTop: '10px' }}>View Campaign</h4>
+      {/* <h4 style={{ paddingTop: '10px' }}>View Campaign</h4> */}
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
@@ -66,7 +74,7 @@ export default function ViewCampaignTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() =>onClickCustomerCity('View End Customer') }
+                onClick={() => onClickCustomerCity('View End Customer')}
               >
                 View End Customer
               </Button>
@@ -83,13 +91,21 @@ export default function ViewCampaignTable(props) {
             </td>
             <td>
               <div className="action-icon">
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
                   <BsEnvelopeFill />
                 </span>
                 <span>
                   <BsArrowDownCircle />
                 </span>
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
                   <BsWhatsapp />
                 </span>
               </div>
@@ -118,13 +134,21 @@ export default function ViewCampaignTable(props) {
                       <td>2000</td>
                       <td>
                         <div className="action-icon">
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                            }}
+                          >
                             <BsEnvelopeFill />
                           </span>
                           <span>
                             <BsArrowDownCircle />
                           </span>
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                            }}
+                          >
                             <BsWhatsapp />
                           </span>
                         </div>
@@ -138,13 +162,21 @@ export default function ViewCampaignTable(props) {
                       <td>2000</td>
                       <td>
                         <div className="action-icon">
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                            }}
+                          >
                             <BsEnvelopeFill />
                           </span>
                           <span>
                             <BsArrowDownCircle />
                           </span>
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                            }}
+                          >
                             <BsWhatsapp />
                           </span>
                         </div>
@@ -156,9 +188,10 @@ export default function ViewCampaignTable(props) {
             </tr>
           )}
 
-
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}><BsChevronDown />  </td>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
             <td>01</td>
             <td>Campaign 1</td>
             <td>5000</td>
@@ -173,7 +206,13 @@ export default function ViewCampaignTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewEndCustomerWise: true,ViewCampaignWise:false })}
+                onClick={() =>
+                  setshowHideTableObj({
+                    ...showHideTableObj,
+                    ViewEndCustomerWise: true,
+                    ViewCampaignWise: false,
+                  })
+                }
               >
                 View End Customer
               </Button>
@@ -183,20 +222,34 @@ export default function ViewCampaignTable(props) {
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={() => setshowHideTableObj({ ...showHideTableObj, ViewEndCustomerWise: true,ViewCampaignWise:false })}
+                onClick={() =>
+                  setshowHideTableObj({
+                    ...showHideTableObj,
+                    ViewEndCustomerWise: true,
+                    ViewCampaignWise: false,
+                  })
+                }
               >
                 View City
               </Button>
             </td>
             <td>
               <div className="action-icon">
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
                   <BsEnvelopeFill />
                 </span>
                 <span>
                   <BsArrowDownCircle />
                 </span>
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
                   <BsWhatsapp />
                 </span>
               </div>

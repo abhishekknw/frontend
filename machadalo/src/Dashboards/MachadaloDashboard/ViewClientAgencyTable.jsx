@@ -47,7 +47,7 @@ export default function ViewClientAgencyTable(props) {
           <tr>
             <th></th>
             <th>S.No.</th>
-            <th>Client Name</th>
+            <th>{showHideBreadCrumbs.first.tableName ==='View Client Wise'?'Client Name':'Agency Name'}</th>
             <th>To be Shared</th>
             <th>Count</th>
             <th> accepted by QA</th>

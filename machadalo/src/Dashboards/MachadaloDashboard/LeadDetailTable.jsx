@@ -11,7 +11,7 @@ import {
   BsWhatsapp,
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
-import { showHideTable,showHideModalAtom } from '../Recoil/States/Machadalo';
+import { showHideTable, showHideModalAtom } from '../Recoil/States/Machadalo';
 import LeadDetailModal from '../common/Modals/LeadDetailModal';
 export default function ViewLeadDetailTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
@@ -21,8 +21,8 @@ export default function ViewLeadDetailTable(props) {
 
   return (
     <>
-    <LeadDetailModal />
-      <h4 style={{ paddingTop: '10px' }}>Leads Table</h4>
+      <LeadDetailModal />
+      {/* <h4 style={{ paddingTop: '10px' }}>Leads Table</h4> */}
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
@@ -54,37 +54,54 @@ export default function ViewLeadDetailTable(props) {
             <td>Machadalo</td>
             <td>12/12/2020</td>
             <td>
-               <Dropdown className='table-dropdown-status'>
+              <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Leads Verified by Machadalo
+                  Leads Verified by Machadalo
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
                   <Dropdown.Item href="#">All</Dropdown.Item>
-                  <Dropdown.Item active href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item  href="#">
+                    Leads Verified by Machadalo
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown></td>
+              </Dropdown>
+            </td>
             <td>20k</td>
             <td>
               {' '}
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={(e)=>{setshowHideModal({...showHideModal, leadDetail: { show: true },})}}
+                onClick={(e) => {
+                  setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                }}
               >
                 View Detail
               </Button>
             </td>
             <td>
               <div className="action-icon">
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
                   <BsEnvelopeFill />
                 </span>
                 <span>
                   <BsArrowDownCircle />
                 </span>
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
                   <BsWhatsapp />
                 </span>
               </div>
@@ -113,13 +130,21 @@ export default function ViewLeadDetailTable(props) {
                       <td>2000</td>
                       <td>
                         <div className="action-icon">
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                            }}
+                          >
                             <BsEnvelopeFill />
                           </span>
                           <span>
                             <BsArrowDownCircle />
                           </span>
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                            }}
+                          >
                             <BsWhatsapp />
                           </span>
                         </div>
@@ -133,13 +158,21 @@ export default function ViewLeadDetailTable(props) {
                       <td>2000</td>
                       <td>
                         <div className="action-icon">
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                            }}
+                          >
                             <BsEnvelopeFill />
                           </span>
                           <span>
                             <BsArrowDownCircle />
                           </span>
-                          <span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                            }}
+                          >
                             <BsWhatsapp />
                           </span>
                         </div>
@@ -152,7 +185,9 @@ export default function ViewLeadDetailTable(props) {
           )}
 
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}><BsChevronDown />  </td>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
             <td>01</td>
             <td>Name 1</td>
             <td>RS</td>
@@ -160,27 +195,53 @@ export default function ViewLeadDetailTable(props) {
             <td>FOS</td>
             <td>Machadalo</td>
             <td>12/12/2020</td>
-            <td>Verified</td>
+            <td><Dropdown className="table-dropdown-status">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item  href="#">
+                    Leads Verified by Machadalo
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
+                  <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown></td>
             <td>20k</td>
             <td>
               {' '}
               <Button
                 variant="outline-dark"
                 className="lead-btn"
-                onClick={(e)=>{setshowHideModal({...showHideModal, leadDetail: { show: true },})}}
+                onClick={(e) => {
+                  setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                }}
               >
                 View Detail
               </Button>
             </td>
             <td>
               <div className="action-icon">
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
                   <BsEnvelopeFill />
                 </span>
                 <span>
                   <BsArrowDownCircle />
                 </span>
-                <span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
                   <BsWhatsapp />
                 </span>
               </div>
