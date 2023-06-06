@@ -57,7 +57,9 @@
 .innner-calender {
     width: calc(100% - 50px);
     overflow: hidden;
-
+    justify-content: flex-end;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .date-btn-right span p{
     padding: 5px 12px;

@@ -344,7 +344,7 @@ table .btn{
     position: relative;
     line-height: 1.9;
     padding: 1px 20px;
-    color: #0e0000;
+    color: #1a2b5b !important;
     font-weight: 400;
     text-decoration: none;
     font-size: 16px;
@@ -353,9 +353,6 @@ table .btn{
 .breadcrumb a:hover {
     color: #fff;
 }
-
-
-
 
 /* Breadcrumb */
 
@@ -484,13 +481,26 @@ table .btn{
     padding: 0px !important;
     margin: 0px ;
   }
+  .comment-box-outer{
+    height: 110px;
+    overflow-y: hidden;
+  }
+  .comment-box{
+    border: 1px solid #ced4da;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+  .comment-box p{
+    margin-bottom: 5px;
+  }
 //   modal css ends
 .breadcrumb a:not([href]):not([class]):hover
 {
     color: #ffffff;
 }
 .breadcrumb li:last-child a{
-    color: #ffffff;
+    color: #ffffff !important;
 }
 .wpModal .btn-close{
     color: #ffffff;
