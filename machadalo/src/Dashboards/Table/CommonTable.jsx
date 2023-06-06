@@ -10,7 +10,7 @@ const CommonTable = ({ headerData, bodyData }) => {
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
-            <th></th>
+            <th className='sn-table'></th>
             {headerData.map((ele, key) => {
               return <th key={key}><div data-toggle="tooltip" data-placement="top" title={ele.tooltip}>{ele.name}</div></th>;
             })}

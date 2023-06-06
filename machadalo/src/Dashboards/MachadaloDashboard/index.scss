@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 // 24/05/23
 .container {
@@ -60,7 +61,10 @@ body{
 .header__links ul li span {
     width: 30px;
 }
-
+.h4-heading{
+    font-size: 20px !important;font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
 
 // headerr
 // datefilter
@@ -84,7 +88,8 @@ body{
     height: 40px;
     border-radius: 20px;
     // padding-top: 10px;
-    background-color: #F7F7F7;
+    // background-color: #F7F7F7;
+    background-color: #e0e0e0;
     padding: 5px 15px;
 }
 
@@ -135,6 +140,12 @@ body{
     font-size: 13px;
     padding: 15px 19px !important;
 }
+
+// table
+.sn-table {
+    width: 40px;
+    padding: 11px 11px !important ;
+}
 @media only screen and (max-width: 600px) and (min-width: 992px) {
     .dx {
 
@@ -163,23 +174,26 @@ body{
 }
 
 .lead-btn:hover {
-    background-color: black !important;
+    background-color: #1a2b5b !important;
     color: #fff;
-
+    border-color: #1a2b5b !important;
 }
-
+.action-icon svg{
+    width: 13px;
+    height: 13px;
+}
 .leads-table .leads-tbody tr th {
     // background: linear-gradient(to bottom, #696666 0%, #2b2b2b 100%);
-    background: rgb(43, 43, 43);
-    background: -moz-linear-gradient(0deg, rgba(43, 43, 43, 1) 35%, rgba(105, 102, 102, 1) 100%);
-    background: -webkit-linear-gradient(0deg, rgba(43, 43, 43, 1) 35%, rgba(105, 102, 102, 1) 100%);
-    background: linear-gradient(0deg, rgba(43, 43, 43, 1) 35%, rgba(105, 102, 102, 1) 100%);
+    background: rgb(39 63 135);
+    background: -moz-linear-gradient(0deg, rgb(39 63 135) 35%, rgb(26 43 91) 100%);
+    background: -webkit-linear-gradient(0deg, rgb(39 63 135) 35%, rgb(26 43 91) 100%);
+    background: linear-gradient(0deg, rgb(39 63 135) 35%, rgb(26 43 91) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2b2b2b", endColorstr="#696666", GradientType=1);
     color: #fff !important;
     font-size: 13px;
     font-weight: 500;
     text-transform: uppercase;
-    padding: 13px !important;
+    padding: 11px 11px !important;
     white-space: break-spaces;
     align-items: start;
     vertical-align: unset;
@@ -212,13 +226,14 @@ body{
 }
 
 .action-icon span {
-    border: 1px solid;
+    border: 1px solid #1a2b5b;
     border-radius: 16px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 0px;
-    padding-bottom: 5px;
     margin-left: 5px !important;
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
 }
 
 .action-icon span:hover {
@@ -228,7 +243,8 @@ body{
 
 table tbody tr td,
 table tbody tr th {
-    padding: 10px 19px !important;
+    padding: 5px 11px !important;
+    vertical-align: middle;
 }
 
 thead,
@@ -240,6 +256,11 @@ th {
     border-color: inherit;
     border-style: none;
     border-width: 0;
+    font-size: 13px;
+    height: 40px;
+}
+table .btn{
+    padding: 4px 10px;
 }
 
 .nested-leads-table .leads-tbody tr th {
@@ -248,15 +269,14 @@ th {
 }
 
 .nested-leads-table-colspan {
-    padding: 0px 40px !important;
-    padding-bottom: 20px !important;
+    padding: 0px 0px 10px 0px !important;
 }
 
 
 /* Breadcrumb */
 
 
-title-definiton {
+.title-definiton {
     width: 500px;
     margin-bottom: 30px;
 }
@@ -279,7 +299,7 @@ title-definiton {
 
         &::before,
         &::after {
-            background: #444343;
+            background: #1a2b5b;
         }
     }
 
@@ -288,7 +308,7 @@ title-definiton {
 
         &::before,
         &::after {
-            background: #444343;
+            background: #1a2b5b;
             color: #fff;
         }
     }
@@ -298,24 +318,24 @@ title-definiton {
         content: '';
         position: absolute;
         left: 0;
-        height: 56%;
+        height: 58%;
         width: 100%;
         background: white;
-        border-left: 2px solid #666;
-        border-right: 2px solid #666;
+        border-left: 2px solid #1a2b5b;
+        border-right: 2px solid #1a2b5b;
         z-index: -2;
     }
 
     &::before {
         top: -2px;
         transform: skew(30deg);
-        border-top: 2px solid #666;
+        border-top: 2px solid #1a2b5b;
     }
 
     &::after {
         bottom: -2px;
         transform: skew(-30deg);
-        border-bottom: 2px solid #666;
+        border-bottom: 2px solid #1a2b5b;
     }
 }
 
@@ -325,8 +345,9 @@ title-definiton {
     line-height: 1.9;
     padding: 1px 20px;
     color: #0e0000;
-    font-weight: 600;
+    font-weight: 400;
     text-decoration: none;
+    font-size: 16px;
 }
 
 .breadcrumb a:hover {
