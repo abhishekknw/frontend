@@ -14,12 +14,16 @@ import { useRecoilState } from 'recoil';
 import { showHideTable, showHideModalAtom } from '../Recoil/States/Machadalo';
 import LeadDetailModal from '../common/Modals/LeadDetailModal';
 import { GrFormView } from "react-icons/gr";
+import Paginations from '../Pagination';
 export default function ViewLeadDetailTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
-
+  const [page,setPage] = React.useState(1);
+  const handlePageChange =(event, value)=>{
+    setPage(value);
+  }
   return (
     <>
       <LeadDetailModal />
@@ -248,6 +252,13 @@ export default function ViewLeadDetailTable(props) {
           </tr>
         </tbody>
       </Table>
+
+      <Paginations
+        pageSize={10}
+        totalItems={100}
+        pageNo={page}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 }
