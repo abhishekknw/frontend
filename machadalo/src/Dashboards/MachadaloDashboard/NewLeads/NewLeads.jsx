@@ -9,7 +9,8 @@ export default function NewLeadsTab(props) {
   const showHideTable = useRecoilValue(showHideTableAtom);
   return (
     <>
-      {!showHideTable.viewLeads.show && <CampaignList />}
+      {' '}
+      <CampaignList />
       {showHideTable.viewLeads.show && <ViewLeadsTable />}
     </>
   );
