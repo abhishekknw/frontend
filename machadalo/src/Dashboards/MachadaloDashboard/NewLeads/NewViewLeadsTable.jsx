@@ -34,6 +34,7 @@ export default function NewViewLeadsTable(props) {
   return (
     <>
       <div className='d-flex justify-content-between align-items-center'>
+        <div></div>
         <div>
           <h4>Customer Table</h4>
         </div>
