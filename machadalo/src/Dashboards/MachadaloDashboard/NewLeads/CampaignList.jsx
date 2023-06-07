@@ -12,8 +12,11 @@ import {
   BsChevronUp,
   BsEnvelopeFill,
   BsArrowDownCircle,
-  BsWhatsapp,
-} from 'react-icons/bs';
+  BsWhatsapp,BsSearch
+} from 'react-icons/bs'; 
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+
 import Paginations from '../../Pagination';
 export default function CampaignList(props) {
   const NewLeadAction = newLeadActions();
@@ -77,6 +80,17 @@ export default function CampaignList(props) {
   return (
     <>
       {/* <CommonTable headerData={headerData} bodyData={bodyData} firstColumn={true}/> */}
+      <div className='d-flex justify-content-between align-items-center'>
+        <div>
+          <h4>Customer Table</h4>
+        </div>
+        <div className='searchbox'>
+          <InputGroup className="mb-3">
+            <Form.Control placeholder="Search" aria-label="Search" />
+            <InputGroup.Text><BsSearch /></InputGroup.Text>
+          </InputGroup>
+        </div>
+      </div>
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>

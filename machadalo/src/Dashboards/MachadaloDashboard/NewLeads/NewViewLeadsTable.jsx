@@ -7,13 +7,14 @@ import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
 import Button from 'react-bootstrap/Button';
 import dayjs from 'dayjs';
 import Dropdown from 'react-bootstrap/Dropdown';
-
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import {
   BsChevronDown,
   BsChevronUp,
   BsEnvelopeFill,
   BsArrowDownCircle,
-  BsWhatsapp,
+  BsWhatsapp, BsSearch
 } from 'react-icons/bs';
 import Paginations from '../../Pagination';
 import DateFilter from '../../common/date-range-filter/dateFilter';
@@ -26,13 +27,24 @@ export default function NewViewLeadsTable(props) {
     console.log(date)
   }
   const handlePageChange = async (event, value) => {
-      setPaginationData({
-        pageNo: value,
-      })
-    }
+    setPaginationData({
+      pageNo: value,
+    })
+  }
   return (
     <>
-    <DateFilter onDateChange={getDates} />
+      <div className='d-flex justify-content-between align-items-center'>
+        <div>
+          <h4>Customer Table</h4>
+        </div>
+        <div className='searchbox'>
+          <InputGroup className="mb-3">
+            <Form.Control placeholder="Search" aria-label="Search" />
+            <InputGroup.Text><BsSearch /></InputGroup.Text>
+          </InputGroup>
+        </div>
+      </div>
+      {/* <DateFilter onDateChange={getDates} /> */}
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
@@ -50,27 +62,27 @@ export default function NewViewLeadsTable(props) {
           {LeadsByCampaign?.values.map((row, index) => {
             return (
               <tr key={index}>
-                <td>{index +1}</td>
+                <td>{index + 1}</td>
                 {row.map((data, index) => (index != 0 ? <td key={index}>{data?.value}</td> : null))}
                 <td><td>
-              <Dropdown className='table-dropdown-status'>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  Leads Verified by Machadalo
-                </Dropdown.Toggle>
+                  <Dropdown className='table-dropdown-status'>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                      Leads Verified by Machadalo
+                    </Dropdown.Toggle>
 
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#">All</Dropdown.Item>
-                  <Dropdown.Item  href="#">
-                    Leads Verified by Machadalo
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
-                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
-                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
-                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
-                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </td></td>
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="#">All</Dropdown.Item>
+                      <Dropdown.Item href="#">
+                        Leads Verified by Machadalo
+                      </Dropdown.Item>
+                      <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                      <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                      <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                      <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                      <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </td></td>
                 <td>
                   <Button
                     variant="outline-dark"
@@ -83,7 +95,7 @@ export default function NewViewLeadsTable(props) {
                   </Button>
                 </td>
                 <td>
-                <Button
+                  <Button
                     variant="outline-dark"
                     className="lead-btn"
                     onClick={() => getLeadsByCampaign(item)}
