@@ -8,26 +8,49 @@ import {
   BsChevronUp,
   BsEnvelopeFill,
   BsArrowDownCircle,
-  BsWhatsapp, BsFillEyeFill,
+  BsWhatsapp,
+  BsFillEyeFill,
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
 import { showHideTable, showHideModalAtom } from '../_states';
 import LeadDetailModal from '../common/Modals/LeadDetailModal';
-import { GrFormView } from "react-icons/gr";
+import { GrFormView } from 'react-icons/gr';
 import Paginations from '../Pagination';
+import EmailModal from '../common/Modals/EmailModal';
+import WhatsappModal from '../common/Modals/WhatsappModal';
+
+
 export default function ViewLeadDetailTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
-  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
-  const [page,setPage] = React.useState(1);
-  const handlePageChange =(event, value)=>{
+  const [showHideModal, setshowHideModal] = React.useState({
+    EmailModal: false,
+    WhatsAppModal: false,
+  });
+
+  const onSendEmail = async (data, check) => {
+    setshowHideModal({ EmailModal: false });
+  };
+  const openEmailModal = async (item) => {
+    setshowHideModal({ ...showHideModal, EmailModal: true });
+    // setshowHideModal({ ...showHideModal, email: { show: true } });
+  };
+
+  const OnshareWhatsApp = () => {
+    setshowHideModal({ ...showHideModal, WhatsAppModal: false });
+  };
+  const openWhatsAppModal = () => {
+    setshowHideModal({ ...showHideModal, WhatsAppModal: true });
+  };
+  const [page, setPage] = React.useState(1);
+  const handlePageChange = (event, value) => {
     setPage(value);
-  }
+  };
   return (
     <>
       <LeadDetailModal />
-      <h4 style={{ paddingTop: '10px' }}>Leads Table</h4>
+      {/* <h4 style={{ paddingTop: '10px' }}>Leads Table</h4> */}
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
@@ -59,16 +82,14 @@ export default function ViewLeadDetailTable(props) {
             <td>Machadalo</td>
             <td>12/12/2020</td>
             <td>
-              <Dropdown className='table-dropdown-status'>
+              <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
                   <Dropdown.Item href="#">All</Dropdown.Item>
-                  <Dropdown.Item  href="#">
-                    Leads Verified by Machadalo
-                  </Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
                   <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
@@ -92,11 +113,11 @@ export default function ViewLeadDetailTable(props) {
             </td> */}
             <td>
               <div className="action-icon">
-                <span onClick={(e) => { setshowHideModal({ ...showHideModal, leadDetail: { show: true }, }) }}
+                <span
+                  onClick={(e) => {
+                    openEmailModal();
+                  }}
                 >
-                  <BsFillEyeFill />
-                </span>
-                <span>
                   <BsEnvelopeFill />
                 </span>
                 <span>
@@ -104,7 +125,7 @@ export default function ViewLeadDetailTable(props) {
                 </span>
                 <span
                   onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                    openWhatsAppModal();
                   }}
                 >
                   <BsWhatsapp />
@@ -137,7 +158,7 @@ export default function ViewLeadDetailTable(props) {
                         <div className="action-icon">
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                              openEmailModal();
                             }}
                           >
                             <BsEnvelopeFill />
@@ -147,7 +168,7 @@ export default function ViewLeadDetailTable(props) {
                           </span>
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                              openWhatsAppModal();
                             }}
                           >
                             <BsWhatsapp />
@@ -165,7 +186,7 @@ export default function ViewLeadDetailTable(props) {
                         <div className="action-icon">
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                              openEmailModal();
                             }}
                           >
                             <BsEnvelopeFill />
@@ -175,7 +196,7 @@ export default function ViewLeadDetailTable(props) {
                           </span>
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                              openWhatsAppModal();
                             }}
                           >
                             <BsWhatsapp />
@@ -200,23 +221,23 @@ export default function ViewLeadDetailTable(props) {
             <td>FOS</td>
             <td>Machadalo</td>
             <td>12/12/2020</td>
-            <td><Dropdown className="table-dropdown-status">
+            <td>
+              <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
                   <Dropdown.Item href="#">All</Dropdown.Item>
-                  <Dropdown.Item  href="#">
-                    Leads Verified by Machadalo
-                  </Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
                   <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
                   <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
                   <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown></td>
+              </Dropdown>
+            </td>
             <td>20k</td>
             {/* <td>
               {' '}
@@ -230,11 +251,11 @@ export default function ViewLeadDetailTable(props) {
             </td> */}
             <td>
               <div className="action-icon">
-                <span onClick={(e) => { setshowHideModal({ ...showHideModal, leadDetail: { show: true }, }) }}
+                <span
+                  onClick={(e) => {
+                    openEmailModal();
+                  }}
                 >
-                  <BsFillEyeFill />
-                </span>
-                <span>
                   <BsEnvelopeFill />
                 </span>
                 <span>
@@ -242,7 +263,7 @@ export default function ViewLeadDetailTable(props) {
                 </span>
                 <span
                   onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                    openWhatsAppModal();
                   }}
                 >
                   <BsWhatsapp />
@@ -252,13 +273,25 @@ export default function ViewLeadDetailTable(props) {
           </tr>
         </tbody>
       </Table>
-
-      <Paginations
-        pageSize={10}
-        totalItems={100}
-        pageNo={page}
-        onPageChange={handlePageChange}
+      <EmailModal
+        data={{
+          show: showHideModal.EmailModal,
+          dropdownOptions: [
+            { status_name: 'Lead verified by Machadalo' },
+            { status_name: 'Lead verified by Machadalo' },
+          ],
+        }}
+        onSubmit={onSendEmail}
+        onCancel={(e) => setshowHideModal({ ...showHideModal, EmailModal: false })}
       />
+      <WhatsappModal
+        data={{
+          show: showHideModal.WhatsAppModal,
+        }}
+        onSubmit={OnshareWhatsApp}
+        onCancel={(e) => setshowHideModal({ ...showHideModal, WhatsAppModal: false })}
+      />
+      <Paginations pageSize={10} totalItems={100} pageNo={page} onPageChange={handlePageChange} />
     </>
   );
 }

@@ -23,26 +23,23 @@ export default function ViewEndCustomerCityTable(props) {
 
   const [showHideModal, setshowHideModal] = React.useState({
     EmailModal: false,
-    WhatsAppModal:false
+    WhatsAppModal: false,
   });
-
 
   const onSendEmail = async (data, check) => {
     setshowHideModal({ EmailModal: false });
   };
   const openEmailModal = async (item) => {
-    setshowHideModal({...showHideModal, EmailModal: true });
+    setshowHideModal({ ...showHideModal, EmailModal: true });
     // setshowHideModal({ ...showHideModal, email: { show: true } });
   };
 
-  const OnshareWhatsApp =()=>{
-    setshowHideModal({ ...showHideModal,WhatsAppModal: false });
-  }
-  const openWhatsAppModal = ()=>{
-    setshowHideModal({...showHideModal, WhatsAppModal: true });
-
-  }
-
+  const OnshareWhatsApp = () => {
+    setshowHideModal({ ...showHideModal, WhatsAppModal: false });
+  };
+  const openWhatsAppModal = () => {
+    setshowHideModal({ ...showHideModal, WhatsAppModal: true });
+  };
 
   async function onClientLeadBtn(btnName) {
     await setshowHideTableObj({
@@ -62,7 +59,11 @@ export default function ViewEndCustomerCityTable(props) {
           <tr>
             <th></th>
             <th>S.No.</th>
-            <th>{showHideBreadCrumbs.third.tableName === 'View End Customer'?"End Customer Name":"City Name"}</th>
+            <th>
+              {showHideBreadCrumbs.third.tableName === 'View End Customer'
+                ? 'End Customer Name'
+                : 'City Name'}
+            </th>
             <th>Count</th>
             <th>Lead accepted by QA</th>
             <th>Lead Accepted by Client</th>
@@ -98,23 +99,25 @@ export default function ViewEndCustomerCityTable(props) {
               </Button>
             </td>
             <td>
-             <div className="action-icon">
-                    <span
-                      onClick={(e) => {
-                        openEmailModal();
-                      }}
-                    >
-                      <BsEnvelopeFill />
-                    </span>
-                    <span>
-                      <BsArrowDownCircle />
-                    </span>
-                    <span onClick={(e)=>{
-                      openWhatsAppModal();
-                    }}>
-                      <BsWhatsapp />
-                    </span>
-                  </div>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    openEmailModal();
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    openWhatsAppModal();
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
             </td>
           </tr>
           {isExpandRow.b2b && (
@@ -139,23 +142,25 @@ export default function ViewEndCustomerCityTable(props) {
                       <td>2500</td>
                       <td>2000</td>
                       <td>
-                      <div className="action-icon">
-                    <span
-                      onClick={(e) => {
-                        openEmailModal();
-                      }}
-                    >
-                      <BsEnvelopeFill />
-                    </span>
-                    <span>
-                      <BsArrowDownCircle />
-                    </span>
-                    <span onClick={(e)=>{
-                      openWhatsAppModal();
-                    }}>
-                      <BsWhatsapp />
-                    </span>
-                  </div>
+                        <div className="action-icon">
+                          <span
+                            onClick={(e) => {
+                              openEmailModal();
+                            }}
+                          >
+                            <BsEnvelopeFill />
+                          </span>
+                          <span>
+                            <BsArrowDownCircle />
+                          </span>
+                          <span
+                            onClick={(e) => {
+                              openWhatsAppModal();
+                            }}
+                          >
+                            <BsWhatsapp />
+                          </span>
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -165,23 +170,25 @@ export default function ViewEndCustomerCityTable(props) {
                       <td>2500</td>
                       <td>2000</td>
                       <td>
-                      <div className="action-icon">
-                    <span
-                      onClick={(e) => {
-                        openEmailModal();
-                      }}
-                    >
-                      <BsEnvelopeFill />
-                    </span>
-                    <span>
-                      <BsArrowDownCircle />
-                    </span>
-                    <span onClick={(e)=>{
-                      openWhatsAppModal();
-                    }}>
-                      <BsWhatsapp />
-                    </span>
-                  </div>
+                        <div className="action-icon">
+                          <span
+                            onClick={(e) => {
+                              openEmailModal();
+                            }}
+                          >
+                            <BsEnvelopeFill />
+                          </span>
+                          <span>
+                            <BsArrowDownCircle />
+                          </span>
+                          <span
+                            onClick={(e) => {
+                              openWhatsAppModal();
+                            }}
+                          >
+                            <BsWhatsapp />
+                          </span>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -213,23 +220,25 @@ export default function ViewEndCustomerCityTable(props) {
               </Button>
             </td>
             <td>
-            <div className="action-icon">
-                    <span
-                      onClick={(e) => {
-                        openEmailModal();
-                      }}
-                    >
-                      <BsEnvelopeFill />
-                    </span>
-                    <span>
-                      <BsArrowDownCircle />
-                    </span>
-                    <span onClick={(e)=>{
-                      openWhatsAppModal();
-                    }}>
-                      <BsWhatsapp />
-                    </span>
-                  </div>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    openEmailModal();
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    openWhatsAppModal();
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
             </td>
           </tr>
         </tbody>

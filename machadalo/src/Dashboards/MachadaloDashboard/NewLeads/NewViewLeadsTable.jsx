@@ -69,7 +69,7 @@ export default function NewViewLeadsTable(props) {
                 return <th key={key}>{LeadsByCampaign?.header[key]}</th>;
               })}
             <th>Current Status</th>
-            <th>Client Comment</th>
+            <th>Comment</th>
             <th>Action</th>
           </tr>
         </thead>

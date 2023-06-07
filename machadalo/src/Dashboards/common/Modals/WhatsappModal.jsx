@@ -3,17 +3,17 @@ import { Modal, Button } from 'react-bootstrap';
 import { showHideModalAtom } from '../../_states/Constant';
 import { useRecoilState } from 'recoil';
 function WhatsappModal(props) {
-  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
-  const [showModal, setShow] = useState(showHideModal.whatsapp);
+  // const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
+  // const [showModal, setShow] = useState(showHideModal.whatsapp);
   const handleClose = () => {
-    setshowHideModal({ ...showHideModal, whatsapp: { show: false } });
-    props?.data?.show ? props?.onCancel() : '';
+    // setshowHideModal({ ...showHideModal, whatsapp: { show: false } });
+   props?.onCancel();
   }
     //   const handleShow = () => setShow(true);
 
   return (
     <>
-      <Modal show={showHideModal.whatsapp.show || props?.data?.show} onHide={handleClose} className='wpModal'>
+      <Modal show={props?.data?.show} onHide={handleClose} className='wpModal'>
         <Modal.Header closeButton>
           <Modal.Title>Share on WhatsApp</Modal.Title>
         </Modal.Header>

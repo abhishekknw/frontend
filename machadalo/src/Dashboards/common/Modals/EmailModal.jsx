@@ -4,13 +4,13 @@ import { showHideModalAtom } from '../../_states/Constant';
 import { useRecoilState } from 'recoil';
 import Dropdown from 'react-bootstrap/Dropdown';
 function EmailModal(props) {
-  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
-  const [showModal, setShow] = useState(showHideModal.email);
+  // const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
+  // const [showModal, setShow] = useState(showHideModal.email);
   const [formData, setFormData] = useState({ emails: '', emailType: '' });
   const clientStatusList = props?.data?.dropdownOptions;
   const handleClose = () => {
-    setshowHideModal({ ...showHideModal, email: { show: false } });
-    props?.data?.show ? props?.onCancel() : '';
+    // setshowHideModal({ ...showHideModal, email: { show: false } });
+   props?.onCancel() ;
   };
   const handleSelect = (status) => {
     setFormData({ ...formData, emailType: status });
@@ -27,7 +27,7 @@ function EmailModal(props) {
         </Button>
       </div> */}
       <Modal
-        show={showHideModal.email.show || props?.data?.show}
+        show={props?.data?.show}
         onHide={handleClose}
         className="wpModal"
       >
