@@ -114,12 +114,12 @@ body{
 .nav-lead-tab button.nav-link.active{
     width: 100%;
     color: #fff;
-    background: #5f76e8 !important;
+    background: #3e59e3 !important;
 }
 .nav-lead-tab button{
     width: 100%;
     color: #fff;
-    background-color: #3e59e3 !important;
+    background-color: #5f76e8 !important;
     border: 0px solid !important;
     padding: 10px 10px;
     font-family: 'Poppins', sans-serif;
@@ -143,6 +143,19 @@ body{
     width: 40px;
     padding: 11px 11px !important ;
 }
+.campaign-list-dropdown .dropdown button, .campaign-list-dropdown .dropdown button:hover{
+    width: 200px;
+    background-color: #3e59e3;
+}
+.campaign-list-dropdown {
+    display: flex;
+}
+.campaign-list-dropdown .dropdown-toggle::after {
+    right: 11px;
+    position: absolute;
+    top: 14px;
+}
+
 @media only screen and (max-width: 600px) and (min-width: 992px) {
     .dx {
 
@@ -182,9 +195,9 @@ body{
 .leads-table .leads-tbody tr th {
     // background: linear-gradient(to bottom, #696666 0%, #2b2b2b 100%);
     background: #5f76e8;
-    background: -moz-linear-gradient(0deg, #5f76e8 35%, #3e59e3  100%);
-    background: -webkit-linear-gradient(0deg, #5f76e8 35%, #3e59e3  100%);
-    background: linear-gradient(0deg, #5f76e8 35%, #3e59e3  100%);
+    background: -moz-linear-gradient(0deg,  #3e59e3  35%, #5f76e8 100%);
+    background: -webkit-linear-gradient(0deg,  #3e59e3  35%, #5f76e8 100%);
+    background: linear-gradient(0deg,  #3e59e3  35%, #5f76e8 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2b2b2b", endColorstr="#696666", GradientType=1);
     color: #fff !important;
     font-size: 13px;
