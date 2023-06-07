@@ -83,20 +83,6 @@ export default function GraphChart() {
     <div className="graph-chart-content-dropdown">
       <div className="row">
         <div className="col-sm-6"> <h6>Monthly Lead Report</h6></div>
-        {/* <div className="col-sm-6  graph-dropdown-btn">
-          <Dropdown as={ButtonGroup}>
-            <Button variant="" className='month-btn'><b>Month</b></Button>
-
-            <Dropdown.Toggle split variant="" id="dropdown-split-basic" />
-
-            <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">January</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Week</Dropdown.Item>
-
-
-            </Dropdown.Menu>
-          </Dropdown>
-        </div> */}
       </div>
 
       <Bar options={options} data={data} />

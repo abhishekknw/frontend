@@ -1,9 +1,11 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { useFetchWrapper } from '../../../B2bDashboard/API/_helpers/fetch-wrapper';
+import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis } from '../../app.constants';
+import { useAlertActions } from '../alert.actions';
 import {AllCampaingsAtom ,LeadByCampaignsAtom ,showViewLeadsTableAtom} from '../../_states/Machadalo/newLeads';
 const newLeadActions = () => {
     const fetchWrapper = useFetchWrapper();
+    const alertActions = useAlertActions();
     const AllCampaignList = useSetRecoilState(AllCampaingsAtom);
     const [LeadsByCampaign,setLeadsByCampaign] = useRecoilState(LeadByCampaignsAtom);
 
@@ -34,8 +36,8 @@ const newLeadActions = () => {
     }
     
     const SendEmailsByCampaign = (data)=>{
-      console.log(data)
-      let params ='?campaign_id=' + data.campaign_id;
+          // alertActions.success("Email Sent Successfully");
+          let params ='?campaign_id=' + data.campaign_id;
           params+='&supplier_type=all';
           params+='&lead_type=Leads';
           params+='&emails='+ data.emails;
@@ -44,7 +46,7 @@ const newLeadActions = () => {
           //  "v0/ui/b2b/email-leads-summary/?lead_type=Leads&supplier_code=all&campaign_id=KRIKRI4EF8&emails=undefined&tabname=&Client_Status=Lead%20verified%20by%20Machadalo",
         return fetchWrapper.get(`${Apis.SendEmail_By_Campaign}${params}`).then((res) => {
           const { data } = res;
-          console.log(res,"11111111111111")
+          console.log("!111111111111111111111111")
         });
     }
 

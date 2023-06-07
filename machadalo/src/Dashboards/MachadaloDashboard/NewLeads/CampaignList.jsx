@@ -99,8 +99,8 @@ export default function CampaignList(props) {
 
   const onSendEmail = async (data, check) => {
     data.campaign_id = campaignData.campaign_id;
-    await NewLeadAction.SendEmailsByCampaign(data);
-    setshowHideModal({ EmailModal: false });
+    let res = await NewLeadAction.SendEmailsByCampaign(data);
+    // setshowHideModal({ EmailModal: false });
   };
   return (
     <>

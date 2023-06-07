@@ -18,14 +18,6 @@ function EmailModal(props) {
   //   const handleShow = () => setShow(true);
   return (
     <>
-      {/* <div
-        className="d-flex align-items-center justify-content-center"
-        style={{ height: "100vh" }}
-      >
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-      </div> */}
       <Modal
         show={props?.data?.show}
         onHide={handleClose}
@@ -37,7 +29,7 @@ function EmailModal(props) {
         <Modal.Body>
           <form className="email-modal">
             <div className="form-group email-form-control">
-              <label for="exampleInputEmail1">Email address</label>
+              <label>Email address</label>
               <input
                 type="email"
                 className="form-control"

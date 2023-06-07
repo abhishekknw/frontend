@@ -14,7 +14,7 @@ const CommonTable = ({ headerData, bodyData }) => {
             {headerData.map((ele, index) => {
               return (
                 <>
-                <th key={index}><div data-toggle="tooltip" data-placement="top" title={ele.tooltip}>{ele.name}</div></th>
+                <th key={ele.name}><div data-toggle="tooltip" data-placement="top" title={ele.tooltip}>{ele.name}</div></th>
                 </>
               )
             })}

@@ -179,9 +179,6 @@ export default function SideNavBar() {
                   <li className="first-class-li">Roles</li>
                   <li className="first-class-li">Users</li>
                 </ul>
-                <li>
-
-                </li>
               </div>
 
             </li>
