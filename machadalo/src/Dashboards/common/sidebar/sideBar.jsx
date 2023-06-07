@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import * as FaIcons from "react-icons/fa"; //Now i get access to all the icons
 import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
-import { BsChevronRight } from 'react-icons/bs';
+import { BsFillCaretRightFill } from 'react-icons/bs';
 
 import { IconContext } from "react-icons";
 
@@ -24,22 +24,22 @@ export default function SideNavBar() {
       title: "Dashboard",
       path: "/",
       cName: "nav-text",
-      icon: <BsChevronRight />
+      icon: <BsFillCaretRightFill />
     },
     {
       title: "Campaign Planning",
       path: "/",
-      icon: <BsChevronRight />,
+      icon: <BsFillCaretRightFill />,
       cName: "nav-text"
     },
     {
       title: "Campaign Execution",
       path: "/",
-      icon: <BsChevronRight />,
+      icon: <BsFillCaretRightFill />,
       cName: "nav-text"
     },
     {
-      icon: <BsChevronRight />,
+      icon: <BsFillCaretRightFill />,
       title: "Static Form",
       path: "/",
       cName: "nav-text"
@@ -110,7 +110,7 @@ export default function SideNavBar() {
             <li className="nav-text" onClick={(e) => { addRemoveClass(item) }}  >
               <Link to="#">
                 <span>Dashboard</span>
-                <i> <BsChevronRight /></i>
+                <i> <BsFillCaretRightFill /></i>
               </Link>
               <div className="first-class">
                 <ul className="first-class-ul">
@@ -125,7 +125,7 @@ export default function SideNavBar() {
             <li className="nav-text">
               <Link to="#">
                 <span>Campaign Planning</span>
-                <i> <BsChevronRight /></i>
+                <i> <BsFillCaretRightFill /></i>
               </Link>
               <div className="first-class">
                 <ul className="first-class-ul">
@@ -137,12 +137,12 @@ export default function SideNavBar() {
             <li className="nav-text">
               <Link to="#">
                 <span>Campaign Execution</span>
-                <i> <BsChevronRight /></i>
+                <i> <BsFillCaretRightFill /></i>
               </Link>
               <div className="first-class">
                 <ul className="first-class-ul">
                   <li className="first-class-li">Campaign Checklist</li>
-                  <li className="first-class-li">Leads  <i> <BsChevronRight /></i></li>
+                  <li className="first-class-li"><a><span>Leads</span> <i> <BsFillCaretRightFill /></i></a>  </li>
 
                 </ul>
               </div>
@@ -151,7 +151,7 @@ export default function SideNavBar() {
             <li className="nav-text">
               <Link to="#">
                 <span>Static Form</span>
-                <i> <BsChevronRight /></i>
+                <i> <BsFillCaretRightFill /></i>
               </Link>
               <div className="first-class">
                 <ul className="first-class-ul">
@@ -163,7 +163,7 @@ export default function SideNavBar() {
             <li className="nav-text">
               <Link to="#">
                 <span>Management</span>
-                <i> <BsChevronRight /></i>
+                <i> <BsFillCaretRightFill /></i>
               </Link>
               <div className="first-class">
                 <ul className="first-class-ul">
