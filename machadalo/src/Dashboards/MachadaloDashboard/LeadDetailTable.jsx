@@ -11,7 +11,7 @@ import {
   BsWhatsapp, BsFillEyeFill,
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
-import { showHideTable, showHideModalAtom } from '../Recoil/States/Machadalo';
+import { showHideTable, showHideModalAtom } from '../_states';
 import LeadDetailModal from '../common/Modals/LeadDetailModal';
 import { GrFormView } from "react-icons/gr";
 import Paginations from '../Pagination';

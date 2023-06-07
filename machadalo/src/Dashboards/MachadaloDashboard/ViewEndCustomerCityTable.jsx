@@ -10,7 +10,7 @@ import {
   BsWhatsapp,
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
-import { showHideTable, showHideBreadcrumbsAtom } from '../Recoil/States/Machadalo';
+import { showHideTable, showHideBreadcrumbsAtom } from '../_states';
 import { BreadCrumbData } from './BreadCrumb';
 
 export default function ViewEndCustomerCityTable(props) {

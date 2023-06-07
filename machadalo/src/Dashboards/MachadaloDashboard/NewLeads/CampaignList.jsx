@@ -24,7 +24,7 @@ export default function CampaignList(props) {
     pageNo: 1,
     totalcount: CampaignList.length,
     startIndex: 0,
-    endIndex: 19,
+    endIndex: 9,
   });
 
   useEffect(() => {
@@ -52,58 +52,19 @@ export default function CampaignList(props) {
     },
   ];
 
-  const bodyData = () => {
-    return (
-      <>
-        {CampaignList.map((item, index) => {
-          return (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{item.name}</td>
-              <td>{item.start_date}</td>
-              <td>{item.supplier_count}</td>
-              <td>
-                <Button
-                  variant="outline-dark"
-                  className="lead-btn"
-                  onClick={() => onClientAgency('View Client Wise')}
-                >
-                  View Leads
-                </Button>
-              </td>
-              <td>
-                <div className="action-icon">
-                  <span
-                    onClick={(e) => {
-                      setshowHideModal({ ...showHideModal, email: { show: true } });
-                    }}
-                  >
-                    <BsEnvelopeFill />
-                  </span>
-                  <span>
-                    <BsArrowDownCircle />
-                  </span>
-                </div>
-              </td>
-            </tr>
-          );
-        })}
-      </>
-    );
-  };
   const handlePageChange = async (event, value) => {
     if (value === 1) {
       setPaginationData({
         pageNo: 1,
         totalcount: CampaignList.length,
         startIndex: 0,
-        endIndex: 19,
+        endIndex: 9,
       });
     } else {
       setPaginationData({
         ...paginationData,
         startIndex: paginationData.endIndex + 1,
-        endIndex: value * 20 - 1,
+        endIndex: value * 10 - 1,
         pageNo: value,
       });
     }
@@ -116,8 +77,8 @@ export default function CampaignList(props) {
   return (
     <>
       {/* <CommonTable headerData={headerData} bodyData={bodyData} firstColumn={true}/> */}
-      <Table striped bordered hover className="dash-table">
-        <thead>
+      <Table striped bordered hover className="leads-table ">
+        <thead className="leads-tbody">
           <tr>
             {headerData?.map((item, index) => {
               return <th key={index}>{item.name}</th>;
@@ -164,7 +125,7 @@ export default function CampaignList(props) {
       </Table>
 
       <Paginations
-        pageSize={20}
+        pageSize={10}
         totalItems={CampaignList.length}
         pageNo={paginationData.pageNo}
         onPageChange={handlePageChange}

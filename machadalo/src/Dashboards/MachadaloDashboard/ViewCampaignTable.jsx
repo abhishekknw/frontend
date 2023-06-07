@@ -15,7 +15,7 @@ import {
   showHideTable,
   showHideBreadcrumbsAtom,
   showHideModalAtom,
-} from '../Recoil/States/Machadalo';
+} from '../_states';
 import { BreadCrumbData } from './BreadCrumb';
 
 export default function ViewCampaignTable(props) {

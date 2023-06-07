@@ -16,7 +16,7 @@ import {
   showHideTable,
   showHideBreadcrumbsAtom,
   showHideModalAtom,
-} from '../Recoil/States/Machadalo';
+} from '../_states';
 import { BreadCrumbData } from './BreadCrumb';
 import EmailModal from '../common/Modals/EmailModal';
 import WhatsappModal from '../common/Modals/WhatsappModal';

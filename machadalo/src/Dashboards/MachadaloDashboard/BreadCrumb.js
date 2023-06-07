@@ -1,5 +1,5 @@
 import { useRecoilState,useRecoilValue } from "recoil";
-import { showHideBreadcrumbsAtom} from '../Recoil/States/Machadalo';
+import { showHideBreadcrumbsAtom} from '../_states';
 import React from 'react';
 
 const BreadCrumbData = () => {

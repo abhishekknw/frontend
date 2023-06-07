@@ -12,7 +12,7 @@ import {
 import ViewClientAgencyTable from './ViewClientAgencyTable';
 import ViewCampaignTable from './ViewCampaignTable';
 import { useRecoilState } from 'recoil';
-import { showHideTable, showHideBreadcrumbsAtom,showHideModalAtom } from '../Recoil/States/Machadalo';
+import { showHideTable, showHideBreadcrumbsAtom,showHideModalAtom } from '../_states';
 import ViewEndCustomerCityTable from './ViewEndCustomerCityTable';
 import ViewLeadDetailTable from './LeadDetailTable';
 import CommonTable from '../Table/CommonTable';

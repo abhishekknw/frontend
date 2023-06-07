@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { showHideModalAtom } from '../../Recoil/States/Machadalo/Constant';
+import { showHideModalAtom } from '../../_states/Constant';
 import { useRecoilState } from 'recoil';
 function WhatsappModal() {
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);

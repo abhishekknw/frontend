@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
 import Button from 'react-bootstrap/Button';
 import dayjs from 'dayjs';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import {
   BsChevronDown,
@@ -15,13 +16,25 @@ import {
   BsWhatsapp,
 } from 'react-icons/bs';
 import Paginations from '../../Pagination';
-export default function ViewLeadsTable(props) {
+import DateFilter from '../../common/date-range-filter/dateFilter';
+export default function NewViewLeadsTable(props) {
   const LeadsByCampaign = useRecoilValue(LeadByCampaignsAtom);
-  console.log(LeadsByCampaign, 'LeadsByCampaign');
+  const [paginationData, setPaginationData] = useState({
+    pageNo: 1,
+  });
+  function getDates(date) {
+    console.log(date)
+  }
+  const handlePageChange = async (event, value) => {
+      setPaginationData({
+        pageNo: value,
+      })
+    }
   return (
     <>
-      <Table striped bordered hover className="dash-table">
-        <thead>
+    <DateFilter onDateChange={getDates} />
+      <Table striped bordered hover className="leads-table ">
+        <thead className="leads-tbody">
           <tr>
             <th>S.No.</th>
             {LeadsByCampaign?.header &&
@@ -39,7 +52,25 @@ export default function ViewLeadsTable(props) {
               <tr key={index}>
                 <td>{index +1}</td>
                 {row.map((data, index) => (index != 0 ? <td key={index}>{data?.value}</td> : null))}
-                <td>Dropdown</td>
+                <td><td>
+              <Dropdown className='table-dropdown-status'>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item  href="#">
+                    Leads Verified by Machadalo
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td></td>
                 <td>
                   <Button
                     variant="outline-dark"
@@ -72,6 +103,12 @@ export default function ViewLeadsTable(props) {
           })}
         </tbody>
       </Table>
+      <Paginations
+        pageSize={20}
+        totalItems={LeadsByCampaign.length}
+        pageNo={paginationData.pageNo}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 }
