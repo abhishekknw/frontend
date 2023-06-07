@@ -12,7 +12,7 @@ import {
 import ViewClientAgencyTable from './ViewClientAgencyTable';
 import ViewCampaignTable from './ViewCampaignTable';
 import { useRecoilState } from 'recoil';
-import { showHideTable, showHideBreadcrumbsAtom,showHideModalAtom } from '../_states';
+import { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom } from '../_states';
 import ViewEndCustomerCityTable from './ViewEndCustomerCityTable';
 import ViewLeadDetailTable from './LeadDetailTable';
 import CommonTable from '../Table/CommonTable';
@@ -24,7 +24,24 @@ export default function LeadsTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
-  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
+  const [showHideModal, setshowHideModal] = useState({
+    EmailModal: false,
+    WhatsAppModal: false,
+  });
+  const onSendEmail = async (data, check) => {
+    setshowHideModal({ EmailModal: false });
+  };
+  const openEmailModal = async (item) => {
+    setshowHideModal({ ...showHideModal, EmailModal: true });
+    // setshowHideModal({ ...showHideModal, email: { show: true } });
+  };
+
+  const OnshareWhatsApp = () => {
+    setshowHideModal({ ...showHideModal, WhatsAppModal: false });
+  };
+  const openWhatsAppModal = () => {
+    setshowHideModal({ ...showHideModal, WhatsAppModal: true });
+  };
 
   const headerData = [
     {
@@ -54,7 +71,7 @@ export default function LeadsTable(props) {
       name: 'Action',
     },
   ];
-  
+
   function onClientAgency(btnName) {
     setshowHideTableObj({
       ...showHideTableObj,
@@ -104,13 +121,21 @@ export default function LeadsTable(props) {
         action: (
           <div>
             <div className="action-icon">
-              <span onClick={(e)=>{setshowHideModal({...showHideModal, email: { show: true },})}}>
+              <span
+                onClick={(e) => {
+                  openEmailModal();
+                }}
+              >
                 <BsEnvelopeFill />
               </span>
               <span>
                 <BsArrowDownCircle />
               </span>
-              <span onClick={(e)=>{setshowHideModal({...showHideModal, whatsapp: { show: true },})}}>
+              <span
+                onClick={(e) => {
+                  openWhatsAppModal();
+                }}
+              >
                 <BsWhatsapp />
               </span>
             </div>
@@ -148,13 +173,21 @@ export default function LeadsTable(props) {
         action: (
           <div>
             <div className="action-icon">
-            <span onClick={(e)=>{setshowHideModal({...showHideModal, email: { show: true },})}}>
+              <span
+                onClick={(e) => {
+                  openEmailModal();
+                }}
+              >
                 <BsEnvelopeFill />
               </span>
               <span>
                 <BsArrowDownCircle />
               </span>
-              <span onClick={(e)=>{setshowHideModal({...showHideModal, whatsapp: { show: true },})}}>
+              <span
+                onClick={(e) => {
+                  openWhatsAppModal();
+                }}
+              >
                 <BsWhatsapp />
               </span>
             </div>
@@ -167,7 +200,10 @@ export default function LeadsTable(props) {
       return (
         <>
           <tr className={isExpandRow.b2b ? 'nested-table' : ''} key={index}>
-            <td className='sn-table' onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+            <td
+              className="sn-table"
+              onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}
+            >
               {isExpandRow.b2b && <BsChevronUp />}
               {!isExpandRow.b2b && <BsChevronDown />}
             </td>
@@ -180,7 +216,7 @@ export default function LeadsTable(props) {
             <td>{ele.agencyWise}</td>
             <td>{ele.action}</td>
           </tr>
-          {ele.type=='B2B' && isExpandRow.b2b && <FosRmTable />}
+          {ele.type == 'B2B' && isExpandRow.b2b && <FosRmTable />}
           {/* {ele.type=='B2C' && isExpandRow.b2b && <FosRmTable />} */}
         </>
       );
@@ -190,18 +226,32 @@ export default function LeadsTable(props) {
 
   return (
     <>
-      <h4 className='h4-heading'>Leads</h4>
-      <EmailModal />
-      <WhatsappModal />
+      <h4 className="h4-heading">Leads</h4>
+      <EmailModal
+        data={{
+          show: showHideModal.EmailModal,
+          dropdownOptions: [
+            { status_name: 'Lead verified by Machadalo' },
+            { status_name: 'Lead verified by Machadalo' },
+          ],
+        }}
+        onSubmit={onSendEmail}
+        onCancel={(e) => setshowHideModal({ ...showHideModal, EmailModal: false })}
+      />
+      <WhatsappModal
+        data={{
+          show: showHideModal.WhatsAppModal,
+        }}
+        onSubmit={OnshareWhatsApp}
+        onCancel={(e) => setshowHideModal({ ...showHideModal, WhatsAppModal: false })}
+      />
       <CommonTable headerData={headerData} bodyData={bodyData} />
 
       {/* Breadcrumb */}
       {(showHideTableObj.ViewClientWise ||
         showHideTableObj.ViewCampaignWise ||
         showHideTableObj.ViewEndCustomerWise ||
-        showHideTableObj.ViewLeadDetail) && (
-        <BreadCrumbData />
-      )}
+        showHideTableObj.ViewLeadDetail) && <BreadCrumbData />}
       {/* Breadcrumb */}
 
       {showHideTableObj.ViewClientWise && <ViewClientAgencyTable />}

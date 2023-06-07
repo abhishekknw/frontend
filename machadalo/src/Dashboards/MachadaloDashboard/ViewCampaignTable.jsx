@@ -11,19 +11,35 @@ import {
 } from 'react-icons/bs';
 import './index.css';
 import { useRecoilState } from 'recoil';
-import {
-  showHideTable,
-  showHideBreadcrumbsAtom,
-  showHideModalAtom,
-} from '../_states';
+import { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom } from '../_states';
 import { BreadCrumbData } from './BreadCrumb';
+import EmailModal from '../common/Modals/EmailModal';
+import WhatsappModal from '../common/Modals/WhatsappModal';
 
 export default function ViewCampaignTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
-  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
+
+  const [showHideModal, setshowHideModal] = React.useState({
+    EmailModal: false,
+    WhatsAppModal: false,
+  });
+  const onSendEmail = async (data, check) => {
+    setshowHideModal({ EmailModal: false });
+  };
+  const openEmailModal = async (item) => {
+    setshowHideModal({ ...showHideModal, EmailModal: true });
+    // setshowHideModal({ ...showHideModal, email: { show: true } });
+  };
+
+  const OnshareWhatsApp = () => {
+    setshowHideModal({ ...showHideModal, WhatsAppModal: false });
+  };
+  const openWhatsAppModal = () => {
+    setshowHideModal({ ...showHideModal, WhatsAppModal: true });
+  };
 
   async function onClickCustomerCity(btnName) {
     await setshowHideTableObj({
@@ -93,7 +109,7 @@ export default function ViewCampaignTable(props) {
               <div className="action-icon">
                 <span
                   onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                    openEmailModal();
                   }}
                 >
                   <BsEnvelopeFill />
@@ -103,7 +119,7 @@ export default function ViewCampaignTable(props) {
                 </span>
                 <span
                   onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                    openWhatsAppModal();
                   }}
                 >
                   <BsWhatsapp />
@@ -136,7 +152,7 @@ export default function ViewCampaignTable(props) {
                         <div className="action-icon">
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                              openEmailModal();
                             }}
                           >
                             <BsEnvelopeFill />
@@ -146,7 +162,7 @@ export default function ViewCampaignTable(props) {
                           </span>
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                              openWhatsAppModal();
                             }}
                           >
                             <BsWhatsapp />
@@ -164,7 +180,7 @@ export default function ViewCampaignTable(props) {
                         <div className="action-icon">
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                              openEmailModal();
                             }}
                           >
                             <BsEnvelopeFill />
@@ -174,7 +190,7 @@ export default function ViewCampaignTable(props) {
                           </span>
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                              openWhatsAppModal();
                             }}
                           >
                             <BsWhatsapp />
@@ -237,7 +253,7 @@ export default function ViewCampaignTable(props) {
               <div className="action-icon">
                 <span
                   onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                    openEmailModal();
                   }}
                 >
                   <BsEnvelopeFill />
@@ -247,7 +263,7 @@ export default function ViewCampaignTable(props) {
                 </span>
                 <span
                   onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                    openWhatsAppModal();
                   }}
                 >
                   <BsWhatsapp />
@@ -257,6 +273,25 @@ export default function ViewCampaignTable(props) {
           </tr>
         </tbody>
       </Table>
+
+      <EmailModal
+        data={{
+          show: showHideModal.EmailModal,
+          dropdownOptions: [
+            { status_name: 'Lead verified by Machadalo' },
+            { status_name: 'Lead verified by Machadalo' },
+          ],
+        }}
+        onSubmit={onSendEmail}
+        onCancel={(e) => setshowHideModal({ ...showHideModal, EmailModal: false })}
+      />
+      <WhatsappModal
+        data={{
+          show: showHideModal.WhatsAppModal,
+        }}
+        onSubmit={OnshareWhatsApp}
+        onCancel={(e) => setshowHideModal({ ...showHideModal, WhatsAppModal: false })}
+      />
     </>
   );
 }

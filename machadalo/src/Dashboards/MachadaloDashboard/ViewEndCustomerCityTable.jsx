@@ -12,12 +12,37 @@ import {
 import { useRecoilState } from 'recoil';
 import { showHideTable, showHideBreadcrumbsAtom } from '../_states';
 import { BreadCrumbData } from './BreadCrumb';
+import EmailModal from '../common/Modals/EmailModal';
+import WhatsappModal from '../common/Modals/WhatsappModal';
 
 export default function ViewEndCustomerCityTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
+
+  const [showHideModal, setshowHideModal] = React.useState({
+    EmailModal: false,
+    WhatsAppModal:false
+  });
+
+
+  const onSendEmail = async (data, check) => {
+    setshowHideModal({ EmailModal: false });
+  };
+  const openEmailModal = async (item) => {
+    setshowHideModal({...showHideModal, EmailModal: true });
+    // setshowHideModal({ ...showHideModal, email: { show: true } });
+  };
+
+  const OnshareWhatsApp =()=>{
+    setshowHideModal({ ...showHideModal,WhatsAppModal: false });
+  }
+  const openWhatsAppModal = ()=>{
+    setshowHideModal({...showHideModal, WhatsAppModal: true });
+
+  }
+
 
   async function onClientLeadBtn(btnName) {
     await setshowHideTableObj({
@@ -73,25 +98,23 @@ export default function ViewEndCustomerCityTable(props) {
               </Button>
             </td>
             <td>
-              <div className="action-icon">
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, email: { show: true } });
-                  }}
-                >
-                  <BsEnvelopeFill />
-                </span>
-                <span>
-                  <BsArrowDownCircle />
-                </span>
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
-                  }}
-                >
-                  <BsWhatsapp />
-                </span>
-              </div>
+             <div className="action-icon">
+                    <span
+                      onClick={(e) => {
+                        openEmailModal();
+                      }}
+                    >
+                      <BsEnvelopeFill />
+                    </span>
+                    <span>
+                      <BsArrowDownCircle />
+                    </span>
+                    <span onClick={(e)=>{
+                      openWhatsAppModal();
+                    }}>
+                      <BsWhatsapp />
+                    </span>
+                  </div>
             </td>
           </tr>
           {isExpandRow.b2b && (
@@ -116,17 +139,23 @@ export default function ViewEndCustomerCityTable(props) {
                       <td>2500</td>
                       <td>2000</td>
                       <td>
-                        <div className="action-icon">
-                          <span>
-                            <BsEnvelopeFill />
-                          </span>
-                          <span>
-                            <BsArrowDownCircle />
-                          </span>
-                          <span>
-                            <BsWhatsapp />
-                          </span>
-                        </div>
+                      <div className="action-icon">
+                    <span
+                      onClick={(e) => {
+                        openEmailModal();
+                      }}
+                    >
+                      <BsEnvelopeFill />
+                    </span>
+                    <span>
+                      <BsArrowDownCircle />
+                    </span>
+                    <span onClick={(e)=>{
+                      openWhatsAppModal();
+                    }}>
+                      <BsWhatsapp />
+                    </span>
+                  </div>
                       </td>
                     </tr>
                     <tr>
@@ -136,17 +165,23 @@ export default function ViewEndCustomerCityTable(props) {
                       <td>2500</td>
                       <td>2000</td>
                       <td>
-                        <div className="action-icon">
-                          <span>
-                            <BsEnvelopeFill />
-                          </span>
-                          <span>
-                            <BsArrowDownCircle />
-                          </span>
-                          <span>
-                            <BsWhatsapp />
-                          </span>
-                        </div>
+                      <div className="action-icon">
+                    <span
+                      onClick={(e) => {
+                        openEmailModal();
+                      }}
+                    >
+                      <BsEnvelopeFill />
+                    </span>
+                    <span>
+                      <BsArrowDownCircle />
+                    </span>
+                    <span onClick={(e)=>{
+                      openWhatsAppModal();
+                    }}>
+                      <BsWhatsapp />
+                    </span>
+                  </div>
                       </td>
                     </tr>
                   </tbody>
@@ -178,21 +213,46 @@ export default function ViewEndCustomerCityTable(props) {
               </Button>
             </td>
             <td>
-              <div className="action-icon">
-                <span>
-                  <BsEnvelopeFill />
-                </span>
-                <span>
-                  <BsArrowDownCircle />
-                </span>
-                <span>
-                  <BsWhatsapp />
-                </span>
-              </div>
+            <div className="action-icon">
+                    <span
+                      onClick={(e) => {
+                        openEmailModal();
+                      }}
+                    >
+                      <BsEnvelopeFill />
+                    </span>
+                    <span>
+                      <BsArrowDownCircle />
+                    </span>
+                    <span onClick={(e)=>{
+                      openWhatsAppModal();
+                    }}>
+                      <BsWhatsapp />
+                    </span>
+                  </div>
             </td>
           </tr>
         </tbody>
       </Table>
+
+      <EmailModal
+        data={{
+          show: showHideModal.EmailModal,
+          dropdownOptions: [
+            { status_name: 'Lead verified by Machadalo' },
+            { status_name: 'Lead verified by Machadalo' },
+          ],
+        }}
+        onSubmit={onSendEmail}
+        onCancel={(e) => setshowHideModal({ ...showHideModal, EmailModal: false })}
+      />
+      <WhatsappModal
+        data={{
+          show: showHideModal.WhatsAppModal,
+        }}
+        onSubmit={OnshareWhatsApp}
+        onCancel={(e) => setshowHideModal({ ...showHideModal, WhatsAppModal: false })}
+      />
     </>
   );
 }

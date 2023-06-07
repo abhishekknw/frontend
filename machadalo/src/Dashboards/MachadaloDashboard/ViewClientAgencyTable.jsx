@@ -12,11 +12,7 @@ import {
 } from 'react-icons/bs';
 import './index.css';
 import { useRecoilState } from 'recoil';
-import {
-  showHideTable,
-  showHideBreadcrumbsAtom,
-  showHideModalAtom,
-} from '../_states';
+import { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom } from '../_states';
 import { BreadCrumbData } from './BreadCrumb';
 import EmailModal from '../common/Modals/EmailModal';
 import WhatsappModal from '../common/Modals/WhatsappModal';
@@ -26,7 +22,25 @@ export default function ViewClientAgencyTable(props) {
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
-  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
+  const [showHideModal, setshowHideModal] = React.useState({
+    EmailModal: false,
+    WhatsAppModal: false,
+  });
+
+  const onSendEmail = async (data, check) => {
+    setshowHideModal({ EmailModal: false });
+  };
+  const openEmailModal = async (item) => {
+    setshowHideModal({ ...showHideModal, EmailModal: true });
+    // setshowHideModal({ ...showHideModal, email: { show: true } });
+  };
+
+  const OnshareWhatsApp = () => {
+    setshowHideModal({ ...showHideModal, WhatsAppModal: false });
+  };
+  const openWhatsAppModal = () => {
+    setshowHideModal({ ...showHideModal, WhatsAppModal: true });
+  };
 
   async function onClickCampaign(btnName) {
     await setshowHideTableObj({
@@ -39,15 +53,17 @@ export default function ViewClientAgencyTable(props) {
 
   return (
     <>
-      <EmailModal />
-      <WhatsappModal />
       {/* <h4 style={{ paddingTop: '10px' }}>Client Wise</h4> */}
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
             <th></th>
             <th>S.No.</th>
-            <th>{showHideBreadCrumbs.first.tableName ==='View Client Wise'?'Client Name':'Agency Name'}</th>
+            <th>
+              {showHideBreadCrumbs.first.tableName === 'View Client Wise'
+                ? 'Client Name'
+                : 'Agency Name'}
+            </th>
             <th>To be Shared</th>
             <th>Count</th>
             <th> accepted by QA</th>
@@ -88,7 +104,7 @@ export default function ViewClientAgencyTable(props) {
               <div className="action-icon">
                 <span
                   onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                    openEmailModal();
                   }}
                 >
                   <BsEnvelopeFill />
@@ -98,7 +114,7 @@ export default function ViewClientAgencyTable(props) {
                 </span>
                 <span
                   onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                    openWhatsAppModal();
                   }}
                 >
                   <BsWhatsapp />
@@ -131,7 +147,7 @@ export default function ViewClientAgencyTable(props) {
                         <div className="action-icon">
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                              openEmailModal();
                             }}
                           >
                             <BsEnvelopeFill />
@@ -141,7 +157,7 @@ export default function ViewClientAgencyTable(props) {
                           </span>
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                              openWhatsAppModal();
                             }}
                           >
                             <BsWhatsapp />
@@ -159,7 +175,7 @@ export default function ViewClientAgencyTable(props) {
                         <div className="action-icon">
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                              openEmailModal();
                             }}
                           >
                             <BsEnvelopeFill />
@@ -169,7 +185,7 @@ export default function ViewClientAgencyTable(props) {
                           </span>
                           <span
                             onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                              openWhatsAppModal();
                             }}
                           >
                             <BsWhatsapp />
@@ -216,7 +232,7 @@ export default function ViewClientAgencyTable(props) {
               <div className="action-icon">
                 <span
                   onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                    openEmailModal();
                   }}
                 >
                   <BsEnvelopeFill />
@@ -226,7 +242,7 @@ export default function ViewClientAgencyTable(props) {
                 </span>
                 <span
                   onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                    openWhatsAppModal();
                   }}
                 >
                   <BsWhatsapp />
@@ -236,6 +252,25 @@ export default function ViewClientAgencyTable(props) {
           </tr>
         </tbody>
       </Table>
+
+      <EmailModal
+        data={{
+          show: showHideModal.EmailModal,
+          dropdownOptions: [
+            { status_name: 'Lead verified by Machadalo' },
+            { status_name: 'Lead verified by Machadalo' },
+          ],
+        }}
+        onSubmit={onSendEmail}
+        onCancel={(e) => setshowHideModal({ ...showHideModal, EmailModal: false })}
+      />
+      <WhatsappModal
+        data={{
+          show: showHideModal.WhatsAppModal,
+        }}
+        onSubmit={OnshareWhatsApp}
+        onCancel={(e) => setshowHideModal({ ...showHideModal, WhatsAppModal: false })}
+      />
     </>
   );
 }

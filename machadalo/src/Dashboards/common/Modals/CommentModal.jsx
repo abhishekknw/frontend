@@ -11,7 +11,7 @@ function CommentModal(props) {
     <>
       <Modal show={props?.data?.show} onHide={handleClose} className='wpModal'>
         <Modal.Header closeButton>
-          <Modal.Title>Comment Modal</Modal.Title>
+          <Modal.Title>Comment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <div className='status-div'>

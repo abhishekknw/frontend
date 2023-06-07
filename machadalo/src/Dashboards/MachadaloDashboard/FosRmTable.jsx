@@ -11,7 +11,7 @@ import {
 } from 'react-icons/bs';
 import CommonTable from '../Table/CommonTable';
 import EmailModal from '../common/Modals/EmailModal';
-
+import WhatsappModal from '../common/Modals/WhatsappModal';
 export default function FosRmTable(props) {
   //   const NestedHeaderData = [
   //     {
@@ -102,14 +102,23 @@ export default function FosRmTable(props) {
 
   const [showHideModal, setshowHideModal] = useState({
     EmailModal: false,
+    WhatsAppModal:false
   });
   const onSendEmail = async (data, check) => {
     setshowHideModal({ EmailModal: false });
   };
   const openEmailModal = async (item) => {
-    setshowHideModal({ EmailModal: true });
+    setshowHideModal({...showHideModal, EmailModal: true });
     // setshowHideModal({ ...showHideModal, email: { show: true } });
   };
+
+  const OnshareWhatsApp =()=>{
+    setshowHideModal({ ...showHideModal,WhatsAppModal: false });
+  }
+  const openWhatsAppModal = ()=>{
+    setshowHideModal({...showHideModal, WhatsAppModal: true });
+
+  }
   return (
     <>
       <tr>
@@ -144,7 +153,9 @@ export default function FosRmTable(props) {
                     <span>
                       <BsArrowDownCircle />
                     </span>
-                    <span>
+                    <span onClick={(e)=>{
+                      openWhatsAppModal();
+                    }}>
                       <BsWhatsapp />
                     </span>
                   </div>
@@ -157,14 +168,20 @@ export default function FosRmTable(props) {
                 <td>2500</td>
                 <td>2000</td>
                 <td>
-                  <div className="action-icon">
-                    <span>
+                <div className="action-icon">
+                    <span
+                      onClick={(e) => {
+                        openEmailModal();
+                      }}
+                    >
                       <BsEnvelopeFill />
                     </span>
                     <span>
                       <BsArrowDownCircle />
                     </span>
-                    <span>
+                    <span onClick={(e)=>{
+                      openWhatsAppModal();
+                    }}>
                       <BsWhatsapp />
                     </span>
                   </div>
@@ -184,7 +201,14 @@ export default function FosRmTable(props) {
           ],
         }}
         onSubmit={onSendEmail}
-        onCancel={(e) => setshowHideModal({ EmailModal: false })}
+        onCancel={(e) => setshowHideModal({ ...showHideModal,EmailModal: false })}
+      />
+      <WhatsappModal
+        data={{
+          show: showHideModal.WhatsAppModal
+        }}
+        onSubmit={OnshareWhatsApp}
+        onCancel={(e) => setshowHideModal({...showHideModal, WhatsAppModal: false })}
       />
     </>
   );
