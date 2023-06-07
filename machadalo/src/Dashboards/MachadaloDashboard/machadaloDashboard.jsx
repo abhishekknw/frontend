@@ -25,7 +25,7 @@ export default function MachadaloDashboard(props) {
           <Tabs
             defaultActiveKey="NewLeads"
             id="uncontrolled-tab-example"
-            className="mb-3 nav-lead-tab"
+            className="mb-1 nav-lead-tab"
           >
             <Tab eventKey="NewLeads" title="New Leads">
               <NewLeadsTab />
