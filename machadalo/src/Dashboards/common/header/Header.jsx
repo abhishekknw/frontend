@@ -11,7 +11,8 @@ import SideNavBar from '../sidebar/sideBar';
 export default function MachadaloHeader(props) {
 
   return (
-    <>    <Box className='pt-1'>
+    <>    
+    <Box className='pt-1'>
       <Row>
         <Col sm={3}>
           <div className='d-flex align-items-center'>
@@ -39,7 +40,7 @@ export default function MachadaloHeader(props) {
 
         <Col sm={9} className='right-heder-content '>
           <div className='d-flex justify-content-end align-items-center'>
-            <ul className='d-flex justify-content-end align-items-center'>
+            <ul className='d-flex justify-content-end align-items-center mb-0'>
               <li> <span>  <BsFillHouseDoorFill /></span></li>
               <li><span><BsGearFill /></span></li>
               <li>   <span><BsFillBellFill /> </span></li>
