@@ -131,3 +131,18 @@
   visibility: visible;
   opacity: 1;
 }
+.right-heder-content .setting-icon button, .right-heder-content .setting-icon button:hover{
+  background-color: transparent !important;
+  color: #5f76e8;
+  border: 0px ;
+}
+.right-heder-content .setting-icon button svg{
+  width: 20px;
+  height: 20px;
+  margin-left: 20px;
+  top: 2px;
+  position: relative;
+}
+.right-heder-content .setting-icon .dropdown-item {
+  padding: 10px 21px;
+}
