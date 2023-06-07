@@ -99,10 +99,6 @@ body{
     margin-left: auto;
 }
 
-
-
-
-
 .dx {
     display: flex;
     margin-top: 97px;
@@ -110,7 +106,7 @@ body{
 }
 .nav-lead-tab{    
     // background-color: #3c1eb5;
-    margin-top: 30px;
+    margin-top: 0px;
 }
 .nav-lead-tab li{
     width: 50%;
@@ -118,12 +114,12 @@ body{
 .nav-lead-tab button.nav-link.active{
     width: 100%;
     color: #fff;
-    background: #1a2b5b !important;
+    background: #5f76e8 !important;
 }
 .nav-lead-tab button{
     width: 100%;
     color: #fff;
-    background-color: #273f87 !important;
+    background-color: #3e59e3 !important;
     border: 0px solid !important;
     padding: 20px 10px;
     font-family: 'Poppins', sans-serif;
@@ -139,6 +135,7 @@ body{
     color: #ffffff !important;
     font-size: 13px;
     padding: 15px 19px !important;
+    vertical-align: middle;
 }
 
 // table
@@ -245,8 +242,11 @@ table tbody tr td,
 table tbody tr th {
     padding: 5px 11px !important;
     vertical-align: middle;
+    text-align: center !important;
 }
-
+table tr th{
+    text-align: center !important;
+}
 thead,
 tbody,
 tfoot,
@@ -662,3 +662,14 @@ table .btn{
 // .breadcrumb a:not([href]):not([class]){
 //     color: #ffffff !important;
 // }
+.searchbox{
+    max-width: 250px;
+}
+.searchbox .input-group-text{
+    background-color: #1a2b5b;
+    color: #ffffff;
+    border: 1px solid #1a2b5b;
+}
+.form-control:focus{
+    box-shadow: none;
+}

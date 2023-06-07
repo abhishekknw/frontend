@@ -88,7 +88,7 @@ export default function DateFilter(props) {
   return (
     <>
       <Box>
-        <div className="dateFilter pt-2">
+        <div className="dateFilter pt-0">
           <h4>
             <b>Date Filter</b>
           </h4>
