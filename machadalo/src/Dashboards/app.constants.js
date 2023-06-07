@@ -12,5 +12,5 @@ export const RoutesName = {
 export const Apis = {
     New_Leads_Campaign: "v0/ui/b2b/get-basic-lead-distribution-campaign/?tabname=basic",
     Lead_By_Campaign: 'v0/ui/b2b/get-dynamic-basic-lead-form-headers/',
-    Client_Status:'b2b/machadalo-client-status-list/?campaign_id=',
+    Client_Status_By_Campaign:'v0/ui/b2b/machadalo-client-status-list/?campaign_id=',
 }

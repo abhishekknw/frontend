@@ -24,11 +24,19 @@ const newLeadActions = () => {
         const { data } = res;
         setLeadsByCampaign({...data})
       });
-    }  
+    }
+    
+    const getClientStatusList = (data) =>{
+      return fetchWrapper.get(`${Apis.Client_Status_By_Campaign}`).then((res) => {
+        const { data } = res;
+        return data;
+      });
+    } 
 
       return {
         getAllCampaigns,
-        getLeadByCampaignId
+        getLeadByCampaignId,
+        getClientStatusList,
       };
 }  
 export { newLeadActions };
