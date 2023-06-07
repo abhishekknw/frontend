@@ -11,8 +11,12 @@ const CommonTable = ({ headerData, bodyData }) => {
         <thead className="leads-tbody">
           <tr>
             <th className='sn-table'></th>
-            {headerData.map((ele, key) => {
-              return <th key={key}><div data-toggle="tooltip" data-placement="top" title={ele.tooltip}>{ele.name}</div></th>;
+            {headerData.map((ele, index) => {
+              return (
+                <>
+                <th key={index}><div data-toggle="tooltip" data-placement="top" title={ele.tooltip}>{ele.name}</div></th>
+                </>
+              )
             })}
           </tr>
         </thead>

@@ -54,93 +54,7 @@ export default function LeadsTable(props) {
       name: 'Action',
     },
   ];
-
-  // const NestedHeaderData = [
-  //   {
-  //     name: 'S.No.',
-  //   },
-  //   {
-  //     name: 'Lead Source',
-  //   },
-  //   {
-  //     name: 'Total Lead Count Shared',
-  //   },
-  //   {
-  //     name: 'Lead Accepted By QA',
-  //   },
-  //   {
-  //     name: 'Lead Accepted By Client',
-  //   },
-  //   {
-  //     name: 'Action',
-  //   },
-  // ];
-
-  // const FosRmBodyData = () => {
-  //   let data = [
-  //     {
-  //       sno: '1.1',
-  //       type: 'FOS',
-  //       leadCount: '5000',
-  //       leadQA: '3000',
-  //       leadClient: '3000',
-  //       action: (
-  //         <div>
-  //           <div className="action-icon">
-  //             <span>
-  //               <BsEnvelopeFill />
-  //             </span>
-  //             <span>
-  //               <BsArrowDownCircle />
-  //             </span>
-  //             <span>
-  //               <BsWhatsapp />
-  //             </span>
-  //           </div>
-  //         </div>
-  //       ),
-  //     },
-  //     {
-  //       sno: '1.2',
-  //       type: 'RM',
-  //       leadCount: '5000',
-  //       leadQA: '3000',
-  //       leadClient: '3000',
-  //       action: (
-  //         <div>
-  //           <div className="action-icon">
-  //             <span>
-  //               <BsEnvelopeFill />
-  //             </span>
-  //             <span>
-  //               <BsArrowDownCircle />
-  //             </span>
-  //             <span>
-  //               <BsWhatsapp />
-  //             </span>
-  //           </div>
-  //         </div>
-  //       ),
-  //     },
-  //   ];
-
-  //   let body = data.map((ele, key) => {
-  //     return (<>
-  //       <tr>
-  //         <td></td>
-  //         <td>{ele.sno}</td>
-  //         <td>{ele.type}</td>
-  //         <td>{ele.leadCount}</td>
-  //         <td>{ele.leadQA}</td>
-  //         <td>{ele.leadClient}</td>
-  //         <td>{ele.action}</td>
-  //       </tr>
-  //     </>
-  //     )
-  //   })
-
-  //   return body;
-  // }
+  
   function onClientAgency(btnName) {
     setshowHideTableObj({
       ...showHideTableObj,
@@ -249,10 +163,10 @@ export default function LeadsTable(props) {
       },
     ];
 
-    let body = data.map((ele, key) => {
+    let body = data.map((ele, index) => {
       return (
         <>
-          <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
+          <tr className={isExpandRow.b2b ? 'nested-table' : ''} key={index}>
             <td className='sn-table' onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
               {isExpandRow.b2b && <BsChevronUp />}
               {!isExpandRow.b2b && <BsChevronDown />}

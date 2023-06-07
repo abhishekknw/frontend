@@ -57,7 +57,7 @@ function EmailModal(props) {
 
                 <Dropdown.Menu>
                   {clientStatusList &&
-                    clientStatusList.map((item, index) => {
+                    clientStatusList?.map((item, index) => {
                       return (
                         <Dropdown.Item
                           key={index}

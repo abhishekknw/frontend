@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import './index.css';
 import Button from 'react-bootstrap/Button';
@@ -10,95 +10,106 @@ import {
   BsWhatsapp,
 } from 'react-icons/bs';
 import CommonTable from '../Table/CommonTable';
+import EmailModal from '../common/Modals/EmailModal';
 
 export default function FosRmTable(props) {
-//   const NestedHeaderData = [
-//     {
-//       name: 'S.No.',
-//     },
-//     {
-//       name: 'Lead Source',
-//     },
-//     {
-//       name: 'Total Lead Count Shared',
-//     },
-//     {
-//       name: 'Lead Accepted By QA',
-//     },
-//     {
-//       name: 'Lead Accepted By Client',
-//     },
-//     {
-//       name: 'Action',
-//     },
-//   ];
-//   const FosRmBodyData = () => {
-//     let data = [
-//       {
-//         sno: '1.1',
-//         type: 'FOS',
-//         leadCount: '5000',
-//         leadQA: '3000',
-//         leadClient: '3000',
-//         action: (
-//           <div>
-//             <div className="action-icon">
-//               <span>
-//                 <BsEnvelopeFill />
-//               </span>
-//               <span>
-//                 <BsArrowDownCircle />
-//               </span>
-//               <span>
-//                 <BsWhatsapp />
-//               </span>
-//             </div>
-//           </div>
-//         ),
-//       },
-//       {
-//         sno: '1.2',
-//         type: 'RM',
-//         leadCount: '5000',
-//         leadQA: '3000',
-//         leadClient: '3000',
-//         action: (
-//           <div>
-//             <div className="action-icon">
-//               <span>
-//                 <BsEnvelopeFill />
-//               </span>
-//               <span>
-//                 <BsArrowDownCircle />
-//               </span>
-//               <span>
-//                 <BsWhatsapp />
-//               </span>
-//             </div>
-//           </div>
-//         ),
-//       },
-//     ];
+  //   const NestedHeaderData = [
+  //     {
+  //       name: 'S.No.',
+  //     },
+  //     {
+  //       name: 'Lead Source',
+  //     },
+  //     {
+  //       name: 'Total Lead Count Shared',
+  //     },
+  //     {
+  //       name: 'Lead Accepted By QA',
+  //     },
+  //     {
+  //       name: 'Lead Accepted By Client',
+  //     },
+  //     {
+  //       name: 'Action',
+  //     },
+  //   ];
+  //   const FosRmBodyData = () => {
+  //     let data = [
+  //       {
+  //         sno: '1.1',
+  //         type: 'FOS',
+  //         leadCount: '5000',
+  //         leadQA: '3000',
+  //         leadClient: '3000',
+  //         action: (
+  //           <div>
+  //             <div className="action-icon">
+  //               <span>
+  //                 <BsEnvelopeFill />
+  //               </span>
+  //               <span>
+  //                 <BsArrowDownCircle />
+  //               </span>
+  //               <span>
+  //                 <BsWhatsapp />
+  //               </span>
+  //             </div>
+  //           </div>
+  //         ),
+  //       },
+  //       {
+  //         sno: '1.2',
+  //         type: 'RM',
+  //         leadCount: '5000',
+  //         leadQA: '3000',
+  //         leadClient: '3000',
+  //         action: (
+  //           <div>
+  //             <div className="action-icon">
+  //               <span>
+  //                 <BsEnvelopeFill />
+  //               </span>
+  //               <span>
+  //                 <BsArrowDownCircle />
+  //               </span>
+  //               <span>
+  //                 <BsWhatsapp />
+  //               </span>
+  //             </div>
+  //           </div>
+  //         ),
+  //       },
+  //     ];
 
-//     let body = data.map((ele, key) => {
-//       return (
-//         <>
-//           <tr>
-//             <td></td>
-//             <td>{ele.sno}</td>
-//             <td>{ele.type}</td>
-//             <td>{ele.leadCount}</td>
-//             <td>{ele.leadQA}</td>
-//             <td>{ele.leadClient}</td>
-//             <td>{ele.action}</td>
-//           </tr>
-//         </>
-//       );
-//     });
+  //     let body = data.map((ele, key) => {
+  //       return (
+  //         <>
+  //           <tr>
+  //             <td></td>
+  //             <td>{ele.sno}</td>
+  //             <td>{ele.type}</td>
+  //             <td>{ele.leadCount}</td>
+  //             <td>{ele.leadQA}</td>
+  //             <td>{ele.leadClient}</td>
+  //             <td>{ele.action}</td>
+  //           </tr>
+  //         </>
+  //       );
+  //     });
 
-//     return body;
-//   };
+  //     return body;
+  //   };
 
+  const [showHideModal, setshowHideModal] = useState({
+    EmailModal: false,
+  });
+  const onSendEmail = async (data, check) => {
+    setshowHideModal({ EmailModal: false });
+  };
+  const openEmailModal = async (item) => {
+    setshowHideModal({ EmailModal: true });
+    // setshowHideModal({ ...showHideModal, email: { show: true } });
+  };
   return (
     <>
       <tr>
@@ -123,7 +134,11 @@ export default function FosRmTable(props) {
                 <td>2000</td>
                 <td>
                   <div className="action-icon">
-                    <span>
+                    <span
+                      onClick={(e) => {
+                        openEmailModal();
+                      }}
+                    >
                       <BsEnvelopeFill />
                     </span>
                     <span>
@@ -159,6 +174,18 @@ export default function FosRmTable(props) {
           </Table>
         </td>
       </tr>
+
+      <EmailModal
+        data={{
+          show: showHideModal.EmailModal,
+          dropdownOptions: [
+            { status_name: 'Lead verified by Machadalo' },
+            { status_name: 'Lead verified by Machadalo' },
+          ],
+        }}
+        onSubmit={onSendEmail}
+        onCancel={(e) => setshowHideModal({ EmailModal: false })}
+      />
     </>
   );
 }

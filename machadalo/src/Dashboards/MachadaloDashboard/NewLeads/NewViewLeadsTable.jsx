@@ -80,7 +80,6 @@ export default function NewViewLeadsTable(props) {
                 <td>{index + 1}</td>
                 {row.map((data, index) => (index != 0 ? <td key={index}>{data?.value}</td> : null))}
                 <td>
-                  <td>
                     <Dropdown className="table-dropdown-status">
                       <Dropdown.Toggle variant="success" id="dropdown-basic">
                         Leads Verified by Machadalo
@@ -96,7 +95,6 @@ export default function NewViewLeadsTable(props) {
                         <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
-                  </td>
                 </td>
                 <td>
                   <Button
