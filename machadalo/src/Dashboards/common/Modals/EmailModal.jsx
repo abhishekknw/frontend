@@ -3,12 +3,19 @@ import { Modal, Button } from 'react-bootstrap';
 import { showHideModalAtom } from '../../_states/Constant';
 import { useRecoilState } from 'recoil';
 import Dropdown from 'react-bootstrap/Dropdown';
-function EmailModal() {
+function EmailModal(props) {
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
   const [showModal, setShow] = useState(showHideModal.email);
-  const handleClose = () => setshowHideModal({ ...showHideModal, email: { show: false } });
+  const [formData, setFormData] = useState({ emails: '', emailType: '' });
+  const clientStatusList = props?.data?.dropdownOptions;
+  const handleClose = () => {
+    setshowHideModal({ ...showHideModal, email: { show: false } });
+    props?.data?.show ? props?.onCancel() : '';
+  };
+  const handleSelect = (status) => {
+    setFormData({ ...formData, emailType: status });
+  };
   //   const handleShow = () => setShow(true);
-
   return (
     <>
       {/* <div
@@ -19,61 +26,92 @@ function EmailModal() {
           Launch demo modal
         </Button>
       </div> */}
-      <Modal show={showHideModal.email.show} onHide={handleClose} className='wpModal'>
+      <Modal
+        show={showHideModal.email.show || props?.data?.show}
+        onHide={handleClose}
+        className="wpModal"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Send Email</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form className='email-modal'>
-            <div class="form-group email-form-control">
+          <form className="email-modal">
+            <div className="form-group email-form-control">
               <label for="exampleInputEmail1">Email address</label>
               <input
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
+                placeholder="Enter Email Ids"
+                onChange={(e) => {
+                  setFormData({ ...formData, emails: e.target.value });
+                }}
               />
             </div>
-            <div class="form-group email-dropdown">
+            <div className="form-group email-dropdown">
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  All
+                  {formData.emailType != '' ? formData.emailType : 'Email Type'}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#">All</Dropdown.Item>
-                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
-                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  {clientStatusList &&
+                    clientStatusList.map((item, index) => {
+                      return (
+                        <Dropdown.Item
+                          key={index}
+                          eventKey={item.status_name}
+                          onClick={(e) => {
+                            handleSelect(item.status_name);
+                          }}
+                          active={item.status_name==formData.emailType}
+                        >
+                          {item.status_name}
+                        </Dropdown.Item>
+                      );
+                    })}
+                  {/* <Dropdown.Item >All</Dropdown.Item>
+                  <Dropdown.Item >Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item >Decision pending</Dropdown.Item> */}
                 </Dropdown.Menu>
               </Dropdown>
             </div>
             <div>
-              <p>Note :- Use comma separation between emails to send multiple emails to users at the same time</p>
+              <p>
+                Note :- Use comma separation between emails to send multiple emails to users at the
+                same time
+              </p>
             </div>
-            <div className='row email-btn-group'>
-              <div className='col-sm-5'>
-                <button className='btn btn-primary'>Send email for given user</button>
+            <div className="row email-btn-group">
+              <div className="col-sm-5">
+                <button
+                  className="btn btn-primary"
+                  onClick={(e) => {
+                    props.onSubmit(formData, true);
+                  }}
+                >
+                  Send email for given user
+                </button>
               </div>
-              <div className='col-sm-2'><p >Or</p></div>
-              <div className='col-sm-5'>
-                <button className='btn btn-primary'>Send email for given user</button>
+              <div className="col-sm-2">
+                <p>Or</p>
+              </div>
+              <div className="col-sm-5">
+                <button
+                  className="btn btn-primary"
+                  onClick={(e) => {
+                    props.onSubmit(formData, false);
+                  }}
+                >
+                  Send email to all
+                </button>
               </div>
             </div>
-            {/* <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" />
-            </div> */}
-            {/* <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-              <label class="form-check-label" for="exampleCheck1">
-                Check me out
-              </label>
-            </div> */}
-
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" className='submit-btn' onClick={handleClose}>
+          <Button variant="secondary" className="submit-btn" onClick={handleClose}>
             Close
           </Button>
           {/* <Button variant="primary" onClick={handleClose}>

@@ -91,7 +91,7 @@ export default function CampaignList(props) {
     // setshowHideModal({ ...showHideModal, email: { show: true } });
   }
 
-  const onSendEmail = (data) =>{
+  const onSendEmail = (data,check) =>{
     setshowHideModal({EmailModal:false});
   }
   return (
@@ -163,6 +163,7 @@ export default function CampaignList(props) {
       <EmailModal
       data={{show:showHideModal.EmailModal,dropdownOptions:clientStatus}}
       onSubmit={onSendEmail}
+      onCancel={(e)=>setshowHideModal({EmailModal:false})}
       />
     </>
   );
