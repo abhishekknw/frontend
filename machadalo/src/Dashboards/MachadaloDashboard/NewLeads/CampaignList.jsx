@@ -34,7 +34,7 @@ export default function CampaignList(props) {
   const [showHideModal, setshowHideModal] = useState({
     EmailModal:false
   });
-
+  const [campaignData,setCampaignData] = useState({});
   const [clientStatus,setClientStatus] = useState([])
 
   useEffect(() => {
@@ -84,14 +84,17 @@ export default function CampaignList(props) {
    setshowHideTable({...showHideTable,viewLeads:{show:true}})
   }
 
-  const sendEmailModal = async(item)=>{
+  const openEmailModal = async(item)=>{
     let response = await NewLeadAction.getClientStatusList(item);
     setClientStatus([...response.client_status])
     setshowHideModal({EmailModal:true});
+    setCampaignData(item);
     // setshowHideModal({ ...showHideModal, email: { show: true } });
   }
 
-  const onSendEmail = (data,check) =>{
+  const onSendEmail = async(data,check) =>{
+    data.campaign_id = campaignData.campaign_id;
+    await NewLeadAction.SendEmailsByCampaign(data);
     setshowHideModal({EmailModal:false});
   }
   return (
@@ -123,7 +126,7 @@ export default function CampaignList(props) {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
-                  <td>{item.start_date}</td>
+                  <td>{dayjs(item.start_date).format("DD-MMM-YYYY")}</td>
                   <td>{item.supplier_count}</td>
                   <td>
                     <Button
@@ -137,7 +140,7 @@ export default function CampaignList(props) {
                   <td>
                     <div className="action-icon">
                       <span
-                        onClick={(e) => {sendEmailModal(item)}}
+                        onClick={(e) => {openEmailModal(item)}}
                       >
                         <BsEnvelopeFill />
                       </span>
