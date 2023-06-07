@@ -13,17 +13,21 @@ import {
   BsChevronUp,
   BsEnvelopeFill,
   BsArrowDownCircle,
-  BsWhatsapp, BsSearch
+  BsWhatsapp,
+  BsSearch,
 } from 'react-icons/bs';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Paginations from '../../Pagination';
 import EmailModal from '../../common/Modals/EmailModal';
+import NewViewLeadsTable from './NewViewLeadsTable';
+
 export default function CampaignList(props) {
   const NewLeadAction = newLeadActions();
   const CampaignList = useRecoilValue(AllCampaingsAtom);
   const [showHideTable, setshowHideTable] = useRecoilState(showHideTableAtom);
+
   // const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
   const [paginationData, setPaginationData] = useState({
     pageNo: 1,
@@ -32,10 +36,10 @@ export default function CampaignList(props) {
     endIndex: 9,
   });
   const [showHideModal, setshowHideModal] = useState({
-    EmailModal: false
+    EmailModal: false,
   });
   const [campaignData, setCampaignData] = useState({});
-  const [clientStatus, setClientStatus] = useState([])
+  const [clientStatus, setClientStatus] = useState([]);
 
   useEffect(() => {
     NewLeadAction.getAllCampaigns();
@@ -81,60 +85,61 @@ export default function CampaignList(props) {
   };
   const getLeadsByCampaign = async (row) => {
     await NewLeadAction.getLeadByCampaignId(row);
-    setshowHideTable({ ...showHideTable, viewLeads: { show: true } })
-  }
+    setshowHideTable({ ...showHideTable, viewLeads: { show: true } });
+    setCampaignData(row);
+  };
 
   const openEmailModal = async (item) => {
     let response = await NewLeadAction.getClientStatusList(item);
-    setClientStatus([...response.client_status])
+    setClientStatus([...response.client_status]);
     setshowHideModal({ EmailModal: true });
     setCampaignData(item);
     // setshowHideModal({ ...showHideModal, email: { show: true } });
-  }
+  };
 
   const onSendEmail = async (data, check) => {
     data.campaign_id = campaignData.campaign_id;
     await NewLeadAction.SendEmailsByCampaign(data);
     setshowHideModal({ EmailModal: false });
-  }
+  };
   return (
     <>
       {/* <CommonTable headerData={headerData} bodyData={bodyData} firstColumn={true}/> */}
-      <div className='d-flex justify-content-between align-items-center pt-2 pb-3'>
-        <div className='campaign-list-dropdown'>
-          <Dropdown className='me-4'>
+      <div className="d-flex justify-content-between align-items-center pt-2 pb-3">
+        <div className="campaign-list-dropdown">
+          <Dropdown className="me-4">
             <Dropdown.Toggle variant="success" id="dropdown-basic">
               All
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-
-              <Dropdown.Item >All</Dropdown.Item>
-              <Dropdown.Item >Leads Verified by Machadalo</Dropdown.Item>
-              <Dropdown.Item >Decision pending</Dropdown.Item>
+              <Dropdown.Item>All</Dropdown.Item>
+              <Dropdown.Item>Leads Verified by Machadalo</Dropdown.Item>
+              <Dropdown.Item>Decision pending</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 
-          <Dropdown >
+          <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-second">
               All
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-
-              <Dropdown.Item >All</Dropdown.Item>
-              <Dropdown.Item >Leads Verified by Machadalo</Dropdown.Item>
-              <Dropdown.Item >Decision pending</Dropdown.Item>
+              <Dropdown.Item>All</Dropdown.Item>
+              <Dropdown.Item>Leads Verified by Machadalo</Dropdown.Item>
+              <Dropdown.Item>Decision pending</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
         <div>
           <h4>Campaigns </h4>
         </div>
-        <div className='searchbox'>
+        <div className="searchbox">
           <InputGroup className="">
             <Form.Control placeholder="Search" aria-label="Search" />
-            <InputGroup.Text><BsSearch /></InputGroup.Text>
+            <InputGroup.Text>
+              <BsSearch />
+            </InputGroup.Text>
           </InputGroup>
         </div>
       </div>
@@ -153,7 +158,7 @@ export default function CampaignList(props) {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
-                  <td>{dayjs(item.start_date).format("DD-MMM-YYYY")}</td>
+                  <td>{dayjs(item.start_date).format('DD-MMM-YYYY')}</td>
                   <td>{item.supplier_count}</td>
                   <td>
                     <Button
@@ -167,7 +172,9 @@ export default function CampaignList(props) {
                   <td>
                     <div className="action-icon">
                       <span
-                        onClick={(e) => { openEmailModal(item) }}
+                        onClick={(e) => {
+                          openEmailModal(item);
+                        }}
                       >
                         <BsEnvelopeFill />
                       </span>
@@ -195,6 +202,8 @@ export default function CampaignList(props) {
         onSubmit={onSendEmail}
         onCancel={(e) => setshowHideModal({ EmailModal: false })}
       />
+
+      {showHideTable.viewLeads.show && <NewViewLeadsTable Data={campaignData} />}
     </>
   );
 }

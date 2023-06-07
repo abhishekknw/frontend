@@ -20,7 +20,8 @@ import {
 import Paginations from '../../Pagination';
 import DateFilter from '../../common/date-range-filter/dateFilter';
 import CommentModal from '../../common/Modals/CommentModal';
-export default function NewViewLeadsTable(props) {
+export default function NewViewLeadsTable({Data}) {
+  const CampaignData = Data;
   const LeadsByCampaign = useRecoilValue(LeadByCampaignsAtom);
   const [paginationData, setPaginationData] = useState({
     pageNo: 1,
@@ -48,7 +49,7 @@ export default function NewViewLeadsTable(props) {
       <div className="d-flex justify-content-between align-items-center">
         <div></div>
         <div>
-          <h4>Customer Table</h4>
+          <h4>{CampaignData?.name}</h4>
         </div>
         <div className="searchbox">
           <InputGroup className="mb-3">

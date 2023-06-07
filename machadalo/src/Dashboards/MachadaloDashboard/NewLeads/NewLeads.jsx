@@ -6,12 +6,10 @@ import Button from 'react-bootstrap/Button';
 import NewViewLeadsTable from './NewViewLeadsTable';
 
 export default function NewLeadsTab(props) {
-  const showHideTable = useRecoilValue(showHideTableAtom);
   return (
     <>
       {' '}
       <CampaignList />
-      {showHideTable.viewLeads.show && <NewViewLeadsTable />}
     </>
   );
 }
