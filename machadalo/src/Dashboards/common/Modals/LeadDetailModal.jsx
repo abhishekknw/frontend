@@ -90,9 +90,11 @@ function LeadDetailModal() {
                   </div>
                 </div>
                 <textarea rows={2} className='fullwidth' ></textarea>
+                <p className='text-end'>
                 <Button variant="secondary" className='btn btn-primary'>
                   Add
                 </Button>
+                </p>
               </div>
             </div>
           </div>

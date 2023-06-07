@@ -21,7 +21,7 @@
 .nav-menu {
   z-index: 99;
   background-color: #5f76e8;
-  width: 320px;
+  width: 250px;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -95,16 +95,22 @@
   padding: 0;
 }
 
-.first-class {
+.first-class , .first-class-child{
   // display: none;
-  width: 320px;
+  width: 250px;
   position: absolute;
   top: 0px;
-  left: 319px;
+  left: 250px;
   background-color: #3e59e3;
   visibility: hidden;
   opacity: 0;
+  transition: 0.3s ease-in-out;
   // min-height: 100px;
+}
+
+.first-class-child-main:hover .first-class-child{
+  visibility: visible;
+  opacity: 1;
 }
 
 .first-class-li {
