@@ -7,7 +7,7 @@ const CalenderActions = () => {
     const setSelectedDateAtom = useSetRecoilState(SelectedDateAtom);
     const GetPreviousDates =(number)=>{
         let DateArray = [];
-        for (let i=number;i>=0;i--){
+        for (let i=0;i<=number;i++){
             DateArray.push(Today.subtract(i, 'day'))
         }
         // array1.reverse()
@@ -16,21 +16,21 @@ const CalenderActions = () => {
     }
     
     const GetOneDayPreviousDate = (arr) =>{
-        let dates = {fisrt:arr[0],last:arr[24]};
+        let dates = {fisrt:arr[24],last:arr[0]};
         let previous = dates.fisrt.subtract(1, 'day');
         let filtereddate = arr.filter((item) => item.$d !== dates.last.$d);
-        // filtereddate.push(previous);
-        filtereddate.splice(0, 0,previous);
+        filtereddate.push(previous);
+        // filtereddate.splice(0, 0,previous);
         setCustomCalenderDates(filtereddate);
         return filtereddate;
     }
 
     const GetOneDayNextDate = (arr) =>{
-        let dates = {fisrt:arr[0],last:arr[24]};
+        let dates = {fisrt:arr[24],last:arr[0]};
         let next = dates.last.add(1, 'day');
         let filtereddate = arr.filter((item) => item.$d !== dates.fisrt.$d);
-        // filtereddate.splice(0, 0,next);
-        filtereddate.push(next);
+        filtereddate.splice(0, 0,next);
+        // filtereddate.push(next);
         setCustomCalenderDates(filtereddate);
         return filtereddate;
     }
