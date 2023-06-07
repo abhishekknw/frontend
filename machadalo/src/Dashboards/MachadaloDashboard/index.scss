@@ -647,3 +647,18 @@ table .btn{
 .dash-pagination ul{
     justify-content: end;
 }
+.lead-modal .modal-dialog{
+    max-width: 800px;
+    width: 100%;
+}
+.fade.wpModal.lead-modal.modal p {
+    font-size: 13px;
+}
+  
+.breadcrumb  a:not([href]):not([class]):hover{
+    color: #fff !important;
+}
+
+// .breadcrumb a:not([href]):not([class]){
+//     color: #ffffff !important;
+// }
