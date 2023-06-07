@@ -24,11 +24,35 @@ const newLeadActions = () => {
         const { data } = res;
         setLeadsByCampaign({...data})
       });
-    }  
+    }
+    
+    const getClientStatusList = (data) =>{
+      return fetchWrapper.get(`${Apis.Client_Status_By_Campaign}`).then((res) => {
+        const { data } = res;
+        return data;
+      });
+    }
+    
+    const SendEmailsByCampaign = (data)=>{
+      console.log(data)
+      let params ='?campaign_id=' + data.campaign_id;
+          params+='&supplier_type=all';
+          params+='&lead_type=Leads';
+          params+='&emails='+ data.emails;
+          params+="&Client_Status=" + data.emailType;
+          params+="&tabname=" + '';
+          //  "v0/ui/b2b/email-leads-summary/?lead_type=Leads&supplier_code=all&campaign_id=KRIKRI4EF8&emails=undefined&tabname=&Client_Status=Lead%20verified%20by%20Machadalo",
+        return fetchWrapper.get(`${Apis.SendEmail_By_Campaign}${params}`).then((res) => {
+          const { data } = res;
+          console.log(res,"11111111111111")
+        });
+    }
 
       return {
         getAllCampaigns,
-        getLeadByCampaignId
+        getLeadByCampaignId,
+        getClientStatusList,
+        SendEmailsByCampaign
       };
 }  
 export { newLeadActions };

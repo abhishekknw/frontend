@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import CommonTable from '../../Table/CommonTable';
 import { AllCampaingsAtom,showHideTableAtom } from '../../_states/Machadalo/newLeads';
+import { showHideModalAtom } from '../../_states';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
 import Button from 'react-bootstrap/Button';
@@ -18,17 +19,23 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 import Paginations from '../../Pagination';
+import EmailModal from '../../common/Modals/EmailModal';
 export default function CampaignList(props) {
   const NewLeadAction = newLeadActions();
   const CampaignList = useRecoilValue(AllCampaingsAtom);
   const [showHideTable,setshowHideTable] = useRecoilState(showHideTableAtom);
-
+  // const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
   const [paginationData, setPaginationData] = useState({
     pageNo: 1,
     totalcount: CampaignList.length,
     startIndex: 0,
     endIndex: 9,
   });
+  const [showHideModal, setshowHideModal] = useState({
+    EmailModal:false
+  });
+  const [campaignData,setCampaignData] = useState({});
+  const [clientStatus,setClientStatus] = useState([])
 
   useEffect(() => {
     NewLeadAction.getAllCampaigns();
@@ -77,6 +84,19 @@ export default function CampaignList(props) {
    setshowHideTable({...showHideTable,viewLeads:{show:true}})
   }
 
+  const openEmailModal = async(item)=>{
+    let response = await NewLeadAction.getClientStatusList(item);
+    setClientStatus([...response.client_status])
+    setshowHideModal({EmailModal:true});
+    setCampaignData(item);
+    // setshowHideModal({ ...showHideModal, email: { show: true } });
+  }
+
+  const onSendEmail = async(data,check) =>{
+    data.campaign_id = campaignData.campaign_id;
+    await NewLeadAction.SendEmailsByCampaign(data);
+    setshowHideModal({EmailModal:false});
+  }
   return (
     <>
       {/* <CommonTable headerData={headerData} bodyData={bodyData} firstColumn={true}/> */}
@@ -106,7 +126,7 @@ export default function CampaignList(props) {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
-                  <td>{item.start_date}</td>
+                  <td>{dayjs(item.start_date).format("DD-MMM-YYYY")}</td>
                   <td>{item.supplier_count}</td>
                   <td>
                     <Button
@@ -120,9 +140,7 @@ export default function CampaignList(props) {
                   <td>
                     <div className="action-icon">
                       <span
-                        onClick={(e) => {
-                          setshowHideModal({ ...showHideModal, email: { show: true } });
-                        }}
+                        onClick={(e) => {openEmailModal(item)}}
                       >
                         <BsEnvelopeFill />
                       </span>
@@ -143,6 +161,12 @@ export default function CampaignList(props) {
         totalItems={CampaignList.length}
         pageNo={paginationData.pageNo}
         onPageChange={handlePageChange}
+      />
+
+      <EmailModal
+      data={{show:showHideModal.EmailModal,dropdownOptions:clientStatus}}
+      onSubmit={onSendEmail}
+      onCancel={(e)=>setshowHideModal({EmailModal:false})}
       />
     </>
   );
