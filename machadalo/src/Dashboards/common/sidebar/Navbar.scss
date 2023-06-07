@@ -91,15 +91,19 @@
   margin-left: 15px !important;
   font-size: 28px;
 }
-
+.first-class-ul{
+  padding: 0;
+}
 
 .first-class {
-  display: none;
+  // display: none;
   width: 320px;
   position: absolute;
   top: 0px;
   left: 319px;
   background-color: #3e59e3;
+  visibility: hidden;
+  opacity: 0;
   // min-height: 100px;
 }
 
@@ -117,5 +121,7 @@
 }
 
 .nav-text:hover .first-class {
-  display: block;
+  // display: block;
+  visibility: visible;
+  opacity: 1;
 }

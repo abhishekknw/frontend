@@ -142,7 +142,13 @@ export default function SideNavBar() {
               <div className="first-class">
                 <ul className="first-class-ul">
                   <li className="first-class-li">Campaign Checklist</li>
-                  <li className="first-class-li"><a><span>Leads</span> <i> <BsFillCaretRightFill /></i></a>  </li>
+                  <li className="first-class-li nav-text"><a><span>Leads</span> <i> <BsFillCaretRightFill /></i></a>
+                                          
+                      <ul className="first-class first-class-ul">
+                        <li className="first-class-li">Static</li>
+                        <li className="first-class-li">Dynamic</li>
+                      </ul>
+                  </li>
 
                 </ul>
               </div>
