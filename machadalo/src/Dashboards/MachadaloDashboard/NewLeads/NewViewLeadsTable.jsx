@@ -14,34 +14,48 @@ import {
   BsChevronUp,
   BsEnvelopeFill,
   BsArrowDownCircle,
-  BsWhatsapp, BsSearch
+  BsWhatsapp,
+  BsSearch,
 } from 'react-icons/bs';
 import Paginations from '../../Pagination';
 import DateFilter from '../../common/date-range-filter/dateFilter';
+import CommentModal from '../../common/Modals/CommentModal';
 export default function NewViewLeadsTable(props) {
   const LeadsByCampaign = useRecoilValue(LeadByCampaignsAtom);
   const [paginationData, setPaginationData] = useState({
     pageNo: 1,
   });
+  const [showHideModal, setshowHideModal] = useState({
+    CommentModal: false,
+  });
   function getDates(date) {
-    console.log(date)
+    console.log(date);
   }
-  const handlePageChange = async (event, value) => {
+  const handlePageChange =  (event, value) => {
     setPaginationData({
       pageNo: value,
-    })
+    });
+  };
+  const openCommentModal =  () => {
+    setshowHideModal({ CommentModal: true });
+    // setshowHideModal({ ...showHideModal, email: { show: true } });
+  }
+  const onComment =  () => {
+    setshowHideModal({ CommentModal: false });
   }
   return (
     <>
-      <div className='d-flex justify-content-between align-items-center'>
+      <div className="d-flex justify-content-between align-items-center">
         <div></div>
         <div>
           <h4>Customer Table</h4>
         </div>
-        <div className='searchbox'>
+        <div className="searchbox">
           <InputGroup className="mb-3">
             <Form.Control placeholder="Search" aria-label="Search" />
-            <InputGroup.Text><BsSearch /></InputGroup.Text>
+            <InputGroup.Text>
+              <BsSearch />
+            </InputGroup.Text>
           </InputGroup>
         </div>
       </div>
@@ -65,32 +79,31 @@ export default function NewViewLeadsTable(props) {
               <tr key={index}>
                 <td>{index + 1}</td>
                 {row.map((data, index) => (index != 0 ? <td key={index}>{data?.value}</td> : null))}
-                <td><td>
-                  <Dropdown className='table-dropdown-status'>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                      Leads Verified by Machadalo
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#">All</Dropdown.Item>
-                      <Dropdown.Item href="#">
+                <td>
+                  <td>
+                    <Dropdown className="table-dropdown-status">
+                      <Dropdown.Toggle variant="success" id="dropdown-basic">
                         Leads Verified by Machadalo
-                      </Dropdown.Item>
-                      <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
-                      <Dropdown.Item href="#">Decision pending</Dropdown.Item>
-                      <Dropdown.Item href="#">Decision pending</Dropdown.Item>
-                      <Dropdown.Item href="#">Decision pending</Dropdown.Item>
-                      <Dropdown.Item href="#">Decision pending</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </td></td>
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        <Dropdown.Item href="#">All</Dropdown.Item>
+                        <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
+                        <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                        <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                        <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                        <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                        <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </td>
+                </td>
                 <td>
                   <Button
                     variant="outline-dark"
                     className="lead-btn"
-                    onClick={(e) => {
-                      setshowHideModal({ ...showHideModal, comment: { show: true } });
-                    }}
+                    onClick={(e) => { openCommentModal(row) }}
+
                   >
                     Comment
                   </Button>
@@ -121,6 +134,12 @@ export default function NewViewLeadsTable(props) {
         totalItems={LeadsByCampaign.length}
         pageNo={paginationData.pageNo}
         onPageChange={handlePageChange}
+      />
+
+      <CommentModal
+        data={{ show: showHideModal.CommentModal }}
+        onSubmit={onComment}
+        onCancel={(e) => setshowHideModal({ CommentModal: false })}
       />
     </>
   );

@@ -67,7 +67,7 @@ export default function DateFilter(props) {
   }
 
   function oneDayNextDate(arr) {
-    if (dayjs(arr[24].$d).format('DD/MM/YYYY') === dayjs(new Date().$d).format('DD/MM/YYYY')) {
+    if (dayjs(arr[0].$d).format('DD/MM/YYYY') === dayjs(new Date().$d).format('DD/MM/YYYY')) {
       return 0;
     }
     let temp = CalederAction.GetOneDayNextDate(arr);
