@@ -16,5 +16,6 @@ export const Apis = {
     Client_Status_By_Campaign:'v0/ui/b2b/machadalo-client-status-list/?campaign_id=',
     SendEmail_By_Campaign : "v0/ui/b2b/email-leads-summary/",
     Update_Client_Status : "v0/ui/b2b/update-machadalo-client-status/",
+    Get_Comment_List : "v0/ui/b2b/basic-client-comment/",
 }
 

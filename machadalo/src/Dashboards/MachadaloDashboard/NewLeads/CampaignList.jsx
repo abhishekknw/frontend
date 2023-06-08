@@ -111,10 +111,12 @@ export default function CampaignList(props) {
     // setshowHideModal({ EmailModal: false });
   };
   const handleSelect = (data) => {
+    let temp = {...filters,lead_type:data.value}
     setFilters({...filters,lead_type:data.value})
+    NewLeadAction.getAllCampaigns(temp);
   };
   const onSearch = (e) =>{
-    let data = {filters , search:e.target.value};
+    let data = {...filters , search:e.target.value};
     setFilters({...filters,search:e.target.value})
     if(e.target.value!='' && e.target.value.length>2){
       NewLeadAction.getAllCampaigns(data);

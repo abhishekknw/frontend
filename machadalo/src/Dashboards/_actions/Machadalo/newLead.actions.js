@@ -2,7 +2,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { AllCampaingsAtom, LeadByCampaignsAtom, showViewLeadsTableAtom, ClientStatusAtom } from '../../_states/Machadalo/newLeads';
+import { AllCampaingsAtom, LeadByCampaignsAtom, showViewLeadsTableAtom, ClientStatusAtom,CommentListAtom } from '../../_states/Machadalo/newLeads';
 import { errorAtom } from '../../_states/alert';
 
 
@@ -12,10 +12,12 @@ const newLeadActions = () => {
   const [error, setError] = useRecoilState(errorAtom);
   const AllCampaignList = useSetRecoilState(AllCampaingsAtom);
   const SetClientStatus = useSetRecoilState(ClientStatusAtom);
+  const SetCommentListAtom = useSetRecoilState(CommentListAtom);
   const [LeadsByCampaign, setLeadsByCampaign] = useRecoilState(LeadByCampaignsAtom);
 
   const getAllCampaigns = (data) => {
     let params = "&search=" + data.search;
+    params+="lead_type=" + data.lead_type;
     return fetchWrapper.get(`${Apis.New_Leads_Campaign}${params}`).then((res) => {
       const { data } = res;
       AllCampaignList([...data])
@@ -88,12 +90,22 @@ const newLeadActions = () => {
     });
   }
 
+  const getCommentListByIds = (data) => {
+    let params = '?requirement_id=' + data.requirement_id + '&_id=' + data._id + "&comment_type="+ data.comment_type;
+    return fetchWrapper.get(`${Apis.Get_Comment_List}${params}`).then((res) => {
+      // alertActions.success(Labels.Email_Success);
+      // setError(false);
+      SetCommentListAtom([...res.data])
+    });
+  }
+
   return {
     getAllCampaigns,
     getLeadByCampaignId,
     getClientStatusList,
     SendEmailsByCampaign,
-    updateClientStatus
+    updateClientStatus,
+    getCommentListByIds,
   };
 }
 export { newLeadActions };

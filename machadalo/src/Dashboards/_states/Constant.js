@@ -26,10 +26,10 @@ const showHideBreadcrumbsAtom = atom({
 const showHideModalAtom = atom({
   key: 'showHideModalAtom',
   default: {
-    email:{show:false},
-    whatsapp:{show:false},
-    leadDetail:{show:false},
-    comment:{show:false}
+    email:{show:false,tableName:''},
+    whatsapp:{show:false,tableName:''},
+    leadDetail:{show:false,tableName:''},
+    comment:{show:false,tableName:''}
   }
 })
 

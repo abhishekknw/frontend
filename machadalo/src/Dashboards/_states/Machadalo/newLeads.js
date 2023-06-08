@@ -22,6 +22,11 @@ const ClientStatusAtom = atom({
   default: []
 });
 
+const CommentListAtom = atom({
+  key: 'CommentListKey',
+  default: []
+});
+
 const NewLeadTabFilterAtom = atom({
   key: 'NewLeadTabFilterKey',
   default: {
@@ -44,4 +49,4 @@ const NewLeadTabFilterAtom = atom({
     // userType: '',
   },
 });
-export { AllCampaingsAtom, LeadByCampaignsAtom, showHideTableAtom, ClientStatusAtom, NewLeadTabFilterAtom }
+export { AllCampaingsAtom, LeadByCampaignsAtom, showHideTableAtom, ClientStatusAtom, NewLeadTabFilterAtom,CommentListAtom }
