@@ -70,13 +70,13 @@ export default function ViewLeadDetailTable(props) {
               {isExpandRow.b2b && <BsChevronUp />}
               {!isExpandRow.b2b && <BsChevronDown />}
             </td>
-            <td>01</td>
-            <td>Name 1</td>
+            <td>1</td>
+            <td>CPWD Colony 2</td>
             <td>RS</td>
             <td>300</td>
             <td>FOS</td>
             <td>Machadalo</td>
-            <td>12/12/2020</td>
+            <td>2023-02-01 13:57:15</td>
             <td>
               <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -274,13 +274,13 @@ export default function ViewLeadDetailTable(props) {
             <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
               <BsChevronDown />{' '}
             </td>
-            <td>01</td>
-            <td>Name 1</td>
+            <td>2</td>
+            <td>ganshyam test society</td>
             <td>RS</td>
             <td>300</td>
-            <td>FOS</td>
+            <td>RM</td>
             <td>Machadalo</td>
-            <td>12/12/2020</td>
+            <td>2023-02-01 13:57:15</td>
             <td>
               <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -329,6 +329,470 @@ export default function ViewLeadDetailTable(props) {
                   <BsWhatsapp />
                 </span>
               </div> */}
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                  }}
+                >
+                  <BsFillEyeFill />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>3</td>
+            <td>Test aman society</td>
+            <td>RS</td>
+            <td>300</td>
+            <td>RM</td>
+            <td>Machadalo</td>
+            <td>2023-02-01 13:57:15</td>
+            <td>
+              <Dropdown className="table-dropdown-status">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
+                  <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td>
+            <td>20k</td>
+            <td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                  }}
+                >
+                  <BsFillEyeFill />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>4</td>
+            <td>Maple Leaves Residency</td>
+            <td>RS</td>
+            <td>300</td>
+            <td>RM</td>
+            <td>Machadalo</td>
+            <td>2023-02-01 13:57:15</td>
+            <td>
+              <Dropdown className="table-dropdown-status">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
+                  <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td>
+            <td>20k</td>
+            <td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                  }}
+                >
+                  <BsFillEyeFill />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>5</td>
+            <td>Maple Leaves Residency</td>
+            <td>RS</td>
+            <td>300</td>
+            <td>RM</td>
+            <td>Machadalo</td>
+            <td>2023-02-01 13:57:15</td>
+            <td>
+              <Dropdown className="table-dropdown-status">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
+                  <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td>
+            <td>20k</td>
+            <td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                  }}
+                >
+                  <BsFillEyeFill />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>6</td>
+            <td>Maple Leaves Residency</td>
+            <td>RS</td>
+            <td>300</td>
+            <td>RM</td>
+            <td>Machadalo</td>
+            <td>2023-02-01 13:57:15</td>
+            <td>
+              <Dropdown className="table-dropdown-status">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
+                  <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td>
+            <td>20k</td>
+            <td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                  }}
+                >
+                  <BsFillEyeFill />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>7</td>
+            <td>Maple Leaves Residency</td>
+            <td>RS</td>
+            <td>300</td>
+            <td>RM</td>
+            <td>Machadalo</td>
+            <td>2023-02-01 13:57:15</td>
+            <td>
+              <Dropdown className="table-dropdown-status">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
+                  <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td>
+            <td>20k</td>
+            <td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                  }}
+                >
+                  <BsFillEyeFill />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>8</td>
+            <td>Maple Leaves Residency</td>
+            <td>RS</td>
+            <td>300</td>
+            <td>RM</td>
+            <td>Machadalo</td>
+            <td>2023-02-01 13:57:15</td>
+            <td>
+              <Dropdown className="table-dropdown-status">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
+                  <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td>
+            <td>20k</td>
+            <td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                  }}
+                >
+                  <BsFillEyeFill />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>9</td>
+            <td>Maple Leaves Residency</td>
+            <td>RS</td>
+            <td>300</td>
+            <td>RM</td>
+            <td>Machadalo</td>
+            <td>2023-02-01 13:57:15</td>
+            <td>
+              <Dropdown className="table-dropdown-status">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
+                  <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td>
+            <td>20k</td>
+            <td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                  }}
+                >
+                  <BsFillEyeFill />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>10</td>
+            <td>Akash Apartment</td>
+            <td>RS</td>
+            <td>300</td>
+            <td>RM</td>
+            <td>Machadalo</td>
+            <td>2023-02-01 13:57:15</td>
+            <td>
+              <Dropdown className="table-dropdown-status">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
+                  <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td>
+            <td>20k</td>
+            <td>
               <div className="action-icon">
                 <span
                   onClick={(e) => {

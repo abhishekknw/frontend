@@ -22,6 +22,7 @@ import EmailModal from '../common/Modals/EmailModal';
 import WhatsappModal from '../common/Modals/WhatsappModal';
 export default function LeadsTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
+  const [selectedId ,setSelectedId] = React.useState('');
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
   // const [showHideModal, setshowHideModal] = useState({
@@ -89,6 +90,16 @@ export default function LeadsTable(props) {
       third: { show: false, tableName: btnName },
       fourth: { show: false, tableName: btnName },
     });
+  }
+
+  function showHideRow (id){
+    if(id===selectedId){
+      setSelectedId('')
+    }
+    else{
+      setSelectedId(id)
+    }
+    setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })
   }
   const bodyData = () => {
     let data = [
@@ -201,13 +212,13 @@ export default function LeadsTable(props) {
     let body = data.map((ele, index) => {
       return (
         <>
-          <tr className={isExpandRow.b2b ? 'nested-table' : ''} key={index}>
+          <tr className={selectedId===ele.type ? 'nested-table' : ''} key={index}>
             <td
               className="sn-table"
-              onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}
-            >
-              {isExpandRow.b2b && <BsChevronUp />}
-              {!isExpandRow.b2b && <BsChevronDown />}
+              onClick={(e) => {showHideRow(ele.type)}}
+            >{selectedId===ele.type ? <BsChevronUp />:<BsChevronDown />}
+              {/* {isExpandRow.b2b && <BsChevronUp />}
+              {!isExpandRow.b2b && <BsChevronDown />} */}
             </td>
             <td>{ele.sno}</td>
             <td>{ele.type}</td>
@@ -218,7 +229,7 @@ export default function LeadsTable(props) {
             <td>{ele.agencyWise}</td>
             <td>{ele.action}</td>
           </tr>
-          {ele.type == 'B2B' && isExpandRow.b2b && <FosRmTable />}
+          {selectedId===ele.type && <FosRmTable />}
           {/* {ele.type=='B2C' && isExpandRow.b2b && <FosRmTable />} */}
         </>
       );

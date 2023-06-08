@@ -205,7 +205,7 @@ export default function ViewClientAgencyTable(props) {
             <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
               <BsChevronDown />{' '}
             </td>
-            <td>01</td>
+            <td>2</td>
             <td>Clinet 1</td>
             <td>5000</td>
             <td>3000</td>
@@ -226,6 +226,52 @@ export default function ViewClientAgencyTable(props) {
                     ViewClientWise: false,
                   })
                 }
+              >
+                View Campaign
+              </Button>
+            </td>
+            <td>
+            <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              {isExpandRow.b2b && <BsChevronUp />}
+              {!isExpandRow.b2b && <BsChevronDown />}
+            </td>
+            <td>01</td>
+            <td>Clinet 1</td>
+            <td>5000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>
+              {' '}
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() => onClickCampaign('View Campaign Wise')}
               >
                 View Campaign
               </Button>
