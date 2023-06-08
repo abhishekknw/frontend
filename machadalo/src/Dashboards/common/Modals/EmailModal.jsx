@@ -3,51 +3,46 @@ import { Modal, Button } from 'react-bootstrap';
 import { showHideModalAtom } from '../../_states/Constant';
 import { useRecoilState } from 'recoil';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
+import { errorAtom } from '../../_states/alert';
+
 function EmailModal(props) {
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
-  const [showModal, setShow] = useState(showHideModal.email);
+  const [error, setError] = useRecoilState(errorAtom);
   const [formData, setFormData] = useState({ emails: '', emailType: '' });
   const clientStatusList = props?.data?.dropdownOptions;
+  const NewLeadAction = newLeadActions();
+
   const handleClose = () => {
     setshowHideModal({ ...showHideModal, email: { show: false } });
-    // props?.data?.show ? props?.onCancel() : '';
   };
   const handleSelect = (status) => {
     setFormData({ ...formData, emailType: status });
   };
 
-  const handleSubmit =()=>{
-    console.log("```````````111111111111111111111")
-  }
-  //   const handleShow = () => setShow(true);
+  const handleSubmit = async(data, check) => {
+    setError(true)
+    data.campaign_id = showHideModal?.email?.data?.campaign_id;
+    await NewLeadAction.SendEmailsByCampaign(data);
+    setFormData({ emails: '', emailType: '' });
+  };
   return (
     <>
-      {/* <div
-        className="d-flex align-items-center justify-content-center"
-        style={{ height: "100vh" }}
-      >
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-      </div> */}
-      <Modal
-        show={showHideModal.email.show}
-        onHide={handleClose}
-        className="wpModal"
-      >
+      <Modal show={showHideModal.email.show} onHide={handleClose} className="wpModal">
         <Modal.Header closeButton>
           <Modal.Title>Send Email</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="email-modal">
             <div className="form-group email-form-control">
-              <label>Email address</label>
+              {/* <label>Email address</label> */}
               <input
                 type="email"
                 className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 placeholder="Enter Email Ids"
+                value={formData.emails}
                 onChange={(e) => {
                   setFormData({ ...formData, emails: e.target.value });
                 }}
@@ -69,7 +64,7 @@ function EmailModal(props) {
                           onClick={(e) => {
                             handleSelect(item.status_name);
                           }}
-                          active={item.status_name==formData.emailType}
+                          active={item.status_name == formData.emailType}
                         >
                           {item.status_name}
                         </Dropdown.Item>
@@ -90,9 +85,10 @@ function EmailModal(props) {
             <div className="row email-btn-group">
               <div className="col-sm-5">
                 <button
-                   type='button'
+                  type="button"
                   className="btn btn-primary"
-                  onSubmit={(e) => {
+                  disabled={error || formData.emails=='' }
+                  onClick={(e) => {
                     handleSubmit(formData, true);
                   }}
                 >
@@ -104,9 +100,10 @@ function EmailModal(props) {
               </div>
               <div className="col-sm-5">
                 <button
-                  type='button'
+                  type="button"
                   className="btn btn-primary"
-                  onSubmit={(e) => {
+                  disabled={error || formData.emails==''}
+                  onClick={(e) => {
                     handleSubmit(formData, false);
                   }}
                 >

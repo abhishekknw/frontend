@@ -2,7 +2,8 @@ export const Labels = {
     Success: 'success',
     Error: 'error',
     Login_Success: "Login successfully",
-    Upload_Success: "Uploaded successfully",  
+    Upload_Success: "Uploaded successfully",
+    Email_Success: "Email Sent Successfully",    
 }
 
 export const RoutesName = {

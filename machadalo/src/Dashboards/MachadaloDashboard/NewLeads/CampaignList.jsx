@@ -174,7 +174,7 @@ export default function CampaignList(props) {
                     <div className="action-icon">
                       <span
                        onClick={(e) => {
-                        setshowHideModal({ ...showHideModal, email: { show: true } });
+                        setshowHideModal({ ...showHideModal, email: { show: true,tableName:"Campaign",data:item} });
                       }}
                       >
                         <BsEnvelopeFill />
