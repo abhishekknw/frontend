@@ -19,7 +19,6 @@ export default function MachadaloDashboard(props) {
     <>
     <div className='container '>
       <MachadaloHeader />
-     
     </div>
     <hr className='mt-0'/>
       <div className="container">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import CommonTable from '../../Table/CommonTable';
-import { AllCampaingsAtom, showHideTableAtom } from '../../_states/Machadalo/newLeads';
+import { AllCampaingsAtom, showHideTableAtom,NewLeadTabFilterAtom } from '../../_states/Machadalo/newLeads';
 import { showHideModalAtom } from '../../_states';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
@@ -27,8 +27,8 @@ export default function CampaignList(props) {
   const NewLeadAction = newLeadActions();
   const CampaignList = useRecoilValue(AllCampaingsAtom);
   const [showHideTable, setshowHideTable] = useRecoilState(showHideTableAtom);
-
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
+  const [filters,setFilters] = useRecoilState(NewLeadTabFilterAtom)
   const [paginationData, setPaginationData] = useState({
     pageNo: 1,
     totalcount: CampaignList.length,
@@ -39,11 +39,7 @@ export default function CampaignList(props) {
   //   EmailModal: false,
   // });
   const [campaignData, setCampaignData] = useState({});
-  const [clientStatus, setClientStatus] = useState([]);
 
-  useEffect(() => {
-    NewLeadAction.getAllCampaigns();
-  }, []);
   const headerData = [
     {
       name: 'S.No.',
@@ -65,6 +61,17 @@ export default function CampaignList(props) {
       name: 'Action',
     },
   ];
+  const dropdownOption = [
+    { name: 'All', value: 'All' },
+    { name: 'Leads', value: 'Leads' },
+    { name: 'Survey', value: 'Survey' },
+    { name: 'Feedback', value: 'Feedback' },
+    { name: 'Survey Leads', value: 'Survey Leads' },
+  ];
+
+  useEffect(() => {
+    NewLeadAction.getAllCampaigns();
+  }, []);
 
   const handlePageChange = async (event, value) => {
     if (value === 1) {
@@ -98,10 +105,13 @@ export default function CampaignList(props) {
     // setshowHideModal({ ...showHideModal, email: { show: true } });
   };
 
-  const onSendEmail =  (data, check) => {
+  const onSendEmail = (data, check) => {
     data.campaign_id = campaignData.campaign_id;
-    let res =  NewLeadAction.SendEmailsByCampaign(data);
+    let res = NewLeadAction.SendEmailsByCampaign(data);
     // setshowHideModal({ EmailModal: false });
+  };
+  const handleSelect = (data) => {
+    setFilters({...filters,lead_type:data.value})
   };
   return (
     <>
@@ -110,15 +120,23 @@ export default function CampaignList(props) {
         <div className="campaign-list-dropdown">
           <Dropdown className="me-4">
             <Dropdown.Toggle variant="success" id="dropdown-basic">
-              All
+              {filters.lead_type}
             </Dropdown.Toggle>
-
             <Dropdown.Menu>
-              <Dropdown.Item>All</Dropdown.Item>
-              <Dropdown.Item>Leads</Dropdown.Item>
-              <Dropdown.Item>Survey</Dropdown.Item>
-              <Dropdown.Item>Survey Leads</Dropdown.Item>
-              <Dropdown.Item>Feedback</Dropdown.Item>
+              {dropdownOption.map((item, index) => {
+                return (
+                  <Dropdown.Item
+                  key={index}
+                    eventKey={item.value}
+                    onClick={(e) => {
+                      handleSelect(item);
+                    }}
+                    active={filters.lead_type===item.value}
+                  >
+                    {item.name}
+                  </Dropdown.Item>
+                );
+              })}
             </Dropdown.Menu>
           </Dropdown>
 
@@ -126,7 +144,6 @@ export default function CampaignList(props) {
             <Dropdown.Toggle variant="success" id="dropdown-second">
               All
             </Dropdown.Toggle>
-
             <Dropdown.Menu>
               <Dropdown.Item>All</Dropdown.Item>
               <Dropdown.Item>Residential Society</Dropdown.Item>
@@ -174,9 +191,12 @@ export default function CampaignList(props) {
                   <td>
                     <div className="action-icon">
                       <span
-                       onClick={(e) => {
-                        setshowHideModal({ ...showHideModal, email: { show: true,tableName:"Campaign",data:item} });
-                      }}
+                        onClick={(e) => {
+                          setshowHideModal({
+                            ...showHideModal,
+                            email: { show: true, tableName: 'Campaign', data: item },
+                          });
+                        }}
                       >
                         <BsEnvelopeFill />
                       </span>
@@ -198,12 +218,6 @@ export default function CampaignList(props) {
         pageNo={paginationData.pageNo}
         onPageChange={handlePageChange}
       />
-
-      {/* <EmailModal
-        data={{ show: showHideModal.EmailModal, dropdownOptions: clientStatus }}
-        onSubmit={(e) =>{onSendEmail}}
-        onCancel={(e) => setshowHideModal({ EmailModal: false })}
-      /> */}
 
       {showHideTable.viewLeads.show && <NewViewLeadsTable Data={campaignData} />}
     </>

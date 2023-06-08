@@ -7,9 +7,6 @@ import NewViewLeadsTable from './NewViewLeadsTable';
 import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
 
 export default function NewLeadsTab(props) {
-
-  const NewLeadAction = newLeadActions();
-  NewLeadAction.getAllCampaigns();
   return (
     <>
       {' '}

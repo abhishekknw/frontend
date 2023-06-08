@@ -18,10 +18,3 @@ export const Apis = {
     Update_Client_Status : "v0/ui/b2b/update-machadalo-client-status/",
 }
 
-
-// lead_type: Leads
-// supplier_code: all
-// campaign_id: KRIKRI4EF8
-// emails: undefined
-// tabname: 
-// Client_Status: Lead verified by Machadalo
