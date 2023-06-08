@@ -87,6 +87,7 @@ export default function CampaignList(props) {
     await NewLeadAction.getLeadByCampaignId(row);
     setshowHideTable({ ...showHideTable, viewLeads: { show: true } });
     setCampaignData(row);
+    await NewLeadAction.getClientStatusList(row);
   };
 
   const openEmailModal = async (item) => {

@@ -15,6 +15,7 @@ export const Apis = {
     Lead_By_Campaign: 'v0/ui/b2b/get-dynamic-basic-lead-form-headers/',
     Client_Status_By_Campaign:'v0/ui/b2b/machadalo-client-status-list/?campaign_id=',
     SendEmail_By_Campaign : "v0/ui/b2b/email-leads-summary/",
+    Update_Client_Status : "v0/ui/b2b/update-machadalo-client-status/",
 }
 
 

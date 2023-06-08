@@ -13,8 +13,12 @@ const LeadByCampaignsAtom = atom({
 const showHideTableAtom = atom({
   key: 'showHideTablekey',
   default: {
-    viewLeads:{show:false},
+    viewLeads: { show: false },
   }
 });
 
-export {AllCampaingsAtom,LeadByCampaignsAtom,showHideTableAtom}
+const ClientStatusAtom = atom({
+  key: 'ClientStatusKey',
+  default: []
+});
+export { AllCampaingsAtom, LeadByCampaignsAtom, showHideTableAtom, ClientStatusAtom }
