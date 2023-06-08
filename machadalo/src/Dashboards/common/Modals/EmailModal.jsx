@@ -90,8 +90,9 @@ function EmailModal(props) {
             <div className="row email-btn-group">
               <div className="col-sm-5">
                 <button
+                   type='button'
                   className="btn btn-primary"
-                  onClick={(e) => {
+                  onSubmit={(e) => {
                     handleSubmit(formData, true);
                   }}
                 >
@@ -103,8 +104,9 @@ function EmailModal(props) {
               </div>
               <div className="col-sm-5">
                 <button
+                  type='button'
                   className="btn btn-primary"
-                  onClick={(e) => {
+                  onSubmit={(e) => {
                     handleSubmit(formData, false);
                   }}
                 >

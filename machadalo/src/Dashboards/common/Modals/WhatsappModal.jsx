@@ -7,13 +7,13 @@ function WhatsappModal(props) {
   // const [showModal, setShow] = useState(showHideModal.whatsapp);
   const handleClose = () => {
     setshowHideModal({ ...showHideModal, whatsapp: { show: false } });
-    props?.data?.show ? props?.onCancel():'';
+    // props?.data?.show ? props?.onCancel():'';
   }
     //   const handleShow = () => setShow(true);
 
   return (
     <>
-      <Modal show={props?.data?.show || showHideModal.whatsapp.show} onHide={handleClose} className='wpModal'>
+      <Modal show={showHideModal.whatsapp.show} onHide={handleClose} className='wpModal'>
         <Modal.Header closeButton>
           <Modal.Title>Share on WhatsApp</Modal.Title>
         </Modal.Header>
@@ -28,7 +28,7 @@ function WhatsappModal(props) {
                 // aria-describedby="emailHelp"
               />
             </div>
-            <button type="submit" className="btn btn-primary submit-btn">
+            <button type="button" className="btn btn-primary submit-btn">
               Submit
             </button>
           </form>

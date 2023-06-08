@@ -242,14 +242,14 @@ export default function LeadsTable(props) {
       <h4 className="h4-heading">Leads</h4>
       <EmailModal
         data={{
-          show: showHideModal.EmailModal,
+          // show: showHideModal.EmailModal,
           dropdownOptions: [
             { status_name: 'Lead verified by Machadalo' },
             { status_name: 'Lead verified by Machadalo' },
           ],
         }}
-        onSubmit={onSendEmail}
-        onCancel={(e) => setshowHideModal({ ...showHideModal, EmailModal: false })}
+        // onSubmit={onSendEmail}
+        // onCancel={(e) => setshowHideModal({ ...showHideModal, EmailModal: false })}
       />
       <WhatsappModal
         data={{
