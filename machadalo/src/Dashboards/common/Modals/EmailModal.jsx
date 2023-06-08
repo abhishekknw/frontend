@@ -10,11 +10,15 @@ function EmailModal(props) {
   const clientStatusList = props?.data?.dropdownOptions;
   const handleClose = () => {
     setshowHideModal({ ...showHideModal, email: { show: false } });
-    props?.data?.show ? props?.onCancel() : '';
+    // props?.data?.show ? props?.onCancel() : '';
   };
   const handleSelect = (status) => {
     setFormData({ ...formData, emailType: status });
   };
+
+  const handleSubmit =()=>{
+    console.log("```````````111111111111111111111")
+  }
   //   const handleShow = () => setShow(true);
   return (
     <>
@@ -27,7 +31,7 @@ function EmailModal(props) {
         </Button>
       </div> */}
       <Modal
-        show={showHideModal.email.show || props?.data?.show}
+        show={showHideModal.email.show}
         onHide={handleClose}
         className="wpModal"
       >
@@ -88,7 +92,7 @@ function EmailModal(props) {
                 <button
                   className="btn btn-primary"
                   onClick={(e) => {
-                    props.onSubmit(formData, true);
+                    handleSubmit(formData, true);
                   }}
                 >
                   Send email for given user
@@ -101,7 +105,7 @@ function EmailModal(props) {
                 <button
                   className="btn btn-primary"
                   onClick={(e) => {
-                    props.onSubmit(formData, false);
+                    handleSubmit(formData, false);
                   }}
                 >
                   Send email to all

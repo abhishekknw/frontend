@@ -359,7 +359,7 @@ export default function ViewLeadDetailTable(props) {
           </tr>
         </tbody>
       </Table>
-      <EmailModal
+      {/* <EmailModal
         data={{
           show: showHideModal.EmailModal,
           dropdownOptions: [
@@ -376,7 +376,7 @@ export default function ViewLeadDetailTable(props) {
         }}
         onSubmit={OnshareWhatsApp}
         onCancel={(e) => setshowHideModal({ ...showHideModal, WhatsAppModal: false })}
-      />
+      /> */}
       <Paginations pageSize={10} totalItems={100} pageNo={page} onPageChange={handlePageChange} />
     </>
   );

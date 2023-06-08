@@ -321,7 +321,7 @@ export default function ViewEndCustomerCityTable(props) {
         </tbody>
       </Table>
 
-      <EmailModal
+      {/* <EmailModal
         data={{
           show: showHideModal.EmailModal,
           dropdownOptions: [
@@ -338,7 +338,7 @@ export default function ViewEndCustomerCityTable(props) {
         }}
         onSubmit={OnshareWhatsApp}
         onCancel={(e) => setshowHideModal({ ...showHideModal, WhatsAppModal: false })}
-      />
+      /> */}
     </>
   );
 }

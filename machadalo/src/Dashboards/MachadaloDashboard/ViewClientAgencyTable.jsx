@@ -255,7 +255,7 @@ export default function ViewClientAgencyTable(props) {
         </tbody>
       </Table>
 
-      <EmailModal
+      {/* <EmailModal
         data={{
           show: showHideModal.EmailModal,
           dropdownOptions: [
@@ -272,7 +272,7 @@ export default function ViewClientAgencyTable(props) {
         }}
         onSubmit={OnshareWhatsApp}
         onCancel={(e) => setshowHideModal({ ...showHideModal, WhatsAppModal: false })}
-      />
+      /> */}
     </>
   );
 }

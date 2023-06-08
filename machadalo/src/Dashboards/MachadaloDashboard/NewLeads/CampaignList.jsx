@@ -198,11 +198,11 @@ export default function CampaignList(props) {
         onPageChange={handlePageChange}
       />
 
-      <EmailModal
+      {/* <EmailModal
         data={{ show: showHideModal.EmailModal, dropdownOptions: clientStatus }}
         onSubmit={(e) =>{onSendEmail}}
         onCancel={(e) => setshowHideModal({ EmailModal: false })}
-      />
+      /> */}
 
       {showHideTable.viewLeads.show && <NewViewLeadsTable Data={campaignData} />}
     </>
