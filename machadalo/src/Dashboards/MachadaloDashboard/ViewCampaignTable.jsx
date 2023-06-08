@@ -78,7 +78,7 @@ export default function ViewCampaignTable(props) {
               {isExpandRow.b2b && <BsChevronUp />}
               {!isExpandRow.b2b && <BsChevronDown />}
             </td>
-            <td>01</td>
+            <td>1</td>
             <td>Kriti Test company</td>
             <td>5000</td>
             <td>3000</td>
@@ -210,8 +210,209 @@ export default function ViewCampaignTable(props) {
             <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
               <BsChevronDown />{' '}
             </td>
-            <td>01</td>
-            <td>Campaign 1</td>
+            <td>2</td>
+            <td>Great Learning Proposal	</td>
+            <td>5000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>
+              {' '}
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() =>
+                  setshowHideTableObj({
+                    ...showHideTableObj,
+                    ViewEndCustomerWise: true,
+                    ViewCampaignWise: false,
+                  })
+                }
+              >
+                View End Customer
+              </Button>
+            </td>
+            <td>
+              {' '}
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() =>
+                  setshowHideTableObj({
+                    ...showHideTableObj,
+                    ViewEndCustomerWise: true,
+                    ViewCampaignWise: false,
+                  })
+                }
+              >
+                View City
+              </Button>
+            </td>
+            <td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>3</td>
+            <td>Grasim Paints survey</td>
+            <td>5000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>
+              {' '}
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() =>
+                  setshowHideTableObj({
+                    ...showHideTableObj,
+                    ViewEndCustomerWise: true,
+                    ViewCampaignWise: false,
+                  })
+                }
+              >
+                View End Customer
+              </Button>
+            </td>
+            <td>
+              {' '}
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() =>
+                  setshowHideTableObj({
+                    ...showHideTableObj,
+                    ViewEndCustomerWise: true,
+                    ViewCampaignWise: false,
+                  })
+                }
+              >
+                View City
+              </Button>
+            </td>
+            <td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>4</td>
+            <td>Berger(After Package)</td>
+            <td>5000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>
+              {' '}
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() =>
+                  setshowHideTableObj({
+                    ...showHideTableObj,
+                    ViewEndCustomerWise: true,
+                    ViewCampaignWise: false,
+                  })
+                }
+              >
+                View End Customer
+              </Button>
+            </td>
+            <td>
+              {' '}
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() =>
+                  setshowHideTableObj({
+                    ...showHideTableObj,
+                    ViewEndCustomerWise: true,
+                    ViewCampaignWise: false,
+                  })
+                }
+              >
+                View City
+              </Button>
+            </td>
+            <td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>5</td>
+            <td>JSW Paints survey</td>
             <td>5000</td>
             <td>3000</td>
             <td>3000</td>

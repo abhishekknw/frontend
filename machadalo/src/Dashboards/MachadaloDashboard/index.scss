@@ -285,8 +285,27 @@ table .btn{
 .nested-leads-table-colspan {
     padding: 0px 0px 10px 0px !important;
 }
+.filter-box input{
+    width: 180px !important;
+}
+.filter-box .input-group{
+    max-width: 250px;
+}
 
-
+.count-range p{
+    font-size: 12px ;
+    margin-bottom: 0px;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+.count-range{
+    margin-left: auto;
+    max-width: inherit;
+    justify-content: end;
+}
+.count-range .input-group{
+    max-width: 100px;
+}
 /* Breadcrumb */
 
 

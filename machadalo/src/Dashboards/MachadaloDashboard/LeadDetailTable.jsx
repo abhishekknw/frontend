@@ -9,7 +9,8 @@ import {
   BsEnvelopeFill,
   BsArrowDownCircle,
   BsWhatsapp,
-  BsFillEyeFill,BsSearch
+  BsFillEyeFill,
+  BsSearch,
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
 import { showHideTable, showHideModalAtom } from '../_states';
@@ -48,34 +49,42 @@ export default function ViewLeadDetailTable(props) {
   return (
     <>
       <LeadDetailModal />
-      <div className='d-flex pb-2'>
-
-      <div className="searchbox me-2">
-          <InputGroup className="">
+      <div className="row pb-2 filter-box">
+        <div className="col-md-6 d-flex ">
+          <InputGroup className="me-2">
             <Form.Control placeholder="Search" aria-label="Search" />
             <InputGroup.Text>
               <BsSearch />
             </InputGroup.Text>
           </InputGroup>
-        </div>
-        <div>
-        </div>
-        <div className='campaign-list-dropdown me-2'>
-        <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-second">
-              Select City
-            </Dropdown.Toggle>
+          <div className="campaign-list-dropdown">
+            <Dropdown>
+              <Dropdown.Toggle variant="success" id="dropdown-second">
+                Select City
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              <Dropdown.Item>Indore</Dropdown.Item>
-              <Dropdown.Item>Pune</Dropdown.Item>
-              <Dropdown.Item>Chennai</Dropdown.Item>
-              <Dropdown.Item>Bhopal</Dropdown.Item>
-              <Dropdown.Item>Ujjain</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+              <Dropdown.Menu>
+                <Dropdown.Item>Indore</Dropdown.Item>
+                <Dropdown.Item>Pune</Dropdown.Item>
+                <Dropdown.Item>Chennai</Dropdown.Item>
+                <Dropdown.Item>Bhopal</Dropdown.Item>
+                <Dropdown.Item>Ujjain</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
+        </div>
+        <div className='col-md-6'>
+          <div className="searchbox count-range d-flex">
+            <p>Primary Count:</p>
+            <InputGroup className="me-2">
+              <Form.Control placeholder="Start" aria-label="Start" />
+            </InputGroup>
+            <InputGroup className="">
+              <Form.Control placeholder="End" aria-label="Start" />
+            </InputGroup>
           </div>
+        </div>
+      </div>
       {/* <h4 style={{ paddingTop: '10px' }}>Leads Table</h4> */}
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">

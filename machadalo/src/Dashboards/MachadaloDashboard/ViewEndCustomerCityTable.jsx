@@ -82,7 +82,7 @@ export default function ViewEndCustomerCityTable(props) {
               {!isExpandRow.b2b && <BsChevronDown />}
             </td>
             <td>01</td>
-            <td>Customer 1</td>
+            <td>Indore</td>
             <td>3000</td>
             <td>3000</td>
             <td>3000</td>
@@ -260,7 +260,7 @@ export default function ViewEndCustomerCityTable(props) {
               <BsChevronDown />{' '}
             </td>
             <td>01</td>
-            <td>End Customer 2</td>
+            <td>Ujjain</td>
             <td>3000</td>
             <td>3000</td>
             <td>3000</td>
@@ -297,6 +297,94 @@ export default function ViewEndCustomerCityTable(props) {
                   <BsWhatsapp />
                 </span>
               </div> */}
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>3</td>
+            <td>Pune</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>
+              {' '}
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() => onClientLeadBtn('View Leads')}
+              >
+                View Leads
+              </Button>
+            </td>
+            <td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+              <BsChevronDown />{' '}
+            </td>
+            <td>4</td>
+            <td>Chennai</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>3000</td>
+            <td>
+              {' '}
+              <Button
+                variant="outline-dark"
+                className="lead-btn"
+                onClick={() => onClientLeadBtn('View Leads')}
+              >
+                View Leads
+              </Button>
+            </td>
+            <td>
               <div className="action-icon">
                 <span
                   onClick={(e) => {
