@@ -28,6 +28,7 @@ const NewLeadTabFilterAtom = atom({
     campaign_id: '',
     supplier_type: 'all',
     lead_type: 'Leads',
+    search:'',
     // next_page: 0,
     // start_date: '',
     // end_date: '',

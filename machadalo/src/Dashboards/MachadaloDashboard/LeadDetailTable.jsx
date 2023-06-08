@@ -15,7 +15,6 @@ import {
 import { useRecoilState } from 'recoil';
 import { showHideTable, showHideModalAtom } from '../_states';
 import LeadDetailModal from '../common/Modals/LeadDetailModal';
-import { GrFormView } from 'react-icons/gr';
 import Paginations from '../Pagination';
 import EmailModal from '../common/Modals/EmailModal';
 import WhatsappModal from '../common/Modals/WhatsappModal';
@@ -89,7 +88,6 @@ export default function ViewLeadDetailTable(props) {
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
-            <th></th>
             <th>S.No.</th>
             <th>Entity Name</th>
             <th>Entity Type</th>
@@ -105,10 +103,6 @@ export default function ViewLeadDetailTable(props) {
         </thead>
         <tbody>
           <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
-              {isExpandRow.b2b && <BsChevronUp />}
-              {!isExpandRow.b2b && <BsChevronDown />}
-            </td>
             <td>1</td>
             <td>CPWD Colony 2</td>
             <td>RS</td>
@@ -194,125 +188,7 @@ export default function ViewLeadDetailTable(props) {
               </div>
             </td>
           </tr>
-          {isExpandRow.b2b && (
-            <tr>
-              <td colSpan={12} className="nested-leads-table-colspan ">
-                <Table striped bordered hover className="nested-leads-table ">
-                  <thead className="leads-tbody">
-                    <tr>
-                      <th>S.No.</th>
-                      <th>Lead Source</th>
-                      <th>Total Lead Count Shared</th>
-                      <th>Lead accepted by QA</th>
-                      <th>Lead Accepted by Client</th>
-                      <th> Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1.1</td>
-                      <td>FOS</td>
-                      <td>5000</td>
-                      <td>2500</td>
-                      <td>2000</td>
-                      <td>
-                        {/* <div className="action-icon">
-                          <span
-                            onClick={(e) => {
-                              openEmailModal();
-                            }}
-                          >
-                            <BsEnvelopeFill />
-                          </span>
-                          <span>
-                            <BsArrowDownCircle />
-                          </span>
-                          <span
-                            onClick={(e) => {
-                              openWhatsAppModal();
-                            }}
-                          >
-                            <BsWhatsapp />
-                          </span>
-                        </div> */}
-                        <div className="action-icon">
-                          <span
-                            onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, email: { show: true } });
-                            }}
-                          >
-                            <BsEnvelopeFill />
-                          </span>
-                          <span>
-                            <BsArrowDownCircle />
-                          </span>
-                          <span
-                            onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
-                            }}
-                          >
-                            <BsWhatsapp />
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2.1</td>
-                      <td>RM</td>
-                      <td>5000</td>
-                      <td>2500</td>
-                      <td>2000</td>
-                      <td>
-                        {/* <div className="action-icon">
-                          <span
-                            onClick={(e) => {
-                              openEmailModal();
-                            }}
-                          >
-                            <BsEnvelopeFill />
-                          </span>
-                          <span>
-                            <BsArrowDownCircle />
-                          </span>
-                          <span
-                            onClick={(e) => {
-                              openWhatsAppModal();
-                            }}
-                          >
-                            <BsWhatsapp />
-                          </span>
-                        </div> */}
-                        <div className="action-icon">
-                          <span
-                            onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, email: { show: true } });
-                            }}
-                          >
-                            <BsEnvelopeFill />
-                          </span>
-                          <span>
-                            <BsArrowDownCircle />
-                          </span>
-                          <span
-                            onClick={(e) => {
-                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
-                            }}
-                          >
-                            <BsWhatsapp />
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </td>
-            </tr>
-          )}
-
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
-              <BsChevronDown />{' '}
-            </td>
             <td>2</td>
             <td>ganshyam test society</td>
             <td>RS</td>
@@ -397,9 +273,6 @@ export default function ViewLeadDetailTable(props) {
             </td>
           </tr>
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
-              <BsChevronDown />{' '}
-            </td>
             <td>3</td>
             <td>Test aman society</td>
             <td>RS</td>
@@ -455,9 +328,6 @@ export default function ViewLeadDetailTable(props) {
             </td>
           </tr>
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
-              <BsChevronDown />{' '}
-            </td>
             <td>4</td>
             <td>Maple Leaves Residency</td>
             <td>RS</td>
@@ -513,9 +383,6 @@ export default function ViewLeadDetailTable(props) {
             </td>
           </tr>
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
-              <BsChevronDown />{' '}
-            </td>
             <td>5</td>
             <td>Maple Leaves Residency</td>
             <td>RS</td>
@@ -571,9 +438,6 @@ export default function ViewLeadDetailTable(props) {
             </td>
           </tr>
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
-              <BsChevronDown />{' '}
-            </td>
             <td>6</td>
             <td>Maple Leaves Residency</td>
             <td>RS</td>
@@ -629,9 +493,6 @@ export default function ViewLeadDetailTable(props) {
             </td>
           </tr>
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
-              <BsChevronDown />{' '}
-            </td>
             <td>7</td>
             <td>Maple Leaves Residency</td>
             <td>RS</td>
@@ -687,9 +548,6 @@ export default function ViewLeadDetailTable(props) {
             </td>
           </tr>
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
-              <BsChevronDown />{' '}
-            </td>
             <td>8</td>
             <td>Maple Leaves Residency</td>
             <td>RS</td>
@@ -745,9 +603,6 @@ export default function ViewLeadDetailTable(props) {
             </td>
           </tr>
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
-              <BsChevronDown />{' '}
-            </td>
             <td>9</td>
             <td>Maple Leaves Residency</td>
             <td>RS</td>
@@ -803,9 +658,6 @@ export default function ViewLeadDetailTable(props) {
             </td>
           </tr>
           <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
-              <BsChevronDown />{' '}
-            </td>
             <td>10</td>
             <td>Akash Apartment</td>
             <td>RS</td>

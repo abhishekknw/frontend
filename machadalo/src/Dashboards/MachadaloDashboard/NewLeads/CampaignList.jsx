@@ -70,7 +70,7 @@ export default function CampaignList(props) {
   ];
 
   useEffect(() => {
-    NewLeadAction.getAllCampaigns();
+    NewLeadAction.getAllCampaigns(filters);
   }, []);
 
   const handlePageChange = async (event, value) => {
@@ -113,6 +113,13 @@ export default function CampaignList(props) {
   const handleSelect = (data) => {
     setFilters({...filters,lead_type:data.value})
   };
+  const onSearch = (e) =>{
+    let data = {filters , search:e.target.value};
+    setFilters({...filters,search:e.target.value})
+    if(e.target.value!='' && e.target.value.length>2){
+      NewLeadAction.getAllCampaigns(data);
+    }
+  }
   return (
     <>
       {/* <CommonTable headerData={headerData} bodyData={bodyData} firstColumn={true}/> */}
@@ -155,7 +162,7 @@ export default function CampaignList(props) {
         </div>
         <div className="searchbox">
           <InputGroup className="">
-            <Form.Control placeholder="Search" aria-label="Search" />
+            <Form.Control placeholder="Search" aria-label="Search" value={filters.search} onChange={(e)=>{onSearch(e)}}/>
             <InputGroup.Text>
               <BsSearch />
             </InputGroup.Text>

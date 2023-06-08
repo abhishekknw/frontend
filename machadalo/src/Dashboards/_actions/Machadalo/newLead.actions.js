@@ -15,7 +15,8 @@ const newLeadActions = () => {
   const [LeadsByCampaign, setLeadsByCampaign] = useRecoilState(LeadByCampaignsAtom);
 
   const getAllCampaigns = (data) => {
-    return fetchWrapper.get(`${Apis.New_Leads_Campaign}`).then((res) => {
+    let params = "&search=" + data.search;
+    return fetchWrapper.get(`${Apis.New_Leads_Campaign}${params}`).then((res) => {
       const { data } = res;
       AllCampaignList([...data])
     });
