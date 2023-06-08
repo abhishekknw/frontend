@@ -84,7 +84,7 @@ export default function ViewClientAgencyTable(props) {
               {!isExpandRow.b2b && <BsChevronDown />}
             </td>
             <td>01</td>
-            <td>Clinet 1</td>
+            <td>Asian Paints 1</td>
             <td>5000</td>
             <td>3000</td>
             <td>3000</td>

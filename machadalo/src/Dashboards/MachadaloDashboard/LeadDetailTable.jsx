@@ -9,7 +9,7 @@ import {
   BsEnvelopeFill,
   BsArrowDownCircle,
   BsWhatsapp,
-  BsFillEyeFill,
+  BsFillEyeFill,BsSearch
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
 import { showHideTable, showHideModalAtom } from '../_states';
@@ -18,6 +18,8 @@ import { GrFormView } from 'react-icons/gr';
 import Paginations from '../Pagination';
 import EmailModal from '../common/Modals/EmailModal';
 import WhatsappModal from '../common/Modals/WhatsappModal';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 export default function ViewLeadDetailTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
@@ -46,6 +48,34 @@ export default function ViewLeadDetailTable(props) {
   return (
     <>
       <LeadDetailModal />
+      <div className='d-flex pb-2'>
+
+      <div className="searchbox me-2">
+          <InputGroup className="">
+            <Form.Control placeholder="Search" aria-label="Search" />
+            <InputGroup.Text>
+              <BsSearch />
+            </InputGroup.Text>
+          </InputGroup>
+        </div>
+        <div>
+        </div>
+        <div className='campaign-list-dropdown me-2'>
+        <Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-second">
+              Select City
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item>Indore</Dropdown.Item>
+              <Dropdown.Item>Pune</Dropdown.Item>
+              <Dropdown.Item>Chennai</Dropdown.Item>
+              <Dropdown.Item>Bhopal</Dropdown.Item>
+              <Dropdown.Item>Ujjain</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          </div>
+          </div>
       {/* <h4 style={{ paddingTop: '10px' }}>Leads Table</h4> */}
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">

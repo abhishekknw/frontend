@@ -79,7 +79,7 @@ export default function ViewCampaignTable(props) {
               {!isExpandRow.b2b && <BsChevronDown />}
             </td>
             <td>01</td>
-            <td>Campaign 1</td>
+            <td>Kriti Test company</td>
             <td>5000</td>
             <td>3000</td>
             <td>3000</td>
