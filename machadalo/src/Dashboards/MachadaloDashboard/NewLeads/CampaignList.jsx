@@ -28,16 +28,16 @@ export default function CampaignList(props) {
   const CampaignList = useRecoilValue(AllCampaingsAtom);
   const [showHideTable, setshowHideTable] = useRecoilState(showHideTableAtom);
 
-  // const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
+  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
   const [paginationData, setPaginationData] = useState({
     pageNo: 1,
     totalcount: CampaignList.length,
     startIndex: 0,
     endIndex: 9,
   });
-  const [showHideModal, setshowHideModal] = useState({
-    EmailModal: false,
-  });
+  // const [showHideModal, setshowHideModal] = useState({
+  //   EmailModal: false,
+  // });
   const [campaignData, setCampaignData] = useState({});
   const [clientStatus, setClientStatus] = useState([]);
 
@@ -114,8 +114,10 @@ export default function CampaignList(props) {
 
             <Dropdown.Menu>
               <Dropdown.Item>All</Dropdown.Item>
-              <Dropdown.Item>Leads Verified by Machadalo</Dropdown.Item>
-              <Dropdown.Item>Decision pending</Dropdown.Item>
+              <Dropdown.Item>Leads</Dropdown.Item>
+              <Dropdown.Item>Survey</Dropdown.Item>
+              <Dropdown.Item>Survey Leads</Dropdown.Item>
+              <Dropdown.Item>Feedback</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 
@@ -126,8 +128,7 @@ export default function CampaignList(props) {
 
             <Dropdown.Menu>
               <Dropdown.Item>All</Dropdown.Item>
-              <Dropdown.Item>Leads Verified by Machadalo</Dropdown.Item>
-              <Dropdown.Item>Decision pending</Dropdown.Item>
+              <Dropdown.Item>Residential Society</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -172,9 +173,9 @@ export default function CampaignList(props) {
                   <td>
                     <div className="action-icon">
                       <span
-                        onClick={(e) => {
-                          openEmailModal(item);
-                        }}
+                       onClick={(e) => {
+                        setshowHideModal({ ...showHideModal, email: { show: true } });
+                      }}
                       >
                         <BsEnvelopeFill />
                       </span>
@@ -199,7 +200,7 @@ export default function CampaignList(props) {
 
       <EmailModal
         data={{ show: showHideModal.EmailModal, dropdownOptions: clientStatus }}
-        onSubmit={onSendEmail}
+        onSubmit={(e) =>{onSendEmail}}
         onCancel={(e) => setshowHideModal({ EmailModal: false })}
       />
 

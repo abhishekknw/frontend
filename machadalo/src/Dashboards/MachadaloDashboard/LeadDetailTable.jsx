@@ -19,15 +19,11 @@ import Paginations from '../Pagination';
 import EmailModal from '../common/Modals/EmailModal';
 import WhatsappModal from '../common/Modals/WhatsappModal';
 
-
 export default function ViewLeadDetailTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
-  const [showHideModal, setshowHideModal] = React.useState({
-    EmailModal: false,
-    WhatsAppModal: false,
-  });
+  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
   const onSendEmail = async (data, check) => {
     setshowHideModal({ EmailModal: false });
@@ -112,7 +108,7 @@ export default function ViewLeadDetailTable(props) {
               </Button>
             </td> */}
             <td>
-              <div className="action-icon">
+              {/* <div className="action-icon">
                 <span
                   onClick={(e) => {
                     openEmailModal();
@@ -126,6 +122,32 @@ export default function ViewLeadDetailTable(props) {
                 <span
                   onClick={(e) => {
                     openWhatsAppModal();
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div> */}
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                  }}
+                >
+                  <BsFillEyeFill />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
                   }}
                 >
                   <BsWhatsapp />
@@ -155,7 +177,7 @@ export default function ViewLeadDetailTable(props) {
                       <td>2500</td>
                       <td>2000</td>
                       <td>
-                        <div className="action-icon">
+                        {/* <div className="action-icon">
                           <span
                             onClick={(e) => {
                               openEmailModal();
@@ -173,6 +195,25 @@ export default function ViewLeadDetailTable(props) {
                           >
                             <BsWhatsapp />
                           </span>
+                        </div> */}
+                        <div className="action-icon">
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                            }}
+                          >
+                            <BsEnvelopeFill />
+                          </span>
+                          <span>
+                            <BsArrowDownCircle />
+                          </span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                            }}
+                          >
+                            <BsWhatsapp />
+                          </span>
                         </div>
                       </td>
                     </tr>
@@ -183,7 +224,7 @@ export default function ViewLeadDetailTable(props) {
                       <td>2500</td>
                       <td>2000</td>
                       <td>
-                        <div className="action-icon">
+                        {/* <div className="action-icon">
                           <span
                             onClick={(e) => {
                               openEmailModal();
@@ -197,6 +238,25 @@ export default function ViewLeadDetailTable(props) {
                           <span
                             onClick={(e) => {
                               openWhatsAppModal();
+                            }}
+                          >
+                            <BsWhatsapp />
+                          </span>
+                        </div> */}
+                        <div className="action-icon">
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                            }}
+                          >
+                            <BsEnvelopeFill />
+                          </span>
+                          <span>
+                            <BsArrowDownCircle />
+                          </span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
                             }}
                           >
                             <BsWhatsapp />
@@ -250,7 +310,7 @@ export default function ViewLeadDetailTable(props) {
               </Button>
             </td> */}
             <td>
-              <div className="action-icon">
+              {/* <div className="action-icon">
                 <span
                   onClick={(e) => {
                     openEmailModal();
@@ -264,6 +324,32 @@ export default function ViewLeadDetailTable(props) {
                 <span
                   onClick={(e) => {
                     openWhatsAppModal();
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div> */}
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                  }}
+                >
+                  <BsFillEyeFill />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
                   }}
                 >
                   <BsWhatsapp />

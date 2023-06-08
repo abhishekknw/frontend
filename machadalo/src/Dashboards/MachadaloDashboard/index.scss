@@ -303,7 +303,7 @@ table .btn{
 .breadcrumb li {
     display: inline-block;
     position: relative;
-    margin: 10px 10px;
+    margin: 8px 5px;
 
     // Last child
     &:last-child {
@@ -357,11 +357,11 @@ table .btn{
     display: inline-block;
     position: relative;
     line-height: 1.9;
-    padding: 1px 20px;
+    padding: 1px 8px;
     color: #3e59e3 !important;
     font-weight: 400;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 10px;
 }
 
 .breadcrumb a:hover {

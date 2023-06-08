@@ -24,10 +24,12 @@ export default function LeadsTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
-  const [showHideModal, setshowHideModal] = useState({
-    EmailModal: false,
-    WhatsAppModal: false,
-  });
+  // const [showHideModal, setshowHideModal] = useState({
+  //   EmailModal: false,
+  //   WhatsAppModal: false,
+  // });
+  const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
+
   const onSendEmail = async (data, check) => {
     setshowHideModal({ EmailModal: false });
   };
@@ -37,7 +39,7 @@ export default function LeadsTable(props) {
   };
 
   const OnshareWhatsApp = () => {
-    setshowHideModal({ ...showHideModal, WhatsAppModal: false });
+    // setshowHideModal({ ...showHideModal, WhatsAppModal: false });
   };
   const openWhatsAppModal = () => {
     setshowHideModal({ ...showHideModal, WhatsAppModal: true });
@@ -120,25 +122,25 @@ export default function LeadsTable(props) {
         ),
         action: (
           <div>
-            <div className="action-icon">
-              <span
-                onClick={(e) => {
-                  openEmailModal();
-                }}
-              >
-                <BsEnvelopeFill />
-              </span>
-              <span>
-                <BsArrowDownCircle />
-              </span>
-              <span
-                onClick={(e) => {
-                  openWhatsAppModal();
-                }}
-              >
-                <BsWhatsapp />
-              </span>
-            </div>
+             <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
           </div>
         ),
       },
@@ -172,25 +174,25 @@ export default function LeadsTable(props) {
         ),
         action: (
           <div>
-            <div className="action-icon">
-              <span
-                onClick={(e) => {
-                  openEmailModal();
-                }}
-              >
-                <BsEnvelopeFill />
-              </span>
-              <span>
-                <BsArrowDownCircle />
-              </span>
-              <span
-                onClick={(e) => {
-                  openWhatsAppModal();
-                }}
-              >
-                <BsWhatsapp />
-              </span>
-            </div>
+             <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
           </div>
         ),
       },
