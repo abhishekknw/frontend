@@ -11,8 +11,7 @@ import Table from 'react-bootstrap/Table';
 import CampaignList from './NewLeads/CampaignList';
 import NewLeadsTab from './NewLeads/NewLeads';
 export default function MachadaloDashboard(props) {
-  const NewLeadAction = newLeadActions();
-  NewLeadAction.getAllCampaigns();
+  
   function getDates(date) {
     // console.log(date)
   }

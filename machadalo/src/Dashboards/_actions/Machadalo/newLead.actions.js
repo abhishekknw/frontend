@@ -43,11 +43,11 @@ const newLeadActions = () => {
           params+='&emails='+ data.emails;
           params+="&Client_Status=" + data.emailType;
           params+="&tabname=" + '';
-          //  "v0/ui/b2b/email-leads-summary/?lead_type=Leads&supplier_code=all&campaign_id=KRIKRI4EF8&emails=undefined&tabname=&Client_Status=Lead%20verified%20by%20Machadalo",
-        return fetchWrapper.get(`${Apis.SendEmail_By_Campaign}${params}`).then((res) => {
-          const { data } = res;
           console.log("!111111111111111111111111")
-        });
+          //  "v0/ui/b2b/email-leads-summary/?lead_type=Leads&supplier_code=all&campaign_id=KRIKRI4EF8&emails=undefined&tabname=&Client_Status=Lead%20verified%20by%20Machadalo",
+        // return fetchWrapper.get(`${Apis.SendEmail_By_Campaign}${params}`).then((res) => {
+        //   const { data } = res;
+        // });
     }
 
       return {

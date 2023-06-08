@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import { SnackbarProvider } from 'notistack';
 import { useRecoilValue } from 'recoil';
 import MachadaloDashboard from '../machadaloDashboard';
+import {alertAtom} from '../../_states/alert';
 
 export default function MachadaloRoutes(props) {
   const { match } = props;
-  console.log(props)
-  const open = true;
+  const open = useRecoilValue(alertAtom);
 
   return (
     <>

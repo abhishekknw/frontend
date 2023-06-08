@@ -19,16 +19,16 @@ function WhatsappModal(props) {
         </Modal.Header>
         <Modal.Body>
           <form className='wp-form'>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Whatsapp Number</label>
+            <div className="form-group">
+              <label>Whatsapp Number</label>
               <input
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
               />
             </div>
-            <button type="submit" class="btn btn-primary submit-btn">
+            <button type="submit" className="btn btn-primary submit-btn">
               Submit
             </button>
           </form>
