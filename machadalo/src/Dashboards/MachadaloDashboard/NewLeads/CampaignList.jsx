@@ -110,7 +110,7 @@ export default function CampaignList(props) {
     }
   };
   const getLeadsByCampaign = async (row) => {
-    let temp = {...filters,campaign_id:row.campaign_id}
+    let temp = {...filters,campaign_id:row.campaign_id,next_page:0}
     await NewLeadAction.getLeadByCampaignId(temp);
     await NewLeadAction.getClientStatusList(row);
     setFilters({...filters,campaign_id:row.campaign_id})
@@ -153,7 +153,7 @@ export default function CampaignList(props) {
     <>
       {/* <CommonTable headerData={headerData} bodyData={bodyData} firstColumn={true}/> */}
       <div className='text-center'>
-          <h4 className='table-head'>Campaigns </h4>
+          <h4 className='table-head'>{('Campaigns').toUpperCase()}</h4>
         </div>
       <div className="d-flex justify-content-between align-items-center pt-2 pb-3">
         <div className="campaign-list-dropdown">
@@ -228,7 +228,7 @@ export default function CampaignList(props) {
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
                   <td>{dayjs(item.start_date).format('DD-MMM-YYYY')}</td>
-                  <td>{item.supplier_count}</td>
+                  <td>{item.supplier_count}({item.unique_count})</td>
                   <td>
                     <Button
                       variant="outline-dark"

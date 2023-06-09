@@ -59,15 +59,15 @@ export default function ViewLeadDetailTable(props) {
           <div className="campaign-list-dropdown">
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-second">
-                Select City
+                Select Status
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item>Indore</Dropdown.Item>
-                <Dropdown.Item>Pune</Dropdown.Item>
-                <Dropdown.Item>Chennai</Dropdown.Item>
-                <Dropdown.Item>Bhopal</Dropdown.Item>
-                <Dropdown.Item>Ujjain</Dropdown.Item>
+                <Dropdown.Item>Lead Verified By Machadalo</Dropdown.Item>
+                <Dropdown.Item>Lead Verified By Client</Dropdown.Item>
+                <Dropdown.Item>Not a Decision Maker</Dropdown.Item>
+                <Dropdown.Item>Meeting Confirmed</Dropdown.Item>
+                <Dropdown.Item>Meeting Completed</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>

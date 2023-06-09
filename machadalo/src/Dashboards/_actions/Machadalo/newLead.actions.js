@@ -32,7 +32,7 @@ const newLeadActions = () => {
     params += '&supplier_type=all';
     params += '&search=' + data.leadSearch;
     params += '&lead_type=' + data.lead_type;
-    params += '&next_page=0';
+    params += '&next_page=' + data.next_page;
     params += '&city=';
     params += '&startDate=&endDate=';
     return fetchWrapper.get(`${Apis.Lead_By_Campaign}${params}`).then((res) => {

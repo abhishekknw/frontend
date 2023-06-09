@@ -33,10 +33,12 @@ export default function NewViewLeadsTable({ Data }) {
   });
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
-  const handlePageChange = (event, value) => {
+  const handlePageChange = async(event, value) => {
     setPaginationData({
       pageNo: value,
     });
+    let params = {...filters,next_page:value-1}
+    await NewLeadAction.getLeadByCampaignId(params)
   };
   const openCommentModal = async(row) => {
     setshowHideModal({
@@ -52,11 +54,15 @@ export default function NewViewLeadsTable({ Data }) {
     await NewLeadAction.getCommentListByIds(params);
 
   };
-  const onSearch = (e) =>{
-    let data = {...filters , leadSearch:e.target.value};
+  const onSearch = async(e) =>{
+    let data = {...filters , leadSearch:e.target.value,next_page:paginationData.pageNo};
     setFilters({...filters,leadSearch:e.target.value})
     if(e.target.value!='' && e.target.value.length>2){
-      NewLeadAction.getLeadByCampaignId(data);
+      await NewLeadAction.getLeadByCampaignId(data);
+    }
+    if(!e.target.value || e.target.value===''){
+      let data = {...filters , leadSearch:'',next_page:0};
+      await NewLeadAction.getLeadByCampaignId(data);
     }
   }
   const handleSelect = async (status, row) => {
@@ -77,7 +83,7 @@ export default function NewViewLeadsTable({ Data }) {
   return (
     <>
      <div className='text-center'>
-          <h4 className='table-head'>{CampaignData?.name}</h4>
+          <h4 className='table-head'>{CampaignData?.name?.toUpperCase()}</h4>
         </div>
       <div className="d-flex justify-content-between align-items-center">
         <div></div>
@@ -168,6 +174,7 @@ export default function NewViewLeadsTable({ Data }) {
           })}
         </tbody>
       </Table>
+      {console.log(LeadsByCampaign)}
       <Paginations
         pageSize={20}
         totalItems={LeadsByCampaign.length}

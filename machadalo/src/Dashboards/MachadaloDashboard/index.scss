@@ -264,9 +264,16 @@ body{
 
 table tbody tr td,
 table tbody tr th {
+    // padding: 5px 11px !important;
+    // vertical-align: middle;
+    // text-align: center !important;
     padding: 5px 11px !important;
     vertical-align: middle;
     text-align: center !important;
+    max-width: 100px;
+    white-space: normal !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 table tr th{
     text-align: center !important;
