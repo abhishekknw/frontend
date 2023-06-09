@@ -432,18 +432,31 @@ table .btn{
   }
   
   .email-dropdown .dropdown-item {
-    font-size: 14px !important;
+    font-size: 11px !important;
+    white-space: break-spaces;
+    line-height: 1.7;
+  }
+  .email-dropdown .dropdown-menu.show{
+    max-width: 200px;
   }
   
   .email-dropdown .dropdown-toggle:hover {
     border-color: #ced4da !important;
+  }
+  .lead-btn-main .lead-btn:first-child{
+    margin-bottom: 5px;
   }
   
   .btn:focus-visible {
     box-shadow: none !important;
     outline: none;
   }
-  
+  .lead-dropdown button{
+    max-width: 120px;
+    // white-space: break-spaces;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .email-dropdown .dropdown-toggle:first-child:active {
     background-color: inherit;
     color: #000000;

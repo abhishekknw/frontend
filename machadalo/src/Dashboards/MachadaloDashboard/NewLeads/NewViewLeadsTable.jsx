@@ -106,7 +106,7 @@ export default function NewViewLeadsTable({ Data }) {
               <tr key={index}>
                 <td>{index + 1}</td>
                 {row.map((data, index) => (index != 0 ? <td key={index}>{data?.value}</td> : null))}
-                <td>
+                <td className='lead-dropdown'>
                   <Dropdown className="table-dropdown-status">
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                       {row[0]?.macchadalo_client_status}
@@ -141,14 +141,14 @@ export default function NewViewLeadsTable({ Data }) {
                     Comment
                   </Button>
                 </td>
-                <td>
+                <td className='lead-btn-main'>
                   <Button
                     variant="outline-dark"
                     className="lead-btn"
                     onClick={() => getLeadsByCampaign(item)}
                   >
                     Accept
-                  </Button>
+                  </Button><br/>
                   <Button
                     variant="outline-dark"
                     className="lead-btn"

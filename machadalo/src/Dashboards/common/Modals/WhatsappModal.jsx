@@ -25,6 +25,7 @@ function WhatsappModal(props) {
                 type="text"
                 className="form-control"
                 id="exampleInputNumber"
+                placeholder='Enter Numbers'
                 // aria-describedby="emailHelp"
               />
             </div>
@@ -33,14 +34,14 @@ function WhatsappModal(props) {
             </button>
           </form>
         </Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           <Button variant="secondary" className='submit-btn' onClick={handleClose}>
             Close
           </Button>
-          {/* <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleClose}>
             Save Changes
-          </Button> */}
-        </Modal.Footer>
+          </Button>
+        </Modal.Footer> */}
       </Modal>
     </>
   );

@@ -54,9 +54,7 @@ function CommentModal(props) {
         </Modal.Header>
         <Modal.Body>
           <div className="status-div">
-            <div className="d-flex align-items-center strip-div justify-content-between">
-              <p className="p-0">Comments :</p>
-
+             
               <div className="form-group email-dropdown">
                 <Dropdown>
                   <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -81,7 +79,6 @@ function CommentModal(props) {
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
-            </div>
             <div className="comment-box-outer">
               {CommentList &&
                 CommentList.map((item, index) => {
@@ -119,11 +116,11 @@ function CommentModal(props) {
             </Button>
           </div>
         </Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           <Button variant="secondary" className="submit-btn" onClick={handleClose}>
             Close
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
     </>
   );

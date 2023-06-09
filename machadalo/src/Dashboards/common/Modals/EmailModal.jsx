@@ -113,14 +113,14 @@ function EmailModal(props) {
             </div>
           </form>
         </Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           <Button variant="secondary" className="submit-btn" onClick={handleClose}>
             Close
           </Button>
-          {/* <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleClose}>
             Save Changes
-          </Button> */}
-        </Modal.Footer>
+          </Button>
+        </Modal.Footer> */}
       </Modal>
     </>
   );
