@@ -34,6 +34,7 @@ const NewLeadTabFilterAtom = atom({
     supplier_type: 'all',
     lead_type: 'Leads',
     search:'',
+    leadSearch:''
     // next_page: 0,
     // start_date: '',
     // end_date: '',

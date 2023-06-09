@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import CommonTable from '../../Table/CommonTable';
-import { LeadByCampaignsAtom, ClientStatusAtom } from '../../_states/Machadalo/newLeads';
+import { LeadByCampaignsAtom, ClientStatusAtom,NewLeadTabFilterAtom } from '../../_states/Machadalo/newLeads';
 import {showHideModalAtom } from '../../_states/Constant';
 import { useRecoilValue,useRecoilState } from 'recoil';
 import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
@@ -26,13 +26,11 @@ export default function NewViewLeadsTable({ Data }) {
   const CampaignData = Data;
   const LeadsByCampaign = useRecoilValue(LeadByCampaignsAtom);
   const clientStatuslist = useRecoilValue(ClientStatusAtom);
+  const [filters,setFilters] = useRecoilState(NewLeadTabFilterAtom)
   const NewLeadAction = newLeadActions();
   const [paginationData, setPaginationData] = useState({
     pageNo: 1,
   });
-  // const [showHideModal, setshowHideModal] = useState({
-  //   CommentModal: false,
-  // });
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
   const handlePageChange = (event, value) => {
@@ -54,9 +52,13 @@ export default function NewViewLeadsTable({ Data }) {
     await NewLeadAction.getCommentListByIds(params);
 
   };
-  const onComment = () => {
-    // setshowHideModal({ CommentModal: false });
-  };
+  const onSearch = (e) =>{
+    let data = {...filters , leadSearch:e.target.value};
+    setFilters({...filters,leadSearch:e.target.value})
+    if(e.target.value!='' && e.target.value.length>2){
+      NewLeadAction.getLeadByCampaignId(data);
+    }
+  }
 
   const handleSelect = async (status, row) => {
     let object = [
@@ -77,7 +79,7 @@ export default function NewViewLeadsTable({ Data }) {
         </div>
         <div className="searchbox">
           <InputGroup className="mb-3">
-            <Form.Control placeholder="Search" aria-label="Search" />
+            <Form.Control placeholder="Search" aria-label="Search" value={filters.leadSearch} onChange={(e)=>{onSearch(e)}}/>
             <InputGroup.Text>
               <BsSearch />
             </InputGroup.Text>
@@ -167,11 +169,7 @@ export default function NewViewLeadsTable({ Data }) {
         onPageChange={handlePageChange}
       />
 
-      <CommentModal
-        // data={{ show: showHideModal.CommentModal }}
-        // onSubmit={onComment}
-        // onCancel={(e) => setshowHideModal({ CommentModal: false })}
-      />
+      <CommentModal />
     </>
   );
 }

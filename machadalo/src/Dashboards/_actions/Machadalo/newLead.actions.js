@@ -27,9 +27,11 @@ const newLeadActions = () => {
     // ?campaign_id=CPPCPP7270&supplier_type=all&next_page=0&city=&startDate=&endDate=&search=
     let params = '?campaign_id=' + data.campaign_id;
     params += '&supplier_type=all';
+    params +='&search=' +data.leadSearch;
+    params +='&lead_type=' +data.lead_type;
     params += '&next_page=0';
     params += '&city=';
-    params += '&startDate=&endDate=&search=';
+    params += '&startDate=&endDate=';
     return fetchWrapper.get(`${Apis.Lead_By_Campaign}${params}`).then((res) => {
       const { data } = res;
       setLeadsByCampaign({ ...data })

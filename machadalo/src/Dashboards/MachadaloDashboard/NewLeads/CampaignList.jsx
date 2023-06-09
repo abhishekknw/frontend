@@ -91,10 +91,12 @@ export default function CampaignList(props) {
     }
   };
   const getLeadsByCampaign = async (row) => {
-    await NewLeadAction.getLeadByCampaignId(row);
+    let temp = {...filters,campaign_id:row.campaign_id}
+    await NewLeadAction.getLeadByCampaignId(temp);
+    await NewLeadAction.getClientStatusList(row);
+    setFilters({...filters,campaign_id:row.campaign_id})
     setshowHideTable({ ...showHideTable, viewLeads: { show: true } });
     setCampaignData(row);
-    await NewLeadAction.getClientStatusList(row);
   };
 
   const openEmailModal = async (item) => {
