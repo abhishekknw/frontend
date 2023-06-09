@@ -34,10 +34,12 @@ export default function NewViewLeadsTable({ Data }) {
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
   const handlePageChange = async(event, value) => {
+    setFilters({...filters,leadSearch:''});
     setPaginationData({
       pageNo: value,
     });
     let params = {...filters,next_page:value-1}
+    params.leadSearch = ''
     await NewLeadAction.getLeadByCampaignId(params)
   };
   const openCommentModal = async(row) => {
@@ -55,7 +57,7 @@ export default function NewViewLeadsTable({ Data }) {
 
   };
   const onSearch = async(e) =>{
-    let data = {...filters , leadSearch:e.target.value,next_page:paginationData.pageNo};
+    let data = {...filters , leadSearch:e.target.value,next_page:0};
     setFilters({...filters,leadSearch:e.target.value})
     if(e.target.value!='' && e.target.value.length>2){
       await NewLeadAction.getLeadByCampaignId(data);
