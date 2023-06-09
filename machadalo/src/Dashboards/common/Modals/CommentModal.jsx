@@ -12,6 +12,7 @@ function CommentModal(props) {
   const NewLeadAction = newLeadActions();
   const CommentList = useRecoilValue(CommentListAtom);
   const [commentType, setCommentType] = useState({ name: 'All', value: 'all' });
+  const [commentValue, setCommentValue] = useState('');
   const DropdownOption = [
     { name: 'All', value: 'all' },
     { name: 'Company Comment', value: 'company_comment' },
@@ -26,11 +27,23 @@ function CommentModal(props) {
   const handleSelect = async (data) => {
     let params = {
       comment_type: data.value,
-      _id: '63107c31b3cf3b1a2a78f580',
-      requirement_id: 7451,
+      _id: showHideModal.comment.data._id,
+      requirement_id: showHideModal.comment.data.requirement_id,
     };
-    setCommentType({name:data.name,value:data.value})
+    setCommentType({ name: data.name, value: data.value });
     await NewLeadAction.getCommentListByIds(params);
+  };
+
+  const onAddComment = async () => {
+    let object = [
+      {
+        comment: commentValue,
+        _id: showHideModal.comment.data._id,
+        requirement_id: showHideModal.comment.data.requirement_id,
+      },
+    ];
+    setCommentValue('');
+    await NewLeadAction.postCommentById(object);
   };
 
   return (
@@ -86,8 +99,22 @@ function CommentModal(props) {
                   );
                 })}
             </div>
-            <textarea rows={2} className="fullwidth"></textarea>
-            <Button variant="secondary" className="btn btn-primary">
+            <textarea
+              rows={2}
+              className="fullwidth"
+              value={commentValue}
+              onChange={(e) => {
+                setCommentValue(e.target.value);
+              }}
+            ></textarea>
+            <Button
+              variant="secondary"
+              className="btn btn-primary"
+              disabled={commentValue === ''}
+              onClick={(e) => {
+                onAddComment();
+              }}
+            >
               Add
             </Button>
           </div>

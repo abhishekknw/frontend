@@ -93,9 +93,19 @@ const newLeadActions = () => {
   const getCommentListByIds = (data) => {
     let params = '?requirement_id=' + data.requirement_id + '&_id=' + data._id + "&comment_type="+ data.comment_type;
     return fetchWrapper.get(`${Apis.Get_Comment_List}${params}`).then((res) => {
-      // alertActions.success(Labels.Email_Success);
-      // setError(false);
       SetCommentListAtom([...res.data])
+    });
+  }
+
+  const postCommentById = (data) => {
+    return fetchWrapper.post(`${Apis.Get_Comment_List}`,{ data: data }).then((res) => {
+      if(res.status){
+        alertActions.success(res.data);
+        getCommentListByIds({...data[0],comment_type:'all'})
+      }
+      else{
+        alertActions.error(Labels.Error);
+      }
     });
   }
 
@@ -106,6 +116,7 @@ const newLeadActions = () => {
     SendEmailsByCampaign,
     updateClientStatus,
     getCommentListByIds,
+    postCommentById
   };
 }
 export { newLeadActions };

@@ -43,14 +43,13 @@ export default function NewViewLeadsTable({ Data }) {
   const openCommentModal = async(row) => {
     setshowHideModal({
       ...showHideModal,
-      comment: { show: true, tableName: 'LeadDetail', data: row },
+      comment: { show: true, tableName: 'LeadDetail', data: row[0] },
     });
-    console.log(row,"1111111111")
     let params = 
       {
         comment_type: 'all',
-        _id: '63107c31b3cf3b1a2a78f580',
-        requirement_id: 7451,
+        _id: row[0]._id,
+        requirement_id: row[0].requirement_id,
       }
     await NewLeadAction.getCommentListByIds(params);
 
