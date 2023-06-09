@@ -76,11 +76,12 @@ export default function NewViewLeadsTable({ Data }) {
   };
   return (
     <>
+     <div className='text-center'>
+          <h4 className='table-head'>{CampaignData?.name}</h4>
+        </div>
       <div className="d-flex justify-content-between align-items-center">
         <div></div>
-        <div>
-          <h4>{CampaignData?.name}</h4>
-        </div>
+       
         <div className="searchbox">
           <InputGroup className="mb-3">
             <Form.Control placeholder="Search" aria-label="Search" value={filters.leadSearch} onChange={(e)=>{onSearch(e)}}/>

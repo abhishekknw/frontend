@@ -152,6 +152,9 @@ export default function CampaignList(props) {
   return (
     <>
       {/* <CommonTable headerData={headerData} bodyData={bodyData} firstColumn={true}/> */}
+      <div className='text-center'>
+          <h4 className='table-head'>Campaigns </h4>
+        </div>
       <div className="d-flex justify-content-between align-items-center pt-2 pb-3">
         <div className="campaign-list-dropdown">
           <Dropdown className="me-4">
@@ -199,9 +202,7 @@ export default function CampaignList(props) {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        <div>
-          <h4>Campaigns </h4>
-        </div>
+       
         <div className="searchbox">
           <InputGroup className="">
             <Form.Control placeholder="Search" aria-label="Search" value={filters.search} onChange={(e)=>{onSearch(e)}}/>

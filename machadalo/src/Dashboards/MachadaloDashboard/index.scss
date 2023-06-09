@@ -235,14 +235,24 @@ body{
 .nested-leads-table {
     border: 1px #D3D3D3 solid;
 }
+.form-out-box{
+    position: relative;
+    margin-bottom: 20px;
+}
+.form-out-box .action-icon
+{
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
 
 .action-icon span {
     border: 1px solid #3e59e3;
     border-radius: 16px;
     margin-left: 5px !important;
     display: inline-flex;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     align-items: center;
     justify-content: center;
 }
@@ -425,6 +435,14 @@ table .btn{
     border: 1px solid #ced4da;
     font-family: "Segoe UI", Roboto;
     font-weight: 400;
+    text-transform: capitalize;
+  }
+  .email-modal.email-dropdown .dropdown-menu a{
+    font-size: 12px !important;
+  }
+ .email-modal.email-dropdown .dropdown-menu.show{
+    max-width: 100%;
+
   }
   
   .email-dropdown .dropdown-menu.show {
@@ -561,6 +579,11 @@ table .btn{
 }
 .wpModal .btn-close:before{
     content: "+";
+}
+.table-head{
+    font-weight: 700;
+    font-size: 20px;
+    padding: 10px 0px;
 }
 .table-dropdown-status .btn-success,.table-dropdown-status .btn-success:hover{
     background-color: #3e59e3;

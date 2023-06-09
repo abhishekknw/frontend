@@ -31,6 +31,7 @@ function DownloadModal(props) {
         </Modal.Header>
         <Modal.Body>
           <Form.Group controlId="formFile" className="mb-3">
+            <div className='form-out-box'>
             <Form.Label>Upload Comments :</Form.Label>
             <Form.Control type="file" onChange={(e)=>{setUploadFile(e.target.files[0])}}/>
             <div className="action-icon">
@@ -40,6 +41,9 @@ function DownloadModal(props) {
                 <BsFillCloudUploadFill />
               </span>
             </div>
+
+            </div>
+            <div className='form-out-box'>
             <Form.Label>Download Lead Summary:</Form.Label>
             <div className="action-icon">
               <span
@@ -47,6 +51,7 @@ function DownloadModal(props) {
               >
                 <BsCloudDownloadFill />
               </span>
+            </div>
             </div>
           </Form.Group>
         </Modal.Body>

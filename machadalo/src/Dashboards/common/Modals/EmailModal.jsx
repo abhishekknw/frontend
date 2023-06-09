@@ -49,7 +49,7 @@ function EmailModal(props) {
                 }}
               />
             </div>
-            <div className="form-group email-dropdown">
+            <div className="form-group email-dropdown email-modal">
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   {formData.emailType != '' ? formData.emailType : 'Email Type'}
