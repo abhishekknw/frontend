@@ -22,6 +22,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Paginations from '../../Pagination';
 import EmailModal from '../../common/Modals/EmailModal';
 import NewViewLeadsTable from './NewViewLeadsTable';
+import DownloadModal from '../../common/Modals/DownloadModal';
 
 export default function CampaignList(props) {
   const NewLeadAction = newLeadActions();
@@ -248,7 +249,15 @@ export default function CampaignList(props) {
                       >
                         <BsEnvelopeFill />
                       </span>
-                      <span>
+                      <span 
+                      onClick={(e) => {
+                        setshowHideModal({
+                          ...showHideModal,
+                          download: { show: true, tableName: 'Campaign', data: item },
+                        });
+                      }}
+                      // onClick={(e)=>{NewLeadAction.downloadLeadsSummary(item.campaign_id)}}
+                      >
                         <BsArrowDownCircle />
                       </span>
                     </div>
@@ -266,6 +275,7 @@ export default function CampaignList(props) {
         pageNo={paginationData.pageNo}
         onPageChange={handlePageChange}
       />
+      <DownloadModal />
 
       {showHideTable.viewLeads.show && <NewViewLeadsTable Data={campaignData} />}
     </>

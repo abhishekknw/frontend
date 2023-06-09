@@ -1,10 +1,11 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState,useRecoilValue } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { AllCampaingsAtom, LeadByCampaignsAtom, showViewLeadsTableAtom, ClientStatusAtom, CommentListAtom } from '../../_states/Machadalo/newLeads';
+import { AllCampaingsAtom, LeadByCampaignsAtom, showViewLeadsTableAtom, ClientStatusAtom, CommentListAtom,NewLeadTabFilterAtom } from '../../_states/Machadalo/newLeads';
 import { errorAtom } from '../../_states/alert';
-
+import dayjs from 'dayjs';
+import API_URL from '../../../config';
 
 const newLeadActions = () => {
   const fetchWrapper = useFetchWrapper();
@@ -14,6 +15,7 @@ const newLeadActions = () => {
   const SetClientStatus = useSetRecoilState(ClientStatusAtom);
   const SetCommentListAtom = useSetRecoilState(CommentListAtom);
   const [LeadsByCampaign, setLeadsByCampaign] = useRecoilState(LeadByCampaignsAtom);
+  const filters = useRecoilValue(NewLeadTabFilterAtom)
 
   const getAllCampaigns = (data) => {
     let params = "&search=" + data.search;
@@ -152,6 +154,56 @@ const newLeadActions = () => {
     });
   };
 
+  const downloadLeadsSummary = (id) => {
+    let url = `${API_URL.API_URL}/v0/ui/b2b/download-leads-summary/?lead_type=${filters.lead_type}&supplier_code=${filters.supplier_type}&campaign_id=${id}`;
+    if (filters?.start_date && filters?.end_date) {
+      url +=
+        '&start_date=' +
+        dayjs(filters.start_date).format('DD-MM-YYYY') +
+        '&end_date=' +
+        dayjs(filters.end_date).format('DD-MM-YYYY');
+    }
+
+    if (filters?.start_acceptance_date && filters?.end_acceptance_date) {
+      url +=
+        '&start_acceptance_date=' +
+        dayjs(filters.start_acceptance_date).format('DD-MM-YYYY') +
+        '&end_acceptance_date=' +
+        dayjs(filters.end_acceptance_date).format('DD-MM-YYYY');
+    }
+    if (filters?.start_update_date && filters?.end_update_date) {
+      url +=
+        '&start_update_date=' +
+        dayjs(filters.start_update_date).format('DD-MM-YYYY') +
+        '&end_update_date=' +
+        dayjs(filters.end_update_date).format('DD-MM-YYYY');
+    }
+    if (filters?.city) {
+      url += '&city=' + filters.city;
+    }
+    if (filters?.client_status) {
+      url += `&client_status=${filters.client_status}`;
+    }
+    if (filters?.from_primary_count && filters?.to_primary_count) {
+      url +=
+        '&from_primary_count=' +
+        filters.from_primary_count +
+        '&to_primary_count=' +
+        filters.to_primary_count;
+    }
+    window.open(url, '_blank');
+  };
+
+  const uploadCommentFile = (file) => {
+    return fetchWrapper.post(`${Apis.Upload_Comments_File}`, file, true).then((res) => {
+      if (res.status) {
+        alertActions.success(res.data);
+      } else {
+        alertActions.error(Labels.Error);
+      }
+    });
+  };
+
   return {
     getAllCampaigns,
     getLeadByCampaignId,
@@ -160,7 +212,9 @@ const newLeadActions = () => {
     updateClientStatus,
     getCommentListByIds,
     postCommentById,
-    acceptDeclineLeads
+    acceptDeclineLeads,
+    downloadLeadsSummary,
+    uploadCommentFile
   };
 }
 export { newLeadActions };

@@ -29,7 +29,8 @@ const showHideModalAtom = atom({
     email:{show:false,tableName:''},
     whatsapp:{show:false,tableName:''},
     leadDetail:{show:false,tableName:''},
-    comment:{show:false,tableName:''}
+    comment:{show:false,tableName:''},
+    download:{show:false,tableName:''},
   }
 })
 
