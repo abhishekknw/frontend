@@ -59,7 +59,6 @@ export default function NewViewLeadsTable({ Data }) {
       NewLeadAction.getLeadByCampaignId(data);
     }
   }
-
   const handleSelect = async (status, row) => {
     let object = [
       {
@@ -69,6 +68,11 @@ export default function NewViewLeadsTable({ Data }) {
       },
     ];
     await NewLeadAction.updateClientStatus(object);
+  };
+
+  const AcceptDeclineLeads = async (data, status) => {
+    let obj = [{ client_status: status, requirement_id: data?.requirement_id, _id: data?._id }];
+    await NewLeadAction.acceptDeclineLeads(obj);
   };
   return (
     <>
@@ -145,14 +149,15 @@ export default function NewViewLeadsTable({ Data }) {
                   <Button
                     variant="outline-dark"
                     className="lead-btn"
-                    onClick={() => getLeadsByCampaign(item)}
+                    onClick={(e) => AcceptDeclineLeads(row[0],"Accept")}
                   >
                     Accept
                   </Button><br/>
                   <Button
                     variant="outline-dark"
                     className="lead-btn"
-                    onClick={() => getLeadsByCampaign(item)}
+                    onClick={(e) => AcceptDeclineLeads(row[0],"Decline")}
+                    disabled={row[0]?.client_status === 'Decline'}
                   >
                     Decline
                   </Button>

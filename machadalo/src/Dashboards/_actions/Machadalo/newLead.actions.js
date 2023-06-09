@@ -2,7 +2,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { AllCampaingsAtom, LeadByCampaignsAtom, showViewLeadsTableAtom, ClientStatusAtom,CommentListAtom } from '../../_states/Machadalo/newLeads';
+import { AllCampaingsAtom, LeadByCampaignsAtom, showViewLeadsTableAtom, ClientStatusAtom, CommentListAtom } from '../../_states/Machadalo/newLeads';
 import { errorAtom } from '../../_states/alert';
 
 
@@ -28,8 +28,8 @@ const newLeadActions = () => {
     // ?campaign_id=CPPCPP7270&supplier_type=all&next_page=0&city=&startDate=&endDate=&search=
     let params = '?campaign_id=' + data.campaign_id;
     params += '&supplier_type=all';
-    params +='&search=' +data.leadSearch;
-    params +='&lead_type=' +data.lead_type;
+    params += '&search=' + data.leadSearch;
+    params += '&lead_type=' + data.lead_type;
     params += '&next_page=0';
     params += '&city=';
     params += '&startDate=&endDate=';
@@ -94,23 +94,63 @@ const newLeadActions = () => {
   }
 
   const getCommentListByIds = (data) => {
-    let params = '?requirement_id=' + data.requirement_id + '&_id=' + data._id + "&comment_type="+ data.comment_type;
+    let params = '?requirement_id=' + data.requirement_id + '&_id=' + data._id + "&comment_type=" + data.comment_type;
     return fetchWrapper.get(`${Apis.Get_Comment_List}${params}`).then((res) => {
       SetCommentListAtom([...res.data])
     });
   }
 
   const postCommentById = (data) => {
-    return fetchWrapper.post(`${Apis.Get_Comment_List}`,{ data: data }).then((res) => {
-      if(res.status){
+    return fetchWrapper.post(`${Apis.Get_Comment_List}`, { data: data }).then((res) => {
+      if (res.status) {
         alertActions.success(res.data);
-        getCommentListByIds({...data[0],comment_type:'all'})
+        getCommentListByIds({ ...data[0], comment_type: 'all' })
       }
-      else{
+      else {
         alertActions.error(Labels.Error);
       }
     });
   }
+
+  const acceptDeclineLeads = (data) => {
+    let update = data;
+    return fetchWrapper.post(`${Apis.Accept_Decline_Leads}`, { data: data }).then((res) => {
+      if (res.status) {
+        alertActions.success(res.data);
+        // setErorr(false);
+        if (update[0].client_status == 'Accept') {
+          let newList = LeadsByCampaign.values.filter((data) => data[0]._id !== update[0]?._id);
+          setLeadsByCampaign({ ...LeadsByCampaign, values: newList });
+        }
+        else {
+          let newList = [];
+          let tempData = LeadsByCampaign['values'];
+          for (let i in tempData) {
+            if (tempData[i][0]._id == update[0]._id) {
+              let temp = [];
+              for (let j in tempData[i]) {
+                if (tempData[i][j]._id == update[0]._id) {
+                  temp.push({
+                    ...tempData[i][j],
+                    client_status: update[0]['client_status'],
+                  });
+                } else {
+                  temp.push({ ...tempData[i][j] });
+                }
+              }
+              newList.push([...temp]);
+            } else {
+              newList.push(tempData[i]);
+            }
+          }
+          setLeadsByCampaign({ ...LeadsByCampaign, values: newList });
+        }
+      } else {
+        alertActions.error(Labels.Error);
+        // setErorr(true);
+      }
+    });
+  };
 
   return {
     getAllCampaigns,
@@ -119,7 +159,8 @@ const newLeadActions = () => {
     SendEmailsByCampaign,
     updateClientStatus,
     getCommentListByIds,
-    postCommentById
+    postCommentById,
+    acceptDeclineLeads
   };
 }
 export { newLeadActions };

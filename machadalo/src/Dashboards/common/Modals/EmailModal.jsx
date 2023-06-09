@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { showHideModalAtom } from '../../_states/Constant';
-import { useRecoilState } from 'recoil';
+import { showHideModalAtom,ClientStatusAtom } from '../../_states';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
 import { errorAtom } from '../../_states/alert';
 
 function EmailModal(props) {
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
+  const clientStatusList = useRecoilValue(ClientStatusAtom);
   const [error, setError] = useRecoilState(errorAtom);
   const [formData, setFormData] = useState({ emails: '', emailType: '' });
-  const clientStatusList = props?.data?.dropdownOptions;
+  // const clientStatusList = props?.data?.dropdownOptions;
   const NewLeadAction = newLeadActions();
 
   const handleClose = () => {

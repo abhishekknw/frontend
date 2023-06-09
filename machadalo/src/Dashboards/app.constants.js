@@ -7,7 +7,6 @@ export const Labels = {
 }
 
 
-
 export const Apis = {
     New_Leads_Campaign: "v0/ui/b2b/get-basic-lead-distribution-campaign/?tabname=basic",
     Lead_By_Campaign: 'v0/ui/b2b/get-dynamic-basic-lead-form-headers/',
@@ -15,5 +14,6 @@ export const Apis = {
     SendEmail_By_Campaign : "v0/ui/b2b/email-leads-summary/",
     Update_Client_Status : "v0/ui/b2b/update-machadalo-client-status/",
     Get_Comment_List : "v0/ui/b2b/basic-client-comment/",
+    Accept_Decline_Leads: 'v0/ui/b2b/update-client-decision-status/',
 }
 
