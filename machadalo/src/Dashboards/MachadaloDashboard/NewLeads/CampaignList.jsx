@@ -68,6 +68,24 @@ export default function CampaignList(props) {
     { name: 'Feedback', value: 'Feedback' },
     { name: 'Survey Leads', value: 'Survey Leads' },
   ];
+  const supplierTypeCode = [{name:'ALL', value:'all'},
+    {name:'Residential Society', value:'RS'},
+      {name:'Corporate Park', value:'CP'},
+      {name:'Bus Shelter', value:'BS'},
+      {name:'Gym', value:'GY'},
+      {name:'Saloon', value:'SA'},
+      {name:'Retail Store', value:'RE'},
+      {name:'Bus', value:'BU'},
+      {name:'Corporates', value:'CO'},
+      {name:'Educational Institute', value:'EI'},
+      {name:'Gantry', value:'GN'},
+      {name:'Hospital', value:'HL'},
+      {name:'Hording', value:'HO'},
+      {name:'In-shop Retail', value:'IR'},
+      {name:'Radio Channel', value:'RC'},
+      {name:'TV Channel', value:'TV'},
+      {name:'Mix', value:'mix'},
+      ];
 
   useEffect(() => {
     NewLeadAction.getAllCampaigns(filters);
@@ -117,6 +135,12 @@ export default function CampaignList(props) {
     setFilters({...filters,lead_type:data.value})
     NewLeadAction.getAllCampaigns(temp);
   };
+  const handleSupplier = (data) => {
+    let temp = {...filters,supplier_type:data.value}
+    setFilters({...filters,supplier_type:data.value})
+    NewLeadAction.getAllCampaigns(temp);
+  };
+  
   const onSearch = (e) =>{
     let data = {...filters , search:e.target.value};
     setFilters({...filters,search:e.target.value})
@@ -153,11 +177,24 @@ export default function CampaignList(props) {
 
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-second">
-              All
+              {supplierTypeCode.find(item => item.value === filters.supplier_type).name}
             </Dropdown.Toggle>
             <Dropdown.Menu>
+              {supplierTypeCode.map((item,index)=>{
+                return(
+                  <Dropdown.Item
+                  key={index}
+                  eventKey={item.value}
+                  onClick={(e) => {
+                    handleSupplier(item);
+                  }}
+                  active={filters.supplier_type===item.value}
+                  >{item.name}
+                  </Dropdown.Item>
+                )
+              })
+              }
               <Dropdown.Item>All</Dropdown.Item>
-              <Dropdown.Item>Residential Society</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>

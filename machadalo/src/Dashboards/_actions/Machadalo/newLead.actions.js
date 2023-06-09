@@ -17,7 +17,8 @@ const newLeadActions = () => {
 
   const getAllCampaigns = (data) => {
     let params = "&search=" + data.search;
-    params+="lead_type=" + data.lead_type;
+    params += "lead_type=" + data.lead_type;
+    params += '&supplier_type=' + data.supplier_type;
     return fetchWrapper.get(`${Apis.New_Leads_Campaign}${params}`).then((res) => {
       const { data } = res;
       AllCampaignList([...data])

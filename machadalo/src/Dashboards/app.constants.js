@@ -6,9 +6,7 @@ export const Labels = {
     Email_Success: "Email Sent Successfully",    
 }
 
-export const RoutesName = {
-    Login: '/login',   
-}
+
 
 export const Apis = {
     New_Leads_Campaign: "v0/ui/b2b/get-basic-lead-distribution-campaign/?tabname=basic",
