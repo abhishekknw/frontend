@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import CommonTable from '../../Table/CommonTable';
-import { AllCampaingsAtom, showHideTableAtom,NewLeadTabFilterAtom } from '../../_states/Machadalo/newLeads';
+import {
+  AllCampaingsAtom,
+  showHideTableAtom,
+  NewLeadTabFilterAtom,
+} from '../../_states/Machadalo/newLeads';
 import { showHideModalAtom } from '../../_states';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
@@ -15,6 +19,8 @@ import {
   BsArrowDownCircle,
   BsWhatsapp,
   BsSearch,
+  BsSortDown,
+  BsSortUp,
 } from 'react-icons/bs';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -29,7 +35,7 @@ export default function CampaignList(props) {
   const CampaignList = useRecoilValue(AllCampaingsAtom);
   const [showHideTable, setshowHideTable] = useRecoilState(showHideTableAtom);
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
-  const [filters,setFilters] = useRecoilState(NewLeadTabFilterAtom)
+  const [filters, setFilters] = useRecoilState(NewLeadTabFilterAtom);
   const [paginationData, setPaginationData] = useState({
     pageNo: 1,
     totalcount: CampaignList.length,
@@ -51,9 +57,11 @@ export default function CampaignList(props) {
 
     {
       name: 'Start Date',
+      sortIcon: { show: true, direction: <BsSortDown /> },
     },
     {
       name: 'Supplier Count',
+      sortIcon: { show: true, direction: <BsSortDown /> },
     },
     {
       name: 'View Leads',
@@ -69,24 +77,25 @@ export default function CampaignList(props) {
     { name: 'Feedback', value: 'Feedback' },
     { name: 'Survey Leads', value: 'Survey Leads' },
   ];
-  const supplierTypeCode = [{name:'ALL', value:'all'},
-    {name:'Residential Society', value:'RS'},
-      {name:'Corporate Park', value:'CP'},
-      {name:'Bus Shelter', value:'BS'},
-      {name:'Gym', value:'GY'},
-      {name:'Saloon', value:'SA'},
-      {name:'Retail Store', value:'RE'},
-      {name:'Bus', value:'BU'},
-      {name:'Corporates', value:'CO'},
-      {name:'Educational Institute', value:'EI'},
-      {name:'Gantry', value:'GN'},
-      {name:'Hospital', value:'HL'},
-      {name:'Hording', value:'HO'},
-      {name:'In-shop Retail', value:'IR'},
-      {name:'Radio Channel', value:'RC'},
-      {name:'TV Channel', value:'TV'},
-      {name:'Mix', value:'mix'},
-      ];
+  const supplierTypeCode = [
+    { name: 'ALL', value: 'all' },
+    { name: 'Residential Society', value: 'RS' },
+    { name: 'Corporate Park', value: 'CP' },
+    { name: 'Bus Shelter', value: 'BS' },
+    { name: 'Gym', value: 'GY' },
+    { name: 'Saloon', value: 'SA' },
+    { name: 'Retail Store', value: 'RE' },
+    { name: 'Bus', value: 'BU' },
+    { name: 'Corporates', value: 'CO' },
+    { name: 'Educational Institute', value: 'EI' },
+    { name: 'Gantry', value: 'GN' },
+    { name: 'Hospital', value: 'HL' },
+    { name: 'Hording', value: 'HO' },
+    { name: 'In-shop Retail', value: 'IR' },
+    { name: 'Radio Channel', value: 'RC' },
+    { name: 'TV Channel', value: 'TV' },
+    { name: 'Mix', value: 'mix' },
+  ];
 
   useEffect(() => {
     NewLeadAction.getAllCampaigns(filters);
@@ -110,10 +119,10 @@ export default function CampaignList(props) {
     }
   };
   const getLeadsByCampaign = async (row) => {
-    let temp = {...filters,campaign_id:row.campaign_id,next_page:0}
+    let temp = { ...filters, campaign_id: row.campaign_id, next_page: 0 };
     await NewLeadAction.getLeadByCampaignId(temp);
     await NewLeadAction.getClientStatusList(row);
-    setFilters({...filters,campaign_id:row.campaign_id})
+    setFilters({ ...filters, campaign_id: row.campaign_id });
     setshowHideTable({ ...showHideTable, viewLeads: { show: true } });
     setCampaignData(row);
   };
@@ -132,29 +141,61 @@ export default function CampaignList(props) {
     // setshowHideModal({ EmailModal: false });
   };
   const handleSelect = (data) => {
-    let temp = {...filters,lead_type:data.value}
-    setFilters({...filters,lead_type:data.value})
+    let temp = { ...filters, lead_type: data.value };
+    setFilters({ ...filters, lead_type: data.value });
     NewLeadAction.getAllCampaigns(temp);
   };
   const handleSupplier = (data) => {
-    let temp = {...filters,supplier_type:data.value}
-    setFilters({...filters,supplier_type:data.value})
+    let temp = { ...filters, supplier_type: data.value };
+    setFilters({ ...filters, supplier_type: data.value });
     NewLeadAction.getAllCampaigns(temp);
   };
-  
-  const onSearch = (e) =>{
-    let data = {...filters , search:e.target.value};
-    setFilters({...filters,search:e.target.value})
-    if(e.target.value!='' && e.target.value.length>2){
+
+  const onSearch = (e) => {
+    let data = { ...filters, search: e.target.value };
+    setFilters({ ...filters, search: e.target.value });
+    if (e.target.value != '' && e.target.value.length > 2) {
       NewLeadAction.getAllCampaigns(data);
     }
-  }
+  };
+
+  const sortTableBy = (key, check) => {
+    // console.log(key, check)
+    // let sortedData = [];
+    // if (key == 'Supplier Count') {
+    //   // supplier_count
+    //   // sortedData = data.sort(function (a, b) {
+    //   //   let x = a.name.toLowerCase();
+    //   //   let y = b.name.toLowerCase();
+    //   //   if (x > y) {
+    //   //     return 1;
+    //   //   }
+    //   //   if (x < y) {
+    //   //     return -1;
+    //   //   }
+    //   //   return 0;
+    //   // });
+    //   console.log(CampaignList)
+    //   sortedData.sort(function(a, b) {
+    //     let keyA = new Date(a.start_date);
+    //     let keyB = new Date(b.start_date);
+    //     if (keyA < keyB) return -1;
+    //     if (keyA > keyB) return 1;
+    //     return 0;
+    //   });
+    //   console.log(sortedData)
+    // } else {
+    //   sortedData = CampaignList.sort(function (a, b) {
+    //     return a.supplier_count - b.supplier_count;
+    //   });
+    // }
+  };
   return (
     <>
       {/* <CommonTable headerData={headerData} bodyData={bodyData} firstColumn={true}/> */}
-      <div className='text-center'>
-          <h4 className='table-head'>{('Campaigns').toUpperCase()}</h4>
-        </div>
+      <div className="text-center">
+        <h4 className="table-head">{'Campaigns'.toUpperCase()}</h4>
+      </div>
       <div className="d-flex justify-content-between align-items-center pt-2 pb-3">
         <div className="campaign-list-dropdown">
           <Dropdown className="me-4">
@@ -165,12 +206,12 @@ export default function CampaignList(props) {
               {dropdownOption.map((item, index) => {
                 return (
                   <Dropdown.Item
-                  key={index}
+                    key={index}
                     eventKey={item.value}
                     onClick={(e) => {
                       handleSelect(item);
                     }}
-                    active={filters.lead_type===item.value}
+                    active={filters.lead_type === item.value}
                   >
                     {item.name}
                   </Dropdown.Item>
@@ -181,31 +222,38 @@ export default function CampaignList(props) {
 
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-second">
-              {supplierTypeCode.find(item => item.value === filters.supplier_type).name}
+              {supplierTypeCode.find((item) => item.value === filters.supplier_type).name}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              {supplierTypeCode.map((item,index)=>{
-                return(
+              {supplierTypeCode.map((item, index) => {
+                return (
                   <Dropdown.Item
-                  key={index}
-                  eventKey={item.value}
-                  onClick={(e) => {
-                    handleSupplier(item);
-                  }}
-                  active={filters.supplier_type===item.value}
-                  >{item.name}
+                    key={index}
+                    eventKey={item.value}
+                    onClick={(e) => {
+                      handleSupplier(item);
+                    }}
+                    active={filters.supplier_type === item.value}
+                  >
+                    {item.name}
                   </Dropdown.Item>
-                )
-              })
-              }
+                );
+              })}
               <Dropdown.Item>All</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
-       
+
         <div className="searchbox">
           <InputGroup className="">
-            <Form.Control placeholder="Search" aria-label="Search" value={filters.search} onChange={(e)=>{onSearch(e)}}/>
+            <Form.Control
+              placeholder="Search"
+              aria-label="Search"
+              value={filters.search}
+              onChange={(e) => {
+                onSearch(e);
+              }}
+            />
             <InputGroup.Text>
               <BsSearch />
             </InputGroup.Text>
@@ -216,7 +264,16 @@ export default function CampaignList(props) {
         <thead className="leads-tbody">
           <tr>
             {headerData?.map((item, index) => {
-              return <th key={index}>{item.name}</th>;
+              return (
+                <th
+                  key={index}
+                  onClick={(e) => {
+                    sortTableBy(item.name, item?.sortIcon?.show);
+                  }}
+                >
+                  {item.name} {item?.sortIcon?.direction}
+                </th>
+              );
             })}
           </tr>
         </thead>
@@ -228,7 +285,9 @@ export default function CampaignList(props) {
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
                   <td>{dayjs(item.start_date).format('DD-MMM-YYYY')}</td>
-                  <td>{item.supplier_count}({item.unique_count})</td>
+                  <td>
+                    {item.supplier_count}({item.unique_count})
+                  </td>
                   <td>
                     <Button
                       variant="outline-dark"
@@ -246,18 +305,19 @@ export default function CampaignList(props) {
                             ...showHideModal,
                             email: { show: true, tableName: 'Campaign', data: item },
                           });
+                          NewLeadAction.getClientStatusList(item);
                         }}
                       >
                         <BsEnvelopeFill />
                       </span>
-                      <span 
-                      onClick={(e) => {
-                        setshowHideModal({
-                          ...showHideModal,
-                          download: { show: true, tableName: 'Campaign', data: item },
-                        });
-                      }}
-                      // onClick={(e)=>{NewLeadAction.downloadLeadsSummary(item.campaign_id)}}
+                      <span
+                        onClick={(e) => {
+                          setshowHideModal({
+                            ...showHideModal,
+                            download: { show: true, tableName: 'Campaign', data: item },
+                          });
+                        }}
+                        // onClick={(e)=>{NewLeadAction.downloadLeadsSummary(item.campaign_id)}}
                       >
                         <BsArrowDownCircle />
                       </span>
