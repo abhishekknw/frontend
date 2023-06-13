@@ -32,7 +32,7 @@ import DownloadModal from '../../common/Modals/DownloadModal';
 
 export default function CampaignList(props) {
   const NewLeadAction = newLeadActions();
-  const CampaignList = useRecoilValue(AllCampaingsAtom);
+  const [CampaignList, setCampaignList] = useRecoilState(AllCampaingsAtom);
   const [showHideTable, setshowHideTable] = useRecoilState(showHideTableAtom);
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
   const [filters, setFilters] = useRecoilState(NewLeadTabFilterAtom);
@@ -47,29 +47,35 @@ export default function CampaignList(props) {
   // });
   const [campaignData, setCampaignData] = useState({});
 
-  const headerData = [
+  const [headerData, setheaderData] = useState([
     {
       name: 'S.No.',
+      key: 'index',
     },
     {
       name: 'Campaign Name',
+      key: 'campaign_name',
     },
 
     {
       name: 'Start Date',
+      key: 'start_date',
       sortIcon: { show: true, direction: <BsSortDown /> },
     },
     {
       name: 'Supplier Count',
+      key: 'supplier_count',
       sortIcon: { show: true, direction: <BsSortDown /> },
     },
     {
       name: 'View Leads',
+      key: 'View Leads',
     },
     {
       name: 'Action',
+      key: 'Action',
     },
-  ];
+  ]);
   const dropdownOption = [
     { name: 'All', value: 'All' },
     { name: 'Leads', value: 'Leads' },
@@ -159,36 +165,38 @@ export default function CampaignList(props) {
     }
   };
 
-  const sortTableBy = (key, check) => {
-    // console.log(key, check)
-    // let sortedData = [];
-    // if (key == 'Supplier Count') {
-    //   // supplier_count
-    //   // sortedData = data.sort(function (a, b) {
-    //   //   let x = a.name.toLowerCase();
-    //   //   let y = b.name.toLowerCase();
-    //   //   if (x > y) {
-    //   //     return 1;
-    //   //   }
-    //   //   if (x < y) {
-    //   //     return -1;
-    //   //   }
-    //   //   return 0;
-    //   // });
-    //   console.log(CampaignList)
-    //   sortedData.sort(function(a, b) {
-    //     let keyA = new Date(a.start_date);
-    //     let keyB = new Date(b.start_date);
-    //     if (keyA < keyB) return -1;
-    //     if (keyA > keyB) return 1;
-    //     return 0;
-    //   });
-    //   console.log(sortedData)
-    // } else {
-    //   sortedData = CampaignList.sort(function (a, b) {
-    //     return a.supplier_count - b.supplier_count;
-    //   });
-    // }
+  const sortTableBy = (header) => {
+    if (header.key === 'supplier_count') {
+      let sortedData = [...CampaignList].sort((a, b) =>
+        header?.sortIcon?.show
+          ? a.supplier_count - b.supplier_count
+          : b.supplier_count - a.supplier_count
+      );
+      setCampaignList(sortedData);
+    } else if (header.key === 'start_date') {
+      let sortedData = [...CampaignList].sort((a, b) => {
+        return (header?.sortIcon?.show)
+          ? new Date(b.start_date) - new Date(a.start_date)
+          : new Date(a.start_date) - new Date(b.start_date);
+      });
+      setCampaignList(sortedData);
+    }
+    if (header?.sortIcon?.show != undefined) {
+      let newHeader = headerData.map((item, index) => {
+        if (item.key === header.key) {
+          return {
+            ...item,
+            sortIcon: {
+              show: !header?.sortIcon?.show,
+              direction: header?.sortIcon?.show ? <BsSortUp /> : <BsSortDown />,
+            },
+          };
+        } else {
+          return item;
+        }
+      });
+      setheaderData(newHeader);
+    }
   };
   return (
     <>
@@ -268,10 +276,10 @@ export default function CampaignList(props) {
                 <th
                   key={index}
                   onClick={(e) => {
-                    sortTableBy(item.name, item?.sortIcon?.show);
+                    sortTableBy(item);
                   }}
                 >
-                  {item.name} {item?.sortIcon?.direction}
+                  {item.name} <span>{item?.sortIcon?.direction}</span>
                 </th>
               );
             })}
