@@ -203,6 +203,11 @@ const newLeadActions = () => {
       }
     });
   };
+  const getSupplierLeadsById = (id) => {
+    return fetchWrapper.get(`${Apis.Get_Leads_By_Supplier}${id}`).then((res) => {
+      SetCommentListAtom([...res.data])
+    });
+  }
 
   return {
     getAllCampaigns,
@@ -214,7 +219,8 @@ const newLeadActions = () => {
     postCommentById,
     acceptDeclineLeads,
     downloadLeadsSummary,
-    uploadCommentFile
+    uploadCommentFile,
+    getSupplierLeadsById
   };
 }
 export { newLeadActions };

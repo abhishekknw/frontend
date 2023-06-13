@@ -22,7 +22,7 @@ import EmailModal from '../common/Modals/EmailModal';
 import WhatsappModal from '../common/Modals/WhatsappModal';
 export default function LeadsTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
-  const [selectedId ,setSelectedId] = React.useState('');
+  const [selectedId, setSelectedId] = React.useState('');
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
   // const [showHideModal, setshowHideModal] = useState({
@@ -92,14 +92,12 @@ export default function LeadsTable(props) {
     });
   }
 
-  function showHideRow (id){
-    if(id===selectedId){
-      setSelectedId('')
+  function showHideRow(id) {
+    if (id === selectedId) {
+      setSelectedId('');
+    } else {
+      setSelectedId(id);
     }
-    else{
-      setSelectedId(id)
-    }
-    setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })
   }
   const bodyData = () => {
     let data = [
@@ -133,25 +131,25 @@ export default function LeadsTable(props) {
         ),
         action: (
           <div>
-             <div className="action-icon">
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, email: { show: true } });
-                  }}
-                >
-                  <BsEnvelopeFill />
-                </span>
-                <span>
-                  <BsArrowDownCircle />
-                </span>
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
-                  }}
-                >
-                  <BsWhatsapp />
-                </span>
-              </div>
+            <div className="action-icon">
+              <span
+                onClick={(e) => {
+                  setshowHideModal({ ...showHideModal, email: { show: true } });
+                }}
+              >
+                <BsEnvelopeFill />
+              </span>
+              <span>
+                <BsArrowDownCircle />
+              </span>
+              <span
+                onClick={(e) => {
+                  setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                }}
+              >
+                <BsWhatsapp />
+              </span>
+            </div>
           </div>
         ),
       },
@@ -185,25 +183,25 @@ export default function LeadsTable(props) {
         ),
         action: (
           <div>
-             <div className="action-icon">
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, email: { show: true } });
-                  }}
-                >
-                  <BsEnvelopeFill />
-                </span>
-                <span>
-                  <BsArrowDownCircle />
-                </span>
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
-                  }}
-                >
-                  <BsWhatsapp />
-                </span>
-              </div>
+            <div className="action-icon">
+              <span
+                onClick={(e) => {
+                  setshowHideModal({ ...showHideModal, email: { show: true } });
+                }}
+              >
+                <BsEnvelopeFill />
+              </span>
+              <span>
+                <BsArrowDownCircle />
+              </span>
+              <span
+                onClick={(e) => {
+                  setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                }}
+              >
+                <BsWhatsapp />
+              </span>
+            </div>
           </div>
         ),
       },
@@ -212,11 +210,14 @@ export default function LeadsTable(props) {
     let body = data.map((ele, index) => {
       return (
         <>
-          <tr className={selectedId===ele.type ? 'nested-table' : ''} key={index}>
+          <tr className={selectedId === ele.type ? 'nested-table' : ''} key={index}>
             <td
               className="sn-table"
-              onClick={(e) => {showHideRow(ele.type)}}
-            >{selectedId===ele.type ? <BsChevronUp />:<BsChevronDown />}
+              onClick={(e) => {
+                showHideRow(ele.type);
+              }}
+            >
+              {selectedId === ele.type ? <BsChevronUp /> : <BsChevronDown />}
               {/* {isExpandRow.b2b && <BsChevronUp />}
               {!isExpandRow.b2b && <BsChevronDown />} */}
             </td>
@@ -229,7 +230,7 @@ export default function LeadsTable(props) {
             <td>{ele.agencyWise}</td>
             <td>{ele.action}</td>
           </tr>
-          {selectedId===ele.type && <FosRmTable />}
+          {selectedId === ele.type && <FosRmTable />}
           {/* {ele.type=='B2C' && isExpandRow.b2b && <FosRmTable />} */}
         </>
       );

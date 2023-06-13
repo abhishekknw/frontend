@@ -14,7 +14,7 @@ import dayjs from 'dayjs';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { BsSortDown, BsSearch, BsSortUp } from 'react-icons/bs';
+import { BsSortDown, BsSearch, BsSortUp, BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import Paginations from '../../Pagination';
 import DateFilter from '../../common/date-range-filter/dateFilter';
 import CommentModal from '../../common/Modals/CommentModal';
@@ -29,6 +29,7 @@ export default function NewViewLeadsTable({ Data }) {
     pageNo: 1,
   });
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
+  const [selectedId, setSelectedId] = React.useState('');
 
   const handlePageChange = async (event, value) => {
     setFilters({ ...filters, leadSearch: '' });
@@ -77,6 +78,11 @@ export default function NewViewLeadsTable({ Data }) {
     let obj = [{ client_status: status, requirement_id: data?.requirement_id, _id: data?._id }];
     await NewLeadAction.acceptDeclineLeads(obj);
   };
+
+  async function showHideRow(id) {
+    setSelectedId(id === selectedId ? '' : id);
+    await NewLeadAction.getSupplierLeadsById(id);
+  }
   return (
     <>
       <div className="text-center">
@@ -119,7 +125,16 @@ export default function NewViewLeadsTable({ Data }) {
           {LeadsByCampaign?.values.map((row, index) => {
             return (
               <tr key={index}>
-                <td>{index + 1}</td>
+                <td>
+                  {index + 1}
+                  <span
+                    onClick={(e) => {
+                      showHideRow(row[0]?.supplier_id);
+                    }}
+                  >
+                    {selectedId === row[0]?._id ? <BsChevronUp /> : <BsChevronDown />}
+                  </span>
+                </td>
                 {row.map((data, index) => (index != 0 ? <td key={index}>{data?.value}</td> : null))}
                 <td className="lead-dropdown">
                   <Dropdown className="table-dropdown-status">
@@ -188,18 +203,20 @@ export default function NewViewLeadsTable({ Data }) {
       />
 
       <CommentModal />
+      {/* <body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 
-      {/* <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</body>
 
-<div class="container" id="no-more-tables">
+<div className="container" id="no-more-tables">
   <p>&nbsp;</p>
-  <table class="table table-hover">
+  <table className="table table-hover">
     <thead>
-      <tr class="active">
-        <th class="col-xs-2"><strong>WO Ref</strong></th>
-        <th class="col-xs-2"><strong>Reported</strong></th>
-        <th class="col-xs-6"><strong>Type</strong></th>
-        <th class="col-xs-2"><strong>Completed</strong></th>
+      <tr className="active">
+        <th className="col-xs-2"><strong>WO Ref</strong></th>
+        <th className="col-xs-2"><strong>Reported</strong></th>
+        <th className="col-xs-6"><strong>Type</strong></th>
+        <th className="col-xs-2"><strong>Completed</strong></th>
       </tr>
     </thead>
     <tbody>
@@ -210,28 +227,28 @@ export default function NewViewLeadsTable({ Data }) {
         <td data-title="Completed">01/06/2015</td>
       </tr>
       <tr>
-        <td colspan="6" class="hiddenRow">
-          <div class="collapse" id="demo1">
-            <table class="table table-nested">
+        <td colspan="6" className="hiddenRow">
+          <div className="collapse" id="demo1">
+            <table className="table table-nested">
               <tbody>
                 <tr>
-                  <td class="col-xs-4 col-sm-2 active"><strong>Description</strong></td>
+                  <td className="col-xs-4 col-sm-2 active"><strong>Description</strong></td>
                   <td>07777 123456 ferroli flashing fault 37 no htg or hot water gas boiler no alt form of hot water</td>
                 </tr>
                 <tr>
-                  <td class="col-xs-4 col-sm-2 active"><strong>Action taken</strong></td>
+                  <td className="col-xs-4 col-sm-2 active"><strong>Action taken</strong></td>
                   <td>
                     The work was completed by the contractor on 04-FEB-2013
                   </td>
                 </tr>
                 <tr>
-                  <td class="col-xs-4 col-sm-2 active"><strong>Contractor name</strong></td>
+                  <td className="col-xs-4 col-sm-2 active"><strong>Contractor name</strong></td>
                   <td>
                     PMD North West
                   </td>
                 </tr>
                 <tr>
-                  <td class="col-xs-4 col-sm-2 active" rowspan="2"><strong>Job lines</strong></td>
+                  <td className="col-xs-4 col-sm-2 active" rowspan="2"><strong>Job lines</strong></td>
                   <td>
                     1. Gutter:Clean/Flush Out(Per Elev) Gutter
                   </td>
@@ -253,28 +270,28 @@ export default function NewViewLeadsTable({ Data }) {
         <td data-title="Completed">01/05/2015</td>
       </tr>
       <tr>
-        <td colspan="6" class="hiddenRow">
-          <div class="collapse" id="demo2">
-            <table class="table">
+        <td colspan="6" className="hiddenRow">
+          <div className="collapse" id="demo2">
+            <table className="table">
               <tbody>
                 <tr>
-                  <td class="col-xs-4 col-sm-2 active"><strong>Description</strong></td>
+                  <td className="col-xs-4 col-sm-2 active"><strong>Description</strong></td>
                   <td>07777 123456 ferroli flashing fault 37 no htg or hot water gas boiler no alt form of hot water</td>
                 </tr>
                 <tr>
-                  <td class="col-xs-4 col-sm-2 active"><strong>Action taken</strong></td>
+                  <td className="col-xs-4 col-sm-2 active"><strong>Action taken</strong></td>
                   <td>
                     The work was completed by the contractor on 04-FEB-2013
                   </td>
                 </tr>
                 <tr>
-                  <td class="col-xs-4 col-sm-2 active"><strong>Contractor name</strong></td>
+                  <td className="col-xs-4 col-sm-2 active"><strong>Contractor name</strong></td>
                   <td>
                     PMD North West
                   </td>
                 </tr>
                 <tr>
-                  <td class="col-xs-4 col-sm-2 active" rowspan="2"><strong>Job lines</strong></td>
+                  <td className="col-xs-4 col-sm-2 active" rowspan="2"><strong>Job lines</strong></td>
                   <td>
                     1. Gutter:Clean/Flush Out(Per Elev) Gutter
                   </td>

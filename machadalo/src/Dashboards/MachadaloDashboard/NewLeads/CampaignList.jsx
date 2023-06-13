@@ -141,16 +141,12 @@ export default function CampaignList(props) {
     // setshowHideModal({ ...showHideModal, email: { show: true } });
   };
 
-  const onSendEmail = (data, check) => {
-    data.campaign_id = campaignData.campaign_id;
-    let res = NewLeadAction.SendEmailsByCampaign(data);
-    // setshowHideModal({ EmailModal: false });
-  };
   const handleSelect = (data) => {
     let temp = { ...filters, lead_type: data.value };
     setFilters({ ...filters, lead_type: data.value });
     NewLeadAction.getAllCampaigns(temp);
   };
+
   const handleSupplier = (data) => {
     let temp = { ...filters, supplier_type: data.value };
     setFilters({ ...filters, supplier_type: data.value });

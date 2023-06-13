@@ -11,6 +11,7 @@ import {
   BsWhatsapp,
   BsFillEyeFill,
   BsSearch,
+  BsSortDown,
 } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
 import { showHideTable, showHideModalAtom } from '../_states';
@@ -27,24 +28,55 @@ export default function ViewLeadDetailTable(props) {
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
-  const onSendEmail = async (data, check) => {
-    setshowHideModal({ EmailModal: false });
-  };
-  const openEmailModal = async (item) => {
-    setshowHideModal({ ...showHideModal, EmailModal: true });
-    // setshowHideModal({ ...showHideModal, email: { show: true } });
-  };
-
-  const OnshareWhatsApp = () => {
-    setshowHideModal({ ...showHideModal, WhatsAppModal: false });
-  };
-  const openWhatsAppModal = () => {
-    setshowHideModal({ ...showHideModal, WhatsAppModal: true });
-  };
   const [page, setPage] = React.useState(1);
   const handlePageChange = (event, value) => {
     setPage(value);
   };
+
+  const [headerData, setheaderData] = React.useState([
+    {
+      name: 'S.No.',
+      key: 'index',
+    },
+    {
+      name: 'ENTITY NAME	',
+      key: 'entity_name',
+    },
+
+    {
+      name: 'ENTITY TYPE',
+      key: 'start_date',
+    },
+    {
+      name: 'PRIMARY COUNT',
+      key: 'supplier_count',
+      sortIcon: { show: true, direction: <BsSortDown /> },
+    },
+    {
+      name: 'LEAD SOURCE',
+      key: 'View Leads',
+    },
+    {
+      name: 'ORGANIZATION NAME',
+      key: 'Action',
+    },
+    {
+      name: 'date of lead',
+      key: 'Action',
+      sortIcon: { show: true, direction: <BsSortDown /> },
+    },
+    {
+      name: 'STATUS',
+      key: 'Action',
+    },
+    {
+      name: 'REVENUE EARNED',
+      key: 'Action',
+    },{
+      name: 'ACTION	',
+      key: 'Action',
+    },
+  ]);
   return (
     <>
       <LeadDetailModal />
@@ -72,7 +104,7 @@ export default function ViewLeadDetailTable(props) {
             </Dropdown>
           </div>
         </div>
-        <div className='col-md-6'>
+        <div className="col-md-6">
           <div className="searchbox count-range d-flex">
             <p>Primary Count:</p>
             <InputGroup className="me-2">
@@ -88,17 +120,11 @@ export default function ViewLeadDetailTable(props) {
       <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
-            <th>S.No.</th>
-            <th>Entity Name</th>
-            <th>Entity Type</th>
-            <th>Primary Count</th>
-            <th>Lead Source</th>
-            <th>Organization Name</th>
-            <th>date of lead</th>
-            <th>Status</th>
-            <th>Revenue Earned</th>
-            {/* <th>View detail</th> */}
-            <th>Action</th>
+            {headerData.map((item,index)=>{
+              return (
+                <th key={index}>{item.name} <span>{item?.sortIcon?.direction}</span></th>
+              )
+            })}
           </tr>
         </thead>
         <tbody>
@@ -128,38 +154,7 @@ export default function ViewLeadDetailTable(props) {
               </Dropdown>
             </td>
             <td>20k</td>
-            {/* <td>
-              {' '}
-              <Button
-                variant="outline-dark"
-                className="lead-btn"
-                onClick={(e) => {
-                  setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
-                }}
-              >
-                 View Detail 
-              </Button>
-            </td> */}
             <td>
-              {/* <div className="action-icon">
-                <span
-                  onClick={(e) => {
-                    openEmailModal();
-                  }}
-                >
-                  <BsEnvelopeFill />
-                </span>
-                <span>
-                  <BsArrowDownCircle />
-                </span>
-                <span
-                  onClick={(e) => {
-                    openWhatsAppModal();
-                  }}
-                >
-                  <BsWhatsapp />
-                </span>
-              </div> */}
               <div className="action-icon">
                 <span
                   onClick={(e) => {

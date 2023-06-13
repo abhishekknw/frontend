@@ -16,6 +16,6 @@ export const Apis = {
     Get_Comment_List : "v0/ui/b2b/basic-client-comment/",
     Accept_Decline_Leads: 'v0/ui/b2b/update-client-decision-status/',
     Upload_Comments_File: 'v0/ui/b2b/upload-lead-comments/',
-
+   Get_Leads_By_Supplier:"v0/ui/b2b/supplier-leads-decision-pending/?supplier_id="
 }
 
