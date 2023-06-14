@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import { SnackbarProvider } from 'notistack';
 import { useRecoilValue } from 'recoil';
 import ClientDashboard from '../ClientDashboard';
+import { CLIENT_DASHBOARD_ROUTE } from '../../../constants/routes.constants';
 
 export default function ClientRoutes(props) {
   const { match } = props;
-  console.log(props)
+  console.log(props);
   const open = true;
 
   return (
@@ -19,7 +20,7 @@ export default function ClientRoutes(props) {
         >
           <Route
             exact
-            path={`${match.path}/dashboard`}
+            path={CLIENT_DASHBOARD_ROUTE}
             render={(componentProps) => <ClientDashboard {...props} {...componentProps} />}
           />
         </SnackbarProvider>

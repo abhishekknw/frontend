@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import { SnackbarProvider } from 'notistack';
 import { useRecoilValue } from 'recoil';
 import MachadaloDashboard from '../machadaloDashboard';
-import {alertAtom} from '../../_states/alert';
+import { alertAtom } from '../../_states/alert';
+import { MACHADALO_DASHBOARD_ROUTE } from '../../../constants/routes.constants';
 
 export default function MachadaloRoutes(props) {
   const { match } = props;
@@ -19,7 +20,7 @@ export default function MachadaloRoutes(props) {
         >
           <Route
             exact
-            path={`${match.path}/dashboard`}
+            path={MACHADALO_DASHBOARD_ROUTE}
             render={(componentProps) => <MachadaloDashboard {...props} {...componentProps} />}
           />
         </SnackbarProvider>
