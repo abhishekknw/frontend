@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ClientHeader from './headers/Header';
 import './index.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -11,15 +10,13 @@ import { BsPinMapFill } from 'react-icons/bs';
 import { BsFillArrowDownLeftCircleFill } from 'react-icons/bs';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import B2bicon from '../ClientDashboard/clientimage/b2b.png';
-import B2cicon from '../ClientDashboard/clientimage/b2c.png';
-import Cityicon from '../ClientDashboard/clientimage/city.png';
-import lastmicon from '../ClientDashboard/clientimage/lastmonth.png';
-import Cxicon from '../ClientDashboard/clientimage/cx.png';
 import Table from 'react-bootstrap/Table';
 import Dropdown from 'react-bootstrap/Dropdown';
-import GraphChart from './Graph';
 import UserWiseList from './Tables/UserWiseList';
+import LeadsTable from './Leads/Leads';
+import PieChart from '../common/pie-chart/PieChart';
+import GraphChart from '../common/Graphs/Graph';
+import DateFilter from '../common/date-range-filter/dateFilter';
 const ClientDashboard = (props) => {
   const [TabKey, setTabKey] = useState('lead');
   const [layers, setLayers] = useState({ firstLayer: true, secondLayer: false, thirdLayer: false });
@@ -36,304 +33,50 @@ const ClientDashboard = (props) => {
   const handleClick = (card) => {
     setAddActiveClass({ ...addActiveClass, TotalLeads: true });
   };
+
+  function getDates(date) {
+    // console.log(date)
+  }
+
   console.log(addActiveClass);
   return (
     <>
-      <ClientHeader />
-
-      <div className="bg-color ">
-        <Container fluid className=" lead-first-container p-0">
+      <div className="container">
+        <div className="machadalo-deshboard">
           <Tabs
-            defaultActiveKey="lead"
-            id="main-tab"
-            className="mb-3 top-main-tab main-ul-tab bg-white"
-            fill
+            defaultActiveKey="NewLeads"
+            id="uncontrolled-tab-example"
+            className="mb-1 nav-lead-tab"
           >
-            <Tab eventKey="lead" title="Leads" className="p-4 pt-0">
-              <div className="pt-2">
-                <div className="text-dropdwn d-flex justify-content-between align-items-center">
-                  <h4 className="lead-h4">WELCOME BACK, KATHERINE</h4>
-                  <div className="dropdown-btn">
-                    <Dropdown>
-                      <Dropdown.Toggle variant="" id="dropdown-basic">
-                        Select
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">Last day</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Last Month</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Last Year</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+            <Tab eventKey="Leads" title="LEADS">
+              <DateFilter onDateChange={getDates} />
+              <div className="row pt-0 ">
+                <div className="col-md-7">
+                  <div className="graph-chart">
+                    <GraphChart />
                   </div>
                 </div>
-
-                <div className="pt-2 show-leads-box">
-                  {layers.firstLayer && (
-                    <Row className="pt-3 ">
-                      <Col
-                        sm={3}
-                        onClick={(e) => {
-                          setLayers({ ...layers, secondLayer: true });
-                        }}
-                      >
-                        <div
-                          className={
-                            addActiveClass.TotalLeads
-                              ? 'd-flex lead-box-first active'
-                              : 'd-flex lead-box-first'
-                          }
-                          onClick={(e) =>
-                            setAddActiveClass({
-                              TotalLeads: true,
-                              B2bLeads: false,
-                              B2cLeads: false,
-                              LastCount: false,
-                            })
-                          }
-                        >
-                          <div class="icon-box">
-                            <span class="db-image-icon">
-                              <BsCloudDownload />
-                            </span>
-                          </div>
-                          <div>
-                            <h2 className="h2-heading">25,000</h2>
-                            <p className="span-heading-text">Total Leads</p>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col sm={3}>
-                        <div
-                          className={
-                            addActiveClass.B2bLeads
-                              ? 'd-flex lead-box-first active'
-                              : 'd-flex lead-box-first'
-                          }
-                          onClick={(e) =>
-                            setAddActiveClass({
-                              TotalLeads: false,
-                              B2bLeads: true,
-                              B2cLeads: false,
-                              LastCount: false,
-                            })
-                          }
-                        >
-                          <div class="icon-box">
-                            <span class="db-image-icon">
-                              {' '}
-                              <img src={B2bicon} alt="b2b" />{' '}
-                            </span>
-                          </div>
-                          <div>
-                            <h2 className="h2-heading">25,000</h2>
-                            <p className="span-heading-text">B2B Leads</p>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col sm={3}>
-                        <div
-                          className={
-                            addActiveClass.B2cLeads
-                              ? 'd-flex lead-box-first active'
-                              : 'd-flex lead-box-first'
-                          }
-                          onClick={(e) =>
-                            setAddActiveClass({
-                              TotalLeads: false,
-                              B2bLeads: false,
-                              B2cLeads: true,
-                              LastCount: false,
-                            })
-                          }
-                        >
-                          <div class="icon-box">
-                            <span class="db-image-icon">
-                              <img src={B2cicon} alt="b2c" />
-                            </span>
-                          </div>
-                          <div>
-                            <h2 className="h2-heading">25,000</h2>
-                            <p className="span-heading-text">B2C Leads</p>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col sm={3}>
-                        <div
-                          className={
-                            addActiveClass.LastCount
-                              ? 'd-flex lead-box-first active'
-                              : 'd-flex lead-box-first'
-                          }
-                          onClick={(e) =>
-                            setAddActiveClass({
-                              TotalLeads: false,
-                              B2bLeads: false,
-                              B2cLeads: false,
-                              LastCount: true,
-                            })
-                          }
-                        >
-                          <div class="icon-box">
-                            <span class="db-image-icon">
-                              <img src={lastmicon} alt="lastmicon" />
-                            </span>
-                          </div>
-                          <div>
-                            <h2 className="h2-heading">25,000</h2>
-                            <p className="span-heading-text">Last Month</p>
-                          </div>
-                        </div>
-                      </Col>
-                    </Row>
-                  )}
-                  {layers.secondLayer && (
-                    <Row className="p-3 text-center city-row ms-1 me-1 justify-content-center">
-                      <Col
-                        sm={3}
-                        onClick={(e) => {
-                          setLayers({ ...layers, thirdLayer: true });
-                        }}
-                      >
-                        <div
-                          className={
-                            addActiveClass.userWise
-                              ? 'd-flex lead-box-first active'
-                              : 'd-flex lead-box-first'
-                          }
-                          onClick={(e) =>
-                            setAddActiveClass({...addActiveClass,userWise:true,cityWise:false,LastCount:false})
-                          }
-                        >
-                          {' '}
-                          <div class="icon-box">
-                            <span class="db-image-icon">
-                              <BsPersonCheck />
-                            </span>
-                          </div>
-                          <div>
-                            <h2 className="h2-heading">25,000</h2>
-                            <p className="span-heading-text">User wise</p>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col sm={3}>
-                      <div
-                          className={
-                            addActiveClass.cityWise
-                              ? 'd-flex lead-box-first active'
-                              : 'd-flex lead-box-first'
-                          }
-                          onClick={(e) =>
-                            setAddActiveClass({...addActiveClass,userWise:false,cityWise:true,LastCount:false})
-                          }
-                        >
-                          <div class="icon-box">
-                            <span class="db-image-icon">
-                              <img src={Cityicon} alt="cityicon" />
-                            </span>
-                          </div>
-                          <div>
-                            <h2 className="h2-heading">25,000</h2>
-                            <p className="span-heading-text">City wise</p>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col sm={3}>
-                      <div
-                          className={
-                            addActiveClass.LastCount
-                              ? 'd-flex lead-box-first active'
-                              : 'd-flex lead-box-first'
-                          }
-                          onClick={(e) =>
-                            setAddActiveClass({...addActiveClass,userWise:false,cityWise:false,LastCount:true})
-                          }
-                        >
-                          <div class="icon-box">
-                            <span class="db-image-icon">
-                              <img src={Cxicon} alt="cxicon" />
-                            </span>
-                          </div>
-                          <div>
-                            <h2 className="h2-heading">25,000</h2>
-                            <p className="span-heading-text">Customer type wise</p>
-                          </div>
-                        </div>
-                      </Col>
-                    </Row>
-                  )}
-                  {layers.thirdLayer && (
-                    <div className="graph-img text-center">
-                      {/* <img src={Graph} alt="graph" /> */}
-                      <GraphChart />
-                    </div>
-                  )}
-                  {
-                    layers.thirdLayer && <UserWiseList />
-                    // <Table responsive striped bordered hover className='dashboard-table'  >
-                    //   <thead>
-                    //     <tr className='text-center'>
-                    //       <th>S.No.</th>
-                    //       <th>City Name</th>
-                    //       <th>Total Leads count</th>
-                    //       <th>Current week count</th>
-                    //       <th>Last week count</th>
-                    //       <th>Current month count</th>
-                    //       <th>This quarter count</th>
-                    //       <th> Total comment updated count</th>
-                    //       <th>Total status updated count</th>
-                    //     </tr>
-                    //   </thead>
-                    //   <tbody>
-                    //     <tr>
-                    //       <td>1</td>
-                    //       <td>Mark</td>
-                    //       <td>Otto</td>
-                    //       <td>@mdo</td>
-                    //       <td>Otto</td>
-                    //       <td>@mdo</td>
-                    //       <td><button className='btn btn-theme'>View detail</button></td>
-                    //       <td><button className='btn btn-theme'> Email</button></td>
-                    //       <td><button className='btn btn-theme'>Download</button></td>
-                    //     </tr>
-                    //     <tr>
-                    //       <td>2</td>
-                    //       <td>Jacob</td>
-                    //       <td>Thornton</td>
-                    //       <td>@fat</td>
-                    //       <td>Otto</td>
-                    //       <td>@mdo</td>
-                    //       <td><button className='btn btn-theme'>View detail</button></td>
-                    //       <td><button className='btn btn-theme'> Email</button></td>
-                    //       <td><button className='btn btn-theme'>Download</button></td>
-                    //     </tr>
-                    //     <tr>
-                    //       <td>3</td>
-                    //       <td >Larry the Bird</td>
-                    //       <td>@twitter</td>
-                    //       <td>Larry the Bird</td>
-                    //       <td>Otto</td>
-                    //       <td>@mdo</td>
-                    //       <td><button className='btn btn-theme'>View detail</button></td>
-                    //       <td><button className='btn btn-theme'> Email</button></td>
-                    //       <td><button className='btn btn-theme'>Download</button></td>
-                    //     </tr>
-                    //   </tbody>
-                    // </Table>
-                  }
+                <div className="col-md-5">
+                  <div className="piechart">
+                    <PieChart />
+                  </div>
                 </div>
               </div>
+              <div className="pb-5">
+                <LeadsTable />
+              </div>
             </Tab>
-            <Tab eventKey="pay" title="Payment & Licsence">
-              Tab content for Profile
+            <Tab eventKey="intervene" title="INTERVENE">
+              INTERVENE
             </Tab>
-            <Tab eventKey="templete" title="templete">
-              Tab content for Loooonger Tab
+            <Tab eventKey="template_dashboard" title="TEMPLATE DASHBOARD">
+              TEMPLATE
             </Tab>
-            <Tab eventKey="bot" title="Dynamic Bot"></Tab>
+            <Tab eventKey="dynamic_bots" title="DYNAMIC BOT">
+              Dynamic
+            </Tab>
           </Tabs>
-        </Container>
+        </div>
       </div>
     </>
   );

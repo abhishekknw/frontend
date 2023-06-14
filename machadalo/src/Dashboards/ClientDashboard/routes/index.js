@@ -4,6 +4,7 @@ import { SnackbarProvider } from 'notistack';
 import { useRecoilValue } from 'recoil';
 import ClientDashboard from '../ClientDashboard';
 import { CLIENT_DASHBOARD_ROUTE } from '../../../constants/routes.constants';
+import MachadaloHeader from '../../common/header/Header';
 
 export default function ClientRoutes(props) {
   const { match } = props;
@@ -12,6 +13,9 @@ export default function ClientRoutes(props) {
 
   return (
     <>
+      <div className="container ">
+        <MachadaloHeader />
+      </div>{' '}
       <Switch>
         <SnackbarProvider
           autoHideDuration={2000}

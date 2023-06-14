@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import './index.css';
+import '../index.css';
 import Button from 'react-bootstrap/Button';
 import {
   BsChevronDown,
@@ -9,17 +9,16 @@ import {
   BsArrowDownCircle,
   BsWhatsapp,
 } from 'react-icons/bs';
-import ViewClientAgencyTable from './ViewClientAgencyTable';
-import ViewCampaignTable from './ViewCampaignTable';
 import { useRecoilState } from 'recoil';
-import { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom } from '../_states';
-import ViewEndCustomerCityTable from './ViewEndCustomerCityTable';
-import ViewLeadDetailTable from './LeadDetailTable';
-import CommonTable from '../Table/CommonTable';
-import FosRmTable from './FosRmTable';
-import { BreadCrumbData } from './BreadCrumb';
-import EmailModal from '../common/Modals/EmailModal';
-import WhatsappModal from '../common/Modals/WhatsappModal';
+import { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom } from '../../_states';
+import ViewEndCustomerCityTable from '../../MachadaloDashboard/ViewEndCustomerCityTable';
+import ViewLeadDetailTable from '../../MachadaloDashboard/LeadDetailTable';
+import ViewCampaignTable from '../../MachadaloDashboard/ViewCampaignTable';
+import CommonTable from '../../Table/CommonTable';
+import FosRmTable from '../../MachadaloDashboard/FosRmTable';
+import { BreadCrumbData } from '../../MachadaloDashboard/BreadCrumb';
+import EmailModal from '../../common/Modals/EmailModal';
+import WhatsappModal from '../../common/Modals/WhatsappModal';
 export default function LeadsTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [selectedId, setSelectedId] = React.useState('');
@@ -61,28 +60,41 @@ export default function LeadsTable(props) {
       tooltip: 'Lead accepted by Client',
     },
     {
-      name: 'View Client Wise',
-    },
-    {
-      name: 'View Agency Wise',
+      name: 'View Campaigns',
     },
     {
       name: 'Action',
     },
   ];
 
-  function onClientAgency(btnName) {
+  //   function onClientAgency(btnName) {
+  //     setshowHideTableObj({
+  //       ...showHideTableObj,
+  //       ViewClientWise: true,
+  //       ViewEndCustomerWise: false,
+  //       ViewLeadDetail: false,
+  //       ViewCampaignWise: false,
+  //     });
+  //     setShowHideBreadCrumbs({
+  //       ...showHideBreadCrumbs,
+  //       first: { show: false, tableName: btnName },
+  //       second: { show: true, tableName: btnName },
+  //       third: { show: false, tableName: btnName },
+  //       fourth: { show: false, tableName: btnName },
+  //     });
+  //   }
+  function onClickCampaign(btnName) {
     setshowHideTableObj({
       ...showHideTableObj,
-      ViewClientWise: true,
+      ViewCampaignWise: true,
+      ViewClientWise: false,
       ViewEndCustomerWise: false,
       ViewLeadDetail: false,
-      ViewCampaignWise: false,
     });
     setShowHideBreadCrumbs({
       ...showHideBreadCrumbs,
-      first: { show: true, tableName: btnName },
-      second: { show: false, tableName: btnName },
+      first: { show: false, tableName: btnName },
+      second: { show: true, tableName: btnName },
       third: { show: false, tableName: btnName },
       fourth: { show: false, tableName: btnName },
     });
@@ -103,25 +115,14 @@ export default function LeadsTable(props) {
         leadCount: '5000',
         leadQA: '3000',
         leadClient: '3000',
-        clientWise: (
+        campaigns: (
           <div>
             <Button
               variant="outline-dark"
               className="lead-btn"
-              onClick={() => onClientAgency('View Client Wise')}
+              onClick={() => onClickCampaign('View Campaign Wise')}
             >
-              View Client Wise
-            </Button>
-          </div>
-        ),
-        agencyWise: (
-          <div>
-            <Button
-              variant="outline-dark"
-              className="lead-btn"
-              onClick={() => onClientAgency('View Agency Wise')}
-            >
-              View Agency Wise
+              View Campaigns
             </Button>
           </div>
         ),
@@ -155,25 +156,14 @@ export default function LeadsTable(props) {
         leadCount: '5000',
         leadQA: '3000',
         leadClient: '3000',
-        clientWise: (
+        campaigns: (
           <div>
             <Button
               variant="outline-dark"
               className="lead-btn"
-              onClick={() => onClientAgency('View Client Wise')}
+              onClick={() => onClickCampaign('View Campaign Wise')}
             >
-              View Client Wise
-            </Button>
-          </div>
-        ),
-        agencyWise: (
-          <div>
-            <Button
-              variant="outline-dark"
-              className="lead-btn"
-              onClick={() => onClientAgency('View Client Wise')}
-            >
-              View Agency Wise
+              View Campaigns
             </Button>
           </div>
         ),
@@ -214,20 +204,16 @@ export default function LeadsTable(props) {
               }}
             >
               {selectedId === ele.type ? <BsChevronUp /> : <BsChevronDown />}
-              {/* {isExpandRow.b2b && <BsChevronUp />}
-              {!isExpandRow.b2b && <BsChevronDown />} */}
             </td>
             <td>{ele.sno}</td>
             <td>{ele.type}</td>
             <td>{ele.leadCount}</td>
             <td>{ele.leadQA}</td>
             <td>{ele.leadClient}</td>
-            <td>{ele.clientWise}</td>
-            <td>{ele.agencyWise}</td>
+            <td>{ele.campaigns}</td>
             <td>{ele.action}</td>
           </tr>
           {selectedId === ele.type && <FosRmTable />}
-          {/* {ele.type=='B2C' && isExpandRow.b2b && <FosRmTable />} */}
         </>
       );
     });
@@ -239,14 +225,11 @@ export default function LeadsTable(props) {
       <h4 className="h4-heading">Leads</h4>
       <EmailModal
         data={{
-          // show: showHideModal.EmailModal,
           dropdownOptions: [
             { status_name: 'Lead verified by Machadalo' },
             { status_name: 'Lead verified by Machadalo' },
           ],
         }}
-        // onSubmit={onSendEmail}
-        // onCancel={(e) => setshowHideModal({ ...showHideModal, EmailModal: false })}
       />
       <WhatsappModal
         data={{
@@ -264,7 +247,7 @@ export default function LeadsTable(props) {
         showHideTableObj.ViewLeadDetail) && <BreadCrumbData />}
       {/* Breadcrumb */}
 
-      {showHideTableObj.ViewClientWise && <ViewClientAgencyTable />}
+      {/* {showHideTableObj.ViewClientWise && <ViewClientAgencyTable />} */}
       {showHideTableObj.ViewCampaignWise && <ViewCampaignTable />}
       {showHideTableObj.ViewEndCustomerWise && <ViewEndCustomerCityTable />}
       {showHideTableObj.ViewLeadDetail && <ViewLeadDetailTable />}
