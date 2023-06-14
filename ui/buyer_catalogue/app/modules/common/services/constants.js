@@ -361,6 +361,7 @@ designation_gantry:["Principal", "Vice – Principal", "Admin", "Vice-chancellor
 designation_saloon : ["Owner","Manager","Advertising Manager","Branding Manager"],
 designation_corporate : ["Owner","Manager","Advertising Manager","Branding Manager","Admin","Supervisor","Superintendent","Hr-Manager","Hr-Head","Security Manager"],
 designation_society:[ "Chairman","Secretary","Treasurer","Manager","Supervisor","Committee Member","Decision maker No RWA","RWA member","President","Committee Head"],
+designation_student:['Student'],
 
 covidCasesData:[
   {

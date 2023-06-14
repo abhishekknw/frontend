@@ -60,10 +60,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.selectForHistory = "";
         $scope.selectForContact = "";
         $scope.opsVerifyButtonDiable = true;
-        $scope.opsVerifiedValidation = { 'phoneNumber':null };
+        $scope.opsVerifiedValidation = { 'phoneNumber': null };
         // AIsensy controller
 
-        $scope.getActiveUserTab = function (){
+        $scope.getActiveUserTab = function () {
           $scope.selectedFilterSupplier = '';
           $scope.getActiveUser();
         }
@@ -104,7 +104,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.activesearch) {
             param.search = $scope.formData.activesearch;
           }
-          if(!$scope.selectedFilterSupplier){
+          if (!$scope.selectedFilterSupplier) {
             $scope.selectedFilterSupplier = '';
           }
 
@@ -132,7 +132,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
         $scope.selectedSupplier = function (select, type) {
           $scope.selectedFilterSupplier = select;
-          if (!select && select!='') {
+          if (!select && select != '') {
             return 0;
           }
           else {
@@ -183,10 +183,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.actionSearch) {
             param.search = $scope.formData.actionSearch;
           }
-          if(!$scope.selectedFilterSupplier ){
-            $scope.selectedFilterSupplier  = "";
+          if (!$scope.selectedFilterSupplier) {
+            $scope.selectedFilterSupplier = "";
           }
-          AuthService.getAllActionRequiredData(param, $scope.selectedFilterSupplier )
+          AuthService.getAllActionRequiredData(param, $scope.selectedFilterSupplier)
 
             .then(function onSuccess(response) {
               $scope.actionRequiredUserData = response.data.data.users;
@@ -224,7 +224,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           // if(!entity){
           //   entity = '';
           // }
-          if(!$scope.selectedFilterSupplier){
+          if (!$scope.selectedFilterSupplier) {
             $scope.selectedFilterSupplier = '';
           }
           AuthService.getAllInterveneUserData(param, $scope.selectedFilterSupplier)
@@ -458,7 +458,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         };
 
-        $scope.contactDetailTab = function(){
+        $scope.contactDetailTab = function () {
           $scope.selectForContact = '';
           $scope.contactDetail();
         }
@@ -507,7 +507,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             })
         }
 
-        $scope.historyDetailTab = function(){
+        $scope.historyDetailTab = function () {
           $scope.selectForHistory = '';
           $scope.opsVerifiedValidation.phoneNumber = "";
           $scope.historyDetail();
@@ -542,7 +542,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.formData.historySearch) {
             param.search = $scope.formData.historySearch;
           }
-          if(!entity){
+          if (!entity) {
             entity = ""
           }
           AuthService.getAllUserHistory(param, entity)
@@ -669,32 +669,32 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
         }
 
-        $scope.pageChanged = function (newPageNumber,supplier) {
+        $scope.pageChanged = function (newPageNumber, supplier) {
           $scope.serial = newPageNumber * 10 - 9;
-          $scope.contactDetail(newPageNumber,supplier);
+          $scope.contactDetail(newPageNumber, supplier);
         };
         $scope.historyPageChanged = function (newPageNumber, entity) {
           $scope.serial = newPageNumber * 10 - 9;
-          $scope.historyDetail(newPageNumber,entity);
+          $scope.historyDetail(newPageNumber, entity);
         };
 
 
 
         $scope.liveChatPageChanged = function (newPageNumber, entity) {
           $scope.serial = newPageNumber * 10 - 9;
-          $scope.getActiveUser(newPageNumber,entity);
+          $scope.getActiveUser(newPageNumber, entity);
         };
 
 
         $scope.actionRequiredPageChanged = function (newPageNumber, entity) {
           $scope.serial = newPageNumber * 10 - 9;
-          $scope.getActionRequiredUser(newPageNumber,entity);
+          $scope.getActionRequiredUser(newPageNumber, entity);
         };
 
         $scope.interveneDataPageChanged = function (newPageNumber, entity) {
 
           $scope.serial = newPageNumber * 10 - 9;
-          $scope.getInterveneUser(newPageNumber,entity);
+          $scope.getInterveneUser(newPageNumber, entity);
         };
 
         $scope.templatePageChanged = function (newPageNumber, tab) {
@@ -987,7 +987,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         $scope.opsVerified = function (phone, supplier_id, supplierType) {
 
-          if($scope.opsVerifiedValidation.phoneNumber !== phone){
+          if ($scope.opsVerifiedValidation.phoneNumber !== phone) {
             $scope.requirementDetailData = {}
             $scope.detailedShow = [];
             $scope.newbrowsed = {};
@@ -996,7 +996,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.leads_Data_1 = {};
             $scope.userMinimalList = [];
             // let organisation = JSON.parse(localStorage["userInfo"]);
-            
+
             userService.getSector()
               .then(function onSuccess(response) {
                 $scope.sectorList = response.data;
@@ -1007,14 +1007,14 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.lastIndex = $scope.leads_time.data.length - 1;
                 $scope.leads_Data = response.data.data;
               })
-  
+
             AuthService.getOrganisationsForAssignment()
               .then(function onSuccess(response) {
                 $scope.organisationList = response.data.data;
               }).catch(function onError(response) {
                 console.log(response);
-              })  
-  
+              })
+
             releaseCampaignService.requirementDetail("", phone, supplier_id, supplierType)
               .then(function onSuccess(response) {
                 $scope.requirementDetailData = response.data.data.requirements;
@@ -1035,16 +1035,16 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                       }
                       var selected_preferred_company_sub_sector = [];
                       $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = [];
-  
+
                       if ($scope.requirementDetailData[i].requirements[x].preferred_company_other) {
                         $scope.otherPreferredCompany = true
                         $scope.requirementDetailData[i].requirements[x].otherPreferredCompany = true
                         $scope.requirementDetailData[i].requirements[x].preferred_company.push("")
                       }
-  
+
                       if ($scope.requirementDetailData[i].requirements[x].preferred_company && $scope.requirementDetailData[i].requirements[x].preferred_company.length > 0) {
                         for (let y in $scope.requirementDetailData[i].requirements[x].preferred_company) {
-  
+
                           var _index = $scope.companiesDetailData.map(function (el) {
                             return el.organisation_id;
                           }).indexOf($scope.requirementDetailData[i].requirements[x].preferred_company[y]);
@@ -1052,27 +1052,27 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                             selected_preferred_company_sub_sector.push($scope.companiesDetailData[_index])
                           }
                         }
-  
+
                         $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = selected_preferred_company_sub_sector;
                       }
-  
+
                       var _indexCompany = $scope.companiesDetailData.map(function (el) {
                         return el.organisation_id;
                       }).indexOf($scope.requirementDetailData[i].requirements[x].company);
                       if (_indexCompany != -1) {
                         $scope.requirementDetailData[i].requirements[x].company_name = $scope.companiesDetailData[_indexCompany].name;
                       }
-  
+
                       $scope.requirementDetailData[i].requirements[x].color_class = 'yellow'
                       if ($scope.requirementDetailData[i].requirements[x].varified_ops == 'yes') {
                         $scope.requirementDetailData[i].requirements[x].color_class = 'green'
                       }
-  
+
                       if ($scope.requirementDetailData[i].requirements[x].is_deleted == 'yes') {
                         $scope.requirementDetailData[i].requirements[x].color_class = 'red'
                       }
-  
-  
+
+
                       //start sub sector name
                       if ($scope.requirementDetailData[i].requirements[x].sub_sector) {
                         if ($scope.sectorList) {
@@ -1104,7 +1104,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 })
               })
             $scope.getRequirementBrowsedData("", phone, supplier_id);
-            $scope.opsVerifiedValidation.phoneNumber = phone ;
+            $scope.opsVerifiedValidation.phoneNumber = phone;
           }
           else return 0;
         }
@@ -2894,11 +2894,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             })
 
           AuthService.getOrganisationsForAssignment()
-          .then(function onSuccess(response) {
-            $scope.organisationList = response.data.data;
-          }).catch(function onError(response) {
-            console.log(response);
-          })
+            .then(function onSuccess(response) {
+              $scope.organisationList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
         }
 
         $scope.newSupplierPocModel = [];
@@ -2906,7 +2906,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           $scope.newSupplierPocModel.push({
             'mobile': '',
             'poc_name': '',
-            'designation': ''
+            'designation': '',
+            'email':''
           });
         }
 
@@ -2977,12 +2978,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               $scope.NewsupplierAddUpdateData.pin_code = $scope.supplierData[0][0].pincode;
               $scope.NewsupplierAddUpdateData.address = $scope.supplierData[0][0].address;
               $scope.NewsupplierAddUpdateData.poc_name = $scope.supplierData[1][0]?.name;
+              $scope.NewsupplierAddUpdateData.email = $scope.supplierData[1][0]?.email;
               $scope.NewsupplierAddUpdateData.id = $scope.supplierData[1]?.id;
               $scope.NewsupplierAddUpdateData.city = $scope.supplierData[0][0].city;
               $scope.NewsupplierAddUpdateData.area = $scope.supplierData[0][0].area;
               $scope.NewsupplierAddUpdateData.relationship_manager = $scope.supplierData[0][0]?.relationship_manager;
               $scope.NewsupplierAddUpdateData.representative = $scope.supplierData[0][0]?.representative;
-              if($scope.NewsupplierAddUpdateData.representative){
+              if ($scope.NewsupplierAddUpdateData.representative) {
                 $scope.getSourceDataList($scope.NewsupplierAddUpdateData.representative);
               }
               if (response.data.data.area_id == null) {
@@ -3035,7 +3037,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
           } else if (supplier_type == 'EI' || supplier_type == 'GN') {
             $scope.poc_designation = constants.designation_gantry;
-          } else {
+          } else if (supplier_type == 'ST') {
+            $scope.poc_designation = constants.designation_student;
+          }
+          else {
             $scope.poc_designation = constants.designation_bus_shelter;
           }
         }
@@ -3051,8 +3056,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             "poc_name": $scope.NewsupplierAddUpdateData.poc_name,
             "designation": $scope.NewsupplierAddUpdateData.designation,
             "poc_id": $scope.NewsupplierAddUpdateData.id,
+            "email" : $scope.NewsupplierAddUpdateData?.email,
           };
-          // $scope.newSupplierPocModel.push(obj);
           poc.push(obj)
           for (let i in $scope.newSupplierPocModel) {
             poc.push($scope.newSupplierPocModel[i]);
@@ -3097,7 +3102,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           AuthService.getSupplierDataByNumber(number, society)
             .then(function onSuccess(response) {
               $scope.societyNameList = response.data.data;
-              if($scope.societyNameList.length == 1){
+              if ($scope.societyNameList.length == 1) {
                 $scope.getSupplierDataBySociety($scope.societyNameList[0].supplier_id);
                 $scope.Supplier_id = $scope.societyNameList[0].supplier_id;
               }
@@ -3106,7 +3111,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             });
         }
 
-        $scope.getSourceDataList = function(organisation_id){
+        $scope.getSourceDataList = function (organisation_id) {
           // let organisation = JSON.parse(localStorage["userInfo"]);
           AuthService.getUserMinimalList(organisation_id)
             .then(function onSuccess(response) {
@@ -3118,41 +3123,41 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         $scope.visitmap = function (link) {
           window.open(link, '_blank');
         }
-        $scope.getTemplateDataParams = {'page':0,'search':''};
+        $scope.getTemplateDataParams = { 'page': 0, 'search': '' };
         $scope.getTemplateData = function () {
-          if(!$scope.getTemplateDataParams.page){
+          if (!$scope.getTemplateDataParams.page) {
             $scope.getTemplateDataParams.page = 0;
           }
-          if(!$scope.getTemplateDataParams.search){
+          if (!$scope.getTemplateDataParams.search) {
             $scope.getTemplateDataParams.search = '';
           }
           $scope.TemplateCollapseRow = "";
           AuthService.getTemplateTabData($scope.getTemplateDataParams)
-          .then(function onSuccess(response) {
-            $scope.TemplateList = response.data.data;
-          }).catch(function onError(response) {
-            console.log(response);
-          })
+            .then(function onSuccess(response) {
+              $scope.TemplateList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
         }
-        $scope.getselectedTemplate = function (list){
+        $scope.getselectedTemplate = function (list) {
           $scope.TemplateCollapseRow = list.id
           // $scope.sendTemplateParams = list.param.toString();
         }
-        $scope.setSendTemplateParams = function(param,row){
+        $scope.setSendTemplateParams = function (param, row) {
           let payload = [{
-            'template_id':row.id,
-            'phone_number':$scope.userChatData.phone_number,
-            'params':param.split(','),
-            'default_params':row.param
+            'template_id': row.id,
+            'phone_number': $scope.userChatData.phone_number,
+            'params': param.split(','),
+            'default_params': row.param
           }];
           AuthService.sendTemplateToUser(payload)
-          .then(function onSuccess(response) {
-            $('#TemplateModal').modal('hide');
-            swal("Success",'Sent successfully', constants.success);
-          }).catch(function onError(response) {
-            console.log(response);
-            swal("Error", constants.errorMsg, constants.error);
-          })
+            .then(function onSuccess(response) {
+              $('#TemplateModal').modal('hide');
+              swal("Success", 'Sent successfully', constants.success);
+            }).catch(function onError(response) {
+              console.log(response);
+              swal("Error", constants.errorMsg, constants.error);
+            })
         }
 
         $scope.CallTemplate = function (data) {
@@ -3167,7 +3172,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }).catch(function onError(response) {
               console.log(response);
             })
-            AuthService.getDialerAgents()
+          AuthService.getDialerAgents()
             .then(function onSuccess(response) {
               $scope.DialerAgentList = response.data.data;
               console.log($scope.DialerAgentList)
