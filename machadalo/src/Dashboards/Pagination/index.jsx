@@ -17,7 +17,7 @@ const Paginations = (props) => {
         showLastButton
         page={pageNo}
         onChange={onPageChange}
-        rowsPerPage={pageSize}
+        rowsperpage={pageSize}
         count={numOfPages}
       />
     </Stack>
