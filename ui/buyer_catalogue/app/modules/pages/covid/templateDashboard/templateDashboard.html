@@ -490,7 +490,8 @@
                                   </div>
                                   <div class="modal-footer text-center" style="border-top: 0px; padding: 0;">
                                     <button type="submit" style="margin-top: 10px;"
-                                      class="btn btn-danger smll-btn-cmt">Send</button>
+                                      class="btn btn-danger smll-btn-cmt" ng-disabled="!optinUserLoader">
+                                      <i class="fa fa-spinner fa-spin" style="margin-left: -10px; margin-right:4px;" ng-if="!optinUserLoader"></i>Send</button>
                                   </div>
                                 </form>
                               </div>
