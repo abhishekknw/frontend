@@ -3079,25 +3079,23 @@
 
 
   <!--Start: Code for showing image Modal Window -->
-  <div id="imageModal" class="modal fade">
+  <div id="imageModal" class="modal fade theme-modal">
     <div class="modal-dialog">
       <div class="modal-content">
+        <div class="modal-header">
+          <h3>View Image</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <div class="modal-body">
           <div class="modalBodyBox">
-            <h3>View Image</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="item" ng-repeat="image in imageUrlList">
-              <div>{{image.title}}</div>
-              <img ng-src="{{image.url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/>
-              Comment : {{image.comment}}
-            </div>
-            <!-- <div class="carousel" id="slider" >
+            <div class="carousel" id="slider" >
               <div class="carousel-inner">
-                <div class="item">
-                  <img ng-src="https://androidtokyo.s3.amazonaws.com/HDFC_Distributor_1_POSTER_RELEASE_2019_05_22_1578316995_2841308.jpg" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/>
-                  Comment : {{image.comment}}
+                <div class="item" ng-class="{active:!$index}" ng-repeat="image in imageUrlList">
+                  <div class="img-title">{{image.title}}</div>
+                  <img ng-src="{{image.url}}" style="width:600px; height:400px;" class="img-responsive  modal-img" alt="No Image Found"/>
+                <p class="img-comment">  Comment : {{image.comment}}</p>
                 </div>
               </div>
               <a class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
@@ -3106,7 +3104,7 @@
               <a class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
                 <span class="glyphicon glyphicon-chevron-right"></span>
               </a>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>

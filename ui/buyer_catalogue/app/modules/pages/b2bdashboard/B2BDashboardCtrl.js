@@ -76,10 +76,10 @@
     $scope.primaryCount = { "start": '', "end": '' };
 
     $scope.clientStatusMachadalo = [
-      {"status_name":"Get Verified Leads"},
-      {"status_name":"About MCA"},
-      {"status_name":"Unsubscribe"},
-      {"status_name":"Schedule a demo"},
+      { "status_name": "Get Verified Leads" },
+      { "status_name": "About MCA" },
+      { "status_name": "Unsubscribe" },
+      { "status_name": "Schedule a demo" },
       // {"status_name":"Checkout sample leads"},
       // {"status_name":"Chat With Your RM"},
       // {"status_name":"Claim Your free dashboard"},
@@ -644,10 +644,10 @@
       $scope.listClientStatus = [];
       $scope.listClientStatusObj = [];
       let storeData = JSON.parse(localStorage.userInfo);
-      if(!campaign_id){
+      if (!campaign_id) {
         campaign_id = '';
       }
-      if (storeData.username!="machadalosales") {
+      if (storeData.username != "machadalosales") {
         B2BDashboardService.listClientStatus(campaign_id).then(function onSuccess(response) {
           var listData = response.data.data.client_status;
           for (var k in listData) {
@@ -759,7 +759,7 @@
       B2BDashboardService.viewStatusFunnel(req_id)
         .then(function onSuccess(response) {
           $scope.StatusFunnel = response.data.data;
-        })  
+        })
     }
 
     $scope.deleteBasicComment = function (comment_id, req_id) {
@@ -2220,8 +2220,8 @@
         });
     }
     $scope.toggleClassFilter = false;
-    $scope.toggleFilterClass =function(){
-      $scope.toggleClassFilter = $scope.toggleClassFilter?false:true;
+    $scope.toggleFilterClass = function () {
+      $scope.toggleClassFilter = $scope.toggleClassFilter ? false : true;
     }
     $scope.refeshFilters = function () {
       $scope.selected_cities_list = [];
@@ -2258,13 +2258,13 @@
     $scope.getImagesUrl = function (id) {
       B2BDashboardService.getListImagesUrl(id)
         .then(function onSuccess(response) {
-          $scope.imageUrlList = response.data.data;
+          $scope.imageUrlList = response.data.data
         })
         .catch(function onError(response) {
           swal(constants.name, "Error", constants.error);
         });
     }
-  
+
   })
 })();
 app.factory('Excel', function ($window) {

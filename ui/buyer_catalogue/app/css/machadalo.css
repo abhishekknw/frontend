@@ -1337,3 +1337,29 @@ h6.msg-title {
   opacity: 1;
   text-shadow: none;
 }
+.img-title{
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-transform: capitalize;
+}
+.img-comment{
+  font-size: 15px;
+  margin: 15px 0px ;
+}
+.modal-img{
+  padding: 0px 20px;
+}
+#imageModal .carousel-control .glyphicon-chevron-left, #imageModal  .carousel-control .glyphicon-chevron-right{
+    width: 30px;
+    height: 30px;
+    margin-top: -10px;
+    font-size: 15px;
+    color: #fff;
+    background-color: #8e1921;
+    line-height: 2;
+    border-radius: 50%;
+}
+#imageModal  .carousel-control{
+  top: 50%;
+}
