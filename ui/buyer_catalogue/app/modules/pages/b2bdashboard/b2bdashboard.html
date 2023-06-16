@@ -1348,6 +1348,7 @@
                             <th style="width:200px;">Current Status</th>
                             <th style="width:200px;">Client Comment</th>
                             <th>Lead Details</th>
+                            <th>View Images</th>
                           </tr>
                         </thead>
                         <tbody pagination-id="paginate2"
@@ -1387,6 +1388,9 @@
                                 name="button" class="btn btn-danger"
                                 ng-click="showLeadDetail(lead[0]._id,lead[0].requirement_id)" data-toggle="modal"
                                 data-target="#myModal">Lead Details</button>
+                            </td>
+                            <td>
+                              <a class="linkBtn" data-target="#imageModal" data-toggle="modal" ng-click="getImagesUrl(lead[0].requirement_id)">View Image</a>
                             </td>
                     </div>
                     </tr>
@@ -3072,6 +3076,43 @@
     </div>
   </div>
   <!--comment modal ent -->
+
+
+  <!--Start: Code for showing image Modal Window -->
+  <div id="imageModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalBodyBox">
+            <h3>View Image</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="item" ng-repeat="image in imageUrlList">
+              <div>{{image.title}}</div>
+              <img ng-src="{{image.url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/>
+              Comment : {{image.comment}}
+            </div>
+            <!-- <div class="carousel" id="slider" >
+              <div class="carousel-inner">
+                <div class="item">
+                  <img ng-src="https://androidtokyo.s3.amazonaws.com/HDFC_Distributor_1_POSTER_RELEASE_2019_05_22_1578316995_2841308.jpg" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/>
+                  Comment : {{image.comment}}
+                </div>
+              </div>
+              <a class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+              <a class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+              </a>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--End: Code for showing image Modal  Window -->
 </body>
 
 </html>
