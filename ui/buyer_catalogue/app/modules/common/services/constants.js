@@ -18,6 +18,7 @@ angular
     aws_campaign_images_url : 'https://androidtokyo.s3.amazonaws.com/',
     account_email_id : 'tejas.pawar@machaddalo.com',
     //general
+    alphanums : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
     name : '',
     success : 'success',
     error : 'error',

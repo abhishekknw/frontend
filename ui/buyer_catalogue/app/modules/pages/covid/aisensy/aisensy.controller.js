@@ -33,7 +33,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         var apiHost = APIBaseUrl;
         var interveneApiHost = Config.interveneMeaAPIBaseUrl;
-
+        $scope.ImageBaseUrl = constants.aws_bucket_url;
         $scope.ckeckdUserAisensy = [];
         $scope.ckeckdUserAisensy1 = [];
         $scope.call_back_time = constants.call_back_time;
@@ -2907,7 +2907,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             'mobile': '',
             'poc_name': '',
             'designation': '',
-            'email':''
+            'email': ''
           });
         }
 
@@ -2967,6 +2967,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         $scope.getSupplierDataBySociety = function (supp_id) {
           $scope.newSelectedArea = [];
+          societyImageList();
           AuthService.getSupplierDataBySociety(supp_id)
             .then(function onSuccess(response) {
               $scope.supplierData = response.data.data.supplier;
@@ -3056,7 +3057,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             "poc_name": $scope.NewsupplierAddUpdateData.poc_name,
             "designation": $scope.NewsupplierAddUpdateData.designation,
             "poc_id": $scope.NewsupplierAddUpdateData.id,
-            "email" : $scope.NewsupplierAddUpdateData?.email,
+            "email": $scope.NewsupplierAddUpdateData?.email,
           };
           poc.push(obj)
           for (let i in $scope.newSupplierPocModel) {
@@ -3120,6 +3121,77 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               console.log(response);
             })
         }
+
+        let societyImageList = function () {
+          AuthService.getSocietyImageList()
+            .then(function onSuccess(response) {
+              $scope.societyImages = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response, "325424534")
+            })
+        }
+        function makeid() {
+          var text = "";
+          var possible = constants.alphanums;
+          for (var i = 0; i < 10; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+          return text;
+        }
+        $scope.uploadFiles = function (files, errFiles) {
+          $scope.files = files;
+          $scope.errFile = errFiles;
+          if (files && files.length > 0) {
+            angular.forEach($scope.files, function (file, key) {
+              var my_filename = "MD_" + 'VPNHPWWBBBGL' + "_" + makeid();
+              file['name'] = my_filename;
+              AuthService.uploadImages(file).then(function (result) {
+
+                var my_file_url = { "image_details": [{ "location_id": 'VPNHPWWBBBGL', "image_url": my_filename, "object_id": 'VPNHPWWBBBGL' }] };
+                // $scope.images.push({"location_id":$rootScope.supplierId, "image_url":my_filename})
+                AuthService.addSocietyImages('VPNHPWWBBBGL', my_file_url.image_details[0], 'RS')
+                  .success(function (response) {
+                    swal('DONE', constants.image_success, constants.success);
+                    $scope.societyImages.push(response.data);
+                  }).error(function (response) {
+                    swal(constants.errorMsg, 'Image not added!', constants.error);
+                  }).catch(function (response) {
+                    swal(constants.errorMsg, "Image not added!", constants.error);
+                  });
+
+                file.Success = true;
+              }, function (error) {
+                console.log("errorii", error)
+                // Mark the error
+                $scope.Error = error;
+              }, function (progress) {
+                // Write the progress as a percentage
+                file.Progress = (progress.loaded / progress.total) * 100
+              });
+            });
+          }
+        }
+
+        $scope.removeImage = function(image) {
+          swal({
+            title: "Are you sure?",
+            text: "You want to delete this image!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+          },
+          function(){
+            AuthService.deleteImageSupplierType(image.id)
+              .then(function onSuccess(response){
+                $scope.societyImages = $scope.societyImages.filter( x => x.id !== image.id);
+                swal('DONE', constants.delete_success, constants.success);
+              }).catch(function onError(response){
+                swal(constants.errorMsg, 'Image Not Removed', constants.error);
+              })
+          });
+        }
+
         $scope.visitmap = function (link) {
           window.open(link, '_blank');
         }

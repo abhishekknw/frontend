@@ -3,8 +3,8 @@
 angular.module('Authentication')
 
    .factory('AuthService',
-      ['$http', '$location', '$rootScope', '$window', '$timeout', 'commonDataShare', 'machadaloHttp', 'constants',
-         function ($http, $location, $rootScope, $window, $timeout, commonDataShare, machadaloHttp, constants) {
+      ['$http', '$location', '$rootScope', '$window', '$timeout', 'commonDataShare', 'machadaloHttp', 'constants','$q',
+         function ($http, $location, $rootScope, $window, $timeout, commonDataShare, machadaloHttp, constants,$q) {
 
             var authService = {};
             var userInfo = {};
@@ -952,6 +952,47 @@ angular.module('Authentication')
              authService.postDataOnQuickCall = function(data){
                let url = "v0/ui/mca-bot/dailer-call/";
                return machadaloHttp.post(url,data);
+             }
+
+             authService.getSocietyImageList = function(){
+               let url = "v0/ui/image-mapping/?supplier_id=VPNHPWWBBBGL&supplier_type_code=RS";
+               return machadaloHttp.get(url);
+             }
+             authService.addSocietyImages = function (id, imageUrl,supplierTypeCode) {
+               let url = "v0/ui/image-mapping/?supplier_type_code=" + 'RS';
+               return machadaloHttp.post(url, imageUrl);
+             };
+             authService.deleteImageSupplierType = function (id){
+               var url = "v0/ui/image-mapping/?pk=" + id;
+               return machadaloHttp.delete(url);
+             }
+
+             authService.uploadImages = function (file){
+
+               AWS.config.region = 'us-east-1';
+               AWS.config.update({ accessKeyId: 'AKIAYNLXKO3UESOU6LV6', secretAccessKey: '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' });
+               var bucket = new AWS.S3({ params: { Bucket: 'myTempBucket', maxRetries: 10 }, httpOptions: { timeout: 360000 } });
+       
+               this.Progress = 0;
+               var deferred = $q.defer();
+               var params = { Bucket: 'mdimages', Key: file.name, ContentType: file.type, Body: file };
+               var options = {
+                   // Part Size of 10mb
+                   partSize: 10 * 1024 * 1024,
+                   queueSize: 1,
+                   // Give the owner of the bucket full control
+                   ACL: 'bucket-owner-full-control'
+               };
+               var uploader = bucket.upload(params, options, function (err, data) {
+                   if (err) {
+                       deferred.reject(err);
+                   }
+                   deferred.resolve();
+               });
+               uploader.on('httpUploadProgress', function (event) {
+                   deferred.notify(event);
+               });
+               return deferred.promise
              }
 
             return authService;
