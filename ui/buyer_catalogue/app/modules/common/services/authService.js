@@ -954,8 +954,8 @@ angular.module('Authentication')
                return machadaloHttp.post(url,data);
              }
 
-             authService.getSocietyImageList = function(){
-               let url = "v0/ui/image-mapping/?supplier_id=VPNHPWWBBBGL&supplier_type_code=RS";
+             authService.getSocietyImageList = function(data){
+               let url = "v0/ui/image-mapping/?supplier_id=" + data.supplier_id + "&supplier_type_code=" + data.supplier_type;
                return machadaloHttp.get(url);
              }
              authService.addSocietyImages = function (id, imageUrl,supplierTypeCode) {
@@ -967,8 +967,18 @@ angular.module('Authentication')
                return machadaloHttp.delete(url);
              }
 
-             authService.uploadImages = function (file){
+             authService.addImageLocation = function (imageData) {
+               var url = "v0/ui/image-mapping/save_image_tag/";
+               return machadaloHttp.post(url, imageData);
+            };
+        
+            authService.addcomment = function (data, imageId){
+               var url = "v0/ui/image-mapping/" + imageId + "/";
+               return machadaloHttp.put(url, data);
+            };
+        
 
+             authService.uploadImages = function (file){
                AWS.config.region = 'us-east-1';
                AWS.config.update({ accessKeyId: 'AKIAYNLXKO3UESOU6LV6', secretAccessKey: '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' });
                var bucket = new AWS.S3({ params: { Bucket: 'myTempBucket', maxRetries: 10 }, httpOptions: { timeout: 360000 } });

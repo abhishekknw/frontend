@@ -5553,7 +5553,7 @@
 
             <!-- <div class="uploadImageBox" ng-app="fileUpload" ng-controller="ImagesCtrl"> -->
               <div class="uploadBox">
-                 <button type="file" class="submit-btn" ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="5000" ngf-max-size="7MB" ngf-resize="{width: 600, height: 400}" ngf-fix-orientation=" true">Select Society Image</button>
+                 <button type="file" class="submit-btn" ng-disabled="!Supplier_id" ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="5000" ngf-max-size="7MB" ngf-resize="{width: 600, height: 400}" ngf-fix-orientation=" true">Select Society Image</button>
               </div>
               <div class="imageSection">
                   <div class="repeatBox" ng-repeat="image in societyImages track by $index">
@@ -5572,7 +5572,7 @@
                               <div class="drop-box">
                                   <select class="field" ng-model="image.name" >
                                     <option value="" disabled="true">Select Image Tag</option>
-                                    <option ng-repeat="tag in tags" value="{{tag.name}}">
+                                    <option ng-repeat="tag in imageTages" value="{{tag.name}}">
                                       {{tag.name}}
                                     </option>
                                   </select>

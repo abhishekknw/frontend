@@ -1786,7 +1786,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if ($scope.check == 'external') {
             releaseCampaignService.basicClientComment(comment.comment, $scope.req_id)
               .then(function onSuccess(response) {
-                swal("Successfull", "comment added sucessfully", "success");
+                swal("DONE", constants.commentAdd, constants.success);
                 $scope.mymodel['comment'] = '';
                 $scope.viewCommentsLeadDetails($scope.req_id, $scope.check);
               })
@@ -1794,7 +1794,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           else {
             releaseCampaignService.internalCommentValue(comment.comment, $scope.req_id)
               .then(function onSuccess(response) {
-                swal("Successfull", "comment added sucessfully", "success");
+                swal("DONE", constants.commentAdd, constants.success);
                 $scope.mymodel['comment'] = '';
                 $scope.viewCommentsLeadDetails($scope.req_id, $scope.check);
               })
@@ -2967,7 +2967,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
         $scope.getSupplierDataBySociety = function (supp_id) {
           $scope.newSelectedArea = [];
-          societyImageList();
           AuthService.getSupplierDataBySociety(supp_id)
             .then(function onSuccess(response) {
               $scope.supplierData = response.data.data.supplier;
@@ -3022,9 +3021,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               if ($scope.supplierData[0][0].city && $scope.supplierData[0][0].area && $scope.supplierData[0][0].supplier_type) {
                 $scope.newSelectArea();
               }
+              societyImageList($scope.NewsupplierAddUpdateData);
+
             }).catch(function onError(response) {
               console.log(response);
             });
+
         }
 
         $scope.designationList = function (supplier_type) {
@@ -3122,12 +3124,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             })
         }
 
-        let societyImageList = function () {
-          AuthService.getSocietyImageList()
+        let societyImageList = function (paramsData) {
+          $scope.imageTages = angular.copy(constants.imageTagForSocity)
+          AuthService.getSocietyImageList(paramsData)
             .then(function onSuccess(response) {
               $scope.societyImages = response.data.data;
             }).catch(function onError(response) {
-              console.log(response, "325424534")
+              swal(constants.errorMsg, constants.emptyResponse, constants.error);
             })
         }
         function makeid() {
@@ -3171,7 +3174,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
         }
 
-        $scope.removeImage = function(image) {
+        $scope.removeImage = function (image) {
           swal({
             title: "Are you sure?",
             text: "You want to delete this image!",
@@ -3181,15 +3184,36 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             confirmButtonText: "Yes, delete it!",
             closeOnConfirm: false
           },
-          function(){
-            AuthService.deleteImageSupplierType(image.id)
-              .then(function onSuccess(response){
-                $scope.societyImages = $scope.societyImages.filter( x => x.id !== image.id);
-                swal('DONE', constants.delete_success, constants.success);
-              }).catch(function onError(response){
-                swal(constants.errorMsg, 'Image Not Removed', constants.error);
-              })
-          });
+            function () {
+              AuthService.deleteImageSupplierType(image.id)
+                .then(function onSuccess(response) {
+                  $scope.societyImages = $scope.societyImages.filter(x => x.id !== image.id);
+                  swal('DONE', constants.delete_success, constants.success);
+                }).catch(function onError(response) {
+                  swal(constants.errorMsg, 'Image Not Removed', constants.error);
+                })
+            });
+        }
+
+        $scope.addcomment = function (image, input_comment) {
+          var data = {
+            image_url: image.image_url,
+            comments: image.comments
+          };
+          AuthService.addcomment(data, image.id)
+            .success(function (response) {
+              $scope.comment = true;
+              swal('DONE', constants.commentAdd, constants.success);
+            }).error(function (response) {
+              swal(constants.commentNotAdd, constants.server_connection_error, constants.error);
+            }).catch(function (response) {
+            });
+
+          AuthService.addImageLocation(image)
+            .then(function onSuccess(response) {
+            }).catch(function onError(response) {
+              console.log(response);
+            });
         }
 
         $scope.visitmap = function (link) {
