@@ -66,23 +66,7 @@ export default function LeadsTable(props) {
       name: 'Action',
     },
   ];
-
-  //   function onClientAgency(btnName) {
-  //     setshowHideTableObj({
-  //       ...showHideTableObj,
-  //       ViewClientWise: true,
-  //       ViewEndCustomerWise: false,
-  //       ViewLeadDetail: false,
-  //       ViewCampaignWise: false,
-  //     });
-  //     setShowHideBreadCrumbs({
-  //       ...showHideBreadCrumbs,
-  //       first: { show: false, tableName: btnName },
-  //       second: { show: true, tableName: btnName },
-  //       third: { show: false, tableName: btnName },
-  //       fourth: { show: false, tableName: btnName },
-  //     });
-  //   }
+  
   function onClickCampaign(btnName) {
     setshowHideTableObj({
       ...showHideTableObj,

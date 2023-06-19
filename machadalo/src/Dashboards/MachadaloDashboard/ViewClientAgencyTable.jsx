@@ -22,12 +22,36 @@ export default function ViewClientAgencyTable(props) {
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
-  // const [showHideModal, setshowHideModal] = React.useState({
-  //   EmailModal: false,
-  //   WhatsAppModal: false,
-  // });
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
+  const headerData = [
+    {
+      name: 'S.No.',
+    },
+    {
+      name: 'Lead type',
+    },
+    {
+      name: 'Lead Count',
+    },
+    {
+      name: 'Lead accepted by QA',
+      tooltip: 'Lead accepted by QA',
+    },
+    {
+      name: 'Lead Accepted by Client',
+      tooltip: 'Lead accepted by Client',
+    },
+    {
+      name: 'View Client Wise',
+    },
+    {
+      name: 'View Agency Wise',
+    },
+    {
+      name: 'Action',
+    },
+  ];
 
   const onSendEmail = async (data, check) => {
     setshowHideModal({ EmailModal: false });

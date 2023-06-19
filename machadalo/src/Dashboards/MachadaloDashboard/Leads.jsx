@@ -82,9 +82,9 @@ export default function LeadsTable(props) {
     setShowHideBreadCrumbs({
       ...showHideBreadCrumbs,
       first: { show: true, tableName: btnName },
-      second: { show: false, tableName: btnName },
-      third: { show: false, tableName: btnName },
-      fourth: { show: false, tableName: btnName },
+      second: { show: false, tableName: '' },
+      third: { show: false, tableName: '' },
+      fourth: { show: false, tableName: '' },
     });
   }
 
