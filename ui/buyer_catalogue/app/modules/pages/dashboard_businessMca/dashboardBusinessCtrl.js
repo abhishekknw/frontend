@@ -6,9 +6,11 @@
   'use strict';
 
   angular.module('catalogueApp')
-    .controller('dashboardBusinessCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, B2BDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
+    .controller('dashboardBusinessCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, B2BDashboardService, commonDataShare,AuthService, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
       $scope.APIBaseUrl = Config.APIBaseUrl;
       $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
+      $scope.ImageBaseUrl = constants.aws_bucket_url;
+
       $scope.itemsByPage = 15;
       $scope.permissions = permissions.dashboard;
       $scope.campaign_id = $stateParams.proposal_id;
@@ -6780,6 +6782,24 @@
           .then(function onSuccess(response) {
             $scope.externalComment = response.data.data;
           })    
+      }
+
+      $scope.getImagesUrl = function (data) {
+        data.supplier_type = 'RS';
+        AuthService.getSocietyImageList(data)
+          .then(function onSuccess(response) {
+            $scope.imageUrlList = response.data.data;
+            if($scope.imageUrlList.length > 0){
+              $('#societyImageModal').modal('show');
+            }
+            else{
+              $('#societyImageModal').modal('hide');
+              swal(constants.name, constants.image_empty, constants.warning);
+            }
+          })
+          .catch(function onError(response) {
+            swal(constants.name,constants.errorMsg, constants.error);
+          });
       }
       // END
 
