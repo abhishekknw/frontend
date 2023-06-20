@@ -2254,9 +2254,18 @@
       $scope.primaryCount = { "start": '', "end": '' };
       $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName);
     }
+
+    $scope.getImagesUrl = function (id) {
+      B2BDashboardService.getListImagesUrl(id)
+        .then(function onSuccess(response) {
+          $scope.imageUrlList = response.data.data;
+        })
+        .catch(function onError(response) {
+          swal(constants.name, "Error", constants.error);
+        });
+    }
+  
   })
-
-
 })();
 app.factory('Excel', function ($window) {
   var uri = 'data:application/vnd.ms-excel;base64,',
