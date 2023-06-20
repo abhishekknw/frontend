@@ -1348,7 +1348,7 @@
                             <th style="width:200px;">Current Status</th>
                             <th style="width:200px;">Client Comment</th>
                             <th>Lead Details</th>
-                            <th>View Images</th>
+                            <th>Images</th>
                           </tr>
                         </thead>
                         <tbody pagination-id="paginate2"
@@ -1390,7 +1390,7 @@
                                 data-target="#myModal">Lead Details</button>
                             </td>
                             <td>
-                              <a class="linkBtn" data-target="#imageModal" data-toggle="modal" ng-click="getImagesUrl(lead[0].requirement_id)">View Image</a>
+                              <a class="linkBtn" ng-click="getImagesUrl(lead[0])">View Image</a>
                             </td>
                     </div>
                     </tr>
@@ -3090,11 +3090,11 @@
         </div>
         <div class="modal-body">
           <div class="modalBodyBox">
-            <div class="carousel" id="slider" >
+            <div class="carousel" id="slider"  ng-if="imageUrlList.length > 0">
               <div class="carousel-inner">
                 <div class="item" ng-class="{active:!$index}" ng-repeat="image in imageUrlList">
-                  <div class="img-title">{{image.title}}</div>
-                  <img ng-src="{{image.url}}" style="width:600px; height:400px;" class="img-responsive  modal-img" alt="No Image Found"/>
+                  <div class="img-title">{{image.name}}</div>
+                  <img ng-src="{{ImageBaseUrl + image.image_url}}" style="width:600px; height:400px;" class="img-responsive  modal-img" alt="No Image Found"/>
                 <p class="img-comment">  Comment : {{image.comment}}</p>
                 </div>
               </div>

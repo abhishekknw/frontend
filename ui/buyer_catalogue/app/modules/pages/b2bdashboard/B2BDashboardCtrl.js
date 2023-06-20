@@ -15,12 +15,13 @@
         elem.prepend($interpolate(defaultOptionTemplate)(scope));
       }
     };
-  }).controller('B2BDashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, B2BDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
+  }).controller('B2BDashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, B2BDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window,AuthService) {
 
     $scope.campaign_id = $stateParams.proposal_id;
     $scope.passwordError = constants.password_error;
     $scope.userInfo = $rootScope.globals.userInfo;
     $scope.APIBaseUrl = Config.APIBaseUrl;
+    $scope.ImageBaseUrl = constants.aws_bucket_url;
     $scope.supplierTypeCode = [
       {
         "name": "ALL",
@@ -2255,13 +2256,21 @@
       $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName);
     }
 
-    $scope.getImagesUrl = function (id) {
-      B2BDashboardService.getListImagesUrl(id)
+    $scope.getImagesUrl = function (data) {
+      data.supplier_type = 'RS';
+      AuthService.getSocietyImageList(data)
         .then(function onSuccess(response) {
-          $scope.imageUrlList = response.data.data
+          $scope.imageUrlList = response.data.data;
+          if($scope.imageUrlList.length > 0){
+            $('#imageModal').modal('show');
+          }
+          else{
+            $('#imageModal').modal('hide');
+            swal(constants.name, constants.image_empty, constants.warning);
+          }
         })
         .catch(function onError(response) {
-          swal(constants.name, "Error", constants.error);
+          swal(constants.name,constants.errorMsg, constants.error);
         });
     }
 
