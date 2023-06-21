@@ -79,3 +79,23 @@
     flex-direction: row;
     justify-content: flex-end;
 }
+
+@media only screen and (max-width: 767px) {
+.w-40{
+width: 40% !important;
+}
+.w-60{
+    width: 60% !important;
+}
+.main-content{
+    justify-content: center;
+    height: 70px;
+}
+.date-btn-right span p{
+    padding: 4px 4px;
+}
+.date-content{
+    min-width: 40px;
+    padding: 6px 4px;
+}
+}
