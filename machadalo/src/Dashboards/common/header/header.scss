@@ -8,3 +8,37 @@
 .header-content img {
     margin-left: 20px;
 }
+
+@media only screen and (max-width: 767px) {
+    .mobile-con-between{
+        justify-content: space-between !important;
+    }
+    .mobile-start{
+        justify-content:  flex-start !important;
+        padding-left:0px !important;
+    }
+    .right-heder-content{
+        margin-bottom: 20px;
+    }
+    .client-tabs .nav-lead-tab li{
+        white-space:  nowrap;
+        width: 250px;
+    }
+    .nav-lead-tab{
+        gap: 8px;
+       padding: 5px 0;
+        overflow-y: hidden;
+        /* width: 100vw; */
+        justify-content: unset;
+        align-items: center;
+        flex-wrap: unset;
+    }
+    .welcome-box{
+        max-width: 180px;
+        width: 100%;
+        text-align: left;
+        padding: 8px 0px;
+        display: flex;
+        align-items: center;
+    }
+}
