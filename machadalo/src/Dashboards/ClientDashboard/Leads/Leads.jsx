@@ -197,7 +197,7 @@ export default function LeadsTable(props) {
             <td>{ele.campaigns}</td>
             <td>{ele.action}</td>
           </tr>
-          {selectedId === ele.type && <FosRmTable />}
+          {selectedId === ele.type && <FosRmTable styles={{colSpan:9}}/>}
         </>
       );
     });
