@@ -1,5 +1,8 @@
 import React, { useMemo } from 'react';
-import Table from 'react-bootstrap/Table';
+// import Table from 'react-bootstrap/Table';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+
 // import './index.css';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -118,25 +121,25 @@ export default function ViewLeadDetailTable(props) {
       </div>
       {/* <h4 style={{ paddingTop: '10px' }}>Leads Table</h4> */}
       <Table striped bordered hover className="leads-table ">
-        <thead className="leads-tbody">
-          <tr>
+        <Thead className="leads-tbody">
+          <Tr>
             {headerData.map((item,index)=>{
               return (
                 <th key={index}>{item.name} <span>{item?.sortIcon?.direction}</span></th>
               )
             })}
-          </tr>
-        </thead>
-        <tbody>
-          <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
-            <td>1</td>
-            <td>CPWD Colony 2</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>FOS</td>
-            <td>Machadalo</td>
-            <td>2023-02-01 13:57:15</td>
-            <td>
+          </Tr>
+        </Thead>
+        <Tbody>
+          <Tr className={isExpandRow.b2b ? 'nested-table' : ''}>
+            <Td>1</Td>
+            <Td>CPWD Colony 2</Td>
+            <Td>RS</Td>
+            <Td>300</Td>
+            <Td>FOS</Td>
+            <Td>Machadalo</Td>
+            <Td>2023-02-01 13:57:15</Td>
+            <Td>
               <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
@@ -152,9 +155,9 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </td>
-            <td>20k</td>
-            <td>
+            </Td>
+            <Td>20k</Td>
+            <Td>
               <div className="action-icon">
                 <span
                   onClick={(e) => {
@@ -181,101 +184,17 @@ export default function ViewLeadDetailTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>ganshyam test society</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>RM</td>
-            <td>Machadalo</td>
-            <td>2023-02-01 13:57:15</td>
-            <td>
-              <Dropdown className="table-dropdown-status">
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  Leads Verified by Machadalo
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#">All</Dropdown.Item>
-                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
-                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
-                  <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
-                  <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
-                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
-                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </td>
-            <td>20k</td>
-            {/* <td>
-              {' '}
-              <Button
-                variant="outline-dark"
-                className="lead-btn"
-                onClick={(e) => { setshowHideModal({ ...showHideModal, leadDetail: { show: true }, }) }}
-              >
-                View Detail
-              </Button>
-            </td> */}
-            <td>
-              {/* <div className="action-icon">
-                <span
-                  onClick={(e) => {
-                    openEmailModal();
-                  }}
-                >
-                  <BsEnvelopeFill />
-                </span>
-                <span>
-                  <BsArrowDownCircle />
-                </span>
-                <span
-                  onClick={(e) => {
-                    openWhatsAppModal();
-                  }}
-                >
-                  <BsWhatsapp />
-                </span>
-              </div> */}
-              <div className="action-icon">
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
-                  }}
-                >
-                  <BsFillEyeFill />
-                </span>
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, email: { show: true } });
-                  }}
-                >
-                  <BsEnvelopeFill />
-                </span>
-                <span>
-                  <BsArrowDownCircle />
-                </span>
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
-                  }}
-                >
-                  <BsWhatsapp />
-                </span>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Test aman society</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>RM</td>
-            <td>Machadalo</td>
-            <td>2023-02-01 13:57:15</td>
-            <td>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>2</Td>
+            <Td>ganshyam test society</Td>
+            <Td>RS</Td>
+            <Td>300</Td>
+            <Td>RM</Td>
+            <Td>Machadalo</Td>
+            <Td>2023-02-01 13:57:15</Td>
+            <Td>
               <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
@@ -291,9 +210,9 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </td>
-            <td>20k</td>
-            <td>
+            </Td>
+            <Td>20k</Td>
+            <Td>
               <div className="action-icon">
                 <span
                   onClick={(e) => {
@@ -320,17 +239,17 @@ export default function ViewLeadDetailTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Maple Leaves Residency</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>RM</td>
-            <td>Machadalo</td>
-            <td>2023-02-01 13:57:15</td>
-            <td>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>3</Td>
+            <Td>Test aman society</Td>
+            <Td>RS</Td>
+            <Td>300</Td>
+            <Td>RM</Td>
+            <Td>Machadalo</Td>
+            <Td>2023-02-01 13:57:15</Td>
+            <Td>
               <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
@@ -346,9 +265,9 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </td>
-            <td>20k</td>
-            <td>
+            </Td>
+            <Td>20k</Td>
+            <Td>
               <div className="action-icon">
                 <span
                   onClick={(e) => {
@@ -375,17 +294,17 @@ export default function ViewLeadDetailTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Maple Leaves Residency</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>RM</td>
-            <td>Machadalo</td>
-            <td>2023-02-01 13:57:15</td>
-            <td>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>4</Td>
+            <Td>Maple Leaves Residency</Td>
+            <Td>RS</Td>
+            <Td>300</Td>
+            <Td>RM</Td>
+            <Td>Machadalo</Td>
+            <Td>2023-02-01 13:57:15</Td>
+            <Td>
               <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
@@ -401,9 +320,9 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </td>
-            <td>20k</td>
-            <td>
+            </Td>
+            <Td>20k</Td>
+            <Td>
               <div className="action-icon">
                 <span
                   onClick={(e) => {
@@ -430,17 +349,17 @@ export default function ViewLeadDetailTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Maple Leaves Residency</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>RM</td>
-            <td>Machadalo</td>
-            <td>2023-02-01 13:57:15</td>
-            <td>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>5</Td>
+            <Td>Maple Leaves Residency</Td>
+            <Td>RS</Td>
+            <Td>300</Td>
+            <Td>RM</Td>
+            <Td>Machadalo</Td>
+            <Td>2023-02-01 13:57:15</Td>
+            <Td>
               <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
@@ -456,9 +375,9 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </td>
-            <td>20k</td>
-            <td>
+            </Td>
+            <Td>20k</Td>
+            <Td>
               <div className="action-icon">
                 <span
                   onClick={(e) => {
@@ -485,17 +404,17 @@ export default function ViewLeadDetailTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>Maple Leaves Residency</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>RM</td>
-            <td>Machadalo</td>
-            <td>2023-02-01 13:57:15</td>
-            <td>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>6</Td>
+            <Td>Maple Leaves Residency</Td>
+            <Td>RS</Td>
+            <Td>300</Td>
+            <Td>RM</Td>
+            <Td>Machadalo</Td>
+            <Td>2023-02-01 13:57:15</Td>
+            <Td>
               <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
@@ -511,9 +430,9 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </td>
-            <td>20k</td>
-            <td>
+            </Td>
+            <Td>20k</Td>
+            <Td>
               <div className="action-icon">
                 <span
                   onClick={(e) => {
@@ -540,17 +459,17 @@ export default function ViewLeadDetailTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>Maple Leaves Residency</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>RM</td>
-            <td>Machadalo</td>
-            <td>2023-02-01 13:57:15</td>
-            <td>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>7</Td>
+            <Td>Maple Leaves Residency</Td>
+            <Td>RS</Td>
+            <Td>300</Td>
+            <Td>RM</Td>
+            <Td>Machadalo</Td>
+            <Td>2023-02-01 13:57:15</Td>
+            <Td>
               <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
@@ -566,9 +485,9 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </td>
-            <td>20k</td>
-            <td>
+            </Td>
+            <Td>20k</Td>
+            <Td>
               <div className="action-icon">
                 <span
                   onClick={(e) => {
@@ -595,17 +514,17 @@ export default function ViewLeadDetailTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>Maple Leaves Residency</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>RM</td>
-            <td>Machadalo</td>
-            <td>2023-02-01 13:57:15</td>
-            <td>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>8</Td>
+            <Td>Maple Leaves Residency</Td>
+            <Td>RS</Td>
+            <Td>300</Td>
+            <Td>RM</Td>
+            <Td>Machadalo</Td>
+            <Td>2023-02-01 13:57:15</Td>
+            <Td>
               <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
@@ -621,9 +540,9 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </td>
-            <td>20k</td>
-            <td>
+            </Td>
+            <Td>20k</Td>
+            <Td>
               <div className="action-icon">
                 <span
                   onClick={(e) => {
@@ -650,17 +569,17 @@ export default function ViewLeadDetailTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>Akash Apartment</td>
-            <td>RS</td>
-            <td>300</td>
-            <td>RM</td>
-            <td>Machadalo</td>
-            <td>2023-02-01 13:57:15</td>
-            <td>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>9</Td>
+            <Td>Maple Leaves Residency</Td>
+            <Td>RS</Td>
+            <Td>300</Td>
+            <Td>RM</Td>
+            <Td>Machadalo</Td>
+            <Td>2023-02-01 13:57:15</Td>
+            <Td>
               <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
@@ -676,9 +595,9 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </td>
-            <td>20k</td>
-            <td>
+            </Td>
+            <Td>20k</Td>
+            <Td>
               <div className="action-icon">
                 <span
                   onClick={(e) => {
@@ -705,28 +624,65 @@ export default function ViewLeadDetailTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
-        </tbody>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>10</Td>
+            <Td>Akash Apartment</Td>
+            <Td>RS</Td>
+            <Td>300</Td>
+            <Td>RM</Td>
+            <Td>Machadalo</Td>
+            <Td>2023-02-01 13:57:15</Td>
+            <Td>
+              <Dropdown className="table-dropdown-status">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Leads Verified by Machadalo
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">All</Dropdown.Item>
+                  <Dropdown.Item href="#">Leads Verified by Machadalo</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 1</Dropdown.Item>
+                  <Dropdown.Item href="#">Ringing Not Responding 2</Dropdown.Item>
+                  <Dropdown.Item href="#">Meeting Confirmed</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                  <Dropdown.Item href="#">Decision pending</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Td>
+            <Td>20k</Td>
+            <Td>
+              <div className="action-icon">
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, leadDetail: { show: true } });
+                  }}
+                >
+                  <BsFillEyeFill />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, email: { show: true } });
+                  }}
+                >
+                  <BsEnvelopeFill />
+                </span>
+                <span>
+                  <BsArrowDownCircle />
+                </span>
+                <span
+                  onClick={(e) => {
+                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                  }}
+                >
+                  <BsWhatsapp />
+                </span>
+              </div>
+            </Td>
+          </Tr>
+        </Tbody>
       </Table>
-      {/* <EmailModal
-        data={{
-          show: showHideModal.EmailModal,
-          dropdownOptions: [
-            { status_name: 'Lead verified by Machadalo' },
-            { status_name: 'Lead verified by Machadalo' },
-          ],
-        }}
-        onSubmit={onSendEmail}
-        onCancel={(e) => setshowHideModal({ ...showHideModal, EmailModal: false })}
-      />
-      <WhatsappModal
-        data={{
-          show: showHideModal.WhatsAppModal,
-        }}
-        onSubmit={OnshareWhatsApp}
-        onCancel={(e) => setshowHideModal({ ...showHideModal, WhatsAppModal: false })}
-      /> */}
       <Paginations pageSize={10} totalItems={100} pageNo={page} onPageChange={handlePageChange} />
     </>
   );

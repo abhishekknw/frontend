@@ -93,9 +93,9 @@ export default function ViewClientAgencyTable(props) {
           <Button
             variant="outline-dark"
             className="lead-btn"
-            onClick={() => onClientAgency('View Client Wise')}
+            onClick={() => onClickCampaign('View Campaign Wise')}
           >
-            View Client Wise
+            View Campaign Wise
           </Button>
         ),
         action: (
@@ -134,9 +134,9 @@ export default function ViewClientAgencyTable(props) {
           <Button
             variant="outline-dark"
             className="lead-btn"
-            onClick={() => onClientAgency('View Client Wise')}
+            onClick={() => onClickCampaign('View Campaign Wise')}
           >
-            View Client Wise
+            View Campaign Wise
           </Button>
         ),
         action: (
@@ -175,9 +175,9 @@ export default function ViewClientAgencyTable(props) {
           <Button
             variant="outline-dark"
             className="lead-btn"
-            onClick={() => onClientAgency('View Client Wise')}
+            onClick={() => onClickCampaign('View Campaign Wise')}
           >
-            View Client Wise
+            View Campaign Wise
           </Button>
         ),
         action: (
