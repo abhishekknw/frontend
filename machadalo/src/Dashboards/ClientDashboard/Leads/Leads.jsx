@@ -1,5 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import Table from 'react-bootstrap/Table';
+// import Table from 'react-bootstrap/Table';
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
+
 import '../index.css';
 import Button from 'react-bootstrap/Button';
 import {
@@ -180,23 +183,23 @@ export default function LeadsTable(props) {
     let body = data.map((ele, index) => {
       return (
         <>
-          <tr className={selectedId === ele.type ? 'nested-table' : ''} key={index}>
-            <td
+          <Tr className={selectedId === ele.type ? 'nested-table' : ''} key={index}>
+            <Td
               className="sn-table"
               onClick={(e) => {
                 showHideRow(ele.type);
               }}
             >
               {selectedId === ele.type ? <BsChevronUp /> : <BsChevronDown />}
-            </td>
-            <td>{ele.sno}</td>
-            <td>{ele.type}</td>
-            <td>{ele.leadCount}</td>
-            <td>{ele.leadQA}</td>
-            <td>{ele.leadClient}</td>
-            <td>{ele.campaigns}</td>
-            <td>{ele.action}</td>
-          </tr>
+            </Td>
+            <Td>{ele.sno}</Td>
+            <Td>{ele.type}</Td>
+            <Td>{ele.leadCount}</Td>
+            <Td>{ele.leadQA}</Td>
+            <Td>{ele.leadClient}</Td>
+            <Td>{ele.campaigns}</Td>
+            <Td>{ele.action}</Td>
+          </Tr>
           {selectedId === ele.type && <FosRmTable styles={{colSpan:9}}/>}
         </>
       );
