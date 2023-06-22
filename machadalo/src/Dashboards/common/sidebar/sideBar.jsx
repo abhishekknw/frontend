@@ -178,7 +178,6 @@ export default function SideNavBar() {
                       <li className="first-class-li"><Link to="/r/operations-dashboard/user">User Performance</Link></li>
                     </ul>
                   </li>
-                  <li className="first-class-li"></li>
                   <li className="first-class-li">Dynamic</li>
                 </ul>
               </div>
