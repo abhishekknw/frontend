@@ -1337,3 +1337,80 @@ h6.msg-title {
   opacity: 1;
   text-shadow: none;
 }
+.img-title{
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-transform: capitalize;
+}
+.img-comment{
+  font-size: 15px;
+  margin: 15px 0px ;
+}
+.modal-img{
+  padding: 0px 20px;
+}
+#imageModal .carousel-control .glyphicon-chevron-left, #imageModal  .carousel-control .glyphicon-chevron-right{
+    width: 30px;
+    height: 30px;
+    margin-top: -10px;
+    font-size: 15px;
+    color: #fff;
+    background-color: #8e1921;
+    line-height: 2;
+    border-radius: 50%;
+}
+#imageModal  .carousel-control{
+  top: 50%;
+}
+
+.uploadBox{
+	margin: 20px 0px;
+  text-align: center;
+}
+.uploadBox button{
+  max-width: 200px;
+  padding: 6px 17px;
+}
+.imageSection .fieldbox  textarea{
+  height: 49px;
+  max-width: 130px;
+  padding: 5px 7px;
+}
+.imageSection .drop-box .field{
+  max-width: 130px;
+  padding: 5px 15px !important;
+}
+.imageSection{
+  display: flex;
+  gap: 8px;
+  padding: 5px 0;
+  overflow-y: hidden;
+  /* width: 100vw; */
+  justify-content: unset;
+  /* align-items: center; */
+  flex-wrap: unset;
+}
+
+.imageBox{
+  width: 160px;
+}
+.modal-image-type{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.style-modal .modal-header .close.scroll-image-modal {
+  margin: 0;
+  background-color: #000;
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 50%;
+  line-height: 1;
+  right: 23px;
+  position: relative;
+}
+.modal-dialog .imageSection button.smallBtn {
+  margin-top: 0;
+  padding: 3px 21px;
+}
