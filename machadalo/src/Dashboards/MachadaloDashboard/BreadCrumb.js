@@ -1,14 +1,16 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { showHideBreadcrumbsAtom, showHideTable } from '../_states';
-import React from 'react';
+import { showHideBreadcrumbsAtom, showHideTable,scrollAtom } from '../_states';
+import React,{useRef,useEffect} from 'react';
 
 const BreadCrumbData = () => {
+  const scroll = useRef(null);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
 
-
+  useEffect(()=>{
+    scroll.current?.scrollIntoView({behavior: 'smooth'});
+  },[showHideBreadCrumbs])
   function handleClick(btnName) {
-    console.log(showHideBreadCrumbs)
     if (btnName === "View Client Wise" || btnName === "View Agency Wise") {
       setShowHideBreadCrumbs({
         ...showHideBreadCrumbs,
@@ -26,12 +28,10 @@ const BreadCrumbData = () => {
         ViewCampaignWise: false,
       });
     }
-
-
   }
   return (
     <>
-      <nav>
+      <nav ref={scroll}>
         <ol className="breadcrumb">
           {showHideBreadCrumbs.first.show && (
             <li>
