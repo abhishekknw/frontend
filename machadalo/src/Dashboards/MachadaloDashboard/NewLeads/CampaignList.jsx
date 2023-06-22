@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Table from 'react-bootstrap/Table';
+// import Table from 'react-bootstrap/Table';
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import CommonTable from '../../Table/CommonTable';
 import {
   AllCampaingsAtom,
@@ -265,34 +267,34 @@ export default function CampaignList(props) {
         </div>
       </div>
       <Table striped bordered hover className="leads-table ">
-        <thead className="leads-tbody">
-          <tr>
+        <Thead className="leads-tbody">
+          <Tr>
             {headerData?.map((item, index) => {
               return (
-                <th
+                <Th
                   key={index}
                   onClick={(e) => {
                     sortTableBy(item);
                   }}
                 >
                   {item.name} <span>{item?.sortIcon?.direction}</span>
-                </th>
+                </Th>
               );
             })}
-          </tr>
-        </thead>
-        <tbody>
+          </Tr>
+        </Thead>
+        <Tbody>
           {CampaignList.map((item, index) => {
             if (paginationData.startIndex <= index && paginationData.endIndex >= index) {
               return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item.name}</td>
-                  <td>{dayjs(item.start_date).format('DD-MMM-YYYY')}</td>
-                  <td>
+                <Tr key={index}>
+                  <Td>{index + 1}</Td>
+                  <Td>{item.name}</Td>
+                  <Td>{dayjs(item.start_date).format('DD-MMM-YYYY')}</Td>
+                  <Td>
                     {item.supplier_count}({item.unique_count})
-                  </td>
-                  <td>
+                  </Td>
+                  <Td>
                     <Button
                       variant="outline-dark"
                       className="lead-btn"
@@ -300,8 +302,8 @@ export default function CampaignList(props) {
                     >
                       View Leads
                     </Button>
-                  </td>
-                  <td>
+                  </Td>
+                  <Td>
                     <div className="action-icon">
                       <span
                         onClick={(e) => {
@@ -326,12 +328,12 @@ export default function CampaignList(props) {
                         <BsArrowDownCircle />
                       </span>
                     </div>
-                  </td>
-                </tr>
+                  </Td>
+                </Tr>
               );
             }
           })}
-        </tbody>
+        </Tbody>
       </Table>
 
       <Paginations
