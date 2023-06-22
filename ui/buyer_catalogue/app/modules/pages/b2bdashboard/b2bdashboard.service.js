@@ -639,11 +639,7 @@ angular.module('catalogueApp')
         var url = url_root +"b2b/status-funnel/?lead_id=" + lead_id;
         return machadaloHttp.get(url);
       }
-
-      DashboardService.getListImagesUrl = function(id){
-        var url = url_root +"b2b/get_lead_images/?lead_id=" + id;
-        return machadaloHttp.get(url);
-      }
+      
       return DashboardService;
 
     }]);
