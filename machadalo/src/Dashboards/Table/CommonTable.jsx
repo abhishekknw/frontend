@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Table } from 'react-bootstrap';
+// import { Table } from 'react-bootstrap';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 
 const CommonTable = ({ headerData, bodyData }) => {
   const [isExpandRow, setIsExpandRow] = useState({ b2b: false, b2c: false });
@@ -8,19 +10,19 @@ const CommonTable = ({ headerData, bodyData }) => {
   return (
     <>
       <Table striped bordered hover className="leads-table ">
-        <thead className="leads-tbody">
-          <tr>
-            <th className='sn-table'></th>
+        <Thead className="leads-tbody">
+          <Tr>
+            <Th className='sn-table'></Th>
             {headerData.map((ele, index) => {
               return (
                 <>
-                <th key={ele.name}><div data-toggle="tooltip" data-placement="top" title={ele.tooltip}>{ele.name}</div></th>
+                <Th key={ele.name}><div data-toggle="tooltip" data-placement="top" title={ele.tooltip}>{ele.name}</div></Th>
                 </>
               )
             })}
-          </tr>
-        </thead>
-        <tbody>{bodyData()}</tbody>
+          </Tr>
+        </Thead>
+        <Tbody>{bodyData()}</Tbody>
       </Table>
     </>
   );

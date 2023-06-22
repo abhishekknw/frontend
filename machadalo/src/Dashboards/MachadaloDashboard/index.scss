@@ -278,7 +278,7 @@ table.basic-leads tbody tr th{
     white-space: normal !important;
 
     overflow: hidden;
-}
+} 
 
 table tr th{
     text-align: center !important;
@@ -753,4 +753,66 @@ table .btn{
 }
 .form-control:focus{
     box-shadow: none;
+}
+@media screen and (max-width: 767px) {
+tbody, td, tfoot,  th, thead, tr{
+    height: auto;
+    line-height: 2.5;
+}
+table th {  
+    color: #ffffff;
+    background-color: #3e59e3;
+}
+
+html body tbody .responsiveTable td .tdBefore{
+    padding-left: 10px
+}
+table tbody tr td, table tbody tr th{
+    text-align: left !important;
+}
+tr{
+    padding: 15px 0px 0px 0px !important
+}
+html body td.sn-table.pivoted{
+    display: inline-table;
+    background-color: #3e59e3;
+    color: #fff;
+    text-align: center !important;
+    border-radius: 90px;
+    width: 32px;
+    height: 30px;
+    margin-left: 14px;
+}
+html body .responsiveTable td .tdBefore{
+    left: 0px !important;  
+    white-space: nowrap;
+    max-width: 220px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+html body .responsiveTable th div{
+    white-space: nowrap;
+    max-width: 220px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+}
+@media screen and (max-width: 400px) {
+.main-content{
+    display: block !important;
+}
+.w-40, .w-60{
+    width: 100% !important;
+    margin: 10px 0px !important ;
+}
+html body .w-60{
+    width: 100% !important;
+}
+.w-40 .calander{
+    justify-content: center;
+}
+.date-btn-right{
+    justify-content: center !important;
+    margin-top: 10px ;
+}
 }
