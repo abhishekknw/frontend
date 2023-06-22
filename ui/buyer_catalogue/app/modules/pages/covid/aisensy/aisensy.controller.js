@@ -3100,6 +3100,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.societyNameList = [];
             $scope.newSelectedArea = [];
             $scope.Areas = ""
+            $scope.societyImages = [];
             return 0;
           }
           AuthService.getSupplierDataByNumber(number, society)
@@ -3141,17 +3142,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           return text;
         }
         $scope.uploadFiles = function (files, errFiles) {
+          console.log($scope.NewsupplierAddUpdateData)
           $scope.files = files;
           $scope.errFile = errFiles;
           if (files && files.length > 0) {
             angular.forEach($scope.files, function (file, key) {
-              var my_filename = "MD_" + 'VPNHPWWBBBGL' + "_" + makeid();
+              var my_filename = "MD_" + $scope.NewsupplierAddUpdateData.supplier_id + "_" + makeid();
               file['name'] = my_filename;
               AuthService.uploadImages(file).then(function (result) {
 
-                var my_file_url = { "image_details": [{ "location_id": 'VPNHPWWBBBGL', "image_url": my_filename, "object_id": 'VPNHPWWBBBGL' }] };
+                var my_file_url = { "image_details": [{ "location_id": $scope.NewsupplierAddUpdateData.supplier_id, "image_url": my_filename, "object_id": $scope.NewsupplierAddUpdateData.supplier_id }] };
                 // $scope.images.push({"location_id":$rootScope.supplierId, "image_url":my_filename})
-                AuthService.addSocietyImages('VPNHPWWBBBGL', my_file_url.image_details[0], 'RS')
+                AuthService.addSocietyImages($scope.NewsupplierAddUpdateData.supplier_id, my_file_url.image_details[0], $scope.NewsupplierAddUpdateData.supplier_type)
                   .success(function (response) {
                     swal('DONE', constants.image_success, constants.success);
                     $scope.societyImages.push(response.data);

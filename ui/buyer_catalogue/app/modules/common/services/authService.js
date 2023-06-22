@@ -959,7 +959,7 @@ angular.module('Authentication')
                return machadaloHttp.get(url);
              }
              authService.addSocietyImages = function (id, imageUrl,supplierTypeCode) {
-               let url = "v0/ui/image-mapping/?supplier_type_code=" + 'RS';
+               let url = "v0/ui/image-mapping/?supplier_type_code=" + supplierTypeCode;
                return machadaloHttp.post(url, imageUrl);
              };
              authService.deleteImageSupplierType = function (id){
