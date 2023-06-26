@@ -3,3 +3,4 @@ export * from './auth'
 export * from './alert'
 
 export * from './Machadalo/newLeads';
+export * from './CampaignPlanning/DecisionBoard';
