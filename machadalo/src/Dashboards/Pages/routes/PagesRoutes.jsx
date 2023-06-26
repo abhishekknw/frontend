@@ -12,16 +12,19 @@ export default function PagesRoutes() {
 
   return (
     <>
-    <MachadaloHeader />
+      <div className="container ">
+        <MachadaloHeader />
+        <hr className='mt-0'/>
       <Switch>
-      <SnackbarProvider
+        <SnackbarProvider
           autoHideDuration={2000}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           open={open}
         >
-        <Route path={ROUTESNAME.CAMPAIGN_DECISION_BOARD} component={CampaignDecisionBoard} />
+          <Route path={ROUTESNAME.CAMPAIGN_DECISION_BOARD} component={CampaignDecisionBoard} />
         </SnackbarProvider>
       </Switch>
+      </div>
     </>
   );
 }
