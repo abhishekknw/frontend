@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { DecisionBoardActions } from '../../_actions';
@@ -11,10 +11,11 @@ import Paginations from '../../Pagination';
 import CampaignAssignModal from './CampaignAssignModal';
 export default function CampaignDecisionBoard() {
   const DecisionBoard = DecisionBoardActions();
-  const [filters, setFilters] = React.useState({ search: '', pageNo: 1 });
+  const [filters, setFilters] =  useState({ search: '', pageNo: 1 });
   const InvoiceProposalList = useRecoilValue(InvoiceProposalsAtom);
-  const [showHide, setShowHide] = React.useState(false);
-  const [headerData, setheaderData] = React.useState([
+  const [showHide, setShowHide] = useState(false);
+  const [proposalData,setProposalData] = useState({});
+  const [headerData, setheaderData] = useState([
     {
       name: 'S.No.',
       key: 'index',
@@ -86,16 +87,15 @@ export default function CampaignDecisionBoard() {
 
    const convertCampaignToProposal=async(proposal)=> {
     await DecisionBoard.converCampaignToProposal(proposal);
-    setShowHide(true);
   }
   const  convertProposalToCampaign=async(proposal)=> {
     await DecisionBoard.convertProposalToCampaign(proposal);
+    setProposalData(proposal);
     setShowHide(true);
   }
 
   const convertCampaignOnHold=async(proposal)=> {
     await DecisionBoard.convertCampaignOnHold(proposal);
-    setShowHide(true);
   }
 
   React.useEffect(() => {
@@ -202,7 +202,7 @@ export default function CampaignDecisionBoard() {
             onPageChange={handlePageChange}
           />
         )}
-        <CampaignAssignModal show={showHide} close={() => setShowHide(false)}  />
+        <CampaignAssignModal show={showHide} close={() => setShowHide(false)} proposalData={proposalData} />
       </div>
     </>
   );
