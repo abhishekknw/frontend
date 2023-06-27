@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
-import { DecisionBoardActions } from '../../_actions/CampaignPlanning/decisionBoard.actions';
+import { DecisionBoardActions } from '../../_actions';
 import { InvoiceProposalsAtom } from '../../_states';
 import { useRecoilValue } from 'recoil';
 import Form from 'react-bootstrap/Form';
@@ -10,7 +10,7 @@ import SearchBox from '../../common/search/SearchBox';
 import Paginations from '../../Pagination';
 export default function CampaignDecisionBoard() {
   const DecisionBoard = DecisionBoardActions();
-  const [filters,setFilters] = React.useState({search:'',pageNo:1})
+  const [filters, setFilters] = React.useState({ search: '', pageNo: 1 });
   const InvoiceProposalList = useRecoilValue(InvoiceProposalsAtom);
   const [headerData, setheaderData] = React.useState([
     {
@@ -69,17 +69,28 @@ export default function CampaignDecisionBoard() {
     },
   ]);
   async function handlePageChange(e, page) {
-    let data = {...filters,pageNo:page};
+    let data = { ...filters, pageNo: page };
     setFilters(data);
     await DecisionBoard.GetInvoiceProposals(data);
   }
 
-  async function handleSearch (e){
-    let data = {search:e.target.value,pageNo:1};
+  async function handleSearch(e) {
+    let data = { search: e.target.value, pageNo: 1 };
     setFilters(data);
-    if(data.search.length > 2 || data.search == ''){
+    if (data.search.length > 2 || data.search == '') {
       await DecisionBoard.GetInvoiceProposals(data);
     }
+  }
+
+  async function convertCampaignToProposal(proposal) {
+    await DecisionBoard.converCampaignToProposal(proposal);
+  }
+  async function convertProposalToCampaign(proposal) {
+    await DecisionBoard.convertProposalToCampaign(proposal);
+  }
+
+  async function convertCampaignOnHold(proposal) {
+    await DecisionBoard.convertCampaignOnHold(proposal);
   }
 
   React.useEffect(() => {
@@ -92,9 +103,7 @@ export default function CampaignDecisionBoard() {
         <h4 className="table-head">{'Campaign Decision Board'.toUpperCase()}</h4>
       </div>
       <div>
-        <SearchBox
-        onSearch={handleSearch}
-        />
+        <SearchBox onSearch={handleSearch} />
         <br></br>
         <Table className="leads-table ">
           <Thead className="leads-tbody">
@@ -124,9 +133,30 @@ export default function CampaignDecisionBoard() {
                   <Td>{dayjs(data.proposal.tentative_end_date).format('DD-MM-YYYY')}</Td>
                   <Td>
                     <Form>
-                      <Form.Check label="Accept" name="group1" value="PTC" type={'radio'} />
-                      <Form.Check label="Decline" name="group1" value="PNC" type={'radio'} />
-                      <Form.Check label="OnHold" name="group1" value="POH" type={'radio'} />
+                      <Form.Check
+                        label="Accept"
+                        checked={data.proposal.campaign_state === 'PTC'}
+                        type="radio"
+                        onChange={(e) => {
+                          convertProposalToCampaign(data);
+                        }}
+                      />
+                      <Form.Check
+                        label="Decline"
+                        checked={data.proposal.campaign_state === 'PNC'}
+                        type="radio"
+                        onChange={(e) => {
+                          convertCampaignToProposal(data);
+                        }}
+                      />
+                      <Form.Check
+                        type="radio"
+                        label="OnHold"
+                        checked={data.proposal.campaign_state === 'POH'}
+                        onChange={(e) => {
+                          convertCampaignOnHold(data);
+                        }}
+                      />
                     </Form>
                   </Td>
                   <Td>
