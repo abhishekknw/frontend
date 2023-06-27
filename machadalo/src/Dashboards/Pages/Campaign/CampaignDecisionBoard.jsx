@@ -8,10 +8,12 @@ import Form from 'react-bootstrap/Form';
 import dayjs from 'dayjs';
 import SearchBox from '../../common/search/SearchBox';
 import Paginations from '../../Pagination';
+import CampaignAssignModal from './CampaignAssignModal';
 export default function CampaignDecisionBoard() {
   const DecisionBoard = DecisionBoardActions();
   const [filters, setFilters] = React.useState({ search: '', pageNo: 1 });
   const InvoiceProposalList = useRecoilValue(InvoiceProposalsAtom);
+  const [showHide, setShowHide] = React.useState(false);
   const [headerData, setheaderData] = React.useState([
     {
       name: 'S.No.',
@@ -82,15 +84,18 @@ export default function CampaignDecisionBoard() {
     }
   }
 
-  async function convertCampaignToProposal(proposal) {
+   const convertCampaignToProposal=async(proposal)=> {
     await DecisionBoard.converCampaignToProposal(proposal);
+    setShowHide(true);
   }
-  async function convertProposalToCampaign(proposal) {
+  const  convertProposalToCampaign=async(proposal)=> {
     await DecisionBoard.convertProposalToCampaign(proposal);
+    setShowHide(true);
   }
 
-  async function convertCampaignOnHold(proposal) {
+  const convertCampaignOnHold=async(proposal)=> {
     await DecisionBoard.convertCampaignOnHold(proposal);
+    setShowHide(true);
   }
 
   React.useEffect(() => {
@@ -197,6 +202,7 @@ export default function CampaignDecisionBoard() {
             onPageChange={handlePageChange}
           />
         )}
+        <CampaignAssignModal show={showHide} close={() => setShowHide(false)}  />
       </div>
     </>
   );
