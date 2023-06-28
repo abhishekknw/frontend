@@ -619,6 +619,18 @@ angular
           permission: 'can_view_template_dashboard'
         }
       })
+      .state('interveneTemplate', {
+        url: '/interveneTemplate/:phoneNumber',
+        controller: 'interveneTemplateCtrl',
+        templateUrl: 'modules/pages/interveneTemplate/interveneTemplate.html',
+        sidebarMeta: {
+          icon: 'ion-android-home',
+          order: 0,
+        },
+        data: {
+          permission: 'can_view_template_dashboard'
+        }
+      })
       .state('templateDashboardMea', {
         url: '/templateDashboardMea',
         controller: 'TemplateDashboardMeaCtrl',
