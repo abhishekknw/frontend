@@ -1356,13 +1356,13 @@
                           <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_positive')">Positive
+                          <th ng-click="Sort('total_positive')">B1
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_neutral')">Neutral
+                          <th ng-click="Sort('total_neutral')">B2
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_negative')">Negative
+                          <th ng-click="Sort('total_negative')">B3
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Details</th>
@@ -1566,13 +1566,16 @@
                           <th style="padding:10px" ng-click="Sort('total_read')">Read
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_positive')">Positive
+                          <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_neutral')">Neutral
+                          <th style="padding:10px" ng-click="Sort('total_positive')">B1
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_negative')">Negative
+                          <th style="padding:10px" ng-click="Sort('total_neutral')">B2
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_negative')">B3
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">View</th>
@@ -1589,6 +1592,7 @@
                           <td style="text-align: center;">{{tdtemplate.total_users}}({{tdtemplate.Unique_send}})</td>
                           <td style="text-align: center;">{{tdtemplate.total_delivered}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_read}}</td>
+                          <td style="text-align: center;">{{tdtemplate.unique_button_count}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_positive}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_negative}}</td>
@@ -1660,13 +1664,13 @@
                           <th style="padding:10px">User Name</th>
                           <th style="padding:10px">What's app Name</th>
                           <th style="padding:10px">Phone Number</th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_positive')">Positive
+                          <th style="padding:10px" ng-click="SortFromBackend('total_positive')">B1
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_neutral')">Neutral
+                          <th style="padding:10px" ng-click="SortFromBackend('total_neutral')">B2
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_negative')">Negative
+                          <th style="padding:10px" ng-click="SortFromBackend('total_negative')">B3
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Status
