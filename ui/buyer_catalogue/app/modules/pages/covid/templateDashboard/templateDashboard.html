@@ -1728,7 +1728,12 @@
                             {{tmp.agent_name}}
                           </td>
                           <td style="text-align: center;">
-                            {{tmp.comment.length>0?tmp.comment[tmp.comment.length-1].comment:'NA'}}
+                            <!-- {{tmp.comment.length>0?tmp.comment[tmp.comment.length-1].comment:'NA'}} -->
+                            <p style="color: #000;">{{ tmp.comment[tmp.comment.length-1].comment | limitTo: 20
+                              }}<span>{{tmp.comment[tmp.comment.length-1].comment.length > 20 ? '...' : ''}}
+                                <md-tooltip>{{tmp.comment[tmp.comment.length-1].comment}}</md-tooltip>
+                              </span>
+                            </p>
                           </td>
                           <td style="text-align: center;">
                             <i class='fas fa-phone-alt' style="font-size:20px" ng-click="CallTemplate(tmp)"></i>
