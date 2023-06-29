@@ -6477,6 +6477,7 @@
 
       // Template Dashboard start
       $scope.getTransactionalTemplate = function (value, s_date = '', e_date = '') {
+        $scope.interveneDashboard = {show:false,data:''};
         $scope.TemplateListSummary()
         $scope.changeStartDate();
         $scope.changeEndDate();
@@ -6996,8 +6997,11 @@
       }
       $scope.templateDetail();
       $scope.userDetail = function (data) {
-        alert(!333)
         $scope.interveneDashboard = {show:true,data:data};
+        console.log($scope.interveneDashboard,"$scope.interveneDashboard")
+      }
+      $scope.hideIntervene =function(){
+        $scope.interveneDashboard = {show:false,data:''};
       }
       // Template Dashboard end
 

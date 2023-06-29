@@ -1168,7 +1168,7 @@
               <uib-tab-heading>
                 <h5>Transactional Template</h5>
               </uib-tab-heading>
-              <div class="container-fluid">
+              <div class="container-fluid" ng-if="!interveneDashboard.show">
                 <!-- <div class="panel panel-default"> -->
 
 
@@ -1714,7 +1714,9 @@
                           <td style="text-align: center;">{{tmp.total_positive}}</td>
                           <td style="text-align: center;">{{tmp.total_neutral}}</td>
                           <td style="text-align: center;">{{tmp.total_negative}}</td>
-                          <td style="text-align: center;">{{tmp.status}}</td>
+                          <td style="text-align: center;">
+                            <p style="color: #000;">{{tmp.status}}</p>
+                          </td>
                           <!-- <td style="text-align: center;">{{tmp.created_at}}</td> -->
                           <td style="text-align: center; line-height: 1.5; width: 100px;">{{tmp.updated_at}}</td>
                           <td style="text-align: center;">
@@ -1730,15 +1732,15 @@
                           <td style="text-align: center;">
                             <!-- {{tmp.comment.length>0?tmp.comment[tmp.comment.length-1].comment:'NA'}} -->
                             <p style="color: #000;">{{ tmp.comment[tmp.comment.length-1].comment | limitTo: 20
-                              }}<span>{{tmp.comment[tmp.comment.length-1].comment.length > 20 ? '  ...' : ''}}
+                              }}<span>{{tmp.comment[tmp.comment.length-1].comment.length > 20 ? ' ...' : ''}}
                                 <md-tooltip class="tool-box">{{tmp.comment[tmp.comment.length-1].comment}}</md-tooltip>
                               </span>
                             </p>
                           </td>
                           <td style="text-align: center;">
-                            <i class='fas fa-phone-alt' style="font-size:20px;color: #000000;" ng-click="CallTemplate(tmp)"></i>
-                            <!-- <a ng-click="userDetail(tmp)">Intervene</a> -->
-                            <!-- <a  ng-click="userDetail(tmp)" href="#/interveneTemplate/{{tmp.phone_number}}">Chat</a> -->
+                            <i class='fas fa-phone-alt' style="font-size:20px;color: #000000;"
+                              ng-click="CallTemplate(tmp)"></i>
+                            <a ng-click="userDetail(tmp)">Intervene</a>
                           </td>
                         </tr>
                       </tbody>
@@ -2002,9 +2004,15 @@
 
 
               </div>
+              <!-- Intervene Chat -->
+              <div ng-if="interveneDashboard.show">
+                <button class="btn btn-danger" ng-click="hideIntervene()">Back To Previous</button>
+                <chat-detail number={{interveneDashboard.data.phone_number}}></chat-detail>
+              </div>
+              <!-- END Intervene Chat -->
 
               <!--Footer-->
-              <div class="page-end">
+              <div class="page-end" ng-if="!interveneDashboard.show">
                 <center>
                   <div class="content">
 
@@ -6459,13 +6467,6 @@
           <div ui-view autoscroll="true" autoscroll-body-top></div>
         </div>
       </div>
-
-      <!-- Intervene Chat -->
-      <!-- <div class="middle-section" ng-if="interveneDashboard.show">
-        <chat-detail number="7006501835"></chat-detail>
-      </div> -->
-      <!-- END Intervene Chat -->
-
       <!-- <back-top></back-top> -->
 
 
