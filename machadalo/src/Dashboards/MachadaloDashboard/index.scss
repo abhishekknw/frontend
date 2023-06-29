@@ -796,6 +796,27 @@ html body .responsiveTable th div{
     overflow-x: hidden;
     text-overflow: ellipsis;
 }
+.mobile-table  tbody tr{
+    padding: 10px !important;
+    overflow: hidden;
+}
+.campaign-list-dropdown .dropdown button, .campaign-list-dropdown .dropdown button:hover{
+    width: 100%;
+    min-width: 112px ;
+    margin-bottom: 10px;
+}
+.mobile-block {
+    display: block !important;
+}
+.mobile-t-padding tr {
+    padding: 10px !important;
+}
+.responsiveTable td.pivoted{
+    overflow: hidden;
+}
+.breadcrumb li::before, .breadcrumb li::after{
+    height: 64%;
+}
 }
 @media screen and (max-width: 400px) {
 .main-content{

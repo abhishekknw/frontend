@@ -120,12 +120,12 @@ export default function ViewLeadDetailTable(props) {
         </div>
       </div>
       {/* <h4 style={{ paddingTop: '10px' }}>Leads Table</h4> */}
-      <Table striped bordered hover className="leads-table ">
+      <Table striped bordered hover className="leads-table mobile-table">
         <Thead className="leads-tbody">
           <Tr>
             {headerData.map((item,index)=>{
               return (
-                <th key={index}>{item.name} <span>{item?.sortIcon?.direction}</span></th>
+                <Th key={index}>{item.name} <span>{item?.sortIcon?.direction}</span></Th> 
               )
             })}
           </Tr>

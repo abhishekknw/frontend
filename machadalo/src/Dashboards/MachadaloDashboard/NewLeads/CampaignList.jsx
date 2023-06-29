@@ -202,7 +202,7 @@ export default function CampaignList(props) {
       <div className="text-center">
         <h4 className="table-head">{'Campaigns'.toUpperCase()}</h4>
       </div>
-      <div className="d-flex justify-content-between align-items-center pt-2 pb-3">
+      <div className=" mobile-block d-flex justify-content-between align-items-center pt-2 pb-3">
         <div className="campaign-list-dropdown">
           <Dropdown className="me-4">
             <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -266,7 +266,7 @@ export default function CampaignList(props) {
           </InputGroup>
         </div>
       </div>
-      <Table striped bordered hover className="leads-table ">
+      <Table striped bordered hover className="leads-table  mobile-t-padding">
         <Thead className="leads-tbody">
           <Tr>
             {headerData?.map((item, index) => {
