@@ -1674,7 +1674,7 @@
                   <div class="table-responsive" style="width: 100%;overflow-y: scroll;" ng-model="userSearch"
                     ng-change="getTransactionalTemplateViewDetail()">
 
-                    <table class="table">
+                    <table class="table templateUserSummary">
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
@@ -1730,13 +1730,13 @@
                           <td style="text-align: center;">
                             <!-- {{tmp.comment.length>0?tmp.comment[tmp.comment.length-1].comment:'NA'}} -->
                             <p style="color: #000;">{{ tmp.comment[tmp.comment.length-1].comment | limitTo: 20
-                              }}<span>{{tmp.comment[tmp.comment.length-1].comment.length > 20 ? '...' : ''}}
-                                <md-tooltip>{{tmp.comment[tmp.comment.length-1].comment}}</md-tooltip>
+                              }}<span>{{tmp.comment[tmp.comment.length-1].comment.length > 20 ? '  ...' : ''}}
+                                <md-tooltip class="tool-box">{{tmp.comment[tmp.comment.length-1].comment}}</md-tooltip>
                               </span>
                             </p>
                           </td>
                           <td style="text-align: center;">
-                            <i class='fas fa-phone-alt' style="font-size:20px" ng-click="CallTemplate(tmp)"></i>
+                            <i class='fas fa-phone-alt' style="font-size:20px;color: #000000;" ng-click="CallTemplate(tmp)"></i>
                             <!-- <a ng-click="userDetail(tmp)">Intervene</a> -->
                             <!-- <a  ng-click="userDetail(tmp)" href="#/interveneTemplate/{{tmp.phone_number}}">Chat</a> -->
                           </td>
