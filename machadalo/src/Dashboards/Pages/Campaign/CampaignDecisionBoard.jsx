@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import { Modal, Button } from 'react-bootstrap';
 import { DecisionBoardActions } from '../../_actions';
 import { InvoiceProposalsAtom } from '../../_states';
 import { useRecoilValue } from 'recoil';
@@ -9,12 +10,14 @@ import dayjs from 'dayjs';
 import SearchBox from '../../common/search/SearchBox';
 import Paginations from '../../Pagination';
 import CampaignAssignModal from './CampaignAssignModal';
+
 export default function CampaignDecisionBoard() {
   const DecisionBoard = DecisionBoardActions();
-  const [filters, setFilters] =  useState({ search: '', pageNo: 1 });
+  const [filters, setFilters] = useState({ search: '', pageNo: 1 });
   const InvoiceProposalList = useRecoilValue(InvoiceProposalsAtom);
   const [showHide, setShowHide] = useState(false);
-  const [proposalData,setProposalData] = useState({});
+  const [proposalData, setProposalData] = useState({});
+  const [declineHoldModal, setDeclineHoldModal] = useState({ show: false, type: '' });
   const [headerData, setheaderData] = useState([
     {
       name: 'S.No.',
@@ -85,18 +88,20 @@ export default function CampaignDecisionBoard() {
     }
   }
 
-   const convertCampaignToProposal=async(proposal)=> {
+  const convertCampaignToProposal = async (proposal) => {
     await DecisionBoard.converCampaignToProposal(proposal);
-  }
-  const  convertProposalToCampaign=async(proposal)=> {
+    setDeclineHoldModal({ show: true, type: 'Decline' });
+  };
+  const convertProposalToCampaign = async (proposal) => {
     await DecisionBoard.convertProposalToCampaign(proposal);
     setProposalData(proposal);
     setShowHide(true);
-  }
+  };
 
-  const convertCampaignOnHold=async(proposal)=> {
+  const convertCampaignOnHold = async (proposal) => {
     await DecisionBoard.convertCampaignOnHold(proposal);
-  }
+    setDeclineHoldModal({ show: true, type: 'Hold' });
+  };
 
   React.useEffect(() => {
     DecisionBoard.GetInvoiceProposals(filters);
@@ -202,8 +207,40 @@ export default function CampaignDecisionBoard() {
             onPageChange={handlePageChange}
           />
         )}
-        <CampaignAssignModal show={showHide} close={() => setShowHide(false)} proposalData={proposalData} />
       </div>
+      <CampaignAssignModal
+        show={showHide}
+        close={() => setShowHide(false)}
+        proposalData={proposalData}
+      />
+
+      <Modal
+        show={declineHoldModal.show}
+        onHide={(e) => {
+          setDeclineHoldModal({ show: false, type: '' });
+        }}
+        className="wpModal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Specify Reason</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="Comment_Box">
+              <Form.Label>
+                {declineHoldModal.type === 'Decline'
+                  ? `Please enter the reason in below box why this proposal can't be converted to
+                campaign.`
+                  : 'Please enter the reason in below box why this proposal is on hold.'}
+              </Form.Label>
+              <Form.Control as="textarea" rows={3} />
+            </Form.Group>
+          </Form>
+          <Button type="button" className="btn btn-primary submit-btn">
+            Notify
+          </Button>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }
