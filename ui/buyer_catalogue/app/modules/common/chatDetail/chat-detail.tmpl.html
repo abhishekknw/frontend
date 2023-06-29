@@ -1208,4 +1208,113 @@
   </div>
   </div>
 </div>
+<!-- Start Send Template Modal -->
+<div id="TemplateModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-0">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+          style="opacity: 1; font-weight:bolder;"> &times;</button>
+
+        <h4 class="modal-title  theme-color" ng-if="!submitLeadType" style=" font-size: 21px;">
+          Select Template you want to share</h4>
+        <hr>
+
+        <div class="input-wrapper search-input-wrapper"
+          style=" margin: 10px; background-color: #575758;top:21px;z-index: 10;">
+          <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px;"></i>
+          <input placeholder="Search here" ng-change="getTemplateData(getTemplateDataParams)"
+            ng-model="getTemplateDataParams.search" id="tab1search" name="searchcontact" type="text"
+            style="background-color: #ababab;margin: 5px; " />
+        </div>
+
+        <div class="modal-body">
+          <table class="table table-bordered table-hover">
+            <tbody ng-repeat="list in TemplateList.rows | limitTo:10">
+              <td>
+                <div class="friend-drawer templte-box-list friend-drawer--onhover">
+                  <div class="custom-control custom-checkbox" ng-click="getselectedTemplate(list)">
+                    <span class="text" style="float: left;">
+                      <h6 class="msg-title">{{list.alias_name}}</h6>
+                      <p class="text-muted">
+                        {{TemplateCollapseRow===list.id?list.data:list.data.substring(0,110)+'...'}}
+                      </p>
+                    </span>
+                  </div>
+                </div>
+                <div ng-if='TemplateCollapseRow===list.id' class="input-params">
+                  <label>Parameters:</label>
+                  <div class="param-div">
+                    <p class="param-list">{{list.param.toString()}}</p>
+                  </div>
+                  <form name="parameters" ng-submit="setSendTemplateParams(sendTemplateParams,list)">
+                    <input type="text" ng-model="sendTemplateParams" name="sendTemplateParams" required/>
+                    <button class="btn btn-primary" type="submit">Send</button>
+                  </form>
+                  <p><span style="font-weight: 600;">Note: </span> Enter Param With (,) Separated</p>
+                </div> 
+              </td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- end Intervene Chat -->
+
+<!-- CallTemplate Modal Start -->
+<div id="CallTemplate" class="modal fade call-modal theme-modal">
+  <div class="modal-dialog quick-call-model">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Quick Call</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="row quick-call-form">
+        <!-- <hr style="border: 1px solid ; border-width: 1px 0px 0px 0px"> style="border-right: 1px solid #0000008c"-->
+        <div class="col-md-12">
+          <form name="myForm" ng-submit="OnQuickCall(CallModel)">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label> Phone Number</label>
+                    <input class="form-control" disabled ng-model="CallModel.destination_number"
+                      placeholder="Phone Number" type="text">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label> Select Agent</label>
+                    <select class="form-control" ng-model="CallModel.agent_number" name="Agent"
+                      required>
+                      <option value="">Select Agent</option>
+                      <option value="{{value.follow_me_number}}"
+                        ng-repeat="value in DialerAgentList.data">
+                        {{value.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label> Select Number</label>
+                    <select class="form-control" ng-model="CallModel.caller_id" name="Number" required>
+                      <option value="">Select Number</option>
+                      <option value="{{value.tollfree_number}}" ng-repeat="value in DialerCallerIds">
+                        {{value.tollfree_number}}</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+            <div class="modal-footer text-center">
+              <button type="submit" style="margin-top: 10px;"
+                class="btn btn-danger smll-btn-cmt">Call</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--CallTemplate Modal End  -->
