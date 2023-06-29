@@ -836,4 +836,8 @@ html body .w-60{
     justify-content: center !important;
     margin-top: 10px ;
 }
+.piechart .chart canvas{    
+    width: 100% !important;
+    height: 100% !important;
+}
 }
