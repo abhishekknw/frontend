@@ -379,9 +379,12 @@
                                 {{templateData.data}}
                               </div>
                               <div>
-                                <button style="width:100px;" ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
-                                <button style="width:100px" ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
-                                <button style="width:100px" ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
+                                <button style="width:100px;"
+                                  ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
+                                <button style="width:100px"
+                                  ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
+                                <button style="width:100px"
+                                  ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
                               </div>
                             </div>
                             <!-- Modal footer -->
@@ -408,48 +411,56 @@
                                   {{message}}
                                 </div>
                                 <div>
-                                  <button style="width:100px;" ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
-                                  <button style="width:100px" ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
-                                  <button style="width:100px" ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
+                                  <button style="width:100px;"
+                                    ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
+                                  <button style="width:100px"
+                                    ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
+                                  <button style="width:100px"
+                                    ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
                                 </div>
                               </div>
                               <div class="modal-footer">
                                 <div class="row clearfix">
                                   <div class="clearfix">
-                                    <div >
-                                    <div class="col-sm-3" >
-                                      <div style="position: relative; text-align: left; height: 38px;">
-                                        <input class="btn btn-danger"
-                                          style="position: absolute; z-index: 16; opacity: 0; width:123px; cursor: pointer;"
-                                          type="file" id="file1" name="file" multiple ng-files="getTheFiles($files)" />
-                                        <button style="position: absolute; z-index: 1; width:123px;" type="button"
-                                          class="btn btn-danger">Upload Users</button>
+                                    <div>
+                                      <div class="col-sm-3">
+                                        <div style="position: relative; text-align: left; height: 38px;">
+                                          <input class="btn btn-danger"
+                                            style="position: absolute; z-index: 16; opacity: 0; width:123px; cursor: pointer;"
+                                            type="file" id="file1" name="file" multiple
+                                            ng-files="getTheFiles($files)" />
+                                          <button style="position: absolute; z-index: 1; width:123px;" type="button"
+                                            class="btn btn-danger">Upload Users</button>
+                                        </div>
                                       </div>
+                                      <div class="col-sm-2">
+                                        <button ng-if="!checkForLoader" type="button" class="btn btn-danger"
+                                          value="Upload" ng-click="uploadSendTemplate()">Send</button>
+                                        <button ng-if="checkForLoader" type="button" class="btn btn-danger"
+                                          value="Upload" disabled><i class="fa fa-spinner fa-spin"
+                                            style="margin-left: -10px; margin-right:4px;"></i>Send</button>
+                                      </div>
+                                      <div style="text-align: left; padding-left: 23px; padding-top:5px;">
+                                        {{selectedFileName}}</div>
+                                      <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
+                                        {{excelColumnError}}</div>
                                     </div>
-                                    <div class="col-sm-2">
-                                      <button ng-if="!checkForLoader" type="button" class="btn btn-danger"
-                                        value="Upload" ng-click="uploadSendTemplate()">Send</button>
-                                      <button ng-if="checkForLoader" type="button" class="btn btn-danger" value="Upload"
-                                        disabled><i class="fa fa-spinner fa-spin"
-                                        style="margin-left: -10px; margin-right:4px;"></i>Send</button>
-                                    </div>
-                                    <div style="text-align: left; padding-left: 23px; padding-top:5px;">
-                                      {{selectedFileName}}</div>
-                                    <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
-                                      {{excelColumnError}}</div>
-                                  </div>
-                                    <div class="input-params send-text-box" >
+                                    <div class="input-params send-text-box">
                                       <label>Parameters:</label>
                                       <div class="param-div">
                                         <p class="param-list">{{templateData.param.toString()}}</p>
                                       </div>
                                       <form name="parameters">
-                                        <input type="text" placeholder="Phone Number" style="margin-bottom: 10px;" ng-model="sendTemplateModel.phone_number" required/>
-                                        <input type="text" ng-model="sendTemplateModel.params" name="sendTemplateParams" placeholder="Entert Params" required/>
-                                        <p style="font-weight: 600;color: #000;"><span>Note: </span> Enter Param With (,) Separated</p>
-                                        <button class="btn btn-primary" type="submit" ng-click="setSendTemplateParams(sendTemplateModel,templateData)">Send</button>
+                                        <input type="text" placeholder="Phone Number" style="margin-bottom: 10px;"
+                                          ng-model="sendTemplateModel.phone_number" required />
+                                        <input type="text" ng-model="sendTemplateModel.params" name="sendTemplateParams"
+                                          placeholder="Entert Params" required />
+                                        <p style="font-weight: 600;color: #000;"><span>Note: </span> Enter Param With
+                                          (,) Separated</p>
+                                        <button class="btn btn-primary" type="submit"
+                                          ng-click="setSendTemplateParams(sendTemplateModel,templateData)">Send</button>
                                       </form>
-                                    </div> 
+                                    </div>
                                     <!-- <div class="col-sm-7" style="text-align: right;">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                     </div> -->
@@ -473,24 +484,31 @@
                               <div>
                                 <form name="myForm" ng-submit="sendOptinUserFile(optinUserNumbers,FileCheckSelect)">
                                   <div>
-                                    <b>Send Excel File : </b><input type="checkbox" ng-model="FileCheckSelect"><br /><br />
-                                    <div style="padding:10px; border:1px solid black; width:100%; font-weight:bold" ng-show='FileCheckSelect'>
+                                    <b>Send Excel File : </b><input type="checkbox"
+                                      ng-model="FileCheckSelect"><br /><br />
+                                    <div style="padding:10px; border:1px solid black; width:100%; font-weight:bold"
+                                      ng-show='FileCheckSelect'>
                                       <div class="chose-file">
                                         <span style="color:#000;">
-                                          <span style='font-size:10px;' ng-if="optineFileName" ng-click="removeOptinFiles()">&#10060;</span>	&nbsp;{{optineFileName}}
+                                          <span style='font-size:10px;' ng-if="optineFileName"
+                                            ng-click="removeOptinFiles()">&#10060;</span> &nbsp;{{optineFileName}}
                                         </span>
-                                        <input class="custom-file-input" type="file" name="file" id="optinFile" size="60" ng-required="FileCheckSelect" multiple
+                                        <input class="custom-file-input" type="file" name="file" id="optinFile"
+                                          size="60" ng-required="FileCheckSelect" multiple
                                           ng-files="getOptinFiles($files)" />
                                       </div>
                                     </div>
                                   </div>
                                   <div class="modal-s-input" ng-show='!FileCheckSelect'>
-                                    <input style="color:#000;width:100%;border:1px solid black;" type="text" ng-model="optinUserNumbers" placeholder="Enter Number , Separated" ng-required="!FileCheckSelect"/>
+                                    <input style="color:#000;width:100%;border:1px solid black;" type="text"
+                                      ng-model="optinUserNumbers" placeholder="Enter Number , Separated"
+                                      ng-required="!FileCheckSelect" />
                                   </div>
                                   <div class="modal-footer text-center" style="border-top: 0px; padding: 0;">
-                                    <button type="submit" style="margin-top: 10px;"
-                                      class="btn btn-danger smll-btn-cmt" ng-disabled="!optinUserLoader">
-                                      <i class="fa fa-spinner fa-spin" style="margin-left: -10px; margin-right:4px;" ng-if="!optinUserLoader"></i>Send</button>
+                                    <button type="submit" style="margin-top: 10px;" class="btn btn-danger smll-btn-cmt"
+                                      ng-disabled="!optinUserLoader">
+                                      <i class="fa fa-spinner fa-spin" style="margin-left: -10px; margin-right:4px;"
+                                        ng-if="!optinUserLoader"></i>Send</button>
                                   </div>
                                 </form>
                               </div>
@@ -1679,6 +1697,7 @@
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Call Status</th>
+                          <th style="padding:10px">Agent Name</th>
                           <th style="padding:10px">Comments</th>
                           <th style="padding:10px">Actions</th>
                         </tr>
@@ -1706,11 +1725,14 @@
                             </select>
                           </td>
                           <td style="text-align: center;">
+                            {{tmp.agent_name}}
+                          </td>
+                          <td style="text-align: center;">
                             {{tmp.comment.length>0?tmp.comment[tmp.comment.length-1].comment:'NA'}}
                           </td>
                           <td style="text-align: center;">
                             <i class='fas fa-phone-alt' style="font-size:20px" ng-click="CallTemplate(tmp)"></i>
-                            <a  ng-click="userDetail(tmp)">Intervene</a>
+                            <!-- <a ng-click="userDetail(tmp)">Intervene</a> -->
                             <!-- <a  ng-click="userDetail(tmp)" href="#/interveneTemplate/{{tmp.phone_number}}">Chat</a> -->
                           </td>
                         </tr>
@@ -3230,7 +3252,7 @@
                           </div>
                           <!-- <div class="row" permission = "[permissions.brandingEmailButton]">
           <button type="button" name="button" class="col-md-12 btn btn-danger" data-toggle="modal" data-target="#sendBookingEngineEmailModal">Click here to Send Emails</button>
-        </div> -->
+         </div> -->
                         </div>
                       </div>
                     </div>
@@ -6432,6 +6454,13 @@
           <div ui-view autoscroll="true" autoscroll-body-top></div>
         </div>
       </div>
+
+      <!-- Intervene Chat -->
+      <!-- <div class="middle-section" ng-if="interveneDashboard.show">
+        <chat-detail number="7006501835"></chat-detail>
+      </div> -->
+      <!-- END Intervene Chat -->
+
       <!-- <back-top></back-top> -->
 
 
@@ -6927,11 +6956,6 @@
         </div>
       </div>
     </div><!-- middle-section -->
-    <!-- Intervene Chat -->
-    <!-- <div ng-if="interveneDashboard.show">
-      <chat-detail number="7006501835"></chat-detail>
-    </div> -->
-    <!-- END Intervene Chat -->
   </main>
 </div>
 
