@@ -1361,25 +1361,43 @@
                           <th style="padding:10px" ng-click="Sort('days_count')">Days sent
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
+                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered(%)
+                          <th style="padding:10px" ng-click="Sort('total_delivered')">
+                            <span>D(%)
+                              <md-tooltip class="tool-box-header">Delivered</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_read')">Read(%)
+                          <th style="padding:10px" ng-click="Sort('total_read')">
+                            <span>R(%)
+                              <md-tooltip class="tool-box-header">Read</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count(%)
+                          <th style="padding:10px" ng-click="Sort('unique_button_count')">
+                            <span>UBC(%)
+                              <md-tooltip class="tool-box-header">Unique Button Count</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_positive')">B1(%)
+                          <th ng-click="Sort('total_positive')">
+                            <span>B1(%)
+                              <md-tooltip class="tool-box-header">Positive</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_neutral')">B2(%)
+                          <th ng-click="Sort('total_neutral')">
+                            <span>B2(%)
+                              <md-tooltip class="tool-box-header">Neutral</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_negative')">B3(%)
+                          <th ng-click="Sort('total_negative')">
+                            <span>B3(%)
+                              <md-tooltip class="tool-box-header">Negative</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Details</th>
@@ -1422,54 +1440,6 @@
                             </button>
                           </td>
                         </tr>
-
-                        <!-- <tr colspan="9">
-                            <td></td>
-                            <td><input ng-model="f.name" class="form-control" placeholder="Search">
-                              <hr>
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td><input ng-model="f.campaign_status" class="form-control" placeholder="Search">
-                              <hr>
-                            </td>
-
-                          </tr> -->
-
-                        <!-- <tbody> -->
-                        <!-- <tr
-                            dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
-                            <td>{{$index + 1}}</td>
-                            <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
-                            <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status == 'completed'" style="text-transform:capitalize">
-                              {{campaign.end_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status != 'completed'">NA</td>
-                            
-                            <td ng-if="campaign.campaign_status == 'on_hold'" style="text-transform:capitalize">OnHold
-                            </td>
-                            <td ng-if="campaign.campaign_status != 'on_hold'" style="text-transform:capitalize">
-                              {{campaign.campaign_status}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.supplier_count}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.flat_count}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.total_leads}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.hot_leads}}</td>
-                            <td>
-                              <button class="btn btn-danger"
-                                ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View
-                                Leads</button>
-                            </td>
-                            <td>
-                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id, 'email')"
-                                data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
-                            </td>
-                            <td>
-                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)"
-                                data-target="#sendEmailModal" data-toggle="modal">Download Leads</button>
-                            </td>
-                          </tr> -->
-
-                        <!-- </tbody> -->
                       </tbody>
                     </table>
                     <div ng-if="transactionalTemplateData.length == 0">
@@ -1574,25 +1544,43 @@
                           <th style="padding:10px" ng-click="Sort('start_date')">Sent Date
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
+                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered(%)
+                          <th style="padding:10px" ng-click="Sort('total_delivered')">
+                            <span>D(%)
+                              <md-tooltip class="tool-box-header">Delivered</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_read')">Read(%)
+                          <th style="padding:10px" ng-click="Sort('total_read')">
+                            <span>R(%)
+                              <md-tooltip class="tool-box-header">Read</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count(%)
+                          <th style="padding:10px" ng-click="Sort('unique_button_count')">
+                            <span>UBC(%)
+                              <md-tooltip class="tool-box-header">Unique Button Count</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_positive')">B1(%)
+                          <th style="padding:10px" ng-click="Sort('total_positive')">
+                            <span>B1(%)
+                              <md-tooltip class="tool-box-header"><b>Positive:-</b>Button Name B1</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_neutral')">B2(%)
+                          <th style="padding:10px" ng-click="Sort('total_neutral')">
+                            <span>B2(%)
+                              <md-tooltip class="tool-box-header"><b>Neutral:-</b>Button Name B2</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_negative')">B3(%)
+                          <th style="padding:10px" ng-click="Sort('total_negative')">
+                            <span>B3(%)
+                              <md-tooltip class="tool-box-header"><b>Negative:-</b>Button Name B3</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">View</th>
@@ -1678,26 +1666,29 @@
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
-                          <th style="padding:10px">User Name</th>
-                          <th style="padding:10px">What's app Name</th>
-                          <th style="padding:10px">Phone Number</th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_positive')">B1(%)
+                          <th style="padding:10px">User N.</th>
+                          <th style="padding:10px">Whatsapp N.</th>
+                          <th style="padding:10px">Pho. No.</th>
+                          <th style="padding:10px" ng-click="SortFromBackend('total_positive')">
+                            <span>B1<md-tooltip class="tool-box-header"><b>Positive:-</b>Button 1 Name</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_neutral')">B2(%)
+                          <th style="padding:10px" ng-click="SortFromBackend('total_neutral')">
+                            <span>B2<md-tooltip class="tool-box-header"><b>Neutral:-</b>Button 2 Name</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_negative')">B3(%)
+                          <th style="padding:10px" ng-click="SortFromBackend('total_negative')">
+                            <span>B3<md-tooltip class="tool-box-header"><b>Negative:-</b>Button 2 Name</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Status
                             <!-- <i class="icon-sort" style="color:white;"></i> -->
                           </th>
-                          <th style="padding:10px;" ng-click="Sort('updated_at')">Responsed At
+                          <th style="padding:10px;" ng-click="Sort('updated_at')">Updated At
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Call Status</th>
-                          <th style="padding:10px">Agent Name</th>
+                          <th style="padding:10px">Agent N.</th>
                           <th style="padding:10px">Comments</th>
                           <th style="padding:10px">Actions</th>
                         </tr>
@@ -1727,7 +1718,7 @@
                             </select>
                           </td>
                           <td style="text-align: center;">
-                            {{tmp.agent_name}}
+                            <p>{{tmp.agent_name}}</p>
                           </td>
                           <td style="text-align: center;">
                             <!-- {{tmp.comment.length>0?tmp.comment[tmp.comment.length-1].comment:'NA'}} -->
