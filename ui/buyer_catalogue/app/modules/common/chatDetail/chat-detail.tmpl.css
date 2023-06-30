@@ -930,3 +930,29 @@
     /* background-color: #000; */
     visibility: hidden;
   }
+
+ .chat-detail-table .table > thead > tr > th,.chat-detail-table .table > tbody > tr > th,.chat-detail-table .table > tfoot > tr > th,.chat-detail-table .table > thead > tr > td,.chat-detail-table .table > tbody > tr > td,.chat-detail-table .table > tfoot > tr > td{
+    padding: 8px !important;
+  }
+  .chat-detail-table  .multiselectDropdown .multiselect-parent .dropdown-toggle{
+    max-width: 210px;
+    width: 100%;
+  }
+  .chat-detail-table .form-control{
+    margin-bottom: 5px;
+  }
+  .message-2{
+    color: #000000;
+  }
+  .phone-chat .screen-phone button{
+    color: #000000;
+  }
+  .profile-image-chat span{
+    color: #000000;
+  }
+  div#RequirementModel th:nth-child(2), div#RequirementModel td:nth-child(2){
+    padding: 6px !important;
+  }
+  .tab-content .tab-pane p {
+    color: #000000 !important;
+}
