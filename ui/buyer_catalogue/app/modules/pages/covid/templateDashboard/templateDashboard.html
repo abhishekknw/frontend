@@ -119,7 +119,6 @@
   }
 </style>
 
-
 <div ng-cloak>
   <div ng-loading="loading"></div>
   <!--For displaying loading icon-->
@@ -380,9 +379,12 @@
                                 {{templateData.data}}
                               </div>
                               <div>
-                                <button style="width:100px;" ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
-                                <button style="width:100px" ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
-                                <button style="width:100px" ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
+                                <button style="width:100px;"
+                                  ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
+                                <button style="width:100px"
+                                  ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
+                                <button style="width:100px"
+                                  ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
                               </div>
                             </div>
                             <!-- Modal footer -->
@@ -409,48 +411,56 @@
                                   {{message}}
                                 </div>
                                 <div>
-                                  <button style="width:100px;" ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
-                                  <button style="width:100px" ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
-                                  <button style="width:100px" ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
+                                  <button style="width:100px;"
+                                    ng-if="templateData.button[0].name !== '' && templateData.button[0].name !== null">{{templateData.button[0].name}}</button>
+                                  <button style="width:100px"
+                                    ng-if="templateData.button[1].name !== '' && templateData.button[1].name !== null">{{templateData.button[1].name}}</button>
+                                  <button style="width:100px"
+                                    ng-if="templateData.button[2].name !== '' && templateData.button[2].name !== null">{{templateData.button[2].name}}</button>
                                 </div>
                               </div>
                               <div class="modal-footer">
                                 <div class="row clearfix">
                                   <div class="clearfix">
-                                    <div >
-                                    <div class="col-sm-3" >
-                                      <div style="position: relative; text-align: left; height: 38px;">
-                                        <input class="btn btn-danger"
-                                          style="position: absolute; z-index: 16; opacity: 0; width:123px; cursor: pointer;"
-                                          type="file" id="file1" name="file" multiple ng-files="getTheFiles($files)" />
-                                        <button style="position: absolute; z-index: 1; width:123px;" type="button"
-                                          class="btn btn-danger">Upload Users</button>
+                                    <div>
+                                      <div class="col-sm-3">
+                                        <div style="position: relative; text-align: left; height: 38px;">
+                                          <input class="btn btn-danger"
+                                            style="position: absolute; z-index: 16; opacity: 0; width:123px; cursor: pointer;"
+                                            type="file" id="file1" name="file" multiple
+                                            ng-files="getTheFiles($files)" />
+                                          <button style="position: absolute; z-index: 1; width:123px;" type="button"
+                                            class="btn btn-danger">Upload Users</button>
+                                        </div>
                                       </div>
+                                      <div class="col-sm-2">
+                                        <button ng-if="!checkForLoader" type="button" class="btn btn-danger"
+                                          value="Upload" ng-click="uploadSendTemplate()">Send</button>
+                                        <button ng-if="checkForLoader" type="button" class="btn btn-danger"
+                                          value="Upload" disabled><i class="fa fa-spinner fa-spin"
+                                            style="margin-left: -10px; margin-right:4px;"></i>Send</button>
+                                      </div>
+                                      <div style="text-align: left; padding-left: 23px; padding-top:5px;">
+                                        {{selectedFileName}}</div>
+                                      <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
+                                        {{excelColumnError}}</div>
                                     </div>
-                                    <div class="col-sm-2">
-                                      <button ng-if="!checkForLoader" type="button" class="btn btn-danger"
-                                        value="Upload" ng-click="uploadSendTemplate()">Send</button>
-                                      <button ng-if="checkForLoader" type="button" class="btn btn-danger" value="Upload"
-                                        disabled><i class="fa fa-spinner fa-spin"
-                                        style="margin-left: -10px; margin-right:4px;"></i>Send</button>
-                                    </div>
-                                    <div style="text-align: left; padding-left: 23px; padding-top:5px;">
-                                      {{selectedFileName}}</div>
-                                    <div style="text-align: left; color:red; padding-left: 23px; padding-top:5px;">
-                                      {{excelColumnError}}</div>
-                                  </div>
-                                    <div class="input-params send-text-box" >
+                                    <div class="input-params send-text-box">
                                       <label>Parameters:</label>
                                       <div class="param-div">
                                         <p class="param-list">{{templateData.param.toString()}}</p>
                                       </div>
                                       <form name="parameters">
-                                        <input type="text" placeholder="Phone Number" style="margin-bottom: 10px;" ng-model="sendTemplateModel.phone_number" required/>
-                                        <input type="text" ng-model="sendTemplateModel.params" name="sendTemplateParams" placeholder="Entert Params" required/>
-                                        <p style="font-weight: 600;color: #000;"><span>Note: </span> Enter Param With (,) Separated</p>
-                                        <button class="btn btn-primary" type="submit" ng-click="setSendTemplateParams(sendTemplateModel,templateData)">Send</button>
+                                        <input type="text" placeholder="Phone Number" style="margin-bottom: 10px;"
+                                          ng-model="sendTemplateModel.phone_number" required />
+                                        <input type="text" ng-model="sendTemplateModel.params" name="sendTemplateParams"
+                                          placeholder="Entert Params" required />
+                                        <p style="font-weight: 600;color: #000;"><span>Note: </span> Enter Param With
+                                          (,) Separated</p>
+                                        <button class="btn btn-primary" type="submit"
+                                          ng-click="setSendTemplateParams(sendTemplateModel,templateData)">Send</button>
                                       </form>
-                                    </div> 
+                                    </div>
                                     <!-- <div class="col-sm-7" style="text-align: right;">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                     </div> -->
@@ -474,24 +484,31 @@
                               <div>
                                 <form name="myForm" ng-submit="sendOptinUserFile(optinUserNumbers,FileCheckSelect)">
                                   <div>
-                                    <b>Send Excel File : </b><input type="checkbox" ng-model="FileCheckSelect"><br /><br />
-                                    <div style="padding:10px; border:1px solid black; width:100%; font-weight:bold" ng-show='FileCheckSelect'>
+                                    <b>Send Excel File : </b><input type="checkbox"
+                                      ng-model="FileCheckSelect"><br /><br />
+                                    <div style="padding:10px; border:1px solid black; width:100%; font-weight:bold"
+                                      ng-show='FileCheckSelect'>
                                       <div class="chose-file">
                                         <span style="color:#000;">
-                                          <span style='font-size:10px;' ng-if="optineFileName" ng-click="removeOptinFiles()">&#10060;</span>	&nbsp;{{optineFileName}}
+                                          <span style='font-size:10px;' ng-if="optineFileName"
+                                            ng-click="removeOptinFiles()">&#10060;</span> &nbsp;{{optineFileName}}
                                         </span>
-                                        <input class="custom-file-input" type="file" name="file" id="optinFile" size="60" ng-required="FileCheckSelect" multiple
+                                        <input class="custom-file-input" type="file" name="file" id="optinFile"
+                                          size="60" ng-required="FileCheckSelect" multiple
                                           ng-files="getOptinFiles($files)" />
                                       </div>
                                     </div>
                                   </div>
                                   <div class="modal-s-input" ng-show='!FileCheckSelect'>
-                                    <input style="color:#000;width:100%;border:1px solid black;" type="text" ng-model="optinUserNumbers" placeholder="Enter Number , Separated" ng-required="!FileCheckSelect"/>
+                                    <input style="color:#000;width:100%;border:1px solid black;" type="text"
+                                      ng-model="optinUserNumbers" placeholder="Enter Number , Separated"
+                                      ng-required="!FileCheckSelect" />
                                   </div>
                                   <div class="modal-footer text-center" style="border-top: 0px; padding: 0;">
-                                    <button type="submit" style="margin-top: 10px;"
-                                      class="btn btn-danger smll-btn-cmt" ng-disabled="!optinUserLoader">
-                                      <i class="fa fa-spinner fa-spin" style="margin-left: -10px; margin-right:4px;" ng-if="!optinUserLoader"></i>Send</button>
+                                    <button type="submit" style="margin-top: 10px;" class="btn btn-danger smll-btn-cmt"
+                                      ng-disabled="!optinUserLoader">
+                                      <i class="fa fa-spinner fa-spin" style="margin-left: -10px; margin-right:4px;"
+                                        ng-if="!optinUserLoader"></i>Send</button>
                                   </div>
                                 </form>
                               </div>
@@ -1151,7 +1168,7 @@
               <uib-tab-heading>
                 <h5>Transactional Template</h5>
               </uib-tab-heading>
-              <div class="container-fluid">
+              <div class="container-fluid" ng-if="!interveneDashboard.show">
                 <!-- <div class="panel panel-default"> -->
 
 
@@ -1347,22 +1364,22 @@
                           <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered
+                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_read')">Read
+                          <th style="padding:10px" ng-click="Sort('total_read')">Read(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count
+                          <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_positive')">Positive
+                          <th ng-click="Sort('total_positive')">B1(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_neutral')">Neutral
+                          <th ng-click="Sort('total_neutral')">B2(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_negative')">Negative
+                          <th ng-click="Sort('total_negative')">B3(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Details</th>
@@ -1377,13 +1394,13 @@
                           <!-- <td style="text-align: center;">{{ttemplate.template_id}}</td> -->
                           <td style="text-align: center; text-transform: capitalize;">{{ttemplate.template_name}}</td>
                           <td style="text-align: center;">{{ttemplate.days_count}}</td>
-                          <td style="text-align: center;">{{ttemplate.total_users}}({{tttemplate.Unique_send}})</td>
-                          <td style="text-align: center;">{{ttemplate.total_delivered}}</td>
-                          <td style="text-align: center;">{{ttemplate.total_read}}</td>
-                          <td style="text-align: center;">{{ttemplate.unique_button_count}}</td>
-                          <td style="text-align: center;">{{ttemplate.total_positive}}</td>
-                          <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
-                          <td style="text-align: center;">{{ttemplate.total_negative}}</td>
+                          <td style="text-align: center;">{{ttemplate.total_users}}<span ng-if="ttemplate.Unique_send">({{ttemplate.Unique_send}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.total_delivered}}<span ng-if="ttemplate.delivered_percentage">({{ttemplate.delivered_percentage}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.total_read}}<span ng-if="ttemplate.delivered_percentage">({{ttemplate.read_percentage}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.unique_button_count}}<span ng-if="ttemplate.unique_button_count_percentage">({{ttemplate.unique_button_count_percentage}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.total_positive}}<span ng-if="ttemplate.b1_percentage">({{ttemplate.b1_percentage}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.total_neutral}}<span ng-if="ttemplate.b2_percentage">({{ttemplate.b2_percentage}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.total_negative}}<span ng-if="ttemplate.b3_percentage">({{ttemplate.b3_percentage}})</span></td>
                           <td style="text-align: center;"><button
                               ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current,ttemplate.template_name,dateRangeModel.start_dates=' ',dateRangeModel.end_dates=' ')"
                               data-toggle="modal" type="button" class="btn btn-danger">View
@@ -1560,19 +1577,22 @@
                           <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered
+                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_read')">Read
+                          <th style="padding:10px" ng-click="Sort('total_read')">Read(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_positive')">Positive
+                          <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_neutral')">Neutral
+                          <th style="padding:10px" ng-click="Sort('total_positive')">B1(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_negative')">Negative
+                          <th style="padding:10px" ng-click="Sort('total_neutral')">B2(%)
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
+                          <th style="padding:10px" ng-click="Sort('total_negative')">B3(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">View</th>
@@ -1586,12 +1606,13 @@
 
                           <td style="text-align: center;">{{$index+serial}}</td>
                           <td style="text-align: center;">{{tdtemplate.sent_date | date : "dd-MM-yyyy"}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_users}}({{tdtemplate.Unique_send}})</td>
-                          <td style="text-align: center;">{{tdtemplate.total_delivered}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_read}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_positive}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_negative}}</td>
+                          <td style="text-align: center;">{{tdtemplate.total_users}}<span ng-if="tdtemplate.Unique_send">({{tdtemplate.Unique_send}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.total_delivered}}<span ng-if="tdtemplate.delivered_percentage">({{tdtemplate.delivered_percentage}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.total_read}}<span ng-if="tdtemplate.read_percentage">({{tdtemplate.read_percentage}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.unique_button_count}}<span ng-if="tdtemplate.unique_button_count_percentage">({{tdtemplate.unique_button_count_percentage}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.total_positive}}<span ng-if="tdtemplate.b1_percentage">({{tdtemplate.b1_percentage}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.total_neutral}}<span ng-if="tdtemplate.b2_percentage">({{tdtemplate.b2_percentage}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.total_negative}}<span ng-if="tdtemplate.b3_percentage">({{tdtemplate.b3_percentage}})</span></td>
                           <td style="text-align: center;"><button
                               ng-click="getTransactionalTemplateUserDetail(view_template.template_id,tdtemplate.sent_date,1,view_template.template_name)"
                               data-toggle="modal" type="button" class="btn btn-danger">View
@@ -1653,20 +1674,20 @@
                   <div class="table-responsive" style="width: 100%;overflow-y: scroll;" ng-model="userSearch"
                     ng-change="getTransactionalTemplateViewDetail()">
 
-                    <table class="table">
+                    <table class="table templateUserSummary">
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
                           <th style="padding:10px">User Name</th>
                           <th style="padding:10px">What's app Name</th>
                           <th style="padding:10px">Phone Number</th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_positive')">Positive
+                          <th style="padding:10px" ng-click="SortFromBackend('total_positive')">B1(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_neutral')">Neutral
+                          <th style="padding:10px" ng-click="SortFromBackend('total_neutral')">B2(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_negative')">Negative
+                          <th style="padding:10px" ng-click="SortFromBackend('total_negative')">B3(%)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Status
@@ -1676,6 +1697,8 @@
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Call Status</th>
+                          <th style="padding:10px">Agent Name</th>
+                          <th style="padding:10px">Comments</th>
                           <th style="padding:10px">Actions</th>
                         </tr>
                       </thead>
@@ -1688,10 +1711,12 @@
                           <td style="text-align: center;">{{tmp.user_name}}</td>
                           <td style="text-align: center;">{{tmp.whatsapp_name}}</td>
                           <td style="text-align: center;">{{tmp.phone_number}}</td>
-                          <td style="text-align: center;">{{tmp.total_positive}}</td>
-                          <td style="text-align: center;">{{tmp.total_neutral}}</td>
-                          <td style="text-align: center;">{{tmp.total_negative}}</td>
-                          <td style="text-align: center;">{{tmp.status}}</td>
+                          <td style="text-align: center;">{{tmp.total_positive}}<span ng-if="tmp.b1_percentage">{{(tmp.b1_percentage)}}</span></td>
+                          <td style="text-align: center;">{{tmp.total_neutral}}<span ng-if="tmp.b2_percentage">{{(tmp.b2_percentage)}}</span></td>
+                          <td style="text-align: center;">{{tmp.total_negative}}<span ng-if="tmp.b3_percentage">{{(tmp.b3_percentage)}}</span></td>
+                          <td style="text-align: center;">
+                            <p style="color: #000;">{{tmp.status}}</p>
+                          </td>
                           <!-- <td style="text-align: center;">{{tmp.created_at}}</td> -->
                           <td style="text-align: center; line-height: 1.5; width: 100px;">{{tmp.updated_at}}</td>
                           <td style="text-align: center;">
@@ -1702,7 +1727,20 @@
                             </select>
                           </td>
                           <td style="text-align: center;">
-                            <i class='fas fa-phone-alt' style="font-size:20px" ng-click="CallTemplate(tmp)"></i>
+                            {{tmp.agent_name}}
+                          </td>
+                          <td style="text-align: center;">
+                            <!-- {{tmp.comment.length>0?tmp.comment[tmp.comment.length-1].comment:'NA'}} -->
+                            <p style="color: #000;">{{ tmp.comment[tmp.comment.length-1].comment | limitTo: 20
+                              }}<span>{{tmp.comment[tmp.comment.length-1].comment.length > 20 ? ' ...' : ''}}
+                                <md-tooltip class="tool-box">{{tmp.comment[tmp.comment.length-1].comment}}</md-tooltip>
+                              </span>
+                            </p>
+                          </td>
+                          <td style="text-align: center;">
+                            <i class='fas fa-phone-alt' style="font-size:20px;color: #000000;"
+                              ng-click="CallTemplate(tmp)"></i>
+                            <!-- <a ng-click="userDetail(tmp)">Intervene</a> -->
                           </td>
                         </tr>
                       </tbody>
@@ -1966,9 +2004,15 @@
 
 
               </div>
+              <!-- Intervene Chat -->
+              <div ng-if="interveneDashboard.show">
+                <button class="btn btn-danger" ng-click="hideIntervene()">Back To Previous</button>
+                <chat-detail number={{interveneDashboard.data.phone_number}}></chat-detail>
+              </div>
+              <!-- END Intervene Chat -->
 
               <!--Footer-->
-              <div class="page-end">
+              <div class="page-end" ng-if="!interveneDashboard.show">
                 <center>
                   <div class="content">
 
@@ -3221,7 +3265,7 @@
                           </div>
                           <!-- <div class="row" permission = "[permissions.brandingEmailButton]">
           <button type="button" name="button" class="col-md-12 btn btn-danger" data-toggle="modal" data-target="#sendBookingEngineEmailModal">Click here to Send Emails</button>
-        </div> -->
+         </div> -->
                         </div>
                       </div>
                     </div>
@@ -6917,12 +6961,7 @@
           </div>
         </div>
       </div>
-      <!--START: Print Leads In Excel Modal  -->
-
-
-
     </div><!-- middle-section -->
-    <!-- wrapperBox -->
   </main>
 </div>
 

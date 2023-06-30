@@ -61,6 +61,7 @@
       $scope.APIBaseUrl = Config.APIBaseUrl;
       $scope.UserComment = {};
       $scope.CallModel = {};
+      $scope.interveneDashboard = {show:false,data:''};
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
         { id: 2, name: 'High' },
@@ -6476,6 +6477,7 @@
 
       // Template Dashboard start
       $scope.getTransactionalTemplate = function (value, s_date = '', e_date = '') {
+        $scope.interveneDashboard = {show:false,data:''};
         $scope.TemplateListSummary()
         $scope.changeStartDate();
         $scope.changeEndDate();
@@ -6626,7 +6628,8 @@
       }
 
       $scope.updateCallStatus = function (status, row) {
-        row.call_status = status
+        row.call_status = status;
+        row.sent_date = $scope.user_view.sent_date;
         templateDashboardService.updateCallStatus(row)
           .then(function onSuccess(response) {
             swal("", response.data.data, constants.success);
@@ -6993,6 +6996,13 @@
         $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id, $scope.user_view.sent_date, null, $scope.user_view.template_name, $scope.user_view.search, $scope.paramsForSorting);
       }
       $scope.templateDetail();
+      $scope.userDetail = function (data) {
+        $scope.interveneDashboard = {show:true,data:data};
+        console.log($scope.interveneDashboard,"$scope.interveneDashboard")
+      }
+      $scope.hideIntervene =function(){
+        $scope.interveneDashboard = {show:false,data:''};
+      }
       // Template Dashboard end
 
     })
