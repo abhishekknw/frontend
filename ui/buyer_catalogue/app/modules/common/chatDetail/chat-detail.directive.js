@@ -13,6 +13,45 @@ angular.module('machadaloCommon')
         $scope.addRemoveBtn = "Add row";
         $scope.NewaddRemoveBtn = "Add row";
         $scope.mymodel = [];
+        $scope.requirement_submitted_headings = [
+          { header: '' },
+          { header: 'Sector' },
+          { header: 'Sub Sector' },
+          { header: 'Current Partner' },
+          { header: 'FeedBack' },
+          { header: 'Preferred Partner' },
+          { header: 'L4 Answers' },
+          { header: 'L5 Answers' },
+          { header: 'L6 Answers' },
+          { header: 'Lead Status' },
+          { header: 'Comment' },
+          { header: 'Internal Comment' },
+          { header: 'Lead Given by' },
+          { header: 'Supplier Agency ' },
+          { header: 'Agency User' },
+          { header: 'Call Status' },
+          { header: 'Price' },
+          { header: 'Timestamp' },
+          { header: 'Action' },
+        ];
+
+        $scope.subSectorList = ['option1', 'option2', 'option3']
+        $scope.requirement_browsed_headings = [
+          { header: '' },
+          { header: 'Sector' },
+          { header: 'Sub Sector' },
+          { header: 'Current Partner' },
+          { header: 'FeedBack' },
+          { header: 'Preferred Partner' },
+          { header: 'L1 Answers' },
+          { header: 'L2 Answers' },
+          { header: 'L3 Answers' },
+          // { header: 'Implementation Time' },
+          // { header: 'Meeting Time' },
+          { header: 'Lead Given by' },
+          { header: 'Comment' },
+          { header: 'Timestamps' }
+        ];
 
         $scope.userDetail = function (number, page) {
           $scope.showChatModule = true;
@@ -76,7 +115,8 @@ angular.module('machadaloCommon')
               console.log(response);
             })
         }
-        $scope.userDetail(attrs.number);
+        // $scope.userDetail(attrs.number);
+        $scope.userDetail('7006501835');
 
         $scope.getTemplateData = function () {
           if (!$scope.getTemplateDataParams.page) {
