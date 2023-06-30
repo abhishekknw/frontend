@@ -956,3 +956,12 @@
   .tab-content .tab-pane p {
     color: #000000 !important;
 }
+.submitted_lead_table tbody{
+  max-height: 231px;
+}
+ .table{
+  margin-bottom: 20px !important;
+}
+div#RequirementModel th:nth-child(1), div#RequirementModel td:nth-child(1){
+  text-align: start;
+}
