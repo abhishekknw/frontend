@@ -155,7 +155,6 @@ angular
               });
           };
           $scope.userDetail(attrs.number)
-          console.log(attrs,"22222222222")
           // $scope.userDetail("9752276168");
 
           $scope.writeMessage = function (data, intervenResolved) {
@@ -163,11 +162,12 @@ angular
               phone: data.phone_number,
               username: data.whatsapp_name
             }
-            alert(intervenResolved)
             if (!intervenResolved) {
               AuthService.addUserToIntervene(param, false)
                 .then(function onSuccess(response) {
-                  console.log("INTERVENE")
+                  setTimeout(function () {
+                    $anchorScroll('scrollToBottom');
+                  }, 1);
                   $scope.messageBox.show = true;
                 }).catch(function onError(response) {
                   console.log(response);
