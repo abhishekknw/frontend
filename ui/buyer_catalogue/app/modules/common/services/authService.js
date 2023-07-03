@@ -782,13 +782,18 @@ angular.module('Authentication')
                   url = "v0/ui/mea-bot/action-status-intervene/?intervene=True&phone_number=" + param.phone + "&username=" + param.username;
                   apiHost = interveneApiHost;
                }
-               return $http.get(apiHost + url)
+               if(!meaType){
+                  return machadaloHttp.get(url);
+               }
+               else{
+                  return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
                   })
                   .catch(function onError(response) {
                      return response
                   });
+               }
             };
 
             authService.addUserToActive = function (param, meaType) {
