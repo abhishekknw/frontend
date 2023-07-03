@@ -18,6 +18,7 @@ angular
         link: function ($scope, element, attrs) {
           $scope.getTemplateDataParams = { page: 0, search: "" };
           $scope.opsVerifiedValidation = { phoneNumber: null };
+          $scope.messageBox = { show: false };
           $scope.detailedShow = [];
           $scope.sector_name = "";
           $scope.companiesDetailDataArray = [];
@@ -34,6 +35,8 @@ angular
           $scope.SelectedCompany = [];
           $scope.newCompaniesBrowseDetailDataArray = [];
           $scope.new_data_check = false;
+          $scope.countBrowsedRow = false;
+          $scope.NewcountBrowsedRow = false;
 
           $scope.requirement_submitted_headings = [
             { header: "" },
@@ -156,6 +159,65 @@ angular
           };
           // $scope.userDetail(attrs.number);
           $scope.userDetail("7006501835");
+
+          $scope.writeMessage = function (data, intervenResolved) {
+            let param = {
+              phone: data.phone_number,
+              username: data.whatsapp_name
+            }
+            if (!intervenResolved) {
+              AuthService.addUserToIntervene(param, false)
+                .then(function onSuccess(response) {
+                  console.log("INTERVENE")
+                  $scope.messageBox.show = true;
+                }).catch(function onError(response) {
+                  console.log(response);
+                })
+            }
+            else {
+              AuthService.addUserToActive(param,false)
+                .then(function onSuccess(response) {
+                  console.log("RESOLVED");
+                  $scope.messageBox.show = false;
+                }).catch(function onError(response) {
+                  console.log(response);
+                })
+            }
+          }
+
+          $scope.sendMessage = function (phone) {
+            let param = {
+              phone: phone,
+            }
+            if ($scope.messageBox.activeMessage) {
+              $scope.oldString = $scope.messageBox.activeMessage;
+              param.text = $scope.oldString.split("\n").join("%0a");
+            }
+            else {
+              return false
+            }
+            AuthService.sendMessage(param)
+              .then(function onSuccess(response) {
+                if (response.data.status) {
+                  let data = {
+                    content: { text: $scope.messageBox.activeMessage },
+                    sender: "bot",
+                    timestamp: new Date()
+                  }
+                  if ($scope.userChatData) {
+                    if ($scope.userChatData.payload && $scope.userChatData.payload.length > 0) {
+                      $scope.userChatData.payload.unshift(data);
+                    }
+                    else {
+                      $scope.userChatData.payload.push(data);
+                    }
+                  }
+                  $scope.messageBox = { activeMessage: '' };
+                }
+              }).catch(function onError(response) {
+                console.log(response);
+              })
+          }
 
           $scope.getTemplateData = function () {
             if (!$scope.getTemplateDataParams.page) {
@@ -598,9 +660,7 @@ angular
             $scope.removeSubSectorDiable = true;
             $scope.updateDisable = false;
             for (let i in $scope.requirementDetailData[index].requirements) {
-              $scope.requirementDetailData[index].requirements[
-                i
-              ].requirementCheck = false;
+              $scope.requirementDetailData[index].requirements[i].requirementCheck = false;
               if (
                 $scope.opsVerifyButtonDiable &&
                 $scope.requirementDetailData[index].requirements[i]
@@ -652,14 +712,10 @@ angular
             for (let k in $scope.companiesDetailData) {
               if ($scope.companiesDetailData[k].business_type !== undefined) {
                 if (id == $scope.companiesDetailData[k].business_type[0]) {
-                  $scope.companiesDetailDataArray[i] =
-                    $scope.companiesDetailData[k];
-                  $scope.companiesDetailDataArray[i].id =
-                    $scope.companiesDetailData[k].organisation_id;
-                  $scope.companiesDetailDataArray[i].label =
-                    $scope.companiesDetailData[k].name;
-                  $scope.companiesDetailDataArray[i].sector =
-                    $scope.companiesDetailData[k].business_type[0];
+                  $scope.companiesDetailDataArray[i] = $scope.companiesDetailData[k];
+                  $scope.companiesDetailDataArray[i].id = $scope.companiesDetailData[k].organisation_id;
+                  $scope.companiesDetailDataArray[i].label = $scope.companiesDetailData[k].name;
+                  $scope.companiesDetailDataArray[i].sector = $scope.companiesDetailData[k].business_type[0];
                   i++;
                 }
               }
@@ -1148,6 +1204,13 @@ angular
             }
           };
 
+          $scope.NewbrowsedPreferredPartner = function (data) {
+            $scope.newRequirement = {};
+            $scope.requirementCompany = [];
+            $scope.newRequirement.sector_id = data.id;
+            $scope.browsedPreferredPartner(data)
+          }
+
           $scope.SubmittedaddBrowsedRow = function () {
             if ($scope.NewcountBrowsedRow == false) {
               $scope.NewcountBrowsedRow = true;
@@ -1336,6 +1399,7 @@ angular
                 deleteSubSectorId.push($scope.requirementDetailData[key].requirements[i].id);
               }
             }
+            console.log(deleteSubSectorId, "weqkjhdfg")
             if (deleteSubSectorId.length > 0) {
               swal(
                 {
@@ -1362,7 +1426,8 @@ angular
                             response.data.data.error,
                             constants.error
                           );
-                        } else {
+                        }
+                        else {
                           if (
                             response &&
                             response.data &&
@@ -1424,6 +1489,78 @@ angular
               );
             }
           };
+          $scope.restoreMultiRequirement = function (data, key) {
+            let restoreSubSectorId = [];
+            $scope.disableRestore = true
+            for (let i in $scope.requirementDetailData[key].requirements) {
+              if ($scope.requirementDetailData[key].requirements[i].requirementCheck == true && $scope.requirementDetailData[key].requirements[i].is_deleted == 'yes') {
+                restoreSubSectorId.push($scope.requirementDetailData[key].requirements[i].id);
+                $scope.disableRestore = false
+              }
+            }
+            if (restoreSubSectorId.length > 0) {
+              swal({
+                title: 'Are you sure ?',
+                text: 'Restore Requirement',
+                type: constants.warning,
+                showCancelButton: true,
+                confirmButtonClass: "btn-success",
+                confirmButtonText: "Yes, Restore!",
+                closeOnConfirm: false,
+                closeOnCancel: true
+              },
+                function (confirm) {
+                  if (confirm) {
+                    let deleteId = {
+                      "requirement_ids": restoreSubSectorId
+                    }
+                    releaseCampaignService.restoreSubmittedLeads(deleteId)
+                      .then(function onSuccess(response) {
+                        if (response && response.data.data.error) {
+                          swal(constants.name, response.data.data.error, constants.error);
+                        } else {
+                          if (response && response.data && response.data.data && response.data.data.list_color_code != 'null') {
+                            let color_class = '';
+                            if (response.data.data.list_color_code == 1) {
+                              color_class = 'yellow';;
+                            }
+                            else if (response.data.data.list_color_code == 2) {
+                              color_class = '#7C4700';
+                            }
+                            else if (response.data.data.list_color_code == 3) {
+                              color_class = 'green';
+                            }
+                            else if (response.data.data.list_color_code == 4) {
+                              color_class = 'white';
+                            }
+                            else if (response.data.data.list_color_code == 5) {
+                              color_class = 'red';
+                            }
+                          }
+                          swal(constants.name, 'Recovered Successfully', constants.success);
+                        }
+                      }).catch(function onError(response) {
+                        console.log(response);
+                      })
+                    $scope.$apply(function () {
+                      for (let x in restoreSubSectorId) {
+                        var localindex_index = $scope.requirementDetailData[key].requirements.map(function (el) {
+                          return el.id;
+                        }).indexOf(restoreSubSectorId[x]);
+                        if (localindex_index != -1) {
+                          $scope.requirementDetailData[key].requirements[localindex_index].is_deleted = 'no';
+                          if ($scope.requirementDetailData[key].requirements[localindex_index].varified_ops == 'yes') {
+                            $scope.requirementDetailData[key].requirements[localindex_index].color_class = 'green';
+                          } else {
+                            $scope.requirementDetailData[key].requirements[localindex_index].color_class = 'yellow';
+                          }
+                        }
+                      }
+                    });
+                  }
+                });
+            }
+          }
           $scope.companyBrowseData = function (id) {
             while ($scope.companiesBrowseDetailDataArray.length) {
               $scope.companiesBrowseDetailDataArray.pop();
@@ -1657,7 +1794,7 @@ angular
                 let current_patner_other = $scope.browsedDetailData[i].current_patner_other;
                 if ($scope.browsedDetailData[i].current_patner_id == "" && $scope.browsedDetailData[i].current_patner_other) {
                   current_patner_id = null;
-                } 
+                }
                 else {
                   current_patner_other = null;
                 }
@@ -1757,20 +1894,13 @@ angular
               $scope.selectLeadData(data.business_type.toLowerCase());
             }
             $scope.SelectedCompany = [];
-            // while ($scope.newCompaniesBrowseDetailDataArray.length) { 
-            //       $scope.newCompaniesBrowseDetailDataArray.pop(); 
-            //     }        
             releaseCampaignService.browsedPreferredPartner($scope.selected_sectorId)
               .then(function onSuccess(response) {
                 $scope.preferred_partnerList = response.data.data.companies;
                 for (let j in $scope.preferred_partnerList) {
                   $scope.preferred_partnerList[j]['label'] = $scope.preferred_partnerList[j].name;
                 }
-                // $scope.companiesBrowseDetailDataArrayCompany[$scope.selected_sectorId] = $scope.preferred_partnerList;
                 $scope.sub_sectorList = response.data.data.sub_sector;
-                // for(let i in $scope.preferred_partnerList ){
-                //   $scope.newCompaniesBrowseDetailDataArray.push($scope.preferred_partnerList[i].name);
-                // }
               }).catch(function onError(response) {
                 console.log(response);
               })
@@ -1779,6 +1909,7 @@ angular
 
           // Suspense Sheet Modal Start
           $scope.getLeadsTabSuspenseLeads = function (phone, page) {
+            alert(phone)
             $scope.loading = null;
             if (!page) {
               page = 1;
