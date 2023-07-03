@@ -5,7 +5,7 @@
 
   .file-upload {
 
-    left: 40px;
+    left: 10px;
     height: 25px;
     width: 25px;
     border-radius: 100px;
@@ -20,7 +20,7 @@
     transition: all 1s;
     color: #fff;
     font-size: 10px;
-    top: 18px;
+    /* top: 18px; */
   }
 
   .file-upload input[type='file'] {
@@ -42,9 +42,16 @@
 
   }
 
+.input-wrapper i {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: #fff;
+}
+
   .file-upload-1 {
 
-    left: 70px;
+    left: 50px;
     height: 25px;
     width: 25px;
     border-radius: 100px;
@@ -74,7 +81,16 @@
 
   }
 
-
+.msg-box .input{
+  width: calc(100% + -156px);
+    margin: 0px 0 0 93px;
+}
+.btn-send{  
+  display: block;
+  position: relative;
+  right: 59px;
+  top: -7px;
+}
   .file-upload-1:hover {
 
     background-position: 0 -100%;
@@ -85,7 +101,7 @@
 
   .file-upload-1 {
 
-    left: 70px;
+    left: 40px;
     height: 25px;
     width: 25px;
     border-radius: 100px;
@@ -100,7 +116,7 @@
     transition: all 1s;
     color: #fff;
     font-size: 10px;
-    top: 18px;
+    /* top: 18px; */
   }
 
   .file-upload-1 input[type='file'] {
@@ -189,6 +205,12 @@
     /*background-color: #8a130f;*/
   }
 
+  button.btn.btn-primary{
+    color: #ffffff !important;
+  }
+  .message-1 .chat-text, .message-2 .chat-text{
+    color: #000;
+  }
   #active-nab {
     color: #8a130f;
   }
