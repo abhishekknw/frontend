@@ -6647,7 +6647,8 @@
           "template_id": $scope.viewComments.template_id,
           "phone_number": $scope.viewComments.phone_number,
           "template_date": $scope.viewComments.template_date,
-          "comment": $scope.UserComment.comment
+          "comment": $scope.UserComment.comment,
+          'sent_date' : $scope.user_view.sent_date
         }
         templateDashboardService.UpdateAddComments(addComment)
           .then(function onSuccess(response) {
@@ -6998,7 +6999,6 @@
       $scope.templateDetail();
       $scope.userDetail = function (data) {
         $scope.interveneDashboard = {show:true,data:data};
-        console.log($scope.interveneDashboard,"$scope.interveneDashboard")
       }
       $scope.hideIntervene =function(){
         $scope.interveneDashboard = {show:false,data:''};
