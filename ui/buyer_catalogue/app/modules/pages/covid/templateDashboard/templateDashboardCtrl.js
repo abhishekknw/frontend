@@ -6997,11 +6997,9 @@
         $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id, $scope.user_view.sent_date, null, $scope.user_view.template_name, $scope.user_view.search, $scope.paramsForSorting);
       }
       $scope.templateDetail();
-      $scope.userDetail = function (data) {
-        $scope.interveneDashboard = {show:true,data:data};
-      }
-      $scope.hideIntervene =function(){
-        $scope.interveneDashboard = {show:false,data:''};
+
+      $scope.showHideIntervene =function(data){
+        $scope.interveneDashboard = {show:!$scope.interveneDashboard.show,data:data};
       }
       // Template Dashboard end
 

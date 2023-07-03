@@ -6,7 +6,7 @@
         <div ng-if="userChatData.whatsapp_name!=''" class="green-fixed-inner">
           <div class="icon-back">
             <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
-              ng-click="getActiveUser(pagination.current)">
+              ng-click="showHideIntervene()">
 
               <path fill="#fff"
                 d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
@@ -27,7 +27,7 @@
             <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)" data-toggle="modal"
               data-target="#SuspenseLeadsModel">Suspense Sheet</button>
           </div>
-          <div ng-click="userProfileIcon(userChatData.phone_number)">
+          <div>
             <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
               {{userChatData.whatsapp_name.length > 15 ? '...' :
               ''}}({{userChatData.user_name}})</span><br />
@@ -142,19 +142,7 @@
           </div>
         </div>
       </div>
-
     </div>
-    <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary"
-      ng-click="prvPageChat(userChatData.phone_number)"
-      style="background-color: rgb(70, 70, 70);  float:left;  margin-bottom: 5px; border-radius:50%; border: 1px solid white; margin-top: -20px; position: relative; z-index: 10;">
-      <i class="fa fa-angle-double-down" aria-hidden="true"></i>
-    </button>
-    <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary"
-      ng-click="nextPageChat(userChatData.phone_number)"
-      style="background-color: rgb(70, 70, 70);float:right; margin-bottom: 5px; border-radius:50%; border: 1px solid white;  margin-top: -20px; position: relative; z-index: 10;">
-      <i class="fa fa-angle-double-up" aria-hidden="true"></i>
-    </button>
-
     <div ng-if="messageBox.show" class="msg-box">
       <div class="input-wrapper input ">
         <div class="wrapper">
@@ -162,9 +150,7 @@
             <input type="file" />
             <i class="fa fa-arrow-up"></i>
           </div>
-
           <!--contct attachment-->
-
           <div>
             <div class="file-upload-1" ng-click="getContactList()">
               <i class="fa fa-address-card-o" data-target="#contactModal" data-toggle="modal"
@@ -224,7 +210,7 @@
           <textarea id="message" ng-model="messageBox.activeMessage" placeholder="Write message"
             style="width: 90%;
             height: 15px;
-            overflow: hidden;margin: 5px; padding-left: 15px;color:black;"
+            overflow: hidden;margin: 5px; padding-left: 55px;color:black;"
             ui-keypress="{13:'sendMessage(userChatData.phone_number)'}">
         </textarea>
         </div>
@@ -236,21 +222,29 @@
             d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
         </svg>
       </div>
-
-      <!-- <div class="aisensy-resolve-btn">
+      <div class="aisensy-resolve-btn" align='center'>
         <button type="button" class="btn btn-success" style="margin-top:10px"
-          ng-click="interveneButton(userChatData)">
-          Resolve
-        </button>
-      </div> -->
+          ng-click="writeMessage(userChatData,messageBox.show)">Resolve</button>
+      </div>
     </div>
-    <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData,messageBox.show)"
-      style="margin-top:5px">
-      <button type="button" class="btn btn-primary" style="margin-top:30px">
-        {{!messageBox.show?'Intervene':'Resolve'}}
+    <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary"
+      ng-click="prvPageChat(userChatData.phone_number)"
+      style="background-color: rgb(70, 70, 70);  float:left;  margin-bottom: 5px; border-radius:50%; border: 1px solid white; margin-top: -20px; position: relative; z-index: 10;">
+      <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+    </button>
+    <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary"
+      ng-click="nextPageChat(userChatData.phone_number)"
+      style="background-color: rgb(70, 70, 70);float:right; margin-bottom: 5px; border-radius:50%; border: 1px solid white;  margin-top: -20px; position: relative; z-index: 10;">
+      <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="aisensy-intervene-btn" ng-if="!messageBox.show"
+      style="margin-top:5px;" align='center'>
+      <button type="button" ng-click="writeMessage(userChatData,messageBox.show)" class="btn btn-primary">
+        <!-- {{!messageBox.show?'Intervene':'Resolve'}} -->
+        Intervene
       </button>
     </div>
-  </div>
 </div>
 <!-- Start Send Template Modal -->
 <div id="TemplateModal" class="modal fade">
@@ -1263,9 +1257,7 @@
                           {{lead_L4}}
                         </option>
                       </select>
-
                     </td>
-
                     <td class="alignment">
                       <select class="form-control" ng-model="browseData.L5">
                         <option value="" disabled>Select</option>
@@ -1282,8 +1274,6 @@
                         </option>
                       </select>
                     </td>
-
-
                     <td class="alignment">
                       {{browseData.lead_status}}
                     </td>
@@ -1331,10 +1321,10 @@
                   </tr>
                 </tbody>
               </table>
-              <dir-pagination-controls max-size="10"
+              <!-- <dir-pagination-controls max-size="10"
                 on-page-change="pageChangedSuspenseLead(userChatData.phone_number,newPageNumber,False)"
                 direction-links="true" boundary-links="true" pagination-id="browseDataPaginate">
-              </dir-pagination-controls>
+              </dir-pagination-controls> -->
             </form>
           </div>
         </div>
