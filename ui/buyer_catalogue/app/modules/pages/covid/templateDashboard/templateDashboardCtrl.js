@@ -6557,7 +6557,8 @@
       }
 
       $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search, sortingObj) {
-        $scope.viewUserSummary()
+        cfpLoadingBar.start();
+        $scope.viewUserSummary();
         $scope.user_view = {
           template_id: value,
           template_name: name,
@@ -6593,6 +6594,7 @@
           .then(function onSuccess(response) {
             $scope.transactionalTemplateUserData = response.data.data.users;
             $scope.totalCount = response.data.data.total_count;
+            cfpLoadingBar.complete();
           }).catch(function onError(response) {
             console.log(response);
           })
