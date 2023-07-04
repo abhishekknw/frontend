@@ -113,9 +113,9 @@ export default function SideNavBar() {
 
             <li
               className="nav-text"
-              onClick={(e) => {
-                addRemoveClass(item);
-              }}
+              // onClick={(e) => {
+              //   addRemoveClass(item);
+              // }}
             >
               <Link to="#">
                 <span>Dashboard</span>

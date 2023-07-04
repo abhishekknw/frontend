@@ -754,6 +754,13 @@ table .btn{
 .form-control:focus{
     box-shadow: none;
 }
+@media screen and (max-width: 930px){
+    .filter-box .input-group span.input-group-text{
+        position: absolute;
+        right: 0;
+        top: 3px;
+    }
+}
 @media screen and (max-width: 767px) {
 tbody, td, tfoot,  th, thead, tr{
     height: auto;
@@ -796,6 +803,40 @@ html body .responsiveTable th div{
     overflow-x: hidden;
     text-overflow: ellipsis;
 }
+.mobile-table  tbody tr{
+    padding: 10px !important;
+    // overflow: hidden;
+}
+.campaign-list-dropdown .dropdown button, .campaign-list-dropdown .dropdown button:hover{
+    width: 100%;
+    min-width: 112px ;
+    margin-bottom: 10px;
+}
+.mobile-block {
+    display: block !important;
+}
+.mobile-t-padding tr {
+    padding: 10px !important;
+}
+// .responsiveTable td.pivoted{
+//     overflow: hidden;  
+//     text-overflow: ellipsis;
+// }
+.responsiveTable td.pivoted .table-dropdown-status.dropdown button{
+    white-space: normal !important;
+}
+.responsiveTable td.pivoted{    
+    padding-left: calc(47% + 0px) !important
+}
+.breadcrumb li::before, .breadcrumb li::after{
+    height: 64%;
+}
+.count-range{
+    align-items: center;
+}
+.filter-box .col-md-6{
+    margin-bottom: 10px;
+}
 }
 @media screen and (max-width: 400px) {
 .main-content{
@@ -814,5 +855,9 @@ html body .w-60{
 .date-btn-right{
     justify-content: center !important;
     margin-top: 10px ;
+}
+.piechart .chart canvas{    
+    width: 100% !important;
+    height: 100% !important;
 }
 }
