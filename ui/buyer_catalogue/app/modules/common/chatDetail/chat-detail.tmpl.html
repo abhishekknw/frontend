@@ -6,7 +6,7 @@
         <div ng-if="userChatData.whatsapp_name!=''" class="green-fixed-inner">
           <div class="icon-back">
             <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
-              ng-click="getActiveUser(pagination.current)">
+              ng-click="showHideIntervene()">
 
               <path fill="#fff"
                 d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
@@ -27,7 +27,7 @@
             <button ng-click="getLeadsTabSuspenseLeads(userChatData.phone_number)" data-toggle="modal"
               data-target="#SuspenseLeadsModel">Suspense Sheet</button>
           </div>
-          <div ng-click="userProfileIcon(userChatData.phone_number)">
+          <div>
             <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
               {{userChatData.whatsapp_name.length > 15 ? '...' :
               ''}}({{userChatData.user_name}})</span><br />
@@ -142,7 +142,90 @@
           </div>
         </div>
       </div>
+    </div>
+    <div ng-if="messageBox.show" class="msg-box">
+      <div class="input-wrapper input ">
+        <div class="wrapper">
+          <div class="file-upload">
+            <input type="file" />
+            <i class="fa fa-arrow-up"></i>
+          </div>
+          <!--contct attachment-->
+          <div>
+            <div class="file-upload-1" ng-click="getContactList()">
+              <i class="fa fa-address-card-o" data-target="#contactModal" data-toggle="modal"
+                type="button"></i>
+            </div>
+            <div id="contactModal" class="modal fade">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                      style="opacity: 1; font-weight:bolder;"> &times;</button>
 
+                    <h4 class="modal-title" ng-if="!submitLeadType"
+                      style="font-weight: bolder; font-size: 21px;">
+                      Select Contact you want to share</h4>
+                    <hr>
+
+                    <div class="input-wrapper"
+                      style=" margin: 10px; background-color: #575758;position: sticky;top:21px;z-index: 10;">
+                      <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px;"></i>
+                      <input placeholder="Search here" ng-change="getContactList(contactNames)"
+                        ng-model="contactNames" id="tab1search" name="searchcontact" type="text"
+                        style="background-color: #ababab;margin: 5px; " />
+                    </div>
+
+                    <div class="modal-body">
+                      <table class="table table-bordered table-hover">
+                        <tbody ng-repeat="list in contactListData">
+                          <td>
+                            <div class="friend-drawer friend-drawer--onhover">
+                              <div class="custom-control custom-checkbox"
+                                ng-click="getselectedContact(list.email_id,list.contact_name,list.phone_number,list.organisation_name)">
+                                <input type="checkbox" class="custom-control-input"
+                                  id="customCheck" name="example1" checklist-value="list"
+                                  checklist-model="list.selected"
+                                  style="position: absolute; right: 35px; width: 20px;">
+                                <span class="text" style="float: left;">
+                                  <h6>{{list.contact_name}}</h6>
+                                  <p class="text-muted"><b>
+                                      {{list.phone_number}}
+                                    </b></p>
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+                        </tbody>
+                      </table>
+                      <button type="submit" class="btn btn-primary" value="submit" id="#myModal"
+                        ng-click="sendContact('91'+userChatData.phone_number)">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end contct attachment-->
+          <textarea id="message" ng-model="messageBox.activeMessage" placeholder="Write message"
+            style="width: 90%;
+            height: 15px;
+            overflow: hidden;margin: 5px; padding-left: 55px;color:black;"
+            ui-keypress="{13:'sendMessage(userChatData.phone_number)'}">
+        </textarea>
+        </div>
+      </div>
+      <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
+        <svg viewBox="0 0 74.433 60.908" width="25" height="25"
+          xmlns="http://www.w3.org/2000/svg">
+          <path fill="#fff"
+            d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
+        </svg>
+      </div>
+      <div class="aisensy-resolve-btn" align='center' id="scrollToBottom">
+        <button type="button" class="btn btn-success" style="margin-top:10px"
+          ng-click="writeMessage(userChatData,messageBox.show)">Resolve</button>
+      </div>
     </div>
     <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary"
       ng-click="prvPageChat(userChatData.phone_number)"
@@ -154,28 +237,14 @@
       style="background-color: rgb(70, 70, 70);float:right; margin-bottom: 5px; border-radius:50%; border: 1px solid white;  margin-top: -20px; position: relative; z-index: 10;">
       <i class="fa fa-angle-double-up" aria-hidden="true"></i>
     </button>
-
-    <div ng-if="messageBox" class="msg-box">
-      <div class="input-wrapper input ">
-        <div class="wrapper">
-          <div class="file-upload">
-            <input type="file" />
-            <i class="fa fa-arrow-up"></i>
-          </div>
-          <div class="file-upload">
-            <input type="file" />
-            <i class="fa fa-arrow-up"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData,'active')" ng-if="!messageBox"
-      style="margin-top:5px">
-      <button type="button" class="btn btn-primary" style="margin-top:30px">
+  </div>
+  <div class="aisensy-intervene-btn" ng-if="!messageBox.show"
+      style="margin-top:5px;" align='center'>
+      <button type="button" ng-click="writeMessage(userChatData,messageBox.show)" class="btn btn-primary">
+        <!-- {{!messageBox.show?'Intervene':'Resolve'}} -->
         Intervene
       </button>
     </div>
-  </div>
 </div>
 <!-- Start Send Template Modal -->
 <div id="TemplateModal" class="modal fade">
@@ -502,14 +571,14 @@
                       </td>
                       <tr ng-show="detailedShow[key]" ng-repeat-end>
                         <td colspan="17">
-                          <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck || updateDisable"
+                          <!-- <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck || updateDisable"
                             ng-click="updateSubSector(requirement.requirements)">Update
                           </button>
                           <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
                             class="btn btn-success" ng-disabled="subSectorCheck || updateDisable"
                             ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span
                               ng-if="!opsVerifyButtonDiable">Ops Verify</span>
-                            <span ng-if="opsVerifyButtonDiable">Ops Verified</span></button>
+                            <span ng-if="opsVerifyButtonDiable">Ops Verified</span></button> -->
                           <button style="margin-bottom:2px" id="remove_{{key}}" type="button" name="button"
                             ng-disabled="subSectorCheck || removeSubSectorDiable" class="btn btn-danger"
                             ng-click="removeSubSectorRequirement(requirement.requirements,key)">Remove</button>
@@ -1188,9 +1257,7 @@
                           {{lead_L4}}
                         </option>
                       </select>
-
                     </td>
-
                     <td class="alignment">
                       <select class="form-control" ng-model="browseData.L5">
                         <option value="" disabled>Select</option>
@@ -1207,8 +1274,6 @@
                         </option>
                       </select>
                     </td>
-
-
                     <td class="alignment">
                       {{browseData.lead_status}}
                     </td>
@@ -1256,10 +1321,10 @@
                   </tr>
                 </tbody>
               </table>
-              <dir-pagination-controls max-size="10"
+              <!-- <dir-pagination-controls max-size="10"
                 on-page-change="pageChangedSuspenseLead(userChatData.phone_number,newPageNumber,False)"
                 direction-links="true" boundary-links="true" pagination-id="browseDataPaginate">
-              </dir-pagination-controls>
+              </dir-pagination-controls> -->
             </form>
           </div>
         </div>
