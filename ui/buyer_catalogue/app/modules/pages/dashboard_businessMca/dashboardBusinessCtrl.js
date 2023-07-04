@@ -741,6 +741,7 @@
         $('#LeadAcceptModal').modal('show')
       }
       $scope.acceptDeclineDecisionPanding = function (index, value, id, requirement_id) {
+        console.log(value, id, requirement_id)
         let data = [{
           "requirement_id": requirement_id,
           "client_status": value,
