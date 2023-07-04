@@ -6785,7 +6785,20 @@
         </div>
       </div>
       <!--End: Code for showing image Modal  Window -->
-
+     <div id="getLeadsDates" style="display:none">
+      <table>
+        <tr style="background-color:burlywood;">
+          <th>Supplier Id</th>
+          <th>Lead Id</th>
+          <th>Date</th>
+        </tr>
+        <tr ng-repeat="item in sameLeadShare">
+          <td>{{item.supp_id}}</td>
+          <td>{{item.lead_id}}</td>
+          <td>{{item.data}}</td>
+        </tr>
+      </table>
+     </div> 
     </div><!-- middle-section -->
 </div><!-- wrapperBox -->
 </main>

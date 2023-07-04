@@ -1414,3 +1414,26 @@ h6.msg-title {
   margin-top: 0;
   padding: 3px 21px;
 }
+.tool-box{
+  width: 200px;
+  height: 100px;
+  overflow-x: scroll;
+  white-space: normal;
+  background-color: #ffffff !important;
+  color: #000 !important;
+  border: 1px solid #000000 !important;
+  font-size:small;
+}
+.tool-box-header{
+  height: auto;
+  overflow-x: scroll;
+  white-space: normal;
+  background-color: #ffffff !important;
+  color: #000 !important;
+  border: 1px solid #000000 !important;
+  font-size: small;
+}
+.templateUserSummary  p{
+  line-height: 1.4;
+  color: #000 !important;
+}
