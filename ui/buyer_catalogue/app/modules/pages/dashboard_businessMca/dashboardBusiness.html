@@ -1677,7 +1677,7 @@
                             <td><a class="linkBtn" ng-click="getImagesUrl(decisionPanding[0])">View</a></td>
                             <td class="alignment text-center">
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding[0])">Accept</button>
+                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding[0]._id,decisionPanding[0].requirement_id)">Accept</button>
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                                 ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding[0]._id,decisionPanding[0].requirement_id)"
                                 ng-if="decisionPanding[0].client_status!='Decline'">Decline</button>
