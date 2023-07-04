@@ -1677,7 +1677,7 @@
                             <td><a class="linkBtn" ng-click="getImagesUrl(decisionPanding[0])">View</a></td>
                             <td class="alignment text-center">
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding[0]._id,decisionPanding[0].requirement_id)">Accept</button>
+                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding[0])">Accept</button>
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                                 ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding[0]._id,decisionPanding[0].requirement_id)"
                                 ng-if="decisionPanding[0].client_status!='Decline'">Decline</button>
@@ -6785,20 +6785,47 @@
         </div>
       </div>
       <!--End: Code for showing image Modal  Window -->
-     <div id="getLeadsDates" style="display:none">
-      <table>
-        <tr style="background-color:burlywood;">
-          <th>Supplier Id</th>
-          <th>Lead Id</th>
-          <th>Date</th>
-        </tr>
-        <tr ng-repeat="item in sameLeadShare">
-          <td>{{item.supp_id}}</td>
-          <td>{{item.lead_id}}</td>
-          <td>{{item.data}}</td>
-        </tr>
-      </table>
-     </div> 
+      <div id="LeadAcceptModal" class="modal fade theme-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Dates</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="modalBodyBox">
+                <table class="table">
+                  <tr>
+                    <th>Supplier Id</th>
+                    <th>Lead Id</th>
+                    <th>Date</th>
+                  </tr>
+                  <tr>
+                    <td>CHEUVTNRSSCA</td>
+                    <td>5002</td>
+                    <td>11/12/12</td>
+                  </tr>
+                  <tr>
+                    <td>CHEUVTNRSSCA</td>
+                    <td>5002</td>
+                    <td>11/12/12</td>
+                  </tr>
+                  <tr>
+                    <td>CHEUVTNRSSCA</td>
+                    <td>5002</td>
+                    <td>11/12/12</td>
+                  </tr>
+                </table>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger">Yes Accept</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div><!-- middle-section -->
 </div><!-- wrapperBox -->
 </main>

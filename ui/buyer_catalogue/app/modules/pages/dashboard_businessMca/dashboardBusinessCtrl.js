@@ -728,6 +728,18 @@
         var tfMinutes = document.getElementById("tfMinutes");
         tfMinutes.innerHTML = value;
       }
+      $scope.GetSupplierSentLeads = function (index,status,params) {
+        params = {...params,company_campaign_id:$scope.campaignIdForLeads};
+        console.log(params,"1111111111111111")
+        B2BDashboardService.getSupplierSentLead(params)
+          .then(function onSuccess(response) {
+            $scope.supplierSentLeadList = response.data.data;
+          })
+          .catch(function onError(response) {
+            swal(constants.error, constants.errorMsg, constants.error)
+          })
+        $('#LeadAcceptModal').modal('show')
+      }
       $scope.acceptDeclineDecisionPanding = function (index, value, id, requirement_id) {
         let data = [{
           "requirement_id": requirement_id,
@@ -746,9 +758,9 @@
           ><br></br> */}
 
 
-        $scope.sameLeadShare = [{ data: "1/2/23", supp_id: "3247864hr", lead_id: "357" },
-        { data: "11/4/23", supp_id: "467777", lead_id: "356" },
-        { data: "3/4/23", supp_id: "567889fhjfhj", lead_id: "12" }]
+        // $scope.sameLeadShare = [{ data: "1/2/23", supp_id: "3247864hr", lead_id: "357" },
+        // { data: "11/4/23", supp_id: "467777", lead_id: "356" },
+        // { data: "3/4/23", supp_id: "567889fhjfhj", lead_id: "12" }]
         // var form = document.createElement("div");
         // form.innerHTML = `
         // <table>
@@ -768,49 +780,49 @@
         //     <td>Mexico</td>
         //   </tr>
         // </table>`;
-        let datesDetails = document.getElementById('getLeadsDates');
-        console.log(datesDetails, "datesDetails")
-        setTimeout(function () {
-          swal({
-            html: true,
-            title: 'Are you sure ?',
-            text: datesDetails.innerHTML,
-            // type: constants.warning,
-            showCancelButton: true,
-            confirmButtonClass: "btn-success",
-            confirmButtonText: "Yes, Accept!",
-            closeOnConfirm: false,
-            closeOnCancel: true
-          },
-            function (confirm) {
-              if (confirm) {
-                alert(1111)
+        // let datesDetails = document.getElementById('getLeadsDates');
+        // console.log(datesDetails, "datesDetails")
+        // setTimeout(function () {
+        //   swal({
+        //     html: true,
+        //     title: 'Are you sure ?',
+        //     text: datesDetails.innerHTML,
+        //     // type: constants.warning,
+        //     showCancelButton: true,
+        //     confirmButtonClass: "btn-success",
+        //     confirmButtonText: "Yes, Accept!",
+        //     closeOnConfirm: false,
+        //     closeOnCancel: true
+        //   },
+        //     function (confirm) {
+        //       if (confirm) {
+        //         alert(1111)
+        //       }
+        //     })
+        // }, 1);
+
+
+        B2BDashboardService.acceptDeclineDecisionPanding({ 'data': data })
+          .then(function onSuccess(response) {
+            if (response) {
+              if(value == "Decline"){
+                $scope.leadDecisionPandingData.values[index][0].client_status = "Decline";
               }
-            })
-        }, 1);
-       
+              else{
+                $scope.leadDecisionPandingData.values.splice(index,1);
+              }
+              if(value == 'Decline'){
+                value = 'Declined';
+              }
+            }
+            B2BDashboardService.showLeads($scope.supp_id)
+            .then(function onSuccess(response) {
+              $scope.supplier_leads=response.data.data.lead;
+            }) 
+            swal(constants.name, value + " Successfully", constants.success);
+            $scope.leadBasics('basic');
 
-        // B2BDashboardService.acceptDeclineDecisionPanding({ 'data': data })
-        //   .then(function onSuccess(response) {
-        //     if (response) {
-        //       if(value == "Decline"){
-        //         $scope.leadDecisionPandingData.values[index][0].client_status = "Decline";
-        //       }
-        //       else{
-        //         $scope.leadDecisionPandingData.values.splice(index,1);
-        //       }
-        //       if(value == 'Decline'){
-        //         value = 'Declined';
-        //       }
-        //     }
-        //     B2BDashboardService.showLeads($scope.supp_id)
-        //     .then(function onSuccess(response) {
-        //       $scope.supplier_leads=response.data.data.lead;
-        //     }) 
-        //     swal(constants.name, value + " Successfully", constants.success);
-        //     $scope.leadBasics('basic');
-
-        //   });
+          });
       }
 
 
