@@ -6,24 +6,30 @@ import MachadaloHeader from '../../common/header/Header';
 import { alertAtom } from '../../_states/alert';
 import { SnackbarProvider } from 'notistack';
 import { useRecoilValue } from 'recoil';
+import InterveneChat from '../InterveneChat/InterveneChat';
 
-export default function PagesRoutes() {
+export default function PagesRoutes(props) {
+  const { match } = props;
   const open = useRecoilValue(alertAtom);
 
   return (
     <>
       <div className="container ">
         <MachadaloHeader />
-        <hr className='mt-0'/>
-      <Switch>
-        <SnackbarProvider
-          autoHideDuration={2000}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={open}
-        >
-          <Route path={ROUTESNAME.CAMPAIGN_DECISION_BOARD} component={CampaignDecisionBoard} />
-        </SnackbarProvider>
-      </Switch>
+        <hr className="mt-0" />
+        <Switch>
+          <SnackbarProvider
+            autoHideDuration={2000}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={open}
+          >
+            <Route
+              path={match.path + ROUTESNAME.CAMPAIGN_DECISION_BOARD}
+              component={CampaignDecisionBoard}
+            />
+            <Route path={match.path + ROUTESNAME.INTERVENE_CHAT} component={InterveneChat} />
+          </SnackbarProvider>
+        </Switch>
       </div>
     </>
   );
