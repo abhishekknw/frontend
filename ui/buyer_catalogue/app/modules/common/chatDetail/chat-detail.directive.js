@@ -1844,7 +1844,6 @@ angular
 
 
           $scope.getLeadsTabSuspenseLeads = function (phone, page) {
-            alert(phone)
             $scope.loading = null;
             if (!page) {
               page = 1;
