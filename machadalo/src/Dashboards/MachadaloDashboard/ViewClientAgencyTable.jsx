@@ -1,5 +1,8 @@
 import React, { useMemo } from 'react';
-import Table from 'react-bootstrap/Table';
+// import Table from 'react-bootstrap/Table';
+
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import './index.css';
 import Button from 'react-bootstrap/Button';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -16,10 +19,12 @@ import { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom } from '../_s
 import { BreadCrumbData } from './BreadCrumb';
 import EmailModal from '../common/Modals/EmailModal';
 import WhatsappModal from '../common/Modals/WhatsappModal';
+import FosRmTable from './FosRmTable';
+import CommonTable from '../Table/CommonTable';
 
 export default function ViewClientAgencyTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
-  const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
+  const [selectedId, setSelectedId] = React.useState('');
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
@@ -29,10 +34,14 @@ export default function ViewClientAgencyTable(props) {
       name: 'S.No.',
     },
     {
-      name: 'Lead type',
+      name:
+        showHideBreadCrumbs.first.tableName === 'View Client Wise' ? 'Client Name' : 'Agency Name',
     },
     {
-      name: 'Lead Count',
+      name: 'To be Shared',
+    },
+    {
+      name: 'Count',
     },
     {
       name: 'Lead accepted by QA',
@@ -43,30 +52,21 @@ export default function ViewClientAgencyTable(props) {
       tooltip: 'Lead accepted by Client',
     },
     {
-      name: 'View Client Wise',
+      name: 'Comment Updated',
     },
     {
-      name: 'View Agency Wise',
+      name: 'Status Updated',
+    },
+    {
+      name: 'Revenue Earned',
+    },
+    {
+      name: 'View Campaign',
     },
     {
       name: 'Action',
     },
   ];
-
-  const onSendEmail = async (data, check) => {
-    setshowHideModal({ EmailModal: false });
-  };
-  const openEmailModal = async (item) => {
-    setshowHideModal({ ...showHideModal, EmailModal: true });
-    // setshowHideModal({ ...showHideModal, email: { show: true } });
-  };
-
-  const OnshareWhatsApp = () => {
-    setshowHideModal({ ...showHideModal, WhatsAppModal: false });
-  };
-  const openWhatsAppModal = () => {
-    setshowHideModal({ ...showHideModal, WhatsAppModal: true });
-  };
 
   async function onClickCampaign(btnName) {
     await setshowHideTableObj({
@@ -77,46 +77,206 @@ export default function ViewClientAgencyTable(props) {
     setShowHideBreadCrumbs({ ...showHideBreadCrumbs, second: { show: true, tableName: btnName } });
   }
 
+  const bodyData = () => {
+    let data = [
+      {
+        sno: '1',
+        name: 'Asian Paints 1',
+        sharedCount: '6000',
+        leadCount: '5000',
+        leadQA: '3000',
+        leadClient: '3000',
+        commentUpdate: '3000',
+        statusUpdate: '3000',
+        revenue: '30k',
+        campaignWise: (
+          <Button
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCampaign('View Campaign Wise')}
+          >
+            View Campaign Wise
+          </Button>
+        ),
+        action: (
+          <div className="action-icon">
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, email: { show: true } });
+              }}
+            >
+              <BsEnvelopeFill />
+            </span>
+            <span>
+              <BsArrowDownCircle />
+            </span>
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+              }}
+            >
+              <BsWhatsapp />
+            </span>
+          </div>
+        ),
+      },
+      {
+        sno: '2',
+        name: 'Client 1',
+        sharedCount: '6000',
+        leadCount: '5000',
+        leadQA: '3000',
+        leadClient: '3000',
+        commentUpdate: '3000',
+        statusUpdate: '3000',
+        revenue: '30k',
+        campaignWise: (
+          <Button
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCampaign('View Campaign Wise')}
+          >
+            View Campaign Wise
+          </Button>
+        ),
+        action: (
+          <div className="action-icon">
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, email: { show: true } });
+              }}
+            >
+              <BsEnvelopeFill />
+            </span>
+            <span>
+              <BsArrowDownCircle />
+            </span>
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+              }}
+            >
+              <BsWhatsapp />
+            </span>
+          </div>
+        ),
+      },
+      {
+        sno: '3',
+        name: 'Asian Paints 1',
+        sharedCount: '6000',
+        leadCount: '5000',
+        leadQA: '3000',
+        leadClient: '3000',
+        commentUpdate: '3000',
+        statusUpdate: '3000',
+        revenue: '30k',
+        campaignWise: (
+          <Button
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCampaign('View Campaign Wise')}
+          >
+            View Campaign Wise
+          </Button>
+        ),
+        action: (
+          <div className="action-icon">
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, email: { show: true } });
+              }}
+            >
+              <BsEnvelopeFill />
+            </span>
+            <span>
+              <BsArrowDownCircle />
+            </span>
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+              }}
+            >
+              <BsWhatsapp />
+            </span>
+          </div>
+        ),
+      },
+    ];
+
+    let body = data.map((ele, index) => {
+      return (
+        <>
+          <Tr className={selectedId === ele.type ? 'nested-table' : ''} key={index}>
+            <Td
+              className="sn-table"
+              onClick={(e) => {
+                setSelectedId(selectedId === ele.sno?"":ele.sno);
+              }}
+            >
+              {selectedId === ele.sno ? <BsChevronUp /> : <BsChevronDown />}
+            </Td>
+            <Td>{ele.sno}</Td>
+            <Td>{ele.name}</Td>
+            <Td>{ele.sharedCount}</Td>
+            <Td>{ele.leadCount}</Td>
+            <Td>{ele.leadQA}</Td>
+            <Td>{ele.leadClient}</Td>
+            <Td>{ele.commentUpdate}</Td>
+            <Td>{ele.statusUpdate}</Td>
+            <Td>{ele.revenue}</Td>
+            <Td>{ele.campaignWise}</Td>
+            <Td>{ele.action}</Td>
+          </Tr>
+          {selectedId === ele.sno && <FosRmTable styles={{colSpan:12}}/>}
+        </>
+      );
+    });
+    return body;
+  };
+
   return (
     <>
       {/* <h4 style={{ paddingTop: '10px' }}>Client Wise</h4> */}
-      <Table striped bordered hover className="leads-table ">
-        <thead className="leads-tbody">
-          <tr>
-            <th></th>
-            <th>S.No.</th>
-            <th>
+      <CommonTable headerData={headerData} bodyData={bodyData} />
+
+      {/* <Table striped bordered hover className="leads-table ">
+        <Thead className="leads-tbody">
+          <Tr>
+            <Th></Th>
+            <Th>S.No.</Th>
+            <Th>
               {showHideBreadCrumbs.first.tableName === 'View Client Wise'
                 ? 'Client Name'
                 : 'Agency Name'}
-            </th>
-            <th>To be Shared</th>
-            <th>Count</th>
-            <th> accepted by QA</th>
-            <th> Accepted by Client</th>
-            <th>Comment updated</th>
-            <th>Status updated</th>
-            <th>Revenue Earned</th>
-            <th>View Campaign</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+            </Th>
+            <Th>To be Shared</Th>
+            <Th>Count</Th>
+            <Th> Accepted by QA</Th>
+            <Th> Accepted by Client</Th>
+            <Th>Comment updated</Th>
+            <Th>Status updated</Th>
+            <Th>Revenue Earned</Th>
+            <Th>View Campaign</Th>
+            <Th>Action</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          <Tr className={isExpandRow.b2b ? 'nested-table' : ''}>
+            <Td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
               {isExpandRow.b2b && <BsChevronUp />}
               {!isExpandRow.b2b && <BsChevronDown />}
-            </td>
-            <td>1</td>
-            <td>Asian Paints 1</td>
-            <td>5000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>
+            </Td>
+            <Td>1</Td>
+            <Td>Asian Paints 1</Td>
+            <Td>5000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>
               {' '}
               <Button
                 variant="outline-dark"
@@ -125,9 +285,9 @@ export default function ViewClientAgencyTable(props) {
               >
                 View Campaign
               </Button>
-            </td>
-            <td>
-            <div className="action-icon">
+            </Td>
+            <Td>
+              <div className="action-icon">
                 <span
                   onClick={(e) => {
                     setshowHideModal({ ...showHideModal, email: { show: true } });
@@ -146,99 +306,99 @@ export default function ViewClientAgencyTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
+            </Td>
+          </Tr>
           {isExpandRow.b2b && (
-            <tr>
-              <td colSpan={12} className="nested-leads-table-colspan ">
+            <Tr>
+              <Td colSpan={12} className="nested-leads-table-colspan ">
                 <Table striped bordered hover className="nested-leads-table ">
-                  <thead className="leads-tbody">
-                    <tr>
-                      <th>S.No.</th>
-                      <th>Lead Source</th>
-                      <th>Total Lead Count Shared</th>
-                      <th>Lead accepted by QA</th>
-                      <th>Lead Accepted by Client</th>
-                      <th> Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1.1</td>
-                      <td>FOS</td>
-                      <td>5000</td>
-                      <td>2500</td>
-                      <td>2000</td>
-                      <td>
-                      <div className="action-icon">
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, email: { show: true } });
-                  }}
-                >
-                  <BsEnvelopeFill />
-                </span>
-                <span>
-                  <BsArrowDownCircle />
-                </span>
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
-                  }}
-                >
-                  <BsWhatsapp />
-                </span>
-              </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2.1</td>
-                      <td>RM</td>
-                      <td>5000</td>
-                      <td>2500</td>
-                      <td>2000</td>
-                      <td>
-                      <div className="action-icon">
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, email: { show: true } });
-                  }}
-                >
-                  <BsEnvelopeFill />
-                </span>
-                <span>
-                  <BsArrowDownCircle />
-                </span>
-                <span
-                  onClick={(e) => {
-                    setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
-                  }}
-                >
-                  <BsWhatsapp />
-                </span>
-              </div>
-                      </td>
-                    </tr>
-                  </tbody>
+                  <Thead className="leads-Tbody">
+                    <Tr>
+                      <Th>S.No.</Th>
+                      <Th>Lead Source</Th>
+                      <Th>Total Lead Count Shared</Th>
+                      <Th>Lead accepted by QA</Th>
+                      <Th>Lead Accepted by Client</Th>
+                      <Th> Action</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    <Tr>
+                      <Td>1.1</Td>
+                      <Td>FOS</Td>
+                      <Td>5000</Td>
+                      <Td>2500</Td>
+                      <Td>2000</Td>
+                      <Td>
+                        <div className="action-icon">
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                            }}
+                          >
+                            <BsEnvelopeFill />
+                          </span>
+                          <span>
+                            <BsArrowDownCircle />
+                          </span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                            }}
+                          >
+                            <BsWhatsapp />
+                          </span>
+                        </div>
+                      </Td>
+                    </Tr>
+                    <Tr>
+                      <Td>2.1</Td>
+                      <Td>RM</Td>
+                      <Td>5000</Td>
+                      <Td>2500</Td>
+                      <Td>2000</Td>
+                      <Td>
+                        <div className="action-icon">
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, email: { show: true } });
+                            }}
+                          >
+                            <BsEnvelopeFill />
+                          </span>
+                          <span>
+                            <BsArrowDownCircle />
+                          </span>
+                          <span
+                            onClick={(e) => {
+                              setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+                            }}
+                          >
+                            <BsWhatsapp />
+                          </span>
+                        </div>
+                      </Td>
+                    </Tr>
+                  </Tbody>
                 </Table>
-              </td>
-            </tr>
+              </Td>
+            </Tr>
           )}
 
-          <tr>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+          <Tr>
+            <Td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
               <BsChevronDown />{' '}
-            </td>
-            <td>2</td>
-            <td>Clinet 1</td>
-            <td>5000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>
+            </Td>
+            <Td>2</Td>
+            <Td>Clinet 1</Td>
+            <Td>5000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>
               {' '}
               <Button
                 variant="outline-dark"
@@ -253,9 +413,9 @@ export default function ViewClientAgencyTable(props) {
               >
                 View Campaign
               </Button>
-            </td>
-            <td>
-            <div className="action-icon">
+            </Td>
+            <Td>
+              <div className="action-icon">
                 <span
                   onClick={(e) => {
                     setshowHideModal({ ...showHideModal, email: { show: true } });
@@ -274,23 +434,23 @@ export default function ViewClientAgencyTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
-          <tr className={isExpandRow.b2b ? 'nested-table' : ''}>
-            <td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
+            </Td>
+          </Tr>
+          <Tr className={isExpandRow.b2b ? 'nested-table' : ''}>
+            <Td onClick={() => setIsExpandRow({ ...isExpandRow, b2b: !isExpandRow.b2b })}>
               {isExpandRow.b2b && <BsChevronUp />}
               {!isExpandRow.b2b && <BsChevronDown />}
-            </td>
-            <td>3</td>
-            <td>Clinet 1</td>
-            <td>5000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>3000</td>
-            <td>
+            </Td>
+            <Td>3</Td>
+            <Td>Clinet 1</Td>
+            <Td>5000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>3000</Td>
+            <Td>
               {' '}
               <Button
                 variant="outline-dark"
@@ -299,9 +459,9 @@ export default function ViewClientAgencyTable(props) {
               >
                 View Campaign
               </Button>
-            </td>
-            <td>
-            <div className="action-icon">
+            </Td>
+            <Td>
+              <div className="action-icon">
                 <span
                   onClick={(e) => {
                     setshowHideModal({ ...showHideModal, email: { show: true } });
@@ -320,29 +480,10 @@ export default function ViewClientAgencyTable(props) {
                   <BsWhatsapp />
                 </span>
               </div>
-            </td>
-          </tr>
-        </tbody>
-      </Table>
-
-      {/* <EmailModal
-        data={{
-          show: showHideModal.EmailModal,
-          dropdownOptions: [
-            { status_name: 'Lead verified by Machadalo' },
-            { status_name: 'Lead verified by Machadalo' },
-          ],
-        }}
-        onSubmit={onSendEmail}
-        onCancel={(e) => setshowHideModal({ ...showHideModal, EmailModal: false })}
-      />
-      <WhatsappModal
-        data={{
-          show: showHideModal.WhatsAppModal,
-        }}
-        onSubmit={OnshareWhatsApp}
-        onCancel={(e) => setshowHideModal({ ...showHideModal, WhatsAppModal: false })}
-      /> */}
+            </Td>
+          </Tr>
+        </Tbody>
+      </Table> */}
     </>
   );
 }

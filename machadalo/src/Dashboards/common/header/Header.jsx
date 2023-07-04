@@ -15,7 +15,7 @@ export default function MachadaloHeader(props) {
       <Box className='pt-1'>
         <Row>
           <Col sm={3}>
-            <div className='d-flex align-items-center'>
+            <div className='d-flex align-items-center mobile-con-between'>
               {/* <span>
               <div className="header__links">
                 <ul>
@@ -39,8 +39,8 @@ export default function MachadaloHeader(props) {
 
 
           <Col sm={9} className='right-heder-content '>
-            <div className='d-flex justify-content-end align-items-center'>
-              <ul className='d-flex justify-content-end align-items-center mb-0'>
+            <div className='d-flex justify-content-end align-items-center mobile-con-between'>
+              <ul className='d-flex justify-content-end align-items-center mb-0 mobile-start'>
                 <li> <span>  <BsFillHouseDoorFill /></span></li>
                 <li>
                   <Dropdown className='setting-icon'>
