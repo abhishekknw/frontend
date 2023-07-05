@@ -48,6 +48,9 @@
     padding-left: 8px;
     margin-top: 10px;
   }
+  .templateUserSummary select.form-control {
+    max-width: 200px;
+}
 
   @media screen and (max-width :500px) {
     .dropdowns {
@@ -1361,25 +1364,43 @@
                           <th style="padding:10px" ng-click="Sort('days_count')">Days sent
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
+                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered(%)
+                          <th style="padding:10px" ng-click="Sort('total_delivered')">
+                            <span>D(%)
+                              <md-tooltip class="tool-box-header">Delivered</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_read')">Read(%)
+                          <th style="padding:10px" ng-click="Sort('total_read')">
+                            <span>R(%)
+                              <md-tooltip class="tool-box-header">Read</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count(%)
+                          <th style="padding:10px" ng-click="Sort('unique_button_count')">
+                            <span>UBC(%)
+                              <md-tooltip class="tool-box-header">Unique Button Count</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_positive')">B1(%)
+                          <th ng-click="Sort('total_positive')">
+                            <span>B1(%)
+                              <md-tooltip class="tool-box-header">Positive</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_neutral')">B2(%)
+                          <th ng-click="Sort('total_neutral')">
+                            <span>B2(%)
+                              <md-tooltip class="tool-box-header">Neutral</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th ng-click="Sort('total_negative')">B3(%)
+                          <th ng-click="Sort('total_negative')">
+                            <span>B3(%)
+                              <md-tooltip class="tool-box-header">Negative</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Details</th>
@@ -1394,13 +1415,21 @@
                           <!-- <td style="text-align: center;">{{ttemplate.template_id}}</td> -->
                           <td style="text-align: center; text-transform: capitalize;">{{ttemplate.template_name}}</td>
                           <td style="text-align: center;">{{ttemplate.days_count}}</td>
-                          <td style="text-align: center;">{{ttemplate.total_users}}<span ng-if="ttemplate.Unique_send">({{ttemplate.Unique_send}})</span></td>
-                          <td style="text-align: center;">{{ttemplate.total_delivered}}<span ng-if="ttemplate.delivered_percentage">({{ttemplate.delivered_percentage}})</span></td>
-                          <td style="text-align: center;">{{ttemplate.total_read}}<span ng-if="ttemplate.delivered_percentage">({{ttemplate.read_percentage}})</span></td>
-                          <td style="text-align: center;">{{ttemplate.unique_button_count}}<span ng-if="ttemplate.unique_button_count_percentage">({{ttemplate.unique_button_count_percentage}})</span></td>
-                          <td style="text-align: center;">{{ttemplate.total_positive}}<span ng-if="ttemplate.b1_percentage">({{ttemplate.b1_percentage}})</span></td>
-                          <td style="text-align: center;">{{ttemplate.total_neutral}}<span ng-if="ttemplate.b2_percentage">({{ttemplate.b2_percentage}})</span></td>
-                          <td style="text-align: center;">{{ttemplate.total_negative}}<span ng-if="ttemplate.b3_percentage">({{ttemplate.b3_percentage}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.total_users}}<span
+                              ng-if="ttemplate.Unique_send">({{ttemplate.Unique_send}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.total_delivered}}<span
+                              ng-if="ttemplate.delivered_percentage">({{ttemplate.delivered_percentage}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.total_read}}<span
+                              ng-if="ttemplate.delivered_percentage">({{ttemplate.read_percentage}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.unique_button_count}}<span
+                              ng-if="ttemplate.unique_button_count_percentage">({{ttemplate.unique_button_count_percentage}})</span>
+                          </td>
+                          <td style="text-align: center;">{{ttemplate.total_positive}}<span
+                              ng-if="ttemplate.b1_percentage">({{ttemplate.b1_percentage}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.total_neutral}}<span
+                              ng-if="ttemplate.b2_percentage">({{ttemplate.b2_percentage}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.total_negative}}<span
+                              ng-if="ttemplate.b3_percentage">({{ttemplate.b3_percentage}})</span></td>
                           <td style="text-align: center;"><button
                               ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current,ttemplate.template_name,dateRangeModel.start_dates=' ',dateRangeModel.end_dates=' ')"
                               data-toggle="modal" type="button" class="btn btn-danger">View
@@ -1422,54 +1451,6 @@
                             </button>
                           </td>
                         </tr>
-
-                        <!-- <tr colspan="9">
-                            <td></td>
-                            <td><input ng-model="f.name" class="form-control" placeholder="Search">
-                              <hr>
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td><input ng-model="f.campaign_status" class="form-control" placeholder="Search">
-                              <hr>
-                            </td>
-
-                          </tr> -->
-
-                        <!-- <tbody> -->
-                        <!-- <tr
-                            dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
-                            <td>{{$index + 1}}</td>
-                            <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
-                            <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status == 'completed'" style="text-transform:capitalize">
-                              {{campaign.end_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status != 'completed'">NA</td>
-                            
-                            <td ng-if="campaign.campaign_status == 'on_hold'" style="text-transform:capitalize">OnHold
-                            </td>
-                            <td ng-if="campaign.campaign_status != 'on_hold'" style="text-transform:capitalize">
-                              {{campaign.campaign_status}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.supplier_count}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.flat_count}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.total_leads}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.hot_leads}}</td>
-                            <td>
-                              <button class="btn btn-danger"
-                                ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View
-                                Leads</button>
-                            </td>
-                            <td>
-                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id, 'email')"
-                                data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
-                            </td>
-                            <td>
-                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)"
-                                data-target="#sendEmailModal" data-toggle="modal">Download Leads</button>
-                            </td>
-                          </tr> -->
-
-                        <!-- </tbody> -->
                       </tbody>
                     </table>
                     <div ng-if="transactionalTemplateData.length == 0">
@@ -1574,25 +1555,43 @@
                           <th style="padding:10px" ng-click="Sort('start_date')">Sent Date
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique Count)
+                          <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_delivered')">Delivered(%)
+                          <th style="padding:10px" ng-click="Sort('total_delivered')">
+                            <span>D(%)
+                              <md-tooltip class="tool-box-header">Delivered</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_read')">Read(%)
+                          <th style="padding:10px" ng-click="Sort('total_read')">
+                            <span>R(%)
+                              <md-tooltip class="tool-box-header">Read</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('unique_button_count')">Unique Count(%)
+                          <th style="padding:10px" ng-click="Sort('unique_button_count')">
+                            <span>UBC(%)
+                              <md-tooltip class="tool-box-header">Unique Button Count</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_positive')">B1(%)
+                          <th style="padding:10px" ng-click="Sort('total_positive')">
+                            <span>B1(%)
+                              <md-tooltip class="tool-box-header"><b>Positive:-</b>Button Name B1</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_neutral')">B2(%)
+                          <th style="padding:10px" ng-click="Sort('total_neutral')">
+                            <span>B2(%)
+                              <md-tooltip class="tool-box-header"><b>Neutral:-</b>Button Name B2</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="Sort('total_negative')">B3(%)
+                          <th style="padding:10px" ng-click="Sort('total_negative')">
+                            <span>B3(%)
+                              <md-tooltip class="tool-box-header"><b>Negative:-</b>Button Name B3</md-tooltip>
+                            </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">View</th>
@@ -1606,13 +1605,21 @@
 
                           <td style="text-align: center;">{{$index+serial}}</td>
                           <td style="text-align: center;">{{tdtemplate.sent_date | date : "dd-MM-yyyy"}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_users}}<span ng-if="tdtemplate.Unique_send">({{tdtemplate.Unique_send}})</span></td>
-                          <td style="text-align: center;">{{tdtemplate.total_delivered}}<span ng-if="tdtemplate.delivered_percentage">({{tdtemplate.delivered_percentage}})</span></td>
-                          <td style="text-align: center;">{{tdtemplate.total_read}}<span ng-if="tdtemplate.read_percentage">({{tdtemplate.read_percentage}})</span></td>
-                          <td style="text-align: center;">{{tdtemplate.unique_button_count}}<span ng-if="tdtemplate.unique_button_count_percentage">({{tdtemplate.unique_button_count_percentage}})</span></td>
-                          <td style="text-align: center;">{{tdtemplate.total_positive}}<span ng-if="tdtemplate.b1_percentage">({{tdtemplate.b1_percentage}})</span></td>
-                          <td style="text-align: center;">{{tdtemplate.total_neutral}}<span ng-if="tdtemplate.b2_percentage">({{tdtemplate.b2_percentage}})</span></td>
-                          <td style="text-align: center;">{{tdtemplate.total_negative}}<span ng-if="tdtemplate.b3_percentage">({{tdtemplate.b3_percentage}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.total_users}}<span
+                              ng-if="tdtemplate.Unique_send">({{tdtemplate.Unique_send}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.total_delivered}}<span
+                              ng-if="tdtemplate.delivered_percentage">({{tdtemplate.delivered_percentage}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.total_read}}<span
+                              ng-if="tdtemplate.read_percentage">({{tdtemplate.read_percentage}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.unique_button_count}}<span
+                              ng-if="tdtemplate.unique_button_count_percentage">({{tdtemplate.unique_button_count_percentage}})</span>
+                          </td>
+                          <td style="text-align: center;">{{tdtemplate.total_positive}}<span
+                              ng-if="tdtemplate.b1_percentage">({{tdtemplate.b1_percentage}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.total_neutral}}<span
+                              ng-if="tdtemplate.b2_percentage">({{tdtemplate.b2_percentage}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.total_negative}}<span
+                              ng-if="tdtemplate.b3_percentage">({{tdtemplate.b3_percentage}})</span></td>
                           <td style="text-align: center;"><button
                               ng-click="getTransactionalTemplateUserDetail(view_template.template_id,tdtemplate.sent_date,1,view_template.template_name)"
                               data-toggle="modal" type="button" class="btn btn-danger">View
@@ -1678,26 +1685,32 @@
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
-                          <th style="padding:10px">User Name</th>
-                          <th style="padding:10px">What's app Name</th>
-                          <th style="padding:10px">Phone Number</th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_positive')">B1(%)
+                          <th style="padding:10px">User N.</th>
+                          <th style="padding:10px">Whatsapp N.</th>
+                          <th style="padding:10px">Pho. No.</th>
+                          <th style="padding:10px" ng-click="SortFromBackend('total_positive')">
+                            <span>B1<md-tooltip class="tool-box-header"><b>Positive:-</b>Button 1
+                                Name</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_neutral')">B2(%)
+                          <th style="padding:10px" ng-click="SortFromBackend('total_neutral')">
+                            <span>B2<md-tooltip class="tool-box-header"><b>Neutral:-</b>Button 2
+                                Name</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
-                          <th style="padding:10px" ng-click="SortFromBackend('total_negative')">B3(%)
+                          <th style="padding:10px" ng-click="SortFromBackend('total_negative')">
+                            <span>B3<md-tooltip class="tool-box-header"><b>Negative:-</b>Button 2
+                                Name</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Status
                             <!-- <i class="icon-sort" style="color:white;"></i> -->
                           </th>
-                          <th style="padding:10px;" ng-click="Sort('updated_at')">Responsed At
+                          <th style="padding:10px;" ng-click="Sort('updated_at')">Updated At
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Call Status</th>
-                          <th style="padding:10px">Agent Name</th>
+                          <th style="padding:10px">Agent N.</th>
                           <th style="padding:10px">Comments</th>
                           <th style="padding:10px">Actions</th>
                         </tr>
@@ -1711,9 +1724,12 @@
                           <td style="text-align: center;">{{tmp.user_name}}</td>
                           <td style="text-align: center;">{{tmp.whatsapp_name}}</td>
                           <td style="text-align: center;">{{tmp.phone_number}}</td>
-                          <td style="text-align: center;">{{tmp.total_positive}}<span ng-if="tmp.b1_percentage">{{(tmp.b1_percentage)}}</span></td>
-                          <td style="text-align: center;">{{tmp.total_neutral}}<span ng-if="tmp.b2_percentage">{{(tmp.b2_percentage)}}</span></td>
-                          <td style="text-align: center;">{{tmp.total_negative}}<span ng-if="tmp.b3_percentage">{{(tmp.b3_percentage)}}</span></td>
+                          <td style="text-align: center;">{{tmp.total_positive}}<span
+                              ng-if="tmp.b1_percentage">{{(tmp.b1_percentage)}}</span></td>
+                          <td style="text-align: center;">{{tmp.total_neutral}}<span
+                              ng-if="tmp.b2_percentage">{{(tmp.b2_percentage)}}</span></td>
+                          <td style="text-align: center;">{{tmp.total_negative}}<span
+                              ng-if="tmp.b3_percentage">{{(tmp.b3_percentage)}}</span></td>
                           <td style="text-align: center;">
                             <p style="color: #000;">{{tmp.status}}</p>
                           </td>
@@ -1727,7 +1743,7 @@
                             </select>
                           </td>
                           <td style="text-align: center;">
-                            {{tmp.agent_name}}
+                            <p>{{tmp.agent_name}}</p>
                           </td>
                           <td style="text-align: center;">
                             <!-- {{tmp.comment.length>0?tmp.comment[tmp.comment.length-1].comment:'NA'}} -->
@@ -1739,8 +1755,10 @@
                           </td>
                           <td style="text-align: center;">
                             <i class='fas fa-phone-alt' style="font-size:20px;color: #000000;"
-                              ng-click="CallTemplate(tmp)"></i>
-                            <a ng-click="userDetail(tmp)">Intervene</a>
+                              ng-click="CallTemplate(tmp)"><md-tooltip class="tool-box-header">Call,Comment & Status</md-tooltip></i>
+                            <i class='far fa-comments' style="font-size:20px;color: #000000;"
+                              ng-click="showHideIntervene(tmp)"><md-tooltip class="tool-box-header">Intervene</md-tooltip>
+                            </i>
                           </td>
                         </tr>
                       </tbody>
@@ -1835,7 +1853,6 @@
                                   </div>
                                   <div>
                                     <img ng-src="{{userIcon}}">
-                                    <!-- <b>{{userInfo.username}}:</b> -->
                                     <b>{{item.user}}:</b>
                                     <span><small>{{item.date|date:'medium'}}</small></span>
                                   </div>
@@ -2006,7 +2023,7 @@
               </div>
               <!-- Intervene Chat -->
               <div ng-if="interveneDashboard.show">
-                <button class="btn btn-danger" ng-click="hideIntervene()">Back To Previous</button>
+                <!-- <button class="btn btn-danger" ng-click="showHideIntervene('')">Back To Previous</button> -->
                 <chat-detail number={{interveneDashboard.data.phone_number}}></chat-detail>
               </div>
               <!-- END Intervene Chat -->

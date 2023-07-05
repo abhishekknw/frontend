@@ -6557,7 +6557,8 @@
       }
 
       $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search, sortingObj) {
-        $scope.viewUserSummary()
+        cfpLoadingBar.start();
+        $scope.viewUserSummary();
         $scope.user_view = {
           template_id: value,
           template_name: name,
@@ -6593,6 +6594,7 @@
           .then(function onSuccess(response) {
             $scope.transactionalTemplateUserData = response.data.data.users;
             $scope.totalCount = response.data.data.total_count;
+            cfpLoadingBar.complete();
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -6647,7 +6649,8 @@
           "template_id": $scope.viewComments.template_id,
           "phone_number": $scope.viewComments.phone_number,
           "template_date": $scope.viewComments.template_date,
-          "comment": $scope.UserComment.comment
+          "comment": $scope.UserComment.comment,
+          'sent_date' : $scope.user_view.sent_date
         }
         templateDashboardService.UpdateAddComments(addComment)
           .then(function onSuccess(response) {
@@ -6996,12 +6999,9 @@
         $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id, $scope.user_view.sent_date, null, $scope.user_view.template_name, $scope.user_view.search, $scope.paramsForSorting);
       }
       $scope.templateDetail();
-      $scope.userDetail = function (data) {
-        $scope.interveneDashboard = {show:true,data:data};
-        console.log($scope.interveneDashboard,"$scope.interveneDashboard")
-      }
-      $scope.hideIntervene =function(){
-        $scope.interveneDashboard = {show:false,data:''};
+
+      $scope.showHideIntervene =function(data){
+        $scope.interveneDashboard = {show:!$scope.interveneDashboard.show,data:data};
       }
       // Template Dashboard end
 
