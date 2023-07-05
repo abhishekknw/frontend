@@ -730,7 +730,7 @@
       }
       $scope.GetSupplierSentLeads = function (index, status, params) {
         $scope.paramsForAcceptLead = {
-          'index': index, 'status': status, "id" : params._id, 'requirement_id' : params.requirement_id
+          'index': index, 'status': status, "id": params._id, 'requirement_id': params.requirement_id
         }
         params = { ...params, company_campaign_id: $scope.campaignIdForLeads };
         B2BDashboardService.getSupplierSentLead(params)
@@ -748,27 +748,40 @@
           "client_status": value,
           "_id": id
         }]
-
-        B2BDashboardService.acceptDeclineDecisionPanding({ 'data': data })
-          .then(function onSuccess(response) {
-            if (response) {
-              if (value == "Decline") {
-                $scope.leadDecisionPandingData.values[index][0].client_status = "Decline";
-              }
-              else {
-                $scope.leadDecisionPandingData.values.splice(index, 1);
-              }
-              if (value == 'Decline') {
-                value = 'Declined';
-              }
+        swal({
+          title: 'Are you sure ?',
+          text: value + ' Leads',
+          type: constants.warning,
+          showCancelButton: true,
+          confirmButtonClass: "btn-success",
+          confirmButtonText: "Yes, Remove!",
+          closeOnConfirm: false,
+          closeOnCancel: true
+        },
+          function (confirm) {
+            if (confirm) {
+              B2BDashboardService.acceptDeclineDecisionPanding({ 'data': data })
+                .then(function onSuccess(response) {
+                  if (response) {
+                    if (value == "Decline") {
+                      $scope.leadDecisionPandingData.values[index][0].client_status = "Decline";
+                    } else {
+                      $scope.leadDecisionPandingData.values.splice(index, 1);
+                    }
+                    if (value == 'Decline') {
+                      value = 'Declined';
+                    }
+                  }
+                  B2BDashboardService.showLeads($scope.supp_id)
+                    .then(function onSuccess(response) {
+                      $scope.supplier_leads = response.data.data.lead;
+                    })
+                  swal(constants.name, value + " Successfully", constants.success);
+                  $scope.leadBasics('basic');
+                });
             }
-            B2BDashboardService.showLeads($scope.supp_id)
-              .then(function onSuccess(response) {
-                $scope.supplier_leads = response.data.data.lead;
-              })
-            swal(constants.name, value + " Successfully", constants.success);
-            $scope.leadBasics('basic');
-          });
+          }
+        )
       }
 
 
