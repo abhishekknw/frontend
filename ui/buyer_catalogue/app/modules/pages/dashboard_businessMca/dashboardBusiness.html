@@ -6798,7 +6798,7 @@
             </div>
             <div class="modal-body">
               <div class="modalBodyBox">
-                <table class="table">
+                <table class="table" ng-if="supplierSentLeadList.values.length > 0">
                   <tr style="font-size: 15px;">
                     <th>Supplier Id</th>
                     <th>Lead Id</th>
@@ -6812,6 +6812,7 @@
                     <td style="text-align: center;">{{data[0].updated_at}}</td>
                   </tr>
                 </table>
+                <div ng-if="!supplierSentLeadList.values || supplierSentLeadList.values.length <= 0" style="font-size: medium; text-align: center;">No Previous Record Found</div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger"
                     ng-click="acceptDeclineDecisionPanding(paramsForAcceptLead.index,paramsForAcceptLead.status,paramsForAcceptLead._id,paramsForAcceptLead.requirement_id)">Yes

@@ -732,7 +732,6 @@
         $scope.paramsForAcceptLead = {
           'index': index, 'status': status, "id" : params._id, 'requirement_id' : params.requirement_id
         }
-        console.log($scope.paramsForAcceptLead,"$scope.parametersForAcceptLead")
         params = { ...params, company_campaign_id: $scope.campaignIdForLeads };
         B2BDashboardService.getSupplierSentLead(params)
           .then(function onSuccess(response) {
