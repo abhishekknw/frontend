@@ -7,7 +7,7 @@ import { alertAtom } from '../../_states/alert';
 import { SnackbarProvider } from 'notistack';
 import { useRecoilValue } from 'recoil';
 import InterveneChat from '../InterveneChat/InterveneChat';
-
+import OpsDashboard from '../OpsDashboard/OpsDashboard';
 export default function PagesRoutes(props) {
   const { match } = props;
   const open = useRecoilValue(alertAtom);
@@ -28,6 +28,7 @@ export default function PagesRoutes(props) {
               component={CampaignDecisionBoard}
             />
             <Route path={match.path + ROUTESNAME.INTERVENE_CHAT} component={InterveneChat} />
+            <Route path={match.path + ROUTESNAME.OPS_DASHBOARD} component={OpsDashboard} />
           </SnackbarProvider>
         </Switch>
       </div>

@@ -5,5 +5,6 @@ export const CLIENT_DASHBOARD_ROUTE = '/r/dashboard/client';
 
 export const ROUTESNAME = {
     CAMPAIGN_DECISION_BOARD:'/campaignDecisionBoard',
-    INTERVENE_CHAT : '/interveneChat',
+    INTERVENE_CHAT : '/intervenechat',
+    OPS_DASHBOARD : '/opsdashboard'
 }
