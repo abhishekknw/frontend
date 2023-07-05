@@ -1020,7 +1020,12 @@ div#RequirementModel th:nth-child(1),
 div#RequirementModel td:nth-child(1) {
   text-align: start;
 }
-
+.multiselectDropdown .multiselect-parent .dropdown-toggle{
+  width: 100% !important;
+}
+div#SuspenseLeadsModel th, div#SuspenseLeadsModel td{
+  padding: 6px !important;
+}
 #RequirementModel .table-responsive {
   max-height: 500px !important;
 }
