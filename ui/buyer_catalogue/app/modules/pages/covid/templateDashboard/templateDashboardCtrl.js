@@ -6548,9 +6548,10 @@
 
         templateDashboardService.transactionalTemplateDatewiseDetail(param)
           .then(function onSuccess(response) {
-            $scope.transactionalTemplateDataDetail = response.data.data;
+            $scope.transactionalTemplateDataDetail = response.data.data.data;
+            $scope.buttonNamelist = response.data.data.button_list;
+            console.log($scope.buttonNamelist,"$scope.buttonNamelist")
             $scope.totalCount = response.data.data.total_count;
-
           }).catch(function onError(response) {
             console.log(response);
           })

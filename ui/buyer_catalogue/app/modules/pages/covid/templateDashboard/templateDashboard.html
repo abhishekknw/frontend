@@ -1575,19 +1575,19 @@
                           </th>
                           <th style="padding:10px" ng-click="Sort('total_positive')">
                             <span>B1(%)
-                              <md-tooltip class="tool-box-header"><b>Positive:-</b>Button Name B1</md-tooltip>
+                              <md-tooltip class="tool-box-header"><b>{{buttonNamelist[0].connotation}}:-</b>{{buttonNamelist[0].name}}</md-tooltip>
                             </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px" ng-click="Sort('total_neutral')">
                             <span>B2(%)
-                              <md-tooltip class="tool-box-header"><b>Neutral:-</b>Button Name B2</md-tooltip>
+                              <md-tooltip class="tool-box-header"><b>{{buttonNamelist[1].connotation}}:-</b>{{buttonNamelist[1].name}}</md-tooltip>
                             </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px" ng-click="Sort('total_negative')">
                             <span>B3(%)
-                              <md-tooltip class="tool-box-header"><b>Negative:-</b>Button Name B3</md-tooltip>
+                              <md-tooltip class="tool-box-header"><b>{{buttonNamelist[2].connotation}}:-</b>{{buttonNamelist[2].name}}</md-tooltip>
                             </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
@@ -1687,18 +1687,15 @@
                           <th style="padding:10px">Whatsapp N.</th>
                           <th style="padding:10px">Pho. No.</th>
                           <th style="padding:10px" ng-click="SortFromBackend('total_positive')">
-                            <span>B1<md-tooltip class="tool-box-header"><b>Positive:-</b>Button 1
-                                Name</md-tooltip></span>
+                            <span>B1<md-tooltip class="tool-box-header"><b>{{buttonNamelist[0].connotation}}:-</b>{{buttonNamelist[0].name}}</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px" ng-click="SortFromBackend('total_neutral')">
-                            <span>B2<md-tooltip class="tool-box-header"><b>Neutral:-</b>Button 2
-                                Name</md-tooltip></span>
+                            <span>B2<md-tooltip class="tool-box-header"><b>{{buttonNamelist[1].connotation}}:-</b>{{buttonNamelist[1].name}}</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px" ng-click="SortFromBackend('total_negative')">
-                            <span>B3<md-tooltip class="tool-box-header"><b>Negative:-</b>Button 2
-                                Name</md-tooltip></span>
+                            <span>B3<md-tooltip class="tool-box-header"><b>{{buttonNamelist[2].connotation}}:-</b>{{buttonNamelist[2].name}}</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Status
