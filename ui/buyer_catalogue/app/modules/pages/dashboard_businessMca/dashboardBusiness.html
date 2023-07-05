@@ -1677,7 +1677,9 @@
                             <td><a class="linkBtn" ng-click="getImagesUrl(decisionPanding[0])">View</a></td>
                             <td class="alignment text-center">
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding[0]._id,decisionPanding[0].requirement_id)">Accept</button>
+                                ng-click="GetSupplierSentLeads($index,'Accepted',decisionPanding[0])">Accept</button>
+                              <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding[0]._id,decisionPanding[0].requirement_id)">Accept</button>-->
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                                 ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding[0]._id,decisionPanding[0].requirement_id)"
                                 ng-if="decisionPanding[0].client_status!='Decline'">Decline</button>
@@ -6796,30 +6798,25 @@
             </div>
             <div class="modal-body">
               <div class="modalBodyBox">
-                <table class="table">
-                  <tr>
+                <table class="table" ng-if="supplierSentLeadList.values.length > 0">
+                  <tr style="font-size: 15px;">
                     <th>Supplier Id</th>
                     <th>Lead Id</th>
+                    <th>Status</th>
                     <th>Date</th>
                   </tr>
-                  <tr>
-                    <td>CHEUVTNRSSCA</td>
-                    <td>5002</td>
-                    <td>11/12/12</td>
-                  </tr>
-                  <tr>
-                    <td>CHEUVTNRSSCA</td>
-                    <td>5002</td>
-                    <td>11/12/12</td>
-                  </tr>
-                  <tr>
-                    <td>CHEUVTNRSSCA</td>
-                    <td>5002</td>
-                    <td>11/12/12</td>
+                  <tr ng-repeat="data in supplierSentLeadList.values" style="font-size: 12px;">
+                    <td>{{data[0].supplier_id}}</td>
+                    <td style="text-align: center;">{{data[0].requirement_id}}</td>
+                    <td>{{data[0].macchadalo_client_status}}</td>
+                    <td style="text-align: center;">{{data[0].updated_at}}</td>
                   </tr>
                 </table>
+                <div ng-if="!supplierSentLeadList.values || supplierSentLeadList.values.length <= 0" style="font-size: medium; text-align: center;">No Previous Record Found</div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-danger">Yes Accept</button>
+                  <button type="button" class="btn btn-danger"
+                    ng-click="acceptDeclineDecisionPanding(paramsForAcceptLead.index,paramsForAcceptLead.status,paramsForAcceptLead._id,paramsForAcceptLead.requirement_id)">Yes
+                    Accept</button>
                 </div>
               </div>
             </div>

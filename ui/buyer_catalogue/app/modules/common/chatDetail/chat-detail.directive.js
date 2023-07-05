@@ -153,8 +153,11 @@ angular
               .catch(function onError(response) {
                 console.log(response);
               });
+              setTimeout(function () {
+                $anchorScroll('scrollToIntervene');
+              }, 1);
           };
-          $scope.userDetail(attrs.number)
+          $scope.userDetail(attrs.number);
           // $scope.userDetail("9752276168");
 
           $scope.writeMessage = function (data, intervenResolved) {
