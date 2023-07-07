@@ -15,12 +15,13 @@
         elem.prepend($interpolate(defaultOptionTemplate)(scope));
       }
     };
-  }).controller('B2BDashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, B2BDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
+  }).controller('B2BDashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, B2BDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window,AuthService) {
 
     $scope.campaign_id = $stateParams.proposal_id;
     $scope.passwordError = constants.password_error;
     $scope.userInfo = $rootScope.globals.userInfo;
     $scope.APIBaseUrl = Config.APIBaseUrl;
+    $scope.ImageBaseUrl = constants.aws_bucket_url;
     $scope.supplierTypeCode = [
       {
         "name": "ALL",
@@ -76,10 +77,10 @@
     $scope.primaryCount = { "start": '', "end": '' };
 
     $scope.clientStatusMachadalo = [
-      {"status_name":"Get Verified Leads"},
-      {"status_name":"About MCA"},
-      {"status_name":"Unsubscribe"},
-      {"status_name":"Schedule a demo"},
+      { "status_name": "Get Verified Leads" },
+      { "status_name": "About MCA" },
+      { "status_name": "Unsubscribe" },
+      { "status_name": "Schedule a demo" },
       // {"status_name":"Checkout sample leads"},
       // {"status_name":"Chat With Your RM"},
       // {"status_name":"Claim Your free dashboard"},
@@ -644,10 +645,10 @@
       $scope.listClientStatus = [];
       $scope.listClientStatusObj = [];
       let storeData = JSON.parse(localStorage.userInfo);
-      if(!campaign_id){
+      if (!campaign_id) {
         campaign_id = '';
       }
-      if (storeData.username!="machadalosales") {
+      if (storeData.username != "machadalosales") {
         B2BDashboardService.listClientStatus(campaign_id).then(function onSuccess(response) {
           var listData = response.data.data.client_status;
           for (var k in listData) {
@@ -759,7 +760,7 @@
       B2BDashboardService.viewStatusFunnel(req_id)
         .then(function onSuccess(response) {
           $scope.StatusFunnel = response.data.data;
-        })  
+        })
     }
 
     $scope.deleteBasicComment = function (comment_id, req_id) {
@@ -2220,8 +2221,8 @@
         });
     }
     $scope.toggleClassFilter = false;
-    $scope.toggleFilterClass =function(){
-      $scope.toggleClassFilter = $scope.toggleClassFilter?false:true;
+    $scope.toggleFilterClass = function () {
+      $scope.toggleClassFilter = $scope.toggleClassFilter ? false : true;
     }
     $scope.refeshFilters = function () {
       $scope.selected_cities_list = [];
@@ -2254,9 +2255,26 @@
       $scope.primaryCount = { "start": '', "end": '' };
       $scope.getPurchasedNotPurchasedLead($scope.campaignId, $scope.campaignName);
     }
+
+    $scope.getImagesUrl = function (data) {
+      data.supplier_type = 'RS';
+      AuthService.getSocietyImageList(data)
+        .then(function onSuccess(response) {
+          $scope.imageUrlList = response.data.data;
+          if($scope.imageUrlList.length > 0){
+            $('#imageModal').modal('show');
+          }
+          else{
+            $('#imageModal').modal('hide');
+            swal(constants.name, constants.image_empty, constants.warning);
+          }
+        })
+        .catch(function onError(response) {
+          swal(constants.name,constants.errorMsg, constants.error);
+        });
+    }
+
   })
-
-
 })();
 app.factory('Excel', function ($window) {
   var uri = 'data:application/vnd.ms-excel;base64,',

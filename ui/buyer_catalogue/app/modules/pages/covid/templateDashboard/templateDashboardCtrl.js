@@ -61,6 +61,7 @@
       $scope.APIBaseUrl = Config.APIBaseUrl;
       $scope.UserComment = {};
       $scope.CallModel = {};
+      $scope.interveneDashboard = {show:false,data:''};
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
         { id: 2, name: 'High' },
@@ -6476,6 +6477,7 @@
 
       // Template Dashboard start
       $scope.getTransactionalTemplate = function (value, s_date = '', e_date = '') {
+        $scope.interveneDashboard = {show:false,data:''};
         $scope.TemplateListSummary()
         $scope.changeStartDate();
         $scope.changeEndDate();
@@ -6555,7 +6557,8 @@
       }
 
       $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search, sortingObj) {
-        $scope.viewUserSummary()
+        cfpLoadingBar.start();
+        $scope.viewUserSummary();
         $scope.user_view = {
           template_id: value,
           template_name: name,
@@ -6591,6 +6594,7 @@
           .then(function onSuccess(response) {
             $scope.transactionalTemplateUserData = response.data.data.users;
             $scope.totalCount = response.data.data.total_count;
+            cfpLoadingBar.complete();
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -6626,7 +6630,8 @@
       }
 
       $scope.updateCallStatus = function (status, row) {
-        row.call_status = status
+        row.call_status = status;
+        row.sent_date = $scope.user_view.sent_date;
         templateDashboardService.updateCallStatus(row)
           .then(function onSuccess(response) {
             swal("", response.data.data, constants.success);
@@ -6644,7 +6649,8 @@
           "template_id": $scope.viewComments.template_id,
           "phone_number": $scope.viewComments.phone_number,
           "template_date": $scope.viewComments.template_date,
-          "comment": $scope.UserComment.comment
+          "comment": $scope.UserComment.comment,
+          'sent_date' : $scope.user_view.sent_date
         }
         templateDashboardService.UpdateAddComments(addComment)
           .then(function onSuccess(response) {
@@ -6993,6 +6999,10 @@
         $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id, $scope.user_view.sent_date, null, $scope.user_view.template_name, $scope.user_view.search, $scope.paramsForSorting);
       }
       $scope.templateDetail();
+
+      $scope.showHideIntervene =function(data){
+        $scope.interveneDashboard = {show:!$scope.interveneDashboard.show,data:data};
+      }
       // Template Dashboard end
       // const socket = new WebSocket('ws://localhost:8000/ws/livec/');
       // console.log(socket,"11111111")

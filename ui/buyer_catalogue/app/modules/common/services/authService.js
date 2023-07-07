@@ -3,8 +3,8 @@
 angular.module('Authentication')
 
    .factory('AuthService',
-      ['$http', '$location', '$rootScope', '$window', '$timeout', 'commonDataShare', 'machadaloHttp', 'constants',
-         function ($http, $location, $rootScope, $window, $timeout, commonDataShare, machadaloHttp, constants) {
+      ['$http', '$location', '$rootScope', '$window', '$timeout', 'commonDataShare', 'machadaloHttp', 'constants', '$q',
+         function ($http, $location, $rootScope, $window, $timeout, commonDataShare, machadaloHttp, constants, $q) {
 
             var authService = {};
             var userInfo = {};
@@ -782,13 +782,18 @@ angular.module('Authentication')
                   url = "v0/ui/mea-bot/action-status-intervene/?intervene=True&phone_number=" + param.phone + "&username=" + param.username;
                   apiHost = interveneApiHost;
                }
-               return $http.get(apiHost + url)
-                  .then(function onSuccess(response) {
-                     return response
-                  })
-                  .catch(function onError(response) {
-                     return response
-                  });
+               if (!meaType) {
+                  return machadaloHttp.get(url);
+               }
+               else {
+                  return $http.get(apiHost + url)
+                     .then(function onSuccess(response) {
+                        return response
+                     })
+                     .catch(function onError(response) {
+                        return response
+                     });
+               }
             };
 
             authService.addUserToActive = function (param, meaType) {
@@ -798,13 +803,18 @@ angular.module('Authentication')
                   url = "v0/ui/mea-bot/action-status-intervene/?resolved=True&phone_number=" + param.phone + "&username=" + param.username;
                   apiHost = interveneApiHost;
                }
-               return $http.get(apiHost + url)
-                  .then(function onSuccess(response) {
-                     return response
-                  })
-                  .catch(function onError(response) {
-                     return response
-                  });
+               if (!meaType) {
+                  return machadaloHttp.get(url);
+               }
+               else {
+                  return $http.get(apiHost + url)
+                     .then(function onSuccess(response) {
+                        return response
+                     })
+                     .catch(function onError(response) {
+                        return response
+                     });
+               }
             };
             authService.getLeasTabSuspenseLead = function (phone, page) {
                var url = "v0/ui/b2b/intervene-get-all-suspense-lead/?page=" + page + '&phone_number=' + phone;
@@ -939,20 +949,71 @@ angular.module('Authentication')
                return machadaloHttp.post(url, data);
             };
 
-            authService.getDialerCallerIds = function(){
+            authService.getDialerCallerIds = function () {
                let url = "v0/ui/mca-bot/dailer-caller-ids/";
                return machadaloHttp.get(url);
-             }
-       
-             authService.getDialerAgents = function(){
+            }
+
+            authService.getDialerAgents = function () {
                let url = "v0/ui/mca-bot/dailer-agents/";
                return machadaloHttp.get(url);
-             }
+            }
 
-             authService.postDataOnQuickCall = function(data){
+            authService.postDataOnQuickCall = function (data) {
                let url = "v0/ui/mca-bot/dailer-call/";
-               return machadaloHttp.post(url,data);
-             }
+               return machadaloHttp.post(url, data);
+            }
+
+            authService.getSocietyImageList = function (data) {
+               let url = "v0/ui/image-mapping/?supplier_id=" + data.supplier_id + "&supplier_type_code=" + data.supplier_type;
+               return machadaloHttp.get(url);
+            }
+            authService.addSocietyImages = function (id, imageUrl, supplierTypeCode) {
+               let url = "v0/ui/image-mapping/?supplier_type_code=" + supplierTypeCode;
+               return machadaloHttp.post(url, imageUrl);
+            };
+            authService.deleteImageSupplierType = function (id) {
+               var url = "v0/ui/image-mapping/?pk=" + id;
+               return machadaloHttp.delete(url);
+            }
+
+            authService.addImageLocation = function (imageData) {
+               var url = "v0/ui/image-mapping/save_image_tag/";
+               return machadaloHttp.post(url, imageData);
+            };
+
+            authService.addcomment = function (data, imageId) {
+               var url = "v0/ui/image-mapping/" + imageId + "/";
+               return machadaloHttp.put(url, data);
+            };
+
+
+            authService.uploadImages = function (file) {
+               AWS.config.region = 'us-east-1';
+               AWS.config.update({ accessKeyId: 'AKIAYNLXKO3UESOU6LV6', secretAccessKey: '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' });
+               var bucket = new AWS.S3({ params: { Bucket: 'myTempBucket', maxRetries: 10 }, httpOptions: { timeout: 360000 } });
+
+               this.Progress = 0;
+               var deferred = $q.defer();
+               var params = { Bucket: 'mdimages', Key: file.name, ContentType: file.type, Body: file };
+               var options = {
+                  // Part Size of 10mb
+                  partSize: 10 * 1024 * 1024,
+                  queueSize: 1,
+                  // Give the owner of the bucket full control
+                  ACL: 'bucket-owner-full-control'
+               };
+               var uploader = bucket.upload(params, options, function (err, data) {
+                  if (err) {
+                     deferred.reject(err);
+                  }
+                  deferred.resolve();
+               });
+               uploader.on('httpUploadProgress', function (event) {
+                  deferred.notify(event);
+               });
+               return deferred.promise
+            }
 
             return authService;
          }])

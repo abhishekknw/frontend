@@ -1348,6 +1348,7 @@
                             <th style="width:200px;">Current Status</th>
                             <th style="width:200px;">Client Comment</th>
                             <th>Lead Details</th>
+                            <th>Images</th>
                           </tr>
                         </thead>
                         <tbody pagination-id="paginate2"
@@ -1387,6 +1388,9 @@
                                 name="button" class="btn btn-danger"
                                 ng-click="showLeadDetail(lead[0]._id,lead[0].requirement_id)" data-toggle="modal"
                                 data-target="#myModal">Lead Details</button>
+                            </td>
+                            <td>
+                              <a class="linkBtn" ng-click="getImagesUrl(lead[0])">View Image</a>
                             </td>
                     </div>
                     </tr>
@@ -3072,6 +3076,41 @@
     </div>
   </div>
   <!--comment modal ent -->
+
+
+  <!--Start: Code for showing image Modal Window -->
+  <div id="imageModal" class="modal fade theme-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>View Image</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="modalBodyBox">
+            <div class="carousel" id="slider"  ng-if="imageUrlList.length > 0">
+              <div class="carousel-inner">
+                <div class="item" ng-class="{active:!$index}" ng-repeat="image in imageUrlList">
+                  <div class="img-title">{{image.name}}</div>
+                  <img ng-src="{{ImageBaseUrl + image.image_url}}" style="width:600px; height:400px;" class="img-responsive  modal-img" alt="No Image Found"/>
+                <p class="img-comment">  Comment : {{image.comment}}</p>
+                </div>
+              </div>
+              <a class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+              <a class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--End: Code for showing image Modal  Window -->
 </body>
 
 </html>

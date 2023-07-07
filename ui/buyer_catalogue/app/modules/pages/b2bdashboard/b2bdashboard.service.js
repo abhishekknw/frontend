@@ -639,6 +639,7 @@ angular.module('catalogueApp')
         var url = url_root +"b2b/status-funnel/?lead_id=" + lead_id;
         return machadaloHttp.get(url);
       }
+      
       return DashboardService;
 
     }]);
