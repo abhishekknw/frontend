@@ -8,7 +8,7 @@ import { SnackbarProvider } from 'notistack';
 import { useRecoilValue } from 'recoil';
 import InterveneChat from '../InterveneChat/InterveneChat';
 import OpsDashboard from '../OpsDashboard/OpsDashboard';
-export default function PagesRoutes(props) {
+ export default function PagesRoutes(props) {
   const { match } = props;
   const open = useRecoilValue(alertAtom);
 
