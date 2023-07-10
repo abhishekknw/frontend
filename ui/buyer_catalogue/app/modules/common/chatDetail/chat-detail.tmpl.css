@@ -622,7 +622,7 @@ ul.timeline>li:before {
 
 .aisensy-intervene-btn {
   position: absolute;
-  width: 100%;
+  width: 95%;
   bottom: 0px;
 }
 .msg-box {
@@ -630,8 +630,17 @@ ul.timeline>li:before {
   width: 100%;
   z-index: 10
 }
+.dashboard-tab .tab-content{
+  padding-top: 0px !important;
+}
 
-
+#TemplateModal .search-input-wrapper {
+  display: block;
+  margin: 0px 0px 35px 10px !important;
+}
+#TemplateModal  .input-wrapper i {
+  color: #8e1921;
+}
 
 .contact-info {
   width: 250px;
@@ -1011,7 +1020,12 @@ div#RequirementModel th:nth-child(1),
 div#RequirementModel td:nth-child(1) {
   text-align: start;
 }
-
+.multiselectDropdown .multiselect-parent .dropdown-toggle{
+  width: 100% !important;
+}
+div#SuspenseLeadsModel th, div#SuspenseLeadsModel td{
+  padding: 6px !important;
+}
 #RequirementModel .table-responsive {
   max-height: 500px !important;
 }
