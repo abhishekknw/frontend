@@ -1119,7 +1119,7 @@
         <aside ng-class="{'is-visible':visible}">
           <div class="sidemenu">
             <ul id="menu-content">
-              <li class="parent arrow" ng-class="{active: isActive('/dashboard')}" permission="[perm.menuDashboard]">
+              <li class="parent arrow" ng-class="{active: isActive('/dashboard')}">
                 <a href="javascript:void(0);">DashBoard</a>
                 <ul class="child">
                   <li><a ng-href="/#/dashboard">Business</a></li>
@@ -1207,7 +1207,7 @@
               <li class="parent arrow" permission="[perm.menuCampaignLeads]">
                 <a href="javascript:void(0);">Static Form</a>
                 <ul class="child">
-                  <li><a href="https://forms.machadalo.com/#/dashboard">Manage Supplier</a></li>
+                  <li><a href="https://stagingforms.machadalo.com/#/dashboard">Manage Supplier</a></li>
                 </ul>
               </li><!-- li -->
               <li class="parent arrow">
@@ -5255,7 +5255,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">&times;</button>
         <div class="pageTitle smallBtn full-width-header">
           <h4>Add/Update Supplier</h4>
         </div>
@@ -5548,6 +5548,48 @@
                 </select>
               </div>
             </div>
+
+            <!-- Start upload Image Box -->
+
+            <!-- <div class="uploadImageBox" ng-app="fileUpload" ng-controller="ImagesCtrl"> -->
+              <div class="uploadBox">
+                 <button type="file" class="submit-btn" ng-disabled="!Supplier_id" ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="5000" ngf-max-size="7MB" ngf-resize="{width: 600, height: 400}" ngf-fix-orientation=" true">Select Society Image</button>
+              </div>
+              <div class="imageSection">
+                  <div class="repeatBox" ng-repeat="image in societyImages track by $index">
+                      <div class="imageBox">
+                          <div class="image">
+                              <span class="close scroll-image-modal removeImage" ng-click="removeImage(image)">&times;</span>
+                              <div style = "width:100px;height:100px">
+                                  <img ng-src="{{ImageBaseUrl + image.image_url}}" style = "width: 100%; height: 100%; display: block;">
+                              </div>
+                          </div>
+                          <p class="type modal-image-type"><strong>Image Type:</strong> {{image.name}}</p>
+                          <p class="comments" ><strong>Comments:</strong> {{image.comments}}</p>
+                          <div class="fieldbox">
+                              <textarea type="text" class="field" id="commentupdate_id_{{$index}}" name="commentupdate_{{$index}}" ng-model="image.comments" placeholder="Add/Update Comment">
+                              </textarea>
+                              <div class="drop-box">
+                                  <select class="field" ng-model="image.name" >
+                                    <option value="" disabled="true">Select Image Tag</option>
+                                    <option ng-repeat="tag in imageTages" value="{{tag.name}}">
+                                      {{tag.name}}
+                                    </option>
+                                  </select>
+                                </div>
+                              <button type="button" class="smallBtn" ng-click="addcomment(image)">Done</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div style = "font:smaller">
+                  <span class = "progress" ng-show = "f.progress >= 0">
+                      <div ng-style = "width:{{f.progress}}%" ng-bind = "f.progress + '%'"></div>
+                  </span>
+              </div>
+              {{errorMsg}}
+          <!-- </div> -->
+          <!-- END uploadImageBox -->
             <!-- ADD POC -->
             <div ng-repeat="pocdata in newSupplierPocModel track by $index">
               <div class="row">

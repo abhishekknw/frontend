@@ -18,6 +18,7 @@ angular
     aws_campaign_images_url : 'https://androidtokyo.s3.amazonaws.com/',
     account_email_id : 'tejas.pawar@machaddalo.com',
     //general
+    alphanums : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
     name : '',
     success : 'success',
     error : 'error',
@@ -51,6 +52,9 @@ angular
     image_empty : 'No Images Found',
     image_success : 'Image Uploaded Successfully',
     proposal_update_success : "Proposal Updated Successfully",
+    commentAdd : "Comment Added",
+    commentNotAdd : "Comment Not Added",
+
     //createproposal
     geo_location_error : 'Address or Pincode Incorrect, Please Provide Correct Information',
     center_warning : 'Do you want to create only one center ?',
@@ -362,6 +366,9 @@ designation_saloon : ["Owner","Manager","Advertising Manager","Branding Manager"
 designation_corporate : ["Owner","Manager","Advertising Manager","Branding Manager","Admin","Supervisor","Superintendent","Hr-Manager","Hr-Head","Security Manager"],
 designation_society:[ "Chairman","Secretary","Treasurer","Manager","Supervisor","Committee Member","Decision maker No RWA","RWA member","President","Committee Head"],
 designation_student:['Student'],
+
+
+imageTagForSocity: [{"name":"Notice Board"},{"name":"Lift"},{"name":"Standee Space"},{"name":"Stall Space"},{"name":"Car Display"},{"name":"Fliers (Mail box)"},{"name":"Fliers (Security)"},{"name":"Fliers (Door to Door)"},{"name":"Banner Space"},{"name":"Entry Gate"},{"name":"Exit Gate"},{"name":"Facade"},{"name":"Open Area"},{"name":"Children Play Area"},{"name":"Swimming pool"},{"name":"Gym"},{"name":"Shops"},{"name":"Parking Area"},{"name":"Club House"},{"name":"Garden Area"},{"name":"Community Hall"},],
 
 covidCasesData:[
   {
