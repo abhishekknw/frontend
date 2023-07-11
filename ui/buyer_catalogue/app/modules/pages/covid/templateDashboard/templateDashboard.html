@@ -1367,6 +1367,12 @@
                           <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
+                          <th style="padding:10px" ng-click="Sort('total_sent')">
+                            <span>S(%)
+                              <md-tooltip class="tool-box-header">sent</md-tooltip>
+                            </span>
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px" ng-click="Sort('total_delivered')">
                             <span>D(%)
                               <md-tooltip class="tool-box-header">Delivered</md-tooltip>
@@ -1417,8 +1423,10 @@
                           <td style="text-align: center;">{{ttemplate.days_count}}</td>
                           <td style="text-align: center;">{{ttemplate.total_users}}<span
                               ng-if="ttemplate.Unique_send">({{ttemplate.Unique_send}})</span></td>
+                          <td style="text-align: center;">{{ttemplate.total_sent}}<span
+                            ng-if="ttemplate.sent_percentage">({{ttemplate.sent_percentage}})</span></td>
                           <td style="text-align: center;">{{ttemplate.total_delivered}}<span
-                              ng-if="ttemplate.delivered_percentage">({{ttemplate.delivered_percentage}})</span></td>
+                          ng-if="ttemplate.delivered_percentage">({{ttemplate.delivered_percentage}})</span></td>
                           <td style="text-align: center;">{{ttemplate.total_read}}<span
                               ng-if="ttemplate.delivered_percentage">({{ttemplate.read_percentage}})</span></td>
                           <td style="text-align: center;">{{ttemplate.unique_button_count}}<span
@@ -1558,6 +1566,12 @@
                           <th style="padding:10px" ng-click="Sort('total_users')">Sent(Unique)
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
+                          <th style="padding:10px" ng-click="Sort('total_sent')">
+                            <span>S(%)
+                              <md-tooltip class="tool-box-header">sent</md-tooltip>
+                            </span>
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px" ng-click="Sort('total_delivered')">
                             <span>D(%)
                               <md-tooltip class="tool-box-header">Delivered</md-tooltip>
@@ -1607,6 +1621,9 @@
                           <td style="text-align: center;">{{tdtemplate.sent_date | date : "dd-MM-yyyy"}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_users}}<span
                               ng-if="tdtemplate.Unique_send">({{tdtemplate.Unique_send}})</span></td>
+                          <td style="text-align: center;">{{tdtemplate.total_sent}}<span
+                            ng-if="tdtemplate.sent_percentage">({{tdtemplate.sent_percentage}})</span></td>
+                        
                           <td style="text-align: center;">{{tdtemplate.total_delivered}}<span
                               ng-if="tdtemplate.delivered_percentage">({{tdtemplate.delivered_percentage}})</span></td>
                           <td style="text-align: center;">{{tdtemplate.total_read}}<span
