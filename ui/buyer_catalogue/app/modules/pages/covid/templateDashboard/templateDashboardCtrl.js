@@ -61,7 +61,7 @@
       $scope.APIBaseUrl = Config.APIBaseUrl;
       $scope.UserComment = {};
       $scope.CallModel = {};
-      $scope.interveneDashboard = {show:false,data:''};
+      $scope.interveneDashboard = { show: false, data: '' };
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
         { id: 2, name: 'High' },
@@ -6477,7 +6477,7 @@
 
       // Template Dashboard start
       $scope.getTransactionalTemplate = function (value, s_date = '', e_date = '') {
-        $scope.interveneDashboard = {show:false,data:''};
+        $scope.interveneDashboard = { show: false, data: '' };
         $scope.TemplateListSummary()
         $scope.changeStartDate();
         $scope.changeEndDate();
@@ -6523,13 +6523,19 @@
         }
         let param = {
           template_id: value,
-          start_date: s_date,
-          end_date: e_date,
+          // start_date : commonDataShare.formatDateToString(s_date),
+          // end_date : commonDataShare.formatDateToString(e_date),
           next_page: 1
         }
-        if (s_date || e_date) {
-          param.start_date = ''
-          param.end_date = ''
+        if (!s_date || s_date == 'NaN/NaN/NaN' || s_date.length <= 1) {
+          param.start_date = '';
+        } else {
+          param.start_date = commonDataShare.formatDateToString(s_date);
+        }
+        if (!e_date || e_date == 'NaN/NaN/NaN' || e_date.length <= 1) {
+          param.end_date = '';
+        } else {
+          param.end_date = commonDataShare.formatDateToString(e_date);
         }
         if (page) {
           param.next_page = page;
@@ -6549,8 +6555,10 @@
         templateDashboardService.transactionalTemplateDatewiseDetail(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateDataDetail = response.data.data.data;
-            $scope.buttonNamelist = response.data.data.button_list;
-            console.log($scope.buttonNamelist,"$scope.buttonNamelist")
+            $scope.buttonNamelist = response.data?.data?.button_list;
+            if (!$scope.buttonNamelist) {
+              $scope.buttonNamelist = [{ connotation: "POSITIVE", name: "Null" }, { connotation: "NEUTRAL", name: "Null" }, { connotation: "NEGATIVE", name: "Null" }]
+            }
             $scope.totalCount = response.data.data.total_count;
           }).catch(function onError(response) {
             console.log(response);
@@ -6651,7 +6659,7 @@
           "phone_number": $scope.viewComments.phone_number,
           "template_date": $scope.viewComments.template_date,
           "comment": $scope.UserComment.comment,
-          'sent_date' : $scope.user_view.sent_date
+          'sent_date': $scope.user_view.sent_date
         }
         templateDashboardService.UpdateAddComments(addComment)
           .then(function onSuccess(response) {
@@ -7001,8 +7009,8 @@
       }
       $scope.templateDetail();
 
-      $scope.showHideIntervene =function(data){
-        $scope.interveneDashboard = {show:!$scope.interveneDashboard.show,data:data};
+      $scope.showHideIntervene = function (data) {
+        $scope.interveneDashboard = { show: !$scope.interveneDashboard.show, data: data };
       }
       // Template Dashboard end
 
