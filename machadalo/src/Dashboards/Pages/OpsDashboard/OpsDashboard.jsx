@@ -220,6 +220,7 @@ import 'datatables.net-responsive';
 // import 'datatables.net-plugins/sorting/anti-the.mjs';
 import DataTable from 'datatables.net-dt';
 import Select from 'react-select';
+import { Modal, Button } from 'react-bootstrap';
 
 import {
   BsSortDown,
@@ -232,6 +233,7 @@ import {
 import './opsdashboard.css';
 import { Form } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
+import RequirementEditModal from './RequirementEditModal';
 
 const columnsList = [
   { title: 'Current Partner' },
@@ -254,6 +256,7 @@ const columnsList = [
 export default function OpsDashboard(props) {
   // $.DataTable = require('datatables.net');
   const [plusIcon, setPlusIcon] = useState(false);
+  const [requirementModal ,setRequirementModal] = useState({show:true})
   // require("datatables.net-responsive")(window);
   const tableRef = useRef();
   // console.log(tableRef)
@@ -302,6 +305,12 @@ export default function OpsDashboard(props) {
       table.destroy();
     };
   }, []);
+
+  const openCloseModal = () => {
+    alert(2)
+    console.log("2222")
+    setRequirementModal({ show: true });
+  }
   return (
     <>
       <div>
@@ -333,8 +342,11 @@ export default function OpsDashboard(props) {
           <tbody>
             <tr>
               <td>JSW Paints Private Limited</td>
-              <td>NA Reason:not given</td>
-              <td>Asian Paints Ltd ,JSW Paints Private Limited</td>
+              <td onClick={(e)=>{openCloseModal(e)}}>NA Reason:not given test</td>
+              <td>
+                <span>Asian Paints Ltd </span><br></br>
+                <span>JSW Paints Private Limited</span>
+                </td>
               <td>6-9 months</td>
               <td>More Than % years</td>
               <td>as soon as possible</td>
@@ -362,7 +374,7 @@ export default function OpsDashboard(props) {
                 <span>
                   <BsCheckLg />
                 </span>
-                <span>
+                <span onClick={(e)=>{openCloseModal(e)}}> TEST
                   <BsPencilSquare />
                 </span>
                 <span>
@@ -373,7 +385,11 @@ export default function OpsDashboard(props) {
             <tr>
               <td>JSW Paints Private Limited</td>
               <td>NA Reason:not given</td>
-              <td>Asian Paints Ltd ,JSW Paints Private Limited</td>
+              <td>
+                <span>Asian Paints Ltd</span>
+                <br></br>
+                <span>JSW Paints Private Limited</span>
+              </td>
               <td>6-9 months</td>
               <td>More Than % years</td>
               <td>as soon as possible</td>
@@ -401,7 +417,7 @@ export default function OpsDashboard(props) {
                   <BsCheckLg />
                 </span>
                 <span>
-                  <BsPencilSquare />
+                  <BsPencilSquare onClick={(e)=>{openCloseModal(e)}}/>
                 </span>
                 <span>
                   <BsFillXCircleFill />
@@ -411,7 +427,9 @@ export default function OpsDashboard(props) {
             <tr>
               <td>Berger Paints Private Limited</td>
               <td>NA Reason:not given</td>
-              <td>Berger Paints Ltd ,ASIAN Paints Private Limited</td>
+              <td><span>Berger Paints Ltd </span><br>
+              </br>
+              <span>ASIAN Paints Private Limited</span></td>
               <td>6-9 months</td>
               <td>More Than % years</td>
               <td>as soon as possible</td>
@@ -439,7 +457,7 @@ export default function OpsDashboard(props) {
                   <BsCheckLg />
                 </span>
                 <span>
-                  <BsPencilSquare />
+                  <BsPencilSquare onClick={(e)=>{openCloseModal(e)}}/>
                 </span>
                 <span>
                   <BsFillXCircleFill />
@@ -449,6 +467,21 @@ export default function OpsDashboard(props) {
           </tbody>
         </table>
       </div>
+
+      <Modal
+        show={requirementModal.show}
+        onHide={(e) => {
+          setRequirementModal({ show: false });
+        }}
+        className=""
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>EDIT</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <RequirementEditModal />
+        </Modal.Body>
+      </Modal>
     </>
   );
 }
