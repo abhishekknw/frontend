@@ -33,6 +33,8 @@
       $scope.passwordError = constants.password_error;
       $scope.userInfo = $rootScope.globals.userInfo;
       $scope.dateRangeModel = {};
+      $scope.dateWiseRangeModel = {};
+      $scope.dateWisePickerOption = {}
       $scope.selectedVendor = {};
       $scope.vendorsData = {};
       $scope.emailModel = {};
@@ -6510,6 +6512,15 @@
       $scope.changeEndDate = function () {
         if ($scope.changeEndDate > $scope.changeStartDate)
           $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
+      }
+
+      $scope.dateWiseChangeStartDate =function(){
+        $scope.dateWiseRangeModel.start_date =  $scope.dateWiseRangeModel.start_dates;
+        $scope.dateWisePickerOption.minDate = $scope.dateWiseRangeModel.start_date;
+      }
+      $scope.dateWiseChangeEndDate = function (){
+        // if ($scope.changeEndDate > $scope.changeStartDate)
+        $scope.dateWiseRangeModel.end_date = $scope.dateWiseRangeModel.end_dates;
       }
 
       $scope.getTransactionalTemplateViewDetail = function (value, page, name, s_date, e_date) {
