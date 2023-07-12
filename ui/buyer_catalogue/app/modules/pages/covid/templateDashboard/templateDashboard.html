@@ -1370,9 +1370,9 @@
                       <div class="col-md-12" print-remove style="margin-top: 10px; margin-bottom: 10px;">
                         <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
                           <input type="text" style="color:#000000; margin-bottom: 0px;" class="field"
-                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeStartDate()"
+                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="dateWiseChangeStartDate()"
                             ng-model="dateWiseRangeModel.start_dates" is-open="isDatepickerOpen"
-                            datepicker-options="dateWisePickerOption" ng-required="true" close-text="Close"
+                            datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
                             alt-input-formats="altInputFormats">
                           <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"
                             class="pl-2 smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
@@ -1381,7 +1381,7 @@
                         </div>
                         <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
                           <input type="text" style="color:#000000; margin-bottom: 0px;" class="field"
-                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeEndDate()"
+                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="dateWiseChangeEndDate()"
                             ng-model="dateWiseRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="dateWisePickerOption"
                             ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
                           <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"

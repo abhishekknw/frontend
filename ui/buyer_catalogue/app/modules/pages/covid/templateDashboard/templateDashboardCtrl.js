@@ -6514,7 +6514,7 @@
           $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
       }
 
-      $scope.dateWiseChangeStartDate =function(){
+      $scope.dateWiseChangeStartDate = function(){
         $scope.dateWiseRangeModel.start_date =  $scope.dateWiseRangeModel.start_dates;
         $scope.dateWisePickerOption.minDate = $scope.dateWiseRangeModel.start_date;
       }
@@ -6525,8 +6525,8 @@
 
       $scope.getTransactionalTemplateViewDetail = function (value, page, name, s_date, e_date) {
         $scope.viewTemplateSummary();
-        $scope.changeStartDate();
-        $scope.changeEndDate();
+        // $scope.changeStartDate();
+        // $scope.changeEndDate();
         getCallStatusList();
         $scope.view_template = {
           template_id: value,
