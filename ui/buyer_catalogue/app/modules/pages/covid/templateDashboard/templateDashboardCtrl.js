@@ -6490,9 +6490,19 @@
         if (!value) {
           param.search = ""
         }
-        if (s_date || e_date) {
-          param.start_date = ''
-          param.end_date = ''
+        // if (s_date || e_date) {
+        //   param.start_date = ''
+        //   param.end_date = ''
+        // }
+        if (!s_date || s_date == 'NaN/NaN/NaN' || s_date.length <= 1) {
+          param.start_date = '';
+        } else {
+          param.start_date = commonDataShare.formatDateToString(s_date);
+        }
+        if (!e_date || e_date == 'NaN/NaN/NaN' || e_date.length <= 1) {
+          param.end_date = '';
+        } else {
+          param.end_date = commonDataShare.formatDateToString(e_date);
         }
         templateDashboardService.transactionalTemplateSummaryMca(param)
           .then(function onSuccess(response) {
@@ -6515,11 +6525,11 @@
           $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
       }
 
-      $scope.dateWiseChangeStartDate = function(){
-        $scope.dateWiseRangeModel.start_date =  $scope.dateWiseRangeModel.start_dates;
+      $scope.dateWiseChangeStartDate = function () {
+        $scope.dateWiseRangeModel.start_date = $scope.dateWiseRangeModel.start_dates;
         $scope.dateWisePickerOption.minDate = $scope.dateWiseRangeModel.start_date;
       }
-      $scope.dateWiseChangeEndDate = function (){
+      $scope.dateWiseChangeEndDate = function () {
         // if ($scope.changeEndDate > $scope.changeStartDate)
         $scope.dateWiseRangeModel.end_date = $scope.dateWiseRangeModel.end_dates;
       }
