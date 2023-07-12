@@ -20,7 +20,6 @@ angular.module('catalogueApp')
       }
      
       DashboardService.transactionalTemplateDatewiseDetail = function (param){
-        console.log(param,"param")
         let url="v0/ui/mca-bot/template-date-wise-summary/?template_id="+ param.template_id+ "&start_date="+param.start_date+"&end_date="+param.end_date+"&next_page=" + param.next_page;
       return machadaloHttp.get( url);
 
