@@ -6483,6 +6483,7 @@
         $scope.TemplateListSummary()
         $scope.changeStartDate();
         $scope.changeEndDate();
+
         let param = {
           search: value
         }
@@ -6534,8 +6535,6 @@
         }
         let param = {
           template_id: value,
-          // start_date : commonDataShare.formatDateToString(s_date),
-          // end_date : commonDataShare.formatDateToString(e_date),
           next_page: 1
         }
         if (!s_date || s_date == 'NaN/NaN/NaN' || s_date.length <= 1) {

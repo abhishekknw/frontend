@@ -1223,11 +1223,6 @@
                       <br>
                     </div>
                   </div>
-                  <!-- <input type="text" class="form-control " placeholder="search"
-                    ng-change="getTransactionalTemplate(TransactionalTemplateSearch)"
-                    ng-model="TransactionalTemplateSearch">
-                  <br> -->
-                  <!-- <div class="table-responsive"  ng-change="getTransactionalTemplate()"> -->
                   <div class="table-responsive" style="overflow-y: scroll;">
                     <table class="table">
 
@@ -1319,7 +1314,7 @@
                           <td style="text-align: center;">{{ttemplate.total_negative}}<span
                               ng-if="ttemplate.b3_percentage">({{ttemplate.b3_percentage}})</span></td>
                           <td style="text-align: center;"><button
-                              ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current,ttemplate.template_name,dateRangeModel.start_dates=' ',dateRangeModel.end_dates=' ')"
+                              ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current,ttemplate.template_name,dateWiseRangeModel.start_dates=' ',dateWiseRangeModel.end_dates=' ')"
                               data-toggle="modal" type="button" class="btn btn-danger">View
                             </button>
                           </td>
