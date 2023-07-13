@@ -342,7 +342,7 @@ export default function OpsDashboard(props) {
           <tbody>
             <tr>
               <td>JSW Paints Private Limited</td>
-              <td onClick={(e)=>{openCloseModal(e)}}>NA Reason:not given test</td>
+              <td>NA Reason:not given test</td>
               <td>
                 <span>Asian Paints Ltd </span><br></br>
                 <span>JSW Paints Private Limited</span>
@@ -352,10 +352,10 @@ export default function OpsDashboard(props) {
               <td>as soon as possible</td>
               <td>Raw Lead</td>
               <td>
-                <BsFillChatDotsFill />
+                <BsFillChatDotsFill  size={20} className='icons'/>
               </td>
               <td>
-                <BsFillChatDotsFill />
+                <BsFillChatDotsFill  size={20} className='icons'/>
               </td>
               <td>Name: shahid Number: 7006501835</td>
               <td>Bharti AXA Life Insurence company</td>
@@ -372,13 +372,13 @@ export default function OpsDashboard(props) {
               </td>
               <td>
                 <span>
-                  <BsCheckLg />
-                </span>
-                <span onClick={(e)=>{openCloseModal(e)}}> TEST
-                  <BsPencilSquare />
+                  <BsCheckLg  size={20} className='icons'/>
                 </span>
                 <span>
-                  <BsFillXCircleFill />
+                  <BsPencilSquare className='icons'  size={20} onClick={(e)=>{openCloseModal(e)}}/>
+                </span>
+                <span>
+                  <BsFillXCircleFill className='icons'  size={20}/>
                 </span>
               </td>
             </tr>
@@ -395,10 +395,10 @@ export default function OpsDashboard(props) {
               <td>as soon as possible</td>
               <td>Raw Lead</td>
               <td>
-                <BsFillChatDotsFill />
+                <BsFillChatDotsFill className='icons'  size={20}/>
               </td>
               <td>
-                <BsFillChatDotsFill />
+                <BsFillChatDotsFill className='icons'  size={20}/>
               </td>
               <td>Name: shahid Number: 7006501835</td>
               <td>Bharti AXA Life Insurence company</td>
@@ -414,53 +414,13 @@ export default function OpsDashboard(props) {
               </td>
               <td>
                 <span>
-                  <BsCheckLg />
+                  <BsCheckLg className='icons'  size={20}/>
                 </span>
                 <span>
-                  <BsPencilSquare onClick={(e)=>{openCloseModal(e)}}/>
+                  <BsPencilSquare className='icons'  size={20} onClick={(e)=>{openCloseModal(e)}}/>
                 </span>
                 <span>
-                  <BsFillXCircleFill />
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td>Berger Paints Private Limited</td>
-              <td>NA Reason:not given</td>
-              <td><span>Berger Paints Ltd </span><br>
-              </br>
-              <span>ASIAN Paints Private Limited</span></td>
-              <td>6-9 months</td>
-              <td>More Than % years</td>
-              <td>as soon as possible</td>
-              <td>Raw Lead</td>
-              <td>
-                <BsFillChatDotsFill />
-              </td>
-              <td>
-                <BsFillChatDotsFill />
-              </td>
-              <td>Name: shahid Number: 7006501835</td>
-              <td>Bharti AXA TESTing Insurence company</td>
-              <td>Bharat ViKas Group User</td>
-              <td>No Requirement + Feedback + Subcription</td>
-              <td>5000</td>
-              <td>
-                <span>Submitted: Jun 23, 2022 11:31:31 AM </span>
-                <br></br>
-                <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
-                <br></br>
-                <span> Ops Verify Name:AMAN PATIDAR</span>
-              </td>
-              <td>
-                <span>
-                  <BsCheckLg />
-                </span>
-                <span>
-                  <BsPencilSquare onClick={(e)=>{openCloseModal(e)}}/>
-                </span>
-                <span>
-                  <BsFillXCircleFill />
+                  <BsFillXCircleFill className='icons'  size={20} />
                 </span>
               </td>
             </tr>
