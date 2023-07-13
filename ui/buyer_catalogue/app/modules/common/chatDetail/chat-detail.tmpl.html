@@ -239,7 +239,7 @@
     </button>
   </div>
   <div class="aisensy-intervene-btn" ng-if="!messageBox.show"
-      style="margin-top:5px;" align='center'>
+      style="margin-top:5px;" align='center' id="scrollToIntervene">
       <button type="button" ng-click="writeMessage(userChatData,messageBox.show)" class="btn btn-primary">
         <!-- {{!messageBox.show?'Intervene':'Resolve'}} -->
         Intervene
@@ -256,7 +256,6 @@
 
         <h4 class="modal-title  theme-color" ng-if="!submitLeadType" style=" font-size: 21px;">
           Select Template you want to share</h4>
-        <hr>
 
         <div class="input-wrapper search-input-wrapper"
           style=" margin: 10px; background-color: #575758;top:21px;z-index: 10;">

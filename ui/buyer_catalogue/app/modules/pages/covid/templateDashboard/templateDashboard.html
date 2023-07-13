@@ -48,6 +48,9 @@
     padding-left: 8px;
     margin-top: 10px;
   }
+  .templateUserSummary select.form-control {
+    max-width: 200px;
+}
 
   @media screen and (max-width :500px) {
     .dropdowns {
@@ -1581,19 +1584,19 @@
                           </th>
                           <th style="padding:10px" ng-click="Sort('total_positive')">
                             <span>B1(%)
-                              <md-tooltip class="tool-box-header"><b>Positive:-</b>Button Name B1</md-tooltip>
+                              <md-tooltip class="tool-box-header"><b>{{buttonNamelist[0].connotation}}:-</b>{{buttonNamelist[0].name}}</md-tooltip>
                             </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px" ng-click="Sort('total_neutral')">
                             <span>B2(%)
-                              <md-tooltip class="tool-box-header"><b>Neutral:-</b>Button Name B2</md-tooltip>
+                              <md-tooltip class="tool-box-header"><b>{{buttonNamelist[1].connotation}}:-</b>{{buttonNamelist[1].name}}</md-tooltip>
                             </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px" ng-click="Sort('total_negative')">
                             <span>B3(%)
-                              <md-tooltip class="tool-box-header"><b>Negative:-</b>Button Name B3</md-tooltip>
+                              <md-tooltip class="tool-box-header"><b>{{buttonNamelist[2].connotation}}:-</b>{{buttonNamelist[2].name}}</md-tooltip>
                             </span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
@@ -1671,19 +1674,20 @@
                       <h4><b>Template Name: </b>{{user_view.template_name}}</h4>
                       <h5><b>Sent Date: </b>{{user_view.sent_date | date : "dd-MM-yyyy"}}</h5>
                     </div>
-                    <div style="margin: 10px;text-align: right;">
-                      <button class="btn btn-danger"
-                        ng-click="backToDatewiseData(user_view.template_id,1,user_view.template_name,s_date='', e_date='')">Back
-                        To Previous</button>
+                    <div class="d-flex f-div justify-content-between">
+                      <div>
+                        <input type="text" class="form-control" placeholder="search" ng-model="userSearch" style="margin: 10px;"
+                          ng-change="getTransactionalTemplateUserDetail(user_view.template_id,user_view.sent_date,pagination.current,user_view.template_name,userSearch)">
+                      </div>
+                      <div style="margin: 10px;text-align: right;">
+                        <button class="btn btn-danger"
+                          ng-click="backToDatewiseData(user_view.template_id,1,user_view.template_name,s_date='', e_date='')">Back
+                          To Previous</button>
+                      </div>
                     </div>
                   </div>
-
-                  <input type="text" class="form-control " placeholder="search" ng-model="userSearch"
-                    ng-change="getTransactionalTemplateUserDetail(user_view.template_id,user_view.sent_date,pagination.current,user_view.template_name,userSearch)">
-                  <br>
                   <div class="table-responsive" style="width: 100%;overflow-y: scroll;" ng-model="userSearch"
                     ng-change="getTransactionalTemplateViewDetail()">
-
                     <table class="table templateUserSummary">
                       <thead>
                         <tr>
@@ -1692,18 +1696,15 @@
                           <th style="padding:10px">Whatsapp N.</th>
                           <th style="padding:10px">Pho. No.</th>
                           <th style="padding:10px" ng-click="SortFromBackend('total_positive')">
-                            <span>B1<md-tooltip class="tool-box-header"><b>Positive:-</b>Button 1
-                                Name</md-tooltip></span>
+                            <span>B1<md-tooltip class="tool-box-header"><b>{{buttonNamelist[0].connotation}}:-</b>{{buttonNamelist[0].name}}</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px" ng-click="SortFromBackend('total_neutral')">
-                            <span>B2<md-tooltip class="tool-box-header"><b>Neutral:-</b>Button 2
-                                Name</md-tooltip></span>
+                            <span>B2<md-tooltip class="tool-box-header"><b>{{buttonNamelist[1].connotation}}:-</b>{{buttonNamelist[1].name}}</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px" ng-click="SortFromBackend('total_negative')">
-                            <span>B3<md-tooltip class="tool-box-header"><b>Negative:-</b>Button 2
-                                Name</md-tooltip></span>
+                            <span>B3<md-tooltip class="tool-box-header"><b>{{buttonNamelist[2].connotation}}:-</b>{{buttonNamelist[2].name}}</md-tooltip></span>
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
                           <th style="padding:10px">Status
@@ -1758,9 +1759,11 @@
                           </td>
                           <td style="text-align: center;">
                             <i class='fas fa-phone-alt' style="font-size:20px;color: #000000;"
-                              ng-click="CallTemplate(tmp)"><md-tooltip class="tool-box-header">Call,Comment & Status</md-tooltip></i>
+                              ng-click="CallTemplate(tmp)"><md-tooltip class="tool-box-header">Call,Comment &
+                                Status</md-tooltip></i>
                             <i class='far fa-comments' style="font-size:20px;color: #000000;"
-                              ng-click="showHideIntervene(tmp)"><md-tooltip class="tool-box-header">Intervene</md-tooltip>
+                              ng-click="showHideIntervene(tmp)"><md-tooltip
+                                class="tool-box-header">Intervene</md-tooltip>
                             </i>
                           </td>
                         </tr>
@@ -2026,7 +2029,6 @@
               </div>
               <!-- Intervene Chat -->
               <div ng-if="interveneDashboard.show">
-                <!-- <button class="btn btn-danger" ng-click="showHideIntervene('')">Back To Previous</button> -->
                 <chat-detail number={{interveneDashboard.data.phone_number}}></chat-detail>
               </div>
               <!-- END Intervene Chat -->
