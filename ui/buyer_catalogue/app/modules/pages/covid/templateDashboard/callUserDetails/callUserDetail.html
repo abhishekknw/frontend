@@ -1,29 +1,106 @@
+<!-- <link rel="stylesheet" href="modules/common/chatDetail/chat-detail.tmpl.css"> -->
 
-<link rel="stylesheet" href="modules/common/chatDetail/chat-detail.tmpl.css">
-
-<div class="btn smallBtn"  data-target="#onCallUserDetails" data-toggle="modal">New</div>
+<div class="btn smallBtn" data-target="#onCallUserDetails" data-toggle="modal">New</div>
 
 <div id="onCallUserDetails" class="modal fade">
-    <div class="modal-dialog" style="width:600px">
-      <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" ng-click="closeModelAmmenties()" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">USER DETAILS</h4>
-              <div class="modal-body">
-                    <form name="onCallUserDetails" ng-submit="onCallUserDetails()">
-                      <div class="col-md-12">
-                            <label>Name <sup>*</sup></label>
-                            <input type="text" class="form-control" placeholder="Name" ng-model="formData.name" name="name" required="true">
-                      </div>
-                      <div class="col-md-12">
-                            <label>Code <sup>*</sup></label>
-                            <input type="text" class="form-control" name="code" placeholder="Code" ng-model="formData.code" onkeyup="this.value = this.value.toUpperCase();" required="true" maxlength="2">
-                      </div>
-                      <button type="submit" class="smallBtn">Save</button>
-                      <div class="btn smallBtn" ng-click="closeModelAmmenties()">Cancel</div>
-                    </form>
-              </div>
+      <div class="modal-dialog" style="width:600px">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">USER DETAILS</h4>
+                        <div class="modal-body">
+                              <div class="form-group">
+                                    <label> Select Sector</label>
+                                    <select class="form-control" name="sector" ng-click="getFormDataBySector()" required>
+                                          <option value="">Painting</option>
+                                          <option value="">Elevator</option>
+                                          <option value="">Survay</option>
+                                    </select>
+                              </div>
+                              <form name="onCallUserDetails" ng-submit="onCallUserDetails()">
+                                    <div class="col-md-4">
+                                          <label>Current Partner</label>
+                                          <select class="form-control" name="sector" required>
+                                                <option value="">Kriti Test Company</option>
+                                                <option value="">Asian Paints</option>
+                                                <option value="">Berger Paints</option>
+                                          </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <label>Feedback</label>
+                                          <input type="text" class="form-control" name="code" placeholder="Feedback"
+                                                ng-model="formData.code"
+                                                onkeyup="this.value = this.value.toUpperCase();" required="true"
+                                                maxlength="2">
+                                    </div>
+                                    <div class="col-md-4">
+                                          <label>Preffered Partner</label>
+                                          <div ng-dropdown-multiselect="" options="example14data"
+                                                selected-model="example14model" extra-settings="example14settings">
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <label>L4</label>
+                                          <select class="form-control" name="sector" required>
+                                                <option value="">0-3 months</option>
+                                                <option value="">0-6 months</option>
+                                                <option value="">6-9 months</option>
+                                          </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <label>L5</label>
+                                          <select class="form-control" name="sector" required>
+                                                <option value="">0-3 months</option>
+                                                <option value="">0-6 months</option>
+                                                <option value="">6-9 months</option>
+                                          </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <label>L6</label>
+                                          <select class="form-control" name="sector" required>
+                                                <option value="">0-3 months</option>
+                                                <option value="">0-6 months</option>
+                                                <option value="">6-9 months</option>
+                                          </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <label>Comment</label>
+                                          <textarea class="form-control" ng-model="templateData.triger_message"
+                                                placeholder="Comments"></textarea>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                          <label>Lead Status</label>
+                                          <select class="form-control" name="sector" required>
+                                                <option value="">RNR</option>
+                                                <option value="">Call Veified</option>
+                                                <option value="">DND</option>
+                                          </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <label>Submitted Date&Time</label>
+                                          <span>Jul 11, 2023 11:10:39 AM</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <label>Total Leads Submitted</label>
+                                          <span>20</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <label>Total Entity Submitted</label>
+                                          <span>12</span>
+                                    </div>
+                                    <!-- <button type="submit" class="smallBtn">Save</button> -->
+                                    <!-- <div class="btn smallBtn"  data-dismiss="modal" aria-hidden="true">Cancel</div> -->
+                              </form>
+                              <button type="button" class="btn btn-danger">Edit</button>
+                              <button type="button" class="btn btn-danger">FeedBack</button>
+                              <button type="button" class="btn btn-danger">Save</button>
+                              <button type="button" class="btn btn-danger">Intervene</button>
+                              <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger">Submit</button>
+                              </div>
+                        </div>
+                  </div>
             </div>
       </div>
-    </div>
 </div>
