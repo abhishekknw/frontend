@@ -28,11 +28,11 @@ angular
           }
 
           $scope.showLeadDetails = function (){
-            $scope.showHideObj = {table:false,form:true};
+            $scope.showHideObj = {table:true,form:true};
           }
-          $scope.backToTable = function () {
-            $scope.showHideObj = {table:true,form:false};
-          }
+          // $scope.backToTable = function () {
+          //   $scope.showHideObj = {table:true,form:false};
+          // }
         }
       }
     })
