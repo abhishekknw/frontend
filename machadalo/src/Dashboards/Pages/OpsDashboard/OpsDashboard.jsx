@@ -256,11 +256,17 @@ const columnsList = [
 export default function OpsDashboard(props) {
   // $.DataTable = require('datatables.net');
   const [plusIcon, setPlusIcon] = useState(false);
-  const [requirementModal ,setRequirementModal] = useState({show:true})
+  const [requirementModal, setRequirementModal] = useState({ show: true });
   // require("datatables.net-responsive")(window);
   const tableRef = useRef();
-  // console.log(tableRef)
   const tableName = 'table1';
+
+  $(function() {
+    $('#btn').click(function() {
+      alert(2343)
+    });
+  });
+
   useEffect(() => {
     function handleResize() {
       let getClass = document.getElementById('table1');
@@ -307,10 +313,10 @@ export default function OpsDashboard(props) {
   }, []);
 
   const openCloseModal = () => {
-    alert(2)
-    console.log("2222")
+    alert(2);
+    console.log('2222');
     setRequirementModal({ show: true });
-  }
+  };
   return (
     <>
       <div>
@@ -344,18 +350,19 @@ export default function OpsDashboard(props) {
               <td>JSW Paints Private Limited</td>
               <td>NA Reason:not given test</td>
               <td>
-                <span>Asian Paints Ltd </span><br></br>
+                <span>Asian Paints Ltd </span>
+                <br></br>
                 <span>JSW Paints Private Limited</span>
-                </td>
+              </td>
               <td>6-9 months</td>
               <td>More Than % years</td>
               <td>as soon as possible</td>
               <td>Raw Lead</td>
               <td>
-                <BsFillChatDotsFill  size={20} className='icons'/>
+                <BsFillChatDotsFill size={20} className="icons" />
               </td>
               <td>
-                <BsFillChatDotsFill  size={20} className='icons'/>
+                <BsFillChatDotsFill size={20} className="icons" />
               </td>
               <td>Name: shahid Number: 7006501835</td>
               <td>Bharti AXA Life Insurence company</td>
@@ -372,13 +379,20 @@ export default function OpsDashboard(props) {
               </td>
               <td>
                 <span>
-                  <BsCheckLg  size={20} className='icons'/>
+                  <BsCheckLg size={20} className="icons" />
                 </span>
                 <span>
-                  <BsPencilSquare className='icons'  size={20} onClick={(e)=>{openCloseModal(e)}}/>
+                  <BsPencilSquare
+                    className="icons"
+                    id="btn"
+                    size={20}
+                    // onClick={(e) => {
+                    //   openCloseModal(e);
+                    // }}
+                  />
                 </span>
                 <span>
-                  <BsFillXCircleFill className='icons'  size={20}/>
+                  <BsFillXCircleFill className="icons" size={20} />
                 </span>
               </td>
             </tr>
@@ -395,10 +409,10 @@ export default function OpsDashboard(props) {
               <td>as soon as possible</td>
               <td>Raw Lead</td>
               <td>
-                <BsFillChatDotsFill className='icons'  size={20}/>
+                <BsFillChatDotsFill className="icons" size={20} />
               </td>
               <td>
-                <BsFillChatDotsFill className='icons'  size={20}/>
+                <BsFillChatDotsFill className="icons" size={20} />
               </td>
               <td>Name: shahid Number: 7006501835</td>
               <td>Bharti AXA Life Insurence company</td>
@@ -414,13 +428,20 @@ export default function OpsDashboard(props) {
               </td>
               <td>
                 <span>
-                  <BsCheckLg className='icons'  size={20}/>
+                  <BsCheckLg className="icons" size={20} />
                 </span>
                 <span>
-                  <BsPencilSquare className='icons'  size={20} onClick={(e)=>{openCloseModal(e)}}/>
+                  <BsPencilSquare
+                    className="icons"
+                    id="btn"
+                    size={20}
+                    // onClick={(e) => {
+                    //   openCloseModal(e);
+                    // }}
+                  />
                 </span>
                 <span>
-                  <BsFillXCircleFill className='icons'  size={20} />
+                  <BsFillXCircleFill className="icons" size={20} />
                 </span>
               </td>
             </tr>
