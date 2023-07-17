@@ -351,7 +351,7 @@ export default function OpsDashboard(props) {
               <td>NA Reason:not given test</td>
               <td>
                 <span>Asian Paints Ltd </span>
-                <br></br>
+                <br/>
                 <span>JSW Paints Private Limited</span>
               </td>
               <td>6-9 months</td>
@@ -364,7 +364,7 @@ export default function OpsDashboard(props) {
               <td>
                 <BsFillChatDotsFill size={20} className="icons" />
               </td>
-              <td>Name: shahid Number: 7006501835</td>
+              <td className='text-left'><b>Name:</b> shahid <br/><b>Number:</b> 7006501835</td>
               <td>Bharti AXA Life Insurence company</td>
               <td>Bharat ViKas Group User</td>
               <td>No Requirement + Feedback + Subcription</td>
@@ -420,11 +420,13 @@ export default function OpsDashboard(props) {
               <td>No Requirement + Feedback + Subcription</td>
               <td>5000</td>
               <td>
-                <span>Submitted: Jun 23, 2022 11:31:31 AM </span>
+                <span className='span-tag'>
+                <span>Submitted: Jun 23, 2022 11:31:31 AM6854654 </span>
                 <br></br>
                 <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
                 <br></br>
                 <span> Ops Verify Name:AMAN PATIDAR</span>
+                </span>
               </td>
               <td>
                 <span>
