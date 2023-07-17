@@ -1236,6 +1236,12 @@
                           <th style="padding:10px" ng-click="Sort('days_count')">Days sent
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
+                          <th style="padding:10px" ng-click="Sort('sent_date')">
+                            <span>Date
+                              <md-tooltip class="tool-box-header">Last Sent Date</md-tooltip>
+                            </span>
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px" ng-click="Sort('total_users')">
                             <span>Sent(Unique)
                               <md-tooltip class="tool-box-header">Sent By Machadalo</md-tooltip>
@@ -1296,6 +1302,7 @@
                           <!-- <td style="text-align: center;">{{ttemplate.template_id}}</td> -->
                           <td style="text-align: center; text-transform: capitalize;">{{ttemplate.template_name}}</td>
                           <td style="text-align: center;">{{ttemplate.days_count}}</td>
+                          <td style="text-align: center;">{{ttemplate.sent_date | date : "dd-MM-yyyy"}}</td>
                           <td style="text-align: center;">{{ttemplate.total_users}}<span
                               ng-if="ttemplate.Unique_send">({{ttemplate.Unique_send}})</span></td>
                           <td style="text-align: center;">{{ttemplate.total_sent}}<span
@@ -1633,7 +1640,7 @@
                                 class="tool-box-header">Intervene
                               </md-tooltip>
                             </i>
-                            <call-user-detail-temp></call-user-detail-temp>
+                            <!-- <call-user-detail-temp></call-user-detail-temp> -->
                           </td>
                         </tr>
                       </tbody>
