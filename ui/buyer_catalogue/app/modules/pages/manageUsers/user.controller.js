@@ -13,8 +13,8 @@ angular.module('machadaloPages')
     }
   })
   .controller('userCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'userService', 'constants', '$timeout', 'cfpLoadingBar', 'commonDataShare',
-      function ($scope, $rootScope, $window, $location, userService, constants, $timeout, cfpLoadingBar, commonDataShare) {
+    ['$scope', '$rootScope', '$window', '$location', 'userService', 'constants', '$timeout', 'cfpLoadingBar', 'commonDataShare', 'AuthService',
+      function ($scope, $rootScope, $window, $location, userService, constants, $timeout, cfpLoadingBar, commonDataShare, AuthService) {
         //  console.log("$location", $location.path());
 
         // console.log("pathName", pathName);
@@ -106,51 +106,51 @@ angular.module('machadaloPages')
             console.log("error occured");
           });
 
-       
-            userService.getSector()
-            .then(function onSuccess(response) {
-              $scope.businessTypeData = response.data;
-              for (let x in $scope.businessTypeData){
-                $scope.businessTypeData[x].label = $scope.businessTypeData[x].business_type
-              }
-            })
-            $scope.selected_business_type = { buttonDefaultText: 'Select Business Type' };
-            $scope.selected_business_sub_type = { buttonDefaultText: 'Select Business Sub Type' };
 
-            $scope.selectedbusinessType = []; 
-            $scope.businessSubTypeData = [];
-            $scope.selectedbusinessSubType = [];
-              $scope.events = {
-                 onItemSelect: function (item) {
-                  if(item.subtypes && item.subtypes.length > 0){
-                    for(let i in item.subtypes){
-                      $scope.businessSubTypeData.push({
-                        businessTypeId:item.subtypes[i].business_type,
-                        id:item.subtypes[i].id,
-                        label:item.subtypes[i].business_sub_type,
-                      })
-                    }
-                  }
-                },
-                onItemDeselect: function(items) {
-                  for(let j in $scope.businessSubTypeData){
-                    if($scope.businessSubTypeData[j].businessTypeId === items.id){
-                     delete $scope.businessSubTypeData[j];
-                    }
-                  }
-                }
+        userService.getSector()
+          .then(function onSuccess(response) {
+            $scope.businessTypeData = response.data;
+            for (let x in $scope.businessTypeData) {
+              $scope.businessTypeData[x].label = $scope.businessTypeData[x].business_type
+            }
+          })
+        $scope.selected_business_type = { buttonDefaultText: 'Select Business Type' };
+        $scope.selected_business_sub_type = { buttonDefaultText: 'Select Business Sub Type' };
+
+        $scope.selectedbusinessType = [];
+        $scope.businessSubTypeData = [];
+        $scope.selectedbusinessSubType = [];
+        $scope.events = {
+          onItemSelect: function (item) {
+            if (item.subtypes && item.subtypes.length > 0) {
+              for (let i in item.subtypes) {
+                $scope.businessSubTypeData.push({
+                  businessTypeId: item.subtypes[i].business_type,
+                  id: item.subtypes[i].id,
+                  label: item.subtypes[i].business_sub_type,
+                })
               }
-            $scope.settings = {
-            //   smartButtonMaxItems: 4,
-            //  selectionLimit: 4,
-            //  showCheckAll: true,
-            //  enableSearch: true,
-            showCheckAll: false,
-             scrollableHeight: '300px', scrollable: false,
-             enableSearch: false,
-             showUncheckAll:false
-           };
-          
+            }
+          },
+          onItemDeselect: function (items) {
+            for (let j in $scope.businessSubTypeData) {
+              if ($scope.businessSubTypeData[j].businessTypeId === items.id) {
+                delete $scope.businessSubTypeData[j];
+              }
+            }
+          }
+        }
+        $scope.settings = {
+          //   smartButtonMaxItems: 4,
+          //  selectionLimit: 4,
+          //  showCheckAll: true,
+          //  enableSearch: true,
+          showCheckAll: false,
+          scrollableHeight: '300px', scrollable: false,
+          enableSearch: false,
+          showUncheckAll: false
+        };
+
 
         var getAllUserGroups = function () {
           userService.getAllUserGroups()
@@ -177,6 +177,22 @@ angular.module('machadaloPages')
               console.log(response);
             })
         }
+        $scope.selectedState = [];
+        $scope.stateDrodownSetting = { scrollableHeight: '200px', scrollable: true };
+        let getStateCityList = function () {
+          AuthService.initialStateList()
+            .then(function onSuccess(response) {
+              $scope.StateList = response.data.data.map(({ state_name: label, ...rest }) => ({ label, ...rest }));
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+          AuthService.initialData()
+            .then(function onSuccess(response) {
+              $scope.CityList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
         $scope.getProfiles = function (organisationId) {
           var promise = [];
           if (!organisationId)
@@ -189,6 +205,13 @@ angular.module('machadaloPages')
           }).catch(function onError(response) {
             console.log(response);
           })
+          userService.getRoles(organisationId)
+            .then(function onSuccess(response) {
+              $scope.rolesList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+          getStateCityList();
         }
         var getOrganisations = function () {
           userService.getOrganisations()
@@ -227,7 +250,7 @@ angular.module('machadaloPages')
           });
         }
         $scope.register = function (wizardFinish) {
-        
+
           //  $scope.model['groups'] = $scope.selectedGroupList;
           if (!wizardFinish || (wizardFinish && $scope.model.first_name && $scope.model.last_name && $scope.model.username && $scope.model.email && $scope.model.password)) {
             if (wizardFinish)
@@ -582,201 +605,200 @@ angular.module('machadaloPages')
             });
         }
 
-        $scope.createOrganisation = function(){
+        $scope.createOrganisation = function () {
           userService.createOrganisation($scope.organisationData)
-          .then(function onSuccess(response){
-            console.log(response);
-            $scope.onBoardOrgId = response.data.data.organisation_id;
-            swal(constants.name,constants.create_success,constants.success);
-          }).catch(function onError(response){
-            console.log(response);
-          })
-        }
-        //end : change password
-        $scope.updateOrganisation = function(){
-          userService.updateOrganisationDetails($scope.organisationData)
-          .then(function onSuccess(response){
-            console.log(response);
-            swal(constants.name,constants.update_success,constants.success);
-          }).catch(function onError(response){
-            console.log(response);
-          })
-        }
-        $scope.goToOrganisation = function(contentItem, operation, data={}){
-          console.log(data);
-            $scope.organisationData = data;
-            $scope.operationOrganisation.view = false;
-            $scope.operationOrganisation.create = false;
-            $scope.operationOrganisation.edit = false;
-            $scope.operationOrganisation[operation] = true;
-            $scope.getContent(contentItem);
-        }
-    //start: create profile
-    $scope.createProfile = function(){
-      $scope.profileData.general_user_permission = [];
-
-      for(let id in $scope.userInfo.profile.general_user_permission){
-        let row = $scope.userInfo.profile.general_user_permission[id];
-        delete row["id"];
-        row["is_allowed"] = "";
-        $scope.profileData.general_user_permission.push(row);
-      }
-      
-      userService.createProfile($scope.profileData)
-      .then(function onSuccess(response){
-
-        $scope.profileData = response.data.data;
-
-        for(var x in $scope.contentTypeList){
-          var contentType = $scope.contentTypeList[x]
-
-          var object_level_permission1 = {
-            "name":contentType.model.toUpperCase(),
-            "content_type":contentType.id,
-            "profile":$scope.profileData.id
-          }
-          userService.createObjectLevelPermission(object_level_permission1)
-          .then(function onSuccess(response){
-            
-            if(!$scope.profileData.object_level_permission)
-              $scope.profileData['object_level_permission'] = [];
-            $scope.profileData['object_level_permission'].push(response.data.data);
-          }).catch(function onError(response){
-            console.log(response);
-          })
-        }
-        
-        
-        swal(constants.name,constants.create_success,constants.success);
-      }).catch(function onError(response){
-        console.log(response);
-      })
-    }
-    //end: create profile
-    $scope.goToProfiles = function(contentItem, operation, data={}){
-     
-
-      $scope.profileData = data;
-      $scope.operationProfile.view = false;
-      $scope.operationProfile.create = false;
-      $scope.operationProfile.edit = false;
-      $scope.operationProfile[operation] = true;
-      console.log($scope.profileData);
-      // $scope.profileData.organisation = $scope.profileData.organisation.organisation_id;
-      $scope.getContent(contentItem);
-    }
-    $scope.updateProfile = function(){
-      console.log($scope.profileData);
-      userService.updateProfile($scope.profileData)
-      .then(function onSuccess(response){
-        console.log(response);
-        swal(constants.name,constants.update_success,constants.success);
-      }).catch(function onError(response){
-        console.log(response);
-      })
-    }
-
-    $scope.deleteProfile = function (profile) {
-
-      swal({
-        title: constants.warn_user_msg,
-        text: constants.delete_profile,
-        type: constants.warning,
-        showCancelButton: true,
-        confirmButtonClass: constants.btn_success,
-        confirmButtonText: constants.delete_confirm,
-        closeOnConfirm: true
-      },
-        function () {
-
-          userService.deleteProfile(profile.id)
             .then(function onSuccess(response) {
               console.log(response);
-              if (response && response.data && response.data.status) {
-                swal(constants.name, constants.delete_success, constants.success);
-                var localindex_index = $scope.profilesList.map(function (el) {
-                  return el.id;
-                }).indexOf(profile.id);
-                if (localindex_index != -1) {
-                  $scope.profilesList.splice(localindex_index, 1);
-                }
-              }
-             
+              $scope.onBoardOrgId = response.data.data.organisation_id;
+              swal(constants.name, constants.create_success, constants.success);
             }).catch(function onError(response) {
               console.log(response);
-              commonDataShare.showErrorMessage(response);
-            });
-        });
-    }
-    //for generaluser permissionsDict
-    var getObjectLevelPermissions = function(){
-      userService.getObjectLevelPermissions()
-      .then(function onSuccess(response){
-        console.log(response);
-        $scope.objectLevelPermissions = response.data.data;
-      }).catch(function onError(response){
-        console.log(response);
-      })
-    }
-    $scope.objectLevelPermissionData = {};
-    $scope.createObjectLevelPermission = function(){
-      console.log($scope.contentTypeObject);
-      $scope.objectLevelPermissionData['name'] = $scope.contentTypeListById[$scope.objectLevelPermissionData.content_type].model.toUpperCase();
-      userService.createObjectLevelPermission($scope.objectLevelPermissionData)
-      .then(function onSuccess(response){
-        console.log(response);
-        if(!$scope.profileData.object_level_permission)
-          $scope.profileData['object_level_permission'] = [];
-        $scope.profileData['object_level_permission'].push(response.data.data);
-        // getObjectLevelPermissions();/
-        commonDataShare.closeModal('#createObjectLevelPermissionModal');
-        swal(constants.name, constants.create_success,constants.success);
-      }).catch(function onError(response){
-        console.log(response);
-      })
-    }
+            })
+        }
+        //end : change password
+        $scope.updateOrganisation = function () {
+          userService.updateOrganisationDetails($scope.organisationData)
+            .then(function onSuccess(response) {
+              console.log(response);
+              swal(constants.name, constants.update_success, constants.success);
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+        $scope.goToOrganisation = function (contentItem, operation, data = {}) {
+          console.log(data);
+          $scope.organisationData = data;
+          $scope.operationOrganisation.view = false;
+          $scope.operationOrganisation.create = false;
+          $scope.operationOrganisation.edit = false;
+          $scope.operationOrganisation[operation] = true;
+          $scope.getContent(contentItem);
+        }
+        //start: create profile
+        $scope.createProfile = function () {
+          $scope.profileData.general_user_permission = [];
 
-   
-    // $scope.updateObjectLevelPermission = function(){
-    //   cfpLoadingBar.start();
-    //   cfpLoadingBar.inc();
-    //   userService.updateObjectLevelPermission()
-    //   .then(function onSuccess(response){
-    //     console.log(response);
-    //     cfpLoadingBar.complete();
-    //   }).catch(function onError(response){
-    //     console.log(response);
-    //   })
-    // }
-    $scope.assignObjectName = function(c){
-      console.log(c);
-    }
-    //genral user level permissions
-    var getGeneralUserLevelPermissions = function()
-    {
-      userService.getGeneralUserLevelPermissions()
-      .then(function onSuccess(response){
-        console.log(response);
-        $scope.generalUserLevelPermissionsList = response.data.data;
-      }).catch(function onError(response){
-        console.log(response);
-      })
-    }
+          for (let id in $scope.userInfo.profile.general_user_permission) {
+            let row = $scope.userInfo.profile.general_user_permission[id];
+            delete row["id"];
+            row["is_allowed"] = "";
+            $scope.profileData.general_user_permission.push(row);
+          }
+
+          userService.createProfile($scope.profileData)
+            .then(function onSuccess(response) {
+
+              $scope.profileData = response.data.data;
+
+              for (var x in $scope.contentTypeList) {
+                var contentType = $scope.contentTypeList[x]
+
+                var object_level_permission1 = {
+                  "name": contentType.model.toUpperCase(),
+                  "content_type": contentType.id,
+                  "profile": $scope.profileData.id
+                }
+                userService.createObjectLevelPermission(object_level_permission1)
+                  .then(function onSuccess(response) {
+
+                    if (!$scope.profileData.object_level_permission)
+                      $scope.profileData['object_level_permission'] = [];
+                    $scope.profileData['object_level_permission'].push(response.data.data);
+                  }).catch(function onError(response) {
+                    console.log(response);
+                  })
+              }
+
+
+              swal(constants.name, constants.create_success, constants.success);
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+        //end: create profile
+        $scope.goToProfiles = function (contentItem, operation, data = {}) {
+
+
+          $scope.profileData = data;
+          $scope.operationProfile.view = false;
+          $scope.operationProfile.create = false;
+          $scope.operationProfile.edit = false;
+          $scope.operationProfile[operation] = true;
+          console.log($scope.profileData);
+          // $scope.profileData.organisation = $scope.profileData.organisation.organisation_id;
+          $scope.getContent(contentItem);
+        }
+        $scope.updateProfile = function () {
+          console.log($scope.profileData);
+          userService.updateProfile($scope.profileData)
+            .then(function onSuccess(response) {
+              console.log(response);
+              swal(constants.name, constants.update_success, constants.success);
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+
+        $scope.deleteProfile = function (profile) {
+
+          swal({
+            title: constants.warn_user_msg,
+            text: constants.delete_profile,
+            type: constants.warning,
+            showCancelButton: true,
+            confirmButtonClass: constants.btn_success,
+            confirmButtonText: constants.delete_confirm,
+            closeOnConfirm: true
+          },
+            function () {
+
+              userService.deleteProfile(profile.id)
+                .then(function onSuccess(response) {
+                  console.log(response);
+                  if (response && response.data && response.data.status) {
+                    swal(constants.name, constants.delete_success, constants.success);
+                    var localindex_index = $scope.profilesList.map(function (el) {
+                      return el.id;
+                    }).indexOf(profile.id);
+                    if (localindex_index != -1) {
+                      $scope.profilesList.splice(localindex_index, 1);
+                    }
+                  }
+
+                }).catch(function onError(response) {
+                  console.log(response);
+                  commonDataShare.showErrorMessage(response);
+                });
+            });
+        }
+        //for generaluser permissionsDict
+        var getObjectLevelPermissions = function () {
+          userService.getObjectLevelPermissions()
+            .then(function onSuccess(response) {
+              console.log(response);
+              $scope.objectLevelPermissions = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+        $scope.objectLevelPermissionData = {};
+        $scope.createObjectLevelPermission = function () {
+          console.log($scope.contentTypeObject);
+          $scope.objectLevelPermissionData['name'] = $scope.contentTypeListById[$scope.objectLevelPermissionData.content_type].model.toUpperCase();
+          userService.createObjectLevelPermission($scope.objectLevelPermissionData)
+            .then(function onSuccess(response) {
+              console.log(response);
+              if (!$scope.profileData.object_level_permission)
+                $scope.profileData['object_level_permission'] = [];
+              $scope.profileData['object_level_permission'].push(response.data.data);
+              // getObjectLevelPermissions();/
+              commonDataShare.closeModal('#createObjectLevelPermissionModal');
+              swal(constants.name, constants.create_success, constants.success);
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+
+
+        // $scope.updateObjectLevelPermission = function(){
+        //   cfpLoadingBar.start();
+        //   cfpLoadingBar.inc();
+        //   userService.updateObjectLevelPermission()
+        //   .then(function onSuccess(response){
+        //     console.log(response);
+        //     cfpLoadingBar.complete();
+        //   }).catch(function onError(response){
+        //     console.log(response);
+        //   })
+        // }
+        $scope.assignObjectName = function (c) {
+          console.log(c);
+        }
+        //genral user level permissions
+        var getGeneralUserLevelPermissions = function () {
+          userService.getGeneralUserLevelPermissions()
+            .then(function onSuccess(response) {
+              console.log(response);
+              $scope.generalUserLevelPermissionsList = response.data.data;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
 
         // //start: create profile
         // $scope.createProfile = function () {
         //   $scope.profileData.general_user_permission = [];
 
-    
 
-    $scope.mobileValidation = function(){
-      $scope.showMobileError = true;
-      if($scope.organisationData.phone.toString().length ==10){
-        $scope.showMobileError = false;
-      }
-    }
- 
-         
+
+        $scope.mobileValidation = function () {
+          $scope.showMobileError = true;
+          if ($scope.organisationData.phone.toString().length == 10) {
+            $scope.showMobileError = false;
+          }
+        }
+
+
 
         // $scope.deleteProfile = function (profile) {
 
@@ -803,7 +825,7 @@ angular.module('machadaloPages')
         //               $scope.profilesList.splice(localindex_index, 1);
         //             }
         //           }
-                 
+
         //         }).catch(function onError(response) {
         //           console.log(response);
         //           commonDataShare.showErrorMessage(response);
@@ -929,17 +951,17 @@ angular.module('machadaloPages')
         $scope.createOnBoardActivity = function (number) {
           if (number == 1 && $scope.organisationData.name && $scope.organisationData.phone && $scope.organisationData.email && $scope.organisationData.category && !$scope.showMobileError) {
             $scope.organisationData.business_type = [];
-            if($scope.selectedbusinessType.length > 0){
-            for(let i in $scope.selectedbusinessType){
-              $scope.organisationData.business_type.push($scope.selectedbusinessType[i].id)
+            if ($scope.selectedbusinessType.length > 0) {
+              for (let i in $scope.selectedbusinessType) {
+                $scope.organisationData.business_type.push($scope.selectedbusinessType[i].id)
+              }
             }
-          }
-          $scope.organisationData.business_subtype = [];
-          if($scope.selectedbusinessSubType.length > 0){
-            for(let j in $scope.selectedbusinessSubType){
-              $scope.organisationData.business_subtype.push($scope.selectedbusinessSubType[j].id)
+            $scope.organisationData.business_subtype = [];
+            if ($scope.selectedbusinessSubType.length > 0) {
+              for (let j in $scope.selectedbusinessSubType) {
+                $scope.organisationData.business_subtype.push($scope.selectedbusinessSubType[j].id)
+              }
             }
-          }
             $scope.createOrganisation();
             $scope.activityNumber++;
           }
@@ -1121,4 +1143,4 @@ angular.module('machadaloPages')
         $scope.checkClick();
 
 
-       }]);//end of controller
+      }]);//end of controller

@@ -1,16 +1,18 @@
 <!--Dashboard start  -->
-<link rel="stylesheet" href="modules/pages/manageUsers/user.tmpl.css"/>
-<link rel="stylesheet" href="modules/common/header/menu-bar-tmpl.css"/>
+<link rel="stylesheet" href="modules/pages/manageUsers/user.tmpl.css" />
+<link rel="stylesheet" href="modules/common/header/menu-bar-tmpl.css" />
 <div ng-loading="loading"></div> <!--For displaying loading icon-->
-<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading" >
+<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
   <div class="wrapperBox">
-    <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
+    <div ng-show="isEmpty" style="text-align:center;">
+      <h2>{{msg}}</h2>
+    </div>
     <nav-bar></nav-bar>
     <div class="middle-section">
       <div ng-cloak>
         <div class="body-bg"></div>
         <div class="section-block" ng-switch on="menuItem.name">
-          
+
           <!--Start: about you tab -->
           <div class="section-display" ng-switch-when="aboutYou" id="aboutYou">
             <h2 class="heading">About You</h2>
@@ -59,18 +61,22 @@
                 <td>{{$index+1}}</td>
                 <td>{{organisation.name}}</td>
                 <td>{{organisation.category}}</td>
-                <td><a class="linkBtn" ng-click="goToOrganisation(contentItem.organisation,'view',organisation)">View</a></td>
-                <td><a class="linkBtn" ng-click="goToOrganisation(contentItem.organisation,'edit',organisation)">Edit</a></td>
+                <td><a class="linkBtn"
+                    ng-click="goToOrganisation(contentItem.organisation,'view',organisation)">View</a></td>
+                <td><a class="linkBtn"
+                    ng-click="goToOrganisation(contentItem.organisation,'edit',organisation)">Edit</a></td>
                 <td><a class="linkBtn" ng-click="goToOrganisation(contentItem.organisation,'delete')">Delete</a></td>
               </tr>
             </table>
-            <button type="button" class="smallBtn" name="button" ng-click="goToOrganisation(contentItem.organisation,'create')">Create New Organisation</button>
+            <button type="button" class="smallBtn" name="button"
+              ng-click="goToOrganisation(contentItem.organisation,'create')">Create New Organisation</button>
           </div><!-- section-display -->
           <!--End: organisation view tab -->
 
           <!--Start: organisation View and Edit tab -->
           <div class="section-display" ng-switch-when="organisation" id="organisation">
-            <h2 class="heading" ng-if="operationOrganisation.view || operationOrganisation.edit">Organisation Details</h2>
+            <h2 class="heading" ng-if="operationOrganisation.view || operationOrganisation.edit">Organisation Details
+            </h2>
             <h2 class="heading" ng-if="operationOrganisation.create">Create Organisation</h2>
             <table class="table-data" ng-if="operationOrganisation.view">
               <tr>
@@ -146,8 +152,10 @@
               <div class="item"></div>
             </div>
             <div class="bottomBtnBox">
-              <button ng-if="operationOrganisation.create" class="smallBtn active" ng-click="createOrganisation()">Create</button>
-              <button ng-if="operationOrganisation.edit" class="smallBtn active" ng-click="updateOrganisation()">Update</button>
+              <button ng-if="operationOrganisation.create" class="smallBtn active"
+                ng-click="createOrganisation()">Create</button>
+              <button ng-if="operationOrganisation.edit" class="smallBtn active"
+                ng-click="updateOrganisation()">Update</button>
             </div>
           </div><!-- section-display -->
           <!--End: organisation View and Edit tab -->
@@ -171,10 +179,11 @@
                 <td>{{organisation.second_organisation.name}}</td>
                 <td>{{organisation.second_organisation.category}}</td>
                 <td><a class="linkBtn" ng-click="goToOrganisation(contentItem.organisation,'delete')">Delete</a></td>
-              
+
               </tr>
             </table>
-            <button type="button" name="button" class="smallBtn" data-target="#createNewOrganisationMapModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Create New Mapping</button>
+            <button type="button" name="button" class="smallBtn" data-target="#createNewOrganisationMapModal"
+              data-toggle="modal" data-backdrop="static" data-keyboard="false">Create New Mapping</button>
           </div><!-- section-display -->
           <!--End: map Organisations tab -->
 
@@ -204,53 +213,63 @@
                 </td>
               </tr>
             </table>
-            <button type="button" class="smallBtn" name="button" ng-click="goToProfiles(contentItem.profile,'create')">Create New Profile</button>
+            <button type="button" class="smallBtn" name="button"
+              ng-click="goToProfiles(contentItem.profile,'create')">Create New Profile</button>
           </div><!-- section-display -->
           <!--End: profile view tab -->
 
           <!--start: Create user  -->
           <div class="section-display" ng-switch-when='createUser' id="createUser">
             <h2 class="heading">Create New User</h2>
-            <form class="" name="registerForm" method="post" ng-submit= "register()" role="form">
+            <form class="" name="registerForm" method="post" ng-submit="register()" role="form">
               <div class="grid">
                 <div class="item">
                   <label for="name">First Name:</label>
-                  <input type="text" class="field" name="firstname" id="firstname"  placeholder="Enter First Name" ng-model="model.first_name" required>
+                  <input type="text" class="field" name="firstname" id="firstname" placeholder="Enter First Name"
+                    ng-model="model.first_name" required>
                 </div>
                 <div class="item">
                   <label for="name">Last Name:</label>
-                  <input type="text" class="field" name="lastname" id="lastname"  placeholder="Enter Last Name" ng-model="model.last_name">
+                  <input type="text" class="field" name="lastname" id="lastname" placeholder="Enter Last Name"
+                    ng-model="model.last_name">
                 </div>
                 <div class="item">
                   <label for="username">Username:</label>
-                  <input type="text" class="field" name="username" id="username"  placeholder="Enter your Username" ng-model="model.username" required>
+                  <input type="text" class="field" name="username" id="username" placeholder="Enter your Username"
+                    ng-model="model.username" required>
                 </div>
                 <div class="item">
                   <label for="email">Email Id:</label>
-                  <input type="email" class="field" name="email" id="email"  placeholder="Enter Email" ng-model="model.email" required>
+                  <input type="email" class="field" name="email" id="email" placeholder="Enter Email"
+                    ng-model="model.email" required>
                 </div>
                 <div class="item">
                   <label for="password">Password:</label>
-                  <input type="password" class="field" name="password" id="password"  placeholder="Enter your Password" ng-model= "model.password" required>
+                  <input type="password" class="field" name="password" id="password" placeholder="Enter your Password"
+                    ng-model="model.password" required>
                 </div>
                 <div class="item">
                   <label for="confirm">Confirm Password:</label>
-                  <input type="password" class="field" name="confirm" id="confirm"  placeholder="Confirm your Password" ng-model="model.confirm_password" ng-change="validatePassword()"required/>
+                  <input type="password" class="field" name="confirm" id="confirm" placeholder="Confirm your Password"
+                    ng-model="model.confirm_password" ng-change="validatePassword()" required />
                   <span ng-if="!isValid && model.confirm_password">{{passwordError}}</span>
                 </div>
                 <div class="item">
-                  <label for="confirm">Organisation:</label>
-                  <span ng-if="(userInfo.profile.organisation.name.toUpperCase() != standardOrganisation.toUpperCase())">{{userInfo.profile.organisation.name}}</span>
-                  <select ng-if="(userInfo.profile.organisation.name == standardOrganisation) || userInfo.is_superuser" class="field" ng-model="model.organisation"
-                  ng-change="getProfiles(model.organisation);">
-                    <option ng-repeat="organisation in organisationList | orderBy: 'name'" value="{{organisation.organisation_id}}">{{organisation.name}}</option>
+                  <label for="confirm">Organisation11:</label>
+                  <span
+                    ng-if="(userInfo.profile.organisation.name.toUpperCase() != standardOrganisation.toUpperCase())">{{userInfo.profile.organisation.name}}</span>
+                  <select ng-if="(userInfo.profile.organisation.name == standardOrganisation) || userInfo.is_superuser"
+                    class="field" ng-model="model.organisation" ng-change="getProfiles(model.organisation);">
+                    <option ng-repeat="organisation in organisationList | orderBy: 'name'"
+                      value="{{organisation.organisation_id}}">{{organisation.name}}</option>
                   </select>
                 </div>
                 <div class="item">
                   <div class="dropup">
                     <label for="confirm">Assign Profile:</label>
                     <select class="field" ng-model="model.profile">
-                      <option ng-repeat="profile in profilesList | orderBy: 'name'" value="{{profile.id}}">{{profile.name}}</option>
+                      <option ng-repeat="profile in profilesList | orderBy: 'name'" value="{{profile.id}}">
+                        {{profile.name}}</option>
                     </select>
                   </div>
                 </div>
@@ -262,8 +281,18 @@
                     </select>
                   </div>
                 </div>
+                <div class="item">
+                  <div class="dropup">
+                    <label for="confirm">Select State:</label>
+                    <div ng-dropdown-multiselect="" options="StateList" selected-model="selectedState"
+                      extra-settings="stateDrodownSetting">
+                    </div>
+                    <span ng-repeat="item in selectedState">{{item.label}},</span>
+                  </div>
+                </div>
               </div>
-              <button type="submit" id="button" class="smallBtn login-button" ng-disabled="!isValid">Create User</button>
+              <button type="submit" id="button" class="smallBtn login-button" ng-disabled="!isValid">Create
+                User</button>
             </form>
           </div><!-- section-display -->
           <!--End: Create user  -->
@@ -307,7 +336,8 @@
                   </a>
                 </td>
                 <td>
-                  <a class="linkBtn" data-target="#passwordModal" data-toggle="modal" ng-click="setPasswordDetails(user)">click here</a>
+                  <a class="linkBtn" data-target="#passwordModal" data-toggle="modal"
+                    ng-click="setPasswordDetails(user)">click here</a>
                 </td>
               </tr>
             </table>
@@ -324,7 +354,7 @@
               </div>
               <div class="item">
                 <label for="name">Last Name:</label>
-                <input type="text" class="field"  ng-model="userDetails.last_name" required>
+                <input type="text" class="field" ng-model="userDetails.last_name" required>
               </div>
               <div class="item">
                 <label for="name">Is Super User:</label>
@@ -347,17 +377,20 @@
               </div>
               <div class="item">
                 <label>Organisation:</label>
-                <span ng-if="userInfo.profile.organisation.name.toUpperCase() != standardOrganisation.toUpperCase()">{{userInfo.profile.organisation.name}}</span>
-                <select ng-if="(userInfo.profile.organisation.name.toUpperCase() == standardOrganisation.toUpperCase()) || userInfo.is_superuser"
-                class="field" ng-model="model.organisation" ng-change="getProfiles(model.organisation);getRoles(model.organisation)"
-                ng-options="org.organisation_id as org.name for org in organisationList">
-                <!-- <option value="" hidden>Please Select Organisation</option> -->
+                <span
+                  ng-if="userInfo.profile.organisation.name.toUpperCase() != standardOrganisation.toUpperCase()">{{userInfo.profile.organisation.name}}</span>
+                <select
+                  ng-if="(userInfo.profile.organisation.name.toUpperCase() == standardOrganisation.toUpperCase()) || userInfo.is_superuser"
+                  class="field" ng-model="model.organisation"
+                  ng-change="getProfiles(model.organisation);getRoles(model.organisation)"
+                  ng-options="org.organisation_id as org.name for org in organisationList">
+                  <!-- <option value="" hidden>Please Select Organisation</option> -->
                 </select>
               </div>
               <div class="item">
                 <label for="confirm">Assign Profile:</label>
                 <select class="field" ng-model="userDetails.profile">
-                  <option ng-repeat="profile in profilesList"  value="{{profile.id}}" >{{profile.name}}</option>
+                  <option ng-repeat="profile in profilesList" value="{{profile.id}}">{{profile.name}}</option>
                 </select>
               </div>
               <div class="item">
@@ -367,7 +400,8 @@
                 </select>
               </div>
             </div>
-            <button type="submit" id="button" class="smallBtn active" ng-click="updateUserDetails(userDetails)">Update</button>
+            <button type="submit" id="button" class="smallBtn active"
+              ng-click="updateUserDetails(userDetails)">Update</button>
           </div><!-- section-display -->
           <!--End: edit user  -->
 
@@ -401,7 +435,8 @@
               <div class="item is-focused" ng-if="userInfo.is_superuser">
                 <label>Organisation:</label>
                 <select class="field" ng-model="rolesData.organisation" ng-change="getRoles(rolesData.organisation)">
-                  <option  ng-repeat="org in organisationList| orderBy: 'orgName'" value="{{org.organisation_id}}">{{org.name}}</option>
+                  <option ng-repeat="org in organisationList| orderBy: 'orgName'" value="{{org.organisation_id}}">
+                    {{org.name}}</option>
                 </select>
               </div>
               <div class="item is-focused" ng-if="!userInfo.is_superuser">
@@ -411,17 +446,18 @@
               <div class="item is-focused">
                 <label>Select Parent Role:</label>
                 <select class="field" ng-model="rolesData.parent">
-                  <option  ng-repeat="role in rolesList" value="{{role.id}}">{{role.name}}</option>
+                  <option ng-repeat="role in rolesList" value="{{role.id}}">{{role.name}}</option>
                 </select>
               </div>
               <div class="item is-focused">
                 <label>Select Child Role:</label>
                 <select class="field" ng-model="rolesData.child">
-                  <option  ng-repeat="role in rolesList" value="{{role.id}}">{{role.name}}</option>
+                  <option ng-repeat="role in rolesList" value="{{role.id}}">{{role.name}}</option>
                 </select>
               </div>
             </div>
-            <button ng-click="assignRole()" class="smallBtn" ng-disabled="!rolesData.parent || !rolesData.child">Assign Role</button>
+            <button ng-click="assignRole()" class="smallBtn" ng-disabled="!rolesData.parent || !rolesData.child">Assign
+              Role</button>
           </div><!-- section-display -->
           <!--End: assign role  -->
 
@@ -455,11 +491,13 @@
                   <input type="radio" ng-model="profileData.is_standard" ng-value="true">
                   <span>Yes</span>
                   <input type="radio" ng-model="profileData.is_standard" ng-value="false">
-                  <span>No</span>  
+                  <span>No</span>
                 </div>
                 <div class="item">
                   <label>Organisation:</label>
-                  <select ng-if="operationProfile.create || operationProfile.edit" class="field" ng-model="profileData.organisation" ng-options="organisation.organisation_id as organisation.name for organisation in organisationList">
+                  <select ng-if="operationProfile.create || operationProfile.edit" class="field"
+                    ng-model="profileData.organisation"
+                    ng-options="organisation.organisation_id as organisation.name for organisation in organisationList">
                   </select>
                 </div>
               </div>
@@ -486,22 +524,34 @@
                 <td>{{$index+1}}</td>
                 <td>{{permission.name}}</td>
                 <td>
-                  <input type="checkbox" ng-model="permission.view" ng-value="{{permission.view}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                  <input type="checkbox" ng-model="permission.view" ng-value="{{permission.view}}"
+                    ng-disabled="operationProfile.view || isDataUpdating"
+                    ng-click="updateObjectLevelPermission(permission,$index)">
                 </td>
                 <td>
-                  <input type="checkbox" ng-model="permission.update" ng-value="{{permission.update}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                  <input type="checkbox" ng-model="permission.update" ng-value="{{permission.update}}"
+                    ng-disabled="operationProfile.view || isDataUpdating"
+                    ng-click="updateObjectLevelPermission(permission,$index)">
                 </td>
                 <td>
-                  <input type="checkbox" ng-model="permission.create" ng-value="{{permission.create}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                  <input type="checkbox" ng-model="permission.create" ng-value="{{permission.create}}"
+                    ng-disabled="operationProfile.view || isDataUpdating"
+                    ng-click="updateObjectLevelPermission(permission,$index)">
                 </td>
                 <td>
-                  <input type="checkbox" ng-model="permission.delete" ng-value="{{permission.delete}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                  <input type="checkbox" ng-model="permission.delete" ng-value="{{permission.delete}}"
+                    ng-disabled="operationProfile.view || isDataUpdating"
+                    ng-click="updateObjectLevelPermission(permission,$index)">
                 </td>
                 <td>
-                  <input type="checkbox" ng-model="permission.view_all" ng-value="{{permission.view_all}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                  <input type="checkbox" ng-model="permission.view_all" ng-value="{{permission.view_all}}"
+                    ng-disabled="operationProfile.view || isDataUpdating"
+                    ng-click="updateObjectLevelPermission(permission,$index)">
                 </td>
                 <td>
-                  <input type="checkbox" ng-model="permission.update_all" ng-value="{{permission.update_all}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                  <input type="checkbox" ng-model="permission.update_all" ng-value="{{permission.update_all}}"
+                    ng-disabled="operationProfile.view || isDataUpdating"
+                    ng-click="updateObjectLevelPermission(permission,$index)">
                 </td>
               </tr>
             </table>
@@ -509,7 +559,8 @@
             <!-- object level permissions End -->
             <!--start: general user level  permissions  -->
             <h2 class="heading">General User Level Permissions</h2>
-            <input type="checkbox" id="allCheck" ng-model="selectChkBoxAll" ng-click="checkAll()"/> {{selectTextAll}} All
+            <input type="checkbox" id="allCheck" ng-model="selectChkBoxAll" ng-click="checkAll()" /> {{selectTextAll}}
+            All
             <span ng-if="!profileData.general_user_permission.length">No Permissions Assigned</span>
             <table class="table-data" ng-if="profileData.general_user_permission.length">
               <tr>
@@ -523,10 +574,13 @@
                   <!-- <label ng-if="operationProfile.view || operationProfile.create ||  operationProfile.edit">{{permission.name.split("_").join(" ");}}</label> -->
                   <label ng-if="operationProfile.view">{{permission.name.split("_").join(" ");}}</label>
                   <label ng-if="operationProfile.create">{{permission.name;}}</label>
-                  <input type="text" class="field" ng-model="permission.name" ng-if="operationProfile.edit" ng-disabled="isDataUpdating" ng-enter="updateGeneralUserPermission(permission,$index)">
+                  <input type="text" class="field" ng-model="permission.name" ng-if="operationProfile.edit"
+                    ng-disabled="isDataUpdating" ng-enter="updateGeneralUserPermission(permission,$index)">
                 </td>
                 <td>
-                  <input type="checkbox" ng-model="permission.is_allowed" ng-value="{{permission.is_allowed}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="[checkClick(),updateGeneralUserPermission(permission,$index)]">
+                  <input type="checkbox" ng-model="permission.is_allowed" ng-value="{{permission.is_allowed}}"
+                    ng-disabled="operationProfile.view || isDataUpdating"
+                    ng-click="[checkClick(),updateGeneralUserPermission(permission,$index)]">
                 </td>
               </tr>
             </table>
@@ -543,11 +597,11 @@
             <div class="wizard-container">
               <div class="wizard-card" data-color="red" id="wizard">
                 <form name="myForm">
-                <ul class="onboardTab">
-                    <li><a class="disableClick" data-target="#details"  data-toggle="tab">Organisation</a></li>
-                    <li><a class="disableClick" data-target="#captain"  data-toggle="tab">Profile</a></li>
-                    <li><a class="disableClick" data-target="#description"  data-toggle="tab">User</a></li>
-                </ul>
+                  <ul class="onboardTab">
+                    <li><a class="disableClick" data-target="#details" data-toggle="tab">Organisation</a></li>
+                    <li><a class="disableClick" data-target="#captain" data-toggle="tab">Profile</a></li>
+                    <li><a class="disableClick" data-target="#description" data-toggle="tab">User</a></li>
+                  </ul>
                   <div class="tab-content">
                     <div class="tab-pane" id="details">
                       <h2 class="heading">Organisation - Let's start with the basic details</h2>
@@ -555,21 +609,25 @@
                         <div class="item">
                           <div class="form-group label-floating">
                             <label>Organisation Name</label>
-                            <input name="organisationName" placeholder="Organisation Name" type="text" class="field" ng-model="organisationData.name" required>
+                            <input name="organisationName" placeholder="Organisation Name" type="text" class="field"
+                              ng-model="organisationData.name" required>
                           </div>
                         </div>
-                        <div class="item">  
+                        <div class="item">
                           <div class="form-group label-floating">
                             <label>Mobile Number</label>
-                            <input name="mobile" type="number" ng-change="mobileValidation()" placeholder="Mobile Number" class="field" ng-model="organisationData.phone" required>
-                          <span ng-if="showMobileError" style="color:red">Invalid Mobile</span>
+                            <input name="mobile" type="number" ng-change="mobileValidation()"
+                              placeholder="Mobile Number" class="field" ng-model="organisationData.phone" required>
+                            <span ng-if="showMobileError" style="color:red">Invalid Mobile</span>
                           </div>
                         </div>
                         <div class="item">
                           <div class="form-group label-floating">
                             <label>Email</label>
-                            <input  type="email" placeholder="Email" name="email" class="field"  ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/"  ng-model="organisationData.email" required>
-                           
+                            <input type="email" placeholder="Email" name="email" class="field"
+                              ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/"
+                              ng-model="organisationData.email" required>
+
                             <span class="error" ng-show="myForm.email.$error.pattern">
                               Not valid email!</span>
                           </div>
@@ -579,37 +637,43 @@
                             <label>Category</label>
                             <select class="field" placeholder="Category" ng-model="organisationData.category" required>
                               <option disabled="" selected="">select category</option>
-                              <option ng-repeat="category in organisationCategories"value="{{category}}"> {{category}} </option>
+                              <option ng-repeat="category in organisationCategories" value="{{category}}"> {{category}}
+                              </option>
                             </select>
                           </div>
                         </div>
 
                         <div class="item">
                           <div class="form-group label-floating">
-                           
+
                             <label>Select Business Type </label>
-                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="businessTypeData"  extra-settings="settings"
-                            selected-model="selectedbusinessType" translation-texts="selected_business_type" events="events"></span>
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;"
+                              ng-dropdown-multiselect="" options="businessTypeData" extra-settings="settings"
+                              selected-model="selectedbusinessType" translation-texts="selected_business_type"
+                              events="events"></span>
                           </div>
                         </div>
 
                         <div class="item">
                           <div class="form-group label-floating">
-                           
+
                             <label>Select Business Sub Type</label>
-                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="businessSubTypeData"  extra-settings="settings"
-                            selected-model="selectedbusinessSubType" translation-texts="selected_business_sub_type" ></span>
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;"
+                              ng-dropdown-multiselect="" options="businessSubTypeData" extra-settings="settings"
+                              selected-model="selectedbusinessSubType"
+                              translation-texts="selected_business_sub_type"></span>
                           </div>
                         </div>
 
                         <div class="item">
                           <div class="form-group label-floating">
                             <label>Comments</label>
-                            <input name="name2" placeholder="Comments" type="text" class="field" ng-model="organisationData.comments">
+                            <input name="name2" placeholder="Comments" type="text" class="field"
+                              ng-model="organisationData.comments">
                           </div>
                         </div>
 
-                      
+
 
 
                       </div>
@@ -628,7 +692,8 @@
                             <label>Clone Profile</label>
                             <select name="profileClone" class="field" ng-model="cloneFromProfileId.id">
                               <option disabled="" selected=""></option>
-                              <option ng-repeat="profile in standardProfileList"value="{{profile.id}}"> {{profile.name}} </option>
+                              <option ng-repeat="profile in standardProfileList" value="{{profile.id}}">
+                                {{profile.name}} </option>
                             </select>
                           </div>
                         </div>
@@ -672,8 +737,10 @@
                   </div><!-- tab-content -->
                   <div class="wizard-footer">
                     <div class="pull-right">
-                      <input type='button' class='smallBtn btn-next btn-fill btn-wd' name='next' value='Next' ng-click="createOnBoardActivity(activityNumber)"/>
-                      <input type='button' class='smallBtn btn-finish btn-fill btn-wd' name='finish' value='Finish' ng-click="register(true)"/>
+                      <input type='button' class='smallBtn btn-next btn-fill btn-wd' name='next' value='Next'
+                        ng-click="createOnBoardActivity(activityNumber)" />
+                      <input type='button' class='smallBtn btn-finish btn-fill btn-wd' name='finish' value='Finish'
+                        ng-click="register(true)" />
                     </div>
                   </div>
                 </form>
@@ -691,7 +758,7 @@
           <!--End: Organisation OnBoarding Wizard  -->
 
 
-          
+
 
         </div><!-- section-block -->
       </div><!-- ng-cloak -->
@@ -699,314 +766,342 @@
 
 
 
-<div class="maincontainer">
+      <div class="maincontainer">
 
 
-  <!--start: content  -->
-  <div class="managementRow">
-    <div class="col-sm-8"  ng-switch on="menuItem.name">
-      <div class="">
-        
-      
-      <div ng-switch-when='createGroup'>
-        <div style="margin-left:15px;" ng-if="!isEditGroup"><h3>Create New Group</h3></div></br></br>
-        <div style="margin-left:15px;" ng-if="isEditGroup"><h3>Edit Group :</h3></div></br></br>
-        <div class="col-md-6 form-horizontal model-body">
-          <div class="managementPageform-group">
-              <label class="col-md-4 control-label" style="text-align:left">Group Name</label>
-              <div class="col-md-3 controls">
-                <input type="text" class="form-control groupInput" placeholder="Enter Group Name" ng-model="groupName.name"/>
-              </div>
-          </div>
-          <div class="managementPageform-group">
-            <label class="col-md-4 control-label" style="text-align:left">Add Permissions</label>
-            <div class="dropdown dropdown-scroll col-md-6">
-              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">Add Permission <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                  <li role="presentation">
-                      <div class="input-group input-group-sm search-control">
-                         <span class="input-group-addon">
+        <!--start: content  -->
+        <div class="managementRow">
+          <div class="col-sm-8" ng-switch on="menuItem.name">
+            <div class="">
+
+
+              <div ng-switch-when='createGroup'>
+                <div style="margin-left:15px;" ng-if="!isEditGroup">
+                  <h3>Create New Group</h3>
+                </div></br></br>
+                <div style="margin-left:15px;" ng-if="isEditGroup">
+                  <h3>Edit Group :</h3>
+                </div></br></br>
+                <div class="col-md-6 form-horizontal model-body">
+                  <div class="managementPageform-group">
+                    <label class="col-md-4 control-label" style="text-align:left">Group Name</label>
+                    <div class="col-md-3 controls">
+                      <input type="text" class="form-control groupInput" placeholder="Enter Group Name"
+                        ng-model="groupName.name" />
+                    </div>
+                  </div>
+                  <div class="managementPageform-group">
+                    <label class="col-md-4 control-label" style="text-align:left">Add Permissions</label>
+                    <div class="dropdown dropdown-scroll col-md-6">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                        data-toggle="dropdown">Add Permission <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation">
+                          <div class="input-group input-group-sm search-control">
+                            <span class="input-group-addon">
                               <span class="glyphicon glyphicon-search"></span>
-                          </span>
-                          <input type="text" class="form-control" placeholder="Search Permission" ng-model="query"></input>
-                      </div>
-                  </li>
-                  <li role="presentation" ng-repeat='permission in permissionsDict.slice(1,permissionsDict.length) | filter:query'>
-                    <input type="checkbox" ng-model="permission.selected" ng-click="addPermission(permission,$index)" style="margin-left:10px;"/>
-                    <a style="display:-webkit-inline-box;">{{permission.name}}</a>
-                  </li>
-              </ul>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Search Permission"
+                              ng-model="query"></input>
+                          </div>
+                        </li>
+                        <li role="presentation"
+                          ng-repeat='permission in permissionsDict.slice(1,permissionsDict.length) | filter:query'>
+                          <input type="checkbox" ng-model="permission.selected"
+                            ng-click="addPermission(permission,$index)" style="margin-left:10px;" />
+                          <a style="display:-webkit-inline-box;">{{permission.name}}</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div></br></br>
+                  <div class="col-md-2 managementPageform-group">
+                    <button ng-if="permissionList.length && groupName.name && !isEditGroup"
+                      class="btn btn-primary active" ng-click="createGroup()">Create Group</button>
+                    <button ng-if="permissionList.length && groupName.name && isEditGroup"
+                      class="btn btn-primary active" ng-click="updateGroupDetails()">Update</button>
+                  </div>
+                </div>
+
+                <div class="col-md-4 list-permission" ng-if="permissionList.length">
+                  <h2>Permissions :</h2>
+                  <ul class="dropdown-list">
+                    <li ng-repeat="permission in permissionList">{{permission.name}}</li>
+                  </ul>
+                </div>
+              </div>
+
+
+              <!--start: users list  -->
+              <div ng-switch-when='viewGroups' id="viewGroups">
+                <div class="">
+                  <h3 class="col-md-7" style="text-align:center">List of Groups</h3></br>
+                  <table class="table-responsive table-bordered table" style="width:60%">
+                    <th ng-repeat="header in groupHeaders">
+                      {{header.header}}
+                    </th>
+                    <tbody>
+                      <tr ng-repeat="group in permissionGroups">
+                        <td class="col-md-2"> {{group.name}} </td>
+                        <td class="col-md-1"><a data-toggle="tooltip" title="Edit"
+                            ng-click="getContent(contentItem.editGroup,group)">
+                            <span class="glyphicon glyphicon-edit"></span></a></td>
+                        <td class="col-md-1">
+                          <a data-toggle="tooltip" title="Delete"><span class="glyphicon glyphicon-trash"
+                              ng-click="deleteGroup(group)"></span></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+              <!--end: users list  -->
+
             </div>
-          </div></br></br>
-          <div class="col-md-2 managementPageform-group">
-            <button ng-if="permissionList.length && groupName.name && !isEditGroup" class="btn btn-primary active" ng-click="createGroup()">Create Group</button>
-            <button ng-if="permissionList.length && groupName.name && isEditGroup" class="btn btn-primary active" ng-click="updateGroupDetails()">Update</button>
+            <!--End of container  -->
+            <!--end: content  -->
           </div>
         </div>
 
-        <div class="col-md-4 list-permission" ng-if="permissionList.length">
-          <h2>Permissions :</h2>
-          <ul class="dropdown-list">
-              <li ng-repeat="permission in permissionList">{{permission.name}}</li>
-          </ul>
-        </div>
       </div>
-      
-      
-      <!--start: users list  -->
-      <div ng-switch-when='viewGroups' id="viewGroups">
-        <div class="">
-          <h3 class="col-md-7" style="text-align:center">List of Groups</h3></br>
-          <table class="table-responsive table-bordered table" style="width:60%">
-            <th ng-repeat="header in groupHeaders">
-              {{header.header}}
-            </th>
-            <tbody>
-              <tr ng-repeat="group in permissionGroups">
-                <td class="col-md-2"> {{group.name}} </td>
-                <td class="col-md-1" ><a data-toggle="tooltip" title="Edit" ng-click="getContent(contentItem.editGroup,group)">
-                  <span class="glyphicon glyphicon-edit"></span></a></td>
-                <td class="col-md-1">
-                   <a data-toggle="tooltip" title="Delete"><span class="glyphicon glyphicon-trash" ng-click="deleteGroup(group)"></span></a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        </div>
-      <!--end: users list  -->
-      
-    </div>
-    <!--End of container  -->
-    <!--end: content  -->
-    </div>
-  </div>
-
-</div>
 
 
 
 
 
-<!--start : change password  -->
-<div class="modal change_password" id="passwordModal" >
-  <div class="modal-dialog">
-    <div class="modal-content">
-  <div class="modal-header">
-      <h3>Change Password <span class="extra-title muted"></span></h3>
-  </div>
-  <form name="passwordForm">
-  <div class="modal-body form-horizontal">
-      <div class="form-group">
-          <label for="new_password" class="col-md-4 control-label">New Password</label>
-          <div class="col-md-5 controls">
-              <input type="password" name="new_password" class="form-control" ng-model="userInfo.password">
+      <!--start : change password  -->
+      <div class="modal change_password" id="passwordModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Change Password <span class="extra-title muted"></span></h3>
+            </div>
+            <form name="passwordForm">
+              <div class="modal-body form-horizontal">
+                <div class="form-group">
+                  <label for="new_password" class="col-md-4 control-label">New Password</label>
+                  <div class="col-md-5 controls">
+                    <input type="password" name="new_password" class="form-control" ng-model="userInfo.password">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="confirm_password" class="col-md-4 control-label">Confirm Password</label>
+                  <div class="col-md-5 controls">
+                    <input type="password" name="confirm_password" class="form-control"
+                      ng-model="userInfo.confirm_password"
+                      ng-change="checkPassword(userInfo.password,userInfo.confirm_password)">
+                    <span ng-if="!passwordValid && passwordForm.confirm_password.$dirty">{{passwordError}}</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="modal-footer">
+              <button href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              <button href="#" class="btn btn-primary" id="password_modal_save" ng-click="changePassword()"
+                ng-disabled="!passwordValid">Save changes</button>
+            </div>
           </div>
+        </div>
       </div>
-      <div class="form-group">
-          <label for="confirm_password" class="col-md-4 control-label">Confirm Password</label>
-          <div class="col-md-5 controls">
-              <input type="password" name="confirm_password" class="form-control" ng-model="userInfo.confirm_password" ng-change="checkPassword(userInfo.password,userInfo.confirm_password)">
-              <span ng-if="!passwordValid && passwordForm.confirm_password.$dirty">{{passwordError}}</span>
+      <!--end : change password  -->
+      <!--start: modal for create object lvel permission for profile  -->
+      <div id="createObjectLevelPermissionModal" class="modal" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Create Object Level Permission</h4>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="email">Object Name</label>
+                  <select class="form-control" ng-model="objectLevelPermissionData.content_type">
+                    <option ng-repeat="content_type in contentTypeList" value="{{content_type.id}}">
+                      {{content_type.model|uppercase}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Assign Object Level Permissions : </label></br>
+                  <label><input type="checkbox" ng-model="objectLevelPermissionData.view">&nbsp;View</label> &nbsp;
+                  <label><input type="checkbox" ng-model="objectLevelPermissionData.update">&nbsp;Update</label> &nbsp;
+                  <label><input type="checkbox" ng-model="objectLevelPermissionData.create">&nbsp;Create</label> &nbsp;
+                  <label><input type="checkbox" ng-model="objectLevelPermissionData.delete">&nbsp;Delete</label> &nbsp;
+                  <label><input type="checkbox" ng-model="objectLevelPermissionData.view_all">&nbsp;ViewAll</label>
+                  &nbsp;
+                  <label><input type="checkbox" ng-model="objectLevelPermissionData.update_all">&nbsp;UpdateAll</label>
+                  &nbsp;
+                </div>
+                <div class="form-group">
+                  <label for="email">Select Profile</label>
+                  <select class="form-control" ng-model="objectLevelPermissionData.profile">
+                    <option value="{{modalData.id}}">{{modalData.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="email">Description</label>
+                  <textarea class="form-control" rows="4" cols="40"></textarea>
+                </div>
+                <button type="submit" class="btn btn-default" ng-model="objectLevelPermissionData.description"
+                  ng-click="createObjectLevelPermission()">Create</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
           </div>
+
+        </div>
       </div>
-  </div>
-</form>
-  <div class="modal-footer">
-      <button href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-      <button href="#" class="btn btn-primary"  id="password_modal_save" ng-click="changePassword()" ng-disabled="!passwordValid">Save changes</button>
-  </div>
-</div>
-</div>
-</div>
-<!--end : change password  -->
-<!--start: modal for create object lvel permission for profile  -->
-<div id="createObjectLevelPermissionModal" class="modal" role="dialog">
-<div class="modal-dialog">
 
-  <!-- Modal content-->
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">Create Object Level Permission</h4>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <label for="email">Object Name</label>
-          <select class="form-control" ng-model="objectLevelPermissionData.content_type">
-            <option ng-repeat="content_type in contentTypeList" value="{{content_type.id}}">{{content_type.model|uppercase}}</option>
-          </select>
+
+      <!--end: modal for create object lvel permission for profile  -->
+
+      <!--start: modal for create general user  lvel permission for profile  -->
+      <div id="createGeneralUserPermissionModal" class="modal" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Create General User Level Permission</h4>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="email">Name</label>
+                  <input type="text" class="form-control" ng-model="generalUserLevelPermissionData.name">
+                </div>
+                <div class="form-group">
+                  <label>Assign General User Level Permissions : </label></br>
+                  <label><input type="checkbox" ng-model="generalUserLevelPermissionData.is_allowed">&nbsp;Is
+                    Allowed</label> &nbsp;
+                </div>
+                <div class="form-group">
+                  <label>Select Profile</label>
+                  <select class="form-control" ng-model="generalUserLevelPermissionData.profile">
+                    <option value="{{modalData.id}}">{{modalData.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="email">Description</label>
+                  <textarea class="form-control" rows="4" cols="40"
+                    ng-model="generalUserLevelPermissionData.description"></textarea>
+                </div>
+                <button type="submit" class="btn btn-default"
+                  ng-click="createGeneralUserLevelPermission()">Create</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
         </div>
-        <div class="form-group">
-          <label>Assign Object Level Permissions : </label></br>
-          <label><input type="checkbox" ng-model="objectLevelPermissionData.view">&nbsp;View</label> &nbsp;
-          <label><input type="checkbox" ng-model="objectLevelPermissionData.update">&nbsp;Update</label> &nbsp;
-          <label><input type="checkbox" ng-model="objectLevelPermissionData.create">&nbsp;Create</label> &nbsp;
-          <label><input type="checkbox" ng-model="objectLevelPermissionData.delete">&nbsp;Delete</label> &nbsp;
-          <label><input type="checkbox" ng-model="objectLevelPermissionData.view_all">&nbsp;ViewAll</label> &nbsp;
-          <label><input type="checkbox" ng-model="objectLevelPermissionData.update_all">&nbsp;UpdateAll</label> &nbsp;
+      </div>
+
+
+
+      <div id="cloneProfileModal" class="modal" role="dialog">
+
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">You are about to clone profile <b>{{modalData.name}}</b> within organisation <b>
+                  {{modalData.organisation.name}} </b></h4>
+            </div>
+
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="email">Enter New Name</label>
+                  <input type="text" class="form-control" placeholder="Click here to Enter Name"
+                    ng-model="cloneProfileNewName">
+                </div>
+                <button type="submit" class="btn btn-default"
+                  ng-click="cloneProfileGeneral(modalData.id, modalData.organisation.organisation_id,  cloneProfileNewName)">Clone
+                  Profile</button>
+              </form>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+
         </div>
-        <div class="form-group">
-          <label for="email">Select Profile</label>
-          <select class="form-control" ng-model="objectLevelPermissionData.profile">
-            <option value="{{modalData.id}}">{{modalData.name}}</option>
-          </select>
+      </div>
+      <!--start: create new organisation mapping modal  -->
+      <div id="createNewOrganisationMapModal" class="modal" role="dialog">
+
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Create New Organisation Mapping </b></h4>
+            </div>
+
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="email">Select Source Category</label>
+                  <select class="form-control" name="" ng-model="sourceCategory"
+                    ng-change="getOrganisationsByCategory(sourceCategory,true)">
+                    <option ng-repeat="category in organisationCategories" value="{{category}}">{{category}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="email">Select Source Organisation</label>
+                  <select class="form-control" name="" ng-model="mappingData.first_organisation_id">
+                    <option ng-repeat="organisation in sourceOrganisationListByCategory"
+                      value="{{organisation.organisation_id}}">{{organisation.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="email">Select Category You Want To Work With</label>
+                  <select class="form-control" name="" ng-model="destinationCategory"
+                    ng-change="getOrganisationsByCategory(destinationCategory)">
+                    <option ng-repeat="category in organisationCategories" value="{{category}}">{{category}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="email">Select Organisation You Want To Work With</label>
+                  <select class="form-control" name="" ng-model="mappingData.second_organisation_id">
+                    <option ng-repeat="organisation in destinationOrganisationListByCategory"
+                      value="{{organisation.organisation_id}}">{{organisation.name}}</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-default" ng-click="createOrganisationMapping()">Create</button>
+              </form>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+
         </div>
-        <div class="form-group">
-          <label for="email">Description</label>
-          <textarea  class="form-control" rows="4" cols="40"></textarea>
-        </div>
-        <button type="submit" class="btn btn-default" ng-model="objectLevelPermissionData.description" ng-click="createObjectLevelPermission()">Create</button>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    </div>
-  </div>
-
-</div>
-</div>
-
-
-<!--end: modal for create object lvel permission for profile  -->
-
-<!--start: modal for create general user  lvel permission for profile  -->
-<div id="createGeneralUserPermissionModal" class="modal" role="dialog">
-<div class="modal-dialog">
-
-  <!-- Modal content-->
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">Create General User Level Permission</h4>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <label for="email">Name</label>
-          <input type="text" class="form-control" ng-model="generalUserLevelPermissionData.name">
-        </div>
-        <div class="form-group">
-          <label>Assign General User Level Permissions : </label></br>
-          <label><input type="checkbox" ng-model="generalUserLevelPermissionData.is_allowed">&nbsp;Is Allowed</label> &nbsp;
-        </div>
-        <div class="form-group">
-          <label>Select Profile</label>
-          <select class="form-control" ng-model="generalUserLevelPermissionData.profile">
-            <option value="{{modalData.id}}">{{modalData.name}}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="email">Description</label>
-          <textarea  class="form-control" rows="4" cols="40"  ng-model="generalUserLevelPermissionData.description"></textarea>
-        </div>
-        <button type="submit" class="btn btn-default"ng-click="createGeneralUserLevelPermission()">Create</button>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    </div>
-  </div>
-
-</div>
-</div>
+      </div>
+      <!--end : create new organisation mapping modal  -->
 
 
 
-<div id="cloneProfileModal" class="modal" role="dialog">
 
-<div class="modal-dialog">
-
-  <!-- Modal content-->
-  <div class="modal-content">
-
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">You are about to clone profile <b>{{modalData.name}}</b>  within organisation <b> {{modalData.organisation.name}} </b></h4>
-    </div>
-
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <label for="email">Enter New Name</label>
-          <input type="text" class="form-control" placeholder="Click here to Enter Name" ng-model="cloneProfileNewName">
-        </div>
-        <button type="submit" class="btn btn-default"ng-click="cloneProfileGeneral(modalData.id, modalData.organisation.organisation_id,  cloneProfileNewName)">Clone Profile</button>
-      </form>
-    </div>
-
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    </div>
-
-  </div>
-
-</div>
-</div>
-<!--start: create new organisation mapping modal  -->
-<div id="createNewOrganisationMapModal" class="modal" role="dialog">
-
-<div class="modal-dialog">
-
-  <!-- Modal content-->
-  <div class="modal-content">
-
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">Create New Organisation Mapping </b></h4>
-    </div>
-
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <label for="email">Select Source Category</label>
-          <select class="form-control" name="" ng-model="sourceCategory" ng-change="getOrganisationsByCategory(sourceCategory,true)">
-            <option ng-repeat="category in organisationCategories" value="{{category}}">{{category}}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="email">Select Source Organisation</label>
-          <select class="form-control" name="" ng-model="mappingData.first_organisation_id">
-            <option ng-repeat="organisation in sourceOrganisationListByCategory" value="{{organisation.organisation_id}}">{{organisation.name}}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="email">Select Category You Want To Work With</label>
-          <select class="form-control" name="" ng-model="destinationCategory"  ng-change="getOrganisationsByCategory(destinationCategory)">
-            <option ng-repeat="category in organisationCategories" value="{{category}}">{{category}}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="email">Select Organisation You Want To Work With</label>
-          <select class="form-control" name="" ng-model="mappingData.second_organisation_id">
-            <option ng-repeat="organisation in destinationOrganisationListByCategory" value="{{organisation.organisation_id}}">{{organisation.name}}</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-default"ng-click="createOrganisationMapping()">Create</button>
-      </form>
-    </div>
-
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    </div>
-
-  </div>
-
-</div>
-</div>
-<!--end : create new organisation mapping modal  -->
-
-
-
-      
     </div><!-- middle-section -->
     <div class="fixfooter"></div>
   </div><!-- wrapperBox -->
   <footer-bar></footer-bar>
 </main>
-
-
-

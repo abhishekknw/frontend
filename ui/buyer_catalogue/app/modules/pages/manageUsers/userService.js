@@ -195,5 +195,10 @@ angular.module('machadaloPages')
       return machadaloHttp.get(url);
     }
 
+    userService.getRoleByOrganisation = function(id){
+      let url = url_base_website + "role/?organisation_id=" + id;
+      return machadaloHttp.get(url);
+    }
+
   return userService;
 }]);
