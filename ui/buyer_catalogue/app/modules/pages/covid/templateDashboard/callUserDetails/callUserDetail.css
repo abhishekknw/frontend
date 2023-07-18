@@ -1,0 +1,20 @@
+#onCallUserDetails {
+    text-align: left;
+}
+
+#onCallUserDetails .modal-body{
+    padding: 15px;
+}
+#onCallUserDetails label{
+    line-height: normal;
+    font-weight: 300;
+    color: #666;
+}
+
+#onCallUserDetails table th,#onCallUserDetails table td{
+    text-align: left;
+}
+
+#onCallUserDetails .multiselect-parent button,#onCallUserDetails  .multiselect-parent{
+    width: 100%;
+}
