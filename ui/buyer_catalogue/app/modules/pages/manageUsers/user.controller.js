@@ -179,7 +179,7 @@ angular.module('machadaloPages')
         }
         $scope.selectedState = [];
         $scope.selectedCity = [];
-        $scope.stateDrodownSetting = { scrollableHeight: '200px', scrollable: true,enableSearch: true };
+        $scope.stateDrodownSetting = { scrollableHeight: '200px', scrollable: true, enableSearch: true };
         let getStateCityList = function () {
           AuthService.initialStateList()
             .then(function onSuccess(response) {
@@ -190,10 +190,18 @@ angular.module('machadaloPages')
           AuthService.initialData()
             .then(function onSuccess(response) {
               $scope.CityList = response.data.cities.map(({ city_name: label, ...rest }) => ({ label, ...rest }));
-              console.log($scope.CityList)
             }).catch(function onError(response) {
               console.log(response);
             })
+        }
+
+        $scope.getCityListByFilter = function () {
+          let stateIds = []
+          $scope.selectedState.map((item) => {
+            stateIds.push(item.id)
+          })
+          let filterCity = $scope.CityList?.filter((obj) => stateIds.includes(obj.state_code));
+          return filterCity;
         }
         $scope.getProfiles = function (organisationId) {
           var promise = [];
