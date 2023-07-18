@@ -740,21 +740,24 @@
           .catch(function onError(response) {
             swal(constants.error, constants.errorMsg, constants.error)
           })
-        $('#LeadAcceptModal').modal('show')
+        $('#LeadAcceptModal').modal('show');
       }
+
       $scope.acceptDeclineDecisionPanding = function (index, value, id, requirement_id) {
         let data = [{
           "requirement_id": requirement_id,
           "client_status": value,
           "_id": id
         }]
+        let meassage = value==='Accepted' ? "Yes Accept !" : "Yes Decline !";
+        let confirmBtn = value==='Accepted' ? "Accept" : "Yes Decline";
         swal({
           title: 'Are you sure ?',
-          text: value + ' Leads',
+          text: meassage,
           type: constants.warning,
           showCancelButton: true,
           confirmButtonClass: "btn-success",
-          confirmButtonText: "Yes, Remove!",
+          confirmButtonText: confirmBtn,
           closeOnConfirm: false,
           closeOnCancel: true
         },
@@ -767,6 +770,7 @@
                       $scope.leadDecisionPandingData.values[index][0].client_status = "Decline";
                     } else {
                       $scope.leadDecisionPandingData.values.splice(index, 1);
+                      $('#LeadAcceptModal').modal('hide')
                     }
                     if (value == 'Decline') {
                       value = 'Declined';
