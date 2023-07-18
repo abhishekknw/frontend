@@ -290,6 +290,15 @@
                     <span ng-repeat="item in selectedState">{{item.label}},</span>
                   </div>
                 </div>
+                <div class="item">
+                  <div class="dropup">
+                    <label for="confirm">Select City:</label>
+                    <div ng-dropdown-multiselect="" options="CityList" selected-model="selectedCity"
+                      extra-settings="stateDrodownSetting">
+                    </div>
+                    <span ng-repeat="item in selectedCity">{{item.label}},</span>
+                  </div>
+                </div>
               </div>
               <button type="submit" id="button" class="smallBtn login-button" ng-disabled="!isValid">Create
                 User</button>
