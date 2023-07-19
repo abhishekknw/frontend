@@ -286,6 +286,7 @@
                     <label for="confirm">Select State:</label>
                     <div ng-dropdown-multiselect="" options="StateList" selected-model="selectedState"
                       extra-settings="stateDrodownSetting"
+                      events="stateEvents" 
                       >
                     </div>
                     <span ng-repeat="item in selectedState">{{item.label}},</span>
@@ -294,7 +295,7 @@
                 <div class="item">
                   <div class="dropup">
                     <label for="confirm">Select City:</label>
-                    <div ng-dropdown-multiselect="" options="getCityListByFilter()" selected-model="selectedCity"
+                    <div ng-dropdown-multiselect="" options="filterCity" selected-model="selectedCity"
                       extra-settings="stateDrodownSetting">
                     </div>
                     <span ng-repeat="item in selectedCity">{{item.label}},</span>
