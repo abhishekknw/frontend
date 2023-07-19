@@ -15,7 +15,7 @@ import OpsDashboard from '../OpsDashboard/OpsDashboard';
   return (
     <>
       <div className="container ">
-        <MachadaloHeader />
+        {/* <MachadaloHeader /> */}
         <hr className="mt-0" />
         <Switch>
           <SnackbarProvider
@@ -23,10 +23,7 @@ import OpsDashboard from '../OpsDashboard/OpsDashboard';
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={open}
           >
-            <Route
-              path={match.path + ROUTESNAME.CAMPAIGN_DECISION_BOARD}
-              component={CampaignDecisionBoard}
-            />
+            <Route path={match.path + ROUTESNAME.CAMPAIGN_DECISION_BOARD} component={CampaignDecisionBoard}/>
             <Route path={match.path + ROUTESNAME.INTERVENE_CHAT} component={InterveneChat} />
             <Route path={match.path + ROUTESNAME.OPS_DASHBOARD} component={OpsDashboard} />
           </SnackbarProvider>

@@ -14,13 +14,8 @@ export default function DashboardRoutes(props) {
   return (
     <>
       <Switch>
-        {/* <Route
-            exact
-            path={`${match.path}/dashboard`}
-            render={(componentProps) => <MachadaloDashboard {...props} {...componentProps} />}
-          /> */}
-        <Route path={MACHADALO_DASHBOARD_ROUTE} component={MachadaloRoutes} />
-        <Route path={CLIENT_DASHBOARD_ROUTE} component={ClientRoutes} />
+        <Route path={`${match.path}/machadalo`} component={MachadaloRoutes} />
+        <Route path={`${match.path}/client`} component={ClientRoutes} />
       </Switch>
     </>
   );

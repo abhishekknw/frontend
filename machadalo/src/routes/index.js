@@ -14,17 +14,7 @@ export default function Routes() {
   return (
     <Router>
       <Switch>
-        {/* {
-          userInfo.profile.organisation.category === "SUPPLIER_AGENCY" &&
-          <Route path='/r/supplier' component={SupplierRoutes} />
-        } */}
-        {/* {
-          userInfo === "BUSINESS" &&
-          <Route path='/r/Client' component={ClientRoutes} />
-        } */}
-        {/* <Route path="/r/machadalo" component={MachadaloRoutes} /> */}
-        <Route path={DASHBOARD_ROUTE} component={DashboardRoutes} />
-        <Route path="/r" component={PagesRoutes} />
+        {/* <Route path="/r" component={PagesRoutes} /> */}
         <Route path="/r" component={LayoutContainer} />
         <Route path="*">
           <Redirect to="/r/404" />

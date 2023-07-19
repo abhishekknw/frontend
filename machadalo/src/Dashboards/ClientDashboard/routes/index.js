@@ -13,9 +13,9 @@ export default function ClientRoutes(props) {
 
   return (
     <>
-      <div className="container ">
+      {/* <div className="container ">
         <MachadaloHeader />
-      </div>{' '}
+      </div>{' '} */}
       <Switch>
         <SnackbarProvider
           autoHideDuration={2000}
@@ -24,7 +24,7 @@ export default function ClientRoutes(props) {
         >
           <Route
             exact
-            path={CLIENT_DASHBOARD_ROUTE}
+            path={`${match.path}/`}
             render={(componentProps) => <ClientDashboard {...props} {...componentProps} />}
           />
         </SnackbarProvider>
