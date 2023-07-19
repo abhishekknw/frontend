@@ -301,7 +301,8 @@
                   <div class="dropup">
                     <label for="confirm">Select City:</label>
                     <div ng-dropdown-multiselect="" options="filterCity" selected-model="selectedCity"
-                      extra-settings="stateDrodownSetting">
+                      extra-settings="stateDrodownSetting"
+                      events="cityEvents">
                     </div>
                     <span ng-repeat="item in selectedCity">{{item.label}},</span>
                   </div>
