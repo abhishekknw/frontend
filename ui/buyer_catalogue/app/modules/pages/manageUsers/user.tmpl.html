@@ -255,7 +255,7 @@
                   <span ng-if="!isValid && model.confirm_password">{{passwordError}}</span>
                 </div>
                 <div class="item">
-                  <label for="confirm">Organisation11:</label>
+                  <label for="confirm">Organisation:</label>
                   <span
                     ng-if="(userInfo.profile.organisation.name.toUpperCase() != standardOrganisation.toUpperCase())">{{userInfo.profile.organisation.name}}</span>
                   <select ng-if="(userInfo.profile.organisation.name == standardOrganisation) || userInfo.is_superuser"

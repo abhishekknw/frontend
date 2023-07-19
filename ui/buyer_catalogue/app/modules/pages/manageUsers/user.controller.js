@@ -185,6 +185,7 @@ angular.module('machadaloPages')
           enableSearch: true, 
           selectedToTop: true,
           showCheckAll: false,
+          showUncheckAll: false,
         };
         $scope.stateEvents = { 
           onInitDone: function (item) { console.log(item); }, 
