@@ -287,24 +287,28 @@
                     ng-model="model.mobile" required>
                 </div>
                 <div class="item">
-                  <div class="dropup">
+                  <div class="form-group label-floating">
                     <label for="confirm">Select State:</label>
-                    <div ng-dropdown-multiselect="" options="StateList" selected-model="selectedState"
+                    <span style="color:red;width:100%;margin-left:20px;" 
+                      ng-dropdown-multiselect="" options="StateList" 
+                      selected-model="selectedState"
                       extra-settings="stateDrodownSetting"
                       events="stateEvents" 
                       >
-                    </div>
-                    <span ng-repeat="item in selectedState">{{item.label}},</span>
+                    </span>
+                    <!-- <span ng-repeat="item in selectedState">{{item.label}},</span> -->
                   </div>
                 </div>
                 <div class="item">
-                  <div class="dropup">
+                  <div class="form-group label-floating">
                     <label for="confirm">Select City:</label>
-                    <div ng-dropdown-multiselect="" options="filterCity" selected-model="selectedCity"
+                    <span style="color:red;width:100%;margin-left:20px;"
+                      ng-dropdown-multiselect="" options="filterCity" 
+                      selected-model="selectedCity"
                       extra-settings="stateDrodownSetting"
                       events="cityEvents">
-                    </div>
-                    <span ng-repeat="item in selectedCity">{{item.label}},</span>
+                    </span>
+                    <!-- <span ng-repeat="item in selectedCity">{{item.label}},</span> -->
                   </div>
                 </div>
               </div>
