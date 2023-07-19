@@ -7,8 +7,11 @@ import { BsFillBellFill, BsFillPersonFill, BsFillHouseDoorFill, BsGearFill } fro
 import Logo from './logo.png';
 import './header.css';
 import SideNavBar from '../sidebar/sideBar';
+import { userInformationAtom } from '../../_states';
+import { useRecoilValue } from 'recoil';
 
 export default function MachadaloHeader(props) {
+  const userInfo = useRecoilValue(userInformationAtom);
   return (
     <>
       <Box className="pt-1">
@@ -41,8 +44,12 @@ export default function MachadaloHeader(props) {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item><Link to="#">Change Password</Link></Dropdown.Item>
-                      <Dropdown.Item><Link to="/#/logout/">Logout</Link></Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link to="#">Change Password</Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link to="/#/logout/">Logout</Link>
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </li>
@@ -57,7 +64,7 @@ export default function MachadaloHeader(props) {
                 <span>
                   <BsFillPersonFill />
                 </span>
-                Welcome back ,Kriti
+                {userInfo?.first_name.toUpperCase() + ' ' + userInfo?.last_name.toUpperCase()}
               </div>{' '}
             </div>
           </Col>
