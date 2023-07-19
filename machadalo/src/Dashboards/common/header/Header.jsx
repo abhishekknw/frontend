@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Link } from '@mui/material';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -28,11 +28,11 @@ export default function MachadaloHeader(props) {
             <div className="d-flex justify-content-end align-items-center mobile-con-between">
               <ul className="d-flex justify-content-end align-items-center mb-0 mobile-start">
                 <li>
-                  {' '}
-                  <span>
-                    {' '}
-                    <BsFillHouseDoorFill />
-                  </span>
+                  <Link to="/#/manageCampaign/create">
+                    <span>
+                      <BsFillHouseDoorFill />
+                    </span>
+                  </Link>
                 </li>
                 <li>
                   <Dropdown className="setting-icon">
@@ -41,8 +41,8 @@ export default function MachadaloHeader(props) {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="#">Change Password</Dropdown.Item>
-                      <Dropdown.Item href="#">Logout</Dropdown.Item>
+                      <Dropdown.Item><Link to="#">Change Password</Link></Dropdown.Item>
+                      <Dropdown.Item><Link to="/#/logout/">Logout</Link></Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </li>
@@ -62,16 +62,6 @@ export default function MachadaloHeader(props) {
             </div>
           </Col>
         </Row>
-
-        {/* <div className="second-header">
-          <Row>
-            <Col sm={2} className='icon'><BsFillPersonPlusFill />    <span>    Leads</span></Col>
-            <Col sm={2} className='icon'><BsPhoneVibrate /><span>  INTERVENE</span></Col>
-            <Col sm={2} className='icon'><BsPcDisplay /><span>  Template dashboard</span></Col>
-            <Col sm={2} className='icon'><BsChatRightHeart /><span>  Dynamic Bot</span></Col>
-            <Col sm={2} className='icon'><BsPersonVideo3 /><span>License & Payment</span></Col>
-          </Row>
-        </div> */}
       </Box>
     </>
   );
