@@ -220,7 +220,7 @@ import 'datatables.net-responsive';
 // import 'datatables.net-plugins/sorting/anti-the.mjs';
 import DataTable from 'datatables.net-dt';
 import Select from 'react-select';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Col } from 'react-bootstrap';
 
 import {
   BsSortDown,
@@ -291,7 +291,7 @@ export default function OpsDashboard(props) {
               meta.row +
               '" value="EDIT"/><input type="button" class="opsverify" id=n-"' +
               meta.row +
-              '" value="OPS VERIFY"/><input type="button" class="Remove" id=n-"' +
+              '" value="OPS VERIFY"/><input type="button" class="remove" id=n-"' +
               meta.row +
               '" value="Remove"/>'
             );
@@ -346,19 +346,39 @@ export default function OpsDashboard(props) {
   return (
     <>
       <div>
-        <Form>
-          <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-            <Select
-              className="mb-3"
-              options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
-              // onChange={handleTypeSelect}
-              // value={organisationOptions.filter(function (option) {
-              //   return option.value === selectedOption;
-              // })}
-              label="Sector"
-              id="Sector"
-              placeholder="Select Sector"
-            />
+        <Form className=''>
+          <Form.Group    className="mb-3 group-two" controlId="formPlaintextEmail">
+            <Form.Group >
+              <Select
+                className="mb-3 me-2 input-div"
+                options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
+                // onChange={handleTypeSelect}
+                // value={organisationOptions.filter(function (option) {
+                //   return option.value === selectedOption;
+                // })}
+                label="Sector"
+                id="Sector"
+                placeholder="Select Sector"
+              />
+            </Form.Group>
+
+            <Form.Group  className="mb-3" controlId="formPlaintext">
+              <Select
+                className="mb-3 me-2 input-div"
+                options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
+                // onChange={handleTypeSelect}
+                // value={organisationOptions.filter(function (option) {
+                //   return option.value === selectedOption;
+                // })}
+                label="Sector"
+                id="Sector"
+                placeholder="Select Sector"
+              />
+            </Form.Group>
+            
+            <Form.Group  className="mb-3 me-2 input-div" controlId="formPlaintext">
+              <Button className='btn btn-theme'>Add Row</Button>
+              </Form.Group>
           </Form.Group>
         </Form>
       </div>
@@ -398,13 +418,15 @@ export default function OpsDashboard(props) {
               <td>Bharat ViKas Group User</td>
               <td>No Requirement + Feedback + Subcription</td>
               <td>5000</td>
-              <td>
+              <td className='span-box'>
                 {' '}
-                <span>Submitted: Jun 23, 2022 11:31:31 AM </span>
-                <br></br>
-                <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
-                <br></br>
-                <span> Ops Verify Name:AMAN PATIDAR</span>
+                <span className="span-tag">
+                  <span>Submitted: Jun 23, 2022 11:31:31 AM </span>
+                  <br></br>
+                  <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
+                  <br></br>
+                  <span> Ops Verify Name:AMAN PATIDAR  </span>
+                </span>
               </td>
               <td>
                 {/* <span>
@@ -485,10 +507,10 @@ export default function OpsDashboard(props) {
         onHide={(e) => {
           setRequirementModal({ show: false });
         }}
-        className=""
+        className="ops-edit-modal modify-modal"
       >
         <Modal.Header closeButton>
-          <Modal.Title>EDIT</Modal.Title>
+          <Modal.Title>Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <RequirementEditModal />

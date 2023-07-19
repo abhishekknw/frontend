@@ -1043,3 +1043,74 @@ tr.child td.child {
 .text-left{
     text-align: left !important;
 }
+table.dataTable tbody th, table.dataTable tbody td{
+    line-height: 1.5;
+}
+// td.dtr-control.sorting_1
+tr td:first-child{
+    padding: 10px 10px 10px 24px !important;
+}
+tr td li{
+    position: relative;
+}
+.span-box{
+    position: relative;
+}
+li .span-tag{
+    // position: absolute;
+    /* height: 43px; */
+    /* display: block; */
+    left: 90px;
+}
+.edit , .opsverify , .remove{
+margin-right: 10px;
+}
+.ops-edit-modal .modal-dialog{
+    max-width: 700px;
+    width: 100%;
+}
+.group-two{
+    display: flex;
+}
+.input-div{
+    max-width: 500px;
+    min-width: 250px;
+}
+.btn-theme, .btn-theme:hover{
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+// modal
+.form-mainbox{
+    display: inline-flex;
+    justify-content: space-between;
+}
+.form-div{
+    width: 49%;
+}
+
+.modify-modal .modal-header {
+    background-color: #8e1921;
+    color: #FFFFFF;
+}
+.modify-modal .modal-title{
+    background-color: transparent;
+    font-size: 18px;    
+}
+.form-div label.form-label {
+    font-weight: 700;
+    display: block;
+}
+p{
+    line-height: 1.5;
+}
