@@ -220,7 +220,7 @@ import 'datatables.net-responsive';
 // import 'datatables.net-plugins/sorting/anti-the.mjs';
 import DataTable from 'datatables.net-dt';
 import Select from 'react-select';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Col } from 'react-bootstrap';
 
 import {
   BsSortDown,
@@ -234,6 +234,7 @@ import './opsdashboard.css';
 import { Form } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import RequirementEditModal from './RequirementEditModal';
+import ReactDOM from "react-dom";
 
 const columnsList = [
   { title: 'Current Partner' },
@@ -259,17 +260,11 @@ export default function OpsDashboard(props) {
   const [requirementModal, setRequirementModal] = useState({ show: true });
   // require("datatables.net-responsive")(window);
   const tableRef = useRef();
-  const tableName = 'table1';
-
-  $(function() {
-    $('#btn').click(function() {
-      alert(2343)
-    });
-  });
+  const tableName = 'opsDashboardTable';
 
   useEffect(() => {
     function handleResize() {
-      let getClass = document.getElementById('table1');
+      let getClass = document.getElementById('opsDashboardTable');
       console.log(getClass.className, 'getClassgetClass');
       if ('display dataTable no-footer dtr-inline collapsed' === getClass.className) {
         setPlusIcon(true);
@@ -284,26 +279,46 @@ export default function OpsDashboard(props) {
     console.log(tableRef.current);
 
     const table = new DataTable(`#${tableName}`, {
-      // data: dataSet,
-      // columns: [
-      //   { title: 'Action' },
-      // ],
-      // columnDefs: [
-      //   {
-      //     target: 0,
-      //     type: 'anti-the',
-      //   },
-      // ],
+      details: {
+        renderer: $.fn.dataTable.Responsive.renderer.listHiddenNodes()
+      },
+      columnDefs: [
+        {
+          targets: -1,
+          render: function (data, type, row, meta) {
+            return (
+              '<input type="button" class="edit" id=n-"' +
+              meta.row +
+              '" value="EDIT"/><input type="button" class="opsverify" id=n-"' +
+              meta.row +
+              '" value="OPS VERIFY"/><input type="button" class="remove" id=n-"' +
+              meta.row +
+              '" value="Remove"/>'
+            );
+          },
+        },
+        // {
+        //   targets: -1,
+        //   createdCell: (td, cellData, rowData, row, col) => {
+        //     ReactDOM.render(
+        //       <button
+        //         onClick={() =>{openCloseModal({ rowID: rowData.RowID, code: rowData.ProdCode })}}
+        //         data-toggle="tooltip"
+        //         data-placement="right"
+        //         title="Delete Item From Cart"
+        //         className="btn btn-sm btn-danger"
+        //       >
+        //         <i className="fas fa-times fa-lg"></i>
+        //       </button>,
+        //       td
+        //     );
+        //   },
+        // },
+      ],
       info: false,
-      // select: true,
-      // dom: 'Bfrtip',
-      // ordering: false,
       paging: false,
       responsive: true,
       searching: false,
-      // rowReorder: {
-      //   selector: 'td:nth-child(2)',
-      // },
     });
     // Extra step to do extra clean-up.
     return function () {
@@ -312,27 +327,58 @@ export default function OpsDashboard(props) {
     };
   }, []);
 
+  $('#opsDashboardTable tbody').on('click', '.edit', function () {
+    var id = $(this).attr('id').match(/\d+/)[0];
+    var data = $('#opsDashboardTable').DataTable().row(id).data();
+    console.log(data[0]);
+    openCloseModal();
+  });
+  $('#opsDashboardTable tbody').on('click', '.opsverify', function () {
+    var id = $(this).attr('id').match(/\d+/)[0];
+    var data = $('#opsDashboardTable').DataTable().row(id).data();
+    console.log(data[5]);
+    openCloseModal();
+  });
   const openCloseModal = () => {
-    alert(2);
     console.log('2222');
     setRequirementModal({ show: true });
   };
   return (
     <>
       <div>
-        <Form>
-          <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-            <Select
-              className="mb-3"
-              options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
-              // onChange={handleTypeSelect}
-              // value={organisationOptions.filter(function (option) {
-              //   return option.value === selectedOption;
-              // })}
-              label="Sector"
-              id="Sector"
-              placeholder="Select Sector"
-            />
+        <Form className=''>
+          <Form.Group    className="mb-3 group-two" controlId="formPlaintextEmail">
+            <Form.Group >
+              <Select
+                className="mb-3 me-2 input-div"
+                options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
+                // onChange={handleTypeSelect}
+                // value={organisationOptions.filter(function (option) {
+                //   return option.value === selectedOption;
+                // })}
+                label="Sector"
+                id="Sector"
+                placeholder="Select Sector"
+              />
+            </Form.Group>
+
+            <Form.Group  className="mb-3" controlId="formPlaintext">
+              <Select
+                className="mb-3 me-2 input-div"
+                options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
+                // onChange={handleTypeSelect}
+                // value={organisationOptions.filter(function (option) {
+                //   return option.value === selectedOption;
+                // })}
+                label="Sector"
+                id="Sector"
+                placeholder="Select Sector"
+              />
+            </Form.Group>
+            
+            <Form.Group  className="mb-3 me-2 input-div" controlId="formPlaintext">
+              <Button className='btn btn-theme'>Add Row</Button>
+              </Form.Group>
           </Form.Group>
         </Form>
       </div>
@@ -351,7 +397,7 @@ export default function OpsDashboard(props) {
               <td>NA Reason:not given test</td>
               <td>
                 <span>Asian Paints Ltd </span>
-                <br/>
+                <br />
                 <span>JSW Paints Private Limited</span>
               </td>
               <td>6-9 months</td>
@@ -364,21 +410,26 @@ export default function OpsDashboard(props) {
               <td>
                 <BsFillChatDotsFill size={20} className="icons" />
               </td>
-              <td className='text-left'><b>Name:</b> shahid <br/><b>Number:</b> 7006501835</td>
+              <td className="text-left">
+                <b>Name:</b> shahid <br />
+                <b>Number:</b> 7006501835
+              </td>
               <td>Bharti AXA Life Insurence company</td>
               <td>Bharat ViKas Group User</td>
               <td>No Requirement + Feedback + Subcription</td>
               <td>5000</td>
-              <td>
+              <td className='span-box'>
                 {' '}
-                <span>Submitted: Jun 23, 2022 11:31:31 AM </span>
-                <br></br>
-                <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
-                <br></br>
-                <span> Ops Verify Name:AMAN PATIDAR</span>
+                <span className="span-tag">
+                  <span>Submitted: Jun 23, 2022 11:31:31 AM </span>
+                  <br></br>
+                  <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
+                  <br></br>
+                  <span> Ops Verify Name:AMAN PATIDAR  </span>
+                </span>
               </td>
               <td>
-                <span>
+                {/* <span>
                   <BsCheckLg size={20} className="icons" />
                 </span>
                 <span>
@@ -386,14 +437,14 @@ export default function OpsDashboard(props) {
                     className="icons"
                     id="btn"
                     size={20}
-                    // onClick={(e) => {
-                    //   openCloseModal(e);
-                    // }}
+                    onClick={(e) => {
+                      openCloseModal(e);
+                    }}
                   />
                 </span>
                 <span>
                   <BsFillXCircleFill className="icons" size={20} />
-                </span>
+                </span> */}
               </td>
             </tr>
             <tr>
@@ -420,16 +471,16 @@ export default function OpsDashboard(props) {
               <td>No Requirement + Feedback + Subcription</td>
               <td>5000</td>
               <td>
-                <span className='span-tag'>
-                <span>Submitted: Jun 23, 2022 11:31:31 AM6854654 </span>
-                <br></br>
-                <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
-                <br></br>
-                <span> Ops Verify Name:AMAN PATIDAR</span>
+                <span className="span-tag">
+                  <span>Submitted: Jun 23, 2022 11:31:31 AM6854654 </span>
+                  <br></br>
+                  <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
+                  <br></br>
+                  <span> Ops Verify Name:AMAN PATIDAR</span>
                 </span>
               </td>
               <td>
-                <span>
+                {/* <span>
                   <BsCheckLg className="icons" size={20} />
                 </span>
                 <span>
@@ -437,14 +488,14 @@ export default function OpsDashboard(props) {
                     className="icons"
                     id="btn"
                     size={20}
-                    // onClick={(e) => {
-                    //   openCloseModal(e);
-                    // }}
+                    onClick={(e) => {
+                      openCloseModal(e);
+                    }}
                   />
                 </span>
                 <span>
                   <BsFillXCircleFill className="icons" size={20} />
-                </span>
+                </span> */}
               </td>
             </tr>
           </tbody>
@@ -456,10 +507,10 @@ export default function OpsDashboard(props) {
         onHide={(e) => {
           setRequirementModal({ show: false });
         }}
-        className=""
+        className="ops-edit-modal modify-modal"
       >
         <Modal.Header closeButton>
-          <Modal.Title>EDIT</Modal.Title>
+          <Modal.Title>Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <RequirementEditModal />

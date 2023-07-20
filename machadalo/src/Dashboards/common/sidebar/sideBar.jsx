@@ -148,9 +148,15 @@ export default function SideNavBar() {
                       </i>
                     </a>
                     <ul className="first-class-child first-class-ul">
-                      <li className="first-class-li"><Link to="/r/operations-dashboard">Campaign Report</Link></li>
-                      <li className="first-class-li"><Link to="/r/operations-dashboard/entity">Entity Report</Link></li>
-                      <li className="first-class-li"><Link to="/r/operations-dashboard/user">User Performance</Link></li>
+                      <li className="first-class-li">
+                        <Link to="/r/operations-dashboard">Campaign Report</Link>
+                      </li>
+                      <li className="first-class-li">
+                        <Link to="/r/operations-dashboard/entity">Entity Report</Link>
+                      </li>
+                      <li className="first-class-li">
+                        <Link to="/r/operations-dashboard/user">User Performance</Link>
+                      </li>
                     </ul>
                   </li>
                 </ul>
@@ -165,7 +171,7 @@ export default function SideNavBar() {
               </Link>
               <div className="first-class">
                 <ul className="first-class-ul">
-                <li className="first-class-li nav-text first-class-child-main">
+                  <li className="first-class-li nav-text first-class-child-main">
                     <a>
                       <span>Static</span>
                       <i>
@@ -173,17 +179,126 @@ export default function SideNavBar() {
                       </i>
                     </a>
                     <ul className="first-class-child first-class-ul">
-                      <li className="first-class-li"><Link to="/#/campaignDecisionBoard">Campaign Decision Board</Link></li>
-                      <li className="first-class-li"><Link to="/r/operations-dashboard/entity">Entity Report</Link></li>
-                      <li className="first-class-li"><Link to="/r/operations-dashboard/user">User Performance</Link></li>
+                      <li className="first-class-li">
+                        <Link to="/#/campaignDecisionBoard">Campaign Decision Board</Link>
+                      </li>
+                      <li className="first-class-li">
+                        <Link to="/#/CampaignList">List Of Campaign</Link>
+                      </li>
+                      <li className="first-class-li">
+                        <Link to="/#/HDFHDF0789/releasePlan">Booking Plan</Link>
+                      </li>
+                      <li className="first-class-li">
+                        <Link to="/#/SuspenseLeadSheet">Suspense Lead Sheet</Link>
+                      </li>
                     </ul>
                   </li>
-                  <li className="first-class-li">Dynamic</li>
+                  <li className="first-class-li nav-text first-class-child-main">
+                    <a>
+                      <span>Dynamic</span>
+                      <i>
+                        <BsFillCaretRightFill />
+                      </i>
+                    </a>
+                    <ul className="first-class-child first-class-ul">
+                      <li className="first-class-li nav-text second-class-child-li">
+                        <a>
+                          <span>Supplier</span>
+                          <i>
+                            <BsFillCaretRightFill />
+                          </i>
+                        </a>
+                        <ul className="first-class-ul second-class-child">
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <Link to="/r/supplier/base-type/list">Standard Templates
+                              </Link>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <Link to="/r/supplier/type/list">Manage Supplier Type</Link>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <Link to="/r/supplier/list">Manage Supplier</Link>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li className="first-class-li nav-text second-class-child-li">
+                        <a>
+                          <span>Inventory</span>
+                          <i>
+                            <BsFillCaretRightFill />
+                          </i>
+                        </a>
+                        <ul className="first-class-ul second-class-child">
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <Link to="/r/inventory/base/list">Standard Template</Link>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                            <Link to="/r/inventory/list">Manage Inventory</Link>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li className="first-class-li nav-text second-class-child-li">
+                        <a>
+                          <span>Booking Engine</span>
+                          <i>
+                            <BsFillCaretRightFill />
+                          </i>
+                        </a>
+                        <ul className="first-class-ul second-class-child">
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <Link to="/r/booking/base/list">Standard Templates</Link>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                            <Link to="/r/booking/template/list">Booking Templates</Link>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                            <Link to="/r/booking/campaigns">Manage Bookings</Link>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li className="first-class-li nav-text second-class-child-li">
+                        <a>
+                          <span>Campaign Release</span>
+                          <i>
+                            <BsFillCaretRightFill />
+                          </i>
+                        </a>
+                        <ul className="first-class-ul second-class-child">
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <Link to="/#/HDFHDF0789/auditReleasePlan">Release and Audit Plan </Link>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <Link to="/#">Manage Phases</Link>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </li>
             <li className="nav-text">
-              <Link to="#">
+              <Link to="/r/checklist/campaigns">
                 Campaign Execution
                 <i>
                   <BsFillCaretRightFill />
@@ -202,8 +317,12 @@ export default function SideNavBar() {
                       </i>
                     </a>
                     <ul className="first-class-child first-class-ul">
-                      <li className="first-class-li"><Link to="/#/campaignLeads">Static</Link></li>
-                      <li className="first-class-li"><Link to="/r/leads/settings">Dynamic</Link></li>
+                      <li className="first-class-li">
+                        <Link to="/#/campaignLeads">Capture Leads</Link>
+                      </li>
+                      <li className="first-class-li">
+                        <Link to="/r/leads/settings">Assign Permission</Link>
+                      </li>
                     </ul>
                   </li>
                 </ul>
@@ -220,7 +339,9 @@ export default function SideNavBar() {
               </Link>
               <div className="first-class">
                 <ul className="first-class-ul">
-                  <li className="first-class-li">Manage Supplier</li>
+                  <li className="first-class-li">
+                    <Link to="/#/login">Manage Supplier</Link>
+                  </li>
                 </ul>
               </div>
             </li>
@@ -229,38 +350,95 @@ export default function SideNavBar() {
               <Link to="#">
                 <span>Management</span>
                 <i>
-                  {' '}
                   <BsFillCaretRightFill />
                 </i>
               </Link>
               <div className="first-class">
                 <ul className="first-class-ul">
-                  <li className="first-class-li">My Profile</li>
-                  <li className="first-class-li">Organisations</li>
+                  <li className="first-class-li">
+                    <Link to="/#/manageMent/aboutYou">My Profile</Link>
+                  </li>
+                  <li className="first-class-li nav-text first-class-child-main">
+                    <a>
+                      <span>Organization</span>
+                      <i>
+                        <BsFillCaretRightFill />
+                      </i>
+                    </a>
+                    <ul className="first-class-child first-class-ul">
+                      <li className="first-class-li">
+                        <Link to="/#/manageMent/organisationView">View</Link>
+                      </li>
+                      <li className="first-class-li">
+                        <Link to="/#/manageMent/organisationOnBoard">On Boarding</Link>
+                      </li>
+                      <li className="first-class-li">
+                        <Link to="/#/manageMent/mapOrganisations">Organizations Mapping</Link>
+                      </li>
+                    </ul>
+                  </li>
                   <li className="first-class-li">Manage Profile</li>
-                  <li className="first-class-li">Roles</li>
-                  <li className="first-class-li">Users</li>
+                  <li className="first-class-li nav-text first-class-child-main">
+                    <a>
+                      <span>Roles</span>
+                      <i>
+                        <BsFillCaretRightFill />
+                      </i>
+                    </a>
+                    <ul className="first-class-child first-class-ul">
+                      <li className="first-class-li">
+                        <Link to="#/manageMent/createRoles">Create</Link>
+                      </li>
+                      <li className="first-class-li">
+                        <Link to="/#/manageMent/assignRole">Assign</Link>
+                      </li>
+                      <li className="first-class-li">
+                        <Link to="/#/manageMent/viewRole">View</Link>
+                      </li>
+                    </ul>
+                  </li>
+                  <li className="first-class-li nav-text first-class-child-main">
+                    <a>
+                      <span>Users</span>
+                      <i>
+                        <BsFillCaretRightFill />
+                      </i>
+                    </a>
+                    <ul className="first-class-child first-class-ul">
+                      <li className="first-class-li">
+                        <Link to="/#/manageMent/createUser">Create User</Link>
+                      </li>
+                      <li className="first-class-li">
+                        <Link to="/#/manageMent/viewUsers">Update</Link>
+                      </li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </li>
             <li className="nav-text">
-              <Link to="#">
+              <Link to="/#/lead-data">
                 <span>Leads Data</span>
               </Link>
             </li>
             <li className="nav-text">
-              <Link to="#">
+              <Link to="/#/intervene">
                 <span>Intervene MCA</span>
               </Link>
             </li>
             <li className="nav-text">
-              <Link to="#">
+              <Link to="/#/intervene/mea">
                 <span>Intervene MEA</span>
               </Link>
             </li>
             <li className="nav-text">
-              <Link to="#">
-                <span>Dashboard</span>
+              <Link to="/#/templateDashboard">
+                <span>Template Dashboard MCA</span>
+              </Link>
+            </li>
+            <li className="nav-text">
+              <Link to="/#/templateDashboardMea">
+                <span>Template Dashboard MEA</span>
               </Link>
             </li>
           </ul>
