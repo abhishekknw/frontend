@@ -6655,7 +6655,7 @@
         $scope.CallModel = { 'destination_number': row.phone_number };
         $scope.viewComments = row;
         $('#CallTemplate').modal('show');
-        $('#onCallUserDetails').modal('show');
+        // $('#onCallUserDetails').modal('show');
       }
 
       $scope.updateCallStatus = function (status, row) {

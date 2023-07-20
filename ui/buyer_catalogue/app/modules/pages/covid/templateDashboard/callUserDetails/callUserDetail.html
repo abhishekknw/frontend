@@ -17,17 +17,13 @@
                         <div class="row">
                               <div class="col-md-6">
                                     <label> Select Sector</label>
-                                    <select class="form-control" name="sector" ng-click="getFormDataBySector()"
+                                    <select class="form-control" name="sector" ng-model="formData.sectorId" ng-click="getLeadsBySector()"
                                           required>
-                                          <option value="">Painting</option>
-                                          <option value="">Elevator</option>
-                                          <option value="">Survay</option>
+                                          <option value="">Select</option>
+                                          <option ng-repeat="sector in sectorList" value="{{sector.id}}">
+                                                {{sector.business_type}}</option>
                                     </select>
                               </div>
-                              <!-- <div class="col-md-6">
-                                    <label>Total Leads Submitted <span>20</span></label>
-                                    <label>Total Entity Submitted <span>12</span></label>
-                              </div> -->
                         </div>
                         <div style="margin-top: 10px;" ng-if="showHideObj.table || showHideObj.form">
                               <div class="row">
@@ -85,21 +81,15 @@
                         </div>
                         <form name="onCallUserDetails" ng-submit="onCallUserDetails()" ng-if="showHideObj.form"
                               style="margin-top: 15px;">
-                              <!-- <button class="btn btn-danger" ng-click="backToTable()">Back</button> -->
                               <div class="row">
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>Current Partner</label>
                                                 <select class="form-control" name="sector" required>
                                                       <option value="">Select</option>
-                                                      <option ng-repeat="company in partnerCompanies" value="{{company.label}}" >{{company.label}}</option>
+                                                      <option ng-repeat="company in partnerCompanies"
+                                                            value="{{company.label}}">{{company.label}}</option>
                                                 </select>
-                                                <!-- <select ng-change="templateDetail('','',selectValue,selectCampaign)"
-                                                      value="selectCampaign" ng-model="selectCampaign">
-                                                      <option value="">Select Campaign</option>
-                                                      <option value="{{value}}" ng-repeat="value in campaign_name_list">
-                                                            {{value}}</option>
-                                                </select> -->
                                           </div>
                                     </div>
                                     <div class="col-md-4">
