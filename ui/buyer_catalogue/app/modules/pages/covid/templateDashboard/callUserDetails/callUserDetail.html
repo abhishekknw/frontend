@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="modules/pages/covid/templateDashboard/callUserDetails/callUserDetail.css" />
 
-<div class="btn smallBtn" data-target="#onCallUserDetails" data-toggle="modal">
+<!-- <div class="btn smallBtn" data-target="#onCallUserDetails" data-toggle="modal">
       New
-</div>
+</div> -->
 
 <div id="onCallUserDetails" class="modal fade">
       <div class="modal-dialog" style="width: 600px">
@@ -91,10 +91,15 @@
                                           <div class="form-group">
                                                 <label>Current Partner</label>
                                                 <select class="form-control" name="sector" required>
-                                                      <option value="">Kriti Test Company</option>
-                                                      <option value="">Asian Paints</option>
-                                                      <option value="">Berger Paints</option>
+                                                      <option value="">Select</option>
+                                                      <option ng-repeat="company in partnerCompanies" value="{{company.label}}" >{{company.label}}</option>
                                                 </select>
+                                                <!-- <select ng-change="templateDetail('','',selectValue,selectCampaign)"
+                                                      value="selectCampaign" ng-model="selectCampaign">
+                                                      <option value="">Select Campaign</option>
+                                                      <option value="{{value}}" ng-repeat="value in campaign_name_list">
+                                                            {{value}}</option>
+                                                </select> -->
                                           </div>
                                     </div>
                                     <div class="col-md-4">
@@ -157,13 +162,12 @@
                                     <div class="col-md-12">
                                           <div class="form-group">
                                                 <label>Preffered Partner</label>
-                                                <div ng-dropdown-multiselect="" options="example14data"
-                                                      selected-model="example14model"
+                                                <div ng-dropdown-multiselect="" options="partnerCompanies"
+                                                      selected-model="selectedCompanies"
                                                       extra-settings="example14settings"
-                                                      translation-texts="customTextForDropdown"
-                                                      checkboxes="true">
+                                                      translation-texts="customTextForDropdown" checkboxes="true">
                                                 </div>
-                                                <span ng-repeat="item in example14model">{{item.label}},</span>
+                                                <span ng-repeat="item in selectedCompanies">{{item.label}},</span>
                                           </div>
                                     </div>
                                     <div class="col-md-12">

@@ -104,6 +104,11 @@ angular.module('catalogueApp')
         return machadaloHttp.post(url, data);
       }
 
+      DashboardService.getDropdownData = function (){
+        let url = "v0/ui/b2b/dropdown-filter-by-sector/?sector=painting";
+        return machadaloHttp.get(url);
+      }
+
       return DashboardService;
 
     }]);
