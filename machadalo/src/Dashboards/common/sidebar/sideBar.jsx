@@ -113,9 +113,9 @@ export default function SideNavBar() {
 
             <li
               className="nav-text"
-              // onClick={(e) => {
-              //   addRemoveClass(item);
-              // }}
+            // onClick={(e) => {
+            //   addRemoveClass(item);
+            // }}
             >
               <Link to="#">
                 <span>Dashboard</span>
@@ -201,37 +201,94 @@ export default function SideNavBar() {
                       </i>
                     </a>
                     <ul className="first-class-child first-class-ul">
-                      <li className="first-class-li nav-text first-class-child-main">
+                      <li className="first-class-li nav-text second-class-child-li">
                         <a>
                           <span>Supplier</span>
                           <i>
                             <BsFillCaretRightFill />
                           </i>
                         </a>
+                        {/* 3rd dropdown */}
+                        <ul className="first-class-ul second-class-child">
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <span>Supplier1</span>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <span>Inventory1</span>
+                            </a>
+                          </li>
+                        </ul>
+                         {/* 3rd dropdown */}
+
                       </li>
-                      <li className="first-class-li nav-text first-class-child-main">
+                      <li className="first-class-li nav-text second-class-child-li">
                         <a>
                           <span>Inventory</span>
                           <i>
                             <BsFillCaretRightFill />
                           </i>
                         </a>
+                         {/* 3rd dropdown */}
+                         <ul className="first-class-ul second-class-child">
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <span>Supplier1</span>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <span>Inventory1</span>
+                            </a>
+                          </li>
+                        </ul>
+                         {/* 3rd dropdown */}
                       </li>
-                      <li className="first-class-li nav-text first-class-child-main">
+                      <li className="first-class-li nav-text second-class-child-li">
                         <a>
                           <span>Booking Engine</span>
                           <i>
                             <BsFillCaretRightFill />
                           </i>
                         </a>
+                        {/* 3rd dropdown */}
+                        <ul className="first-class-ul second-class-child">
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <span>Supplier1</span>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <span>Inventory1</span>
+                            </a>
+                          </li>
+                        </ul>
+                         {/* 3rd dropdown */}
                       </li>
-                      <li className="first-class-li nav-text first-class-child-main">
+                      <li className="first-class-li nav-text second-class-child-li">
                         <a>
                           <span>Campaign Release</span>
                           <i>
                             <BsFillCaretRightFill />
                           </i>
                         </a>
+                        {/* 3rd dropdown */}
+                        <ul className="first-class-ul second-class-child">
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <span>Supplier1</span>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <span>Inventory1</span>
+                            </a>
+                          </li>
+                        </ul>
+                         {/* 3rd dropdown */}
                       </li>
                     </ul>
                   </li>

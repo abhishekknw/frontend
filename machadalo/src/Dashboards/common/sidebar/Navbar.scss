@@ -95,7 +95,7 @@
   padding: 0;
 }
 
-.first-class , .first-class-child{
+.first-class , .first-class-child, .second-class-child{
   // display: none;
   width: 250px;
   position: absolute;
@@ -108,11 +108,14 @@
   // min-height: 100px;
 }
 
-.first-class-child-main:hover .first-class-child{
+.first-class-child-main:hover .first-class-child ,.second-class:hover .second-class-child{
   visibility: visible;
   opacity: 1;
 }
-
+.second-class-child-li:hover .second-class-child{
+  visibility: visible;
+  opacity: 1;
+}
 .first-class-li {
   font-size: 14px;
   padding: 15px 20px;
