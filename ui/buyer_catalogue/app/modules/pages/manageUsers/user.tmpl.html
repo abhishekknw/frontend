@@ -277,7 +277,7 @@
                   <div class=" dropup">
                     <label for="confirm">Assign Role:</label>
                     <select class="field" name="" ng-model="model.role">
-                      <option ng-repeat="role in rolesList" ng-value="{{role.id}}">{{role.name}}</option>
+                      <option ng-repeat="role in rolesList" value="{{role.id}}">{{role.name}}</option>
                     </select>
                   </div>
                 </div>
@@ -410,7 +410,7 @@
               <div class="item">
                 <label for="confirm">Assign Role</label>
                 <select class="field" ng-model="userDetails.role">
-                  <option ng-repeat="role in rolesList" ng-value="{{role.id}}">{{role.name}}</option>
+                  <option ng-repeat="role in rolesList" value="{{role.id}}">{{role.name}}</option>
                 </select>
               </div>
             </div>

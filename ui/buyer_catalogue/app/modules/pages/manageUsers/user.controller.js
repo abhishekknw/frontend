@@ -222,7 +222,6 @@ angular.module('machadaloPages')
           })
           $scope.filterCity = $scope.CityList?.filter((obj) => stateIds.includes(obj.state_code));
         }
-
         let arrangeLocation = function () {
           let location = []
           $scope.selectedState.map((state) => {
@@ -514,8 +513,6 @@ angular.module('machadaloPages')
           // console.log($scope.selectedGroupList);
         }
         $scope.updateUserDetails = function (userDetails) {
-          console.log("userDetails", $scope.userDetails);
-          console.log("userDetails", userDetails);
           var groups = [];
           angular.forEach(userDetails.groups, function (group) {
             groups.push(group.id);
@@ -524,9 +521,9 @@ angular.module('machadaloPages')
           userDetails.location = arrangeLocation();
           userService.updateUserDetails(userDetails.id, userDetails)
             .then(function onSuccess(response) {
-              console.log(response);
-              console.log(userDetails);
               swal(constants.name, constants.save_success, constants.success);
+              $scope.selectedCity = [];
+              $scope.selectedState = [];
               $scope.getContent($scope.contentItem.viewUsers);
             }).catch(function onError(response) {
               console.log(response);
