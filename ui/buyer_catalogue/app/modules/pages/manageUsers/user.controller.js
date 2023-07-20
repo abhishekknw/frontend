@@ -298,6 +298,7 @@ angular.module('machadaloPages')
             if (wizardFinish)
               $scope.model['profile'] = $scope.clonedProfileId;
               $scope.model['location'] = arrangeLocation();
+              $scope.model['user_type'] = getRoleNameById($scope.model.role)
             userService.createUser($scope.model)
               .then(function onSuccess(response) {
                 console.log("Successful");
@@ -520,6 +521,7 @@ angular.module('machadaloPages')
           });
           userDetails.groups = groups;
           userDetails.location = arrangeLocation();
+          userDetails.user_type = getRoleNameById(userDetails.role);
           userService.updateUserDetails(userDetails.id, userDetails)
             .then(function onSuccess(response) {
               swal(constants.name, constants.save_success, constants.success);
@@ -1092,7 +1094,6 @@ angular.module('machadaloPages')
         $scope.getRoles = function () {
           userService.getRoles($scope.rolesData.organisation)
             .then(function onSuccess(response) {
-              console.log(response);
               $scope.rolesList = response.data.data;
             }).catch(function onError(response) {
               console.log(response);
@@ -1112,9 +1113,12 @@ angular.module('machadaloPages')
                 swal(constants.name, constants.errorMsg, constants.error);
               })
           }
-
         }
 
+        let getRoleNameById = function (id){
+          let roleObj = $scope.rolesList.find(x => x.id === Number(id)).name;
+          return roleObj;
+        }
 
         let pathName = $location.path()
         if (pathName === "/manageMent/profileView") {
