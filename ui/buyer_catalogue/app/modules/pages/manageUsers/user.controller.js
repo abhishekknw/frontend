@@ -370,6 +370,7 @@ angular.module('machadaloPages')
               break;
             case $scope.contentItem.editUser:
               editUserInfo(data);
+              console.log(data,"!1111111111111")
               addMoreFieldsToPermission();
               break;
             case $scope.contentItem.editGroup:
