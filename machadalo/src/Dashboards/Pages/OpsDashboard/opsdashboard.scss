@@ -864,13 +864,13 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before {
     font-family: "Courier New", Courier, monospace;
     line-height: 1em;
     content: "+";
-    background-color: #31b131
+    background-color: #3e59e3;
 }
 
 table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td.dtr-control:before,
 table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th.dtr-control:before {
     content: "-";
-    background-color: #d33333
+    background-color: #3e59e3;
 }
 
 table.dataTable.dtr-inline.collapsed.compact>tbody>tr>td.dtr-control,
@@ -1078,8 +1078,8 @@ margin-right: 10px;
 }
 .btn-theme, .btn-theme:hover{
     color: #fff;
-    background-color: #d9534f;
-    border-color: #d43f3a;
+    background-color: #3e59e3;
+    border-color: #3e59e3;
     display: inline-block;
     margin-bottom: 0;
     text-align: center;
@@ -1097,15 +1097,24 @@ margin-right: 10px;
 }
 .form-div{
     width: 49%;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .modify-modal .modal-header {
-    background-color: #8e1921;
+    background-color: #3e59e3;
     color: #FFFFFF;
+    padding: 20px 20px;
 }
 .modify-modal .modal-title{
     background-color: transparent;
     font-size: 18px;    
+}
+.modify-modal .modal-body{
+    padding: 10px;
+}
+.modify-modal .form-mainbox{
+    padding: 0px 20px;
 }
 .form-div label.form-label {
     font-weight: 700;
@@ -1113,4 +1122,30 @@ margin-right: 10px;
 }
 p{
     line-height: 1.5;
+}
+
+table thead tr th {
+    background: #5f76e8;
+    background: linear-gradient(0deg, #3e59e3 35%, #5f76e8 100%);
+}
+
+.form-div p{
+    font-size: 14px;
+}
+p.form-p span{
+    font-weight: 500;
+}
+.form-static{
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1)
+}
+.price-div input{
+    padding: 7.5px 10px;
+}
+.form-div textarea{
+    height: 38px;
+    width: 100%;
+    border-color: #ced4da;
+    padding: 6px 8px;
+    border-radius: 5px;
 }

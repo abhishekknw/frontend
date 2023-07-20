@@ -54,20 +54,7 @@ export default function RequirementEditModal(props) {
             />
           </div>
 
-          <div className='pb-3 form-div'>
-            <Form.Label>FeedBack</Form.Label>
-            <Select
-              options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
-              onChange={handleTypeSelect}
-              //   value={organisationOptions.filter(function (option) {
-              //     return option.value === selectedOption;
-              //   })}
-              label="FeedBack"
-              id="feedback"
-              placeholder="FeedBack"
-            />
-          </div>
-
+        
           <div className='pb-3 form-div'>
             <Form.Label>Preferred Partner</Form.Label>
             {/* <Select
@@ -81,14 +68,14 @@ export default function RequirementEditModal(props) {
               placeholder="Preferred Partner"
             /> */}
             <Select
-                  label="Assign To"
-                  id="assign"
-                  placeholder="Select User For Assign"
-                  isMulti={true}
-                  // value={multiSelect}
-                  // onChange={handleMultiSelect}
-                  options={[{ label: 'painting',id:1 }, { label: 'Elevator' ,id:2}, { label: 'Cars',id:3 }]}
-                />
+              label="Assign To"
+              id="assign"
+              placeholder="Select User For Assign"
+              isMulti={true}
+              // value={multiSelect}
+              // onChange={handleMultiSelect}
+              options={[{ label: 'painting', id: 1 }, { label: 'Elevator', id: 2 }, { label: 'Cars', id: 3 }]}
+            />
           </div>
           <div className='pb-3 form-div'>
             <Form.Label>L4 Answers</Form.Label>
@@ -142,15 +129,6 @@ export default function RequirementEditModal(props) {
               placeholder="Lead Status"
             />
           </div>
-       
-         
-          <div className='pb-3 form-div'>
-            <Form.Label>Lead Given by</Form.Label>
-            <p>
-           <span className='fw-medium'>Name:</span> fdg<br/>
-           <span>Number:</span> 8082356021
-           </p>
-          </div>
           <div className='pb-3 form-div'>
             <Form.Label>Supplier</Form.Label>
             <Select
@@ -203,20 +181,32 @@ export default function RequirementEditModal(props) {
               placeholder="Call Status"
             />
           </div>
-          
           <div className='pb-3 form-div'>
+            <Form.Label>FeedBack</Form.Label>
+            <textarea name="postContent" placeholder='feedback' />
+          </div>
+
+
+          <div className='pb-3 form-div price-div'>
             <Form.Label>Price</Form.Label>
             <Form.Control type="text" placeholder="Enter price" />
           </div>
-          <div className='pb-3 form-div'>
-            <Form.Label>Timestamp</Form.Label>
-            <p>
-           <span> Submitted:</span> Apr 5, 2023 4:58:21 PM <br/>
-           <span> Ops Verify:</span> Apr 13, 2023 4:02:55 PM <br/>
-           <span> Ops Verify Name:</span> Admin
-           </p>
+          <div className='pb-3 form-div form-static'>
+            <Form.Label>Lead Given by</Form.Label>
+            <p className='form-p'>
+              <span className='fw-medium'>Name:</span> fdg<br />
+              <span>Number:</span> 8082356021
+            </p>
           </div>
-      
+          <div className='pb-3 form-div form-static'>
+            <Form.Label>Timestamp</Form.Label>
+            <p className='form-p'>
+              <span> Submitted:</span> Apr 5, 2023 4:58:21 PM <br />
+              <span> Ops Verify:</span> Apr 13, 2023 4:02:55 PM <br />
+              <span> Ops Verify Name:</span> Admin
+            </p>
+          </div>
+
         </Form.Group>
       </Form>
     </div>
