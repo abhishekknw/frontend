@@ -219,7 +219,7 @@
           <!--End: profile view tab -->
 
           <!--start: Create user  -->
-          <div class="section-display" ng-switch-when='createUser' id="createUser">
+          <div class="section-display crate-user-section" ng-switch-when='createUser' id="createUser">
             <h2 class="heading">Create New User</h2>
             <form class="" name="registerForm" method="post" ng-submit="register()" role="form">
               <div class="grid">
@@ -286,29 +286,29 @@
                   <input type="mobile" class="field" name="mobile" id="mobile" placeholder="Enter your mobile Number"
                     ng-model="model.mobile" required>
                 </div>
-                <div class="item">
+                <div class="item select-drop-down">
                   <div class="form-group label-floating">
                     <label for="confirm">Select State:</label>
-                    <span style="color:red;width:100%;margin-left:20px;" 
+                    <span style="color:red;width:100%;" 
                       ng-dropdown-multiselect="" options="StateList" 
                       selected-model="selectedState"
                       extra-settings="stateDrodownSetting"
                       events="stateEvents" 
                       >
                     </span>
-                    <!-- <span ng-repeat="item in selectedState">{{item.label}},</span> -->
+                    <span ng-repeat="item in selectedState">{{item.label}},</span>
                   </div>
                 </div>
-                <div class="item">
+                <div class="item select-drop-down">
                   <div class="form-group label-floating">
                     <label for="confirm">Select City:</label>
-                    <span style="color:red;width:100%;margin-left:20px;"
+                    <span style="color:red;width:100%;"
                       ng-dropdown-multiselect="" options="filterCity" 
                       selected-model="selectedCity"
                       extra-settings="stateDrodownSetting"
                       events="cityEvents">
                     </span>
-                    <!-- <span ng-repeat="item in selectedCity">{{item.label}},</span> -->
+                    <span ng-repeat="item in selectedCity">{{item.label}},</span>
                   </div>
                 </div>
               </div>
