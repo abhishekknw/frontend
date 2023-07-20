@@ -14,7 +14,7 @@
         <div class="section-block" ng-switch on="menuItem.name">
 
           <!--Start: about you tab -->
-          <div class="section-display" ng-switch-when="aboutYou" id="aboutYou">
+          <div class="section-display crate-user-section" ng-switch-when="aboutYou" id="aboutYou">
             <h2 class="heading">About You</h2>
             <table class="table-data">
               <tr>
@@ -46,7 +46,7 @@
           <!--End: about you tab -->
 
           <!--Start: organisation view tab -->
-          <div class="section-display" ng-switch-when="organisationCommon" id="organisationCommon">
+          <div class="section-display crate-user-section" ng-switch-when="organisationCommon" id="organisationCommon">
             <h2 class="heading">Organisation</h2>
             <table class="table-data">
               <tr>
@@ -188,7 +188,7 @@
           <!--End: map Organisations tab -->
 
           <!--Start: profile view tab -->
-          <div class="section-display" ng-switch-when="profileView">
+          <div class="section-display crate-user-section" ng-switch-when="profileView">
             <h2 class="heading">Profile </h2>
             <table class="table-data">
               <tr>
@@ -312,7 +312,7 @@
           <!--End: Create user  -->
 
           <!--start: users list view -->
-          <div class="section-display" ng-switch-when='viewUsers' id="viewUsers">
+          <div class="section-display  crate-user-section" ng-switch-when='viewUsers' id="viewUsers">
             <h2 class="heading">List of Users</h2>
             <table class="table-data">
               <tr>
@@ -359,7 +359,7 @@
           <!--End: users list view -->
 
           <!--start: edit user  -->
-          <div class="section-display" ng-switch-when='editUser' id="editUser">
+          <div class="section-display crate-user-section" ng-switch-when='editUser' id="editUser">
             <h2 class="heading">Edit User Details</h2>
             <div class="grid">
               <div class="item">
@@ -413,32 +413,33 @@
                   <option ng-repeat="role in rolesList" value="{{role.id}}">{{role.name}}</option>
                 </select>
               </div>
-            </div>
-            <div class="item select-drop-down">
-              <div class="form-group label-floating">
-                <label for="confirm">Select State:</label>
-                <span style="color:red;width:100%;" ng-dropdown-multiselect="" options="StateList"
-                  selected-model="selectedState" extra-settings="stateDrodownSetting" events="stateEvents">
-                </span>
-                <span ng-repeat="item in selectedState">{{item.label}},</span>
+              <div class="item select-drop-down">
+                <div class="form-group label-floating">
+                  <label for="confirm">Select State:</label>
+                  <span style="color:red;width:100%;" ng-dropdown-multiselect="" options="StateList"
+                    selected-model="selectedState" extra-settings="stateDrodownSetting" events="stateEvents">
+                  </span>
+                  <span ng-repeat="item in selectedState">{{item.label}},</span>
+                </div>
+              </div>
+              <div class="item select-drop-down">
+                <div class="form-group label-floating">
+                  <label for="confirm">Select City:</label>
+                  <span style="color:red;width:100%;" ng-dropdown-multiselect="" options="filterCity"
+                    selected-model="selectedCity" extra-settings="stateDrodownSetting" events="cityEvents">
+                  </span>
+                  <span ng-repeat="item in selectedCity">{{item.label}},</span>
+                </div>
               </div>
             </div>
-            <div class="item select-drop-down">
-              <div class="form-group label-floating">
-                <label for="confirm">Select City:</label>
-                <span style="color:red;width:100%;" ng-dropdown-multiselect="" options="filterCity"
-                  selected-model="selectedCity" extra-settings="stateDrodownSetting" events="cityEvents">
-                </span>
-                <span ng-repeat="item in selectedCity">{{item.label}},</span>
-              </div>
-            </div>
+          
             <button type="submit" id="button" class="smallBtn active"
               ng-click="updateUserDetails(userDetails)">Update</button>
           </div><!-- section-display -->
           <!--End: edit user  -->
 
           <!--start: Create Roles  -->
-          <div class="section-display" ng-switch-when="createRoles" id="createRoles">
+          <div class="section-display crate-user-section" ng-switch-when="createRoles" id="createRoles">
             <h2 class="heading">Create New Role</h2>
             <div class="grid">
               <div class="item is-focused">
@@ -461,7 +462,7 @@
           <!--End: Create Roles  -->
 
           <!--start: assign role  -->
-          <div class="section-display" ng-switch-when="assignRole" id="assignRole">
+          <div class="section-display crate-user-section" ng-switch-when="assignRole" id="assignRole">
             <h2 class="heading">Role Assignment</h2>
             <div class="grid">
               <div class="item is-focused" ng-if="userInfo.is_superuser">
@@ -494,7 +495,7 @@
           <!--End: assign role  -->
 
           <!--start: Profile -->
-          <div class="section-display" ng-switch-when="profile" id="profile">
+          <div class="section-display crate-user-section" ng-switch-when="profile" id="profile">
             <h2 class="heading" ng-if="operationProfile.create">Create Profile </h2>
             <h2 class="heading" ng-if="operationProfile.edit">Edit Profile Details</h2>
             <h2 class="heading" ng-if="operationProfile.view">View Profile Details</h2>
@@ -623,7 +624,7 @@
 
 
           <!--start: Organisation OnBoarding Wizard  -->
-          <div class="section-display" ng-switch-when="onBoard" id="onBoard">
+          <div class="section-display crate-user-section" ng-switch-when="onBoard" id="onBoard">
             <h2 class="heading">Organisation OnBoarding Wizard</h2>
             <p>Step By Step Guide To OnBoard Any Organisation within 5 minutes</p>
             <div class="wizard-container">
