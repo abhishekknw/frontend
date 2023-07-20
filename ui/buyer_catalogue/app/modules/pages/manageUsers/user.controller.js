@@ -233,7 +233,7 @@ angular.module('machadaloPages')
             })
             location.push({ state: state.label, city: cityName });
           })
-          $scope.model.location = location;
+          return location;
         }
 
         $scope.getProfiles = function (organisationId) {
@@ -298,6 +298,7 @@ angular.module('machadaloPages')
           if (!wizardFinish || (wizardFinish && $scope.model.first_name && $scope.model.last_name && $scope.model.username && $scope.model.email && $scope.model.password)) {
             if (wizardFinish)
               $scope.model['profile'] = $scope.clonedProfileId;
+              $scope.model['location'] = arrangeLocation();
             userService.createUser($scope.model)
               .then(function onSuccess(response) {
                 console.log("Successful");
@@ -520,6 +521,7 @@ angular.module('machadaloPages')
             groups.push(group.id);
           });
           userDetails.groups = groups;
+          userDetails.location = arrangeLocation();
           userService.updateUserDetails(userDetails.id, userDetails)
             .then(function onSuccess(response) {
               console.log(response);

@@ -289,12 +289,8 @@
                 <div class="item select-drop-down">
                   <div class="form-group label-floating">
                     <label for="confirm">Select State:</label>
-                    <span style="color:red;width:100%;" 
-                      ng-dropdown-multiselect="" options="StateList" 
-                      selected-model="selectedState"
-                      extra-settings="stateDrodownSetting"
-                      events="stateEvents" 
-                      >
+                    <span style="color:red;width:100%;" ng-dropdown-multiselect="" options="StateList"
+                      selected-model="selectedState" extra-settings="stateDrodownSetting" events="stateEvents">
                     </span>
                     <span ng-repeat="item in selectedState">{{item.label}},</span>
                   </div>
@@ -302,11 +298,8 @@
                 <div class="item select-drop-down">
                   <div class="form-group label-floating">
                     <label for="confirm">Select City:</label>
-                    <span style="color:red;width:100%;"
-                      ng-dropdown-multiselect="" options="filterCity" 
-                      selected-model="selectedCity"
-                      extra-settings="stateDrodownSetting"
-                      events="cityEvents">
+                    <span style="color:red;width:100%;" ng-dropdown-multiselect="" options="filterCity"
+                      selected-model="selectedCity" extra-settings="stateDrodownSetting" events="cityEvents">
                     </span>
                     <span ng-repeat="item in selectedCity">{{item.label}},</span>
                   </div>
@@ -419,6 +412,24 @@
                 <select class="field" ng-model="userDetails.role">
                   <option ng-repeat="role in rolesList" ng-value="{{role.id}}">{{role.name}}</option>
                 </select>
+              </div>
+            </div>
+            <div class="item select-drop-down">
+              <div class="form-group label-floating">
+                <label for="confirm">Select State:</label>
+                <span style="color:red;width:100%;" ng-dropdown-multiselect="" options="StateList"
+                  selected-model="selectedState" extra-settings="stateDrodownSetting" events="stateEvents">
+                </span>
+                <span ng-repeat="item in selectedState">{{item.label}},</span>
+              </div>
+            </div>
+            <div class="item select-drop-down">
+              <div class="form-group label-floating">
+                <label for="confirm">Select City:</label>
+                <span style="color:red;width:100%;" ng-dropdown-multiselect="" options="filterCity"
+                  selected-model="selectedCity" extra-settings="stateDrodownSetting" events="cityEvents">
+                </span>
+                <span ng-repeat="item in selectedCity">{{item.label}},</span>
               </div>
             </div>
             <button type="submit" id="button" class="smallBtn active"

@@ -38,7 +38,6 @@ angular.module('machadaloPages')
     }
 
     userService.updateUserDetails = function(id,data){
-      console.log(data);
       var url = url_base_user + "user/" + id + "/";
       return machadaloHttp.put(url,data);
     }
