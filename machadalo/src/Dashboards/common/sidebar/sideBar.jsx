@@ -113,9 +113,9 @@ export default function SideNavBar() {
 
             <li
               className="nav-text"
-            // onClick={(e) => {
-            //   addRemoveClass(item);
-            // }}
+              // onClick={(e) => {
+              //   addRemoveClass(item);
+              // }}
             >
               <Link to="#">
                 <span>Dashboard</span>
@@ -208,21 +208,24 @@ export default function SideNavBar() {
                             <BsFillCaretRightFill />
                           </i>
                         </a>
-                        {/* 3rd dropdown */}
                         <ul className="first-class-ul second-class-child">
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                              <span>Supplier1</span>
+                              <Link to="/r/supplier/base-type/list">Standard Templates
+                              </Link>
                             </a>
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                              <span>Inventory1</span>
+                              <Link to="/r/supplier/type/list">Manage Supplier Type</Link>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                              <Link to="/r/supplier/list">Manage Supplier</Link>
                             </a>
                           </li>
                         </ul>
-                         {/* 3rd dropdown */}
-
                       </li>
                       <li className="first-class-li nav-text second-class-child-li">
                         <a>
@@ -231,20 +234,18 @@ export default function SideNavBar() {
                             <BsFillCaretRightFill />
                           </i>
                         </a>
-                         {/* 3rd dropdown */}
-                         <ul className="first-class-ul second-class-child">
+                        <ul className="first-class-ul second-class-child">
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                              <span>Supplier1</span>
+                              <Link to="/r/inventory/base/list">Standard Template</Link>
                             </a>
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                              <span>Inventory1</span>
+                            <Link to="/r/inventory/list">Manage Inventory</Link>
                             </a>
                           </li>
                         </ul>
-                         {/* 3rd dropdown */}
                       </li>
                       <li className="first-class-li nav-text second-class-child-li">
                         <a>
@@ -253,20 +254,23 @@ export default function SideNavBar() {
                             <BsFillCaretRightFill />
                           </i>
                         </a>
-                        {/* 3rd dropdown */}
                         <ul className="first-class-ul second-class-child">
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                              <span>Supplier1</span>
+                              <Link to="/r/booking/base/list">Standard Templates</Link>
                             </a>
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                              <span>Inventory1</span>
+                            <Link to="/r/booking/template/list">Booking Templates</Link>
+                            </a>
+                          </li>
+                          <li className="first-class-li nav-text first-class-child-main">
+                            <a>
+                            <Link to="/r/booking/campaigns">Manage Bookings</Link>
                             </a>
                           </li>
                         </ul>
-                         {/* 3rd dropdown */}
                       </li>
                       <li className="first-class-li nav-text second-class-child-li">
                         <a>
@@ -275,20 +279,18 @@ export default function SideNavBar() {
                             <BsFillCaretRightFill />
                           </i>
                         </a>
-                        {/* 3rd dropdown */}
                         <ul className="first-class-ul second-class-child">
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                              <span>Supplier1</span>
+                              <Link to="/#/HDFHDF0789/auditReleasePlan">Release and Audit Plan </Link>
                             </a>
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                              <span>Inventory1</span>
+                              <Link to="/#">Manage Phases</Link>
                             </a>
                           </li>
                         </ul>
-                         {/* 3rd dropdown */}
                       </li>
                     </ul>
                   </li>
