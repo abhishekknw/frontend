@@ -14,9 +14,9 @@ import OpsDashboard from '../OpsDashboard/OpsDashboard';
 
   return (
     <>
-      <div className="container ">
+      {/* <div className="container "> */}
         {/* <MachadaloHeader /> */}
-        <hr className="mt-0" />
+        {/* <hr className="mt-0" /> */}
         <Switch>
           <SnackbarProvider
             autoHideDuration={2000}
@@ -28,7 +28,7 @@ import OpsDashboard from '../OpsDashboard/OpsDashboard';
             <Route path={match.path + ROUTESNAME.OPS_DASHBOARD} component={OpsDashboard} />
           </SnackbarProvider>
         </Switch>
-      </div>
+      {/* </div> */}
     </>
   );
 }

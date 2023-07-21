@@ -44,8 +44,8 @@ export default class Layout extends React.Component {
           <div className="container ">
             <MachadaloHeader />
           </div>
-          <hr className="mt-0" />
-          <div className="wrapper">
+          {/* <hr className="mt-0" /> */}
+          <div className="wrapper mt-2">
             <div className="container">
               <Switch>
                 <Route path={`${match.path}/checklist`} component={ChecklistContainer} />
