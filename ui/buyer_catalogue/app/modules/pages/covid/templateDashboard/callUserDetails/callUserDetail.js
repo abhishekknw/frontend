@@ -11,6 +11,7 @@ angular
       AuthService,
       $anchorScroll,
       templateDashboardService,
+      releaseCampaignService,
     ) {
       return {
         templateUrl: "modules/pages/covid/templateDashboard/callUserDetails/callUserDetail.html",
@@ -36,7 +37,6 @@ angular
           $scope.showLeadDetails = function (leadData) {
             $scope.showHideObj = { table: true, form: true };
             $scope.formData.data = leadData;
-            console.log($scope.formData.data)
             $scope.selectedCompanies = $scope.partnerCompanies?.filter((obj) => $scope.formData.data.preferred_company.includes(obj.organisation_id));
           }
 
@@ -55,6 +55,28 @@ angular
                 $scope.partnerCompanies = response.data.data.companies_sector_wise.map(obj => ({ ...obj, label: obj.name, id: obj.organisation_id }));
                 $scope.callStatusList = response.data.data.call_status;
                 $scope.questionList = response.data.data.question;
+              }).catch(function onError(response) {
+                console.log(response);
+              })
+          }
+
+          $scope.getCompanyName = function (id){
+            let company = $scope.partnerCompanies.find(x => x.organisation_id === id);
+            return company ? company.name : 'NA';
+          }
+
+          $scope.updateRequirement = function (data) {
+            console.log(data)
+            data.data.L4 = data.data.l1_answers;
+            data.data.L5 = data.data.l1_answer_2;
+            data.data.L6 = data.data.l2_answers;
+            data.data['L4.1'] = null;
+            data.data['L5.1'] = null;
+            data.data['L6.1'] = null;
+            let obj = {requirements:[data.data]}
+            releaseCampaignService.updateRequirement(obj)
+              .then(function onSuccess(response) {
+                alert(111)
               }).catch(function onError(response) {
                 console.log(response);
               })

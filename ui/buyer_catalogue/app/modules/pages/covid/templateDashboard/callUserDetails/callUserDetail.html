@@ -52,7 +52,7 @@
                                           <tr ng-repeat="lead in sectorWiseLeads" track by "$index"
                                                 ng-class="{'highlighted': formData.data.id === lead.id}">
                                                 <td>{{$index}}</td>
-                                                <td>{{lead.company_campaign}}</td>
+                                                <td>{{getCompanyName(lead.current_company)}}</td>
                                                 <td>{{lead.lead_date | date : "dd-MM-yyyy"}}</td>
                                                 <td>{{lead.id}}</td>
                                                 <td>
@@ -164,7 +164,7 @@
                               <div>
                                     <button type="button" class="btn btn-danger">Edit</button>
                                     <button type="button" class="btn btn-danger">FeedBack</button>
-                                    <button type="button" class="btn btn-danger">Save</button>
+                                    <button type="button" class="btn btn-danger" ng-click="updateRequirement(formData)">Save</button>
                                     <button type="button" class="btn btn-danger">Intervene</button>
                               </div>
                               <!-- <button type="submit" class="smallBtn">Save</button> -->
