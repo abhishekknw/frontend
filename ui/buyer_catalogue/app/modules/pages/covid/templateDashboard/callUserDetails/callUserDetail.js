@@ -60,25 +60,39 @@ angular
               })
           }
 
-          $scope.getCompanyName = function (id){
+          $scope.getCompanyName = function (id) {
             let company = $scope.partnerCompanies.find(x => x.organisation_id === id);
             return company ? company.name : 'NA';
           }
 
           $scope.updateRequirement = function (data) {
-            console.log(data)
+            console.log(data,"2222")
             data.data.L4 = data.data.l1_answers;
             data.data.L5 = data.data.l1_answer_2;
             data.data.L6 = data.data.l2_answers;
             data.data['L4.1'] = null;
             data.data['L5.1'] = null;
             data.data['L6.1'] = null;
-            let obj = {requirements:[data.data]}
-            releaseCampaignService.updateRequirement(obj)
-              .then(function onSuccess(response) {
-                alert(111)
-              }).catch(function onError(response) {
-                console.log(response);
+            let obj = { requirements: [data.data] }
+            swal({
+              title: 'Are you sure ?',
+              text: 'Updated Requirement',
+              type: constants.warning,
+              showCancelButton: true,
+              confirmButtonClass: "btn-success",
+              confirmButtonText: "Yes, Update!",
+              closeOnConfirm: false,
+              closeOnCancel: true
+            },
+              function (confirm) {
+                if (confirm) {
+                  releaseCampaignService.updateRequirement(obj)
+                    .then(function onSuccess(response) {
+                      swal(constants.name, constants.update_success, constants.success);
+                    }).catch(function onError(response) {
+                      swal(constants.name, constants.save_error, constants.error);
+                    })
+                }
               })
           }
 
