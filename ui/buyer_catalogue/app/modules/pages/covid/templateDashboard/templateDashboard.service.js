@@ -104,14 +104,18 @@ angular.module('catalogueApp')
         return machadaloHttp.post(url, data);
       }
 
-      DashboardService.getDropdownData = function (){
-        let url = "v0/ui/b2b/dropdown-filter-by-sector/?sector=painting";
+      DashboardService.getDropdownData = function (sector) {
+        let url = "v0/ui/b2b/dropdown-filter-by-sector/?sector="+ sector;
         return machadaloHttp.get(url);
       }
 
-      DashboardService.getLeadBySector = function (data){
-        console.log(data,"q2222222222222222")
-        let url = "v0/ui/b2b/dropdown-filter-by-sector/?sector=painting";
+      DashboardService.getSectorByNumber = function (number) {
+        let url = "v0/ui/b2b/sector-list/?mobile_number=" + number;
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.getLeadBySector = function (data) {
+        let url = "v0/ui/b2b/sector-wise-lead-details/?mobile_number=" + data.phone_number + "&sector_id=" + data.sector.id;
         return machadaloHttp.get(url);
       }
 

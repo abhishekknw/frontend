@@ -17,10 +17,10 @@
                         <div class="row">
                               <div class="col-md-6">
                                     <label> Select Sector</label>
-                                    <select class="form-control" name="sector" ng-model="formData.sectorId" ng-click="getLeadsBySector()"
-                                          required>
+                                    <select class="form-control" name="sector" ng-model="formData.sector"
+                                          ng-click="getLeadsBySector()" required>
                                           <option value="">Select</option>
-                                          <option ng-repeat="sector in sectorList" value="{{sector.id}}">
+                                          <option ng-repeat="sector in sectorList" value="{{sector}}" ng-selected="formData.sector.id == sector.id">
                                                 {{sector.business_type}}</option>
                                     </select>
                               </div>
@@ -48,17 +48,17 @@
                                           </tr>
                                     </thead>
                                     <tbody>
-                                          <tr class="highlighted">
-                                                <td>1</td>
-                                                <td>Assian Paints</td>
-                                                <td>12/12/2023</td>
-                                                <td>6892</td>
+                                          <tr class="highlighted" ng-repeat="lead in sectorWiseLeads" track by "$index">
+                                                <td>{{$index}}</td>
+                                                <td>{{lead.company_campaign}}</td>
+                                                <td>{{lead.lead_date | date : "dd-MM-yyyy"}}</td>
+                                                <td>{{lead.id}}</td>
                                                 <td>
                                                       <i class="fa fa-eye" style="font-size: 16px; cursor: pointer"
-                                                            ng-click="showLeadDetails()"></i>
+                                                            ng-click="showLeadDetails(lead)"></i>
                                                 </td>
                                           </tr>
-                                          <tr>
+                                          <!-- <tr>
                                                 <td>2</td>
                                                 <td>Berger Paints</td>
                                                 <td>9/08/2022</td>
@@ -75,7 +75,7 @@
                                                 <td>
                                                       <i class="fa fa-eye" style="font-size: 16px; cursor: pointer"></i>
                                                 </td>
-                                          </tr>
+                                          </tr> -->
                                     </tbody>
                               </table>
                         </div>
@@ -85,10 +85,13 @@
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>Current Partner</label>
-                                                <select class="form-control" name="sector" required>
+                                                <select class="form-control" name="sector"
+                                                      ng-modal="formData.data.current_company" required>
                                                       <option value="">Select</option>
                                                       <option ng-repeat="company in partnerCompanies"
-                                                            value="{{company.label}}">{{company.label}}</option>
+                                                            value="{{company.organisation_id}}"
+                                                            ng-selected="company.organisation_id == formData.data.current_company">
+                                                            {{company.label}}</option>
                                                 </select>
                                           </div>
                                     </div>
@@ -96,49 +99,49 @@
                                           <div class="form-group">
                                                 <label>Feedback</label>
                                                 <input type="text" class="form-control" name="code"
-                                                      placeholder="Feedback" ng-model="formData.code"
-                                                      onkeyup="this.value = this.value.toUpperCase();" required="true"
-                                                      maxlength="2" />
+                                                      placeholder="Feedback"
+                                                      ng-model="formData.data.current_patner_feedback" />
                                           </div>
                                     </div>
 
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>Lead Status</label>
-                                                <select class="form-control" name="sector" required>
-                                                      <option value="">RNR</option>
-                                                      <option value="">Call Veified</option>
-                                                      <option value="">DND</option>
+                                                <select class="form-control" name="leadStatus"
+                                                      ng-model="formData.data.call_back_preference">
+                                                      <option value="NA">Select</option>
+                                                      <option ng-repeat="status in callStatusList" track by "$index"
+                                                            value="{{status}}">{{status}}</option>
                                                 </select>
                                           </div>
                                     </div>
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L4</label>
-                                                <select class="form-control" name="sector" required>
-                                                      <option value="">0-3 months</option>
-                                                      <option value="">0-6 months</option>
-                                                      <option value="">6-9 months</option>
+                                                <select class="form-control" name="l1_answers" ng-model="formData.data.l1_answers">
+                                                      <option value="">Select</option>
+                                                      <option ng-repeat="l4 in questionList[0].L4" track by "$index" value="{{l4}}">{{l4}}
+                                                      </option>
                                                 </select>
                                           </div>
                                     </div>
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L5</label>
-                                                <select class="form-control" name="sector" required>
-                                                      <option value="">0-3 months</option>
-                                                      <option value="">0-6 months</option>
-                                                      <option value="">6-9 months</option>
+                                                <select class="form-control" name="l1_answer_2" ng-model="formData.data.l1_answer_2">
+                                                      <option value="">Select</option>
+                                                      <option ng-repeat="l5 in questionList[0].L5" value="{{l5}}">{{l5}}
+                                                      </option>
                                                 </select>
                                           </div>
                                     </div>
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L6</label>
-                                                <select class="form-control" name="sector" required>
-                                                      <option value="">0-3 months</option>
-                                                      <option value="">0-6 months</option>
-                                                      <option value="">6-9 months</option>
+                                                <select class="form-control" name="l2_answers" ng-model="formData.data.l2_answers">
+                                                      <option value="">Select</option>
+                                                      <option ng-repeat="l6 in questionList[0].L6" value="{{l6}}">{{l6}}
+                                                      </option>
                                                 </select>
                                           </div>
                                     </div>
