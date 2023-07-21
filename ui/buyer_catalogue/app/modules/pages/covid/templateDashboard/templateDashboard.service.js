@@ -105,7 +105,7 @@ angular.module('catalogueApp')
       }
 
       DashboardService.getDropdownData = function (sector) {
-        let url = "v0/ui/b2b/dropdown-filter-by-sector/?sector="+ sector;
+        let url = "v0/ui/b2b/dropdown-filter-by-sector/?sector="+ sector.toLowerCase();
         return machadaloHttp.get(url);
       }
 

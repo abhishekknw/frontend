@@ -20,7 +20,8 @@
                                     <select class="form-control" name="sector" ng-model="formData.sector"
                                           ng-click="getLeadsBySector()" required>
                                           <option value="">Select</option>
-                                          <option ng-repeat="sector in sectorList" value="{{sector}}" ng-selected="formData.sector.id == sector.id">
+                                          <option ng-repeat="sector in sectorList" value="{{sector}}"
+                                                ng-selected="formData.sector.id == sector.id">
                                                 {{sector.business_type}}</option>
                                     </select>
                               </div>
@@ -48,7 +49,8 @@
                                           </tr>
                                     </thead>
                                     <tbody>
-                                          <tr class="highlighted" ng-repeat="lead in sectorWiseLeads" track by "$index">
+                                          <tr ng-repeat="lead in sectorWiseLeads" track by "$index"
+                                                ng-class="{'highlighted': formData.data.id === lead.id}">
                                                 <td>{{$index}}</td>
                                                 <td>{{lead.company_campaign}}</td>
                                                 <td>{{lead.lead_date | date : "dd-MM-yyyy"}}</td>
@@ -58,24 +60,6 @@
                                                             ng-click="showLeadDetails(lead)"></i>
                                                 </td>
                                           </tr>
-                                          <!-- <tr>
-                                                <td>2</td>
-                                                <td>Berger Paints</td>
-                                                <td>9/08/2022</td>
-                                                <td>6892</td>
-                                                <td>
-                                                      <i class="fa fa-eye" style="font-size: 16px; cursor: pointer"></i>
-                                                </td>
-                                          </tr>
-                                          <tr>
-                                                <td>1</td>
-                                                <td>Nerolac Paints</td>
-                                                <td>02/11/2021</td>
-                                                <td>6892</td>
-                                                <td>
-                                                      <i class="fa fa-eye" style="font-size: 16px; cursor: pointer"></i>
-                                                </td>
-                                          </tr> -->
                                     </tbody>
                               </table>
                         </div>
@@ -118,9 +102,11 @@
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L4</label>
-                                                <select class="form-control" name="l1_answers" ng-model="formData.data.l1_answers">
+                                                <select class="form-control" name="l1_answers"
+                                                      ng-model="formData.data.l1_answers">
                                                       <option value="">Select</option>
-                                                      <option ng-repeat="l4 in questionList[0].L4" track by "$index" value="{{l4}}">{{l4}}
+                                                      <option ng-repeat="l4 in questionList[0].L4" track by "$index"
+                                                            value="{{l4}}">{{l4}}
                                                       </option>
                                                 </select>
                                           </div>
@@ -128,7 +114,8 @@
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L5</label>
-                                                <select class="form-control" name="l1_answer_2" ng-model="formData.data.l1_answer_2">
+                                                <select class="form-control" name="l1_answer_2"
+                                                      ng-model="formData.data.l1_answer_2">
                                                       <option value="">Select</option>
                                                       <option ng-repeat="l5 in questionList[0].L5" value="{{l5}}">{{l5}}
                                                       </option>
@@ -138,7 +125,8 @@
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L6</label>
-                                                <select class="form-control" name="l2_answers" ng-model="formData.data.l2_answers">
+                                                <select class="form-control" name="l2_answers"
+                                                      ng-model="formData.data.l2_answers">
                                                       <option value="">Select</option>
                                                       <option ng-repeat="l6 in questionList[0].L6" value="{{l6}}">{{l6}}
                                                       </option>
@@ -148,7 +136,7 @@
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>Submitted Date&Time</label>
-                                                <span>Jul 11, 2023 11:10:39 AM</span>
+                                                <span>{{formData.data.created_at | date:'medium' }}</span>
                                           </div>
                                     </div>
 
@@ -166,7 +154,7 @@
                                     <div class="col-md-12">
                                           <div class="form-group">
                                                 <label>Comment</label>
-                                                <textarea class="form-control" ng-model="templateData.triger_message"
+                                                <textarea class="form-control" ng-model="formData.data.comment"
                                                       placeholder="Comments"></textarea>
                                           </div>
                                     </div>

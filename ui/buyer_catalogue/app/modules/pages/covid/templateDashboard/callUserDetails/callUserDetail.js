@@ -36,8 +36,8 @@ angular
           $scope.showLeadDetails = function (leadData) {
             $scope.showHideObj = { table: true, form: true };
             $scope.formData.data = leadData;
-            console.log("$scope.questionList",$scope.questionList)
-            console.log($scope.formData.data, "$scope.formData.data")
+            console.log($scope.formData.data)
+            $scope.selectedCompanies = $scope.partnerCompanies?.filter((obj) => $scope.formData.data.preferred_company.includes(obj.organisation_id));
           }
 
           let getSectorByNumber = function (number) {
