@@ -15,7 +15,11 @@
     text-align: left;
     padding: 0px 2px;
 }
-
+#onCallUserDetails .table-responsive {
+    max-height: 210px;
+    min-height: 50px;
+    width: 100%;
+}
 #onCallUserDetails .multiselect-parent.dropdown-multiselect button,#onCallUserDetails  .multiselect-parent.dropdown-multiselect{
     width: 100%;
     text-align: left;
@@ -26,5 +30,5 @@
     word-break: break-all;
 }
 tr.highlighted , #onCallUserDetails table .highlighted td{
-    background-color: #f2f2f2;
+    background-color: #e3c1c1;
 }
