@@ -65,15 +65,24 @@ angular
             return company ? company.name : 'NA';
           }
 
+          let getPrefferedCompanyId = function () {
+            let ids = [];
+            $scope.selectedCompanies.map((item) => {
+              ids.push(item.organisation_id);
+            })
+            return ids;
+          }
+
           $scope.updateRequirement = function (data) {
-            console.log(data,"2222")
+            console.log(data, "2222")
             data.data.L4 = data.data.l1_answers;
             data.data.L5 = data.data.l1_answer_2;
             data.data.L6 = data.data.l2_answers;
             data.data['L4.1'] = null;
             data.data['L5.1'] = null;
             data.data['L6.1'] = null;
-            let obj = { requirements: [data.data] }
+            data.data['preferred_company'] = getPrefferedCompanyId();
+            let obj = { requirements: [data.data] };
             swal({
               title: 'Are you sure ?',
               text: 'Updated Requirement',
