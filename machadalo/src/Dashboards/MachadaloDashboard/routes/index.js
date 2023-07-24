@@ -20,7 +20,7 @@ export default function MachadaloRoutes(props) {
         >
           <Route
             exact
-            path={MACHADALO_DASHBOARD_ROUTE}
+            path={`${match.path}/`}
             render={(componentProps) => <MachadaloDashboard {...props} {...componentProps} />}
           />
         </SnackbarProvider>

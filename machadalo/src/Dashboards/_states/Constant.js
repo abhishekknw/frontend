@@ -8,30 +8,29 @@ const showHideTable = atom({
     ViewEndCustomerWise: false,
     ViewCityWise: false,
     ViewCampaignWise: false,
-    ViewLeadDetail:false,
+    ViewLeadDetail: false,
   },
 });
-
 
 const showHideBreadcrumbsAtom = atom({
   key: 'showHideBreadcrumbsAtom',
   default: {
-    first:{show:false,tableName:""},
-    second:{show:false,tableName:""},
-    third:{show:false,tableName:""},
-    fourth:{show:false,tableName:""},
-  }
+    first: { show: false, tableName: '' },
+    second: { show: false, tableName: '' },
+    third: { show: false, tableName: '' },
+    fourth: { show: false, tableName: '' },
+  },
 });
 
 const showHideModalAtom = atom({
   key: 'showHideModalAtom',
   default: {
-    email:{show:false,tableName:''},
-    whatsapp:{show:false,tableName:''},
-    leadDetail:{show:false,tableName:''},
-    comment:{show:false,tableName:''},
-    download:{show:false,tableName:''},
-  }
-})
+    email: { show: false, tableName: '' },
+    whatsapp: { show: false, tableName: '' },
+    leadDetail: { show: false, tableName: '' },
+    comment: { show: false, tableName: '' },
+    download: { show: false, tableName: '' },
+  },
+});
 
-export { showHideTable ,showHideBreadcrumbsAtom,showHideModalAtom};
+export { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom };

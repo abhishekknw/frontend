@@ -12,7 +12,6 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 import Dropdown from 'react-bootstrap/Dropdown';
-import UserWiseList from './Tables/UserWiseList';
 import LeadsTable from './Leads/Leads';
 import PieChart from '../common/pie-chart/PieChart';
 import GraphChart from '../common/Graphs/Graph';

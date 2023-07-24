@@ -4,8 +4,11 @@ import { BsFillCalendarDateFill, BsChevronRight, BsChevronLeft } from 'react-ico
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './date-range.css';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers-pro';
+import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import dayjs from 'dayjs';
 import { CalenderActions } from './CalenderData';
@@ -57,7 +60,7 @@ export default function DateFilter(props) {
       selectDateSlider: false,
     });
     let temp = CalederAction.GetPreviousDates(24);
-    setDateArrayList(temp)
+    setDateArrayList(temp);
     CalederAction.getSelectedDateArray(dateArr[0], dateArr[1]);
   };
 
@@ -92,9 +95,9 @@ export default function DateFilter(props) {
           <h4>
             <b>Date Filter</b>
           </h4>
-          <div >
-            <Row className="main-content align-items-center ">
-              <Col sm={6}>
+          <div>
+            <Row className="main-content align-items-center d-flex flex-row ">
+              <Col sm={6} className="w-40">
                 <div className="calander d-flex ">
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateRangePicker
@@ -124,26 +127,24 @@ export default function DateFilter(props) {
                 </div>
               </Col>
 
-              <Col sm={6}>
-                  <div className='date-btn-right'>
+              <Col sm={6} className="w-60">
+                <div className="date-btn-right">
                   {timeBtns.map((item, index) => {
-                      return (
-                    <span
-                    
-                    key={index}
-                    sm={3}
-                    className={item.class}
-                    onClick={(e) => {
-                      getPreviousDate(item);
-                    }}>
-                         <p>
-                          {item.name}
-                          </p>
-                    </span>
-                     );
-                    })}
-                  </div>
-                  {/* <Row className="timing justifyend" >
+                    return (
+                      <span
+                        key={index}
+                        sm={3}
+                        className={item.class}
+                        onClick={(e) => {
+                          getPreviousDate(item);
+                        }}
+                      >
+                        <p>{item.name}</p>
+                      </span>
+                    );
+                  })}
+                </div>
+                {/* <Row className="timing justifyend" >
                     {timeBtns.map((item, index) => {
                       return (
                         
@@ -179,12 +180,12 @@ export default function DateFilter(props) {
                   }
                   key={index}
                   onClick={(e) => {
-                    CalederAction.getSelectedDateArray(DateArrayList[index].$d)
+                    CalederAction.getSelectedDateArray(DateArrayList[index].$d);
                     setCalenderVaidations({
                       ...CalenderVaidations,
                       selectDatePicker: false,
                       selectDateSlider: true,
-                    });;
+                    });
                   }}
                 >
                   {dayjs(DateArrayList[index].$d).format('ddd')}
@@ -203,9 +204,9 @@ export default function DateFilter(props) {
             </button>
             <div className="pt-2">
               <button
-              onClick={(e) => {
-                oneDayNextDate(DateArrayList);
-              }}
+                onClick={(e) => {
+                  oneDayNextDate(DateArrayList);
+                }}
               >
                 <BsChevronRight />
               </button>

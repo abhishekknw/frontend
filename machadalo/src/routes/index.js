@@ -6,8 +6,8 @@ import SupplierRoutes from '../Dashboards/SupplierAgency/routes';
 import ClientRoutes from '../Dashboards/ClientDashboard/routes';
 import MachadaloRoutes from '../Dashboards/MachadaloDashboard/routes';
 import DashboardRoutes from '../Dashboards/routes/DashboardRoutes';
-import { DASHBOARD_ROUTE, MANAGEMENT_ROUTE, MANAGE_SUPPLIER } from '../constants/routes.constants';
-import ManagementRoutes from '../Management/routes/ManagementRoutes';
+import { DASHBOARD_ROUTE, MANAGE_SUPPLIER } from '../constants/routes.constants';
+import PagesRoutes from '../Dashboards/Pages/routes/PagesRoutes';
 import ManageSupplier from '../ManageSupplier/Dashboard';
 export default function Routes() {
   // let userInfo = JSON.parse(localStorage.getItem('userInfo'))
@@ -15,17 +15,7 @@ export default function Routes() {
   return (
     <Router>
       <Switch>
-        {/* {
-          userInfo.profile.organisation.category === "SUPPLIER_AGENCY" &&
-          <Route path='/r/supplier' component={SupplierRoutes} />
-        } */}
-        {/* {
-          userInfo === "BUSINESS" &&
-          <Route path='/r/Client' component={ClientRoutes} />
-        } */}
-        {/* <Route path="/r/machadalo" component={MachadaloRoutes} /> */}
-        <Route path={DASHBOARD_ROUTE} component={DashboardRoutes} />
-        <Route path={MANAGEMENT_ROUTE} component={ManagementRoutes} />
+        {/* <Route path="/r" component={PagesRoutes} /> */}
         <Route path={MANAGE_SUPPLIER} component={ManageSupplier} />
         <Route path="/r" component={LayoutContainer} />
         <Route path="*">

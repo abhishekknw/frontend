@@ -639,6 +639,10 @@ angular.module('catalogueApp')
         var url = url_root +"b2b/status-funnel/?lead_id=" + lead_id;
         return machadaloHttp.get(url);
       }
+      DashboardService.getSupplierSentLead = function(data){
+        let url = url_root + 'b2b/supplier-sent-lead/?company_campaign_id=' + data.company_campaign_id + '&supplier_id=' + data.supplier_id;
+        return machadaloHttp.get(url);
+      }
       return DashboardService;
 
     }]);

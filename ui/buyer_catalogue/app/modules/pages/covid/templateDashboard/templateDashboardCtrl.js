@@ -33,6 +33,8 @@
       $scope.passwordError = constants.password_error;
       $scope.userInfo = $rootScope.globals.userInfo;
       $scope.dateRangeModel = {};
+      $scope.dateWiseRangeModel = {};
+      $scope.dateWisePickerOption = {}
       $scope.selectedVendor = {};
       $scope.vendorsData = {};
       $scope.emailModel = {};
@@ -61,6 +63,7 @@
       $scope.APIBaseUrl = Config.APIBaseUrl;
       $scope.UserComment = {};
       $scope.CallModel = {};
+      $scope.interveneDashboard = { show: false, data: '' };
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
         { id: 2, name: 'High' },
@@ -6476,18 +6479,30 @@
 
       // Template Dashboard start
       $scope.getTransactionalTemplate = function (value, s_date = '', e_date = '') {
+        $scope.interveneDashboard = { show: false, data: '' };
         $scope.TemplateListSummary()
         $scope.changeStartDate();
         $scope.changeEndDate();
+
         let param = {
           search: value
         }
         if (!value) {
           param.search = ""
         }
-        if (s_date || e_date) {
-          param.start_date = ''
-          param.end_date = ''
+        // if (s_date || e_date) {
+        //   param.start_date = ''
+        //   param.end_date = ''
+        // }
+        if (!s_date || s_date == 'NaN/NaN/NaN' || s_date.length <= 1) {
+          param.start_date = '';
+        } else {
+          param.start_date = commonDataShare.formatDateToString(s_date);
+        }
+        if (!e_date || e_date == 'NaN/NaN/NaN' || e_date.length <= 1) {
+          param.end_date = '';
+        } else {
+          param.end_date = commonDataShare.formatDateToString(e_date);
         }
         templateDashboardService.transactionalTemplateSummaryMca(param)
           .then(function onSuccess(response) {
@@ -6510,10 +6525,19 @@
           $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
       }
 
+      $scope.dateWiseChangeStartDate = function () {
+        $scope.dateWiseRangeModel.start_date = $scope.dateWiseRangeModel.start_dates;
+        $scope.dateWisePickerOption.minDate = $scope.dateWiseRangeModel.start_date;
+      }
+      $scope.dateWiseChangeEndDate = function () {
+        // if ($scope.changeEndDate > $scope.changeStartDate)
+        $scope.dateWiseRangeModel.end_date = $scope.dateWiseRangeModel.end_dates;
+      }
+
       $scope.getTransactionalTemplateViewDetail = function (value, page, name, s_date, e_date) {
         $scope.viewTemplateSummary();
-        $scope.changeStartDate();
-        $scope.changeEndDate();
+        // $scope.changeStartDate();
+        // $scope.changeEndDate();
         getCallStatusList();
         $scope.view_template = {
           template_id: value,
@@ -6521,13 +6545,17 @@
         }
         let param = {
           template_id: value,
-          start_date: s_date,
-          end_date: e_date,
           next_page: 1
         }
-        if (s_date || e_date) {
-          param.start_date = ''
-          param.end_date = ''
+        if (!s_date || s_date == 'NaN/NaN/NaN' || s_date.length <= 1) {
+          param.start_date = '';
+        } else {
+          param.start_date = commonDataShare.formatDateToString(s_date);
+        }
+        if (!e_date || e_date == 'NaN/NaN/NaN' || e_date.length <= 1) {
+          param.end_date = '';
+        } else {
+          param.end_date = commonDataShare.formatDateToString(e_date);
         }
         if (page) {
           param.next_page = page;
@@ -6546,16 +6574,20 @@
 
         templateDashboardService.transactionalTemplateDatewiseDetail(param)
           .then(function onSuccess(response) {
-            $scope.transactionalTemplateDataDetail = response.data.data;
+            $scope.transactionalTemplateDataDetail = response.data.data.data;
+            $scope.buttonNamelist = response.data?.data?.button_list;
+            if (!$scope.buttonNamelist) {
+              $scope.buttonNamelist = [{ connotation: "POSITIVE", name: "Null" }, { connotation: "NEUTRAL", name: "Null" }, { connotation: "NEGATIVE", name: "Null" }]
+            }
             $scope.totalCount = response.data.data.total_count;
-
           }).catch(function onError(response) {
             console.log(response);
           })
       }
 
       $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search, sortingObj) {
-        $scope.viewUserSummary()
+        cfpLoadingBar.start();
+        $scope.viewUserSummary();
         $scope.user_view = {
           template_id: value,
           template_name: name,
@@ -6591,6 +6623,7 @@
           .then(function onSuccess(response) {
             $scope.transactionalTemplateUserData = response.data.data.users;
             $scope.totalCount = response.data.data.total_count;
+            cfpLoadingBar.complete();
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -6626,7 +6659,8 @@
       }
 
       $scope.updateCallStatus = function (status, row) {
-        row.call_status = status
+        row.call_status = status;
+        row.sent_date = $scope.user_view.sent_date;
         templateDashboardService.updateCallStatus(row)
           .then(function onSuccess(response) {
             swal("", response.data.data, constants.success);
@@ -6644,7 +6678,8 @@
           "template_id": $scope.viewComments.template_id,
           "phone_number": $scope.viewComments.phone_number,
           "template_date": $scope.viewComments.template_date,
-          "comment": $scope.UserComment.comment
+          "comment": $scope.UserComment.comment,
+          'sent_date': $scope.user_view.sent_date
         }
         templateDashboardService.UpdateAddComments(addComment)
           .then(function onSuccess(response) {
@@ -6993,6 +7028,10 @@
         $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id, $scope.user_view.sent_date, null, $scope.user_view.template_name, $scope.user_view.search, $scope.paramsForSorting);
       }
       $scope.templateDetail();
+
+      $scope.showHideIntervene = function (data) {
+        $scope.interveneDashboard = { show: !$scope.interveneDashboard.show, data: data };
+      }
       // Template Dashboard end
       // const socket = new WebSocket('ws://localhost:8000/ws/livec/');
       // console.log(socket,"11111111")

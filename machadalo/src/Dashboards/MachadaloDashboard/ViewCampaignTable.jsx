@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import Table from 'react-bootstrap/Table';
+// import Table from 'react-bootstrap/Table';
 import './index.css';
 import Button from 'react-bootstrap/Button';
 import {
@@ -15,18 +15,18 @@ import { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom } from '../_s
 import { BreadCrumbData } from './BreadCrumb';
 import EmailModal from '../common/Modals/EmailModal';
 import WhatsappModal from '../common/Modals/WhatsappModal';
+import CommonTable from '../Table/CommonTable';
+import FosRmTable from './FosRmTable';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 export default function ViewCampaignTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
   const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
   const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideBreadCrumbs, setShowHideBreadCrumbs] = useRecoilState(showHideBreadcrumbsAtom);
-
-  // const [showHideModal, setshowHideModal] = React.useState({
-  //   EmailModal: false,
-  //   WhatsAppModal: false,
-  // });
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
+  const [selectedId, setSelectedId] = React.useState('');
 
   const onSendEmail = async (data, check) => {
     setshowHideModal({ EmailModal: false });
@@ -42,6 +42,232 @@ export default function ViewCampaignTable(props) {
   const openWhatsAppModal = () => {
     setshowHideModal({ ...showHideModal, WhatsAppModal: true });
   };
+  const headerData = [
+    {
+      name: 'S.No.',
+    },
+    {
+      name: 'Campaign Name',
+    },
+    {
+      name: 'To be Shared',
+    },
+    {
+      name: 'Count',
+    },
+    {
+      name: 'Lead accepted by QA',
+      tooltip: 'Lead accepted by QA',
+    },
+    {
+      name: 'Lead Accepted by Client',
+      tooltip: 'Lead Accepted by Client',
+    },
+    {
+      name: 'Comment Updated',
+    },
+    {
+      name: 'Status Updated',
+    },
+    {
+      name: 'Revenue Earned',
+    },
+    {
+      name: 'View End Customer',
+    },
+    {
+      name: 'View City',
+    },
+    {
+      name: 'Action',
+    },
+  ];
+
+  const bodyData = () => {
+    let data = [
+      {
+        sno: '1',
+        name: 'Kriti Test company',
+        sharedCount: '6000',
+        leadCount: '5000',
+        leadQA: '3000',
+        leadClient: '3000',
+        commentUpdate: '3000',
+        statusUpdate: '3000',
+        revenue: '30k',
+        endCustomer: (
+          <Button
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCustomerCity('View End Customer')}
+          >
+            View End Customer
+          </Button>
+        ),
+        city: (
+          <Button
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCustomerCity('View City')}
+          >
+            View City
+          </Button>
+        ),
+        action: (
+          <div className="action-icon">
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, email: { show: true } });
+              }}
+            >
+              <BsEnvelopeFill />
+            </span>
+            <span>
+              <BsArrowDownCircle />
+            </span>
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+              }}
+            >
+              <BsWhatsapp />
+            </span>
+          </div>
+        ),
+      },
+      {
+        sno: '2',
+        name: 'Great Learning Proposal',
+        sharedCount: '6000',
+        leadCount: '5000',
+        leadQA: '3000',
+        leadClient: '3000',
+        commentUpdate: '3000',
+        statusUpdate: '3000',
+        revenue: '30k',
+        endCustomer: (
+          <Button
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCustomerCity('View End Customer')}
+          >
+            View End Customer
+          </Button>
+        ),
+        city: (
+          <Button
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCustomerCity('View City')}
+          >
+            View City
+          </Button>
+        ),
+        action: (
+          <div className="action-icon">
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, email: { show: true } });
+              }}
+            >
+              <BsEnvelopeFill />
+            </span>
+            <span>
+              <BsArrowDownCircle />
+            </span>
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+              }}
+            >
+              <BsWhatsapp />
+            </span>
+          </div>
+        ),
+      },
+      {
+        sno: '3',
+        name: 'JSW Paints survey',
+        sharedCount: '6000',
+        leadCount: '5000',
+        leadQA: '3000',
+        leadClient: '3000',
+        commentUpdate: '3000',
+        statusUpdate: '3000',
+        revenue: '30k',
+        endCustomer: (
+          <Button
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCustomerCity('View End Customer')}
+          >
+            View End Customer
+          </Button>
+        ),
+        city: (
+          <Button
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCustomerCity('View City')}
+          >
+            View City
+          </Button>
+        ),
+        action: (
+          <div className="action-icon">
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, email: { show: true } });
+              }}
+            >
+              <BsEnvelopeFill />
+            </span>
+            <span>
+              <BsArrowDownCircle />
+            </span>
+            <span
+              onClick={(e) => {
+                setshowHideModal({ ...showHideModal, whatsapp: { show: true } });
+              }}
+            >
+              <BsWhatsapp />
+            </span>
+          </div>
+        ),
+      },
+    ];
+
+    let body = data.map((ele, index) => {
+      return (
+        <>
+          <Tr className={selectedId === ele.type ? 'nested-table' : ''} key={index}>
+            <Td
+              className="sn-table"
+              onClick={(e) => {
+                setSelectedId(selectedId === ele.sno ? '' : ele.sno);
+              }}
+            >
+              {selectedId === ele.sno ? <BsChevronUp /> : <BsChevronDown />}
+            </Td>
+            <Td>{ele.sno}</Td>
+            <Td>{ele.name}</Td>
+            <Td>{ele.sharedCount}</Td>
+            <Td>{ele.leadCount}</Td>
+            <Td>{ele.leadQA}</Td>
+            <Td>{ele.leadClient}</Td>
+            <Td>{ele.commentUpdate}</Td>
+            <Td>{ele.statusUpdate}</Td>
+            <Td>{ele.revenue}</Td>
+            <Td>{ele.endCustomer}</Td>
+            <Td>{ele.city}</Td>
+            <Td>{ele.action}</Td>
+          </Tr>
+          {selectedId === ele.sno && <FosRmTable styles={{ colSpan: 13 }} />}
+        </>
+      );
+    });
+    return body;
+  };
 
   async function onClickCustomerCity(btnName) {
     await setshowHideTableObj({
@@ -53,8 +279,9 @@ export default function ViewCampaignTable(props) {
   }
   return (
     <>
+      <CommonTable headerData={headerData} bodyData={bodyData} />
       {/* <h4 style={{ paddingTop: '10px' }}>View Campaign</h4> */}
-      <Table striped bordered hover className="leads-table ">
+      {/* <Table striped bordered hover className="leads-table ">
         <thead className="leads-tbody">
           <tr>
             <th></th>
@@ -211,7 +438,7 @@ export default function ViewCampaignTable(props) {
               <BsChevronDown />{' '}
             </td>
             <td>2</td>
-            <td>Great Learning Proposal	</td>
+            <td>Great Learning Proposal </td>
             <td>5000</td>
             <td>3000</td>
             <td>3000</td>
@@ -475,26 +702,7 @@ export default function ViewCampaignTable(props) {
             </td>
           </tr>
         </tbody>
-      </Table>
-
-      {/* <EmailModal
-        data={{
-          show: showHideModal.EmailModal,
-          dropdownOptions: [
-            { status_name: 'Lead verified by Machadalo' },
-            { status_name: 'Lead verified by Machadalo' },
-          ],
-        }}
-        onSubmit={onSendEmail}
-        onCancel={(e) => setshowHideModal({ ...showHideModal, EmailModal: false })}
-      />
-      <WhatsappModal
-        data={{
-          show: showHideModal.WhatsAppModal,
-        }}
-        onSubmit={OnshareWhatsApp}
-        onCancel={(e) => setshowHideModal({ ...showHideModal, WhatsAppModal: false })}
-      /> */}
+      </Table> */}
     </>
   );
 }

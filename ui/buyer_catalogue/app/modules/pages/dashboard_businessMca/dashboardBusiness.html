@@ -1425,10 +1425,10 @@
                         <tbody>
                           <!-- <tbody dir-paginate="campaign in leadsDataCampaigns | itemsPerPage:20"
                           total-items="paginationForCampaign.totalItems" current-page="paginationForCampaign.currentPage"  pagination-id="paginate2" track by "$index"> -->
-                          <tr style="text-align: center;"
-                            dir-paginate="campaign in CampaignDataList | itemsPerPage:20" 
-                            total-items="paginationForCampaign.totalItems" current-page="paginationForCampaign.currentPage"  pagination-id="paginate2"
-                            track by "$index">
+                          <tr style="text-align: center;" dir-paginate="campaign in CampaignDataList | itemsPerPage:20"
+                            total-items="paginationForCampaign.totalItems"
+                            current-page="paginationForCampaign.currentPage" pagination-id="paginate2" track
+                            by "$index">
                             <td style="width:62px;">{{$index + 1}}</td>
                             <td style="width:140px;" class="col-md-2">{{campaign.name}}</td>
                             <td style="width:140px;">{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
@@ -1455,66 +1455,10 @@
                     </div>
                   </div>
                   <div style="text-align:center">
-                    <dir-pagination-controls pagination-id="paginate2"  max-size="7" direction-links="true"
+                    <dir-pagination-controls pagination-id="paginate2" max-size="7" direction-links="true"
                       boundary-links="true" on-page-change="pageChangedCampaigns(newPageNumber)">
                     </dir-pagination-controls>
                   </div>
-                  <!-- fiter -->
-                  <!-- <div ng-if="!showCampaigns && !leadBasicShow" class="date_range_picker">
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="row">
-                          <div class="col-lg-6">
-                            <select ng-change="selectedCity(city)" class="form-control select_city" ng-model="city">
-                              <option value="">Select City</option>
-                              <option ng-repeat="city in cityListDetails" track by "$index">{{city}}</option>
-                            </select>
-                          </div>
-
-                          <div class="col-lg-6">
-                            <div class="date_wrapper">
-                              <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                                placeholder="DD/MM/YYYY" ng-change="StartDateForLead()"
-                                ng-model="dateRangeModel.start_dates" is-open="isDatepickerOpen"
-                                datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
-                                alt-input-formats="altInputFormats">
-                              <button type="button" class="smallBtn calendar"
-                                ng-click="isDatepickerOpen = !isDatepickerOpen">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-lg-6">
-                        <div class="row">
-                          <div class="col-sm-1">
-                            <h5 style="color:#000;padding: 10px 0;">To:</h5>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="date_wrapper">
-                              <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                                placeholder="DD/MM/YYYY" ng-change="endDateForLead()"
-                                ng-model="dateRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="options"
-                                ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
-                              <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
-                                ng-click="isEndDateOpen = !isEndDateOpen">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <span style="display: block;margin: 15px;">
-                      <input type="text" class="form-control" ng-model="searchForLead"
-                        ng-keyup="searchForDetails(searchForLead)" placeholder="search">
-                    </span>
-                    <center>
-                      <h2 style="color: black;">Leads of {{CampaignNameofLeads}}</h2>
-                    </center>
-                  </div> -->
                   <div class="viewLeadstable" ng-if="!showCampaigns && !leadBasicShow">
                     </br><br>
                     <div style="margin-top: 20px;">
@@ -1536,6 +1480,7 @@
                             </th>
                             <th>Current Status</th>
                             <th>Client Comment</th>
+                            <th>Images</th>
                             <th>Lead Details</th>
                           </tr>
                         </thead>
@@ -1568,6 +1513,7 @@
                                 Add</button>
                               <div>{{lead[0].last_comment.comment}}</div>
                             </td>
+                            <td><a class="linkBtn" ng-click="getImagesUrl(lead[0])">View</a></td>
                             <td><button style="margin-top:8px; margin-right: -16px !important;" type="button"
                                 name="button" class="btn btn-danger"
                                 ng-click="showLeadDetail(lead[0]._id,lead[0].requirement_id)" data-toggle="modal"
@@ -1691,6 +1637,7 @@
                             <th>Phone Number</th>
                             <th>Current Status</th>
                             <th>Client Comment</th>
+                            <th>Images</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -1727,9 +1674,12 @@
                                 / Add</button>
                               <div>{{decisionPanding[0].last_comment.comment}}</div>
                             </td>
+                            <td><a class="linkBtn" ng-click="getImagesUrl(decisionPanding[0])">View</a></td>
                             <td class="alignment text-center">
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding[0]._id,decisionPanding[0].requirement_id)">Accept</button>
+                                ng-click="GetSupplierSentLeads($index,'Accepted',decisionPanding[0])">Accept</button>
+                              <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding[0]._id,decisionPanding[0].requirement_id)">Accept</button>-->
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                                 ng-click="acceptDeclineDecisionPanding($index,'Decline',decisionPanding[0]._id,decisionPanding[0].requirement_id)"
                                 ng-if="decisionPanding[0].client_status!='Decline'">Decline</button>
@@ -1764,6 +1714,7 @@
                               <button type="button" style="margin-bottom:2px" class="btn btn-danger"
                                 ng-click="viewCommentsLeadDetails(data._id,data.requirement_id)">View / Add</button>
                             </td>
+                            <td><a class="linkBtn" ng-click="getImagesUrl(data)">View</a></td>
                             <td class="alignment text-center">
                               <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                                 ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
@@ -6293,43 +6244,6 @@
       <!--END: INVENTORY INFO MODAL  -->
       <!--START : view comments modal  -->
       <div id="viewComments" class="modal fade">
-
-        <!-- <div class="">
-                Selected Inventory :
-                <select class="form-control" ng-model="selectedInvForView">
-                    <option ng-repeat="inv in viewInvForComments" value="{{inv}}">{{inv}}</option>
-                </select>
-              </div>
-              <br> -->
-        <!-- <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-body">
-                    <div class="modal-header">
-                      View Comments For  {{supplierNameForComment}}
-                    </div>
-                  <div style="margin:20px;">
-                  <table class="table-bordered table-striped" align="center">
-                    <tbody>
-                      <tr ng-repeat="item in commentsData[selectedInvForView]">
-                        <td class="col-md-8">
-                          <div style="margin-top:10px;margin-bottom:10px">
-                            <img ng-src="{{userIcon}}">
-                            <b>{{item.user_name}} :</b> <br>
-                          </div>
-                          <div style="padding-left:30px">
-                            Comment : {{item.comment}}</br>
-                            <span> <small>{{item.timestamp|date:'medium'}}</small></span>
-                          </div><br>
-                        </td>
-                      <br>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-              </div> -->
-
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -6837,8 +6751,78 @@
       </div>
       <!--START: Print Leads In Excel Modal  -->
 
-
-
+      <!--Start: Code for showing image Modal Window -->
+      <div id="societyImageModal" class="modal fade theme-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>View Image</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="modalBodyBox">
+                <div class="carousel" id="societySlider" ng-if="imageUrlList.length > 0">
+                  <div class="carousel-inner">
+                    <div class="item" ng-class="{active:!$index}" ng-repeat="image in imageUrlList">
+                      <div class="img-title">{{image.name}}</div>
+                      <img ng-src="{{ImageBaseUrl + image.image_url}}" style="width:600px; height:400px;"
+                        class="img-responsive  modal-img" alt="No Image Found" />
+                      <p class="img-comment"> Comment : {{image.comment}}</p>
+                    </div>
+                  </div>
+                  <a class="left carousel-control" data-toggle="carousel" data-target="#societySlider" role="button"
+                    data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                  </a>
+                  <a class="right carousel-control" data-toggle="carousel" data-target="#societySlider" role="button"
+                    data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--End: Code for showing image Modal  Window -->
+      <div id="LeadAcceptModal" class="modal fade theme-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Dates</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="modalBodyBox">
+                <table class="table" ng-if="supplierSentLeadList.values.length > 0">
+                  <tr style="font-size: 15px;">
+                    <th>Supplier Id</th>
+                    <th>Lead Id</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                  <tr ng-repeat="data in supplierSentLeadList.values" style="font-size: 12px;">
+                    <td>{{data[0].supplier_id}}</td>
+                    <td style="text-align: center;">{{data[0].requirement_id}}</td>
+                    <td>{{data[0].macchadalo_client_status}}</td>
+                    <td style="text-align: center;">{{data[0].updated_at}}</td>
+                  </tr>
+                </table>
+                <div ng-if="!supplierSentLeadList.values || supplierSentLeadList.values.length <= 0" style="font-size: medium; text-align: center;">No Previous Record Found</div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger"
+                    ng-click="acceptDeclineDecisionPanding(paramsForAcceptLead.index,paramsForAcceptLead.status,paramsForAcceptLead._id,paramsForAcceptLead.requirement_id)">Yes
+                    Accept</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div><!-- middle-section -->
 </div><!-- wrapperBox -->
 </main>

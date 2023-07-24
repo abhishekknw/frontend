@@ -14,6 +14,9 @@ import BookingContainer from './../../containers/BookingContainer';
 import OperationsDashboardContainer from '../../containers/OperationsDashboardContainer';
 import B2bContainer from '../../containers/B2bContainer';
 import './index.css';
+import DashboardRoutes from '../../Dashboards/routes/DashboardRoutes';
+import PagesRoutes from '../../Dashboards/Pages/routes/PagesRoutes';
+import MachadaloHeader from '../../Dashboards/common/header/Header';
 
 export default class Layout extends React.Component {
   componentWillMount() {
@@ -36,9 +39,13 @@ export default class Layout extends React.Component {
       return (
         <main>
           <Toastr />
-          <Header {...this.props} />
-          <Sidebar {...this.props} />
-          <div className="wrapper">
+          {/* <Header {...this.props} />
+          <Sidebar {...this.props} /> */}
+          <div className="container ">
+            <MachadaloHeader />
+          </div>
+          {/* <hr className="mt-0" /> */}
+          <div className="wrapper mt-2">
             <div className="container">
               <Switch>
                 <Route path={`${match.path}/checklist`} component={ChecklistContainer} />
@@ -57,6 +64,8 @@ export default class Layout extends React.Component {
                   component={OperationsDashboardContainer}
                 />
                 {/* <Route path={`${match.path}/b2b`} component={B2bContainer} /> */}
+                <Route path={`${match.path}/dashboard`} component={DashboardRoutes} />
+                <Route path={`${match.path}/pages`} component={PagesRoutes} />
               </Switch>
             </div>
           </div>
