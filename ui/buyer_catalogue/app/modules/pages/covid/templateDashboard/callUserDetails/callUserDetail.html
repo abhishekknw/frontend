@@ -18,12 +18,26 @@
                               <div class="col-md-6">
                                     <label> Select Sector</label>
                                     <select class="form-control" name="sector" ng-model="formData.sector"
-                                          ng-click="getLeadsBySector()" required>
+                                          ng-click="getLeadsBySector()">
                                           <option value="">Select</option>
                                           <option ng-repeat="sector in sectorList.sectors" value="{{sector}}"
                                                 ng-selected="formData.sector.id == sector.id">
                                                 {{sector.business_type}}({{sector.lead_count}})</option>
                                     </select>
+                                    <!-- <select class="form-control" name="sector" ng-model="formData.sector"
+                                          ng-click="getLeadsBySector()"
+                                          ng-if="validations.addNewLead">
+                                          <option value="">Select Sector</option>
+                                          <option ng-repeat="sector in sectorList.sectors" value="{{sector}}"
+                                                ng-selected="formData.sector.id == sector.id">
+                                                {{sector.business_type}}</option>
+                                    </select> -->
+                              </div>
+                              <div class="col-md-6">
+                                    <label>New Lead:
+                                          <input type="checkbox" ng-model="validations.addNewLead"
+                                                ng-click="addNewLead()">
+                                    </label>
                               </div>
                         </div>
                         <div style="margin-top: 10px;" ng-if="showHideObj.table || showHideObj.form">
@@ -36,8 +50,7 @@
                                     </div>
                               </div>
                         </div>
-
-                        <div class="table-responsive" ng-if="showHideObj.table">
+                        <div class="table-responsive" ng-if="showHideObj.table && !validations.addNewLead">
                               <table width="100%">
                                     <thead>
                                           <tr>
@@ -57,7 +70,9 @@
                                                 <td>{{lead.company_campaign}}</td>
                                                 <td>{{lead.lead_date | date : "dd-MM-yyyy"}}</td>
                                                 <td>{{lead.id}}</td>
-                                                <td><span class="multi-select-itm" ng-style="{ 'background-color' : (lead.varified_ops == 'yes') ? 'green' : 'yellow' }">{{lead.varified_ops | uppercase}}</span></td>
+                                                <td><span class="multi-select-itm"
+                                                            ng-style="{ 'background-color' : (lead.varified_ops == 'yes') ? 'green' : 'yellow' }">{{lead.varified_ops
+                                                            | uppercase}}</span></td>
                                                 <td>{{lead.varified_ops_by}}</td>
                                                 <td>
                                                       <i class="fa fa-eye" style="font-size: 16px; cursor: pointer"
@@ -74,7 +89,8 @@
                                           <div class="form-group">
                                                 <label>Current Partner</label>
                                                 <select class="form-control" name="sector"
-                                                      ng-model="formData.data.current_company" required>
+                                                      ng-model="formData.data.current_company"
+                                                      ng-disabled="!validations.enableUpdate" required>
                                                       <option value="">Select</option>
                                                       <option ng-repeat="company in partnerCompanies"
                                                             value="{{company.organisation_id}}"
@@ -87,7 +103,7 @@
                                           <div class="form-group">
                                                 <label>Feedback</label>
                                                 <input type="text" class="form-control" name="code"
-                                                      placeholder="Feedback"
+                                                      placeholder="Feedback" ng-disabled="!validations.enableUpdate"
                                                       ng-model="formData.data.current_patner_feedback" />
                                           </div>
                                     </div>
@@ -97,7 +113,7 @@
                                                 <label>Lead Status</label>
                                                 <select class="form-control" name="leadStatus"
                                                       ng-model="formData.data.call_back_preference"
-                                                      required>
+                                                      ng-disabled="!validations.enableUpdate" required>
                                                       <option value="">Select</option>
                                                       <option ng-repeat="status in callStatusList" track by "$index"
                                                             value="{{status}}">{{status}}</option>
@@ -108,7 +124,8 @@
                                           <div class="form-group">
                                                 <label>L4</label>
                                                 <select class="form-control" name="l1_answers"
-                                                      ng-model="formData.data.l1_answers">
+                                                      ng-model="formData.data.l1_answers"
+                                                      ng-disabled="!validations.enableUpdate">
                                                       <option value="">Select</option>
                                                       <option ng-repeat="l4 in questionList[0].L4" track by "$index"
                                                             value="{{l4}}">{{l4}}
@@ -120,7 +137,8 @@
                                           <div class="form-group">
                                                 <label>L5</label>
                                                 <select class="form-control" name="l1_answer_2"
-                                                      ng-model="formData.data.l1_answer_2">
+                                                      ng-model="formData.data.l1_answer_2"
+                                                      ng-disabled="!validations.enableUpdate">
                                                       <option value="">Select</option>
                                                       <option ng-repeat="l5 in questionList[0].L5" value="{{l5}}">{{l5}}
                                                       </option>
@@ -131,7 +149,8 @@
                                           <div class="form-group">
                                                 <label>L6</label>
                                                 <select class="form-control" name="l2_answers"
-                                                      ng-model="formData.data.l2_answers">
+                                                      ng-model="formData.data.l2_answers"
+                                                      ng-disabled="!validations.enableUpdate">
                                                       <option value="">Select</option>
                                                       <option ng-repeat="l6 in questionList[0].L6" value="{{l6}}">{{l6}}
                                                       </option>
@@ -144,15 +163,18 @@
                                                 <div ng-dropdown-multiselect="" options="partnerCompanies"
                                                       selected-model="selectedCompanies"
                                                       extra-settings="example14settings"
-                                                      translation-texts="customTextForDropdown" checkboxes="true">
+                                                      translation-texts="customTextForDropdown" checkboxes="true"
+                                                      disabled="!validations.enableUpdate">
                                                 </div>
-                                                <span ng-repeat="item in selectedCompanies" class="multi-select-itm">{{item.label}}</span>
+                                                <span ng-repeat="item in selectedCompanies"
+                                                      class="multi-select-itm">{{item.label}}</span>
                                           </div>
                                     </div>
                                     <div class="col-md-12">
                                           <div class="form-group">
                                                 <label>Comment</label>
-                                                <textarea class="form-control" ng-model="formData.data.comment" maxlength="250"
+                                                <textarea class="form-control" ng-model="formData.data.comment"
+                                                      ng-disabled="!validations.enableUpdate" maxlength="250"
                                                       placeholder="Comments"></textarea>
                                           </div>
                                     </div>
@@ -164,9 +186,16 @@
                                     </div>
                               </div>
                               <div>
-                                    <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-edit"></span></button>
+                                    <label>Edit:
+                                          <input type="checkbox" ng-model="validations.enableUpdate"
+                                                ng-click="editCurrentLead()">
+                                    </label>
+                                    <!-- <button type="button" class="btn btn-danger"
+                                          ng-click="validations.enableUpdate = !validations.enableUpdate"><span
+                                                class="glyphicon glyphicon-edit"></span></button> -->
+                                    <button type="submit" class="btn btn-danger"
+                                          ng-disabled="!validations.enableUpdate">Save</button>
                                     <button type="button" class="btn btn-danger">FeedBack</button>
-                                    <button type="submit" class="btn btn-danger">Save</button>
                                     <button type="button" class="btn btn-danger">Intervene</button>
                               </div>
                               <!-- <button type="submit" class="smallBtn">Save</button> -->

@@ -21,9 +21,14 @@ angular
           $scope.selectedCompanies = [];
           $scope.example14settings = { scrollableHeight: '200px', scrollable: true };
           $scope.customTextForDropdown = { buttonDefaultText: 'Select Preffered Partner' };
+          $scope.validations = { enableUpdate: false, addNewLead: false }
           // $scope.example14settings = { smartButtonMaxItems: 3, smartButtonTextConverter: function (itemText, originalItem) { if (itemText === 'Jhon') { return 'Jhonny!'; } return itemText; } };
           $scope.getLeadsBySector = function () {
-            $scope.showHideObj = { table: true, form: false };
+            if($scope.validations.addNewLead){
+              $scope.showHideObj = { table: false, form: true };
+            } else {
+              $scope.showHideObj = { table: true, form: false };
+            }
             $scope.formData.sector = JSON.parse($scope.formData.sector);
             getDropdownData($scope.formData.sector.business_type);
             templateDashboardService.getLeadBySector($scope.formData)
@@ -45,7 +50,6 @@ angular
             templateDashboardService.getSectorByNumber(number)
               .then(function onSuccess(response) {
                 $scope.sectorList = response.data.data;
-                console.log($scope.sectorList)
               }).catch(function onError(response) {
                 console.log(response);
               })
@@ -70,8 +74,30 @@ angular
             return ids;
           }
 
+          $scope.addNewLead = function () {
+            $scope.validations = { ...$scope.validations, enableUpdate: true };
+            $scope.showHideObj = { table: false, form: true };
+            $scope.formData.data = {}
+            $scope.selectedCompanies = [];
+            if ($scope.validations.addNewLead) {
+              templateDashboardService.getSector()
+                .then(function onSuccess(response) {
+                  $scope.sectorList.sectors = response.data;
+                }).catch(function onError(response) {
+                  console.log(response);
+                })
+            } else {
+              $scope.showHideObj = { table: false, form: false };
+              console.log($scope.formData)
+              getSectorByNumber($scope.formData.phone_number)
+            }
+          }
+
+          $scope.editCurrentLead = function () {
+            $scope.validations = { ...$scope.validations, addNewLead: false };
+          }
+
           $scope.updateRequirement = function (data) {
-            console.log(data, "2222")
             data.data.L4 = data.data.l1_answers;
             data.data.L5 = data.data.l1_answer_2;
             data.data.L6 = data.data.l2_answers;
@@ -92,12 +118,16 @@ angular
             },
               function (confirm) {
                 if (confirm) {
-                  releaseCampaignService.updateRequirement(obj)
-                    .then(function onSuccess(response) {
-                      swal(constants.name, constants.update_success, constants.success);
-                    }).catch(function onError(response) {
-                      swal(constants.name, constants.save_error, constants.error);
-                    })
+                  if ($scope.validations.addNewLead) {
+                    console.log(obj, "111111111111111111111111111111")
+                  } else {
+                    releaseCampaignService.updateRequirement(obj)
+                      .then(function onSuccess(response) {
+                        swal(constants.name, constants.update_success, constants.success);
+                      }).catch(function onError(response) {
+                        swal(constants.name, constants.save_error, constants.error);
+                      })
+                  }
                 }
               })
           }
