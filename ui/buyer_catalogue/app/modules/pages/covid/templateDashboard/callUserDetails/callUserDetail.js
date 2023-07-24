@@ -88,7 +88,6 @@ angular
                 })
             } else {
               $scope.showHideObj = { table: false, form: false };
-              console.log($scope.formData)
               getSectorByNumber($scope.formData.phone_number)
             }
           }
@@ -136,36 +135,104 @@ angular
           }
 
           $scope.newLeadCreated = function (data) {
-            let browsed_ids = {'browsed_ids':[{
-              'prefered_patners' :  getPrefferedCompanyId(),
-              'prefered_patner_other' : '',
-              'phone_number' : $scope.formData.phone_number,
-              'sub_sector_id' : null,
-              'shortlisted_spaces_id' : null,
-              'call_back_preference' :'',
-              'current_patner_feedback' :'',
-              'current_patner_feedback_reason' : '' ,
-              'campaign_id' : '',
-              'status' : '',
-              'supplier_type' : 'supplier_type',
-              'supplier_id' : '',
-            }]}
-            console.log(browsed_ids, "browsed_ids")
-
-            // releaseCampaignService.newLeadCreated(newObj)
-            //   .then(function onSuccess(response) {
-            //     if (response && response.data.data.error) {
-            //       swal(constants.name, response.data.data.error, constants.error);
-            //     } else {
-            //       swal(constants.name, response.data.data.message, constants.success);
-            //     }
-            //   })
+            let browsed_ids = {
+              'browsed_ids': [{
+                'prefered_patners': getPrefferedCompanyId(),
+                'prefered_patner_other': '',
+                'phone_number': $scope.formData.phone_number,
+                'sector_id': $scope.formData.sector.id,
+                'current_patner_id': $scope.formData.data.current_company,
+                'l1_answers': $scope.formData.data.l1_answers,
+                'l1_answer_2': $scope.formData.data.l1_answer_2,
+                'l2_answers': $scope.formData.data.l2_answers,
+                'comment': $scope.formData.data.comment,
+                'sub_sector_id': null,
+                'shortlisted_spaces_id': null,
+                'call_back_preference': '',
+                'current_patner_feedback': '',
+                'current_patner_feedback_reason': '',
+                'campaign_id': '',
+                'status': '',
+                'supplier_type': $scope.userDetailData.type_of_entity,
+                'supplier_id': $scope.userDetailData.supplier_id,
+                'representative': $scope.formData.data.representative,
+              }]
+            }
+            releaseCampaignService.newLeadCreated(browsed_ids)
+              .then(function onSuccess(response) {
+                if (response && response.data.data.error) {
+                  swal(constants.name, response.data.data.error, constants.error);
+                } else {
+                  swal(constants.name, response.data.data.message, constants.success);
+                  $scope.formData.data = {};
+                  $scope.selectedCompanies = [];
+                }
+              })
           }
 
+          let getOrganisationList = function () {
+            AuthService.getOrganisationsForAssignment()
+              .then(function onSuccess(response) {
+                $scope.organisationList = response.data.data;
+              }).catch(function onError(response) {
+                console.log(response);
+              })
+          }
+
+          let getUserDetails = function (number) {
+            let param = { phoneNumber: number };
+            AuthService.getAllUserDetailData(param)
+              .then(function onSuccess(response) {
+                $scope.userDetailData = response.data.data.payload;
+              }).catch(function onError(response) {
+                console.log(response);
+              })
+          }
           $scope.callUserDetailModal = function (data) {
             $scope.formData.phone_number = data.phone_number
             getSectorByNumber($scope.formData.phone_number);
+            getUserDetails($scope.formData.phone_number)
+            getOrganisationList()
           }
         }
       }
     })
+
+
+// comment
+// :
+// "wr5t4"
+
+// current_patner_id
+// :
+// "BUSKRIA95C"
+// internal_comment
+// :
+// "rfgt"
+// l1_answer_2
+// :
+// "1 to 5 years"
+// l1_answers
+// :
+// "3-6 months"
+// l2_answers
+// :
+// "within 1 week"
+// newBrowsedCheck
+// :
+// true
+// phone_number
+// :
+// "8082356021"
+// relationship_manager
+// :
+// "paintsurveyuser1"
+// representative
+// :
+// "BUS0-25606"
+// supplier_id
+// :
+// "JNQWGTYNFXM"
+// supplier_type
+// :
+// "EI"

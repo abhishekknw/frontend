@@ -149,6 +149,19 @@
                                                 </select>
                                           </div>
                                     </div>
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                                <label>Select Organisation</label>
+                                                <select class="form-control" name="representative"
+                                                      ng-disabled="!validations.enableUpdate"
+                                                      ng-model="formData.data.representative"
+                                                      ng-change="getSourceDataList(subrequirement.representative)"
+                                                      ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'name'"
+                                                      required>
+                                                      <option value="">Select</option>
+                                                </select>
+                                          </div>
+                                    </div>
                                     <div class="col-md-12">
                                           <div class="form-group">
                                                 <label>Preffered Partner</label>
