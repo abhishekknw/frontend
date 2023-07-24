@@ -24,7 +24,7 @@ angular
           $scope.validations = { enableUpdate: false, addNewLead: false }
           // $scope.example14settings = { smartButtonMaxItems: 3, smartButtonTextConverter: function (itemText, originalItem) { if (itemText === 'Jhon') { return 'Jhonny!'; } return itemText; } };
           $scope.getLeadsBySector = function () {
-            if($scope.validations.addNewLead){
+            if ($scope.validations.addNewLead) {
               $scope.showHideObj = { table: false, form: true };
             } else {
               $scope.showHideObj = { table: true, form: false };
@@ -98,29 +98,31 @@ angular
           }
 
           $scope.updateRequirement = function (data) {
-            data.data.L4 = data.data.l1_answers;
-            data.data.L5 = data.data.l1_answer_2;
-            data.data.L6 = data.data.l2_answers;
-            data.data['L4.1'] = null;
-            data.data['L5.1'] = null;
-            data.data['L6.1'] = null;
-            data.data['preferred_company'] = getPrefferedCompanyId();
-            let obj = { requirements: [data.data] };
-            swal({
-              title: 'Are you sure ?',
-              text: 'Updated Requirement',
-              type: constants.warning,
-              showCancelButton: true,
-              confirmButtonClass: "btn-success",
-              confirmButtonText: "Yes, Update!",
-              closeOnConfirm: false,
-              closeOnCancel: true
-            },
-              function (confirm) {
-                if (confirm) {
-                  if ($scope.validations.addNewLead) {
-                    console.log(obj, "111111111111111111111111111111")
-                  } else {
+
+            if ($scope.validations.addNewLead) {
+              $scope.newLeadCreated(data)
+            } else {
+
+              data.data.L4 = data.data.l1_answers;
+              data.data.L5 = data.data.l1_answer_2;
+              data.data.L6 = data.data.l2_answers;
+              data.data['L4.1'] = null;
+              data.data['L5.1'] = null;
+              data.data['L6.1'] = null;
+              data.data['preferred_company'] = getPrefferedCompanyId();
+              let obj = { requirements: [data.data] };
+              swal({
+                title: 'Are you sure ?',
+                text: 'Updated Requirement',
+                type: constants.warning,
+                showCancelButton: true,
+                confirmButtonClass: "btn-success",
+                confirmButtonText: "Yes, Update!",
+                closeOnConfirm: false,
+                closeOnCancel: true
+              },
+                function (confirm) {
+                  if (confirm) {
                     releaseCampaignService.updateRequirement(obj)
                       .then(function onSuccess(response) {
                         swal(constants.name, constants.update_success, constants.success);
@@ -128,8 +130,36 @@ angular
                         swal(constants.name, constants.save_error, constants.error);
                       })
                   }
-                }
-              })
+                })
+
+            }
+          }
+
+          $scope.newLeadCreated = function (data) {
+            let browsed_ids = {'browsed_ids':[{
+              'prefered_patners' :  getPrefferedCompanyId(),
+              'prefered_patner_other' : '',
+              'phone_number' : $scope.formData.phone_number,
+              'sub_sector_id' : null,
+              'shortlisted_spaces_id' : null,
+              'call_back_preference' :'',
+              'current_patner_feedback' :'',
+              'current_patner_feedback_reason' : '' ,
+              'campaign_id' : '',
+              'status' : '',
+              'supplier_type' : 'supplier_type',
+              'supplier_id' : '',
+            }]}
+            console.log(browsed_ids, "browsed_ids")
+
+            // releaseCampaignService.newLeadCreated(newObj)
+            //   .then(function onSuccess(response) {
+            //     if (response && response.data.data.error) {
+            //       swal(constants.name, response.data.data.error, constants.error);
+            //     } else {
+            //       swal(constants.name, response.data.data.message, constants.success);
+            //     }
+            //   })
           }
 
           $scope.callUserDetailModal = function (data) {
