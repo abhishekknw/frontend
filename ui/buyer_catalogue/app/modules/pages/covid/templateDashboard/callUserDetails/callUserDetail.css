@@ -1,0 +1,30 @@
+#onCallUserDetails {
+    text-align: left;
+}
+
+#onCallUserDetails .modal-body{
+    padding: 15px;
+}
+#onCallUserDetails label{
+    line-height: normal;
+    font-weight: 300;
+    color: #666;
+}
+
+#onCallUserDetails table th,#onCallUserDetails table td{
+    text-align: left;
+    padding: 0px 2px;
+}
+
+#onCallUserDetails .multiselect-parent.dropdown-multiselect button,#onCallUserDetails  .multiselect-parent.dropdown-multiselect{
+    width: 100%;
+    text-align: left;
+}
+.form-group span.ng-binding.ng-scope {
+    display: inline-block;
+    white-space: normal;
+    word-break: break-all;
+}
+tr.highlighted , #onCallUserDetails table .highlighted td{
+    background-color: #f2f2f2;
+}
