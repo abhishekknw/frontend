@@ -67,7 +67,7 @@
                                     </tbody>
                               </table>
                         </div>
-                        <form name="onCallUserDetails" ng-submit="onCallUserDetails()" ng-if="showHideObj.form"
+                        <form name="onCallUserDetails" ng-submit="updateRequirement(formData)" ng-if="showHideObj.form"
                               style="margin-top: 15px;">
                               <div class="row">
                                     <div class="col-md-4">
@@ -96,8 +96,9 @@
                                           <div class="form-group">
                                                 <label>Lead Status</label>
                                                 <select class="form-control" name="leadStatus"
-                                                      ng-model="formData.data.call_back_preference" required>
-                                                      <option value="NA">Select</option>
+                                                      ng-model="formData.data.call_back_preference"
+                                                      required>
+                                                      <option value="">Select</option>
                                                       <option ng-repeat="status in callStatusList" track by "$index"
                                                             value="{{status}}">{{status}}</option>
                                                 </select>
@@ -151,7 +152,7 @@
                                     <div class="col-md-12">
                                           <div class="form-group">
                                                 <label>Comment</label>
-                                                <textarea class="form-control" ng-model="formData.data.comment"
+                                                <textarea class="form-control" ng-model="formData.data.comment" maxlength="250"
                                                       placeholder="Comments"></textarea>
                                           </div>
                                     </div>
@@ -163,9 +164,9 @@
                                     </div>
                               </div>
                               <div>
-                                    <button type="button" class="btn btn-danger">Edit</button>
+                                    <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-edit"></span></button>
                                     <button type="button" class="btn btn-danger">FeedBack</button>
-                                    <button type="button" class="btn btn-danger" ng-click="updateRequirement(formData)">Save</button>
+                                    <button type="submit" class="btn btn-danger">Save</button>
                                     <button type="button" class="btn btn-danger">Intervene</button>
                               </div>
                               <!-- <button type="submit" class="smallBtn">Save</button> -->

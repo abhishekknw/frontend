@@ -36,6 +36,7 @@ angular
 
           $scope.showLeadDetails = function (leadData) {
             $scope.showHideObj = { table: true, form: true };
+            leadData.call_back_preference = leadData.call_back_preference === "NA" ? '' : leadData.call_back_preference
             $scope.formData.data = leadData;
             $scope.selectedCompanies = $scope.partnerCompanies?.filter((obj) => $scope.formData.data.preferred_company.includes(obj.organisation_id));
           }
