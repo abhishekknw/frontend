@@ -44,6 +44,7 @@ angular
             templateDashboardService.getSectorByNumber(number)
               .then(function onSuccess(response) {
                 $scope.sectorList = response.data.data;
+                console.log($scope.sectorList)
               }).catch(function onError(response) {
                 console.log(response);
               })
@@ -58,11 +59,6 @@ angular
               }).catch(function onError(response) {
                 console.log(response);
               })
-          }
-
-          $scope.getCompanyName = function (id) {
-            let company = $scope.partnerCompanies.find(x => x.organisation_id === id);
-            return company ? company.name : 'NA';
           }
 
           let getPrefferedCompanyId = function () {

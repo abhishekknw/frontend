@@ -20,16 +20,16 @@
                                     <select class="form-control" name="sector" ng-model="formData.sector"
                                           ng-click="getLeadsBySector()" required>
                                           <option value="">Select</option>
-                                          <option ng-repeat="sector in sectorList" value="{{sector}}"
+                                          <option ng-repeat="sector in sectorList.sectors" value="{{sector}}"
                                                 ng-selected="formData.sector.id == sector.id">
-                                                {{sector.business_type}}</option>
+                                                {{sector.business_type}}({{sector.lead_count}})</option>
                                     </select>
                               </div>
                         </div>
                         <div style="margin-top: 10px;" ng-if="showHideObj.table || showHideObj.form">
                               <div class="row">
                                     <div class="col-md-4">
-                                          <label>Total Leads Submitted <span>20</span></label>
+                                          <label>Total Leads Submitted <span>{{sectorList.total_leads}}</span></label>
                                     </div>
                                     <div class="col-md-4">
                                           <label>Total Entity Submitted <span>12</span></label>
@@ -42,7 +42,7 @@
                                     <thead>
                                           <tr>
                                                 <th>#</th>
-                                                <th>Company</th>
+                                                <th>Campaign</th>
                                                 <th>Date</th>
                                                 <th>Lead Id</th>
                                                 <th>View</th>
@@ -51,8 +51,8 @@
                                     <tbody>
                                           <tr ng-repeat="lead in sectorWiseLeads" track by "$index"
                                                 ng-class="{'highlighted': formData.data.id === lead.id}">
-                                                <td>{{$index}}</td>
-                                                <td>{{getCompanyName(lead.current_company)}}</td>
+                                                <td>{{$index+1}}</td>
+                                                <td>{{lead.company_campaign}}</td>
                                                 <td>{{lead.lead_date | date : "dd-MM-yyyy"}}</td>
                                                 <td>{{lead.id}}</td>
                                                 <td>
@@ -133,13 +133,6 @@
                                                 </select>
                                           </div>
                                     </div>
-                                    <div class="col-md-4">
-                                          <div class="form-group">
-                                                <label>Submitted Date&Time</label>
-                                                <span>{{formData.data.created_at | date:'medium' }}</span>
-                                          </div>
-                                    </div>
-
                                     <div class="col-md-12">
                                           <div class="form-group">
                                                 <label>Preffered Partner</label>
@@ -148,7 +141,7 @@
                                                       extra-settings="example14settings"
                                                       translation-texts="customTextForDropdown" checkboxes="true">
                                                 </div>
-                                                <span ng-repeat="item in selectedCompanies">{{item.label}},</span>
+                                                <span ng-repeat="item in selectedCompanies" class="multi-select-itm">{{item.label}}</span>
                                           </div>
                                     </div>
                                     <div class="col-md-12">
@@ -158,8 +151,12 @@
                                                       placeholder="Comments"></textarea>
                                           </div>
                                     </div>
-
-
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                                <label>Submitted Date&Time</label>
+                                                <span>{{formData.data.created_at | date:'medium' }}</span>
+                                          </div>
+                                    </div>
                               </div>
                               <div>
                                     <button type="button" class="btn btn-danger">Edit</button>
