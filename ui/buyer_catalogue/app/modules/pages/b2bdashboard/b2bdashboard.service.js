@@ -551,7 +551,6 @@ angular.module('catalogueApp')
 
       // For Business Mca Dashboard
       DashboardService.purchasedNotPurchasedLeadBusinessMCA = function (campaignId, page, filters) {
-        console.log(filters,"11111111111111111111")
         var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId +
           "&supplier_type=" + filters.supplierCode +
           "&next_page=" + page +
@@ -563,7 +562,9 @@ angular.module('catalogueApp')
           "&start_date=" + filters.startDate +
           "&end_date=" + filters.endDate +
           "&start_acceptance_date=" + filters.acceptStartDate +
-          "&end_acceptance_date=" + filters.acceptEndDate;
+          "&end_acceptance_date=" + filters.acceptEndDate +
+          "&start_update_date=" + filters.updateStartDate +
+          "&end_update_date=" + filters.updateEndDate;
         if (filters.leadType) {
           url += "&lead_type=" + filters.leadType;
         }
