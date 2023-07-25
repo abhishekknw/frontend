@@ -1491,7 +1491,7 @@
                                     <h5 style="color:#000;padding: 10px 0;">Lead Submitted Date</h5>
                                     <input type="text" style="color:#000000;" class="field"
                                       uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                      ng-change="changeStartDate()" ng-model="dateRangeModel.startDate"
+                                      ng-change="changeStartDate('submitted')" ng-model="dateRangeModel.startDate"
                                       is-open="isDatepickerOpen" datepicker-options="submittedDateOptions"
                                       ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
                                     <button type="button" class="smallBtn calendar"
@@ -1505,7 +1505,7 @@
                                     <h5 style="color:#000;padding: 10px 0;">To:</h5>
                                     <input type="text" style="color:#000000;" class="field"
                                       uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                      ng-change="changeEndDate()" ng-model="dateRangeModel.endDate"
+                                      ng-change="changeEndDate('submitted')" ng-model="dateRangeModel.endDate"
                                       is-open="isEndDateOpen" datepicker-options="submittedDateOptions"
                                       ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
                                     <button type="button" class="smallBtn calendar"
@@ -1517,15 +1517,15 @@
                                 </div>
                               </div>
                             </div>
-                            <!-- <div class="col-lg-12">
+                            <div class="col-lg-12">
                               <div class="row">
                                 <div class="col-lg-6">
                                   <div class="date_wrapper ">
                                     <h5 style="color:#000000;">Lead Acceptance Date:</h5>
                                     <input type="text" style="color:#000000;" class="field"
                                       uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                      ng-change="changeAcceptanceStartDate()" ng-model="AcceptanceDateRange.start_dates"
-                                      is-open="isDatepickerOpen1" datepicker-options="AcceptanceOptions"
+                                      ng-change="changeStartDate('acceptance')" ng-model="dateRangeModel.acceptStartDate"
+                                      is-open="isDatepickerOpen1" datepicker-options="acceptanceDateOptions"
                                       ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
                                     <button type="button" class="smallBtn calendar"
                                       ng-click="isDatepickerOpen1 = !isDatepickerOpen1">
@@ -1538,27 +1538,27 @@
                                     <h5 style="color:#000;padding: 10px 0;">To:</h5>
                                     <input type="text" style="color:#000000;" class="field"
                                       uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                      ng-change="changeAcceptanceEndDate()" ng-model="AcceptanceDateRange.end_dates"
-                                      is-open="isEndDateOpen1" datepicker-options="AcceptanceOptions" ng-required="true"
+                                      ng-change="changeEndDate('acceptance')" ng-model="dateRangeModel.acceptEndDate"
+                                      is-open="isEndDateOpen1" datepicker-options="acceptanceDateOptions" ng-required="true"
                                       close-text="Close" alt-input-formats="altInputFormats">
                                     <button type="button" class="smallBtn calendar"
-                                      ng-disabled="!AcceptanceDateRange.start_dates"
+                                      ng-disabled="!dateRangeModel.acceptStartDate"
                                       ng-click="isEndDateOpen1 = !isEndDateOpen1">
                                       <i class="glyphicon glyphicon-calendar"></i>
                                     </button>
                                   </div>
                                 </div>
                               </div>
-                            </div> -->
-                            <!-- <div class="col-lg-12">
+                            </div>
+                            <div class="col-lg-12">
                               <div class="row">
                                 <div class="col-lg-6">
                                   <div class="date_wrapper  ">
                                     <h5 style="color:#000000;">Lead Update Date:</h5>
                                     <input type="text" style="color:#000000;" class="field"
                                       uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                      ng-change="changeUpdateStartDate()" ng-model="UpdateDateRangeModel.start_dates"
-                                      is-open="isDatepickerOpen2" datepicker-options="UpdateOptions" ng-required="true"
+                                      ng-change="changeStartDate('update')" ng-model="dateRangeModel.updateStartDate"
+                                      is-open="isDatepickerOpen2" datepicker-options="updateDateOptions" ng-required="true"
                                       close-text="Close" alt-input-formats="altInputFormats">
                                     <button type="button" class="smallBtn calendar"
                                       ng-click="isDatepickerOpen2 = !isDatepickerOpen2">
@@ -1571,18 +1571,18 @@
                                     <h5 style="color:#000;padding: 10px 0;">To:</h5>
                                     <input type="text" style="color:#000000;" class="field"
                                       uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                      ng-change="changeUpdateEndDate()" ng-model="UpdateDateRangeModel.end_dates"
-                                      is-open="isEndDateOpen2" datepicker-options="UpdateOptions" ng-required="true"
+                                      ng-change="changeEndDate('update')" ng-model="dateRangeModel.updateEndDate"
+                                      is-open="isEndDateOpen2" datepicker-options="updateDateOptions" ng-required="true"
                                       close-text="Close" alt-input-formats="altInputFormats">
                                     <button type="button" class="smallBtn calendar"
-                                      ng-disabled="!UpdateDateRangeModel.start_dates"
+                                      ng-disabled="!dateRangeModel.updateStartDate"
                                       ng-click="isEndDateOpen2 = !isEndDateOpen2">
                                       <i class="glyphicon glyphicon-calendar"></i>
                                     </button>
                                   </div>
                                 </div>
                               </div>
-                            </div> -->
+                            </div>
                           </div>
                           <div class="row">
                             <div class="col-lg-6">

@@ -3654,12 +3654,13 @@
         if (!filters.primaryCountEnd) {
           filters.primaryCountEnd = '';
         }
-        if (!filters.startDate) {
-          filters.startDate = "";
-        }
-        if (!filters.endDate) {
-          filters.endDate = "";
-        }
+        if (!filters.startDate || filters.startDate == 'NaN-NaN-NaN') filters.startDate = "";
+        if (!filters.endDate || filters.endDate == 'NaN-NaN-NaN') filters.endDate = "";
+        if (!filters.acceptStartDate || filters.acceptStartDate == 'NaN-NaN-NaN') filters.acceptStartDate = "";
+        if (!filters.acceptEndDate || filters.acceptEndDate == 'NaN-NaN-NaN') filters.acceptEndDate = "";
+        if (!filters.updateStartDate || filters.updateStartDate == 'NaN-NaN-NaN') filters.updateStartDate = "";
+        if (!filters.updateEndDate || filters.updateEndDate == 'NaN-NaN-NaN') filters.updateEndDate = "";
+
         filters.leadType = 'Leads';
         filters.supplierCode = 'all';
         $scope.currentPageLead = page;
@@ -6825,17 +6826,42 @@
       $scope.submittedDateOptions = {
         maxDate: new Date(),
       };
-      $scope.changeStartDate = function () {
-        $scope.submittedDateOptions.minDate = $scope.dateRangeModel.startDate;
-        $scope.dateRangeModel.endDate = "";
+      $scope.acceptanceDateOptions = {
+        maxDate: new Date(),
+      };
+      $scope.updateDateOptions = {
+        maxDate: new Date(),
+      };
+      $scope.changeStartDate = function (check) {
+        if (check === 'submitted') {
+          $scope.submittedDateOptions.minDate = $scope.dateRangeModel.startDate;
+          $scope.dateRangeModel.endDate = "";
+          $scope.filterOnTable.endDate = "";
+          $scope.filterOnTable.startDate = commonDataShare.formatDateToString($scope.dateRangeModel.startDate, "-");
+        } else if (check === 'acceptance') {
+          $scope.acceptanceDateOptions.minDate = $scope.dateRangeModel.acceptStartDate;
+          $scope.dateRangeModel.acceptEndDate = "";
+          $scope.filterOnTable.acceptEndDate = "";
+          $scope.filterOnTable.acceptStartDate = commonDataShare.formatDateToString($scope.dateRangeModel.acceptStartDate, "-");
+        } else {
+          $scope.updateDateOptions.minDate = $scope.dateRangeModel.updateStartDate;
+          $scope.dateRangeModel.updateEndDate = "";
+          $scope.filterOnTable.updateEndDate = "";
+          $scope.filterOnTable.updateStartDate = commonDataShare.formatDateToString($scope.dateRangeModel.updateStartDate, "-");
+        }
+        $scope.viewLeadsForSelectedCampaign($scope.leadDetailData, $scope.campaignIdForLeads, $scope.currentPageLead, $scope.filterOnTable);
+
       }
 
-      $scope.changeEndDate = function () {
-        $scope.filterOnTable.startDate = commonDataShare.formatDateToString($scope.dateRangeModel.startDate,"-");
-        $scope.filterOnTable.endDate = commonDataShare.formatDateToString($scope.dateRangeModel.endDate,"-");
+      $scope.changeEndDate = function (check) {
+        if (check === 'submitted') {
+          $scope.filterOnTable.endDate = commonDataShare.formatDateToString($scope.dateRangeModel.endDate, "-");
+        } else if (check === 'acceptance') {
+          $scope.filterOnTable.acceptEndDate = commonDataShare.formatDateToString($scope.dateRangeModel.acceptEndDate, "-");
+        } else {
+          $scope.filterOnTable.updateEndDate = commonDataShare.formatDateToString($scope.dateRangeModel.updateEndDate, "-");
+        }
         $scope.viewLeadsForSelectedCampaign($scope.leadDetailData, $scope.campaignIdForLeads, $scope.currentPageLead, $scope.filterOnTable);
-        console.log($scope.filterOnTable,"$scope.filterOnTable$scope.filterOnTable$scope.filterOnTable");
-        console.log($scope.dateRangeModel);
       }
       // END
 
