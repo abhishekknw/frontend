@@ -52,11 +52,12 @@
                                                 <th>Lead Id</th>
                                                 <th>Verified</th>
                                                 <th>Verified By</th>
-                                                <th>View</th>
+                                                <!-- <th>View</th> -->
                                           </tr>
                                     </thead>
                                     <tbody>
                                           <tr ng-repeat="lead in sectorWiseLeads" track by "$index"
+                                                ng-click="showLeadDetails(lead)"
                                                 ng-class="{'highlighted': formData.data.id === lead.id}">
                                                 <td>{{$index+1}}</td>
                                                 <td>{{lead.company_campaign}}</td>
@@ -66,10 +67,10 @@
                                                             ng-style="{ 'background-color' : (lead.varified_ops == 'yes') ? 'green' : 'yellow' }">{{lead.varified_ops
                                                             | uppercase}}</span></td>
                                                 <td>{{lead.varified_ops_by}}</td>
-                                                <td>
-                                                      <i class="fa fa-eye" style="font-size: 16px; cursor: pointer"
+                                                <!-- <td>
+                                                      <i class="fa fa-eye" style="font-size: 14px; cursor: pointer"
                                                             ng-click="showLeadDetails(lead)"></i>
-                                                </td>
+                                                </td> -->
                                           </tr>
                                     </tbody>
                               </table>
@@ -191,13 +192,15 @@
                                     </div>
                               </div>
                               <div>
-                                    <label>Edit:
+                                    <label ng-if="!validations.addNewLead">Edit:
                                           <input type="checkbox" ng-model="validations.enableUpdate"
                                                 ng-click="editCurrentLead()">
                                     </label>
                                     <button type="submit" class="btn btn-danger"
                                           ng-disabled="!validations.enableUpdate">Save</button>
-                                    <button type="button" class="btn btn-primary" ng-if="formData.data.varified_ops==='no'" ng-click="opsVerifyRequirement(formData.data.id)">Ops Verify</button>
+                                    <button type="button" class="btn btn-primary"
+                                          ng-if="formData.data.varified_ops==='no'"
+                                          ng-click="opsVerifyRequirement(formData.data.id)">Ops Verify</button>
                                     <button type="button" class="btn btn-danger">FeedBack</button>
                                     <button type="button" class="btn btn-danger">Intervene</button>
                               </div>
