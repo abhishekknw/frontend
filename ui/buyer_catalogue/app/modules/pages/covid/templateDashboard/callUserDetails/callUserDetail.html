@@ -22,7 +22,7 @@
                                           <option value="">Select</option>
                                           <option ng-repeat="sector in sectorList.sectors" value="{{sector}}"
                                                 ng-selected="formData.sector.id == sector.id">
-                                                {{sector.business_type}}({{sector.lead_count}})</option>
+                                                {{sector.business_type}} ({{sector.lead_count}})</option>
                                     </select>
                               </div>
                               <div class="col-md-6">
@@ -32,7 +32,7 @@
                                     </label>
                               </div>
                         </div>
-                        <div style="margin-top: 10px;" ng-if="showHideObj.table || showHideObj.form">
+                        <div style="margin-top: 10px;">
                               <div class="row">
                                     <div class="col-md-4">
                                           <label>Total Leads Submitted <span>{{sectorList.total_leads}}</span></label>
@@ -195,11 +195,9 @@
                                           <input type="checkbox" ng-model="validations.enableUpdate"
                                                 ng-click="editCurrentLead()">
                                     </label>
-                                    <!-- <button type="button" class="btn btn-danger"
-                                          ng-click="validations.enableUpdate = !validations.enableUpdate"><span
-                                                class="glyphicon glyphicon-edit"></span></button> -->
                                     <button type="submit" class="btn btn-danger"
                                           ng-disabled="!validations.enableUpdate">Save</button>
+                                    <button type="button" class="btn btn-primary" ng-if="formData.data.varified_ops==='no'" ng-click="opsVerifyRequirement(formData.data.id)">Ops Verify</button>
                                     <button type="button" class="btn btn-danger">FeedBack</button>
                                     <button type="button" class="btn btn-danger">Intervene</button>
                               </div>

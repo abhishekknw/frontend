@@ -170,6 +170,42 @@ angular
               })
           }
 
+          $scope.opsVerifyRequirement = function (id) {
+            let verifyId = [id];
+            swal({
+              title: 'Are you sure ?',
+              text: 'Do you want to proceed with sector level verification?',
+              type: constants.warning,
+              showCancelButton: true,
+              confirmButtonClass: "btn-success",
+              confirmButtonText: "Yes, Verify!",
+              closeOnConfirm: false,
+              closeOnCancel: true
+            },
+              function (confirm) {
+                if (confirm) {
+                  releaseCampaignService.opsVerifyRequirement({ "requirement_ids": verifyId })
+                    .then(function onSuccess(response) {
+                      if (response && response.data.data.error) {
+                        swal(constants.name, response.data.data.error, constants.error);
+                      } else {
+                        swal(constants.name, response.data.data.message, constants.success);
+                        let index = $scope.sectorWiseLeads.findIndex((obj => obj.id == id));
+                        $scope.sectorWiseLeads[index]['varified_ops'] = 'yes';
+                      }
+                    })
+                    .catch(function onError(response) {
+                      if (response && response.data && response.data.data && response.data.data.general_error && response.data.data.general_error.error) {
+                        swal(constants.name, response.data.data.general_error.error, constants.error);
+                      }
+                      else if (response.statusText) {
+                        swal(constants.name, response.statusText, constants.error);
+                      }
+                    })
+                }
+              })
+          }
+
           let getOrganisationList = function () {
             AuthService.getOrganisationsForAssignment()
               .then(function onSuccess(response) {
@@ -188,6 +224,7 @@ angular
                 console.log(response);
               })
           }
+
           $scope.callUserDetailModal = function (data) {
             $scope.formData.phone_number = data.phone_number
             getSectorByNumber($scope.formData.phone_number);
@@ -197,42 +234,3 @@ angular
         }
       }
     })
-
-
-// comment
-// :
-// "wr5t4"
-
-// current_patner_id
-// :
-// "BUSKRIA95C"
-// internal_comment
-// :
-// "rfgt"
-// l1_answer_2
-// :
-// "1 to 5 years"
-// l1_answers
-// :
-// "3-6 months"
-// l2_answers
-// :
-// "within 1 week"
-// newBrowsedCheck
-// :
-// true
-// phone_number
-// :
-// "8082356021"
-// relationship_manager
-// :
-// "paintsurveyuser1"
-// representative
-// :
-// "BUS0-25606"
-// supplier_id
-// :
-// "JNQWGTYNFXM"
-// supplier_type
-// :
-// "EI"
