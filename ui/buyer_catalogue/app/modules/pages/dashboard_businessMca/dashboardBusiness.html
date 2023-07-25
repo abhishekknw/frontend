@@ -1468,7 +1468,8 @@
 
                       <div class="d-flex justify-content-between" style="margin-top: 15px;">
                         <div class="table-header-wrapper-right">
-                          <button class="filter_btn btn btn-primary" ng-click="toggleClassFilter=!toggleClassFilter">Filters</button>
+                          <button class="filter_btn btn btn-primary"
+                            ng-click="toggleClassFilter=!toggleClassFilter">Filters</button>
                         </div>
                         <span style="display: block;margin: 5px; max-width: 300px;margin-left: auto;">
                           <input type="text" class="form-control" ng-model="searchForLead"
@@ -1476,173 +1477,169 @@
                         </span>
                       </div>
                     </div>
-                    <div
-                        ng-class="(toggleClassFilter)?'date_range_picker date_range_picker_open':'date_range_picker'">
-                        <div class="filter-header">
-                          <h5>Filters</h5>
-                          <span class="close-btn" ng-click="toggleClassFilter=!toggleClassFilter">×</span>
+                    <div ng-class="(toggleClassFilter)?'date_range_picker date_range_picker_open':'date_range_picker'">
+                      <div class="filter-header">
+                        <h5>Filters</h5>
+                        <span class="close-btn" ng-click="toggleClassFilter=!toggleClassFilter">×</span>
 
-                          <div class="">
-                            <!-- <div class="row">
-                              <div class="col-lg-12">
-                                <div class="row">
-                                  <div class="col-lg-6">
-                                    <div class="date_wrapper ">
-                                      <h5 style="color:#000;padding: 10px 0;">Lead Submitted Date</h5>
-                                      <input type="text" style="color:#000000;" class="field"
-                                        uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                        ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
-                                        is-open="isDatepickerOpen" datepicker-options="submittedDateOptions"
-                                        ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
-                                      <button type="button" class="smallBtn calendar"
-                                        ng-click="isDatepickerOpen = !isDatepickerOpen">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                      </button>
-                                    </div>
+                        <div class="">
+                          <div class="row">
+                            <div class="col-lg-12">
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <div class="date_wrapper ">
+                                    <h5 style="color:#000;padding: 10px 0;">Lead Submitted Date</h5>
+                                    <input type="text" style="color:#000000;" class="field"
+                                      uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                                      ng-change="changeStartDate()" ng-model="dateRangeModel.startDate"
+                                      is-open="isDatepickerOpen" datepicker-options="submittedDateOptions"
+                                      ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
+                                    <button type="button" class="smallBtn calendar"
+                                      ng-click="isDatepickerOpen = !isDatepickerOpen">
+                                      <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
                                   </div>
-                                  <div class="col-md-6">
-                                    <div class="date_wrapper ">
-                                      <h5 style="color:#000;padding: 10px 0;">To:</h5>
-                                      <input type="text" style="color:#000000;" class="field"
-                                        uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                        ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
-                                        is-open="isEndDateOpen" datepicker-options="submittedDateOptions"
-                                        ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
-                                      <button type="button" class="smallBtn calendar"
-                                        ng-disabled="!dateRangeModel.start_dates"
-                                        ng-click="isEndDateOpen = !isEndDateOpen">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                      </button>
-                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="date_wrapper ">
+                                    <h5 style="color:#000;padding: 10px 0;">To:</h5>
+                                    <input type="text" style="color:#000000;" class="field"
+                                      uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                                      ng-change="changeEndDate()" ng-model="dateRangeModel.endDate"
+                                      is-open="isEndDateOpen" datepicker-options="submittedDateOptions"
+                                      ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
+                                    <button type="button" class="smallBtn calendar"
+                                      ng-disabled="!dateRangeModel.startDate"
+                                      ng-click="isEndDateOpen = !isEndDateOpen">
+                                      <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-lg-12">
-                                <div class="row">
-                                  <div class="col-lg-6">
-                                    <div class="date_wrapper ">
-                                      <h5 style="color:#000000;">Lead Acceptance Date:</h5>
-                                      <input type="text" style="color:#000000;" class="field"
-                                        uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                        ng-change="changeAcceptanceStartDate()"
-                                        ng-model="AcceptanceDateRange.start_dates" is-open="isDatepickerOpen1"
-                                        datepicker-options="AcceptanceOptions" ng-required="true" close-text="Close"
-                                        alt-input-formats="altInputFormats">
-                                      <button type="button" class="smallBtn calendar"
-                                        ng-click="isDatepickerOpen1 = !isDatepickerOpen1">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <div class="date_wrapper ">
-                                      <h5 style="color:#000;padding: 10px 0;">To:</h5>
-                                      <input type="text" style="color:#000000;" class="field"
-                                        uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                        ng-change="changeAcceptanceEndDate()" ng-model="AcceptanceDateRange.end_dates"
-                                        is-open="isEndDateOpen1" datepicker-options="AcceptanceOptions"
-                                        ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
-                                      <button type="button" class="smallBtn calendar"
-                                        ng-disabled="!AcceptanceDateRange.start_dates"
-                                        ng-click="isEndDateOpen1 = !isEndDateOpen1">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                      </button>
-                                    </div>
+                            </div>
+                            <!-- <div class="col-lg-12">
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <div class="date_wrapper ">
+                                    <h5 style="color:#000000;">Lead Acceptance Date:</h5>
+                                    <input type="text" style="color:#000000;" class="field"
+                                      uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                                      ng-change="changeAcceptanceStartDate()" ng-model="AcceptanceDateRange.start_dates"
+                                      is-open="isDatepickerOpen1" datepicker-options="AcceptanceOptions"
+                                      ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
+                                    <button type="button" class="smallBtn calendar"
+                                      ng-click="isDatepickerOpen1 = !isDatepickerOpen1">
+                                      <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-lg-12">
-                                <div class="row">
-                                  <div class="col-lg-6">
-                                    <div class="date_wrapper  ">
-                                      <h5 style="color:#000000;">Lead Update Date:</h5>
-                                      <input type="text" style="color:#000000;" class="field"
-                                        uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                        ng-change="changeUpdateStartDate()" ng-model="UpdateDateRangeModel.start_dates"
-                                        is-open="isDatepickerOpen2" datepicker-options="UpdateOptions"
-                                        ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
-                                      <button type="button" class="smallBtn calendar"
-                                        ng-click="isDatepickerOpen2 = !isDatepickerOpen2">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <div class="date_wrapper ">
-                                      <h5 style="color:#000;padding: 10px 0;">To:</h5>
-                                      <input type="text" style="color:#000000;" class="field"
-                                        uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                                        ng-change="changeUpdateEndDate()" ng-model="UpdateDateRangeModel.end_dates"
-                                        is-open="isEndDateOpen2" datepicker-options="UpdateOptions" ng-required="true"
-                                        close-text="Close" alt-input-formats="altInputFormats">
-                                      <button type="button" class="smallBtn calendar"
-                                        ng-disabled="!UpdateDateRangeModel.start_dates"
-                                        ng-click="isEndDateOpen2 = !isEndDateOpen2">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                      </button>
-                                    </div>
+                                <div class="col-md-6">
+                                  <div class="date_wrapper ">
+                                    <h5 style="color:#000;padding: 10px 0;">To:</h5>
+                                    <input type="text" style="color:#000000;" class="field"
+                                      uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                                      ng-change="changeAcceptanceEndDate()" ng-model="AcceptanceDateRange.end_dates"
+                                      is-open="isEndDateOpen1" datepicker-options="AcceptanceOptions" ng-required="true"
+                                      close-text="Close" alt-input-formats="altInputFormats">
+                                    <button type="button" class="smallBtn calendar"
+                                      ng-disabled="!AcceptanceDateRange.start_dates"
+                                      ng-click="isEndDateOpen1 = !isEndDateOpen1">
+                                      <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
                                   </div>
                                 </div>
                               </div>
                             </div> -->
-                            <div class="row">
-                              <div class="col-lg-6">
-                                <h5 style="color:#000;padding: 10px 0;">Primary Count:</h5>
-                                <input class="field" style="color:#000" type="text" placeholder="Start Range"
-                                  ng-change="searchPrimaryCount(filterOnTable)"
-                                  onkeypress='return event.charCode >= 48 && event.charCode <= 57' required
-                                  ng-model="filterOnTable.primaryCountStart">
-
-
+                            <!-- <div class="col-lg-12">
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <div class="date_wrapper  ">
+                                    <h5 style="color:#000000;">Lead Update Date:</h5>
+                                    <input type="text" style="color:#000000;" class="field"
+                                      uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                                      ng-change="changeUpdateStartDate()" ng-model="UpdateDateRangeModel.start_dates"
+                                      is-open="isDatepickerOpen2" datepicker-options="UpdateOptions" ng-required="true"
+                                      close-text="Close" alt-input-formats="altInputFormats">
+                                    <button type="button" class="smallBtn calendar"
+                                      ng-click="isDatepickerOpen2 = !isDatepickerOpen2">
+                                      <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="date_wrapper ">
+                                    <h5 style="color:#000;padding: 10px 0;">To:</h5>
+                                    <input type="text" style="color:#000000;" class="field"
+                                      uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                                      ng-change="changeUpdateEndDate()" ng-model="UpdateDateRangeModel.end_dates"
+                                      is-open="isEndDateOpen2" datepicker-options="UpdateOptions" ng-required="true"
+                                      close-text="Close" alt-input-formats="altInputFormats">
+                                    <button type="button" class="smallBtn calendar"
+                                      ng-disabled="!UpdateDateRangeModel.start_dates"
+                                      ng-click="isEndDateOpen2 = !isEndDateOpen2">
+                                      <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                  </div>
+                                </div>
                               </div>
-                              <div class="col-lg-6">
-                                <h5 style="color:#000;padding: 10px 0;">To:</h5>
-                                <input class="field" style="color:#000" type="text" placeholder="End Range"
-                                  ng-change="searchPrimaryCount(filterOnTable)"
-                                  onkeypress='return event.charCode >= 48 && event.charCode <= 57' required
-                                  ng-model="filterOnTable.primaryCountEnd">
-                              </div>
+                            </div> -->
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <h5 style="color:#000;padding: 10px 0;">Primary Count:</h5>
+                              <input class="field" style="color:#000" type="text" placeholder="Start Range"
+                                ng-change="searchPrimaryCount(filterOnTable)"
+                                onkeypress='return event.charCode >= 48 && event.charCode <= 57' required
+                                ng-model="filterOnTable.primaryCountStart">
                             </div>
-                            <div class="row multibox-filter-select">
-                              <div class="col-lg-6">
-                                <h5 style="color:#000;padding: 10px 0;">Client Status:</h5>
-                                <span class="multi_dropdwn" ng-dropdown-multiselect="" options="listClientStatusObj"
-                                  extra-settings="dropdownSettings" selected-model="selected_clientStatus"
-                                  ng-click="selectedClientSatusFilter();" translation-texts="selected_business_type"
-                                  events="events">
-                                </span>
-                              </div>
-                              <div class="col-lg-6">
-                                <h5 style="color:#000;padding: 10px 0;">Select City:</h5>
-                                <span class="multi_dropdwn" ng-dropdown-multiselect="" options="cityListDetails"
-                                  extra-settings="dropdownSettings" selected-model="selected_cities_list"
-                                  ng-click="selectedCityFilter();" translation-texts="selected_business_type"
-                                  events="events">
-                                </span>
-                              </div>
+                            <div class="col-lg-6">
+                              <h5 style="color:#000;padding: 10px 0;">To:</h5>
+                              <input class="field" style="color:#000" type="text" placeholder="End Range"
+                                ng-change="searchPrimaryCount(filterOnTable)"
+                                onkeypress='return event.charCode >= 48 && event.charCode <= 57' required
+                                ng-model="filterOnTable.primaryCountEnd">
                             </div>
-                            <span style="display: block;margin: 15px;color:#000;">
-                              Based on your filter there are <b>{{purchasedNotPurchasedLead.length}}</b> leads in "
-                              <span ng-if="!CheckForAllSelectedCity" ng-repeat="city in selected_cities_list">
-                                <b>{{city.label}}</b>
-                                <span ng-if="!$last">,</span>
+                          </div>
+                          <div class="row multibox-filter-select">
+                            <div class="col-lg-6">
+                              <h5 style="color:#000;padding: 10px 0;">Client Status:</h5>
+                              <span class="multi_dropdwn" ng-dropdown-multiselect="" options="listClientStatusObj"
+                                extra-settings="dropdownSettings" selected-model="selected_clientStatus"
+                                ng-click="selectedClientSatusFilter();" translation-texts="selected_business_type"
+                                events="events">
                               </span>
-                              <span style="color:#000"
-                                ng-if="CheckForAllSelectedCity || selected_cities_list.length <= 0"><b>All</b></span> "
-                              cities.
+                            </div>
+                            <div class="col-lg-6">
+                              <h5 style="color:#000;padding: 10px 0;">Select City:</h5>
+                              <span class="multi_dropdwn" ng-dropdown-multiselect="" options="cityListDetails"
+                                extra-settings="dropdownSettings" selected-model="selected_cities_list"
+                                ng-click="selectedCityFilter();" translation-texts="selected_business_type"
+                                events="events">
+                              </span>
+                            </div>
+                          </div>
+                          <span style="display: block;margin: 15px;color:#000;">
+                            Based on your filter there are <b>{{purchasedNotPurchasedLead.length}}</b> leads in "
+                            <span ng-if="!CheckForAllSelectedCity" ng-repeat="city in selected_cities_list">
+                              <b>{{city.label}}</b>
+                              <span ng-if="!$last">,</span>
                             </span>
-                            <div class="d-flex">
-                              <div style="color: rgb(249, 247, 247);margin: 15px;">
-                                <button class="btn btn-danger" ng-click="downloadLeadsByFilter()">Download
-                                  Leads</button>
-                              </div>
-                              <div style="color: rgb(249, 247, 247);margin: 15px;">
-                                <button class="btn btn-danger" ng-click="EmailLeadsByFilter()">Send Email</button>
-                              </div>
+                            <span style="color:#000"
+                              ng-if="CheckForAllSelectedCity || selected_cities_list.length <= 0"><b>All</b></span> "
+                            cities.
+                          </span>
+                          <div class="d-flex">
+                            <div style="color: rgb(249, 247, 247);margin: 15px;">
+                              <button class="btn btn-danger" ng-click="downloadLeadsByFilter()">Download
+                                Leads</button>
+                            </div>
+                            <div style="color: rgb(249, 247, 247);margin: 15px;">
+                              <button class="btn btn-danger" ng-click="EmailLeadsByFilter()">Send Email</button>
                             </div>
                           </div>
                         </div>
                       </div>
+                    </div>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>

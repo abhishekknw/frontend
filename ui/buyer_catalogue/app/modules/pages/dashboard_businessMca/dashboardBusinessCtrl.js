@@ -2328,13 +2328,6 @@
         $scope.campaignInfoForPerfMetrics = campaign;
         $scope.showPerfMetrics = $scope.perfMetrics.blank;
         var result;
-
-
-
-        // if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
-        //   !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
-        //   $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
-        //   $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
         if ($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates) {
           $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_dates);
           $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_dates);
@@ -4258,16 +4251,6 @@
 
       };
       // start_date, end_date
-      $scope.changeStartDate = function () {
-        $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
-        $scope.options.minDate = $scope.dateRangeModel.start_date;
-      }
-
-      $scope.changeEndDate = function () {
-        $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
-
-      }
-
       $scope.changeFilterStartDate = function () {
         $scope.options.minDate = $scope.graphSelection.dateRange.startDate;
       }
@@ -4294,8 +4277,6 @@
 
         DashboardService.getCampaignDateWiseData(dateRange, $scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
-            // $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
-            // $scope.dateRangeModel.end_date = new Date($scope.dateRangeModel.end_date);
             $scope.showPerfMetrics = $scope.perfMetrics.overall;
             $scope.selectAllCampaignLeads = true;
             $scope.dynamicGraphsUI = true;
@@ -4339,18 +4320,10 @@
       $scope.getCampaignWiseSummary = function () {
         var dateRanges = {}
         if ($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates) {
-          //   if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
-          //   !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
-
           dateRanges.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_dates);
           dateRanges.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_dates);
 
-          // }
         }
-        //  else {
-        //   $scope.getVendorWiseSummary();
-        //   $scope.getDynamicGraphsStatics();
-        // }
 
         $scope.getVendorWiseSummary();
         $scope.getDynamicGraphsStatics();
@@ -6847,6 +6820,22 @@
       $scope.searchForDetails = function (search) {
         $scope.filterOnTable.search = search;
         $scope.viewLeadsForSelectedCampaign($scope.leadDetailData, $scope.campaignIdForLeads, $scope.currentPageLead, $scope.filterOnTable);
+      }
+
+      $scope.submittedDateOptions = {
+        maxDate: new Date(),
+      };
+      $scope.changeStartDate = function () {
+        $scope.submittedDateOptions.minDate = $scope.dateRangeModel.startDate;
+        $scope.dateRangeModel.endDate = "";
+      }
+
+      $scope.changeEndDate = function () {
+        $scope.filterOnTable.startDate = commonDataShare.formatDateToString($scope.dateRangeModel.startDate,"-");
+        $scope.filterOnTable.endDate = commonDataShare.formatDateToString($scope.dateRangeModel.endDate,"-");
+        $scope.viewLeadsForSelectedCampaign($scope.leadDetailData, $scope.campaignIdForLeads, $scope.currentPageLead, $scope.filterOnTable);
+        console.log($scope.filterOnTable,"$scope.filterOnTable$scope.filterOnTable$scope.filterOnTable");
+        console.log($scope.dateRangeModel);
       }
       // END
 
