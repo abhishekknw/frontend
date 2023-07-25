@@ -6773,8 +6773,17 @@
         enableSearch: true,
         showUncheckAll: true
       };
-      $scope.filterOnTable = { 'city': '', 'clientStatus': '', 'primaryCountStart': '', 'primaryCountEnd': '', 'search': '' }
 
+      $scope.submittedDateOptions = {
+        maxDate: new Date(),
+      };
+      $scope.acceptanceDateOptions = {
+        maxDate: new Date(),
+      };
+      $scope.updateDateOptions = {
+        maxDate: new Date(),
+      };
+      $scope.filterOnTable = { 'city': '', 'clientStatus': '', 'primaryCountStart': '', 'primaryCountEnd': '', 'search': '' }
       $scope.getCityList = function (campaign_id) {
         B2BDashboardService.getCityList(campaign_id)
           .then(function onSuccess(response) {
@@ -6823,15 +6832,6 @@
         $scope.viewLeadsForSelectedCampaign($scope.leadDetailData, $scope.campaignIdForLeads, $scope.currentPageLead, $scope.filterOnTable);
       }
 
-      $scope.submittedDateOptions = {
-        maxDate: new Date(),
-      };
-      $scope.acceptanceDateOptions = {
-        maxDate: new Date(),
-      };
-      $scope.updateDateOptions = {
-        maxDate: new Date(),
-      };
       $scope.changeStartDate = function (check) {
         if (check === 'submitted') {
           $scope.submittedDateOptions.minDate = $scope.dateRangeModel.startDate;
@@ -6861,6 +6861,14 @@
         } else {
           $scope.filterOnTable.updateEndDate = commonDataShare.formatDateToString($scope.dateRangeModel.updateEndDate, "-");
         }
+        $scope.viewLeadsForSelectedCampaign($scope.leadDetailData, $scope.campaignIdForLeads, $scope.currentPageLead, $scope.filterOnTable);
+      }
+
+      $scope.refeshFilters = function () {
+        $scope.selected_cities_list = [];
+        $scope.selected_clientStatus = [];
+        $scope.dateRangeModel = {};
+        $scope.filterOnTable = { 'city': '', 'clientStatus': '', 'primaryCountStart': '', 'primaryCountEnd': '', 'search': '' }
         $scope.viewLeadsForSelectedCampaign($scope.leadDetailData, $scope.campaignIdForLeads, $scope.currentPageLead, $scope.filterOnTable);
       }
       // END
