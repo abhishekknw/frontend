@@ -235,6 +235,8 @@
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
                                       ng-click="sendTemplates(template,template.data,template.id,'template',template.elementName)">Send
                                       templates</button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;"
+                                      ng-click="editTemplate(template)">Edit</button>
                                     <button type="button" class="btn btn-primary" style="align-items: center;"
                                       ng-click="deleteTemplate(template)">
                                       Delete</button>
@@ -253,11 +255,35 @@
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h4 class="modal-title">Modal Heading</h4>
+                              <h4 class="modal-title">Create Template</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
                               <form action="">
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label> Template Type:</label>
+                                      <select class="form-control" ng-model="templateData.templateType">
+                                        <option value="">Select Sub Sector</option>
+                                        <option>Type 1</option>
+                                        <option>Type 2</option>
+                                        <option>Type 3</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label> Template Sub Type:</label>
+                                      <select class="form-control" ng-model="templateData.templateSubType">
+                                        <option value="">Select Sub Sector</option>
+                                        <option>Sub Type 1</option>
+                                        <option>Sub Type 2</option>
+                                        <option>Sub Type 3</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
                                 <div class="row">
                                   <div class="col-md-6">
                                     <div class="form-group">
@@ -291,7 +317,8 @@
                                       <label>Type Of Entity:</label>
                                       <select class="form-control " ng-model="templateData.entity_type">
                                         <option value="">Select Supplier</option>
-                                        <option ng-repeat="item in supplierList" value="{{item}}">{{item}}</option>
+                                        <option ng-repeat="item in supplierList" value="{{item[0]}}">{{item[1]}}
+                                        </option>
                                       </select>
                                     </div>
                                   </div>
@@ -378,7 +405,7 @@
                           <div class="modal-content">
                             <!-- Modal Header -->
                             <div class="modal-header">
-                              <h4 class="modal-title">Modal Heading</h4>
+                              <h4 class="modal-title">Details</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
@@ -1174,7 +1201,9 @@
 
             <!--Transactional template tab-->
             <!-- <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="1"> -->
-            <uib-tab ng-click="getTransactionalTemplate(search='',dateRangeModel.start_dates='',dateRangeModel.end_dates='')" index="1">
+            <uib-tab
+              ng-click="getTransactionalTemplate(search='',dateRangeModel.start_dates='',dateRangeModel.end_dates='')"
+              index="1">
               <uib-tab-heading>
                 <h5>Transactional Template</h5>
               </uib-tab-heading>
@@ -1371,10 +1400,10 @@
                       <div class="col-md-12" print-remove style="margin-top: 10px; margin-bottom: 10px;">
                         <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
                           <input type="text" style="color:#000000; margin-bottom: 0px;" class="field"
-                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="dateWiseChangeStartDate()"
-                            ng-model="dateWiseRangeModel.start_dates" is-open="isDatepickerOpen"
-                            datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
-                            alt-input-formats="altInputFormats">
+                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                            ng-change="dateWiseChangeStartDate()" ng-model="dateWiseRangeModel.start_dates"
+                            is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
+                            close-text="Close" alt-input-formats="altInputFormats">
                           <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"
                             class="pl-2 smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
                             <i class="glyphicon glyphicon-calendar"></i>
@@ -1382,9 +1411,10 @@
                         </div>
                         <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
                           <input type="text" style="color:#000000; margin-bottom: 0px;" class="field"
-                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="dateWiseChangeEndDate()"
-                            ng-model="dateWiseRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="dateWisePickerOption"
-                            ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
+                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                            ng-change="dateWiseChangeEndDate()" ng-model="dateWiseRangeModel.end_dates"
+                            is-open="isEndDateOpen" datepicker-options="dateWisePickerOption" ng-required="true"
+                            close-text="Close" alt-input-formats="altInputFormats">
                           <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"
                             class="pl-2 smallBtn calendar" ng-disabled="!dateWiseRangeModel.start_dates"
                             ng-click="isEndDateOpen = !isEndDateOpen">

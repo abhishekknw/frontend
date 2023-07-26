@@ -6885,6 +6885,7 @@
           data.param = data.param.split(',');
         }
         data.type_of_fields = 'TEXT';
+        console.log(data)
         if (data.alias_name && data.elementName) {
           templateDashboardService.createTemplate(data)
             .then(function onSuccess(response) {
