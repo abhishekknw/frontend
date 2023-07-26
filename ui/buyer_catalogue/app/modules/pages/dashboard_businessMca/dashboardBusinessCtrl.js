@@ -6694,6 +6694,15 @@
         $scope.campaignId = campaignId;
       }
       $scope.sendEmailsMca = function (email) {
+        if ($scope.checkForEmailModal == false) {
+        if (!email) {
+          return 0;
+        }
+        else {
+          sendEmailByFilter(email);
+          return 0;
+        }
+      }
         B2BDashboardService.sendBookingEmails("leads", "all", $scope.campaignId, email, $scope.tabName)
           .then(function onSuccess(response) {
             if (response.data.status && response.data.data) {
@@ -6881,6 +6890,27 @@
           "&city=" + $scope.filterOnTable.city + "&client_status=" + $scope.filterOnTable.clientStatus +
           "&from_primary_count=" + $scope.filterOnTable.primaryCountStart + "&to_primary_count=" + $scope.filterOnTable.primaryCountEnd;
         window.open(url, '_blank');
+      }
+
+      $scope.EmailLeadsByFilter = function () {
+        $scope.checkForEmailModal = false;
+        $('#sendEmailModal').modal('show');
+      }
+      let sendEmailByFilter = function (email) {
+        let tabname = "";
+        B2BDashboardService.sendBookingEmailsByFilter('Leads', 'all', $scope.campaignIdForLeads, email, tabname,
+          $scope.filterOnTable.startDate, $scope.filterOnTable.endDate, $scope.filterOnTable.acceptStartDate, $scope.filterOnTable.acceptEndDate,
+          $scope.filterOnTable.updateStartDate , $scope.filterOnTable.updateEndDate , $scope.filterOnTable.city,$scope.filterOnTable.clientStatus,
+          $scope.filterOnTable.primaryCountStart, $scope.filterOnTable.primaryCountEnd)
+          .then(function onSuccess(response) {
+            if (response.data.status && response.data.data) {
+              $scope.emailModel = {};
+              swal(constants.name, "Email Sent Sucessfully", constants.success);
+            }
+          })
+          .catch(function onError(response) {
+            swal(constants.name, "Error", constants.error);
+          });
       }
       // END
 
