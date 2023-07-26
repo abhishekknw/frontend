@@ -643,7 +643,7 @@ angular.module('catalogueApp')
 
       DashboardService.sendBookingEmailsByFilter = function (leads, supplier_code, campaign, email, tabName, startDate, endDate, AcceptanceStartDate, AcceptanceEndDate, UpdateStartDate, UpdateEndDate, selectCity, selectedClientStatus, countStart, countEnd) {
         var url = url_root + "b2b/email-leads-summary/?lead_type=" + leads + "&supplier_code=" + supplier_code + "&campaign_id=" + campaign + "&emails=" + email.email + "&tabname=" + tabName +
-          "&start_date=" + startDate + "&end_date=" + endDate + "&start_acceptance_date=" + AcceptanceStartDate + "&end_acceptance_date=" + AcceptanceEndDate + "&start_update_date=" + UpdateStartDate + "end_update_date=" + UpdateEndDate +
+          "&start_date=" + startDate + "&end_date=" + endDate + "&start_acceptance_date=" + AcceptanceStartDate + "&end_acceptance_date=" + AcceptanceEndDate + "&start_update_date=" + UpdateStartDate + "&end_update_date=" + UpdateEndDate +
           "&city=" + selectCity + "&client_status=" + selectedClientStatus + "&from_primary_count=" + countStart + "&to_primary_count=" + countEnd;
         return machadaloHttp.get(url);
       }
