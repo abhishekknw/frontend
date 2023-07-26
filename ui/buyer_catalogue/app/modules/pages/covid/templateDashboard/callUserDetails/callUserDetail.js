@@ -8,6 +8,7 @@ angular
       constants,
       $timeout,
       permissions,
+      commonDataShare,
       AuthService,
       $anchorScroll,
       templateDashboardService,
@@ -22,6 +23,8 @@ angular
           $scope.example14settings = { scrollableHeight: '200px', scrollable: true };
           $scope.customTextForDropdown = { buttonDefaultText: 'Select Preffered Partner' };
           $scope.validations = { enableUpdate: false, addNewLead: false }
+          $scope.propertyName = 'lead_date';
+          $scope.reverse = true;
           // $scope.example14settings = { smartButtonMaxItems: 3, smartButtonTextConverter: function (itemText, originalItem) { if (itemText === 'Jhon') { return 'Jhonny!'; } return itemText; } };
           $scope.getLeadsBySector = function () {
             if ($scope.validations.addNewLead) {
@@ -165,6 +168,8 @@ angular
                 } else {
                   swal(constants.name, response.data.data.message, constants.success);
                 }
+              }).catch(function onError(response) {
+                commonDataShare.showErrorMessage(response);
               })
           }
 
@@ -223,18 +228,20 @@ angular
               })
           }
 
-          $scope.propertyName = 'lead_date';
-          $scope.reverse = true;
           $scope.sortBy = function (propertyName) {
             $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
             $scope.propertyName = propertyName;
           };
 
           $scope.callUserDetailModal = function (data) {
-            $scope.formData.phone_number = data.phone_number
-            getSectorByNumber($scope.formData.phone_number);
-            getUserDetails($scope.formData.phone_number)
-            getOrganisationList()
+            if ($scope.validations.addNewLead) {
+              $scope.addNewLead();
+            } else {
+              $scope.formData.phone_number = data.phone_number
+              getSectorByNumber($scope.formData.phone_number);
+              getUserDetails($scope.formData.phone_number)
+              getOrganisationList()
+            }
           }
         }
       }
