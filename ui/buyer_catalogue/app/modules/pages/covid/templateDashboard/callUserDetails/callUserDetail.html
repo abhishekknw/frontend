@@ -48,7 +48,8 @@
                                           <tr>
                                                 <th>#</th>
                                                 <th ng-click="sortBy('company_campaign')">Campaign
-                                                      <span class="sortorder" ng-if="propertyName === 'company_campaign'"
+                                                      <span class="sortorder"
+                                                            ng-if="propertyName === 'company_campaign'"
                                                             ng-class="{reverse: reverse}"></span>
                                                 </th>
                                                 <th ng-click="sortBy('lead_date')">Lead Date
@@ -58,7 +59,6 @@
                                                 <th>Lead Id</th>
                                                 <th>Verified</th>
                                                 <th>Verified By</th>
-                                                <!-- <th>View</th> -->
                                           </tr>
                                     </thead>
                                     <tbody>
@@ -118,6 +118,11 @@
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L4</label>
+                                                <i class="fa fa-question tool-icon" ng-mouseover="tips1=true"
+                                                      ng-mouseleave="tips1=false"></i>
+                                                <div ng-if="tips1" class="tool-popup">
+                                                      <div>{{questionList[0]['L4 question']}}</div>
+                                                </div>
                                                 <select class="form-control" name="l1_answers"
                                                       ng-model="formData.data.l1_answers"
                                                       ng-disabled="!validations.enableUpdate">
@@ -131,11 +136,17 @@
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L5</label>
+                                                <i class="fa fa-question tool-icon" ng-mouseover="tips2=true"
+                                                      ng-mouseleave="tips2=false"></i>
+                                                <div ng-if="tips2" class="tool-popup">
+                                                      <div>{{questionList[0]['L5 question']}}</div>
+                                                </div>
                                                 <select class="form-control" name="l1_answer_2"
                                                       ng-model="formData.data.l1_answer_2"
                                                       ng-disabled="!validations.enableUpdate">
                                                       <option value="">Select</option>
-                                                      <option ng-repeat="l5 in questionList[0].L5" value="{{l5}}">{{l5}}
+                                                      <option ng-repeat="l5 in questionList[0].L5" value="{{l5}}">
+                                                            {{l5}}
                                                       </option>
                                                 </select>
                                           </div>
@@ -143,11 +154,17 @@
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L6</label>
+                                                <i class="fa fa-question tool-icon" ng-mouseover="tips3=true"
+                                                      ng-mouseleave="tips3=false"></i>
+                                                <div ng-if="tips3" class="tool-popup">
+                                                      <div>{{questionList[0]['L6 question']}}</div>
+                                                </div>
                                                 <select class="form-control" name="l2_answers"
                                                       ng-model="formData.data.l2_answers"
                                                       ng-disabled="!validations.enableUpdate">
                                                       <option value="">Select</option>
-                                                      <option ng-repeat="l6 in questionList[0].L6" value="{{l6}}">{{l6}}
+                                                      <option ng-repeat="l6 in questionList[0].L6" value="{{l6}}">
+                                                            {{l6}}
                                                       </option>
                                                 </select>
                                           </div>
