@@ -247,3 +247,21 @@ label,a{
 .maincontainer{
   margin-top: 215px;
 }
+.crate-user-section{
+  padding: 0px 20px;
+}
+.select-drop-down .btn-default {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;  
+  padding: 13px 17px;
+}
+
+.select-drop-down .btn-group, .select-drop-down .btn-default {
+  width: 100%;
+  text-align: left;
+}
+.select-drop-down span.ng-binding.ng-scope {
+  margin-right: 10px; 
+  display: inline-block;
+}
