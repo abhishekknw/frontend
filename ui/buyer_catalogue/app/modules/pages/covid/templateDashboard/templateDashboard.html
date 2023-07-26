@@ -1552,8 +1552,8 @@
                           ng-change="getTransactionalTemplateUserDetail(user_view.template_id,user_view.sent_date,pagination.current,user_view.template_name,userSearch)">
                       </div>
                       <div class="col-sm-3">
-                        <select class="form-control" value="tmp.call_status" ng-model="tmp.call_status"
-                          ng-change="updateCallStatus(tmp.call_status,tmp)">
+                        <select class="form-control" value="call_status" ng-model="userDetailFilter.callStatus"
+                          ng-change="getUserDetailListByStatus(userDetailFilter)">
                           <option value="">Select Status</option>
                           <option value="{{value}}" ng-repeat="value in CallStatusList">{{value}}</option>
                         </select>
