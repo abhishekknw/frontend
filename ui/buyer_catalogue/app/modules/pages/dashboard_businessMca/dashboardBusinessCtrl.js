@@ -6698,7 +6698,7 @@
           .then(function onSuccess(response) {
             if (response.data.status && response.data.data) {
               $scope.emailModel = {};
-              swal(constants.name, "Email Sent Sucessfully", constants.success);
+              swal(constants.name, constants.email_success, constants.success);
             }
           })
           .catch(function onError(response) {
@@ -6870,6 +6870,17 @@
         $scope.dateRangeModel = {};
         $scope.filterOnTable = { 'city': '', 'clientStatus': '', 'primaryCountStart': '', 'primaryCountEnd': '', 'search': '' }
         $scope.viewLeadsForSelectedCampaign($scope.leadDetailData, $scope.campaignIdForLeads, $scope.currentPageLead, $scope.filterOnTable);
+      }
+
+      $scope.downloadLeadsByFilter = function () {
+
+        let url = $scope.APIBaseUrl + "v0/ui/b2b/download-leads-summary/?lead_type=Leads" + "&supplier_code=all&campaign_id=" + $scope.campaignIdForLeads +
+          "&start_date=" + $scope.filterOnTable.startDate + "&end_date=" + $scope.filterOnTable.endDate +
+          "&start_acceptance_date=" + $scope.filterOnTable.acceptStartDate + "&end_acceptance_date=" + $scope.filterOnTable.acceptEndDate +
+          "&start_update_date=" + $scope.filterOnTable.updateStartDate + "&end_update_date=" + $scope.filterOnTable.updateEndDate +
+          "&city=" + $scope.filterOnTable.city + "&client_status=" + $scope.filterOnTable.clientStatus +
+          "&from_primary_count=" + $scope.filterOnTable.primaryCountStart + "&to_primary_count=" + $scope.filterOnTable.primaryCountEnd;
+        window.open(url, '_blank');
       }
       // END
 
