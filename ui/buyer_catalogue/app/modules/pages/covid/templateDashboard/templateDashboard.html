@@ -1546,13 +1546,19 @@
                       <h4><b>Template Name: </b>{{user_view.template_name}}</h4>
                       <h5><b>Sent Date: </b>{{user_view.sent_date | date : "dd-MM-yyyy"}}</h5>
                     </div>
-                    <div class="d-flex f-div justify-content-between">
-                      <div>
-                        <input type="text" class="form-control" placeholder="search" ng-model="userSearch"
-                          style="margin: 10px;"
+                    <div class="row d-flex align-items-center f-div" style="margin: 0;padding-bottom: 15px;">
+                      <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="search" ng-model="userSearch" 
                           ng-change="getTransactionalTemplateUserDetail(user_view.template_id,user_view.sent_date,pagination.current,user_view.template_name,userSearch)">
                       </div>
-                      <div style="margin: 10px;text-align: right;">
+                      <div class="col-sm-3">
+                        <select class="form-control" value="tmp.call_status" ng-model="tmp.call_status"
+                          ng-change="updateCallStatus(tmp.call_status,tmp)">
+                          <option value="">Select Status</option>
+                          <option value="{{value}}" ng-repeat="value in CallStatusList">{{value}}</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-6" style="text-align: right;">
                         <button class="btn btn-danger"
                           ng-click="backToDatewiseData(user_view.template_id,1,user_view.template_name,s_date='', e_date='')">Back
                           To Previous</button>
@@ -1635,7 +1641,8 @@
                           </td>
                           <td style="text-align: center;">
                             <i class='fas fa-phone-alt' style="font-size:16px;color: #000000;"
-                              ng-click="CallTemplate(tmp);callUserDetailModal(tmp)"><md-tooltip class="tool-box-header">Call,Comment &
+                              ng-click="CallTemplate(tmp);callUserDetailModal(tmp)"><md-tooltip
+                                class="tool-box-header">Call,Comment &
                                 Status</md-tooltip></i>
                             <i class='far fa-comments' style="font-size:16px;color: #000000;"
                               ng-click="showHideIntervene(tmp)">
