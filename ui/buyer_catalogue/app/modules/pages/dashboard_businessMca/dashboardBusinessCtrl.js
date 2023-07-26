@@ -6695,14 +6695,14 @@
       }
       $scope.sendEmailsMca = function (email) {
         if ($scope.checkForEmailModal == false) {
-        if (!email) {
-          return 0;
+          if (!email) {
+            return 0;
+          }
+          else {
+            sendEmailByFilter(email);
+            return 0;
+          }
         }
-        else {
-          sendEmailByFilter(email);
-          return 0;
-        }
-      }
         B2BDashboardService.sendBookingEmails("leads", "all", $scope.campaignId, email, $scope.tabName)
           .then(function onSuccess(response) {
             if (response.data.status && response.data.data) {
@@ -6792,7 +6792,19 @@
       $scope.updateDateOptions = {
         maxDate: new Date(),
       };
-      $scope.filterOnTable = { 'city': '', 'clientStatus': '', 'primaryCountStart': '', 'primaryCountEnd': '', 'search': '' }
+      $scope.filterOnTable = {
+        'city': '',
+        'clientStatus': '',
+        'primaryCountStart': '',
+        'primaryCountEnd': '',
+        'search': '',
+        'startDate': '',
+        "endDate": '',
+        "acceptStartDate": '',
+        'acceptEndDate': '',
+        'updateEndDate': '',
+        'updateStartDate': ''
+      }
       $scope.getCityList = function (campaign_id) {
         B2BDashboardService.getCityList(campaign_id)
           .then(function onSuccess(response) {
@@ -6877,7 +6889,19 @@
         $scope.selected_cities_list = [];
         $scope.selected_clientStatus = [];
         $scope.dateRangeModel = {};
-        $scope.filterOnTable = { 'city': '', 'clientStatus': '', 'primaryCountStart': '', 'primaryCountEnd': '', 'search': '' }
+        $scope.filterOnTable = {
+          'city': '',
+          'clientStatus': '',
+          'primaryCountStart': '',
+          'primaryCountEnd': '',
+          'search': '',
+          'startDate': '',
+          "endDate": '',
+          "acceptStartDate": '',
+          'acceptEndDate': '',
+          'updateEndDate': '',
+          'updateStartDate': ''
+        }
         $scope.viewLeadsForSelectedCampaign($scope.leadDetailData, $scope.campaignIdForLeads, $scope.currentPageLead, $scope.filterOnTable);
       }
 
@@ -6900,7 +6924,7 @@
         let tabname = "";
         B2BDashboardService.sendBookingEmailsByFilter('Leads', 'all', $scope.campaignIdForLeads, email, tabname,
           $scope.filterOnTable.startDate, $scope.filterOnTable.endDate, $scope.filterOnTable.acceptStartDate, $scope.filterOnTable.acceptEndDate,
-          $scope.filterOnTable.updateStartDate , $scope.filterOnTable.updateEndDate , $scope.filterOnTable.city,$scope.filterOnTable.clientStatus,
+          $scope.filterOnTable.updateStartDate, $scope.filterOnTable.updateEndDate, $scope.filterOnTable.city, $scope.filterOnTable.clientStatus,
           $scope.filterOnTable.primaryCountStart, $scope.filterOnTable.primaryCountEnd)
           .then(function onSuccess(response) {
             if (response.data.status && response.data.data) {
