@@ -2,38 +2,46 @@
     text-align: left;
 }
 
-#onCallUserDetails .modal-body{
+#onCallUserDetails .modal-body {
     padding: 15px;
 }
-#onCallUserDetails label{
+
+#onCallUserDetails label {
     line-height: normal;
     font-weight: 300;
     color: #666;
 }
 
-#onCallUserDetails table th,#onCallUserDetails table td{
+#onCallUserDetails table th,
+#onCallUserDetails table td {
     text-align: left;
     padding: 0px 2px;
 }
+
 #onCallUserDetails .table-responsive {
     max-height: 210px;
     min-height: 50px;
     width: 100%;
 }
-#onCallUserDetails .multiselect-parent.dropdown-multiselect button,#onCallUserDetails  .multiselect-parent.dropdown-multiselect{
+
+#onCallUserDetails .multiselect-parent.dropdown-multiselect button,
+#onCallUserDetails .multiselect-parent.dropdown-multiselect {
     width: 100%;
     text-align: center;
 }
+
 .form-group span.ng-binding.ng-scope {
     display: inline-block;
     white-space: normal;
     word-break: break-all;
 }
-tr.highlighted , #onCallUserDetails table .highlighted td{
+
+tr.highlighted,
+#onCallUserDetails table .highlighted td {
     background-color: #e3c1c1;
 }
 
-.multi-select-itm{
+.multi-select-itm {
     display: inline-block;
     background-color: #eee;
     padding: 2px 5px;
@@ -42,4 +50,16 @@ tr.highlighted , #onCallUserDetails table .highlighted td{
     text-align: center;
     margin-right: 2px;
     margin-top: 2px;
+}
+
+.sortorder:after {
+    content: '\25b2';
+}
+
+.sortorder.reverse:after {
+    content: '\25bc';
+}
+
+.ng-hide:not(.ng-hide-animate) {
+    display: contents !important;
 }

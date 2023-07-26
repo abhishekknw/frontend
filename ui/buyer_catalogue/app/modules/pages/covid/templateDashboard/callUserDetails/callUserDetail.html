@@ -37,9 +37,9 @@
                                     <div class="col-md-4">
                                           <label>Total Leads Submitted <span>{{sectorList.total_leads}}</span></label>
                                     </div>
-                                    <div class="col-md-4">
+                                    <!-- <div class="col-md-4">
                                           <label>Total Entity Submitted <span>12</span></label>
-                                    </div>
+                                    </div> -->
                               </div>
                         </div>
                         <div class="table-responsive" ng-if="showHideObj.table && !validations.addNewLead">
@@ -47,8 +47,14 @@
                                     <thead>
                                           <tr>
                                                 <th>#</th>
-                                                <th>Campaign</th>
-                                                <th>Lead Date</th>
+                                                <th ng-click="sortBy('company_campaign')">Campaign
+                                                      <span class="sortorder" ng-if="propertyName === 'company_campaign'"
+                                                            ng-class="{reverse: reverse}"></span>
+                                                </th>
+                                                <th ng-click="sortBy('lead_date')">Lead Date
+                                                      <span class="sortorder" ng-if="propertyName === 'lead_date'"
+                                                            ng-class="{reverse: reverse}"></span>
+                                                </th>
                                                 <th>Lead Id</th>
                                                 <th>Verified</th>
                                                 <th>Verified By</th>
@@ -56,8 +62,8 @@
                                           </tr>
                                     </thead>
                                     <tbody>
-                                          <tr ng-repeat="lead in sectorWiseLeads" track by "$index"
-                                                ng-click="showLeadDetails(lead)"
+                                          <tr ng-repeat="lead in sectorWiseLeads | orderBy:propertyName:reverse" track
+                                                by "$index" ng-click="showLeadDetails(lead)"
                                                 ng-class="{'highlighted': formData.data.id === lead.id}">
                                                 <td>{{$index+1}}</td>
                                                 <td>{{lead.company_campaign}}</td>
@@ -67,10 +73,6 @@
                                                             ng-style="{ 'background-color' : (lead.varified_ops == 'yes') ? 'green' : 'yellow' }">{{lead.varified_ops
                                                             | uppercase}}</span></td>
                                                 <td>{{lead.varified_ops_by}}</td>
-                                                <!-- <td>
-                                                      <i class="fa fa-eye" style="font-size: 14px; cursor: pointer"
-                                                            ng-click="showLeadDetails(lead)"></i>
-                                                </td> -->
                                           </tr>
                                     </tbody>
                               </table>

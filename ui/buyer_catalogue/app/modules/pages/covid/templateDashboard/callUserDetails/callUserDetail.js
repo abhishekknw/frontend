@@ -164,8 +164,6 @@ angular
                   swal(constants.name, response.data.data.error, constants.error);
                 } else {
                   swal(constants.name, response.data.data.message, constants.success);
-                  $scope.formData.data = {};
-                  $scope.selectedCompanies = [];
                 }
               })
           }
@@ -224,6 +222,13 @@ angular
                 console.log(response);
               })
           }
+
+          $scope.propertyName = 'lead_date';
+          $scope.reverse = true;
+          $scope.sortBy = function (propertyName) {
+            $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+            $scope.propertyName = propertyName;
+          };
 
           $scope.callUserDetailModal = function (data) {
             $scope.formData.phone_number = data.phone_number
