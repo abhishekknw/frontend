@@ -7079,12 +7079,21 @@
       // }
 
       let editTemplate = function (tempData) {
-        $scope.templateData = tempData;
-        console.log($scope.templateData,'$scope.templateData')
-        $scope.templateData.triger_message = tempData.data;
+        // $scope.templateData = tempData;
+        $scope.templateData.trigger_message = tempData.data;
         $scope.templateData.send_triger = tempData.send_trigger;
-        // $scope.templateType = tempData.g_templateType;
-        // delete $scope.templateData['data'];
+        $scope.templateData.alias_name = tempData.alias_name;
+        $scope.templateData.comment = tempData.comment;
+        $scope.templateData.elementName = tempData.elementName;
+        $scope.templateData.entity_type = tempData.entity_type;
+        $scope.templateData.sector = tempData.sector;
+        $scope.templateData.sub_sector = tempData.sub_sector;
+        $scope.templateData.template_sub_type = tempData.template_sub_type;
+        $scope.templateData.template_type = tempData.template_type;
+        $scope.templateData.type_of_fields = tempData.type_of_fields;
+        $scope.templateData.md_id = tempData.md_id;
+
+        console.log(tempData, '$scope.templateData');
         $scope.choices = tempData.button.map((item, index) => {
           item.id = index + 1;
           $scope.index = -1;
