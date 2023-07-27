@@ -7053,6 +7053,16 @@
       //   document.querySelector("#results").value += "You: " + data + "\n";  
       //   socketService.connect();
       // }
+
+      $scope.editTemplate = function (tempData) {
+        $scope.templateData = tempData;
+
+        $scope.templateData.triger_message = tempData.data;
+        $scope.templateData.send_triger = tempData.send_trigger;
+        $scope.templateType = tempData.g_templateType;
+        console.log(tempData, "addTemplateaddTemplate")
+        $('#addTemplate').modal('show');
+      }
     })
 })();
 app.factory('Excel', function ($window) {
