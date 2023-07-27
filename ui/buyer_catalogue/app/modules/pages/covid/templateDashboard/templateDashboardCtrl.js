@@ -6832,7 +6832,11 @@
             console.log(response);
           })
         if (check == 'edit') {
+          $scope.editTemplateDetail = true;
           editTemplate(rowTemplateData);
+        } else {
+          $scope.editTemplateDetail = false;
+          $scope.templateData = {};
         }
       }
 
@@ -6885,25 +6889,24 @@
       }
 
       $scope.templateData = {};
-      $scope.multipleButtons = function (data) {
-        if (data.id == 1) {
-          $scope.templateData.buttonOne = data.name;
-        }
-        else if (data.id == 2) {
-          $scope.templateData.buttonTwo = data.name;
-        }
-        else {
-          $scope.templateData.buttonThree = data.name;
-        }
+      $scope.multipleButtons = function () {
+        $scope.templateData.buttonOne = $scope.choices[0]['name'];
+        $scope.templateData.buttonTwo = $scope.choices[1]['name']
+        $scope.templateData.buttonThree = $scope.choices[2]['name']
       }
       $scope.createTemplate = function (data) {
         if (data.param) {
-          data.param = data.param.split(',');
+          try {
+            data.param = data.param.split(',');
+          }
+          catch {
+            data.param = data.param;
+          }
         }
         data.type_of_fields = 'TEXT';
-        console.log(data)
+
         if (data.alias_name && data.elementName) {
-          templateDashboardService.createTemplate(data)
+          templateDashboardService.createTemplate(data, $scope.editTemplateDetail)
             .then(function onSuccess(response) {
               swal("Template", response.data.data, constants.success);
               $scope.templateData = {};
@@ -7077,11 +7080,15 @@
 
       let editTemplate = function (tempData) {
         $scope.templateData = tempData;
-
+        console.log($scope.templateData,'$scope.templateData')
         $scope.templateData.triger_message = tempData.data;
         $scope.templateData.send_triger = tempData.send_trigger;
-        $scope.templateType = tempData.g_templateType;
-        console.log(tempData.button, "addTemplate");
+        // $scope.templateType = tempData.g_templateType;
+        $scope.choices = tempData.button.map((item, index) => {
+          item.id = index + 1;
+          $scope.index = -1;
+          return item
+        });
       }
     })
 })();

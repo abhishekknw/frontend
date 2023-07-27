@@ -255,7 +255,7 @@
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h4 class="modal-title">Create Template</h4>
+                              <h4 class="modal-title">{{editTemplateDetail ? 'Edit Template' : 'Create Template'}}</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
@@ -264,7 +264,7 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                       <label> Template Type:</label>
-                                      <select class="form-control" ng-model="templateData.templateType">
+                                      <select class="form-control" ng-model="templateData.template_type">
                                         <option value="">Select</option>
                                         <option>Type 1</option>
                                         <option>Type 2</option>
@@ -275,7 +275,7 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                       <label> Template Sub Type:</label>
-                                      <select class="form-control" ng-model="templateData.templateSubType">
+                                      <select class="form-control" ng-model="templateData.template_sub_type">
                                         <option value="">Select</option>
                                         <option>Sub Type 1</option>
                                         <option>Sub Type 2</option>
@@ -381,9 +381,9 @@
                                         ng-change="multipleButtons(choice)" placeholder="Enter Button Name">
                                     </div>
                                     <button class="btn btn-danger" ng-click="removeChoice(choice.id)"
-                                      ng-if="choice.id!=index">Remove</button>
+                                      ng-if="choice.id!=index">-</button>
                                     <button class="btn btn-danger" type="button" ng-click="addNewChoice()"
-                                      ng-if="choice.id===index">Add Button</button>
+                                      ng-if="choice.id===index">+</button>
                                   </li>
                                 </ul>
                               </form>

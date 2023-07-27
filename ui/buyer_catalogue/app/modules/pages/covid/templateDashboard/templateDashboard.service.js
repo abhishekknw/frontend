@@ -49,9 +49,13 @@ angular.module('catalogueApp')
         let url = "v0/ui/template/view-template/?next_page=" + page + "&search=" + search + "&status=" + status + "&campaign_id=" + campaign;
         return machadaloHttp.get(url);
       }
-      DashboardService.createTemplate = function (data) {
+      DashboardService.createTemplate = function (data,checkForUpdate) {
         let url = "v0/ui/template/";
-        return machadaloHttp.post(url, { data: data });
+        if (checkForUpdate){
+          return machadaloHttp.put(url, { data: data });
+        } else {
+          return machadaloHttp.post(url, { data: data });
+        }
       }
 
       DashboardService.getSector = function () {
