@@ -7084,6 +7084,7 @@
         $scope.templateData.triger_message = tempData.data;
         $scope.templateData.send_triger = tempData.send_trigger;
         // $scope.templateType = tempData.g_templateType;
+        // delete $scope.templateData['data'];
         $scope.choices = tempData.button.map((item, index) => {
           item.id = index + 1;
           $scope.index = -1;
