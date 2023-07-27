@@ -1271,6 +1271,12 @@
                           <th style="padding:10px" ng-click="Sort('days_count')">Days sent
                             <i class="icon-sort" style="color:white;"></i>
                           </th>
+                          <th style="padding:10px" ng-click="Sort('sent_date')">
+                            <span>Last Date
+                              <md-tooltip class="tool-box-header">Last Sent Date</md-tooltip>
+                            </span>
+                            <i class="icon-sort" style="color:white;"></i>
+                          </th>
                           <th style="padding:10px" ng-click="Sort('total_users')">
                             <span>Sent(Unique)
                               <md-tooltip class="tool-box-header">Sent By Machadalo</md-tooltip>
@@ -1331,6 +1337,7 @@
                           <!-- <td style="text-align: center;">{{ttemplate.template_id}}</td> -->
                           <td style="text-align: center; text-transform: capitalize;">{{ttemplate.template_name}}</td>
                           <td style="text-align: center;">{{ttemplate.days_count}}</td>
+                          <td style="text-align: center;">{{ttemplate.sent_date | date : "dd-MM-yyyy"}}</td>
                           <td style="text-align: center;">{{ttemplate.total_users}}<span
                               ng-if="ttemplate.Unique_send">({{ttemplate.Unique_send}})</span></td>
                           <td style="text-align: center;">{{ttemplate.total_sent}}<span
@@ -1572,13 +1579,19 @@
                       <h4><b>Template Name: </b>{{user_view.template_name}}</h4>
                       <h5><b>Sent Date: </b>{{user_view.sent_date | date : "dd-MM-yyyy"}}</h5>
                     </div>
-                    <div class="d-flex f-div justify-content-between">
-                      <div>
-                        <input type="text" class="form-control" placeholder="search" ng-model="userSearch"
-                          style="margin: 10px;"
+                    <div class="row d-flex align-items-center f-div" style="margin: 0;padding-bottom: 15px;">
+                      <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="search" ng-model="userSearch" 
                           ng-change="getTransactionalTemplateUserDetail(user_view.template_id,user_view.sent_date,pagination.current,user_view.template_name,userSearch)">
                       </div>
-                      <div style="margin: 10px;text-align: right;">
+                      <div class="col-sm-3">
+                        <select class="form-control" value="call_status" ng-model="userDetailFilter.callStatus"
+                          ng-change="getUserDetailListByStatus(userDetailFilter)">
+                          <option value="">Select Status</option>
+                          <option value="{{value}}" ng-repeat="value in CallStatusList">{{value}}</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-6" style="text-align: right;">
                         <button class="btn btn-danger"
                           ng-click="backToDatewiseData(user_view.template_id,1,user_view.template_name,s_date='', e_date='')">Back
                           To Previous</button>
@@ -1660,12 +1673,14 @@
                             </p>
                           </td>
                           <td style="text-align: center;">
-                            <i class='fas fa-phone-alt' style="font-size:20px;color: #000000;"
-                              ng-click="CallTemplate(tmp)"><md-tooltip class="tool-box-header">Call,Comment &
+                            <i class='fas fa-phone-alt' style="font-size:16px;color: #000000;"
+                              ng-click="CallTemplate(tmp);callUserDetailModal(tmp)"><md-tooltip
+                                class="tool-box-header">Call,Comment &
                                 Status</md-tooltip></i>
-                            <i class='far fa-comments' style="font-size:20px;color: #000000;"
-                              ng-click="showHideIntervene(tmp)"><md-tooltip
-                                class="tool-box-header">Intervene</md-tooltip>
+                            <i class='far fa-comments' style="font-size:16px;color: #000000;"
+                              ng-click="showHideIntervene(tmp)">
+                              <md-tooltip class="tool-box-header">Intervene
+                              </md-tooltip>
                             </i>
                           </td>
                         </tr>
@@ -6885,6 +6900,7 @@
           </div>
         </div>
       </div>
+      <call-user-detail-temp></call-user-detail-temp>
     </div><!-- middle-section -->
   </main>
 </div>

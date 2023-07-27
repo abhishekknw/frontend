@@ -1,0 +1,232 @@
+<link rel="stylesheet" href="modules/pages/covid/templateDashboard/callUserDetails/callUserDetail.css" />
+
+<!-- <div class="btn smallBtn" data-target="#onCallUserDetails" data-toggle="modal">
+      New
+</div> -->
+
+<div id="onCallUserDetails" class="modal fade">
+      <div class="modal-dialog" style="width: 600px">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                              &times;
+                        </button>
+                        <h4 class="modal-title">USER DETAILS</h4>
+                  </div>
+                  <div class="modal-body">
+                        <div class="row">
+                              <div class="col-md-6">
+                                    <label> Select Sector</label>
+                                    <select class="form-control" name="sector" ng-model="formData.sector"
+                                          ng-click="getLeadsBySector()">
+                                          <option value="">Select</option>
+                                          <option ng-repeat="sector in sectorList.sectors" value="{{sector}}"
+                                                ng-selected="formData.sector.id == sector.id">
+                                                {{sector.business_type}} ({{sector.lead_count}})</option>
+                                    </select>
+                              </div>
+                              <div class="col-md-6">
+                                    <label>New Lead:
+                                          <input type="checkbox" ng-model="validations.addNewLead"
+                                                ng-click="addNewLead()">
+                                    </label>
+                              </div>
+                        </div>
+                        <div style="margin-top: 10px;">
+                              <div class="row">
+                                    <div class="col-md-4">
+                                          <label>Total Leads Submitted <span>{{sectorList.total_leads}}</span></label>
+                                    </div>
+                                    <!-- <div class="col-md-4">
+                                          <label>Total Entity Submitted <span>12</span></label>
+                                    </div> -->
+                              </div>
+                        </div>
+                        <div class="table-responsive" ng-if="showHideObj.table && !validations.addNewLead">
+                              <table width="100%">
+                                    <thead>
+                                          <tr>
+                                                <th>#</th>
+                                                <th ng-click="sortBy('company_campaign')">Campaign
+                                                      <span class="sortorder"
+                                                            ng-if="propertyName === 'company_campaign'"
+                                                            ng-class="{reverse: reverse}"></span>
+                                                </th>
+                                                <th ng-click="sortBy('lead_date')">Lead Date
+                                                      <span class="sortorder" ng-if="propertyName === 'lead_date'"
+                                                            ng-class="{reverse: reverse}"></span>
+                                                </th>
+                                                <th>Lead Id</th>
+                                                <th>Verified</th>
+                                                <th>Verified By</th>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                          <tr ng-repeat="lead in sectorWiseLeads | orderBy:propertyName:reverse" track
+                                                by "$index" ng-click="showLeadDetails(lead)"
+                                                ng-class="{'highlighted': formData.data.id === lead.id}">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{lead.company_campaign}}</td>
+                                                <td>{{lead.lead_date | date : "dd-MM-yyyy"}}</td>
+                                                <td>{{lead.id}}</td>
+                                                <td><span class="multi-select-itm"
+                                                            ng-style="{ 'background-color' : (lead.varified_ops == 'yes') ? 'green' : 'yellow' }">{{lead.varified_ops
+                                                            | uppercase}}</span></td>
+                                                <td>{{lead.varified_ops_by}}</td>
+                                          </tr>
+                                    </tbody>
+                              </table>
+                        </div>
+                        <form name="onCallUserDetails" ng-submit="updateRequirement(formData)" ng-if="showHideObj.form"
+                              style="margin-top: 15px;">
+                              <div class="row">
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                                <label>Current Partner</label>
+                                                <select class="form-control" name="sector"
+                                                      ng-model="formData.data.current_company"
+                                                      ng-disabled="!validations.enableUpdate" required>
+                                                      <option value="">Select</option>
+                                                      <option ng-repeat="company in partnerCompanies"
+                                                            value="{{company.organisation_id}}"
+                                                            ng-selected="company.organisation_id == formData.data.current_company">
+                                                            {{company.label}}</option>
+                                                </select>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                                <label>Feedback</label>
+                                                <input type="text" class="form-control" name="code"
+                                                      placeholder="Feedback" ng-disabled="!validations.enableUpdate"
+                                                      ng-model="formData.data.current_patner_feedback" />
+                                          </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                                <label>Lead Status</label>
+                                                <select class="form-control" name="leadStatus"
+                                                      ng-model="formData.data.call_back_preference"
+                                                      ng-disabled="!validations.enableUpdate" required>
+                                                      <option value="">Select</option>
+                                                      <option ng-repeat="status in callStatusList" track by "$index"
+                                                            value="{{status}}">{{status}}</option>
+                                                </select>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                                <label>L4</label>
+                                                <i class="fa fa-question tool-icon" ng-mouseover="tips1=true"
+                                                      ng-mouseleave="tips1=false"></i>
+                                                <div ng-if="tips1" class="tool-popup">
+                                                      <div>{{questionList[0]['L4 question']}}</div>
+                                                </div>
+                                                <select class="form-control" name="l1_answers"
+                                                      ng-model="formData.data.l1_answers"
+                                                      ng-disabled="!validations.enableUpdate">
+                                                      <option value="">Select</option>
+                                                      <option ng-repeat="l4 in questionList[0].L4" track by "$index"
+                                                            value="{{l4}}">{{l4}}
+                                                      </option>
+                                                </select>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                                <label>L5</label>
+                                                <i class="fa fa-question tool-icon" ng-mouseover="tips2=true"
+                                                      ng-mouseleave="tips2=false"></i>
+                                                <div ng-if="tips2" class="tool-popup">
+                                                      <div>{{questionList[0]['L5 question']}}</div>
+                                                </div>
+                                                <select class="form-control" name="l1_answer_2"
+                                                      ng-model="formData.data.l1_answer_2"
+                                                      ng-disabled="!validations.enableUpdate">
+                                                      <option value="">Select</option>
+                                                      <option ng-repeat="l5 in questionList[0].L5" value="{{l5}}">
+                                                            {{l5}}
+                                                      </option>
+                                                </select>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                                <label>L6</label>
+                                                <i class="fa fa-question tool-icon" ng-mouseover="tips3=true"
+                                                      ng-mouseleave="tips3=false"></i>
+                                                <div ng-if="tips3" class="tool-popup">
+                                                      <div>{{questionList[0]['L6 question']}}</div>
+                                                </div>
+                                                <select class="form-control" name="l2_answers"
+                                                      ng-model="formData.data.l2_answers"
+                                                      ng-disabled="!validations.enableUpdate">
+                                                      <option value="">Select</option>
+                                                      <option ng-repeat="l6 in questionList[0].L6" value="{{l6}}">
+                                                            {{l6}}
+                                                      </option>
+                                                </select>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                                <label>Select Organisation</label>
+                                                <select class="form-control" name="representative"
+                                                      ng-disabled="!validations.enableUpdate"
+                                                      ng-model="formData.data.representative"
+                                                      ng-change="getSourceDataList(subrequirement.representative)"
+                                                      ng-options="data.organisation_id as data.name for data in organisationList | orderBy: 'name'"
+                                                      required>
+                                                      <option value="">Select</option>
+                                                </select>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                          <div class="form-group">
+                                                <label>Preffered Partner</label>
+                                                <div ng-dropdown-multiselect="" options="partnerCompanies"
+                                                      selected-model="selectedCompanies"
+                                                      extra-settings="example14settings"
+                                                      translation-texts="customTextForDropdown" checkboxes="true"
+                                                      disabled="!validations.enableUpdate">
+                                                </div>
+                                                <span ng-repeat="item in selectedCompanies"
+                                                      class="multi-select-itm">{{item.label}}</span>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                          <div class="form-group">
+                                                <label>Comment</label>
+                                                <textarea class="form-control" ng-model="formData.data.comment"
+                                                      ng-disabled="!validations.enableUpdate" maxlength="250"
+                                                      placeholder="Comments"></textarea>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                                <label>Submitted Date&Time</label>
+                                                <span>{{formData.data.created_at | date:'medium' }}</span>
+                                          </div>
+                                    </div>
+                              </div>
+                              <div>
+                                    <label ng-if="!validations.addNewLead">Edit:
+                                          <input type="checkbox" ng-model="validations.enableUpdate"
+                                                ng-click="editCurrentLead()">
+                                    </label>
+                                    <button type="submit" class="btn btn-danger"
+                                          ng-disabled="!validations.enableUpdate">Save</button>
+                                    <button type="button" class="btn btn-primary"
+                                          ng-if="formData.data.varified_ops==='no'"
+                                          ng-click="opsVerifyRequirement(formData.data.id)">Ops Verify</button>
+                                    <button type="button" class="btn btn-danger">FeedBack</button>
+                                    <button type="button" class="btn btn-danger">Intervene</button>
+                              </div>
+                              <!-- <button type="submit" class="smallBtn">Save</button> -->
+                              <!-- <div class="btn smallBtn"  data-dismiss="modal" aria-hidden="true">Cancel</div> -->
+                        </form>
+                  </div>
+            </div>
+      </div>
+</div>
