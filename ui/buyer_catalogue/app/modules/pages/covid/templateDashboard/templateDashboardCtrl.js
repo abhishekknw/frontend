@@ -6619,7 +6619,7 @@
         }
         $scope.pageCount = param.next_page;
         $scope.disableNextPagebutton = false;
-        console.log(filterObj,"filterObjfilterObjfilterObjfilterObj")
+        console.log(filterObj, "filterObjfilterObjfilterObjfilterObj")
         if (!filterObj || !filterObj.callStatus) {
           param.callStatus = "";
         } else {
@@ -6815,7 +6815,7 @@
       $scope.pagination = {
         current: 1
       };
-      $scope.addTemplateModal = function () {
+      $scope.addTemplateModal = function (check, rowTemplateData) {
         $scope.choices = [{ "id": 1, "type": "Button", "name": "" },];
         $scope.index = $scope.choices.length;
         $('#addTemplate').modal('show');
@@ -6831,6 +6831,9 @@
           }).catch(function onError(response) {
             console.log(response);
           })
+        if (check == 'edit') {
+          editTemplate(rowTemplateData);
+        }
       }
 
       $scope.addNewChoice = function () {
@@ -6839,6 +6842,9 @@
           let newItemNo = ++$scope.index;
           $scope.choices.push({ 'id': newItemNo, "type": "Button", "name": "" });
         }
+        if ($scope.choices.length === 3) {
+          $scope.index = -1;
+        }
       };
 
       $scope.removeChoice = function (id) {
@@ -6846,7 +6852,6 @@
           alert("input cannot be less than 1");
           return;
         }
-
         var index = -1;
         var comArr = eval($scope.choices);
         for (var i = 0; i < comArr.length; i++) {
@@ -6859,6 +6864,11 @@
           alert("Something gone wrong");
         }
         $scope.choices.splice(index, 1);
+
+        if ($scope.choices.length < 3) {
+          $scope.index = $scope.choices[$scope.choices.length - 1].id
+        }
+
       };
 
       $scope.checkBrowseField = false;
@@ -7065,14 +7075,13 @@
       //   socketService.connect();
       // }
 
-      $scope.editTemplate = function (tempData) {
+      let editTemplate = function (tempData) {
         $scope.templateData = tempData;
 
         $scope.templateData.triger_message = tempData.data;
         $scope.templateData.send_triger = tempData.send_trigger;
         $scope.templateType = tempData.g_templateType;
-        console.log(tempData, "addTemplateaddTemplate")
-        $('#addTemplate').modal('show');
+        console.log(tempData.button, "addTemplate");
       }
     })
 })();
