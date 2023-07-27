@@ -6585,7 +6585,7 @@
           })
       }
 
-      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search, sortingObj) {
+      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search, sortingObj, filterObj) {
         cfpLoadingBar.start();
         $scope.viewUserSummary();
         $scope.user_view = {
@@ -6619,6 +6619,12 @@
         }
         $scope.pageCount = param.next_page;
         $scope.disableNextPagebutton = false;
+        console.log(filterObj,"filterObjfilterObjfilterObjfilterObj")
+        if (!filterObj || !filterObj.callStatus) {
+          param.callStatus = "";
+        } else {
+          param.callStatus = filterObj.callStatus;
+        }
         templateDashboardService.transactionalTemplateUserDetail(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateUserData = response.data.data.users;
@@ -6651,7 +6657,6 @@
             console.log(response);
           })
       }
-
       $scope.CallTemplate = function (row) {
         $scope.CallModel = { 'destination_number': row.phone_number };
         $scope.viewComments = row;
@@ -7032,6 +7037,11 @@
 
       $scope.showHideIntervene = function (data) {
         $scope.interveneDashboard = { show: !$scope.interveneDashboard.show, data: data };
+      }
+
+      $scope.userDetailFilter = { 'callStatus': "" }
+      $scope.getUserDetailListByStatus = function (filtersObj) {
+        $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id, $scope.user_view.sent_date, null, $scope.user_view.template_name, $scope.user_view.search, $scope.paramsForSorting, filtersObj);
       }
       // Template Dashboard end
 

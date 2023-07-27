@@ -1168,7 +1168,9 @@
 
             <!--Transactional template tab-->
             <!-- <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="1"> -->
-            <uib-tab ng-click="getTransactionalTemplate(search='',dateRangeModel.start_dates='',dateRangeModel.end_dates='')" index="1">
+            <uib-tab
+              ng-click="getTransactionalTemplate(search='',dateRangeModel.start_dates='',dateRangeModel.end_dates='')"
+              index="1">
               <uib-tab-heading>
                 <h5>Transactional Template</h5>
               </uib-tab-heading>
@@ -1372,10 +1374,10 @@
                       <div class="col-md-12" print-remove style="margin-top: 10px; margin-bottom: 10px;">
                         <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
                           <input type="text" style="color:#000000; margin-bottom: 0px;" class="field"
-                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="dateWiseChangeStartDate()"
-                            ng-model="dateWiseRangeModel.start_dates" is-open="isDatepickerOpen"
-                            datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
-                            alt-input-formats="altInputFormats">
+                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                            ng-change="dateWiseChangeStartDate()" ng-model="dateWiseRangeModel.start_dates"
+                            is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
+                            close-text="Close" alt-input-formats="altInputFormats">
                           <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"
                             class="pl-2 smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
                             <i class="glyphicon glyphicon-calendar"></i>
@@ -1383,9 +1385,10 @@
                         </div>
                         <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
                           <input type="text" style="color:#000000; margin-bottom: 0px;" class="field"
-                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="dateWiseChangeEndDate()"
-                            ng-model="dateWiseRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="dateWisePickerOption"
-                            ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
+                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                            ng-change="dateWiseChangeEndDate()" ng-model="dateWiseRangeModel.end_dates"
+                            is-open="isEndDateOpen" datepicker-options="dateWisePickerOption" ng-required="true"
+                            close-text="Close" alt-input-formats="altInputFormats">
                           <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"
                             class="pl-2 smallBtn calendar" ng-disabled="!dateWiseRangeModel.start_dates"
                             ng-click="isEndDateOpen = !isEndDateOpen">
@@ -1543,13 +1546,19 @@
                       <h4><b>Template Name: </b>{{user_view.template_name}}</h4>
                       <h5><b>Sent Date: </b>{{user_view.sent_date | date : "dd-MM-yyyy"}}</h5>
                     </div>
-                    <div class="d-flex f-div justify-content-between">
-                      <div>
-                        <input type="text" class="form-control" placeholder="search" ng-model="userSearch"
-                          style="margin: 10px;"
+                    <div class="row d-flex align-items-center f-div" style="margin: 0;padding-bottom: 15px;">
+                      <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="search" ng-model="userSearch" 
                           ng-change="getTransactionalTemplateUserDetail(user_view.template_id,user_view.sent_date,pagination.current,user_view.template_name,userSearch)">
                       </div>
-                      <div style="margin: 10px;text-align: right;">
+                      <div class="col-sm-3">
+                        <select class="form-control" value="call_status" ng-model="userDetailFilter.callStatus"
+                          ng-change="getUserDetailListByStatus(userDetailFilter)">
+                          <option value="">Select Status</option>
+                          <option value="{{value}}" ng-repeat="value in CallStatusList">{{value}}</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-6" style="text-align: right;">
                         <button class="btn btn-danger"
                           ng-click="backToDatewiseData(user_view.template_id,1,user_view.template_name,s_date='', e_date='')">Back
                           To Previous</button>
@@ -1631,16 +1640,15 @@
                             </p>
                           </td>
                           <td style="text-align: center;">
-                            <i class='fas fa-phone-alt' style="font-size:20px;color: #000000;"
-                              ng-click="CallTemplate(tmp)"><md-tooltip class="tool-box-header">Call,Comment &
+                            <i class='fas fa-phone-alt' style="font-size:16px;color: #000000;"
+                              ng-click="CallTemplate(tmp);callUserDetailModal(tmp)"><md-tooltip
+                                class="tool-box-header">Call,Comment &
                                 Status</md-tooltip></i>
-                            <i class='far fa-comments' style="font-size:20px;color: #000000;"
+                            <i class='far fa-comments' style="font-size:16px;color: #000000;"
                               ng-click="showHideIntervene(tmp)">
-                              <md-tooltip
-                                class="tool-box-header">Intervene
+                              <md-tooltip class="tool-box-header">Intervene
                               </md-tooltip>
                             </i>
-                            <!-- <call-user-detail-temp></call-user-detail-temp> -->
                           </td>
                         </tr>
                       </tbody>
@@ -6859,6 +6867,7 @@
           </div>
         </div>
       </div>
+      <call-user-detail-temp></call-user-detail-temp>
     </div><!-- middle-section -->
   </main>
 </div>
