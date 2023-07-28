@@ -60,6 +60,6 @@ tr.highlighted,
     content: '\25bc';
 }
 
-.ng-hide:not(.ng-hide-animate) {
+.sortorder {
     display: contents !important;
 }
