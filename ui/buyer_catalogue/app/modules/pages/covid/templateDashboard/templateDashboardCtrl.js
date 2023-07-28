@@ -7085,7 +7085,6 @@
       // }
 
       let editTemplate = function (tempData) {
-        // $scope.templateData = tempData;
         $scope.templateData.trigger_message = tempData.data;
         $scope.templateData.send_triger = tempData.send_trigger;
         $scope.templateData.alias_name = tempData.alias_name;
@@ -7099,12 +7098,13 @@
         $scope.templateData.type_of_fields = tempData.type_of_fields;
         $scope.templateData.md_id = tempData.md_id;
 
-        console.log(tempData, '$scope.templateData');
         $scope.choices = tempData.button.map((item, index) => {
           item.id = index + 1;
           $scope.index = -1;
           return item
         });
+        
+        $scope.getTemplateSubType(tempData.template_type);
       }
 
       $scope.getTemplateSubType = function (tempType) {
