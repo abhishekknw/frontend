@@ -45,13 +45,16 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.getTemplateTabData = function (page, search, status, campaign) {
-        let url = "v0/ui/template/view-template/?next_page=" + page + "&search=" + search + "&status=" + status + "&campaign_id=" + campaign;
+      DashboardService.getTemplateTabData = function (filters) {
+        let url = "v0/ui/template/view-template/?next_page=" + filters.pageNumber + 
+        "&search=" + filters.search + "&status=" + filters.status + 
+        "&campaign_id=" + filters.campaign +
+        "&template_type=" + filters.templateType;
         return machadaloHttp.get(url);
       }
-      DashboardService.createTemplate = function (data,checkForUpdate) {
+      DashboardService.createTemplate = function (data, checkForUpdate) {
         let url = "v0/ui/template/";
-        if (checkForUpdate){
+        if (checkForUpdate) {
           return machadaloHttp.put(url, { data: data });
         } else {
           return machadaloHttp.post(url, { data: data });
@@ -109,7 +112,7 @@ angular.module('catalogueApp')
       }
 
       DashboardService.getDropdownData = function (sector) {
-        let url = "v0/ui/b2b/dropdown-filter-by-sector/?sector="+ sector.toLowerCase();
+        let url = "v0/ui/b2b/dropdown-filter-by-sector/?sector=" + sector.toLowerCase();
         return machadaloHttp.get(url);
       }
 

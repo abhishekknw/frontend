@@ -138,7 +138,7 @@
         <div class="al-content">
           <uib-tabset class="dashboard-tab template-tabs" active="selectTabIndex.value">
 
-            <uib-tab ng-click="templateDetail()" index="2">
+            <uib-tab ng-click="templateDetail(templateDetailsFilters)" index="2">
               <uib-tab-heading>
                 <h5>Master Template</h5>
               </uib-tab-heading>
@@ -157,21 +157,28 @@
                             <div class="input-wrapper">
                               <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
                               <input style="color:black" placeholder="Search here"
-                                ng-change="templateDetail('',templateSearch)" ng-model="templateSearch" type="text" />
+                                ng-change="templateDetail(templateDetailsFilters)" ng-model="templateDetailsFilters.search" type="text" />
                             </div>
                           </div>
                           <div>
-                            <select ng-change="templateDetail('','',selectValue,selectCampaign)" value="selectCampaign"
-                              ng-model="selectCampaign">
+                            <select ng-change="templateDetail(templateDetailsFilters)" 
+                              ng-model="templateDetailsFilters.campaign">
                               <option value="">Select Campaign</option>
                               <option value="{{value}}" ng-repeat="value in campaign_name_list">{{value}}</option>
                             </select>
                           </div>
                           <div>
-                            <select ng-change="templateDetail('','',selectValue,selectCampaign)" value="selectValue"
-                              ng-model="selectValue">
+                            <select ng-change="templateDetail(templateDetailsFilters)" value="selectValue"
+                              ng-model="templateDetailsFilters.status">
                               <option value="">Select Status</option>
                               <option value="{{value}}" ng-repeat="value in optionForTemplate">{{value}}</option>
+                            </select>
+                          </div>
+                          <div>
+                            <select ng-change="templateDetail(templateDetailsFilters)"
+                              ng-model="templateDetailsFilters.templateType">
+                              <option value="">Select Type</option>
+                              <option value="{{value.type}}" ng-repeat="value in template_type_sub_type">{{value.type}}</option>
                             </select>
                           </div>
                           <div class="add-button">
