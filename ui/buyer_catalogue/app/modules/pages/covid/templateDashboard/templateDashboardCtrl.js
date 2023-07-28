@@ -6624,7 +6624,6 @@
         }
         $scope.pageCount = param.next_page;
         $scope.disableNextPagebutton = false;
-        console.log(filterObj, "filterObjfilterObjfilterObjfilterObj")
         if (!filterObj || !filterObj.callStatus) {
           param.callStatus = "";
         } else {
@@ -7103,7 +7102,7 @@
           $scope.index = -1;
           return item
         });
-        
+
         $scope.getTemplateSubType(tempData.template_type);
       }
 
