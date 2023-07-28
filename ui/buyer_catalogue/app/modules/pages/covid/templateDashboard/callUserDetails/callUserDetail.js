@@ -166,10 +166,13 @@ angular
                 if (response && response.data.data.error) {
                   swal(constants.name, response.data.data.error, constants.error);
                 } else {
+                  $scope.formData.data.varified_ops = "no";
+                  $scope.formData.data.id = response.data.data.requermnet_id;
                   swal(constants.name, response.data.data.message, constants.success);
                 }
               }).catch(function onError(response) {
-                commonDataShare.showErrorMessage(response);
+                swal(constants.name, constants.save_error, constants.error);
+                // commonDataShare.showErrorMessage(response);
               })
           }
 
