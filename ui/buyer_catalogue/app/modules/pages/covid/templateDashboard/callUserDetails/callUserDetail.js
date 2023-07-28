@@ -82,6 +82,9 @@ angular
             $scope.showHideObj = { table: false, form: true };
             $scope.formData.data = {}
             $scope.selectedCompanies = [];
+            $scope.partnerCompanies = [];
+            $scope.questionList = [];
+            // $scope.
             if ($scope.validations.addNewLead) {
               templateDashboardService.getSector()
                 .then(function onSuccess(response) {
