@@ -6665,7 +6665,6 @@
         $scope.CallModel = { 'destination_number': row.phone_number };
         $scope.viewComments = row;
         $('#CallTemplate').modal('show');
-        $('#onCallUserDetails').modal('show');
       }
 
       $scope.updateCallStatus = function (status, row) {
@@ -6708,6 +6707,8 @@
       }
 
       $scope.OnQuickCall = function (data) {
+        $('#CallTemplate').modal('hide');
+        $('#onCallUserDetails').modal('show');
         templateDashboardService.postDataOnQuickCall(data)
           .then(function onSuccess(response) {
             swal("", response.data.data.message, constants.success);
