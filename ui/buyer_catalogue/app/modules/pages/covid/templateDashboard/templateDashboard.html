@@ -264,11 +264,10 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                       <label> Template Type:</label>
-                                      <select class="form-control" ng-model="templateData.template_type">
+                                      <select class="form-control" ng-model="templateData.template_type" ng-change="getTemplateSubType(templateData.template_type)">
                                         <option value="">Select</option>
-                                        <option>Type 1</option>
-                                        <option>Type 2</option>
-                                        <option>Type 3</option>
+                                        <option ng-repeat="obj in template_type_sub_type" value="{{obj.type}}">
+                                          {{obj.type}}</option>
                                       </select>
                                     </div>
                                   </div>
@@ -277,9 +276,8 @@
                                       <label> Template Sub Type:</label>
                                       <select class="form-control" ng-model="templateData.template_sub_type">
                                         <option value="">Select</option>
-                                        <option>Sub Type 1</option>
-                                        <option>Sub Type 2</option>
-                                        <option>Sub Type 3</option>
+                                        <option ng-repeat="subtype in template_sub_type_list" value="{{subtype}}">
+                                          {{subtype}}</option>
                                       </select>
                                     </div>
                                   </div>
@@ -333,10 +331,10 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                       <label> Type of Field:</label>
-                                      <select class="form-control" ng-change="selectTemplateType(templateType)"
-                                        ng-model="templateType">
+                                      <select class="form-control" ng-change="selectTemplateType(templateMessagetype)"
+                                        ng-model="templateMessagetype">
                                         <option value="">Select Field Type</option>
-                                        <option ng-repeat="value in template_type">{{value}}</option>
+                                        <option ng-repeat="value in template_Message_type">{{value}}</option>
                                       </select>
                                       <div ng-if="checkBrowseField">
                                         <input type="file" demo-file-model="myFile" class="form-control"
@@ -1661,7 +1659,8 @@
                           </td>
                           <td style="text-align: center;">
                             <i class='fas fa-phone-alt' style="font-size:20px;color: #000000;"
-                              ng-click="CallTemplate(tmp);callUserDetailModal(tmp)"><md-tooltip class="tool-box-header">Call,Comment &
+                              ng-click="CallTemplate(tmp);callUserDetailModal(tmp)"><md-tooltip
+                                class="tool-box-header">Call,Comment &
                                 Status</md-tooltip></i>
                             <i class='far fa-comments' style="font-size:20px;color: #000000;"
                               ng-click="showHideIntervene(tmp)"><md-tooltip

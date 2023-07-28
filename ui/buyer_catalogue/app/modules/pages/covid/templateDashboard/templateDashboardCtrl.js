@@ -702,7 +702,8 @@
             $scope.currentPage = 0;
             $scope.optionForTemplate = response.data.data.status_list;
             $scope.campaign_name_list = response.data.data.proposal_name_list;
-            $scope.template_type = response.data.data.template_type;
+            $scope.template_Message_type = response.data.data.template_Message_type;
+            $scope.template_type_sub_type = response.data.data.template_type;
 
           }).catch(function onError(response) {
             console.log(response);
@@ -7099,6 +7100,11 @@
           $scope.index = -1;
           return item
         });
+      }
+
+      $scope.getTemplateSubType = function (tempType) {
+        $scope.template_sub_type_list = [];
+        $scope.template_sub_type_list = $scope.template_type_sub_type.find(x => x.type == tempType).sub_type;
       }
     })
 })();
