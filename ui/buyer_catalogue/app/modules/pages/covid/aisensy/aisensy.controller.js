@@ -32,6 +32,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         });
 
         var apiHost = APIBaseUrl;
+        $scope.formSiteUrl = Config.mainSiteUrl;
         var interveneApiHost = Config.interveneMeaAPIBaseUrl;
         $scope.ImageBaseUrl = constants.aws_bucket_url;
         $scope.ckeckdUserAisensy = [];

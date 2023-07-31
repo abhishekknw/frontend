@@ -6,6 +6,7 @@ angular.module('machadaloCommon')
     templateUrl: 'modules/common/header/nav-bar.tmpl.html',
     link: function($scope, element, attrs) {
               $scope.perm = permissions.navBar;
+              $scope.formSiteUrl = Config.mainSiteUrl;
               // Do some stuff
               $scope.closeModal = function(){
                 $('#menuModal').modal('hide');
