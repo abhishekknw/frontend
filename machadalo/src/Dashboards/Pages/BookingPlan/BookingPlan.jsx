@@ -14,28 +14,9 @@ export default function BookingPlan() {
   const tableRef = useRef();
   const tableName = 'bookingPlanTable';
 
-  const columnsList = [
-    { title: 'Sr No' },
-    // { title: 'Brand' },
-    // { title: 'Preferred Partner' },
-    // { title: 'L4 Answers' },
-    // { title: 'L5 Answers' },
-    // { title: 'L6 Answers' },
-    // { title: 'Lead Status' },
-    // { title: 'Comment' },
-    // { title: 'Internal Comment' },
-    // { title: 'Lead Given by' },
-    // { title: 'Supplier Agency' },
-    // { title: 'Agency User	' },
-    // { title: 'Call Status' },
-    // { title: 'Price' },
-    // { title: 'Timestamp' },
-    // { title: 'Action' },
-  ];
+  const [columnsList, setColumnList] = useState([]);
 
   useEffect(() => {
-    console.log(tableRef.current);
-
     const table = new DataTable(`#${tableName}`, {
       details: {
         renderer: $.fn.dataTable.Responsive.renderer.listHiddenNodes(),
@@ -53,11 +34,16 @@ export default function BookingPlan() {
   }, []);
 
   useEffect(async () => {
-    BookingApi.getCampaignInventories();
+    await BookingApi.getCampaignInventories();
     let header = await BookingApi.getHeaderData();
-    console.log(header);
+    let headerKeys = Object.keys(header);
+    let temp = [];
+    headerKeys.map((i) => {
+      temp.push({ title: header[i] });
+    });
+    setColumnList(temp);
+    console.log(temp);
   }, []);
-
   return (
     <>
       <div className="booking-plan-wrapper">
@@ -85,14 +71,20 @@ export default function BookingPlan() {
           <table className="display" width="100%" id={tableName} ref={tableRef}>
             <thead>
               <tr>
-                {columnsList.map((item, index) => {
-                  return <th key={index}>{item.title}</th>;
-                })}
+                <th>sNo</th>
+                {columnsList &&
+                  columnsList.length > 0 &&
+                  columnsList.map((item, index) => {
+                    return <th key={index}>{item.title}</th>;
+                  })}
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>JSW Paints Private Limited</td>
+                <td>1</td>
+                {columnsList.map((item, index) => {
+                  return <td key={index}>{item.title}+11</td>;
+                })}
               </tr>
             </tbody>
           </table>
