@@ -41,7 +41,7 @@ export default class Layout extends React.Component {
           <Toastr />
           {/* <Header {...this.props} />
           <Sidebar {...this.props} /> */}
-          <div className="container ">
+          <div className="container main-header">
             <MachadaloHeader />
           </div>
           {/* <hr className="mt-0" /> */}

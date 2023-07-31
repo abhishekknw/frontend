@@ -280,7 +280,7 @@ export default function OpsDashboard(props) {
 
     const table = new DataTable(`#${tableName}`, {
       details: {
-        renderer: $.fn.dataTable.Responsive.renderer.listHiddenNodes()
+        renderer: $.fn.dataTable.Responsive.renderer.listHiddenNodes(),
       },
       columnDefs: [
         {
