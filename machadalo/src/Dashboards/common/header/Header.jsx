@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Link } from '@mui/material';
+// import { Box, Link } from '@mui/material';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -14,7 +14,7 @@ export default function MachadaloHeader(props) {
   const userInfo = useRecoilValue(userInformationAtom);
   return (
     <>
-      <Box className="pt-1">
+      {/* <Box className="pt-1"> */}
         <Row>
           <Col sm={3}>
             <div className="d-flex align-items-center mobile-con-between">
@@ -31,11 +31,11 @@ export default function MachadaloHeader(props) {
             <div className="d-flex justify-content-end align-items-center mobile-con-between">
               <ul className="d-flex justify-content-end align-items-center mb-0 mobile-start">
                 <li>
-                  <Link to="/#/manageCampaign/create">
+                  <a to="/#/manageCampaign/create">
                     <span>
                       <BsFillHouseDoorFill />
                     </span>
-                  </Link>
+                  </a>
                 </li>
                 <li>
                   <Dropdown className="setting-icon">
@@ -45,10 +45,10 @@ export default function MachadaloHeader(props) {
 
                     <Dropdown.Menu>
                       <Dropdown.Item>
-                        <Link to="#">Change Password</Link>
+                        <a to="#">Change Password</a>
                       </Dropdown.Item>
                       <Dropdown.Item>
-                        <Link to="/#/logout/">Logout</Link>
+                        <a to="/#/logout/">Logout</a>
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
@@ -69,7 +69,7 @@ export default function MachadaloHeader(props) {
             </div>
           </Col>
         </Row>
-      </Box>
+      {/* </Box> */}
     </>
   );
 }
