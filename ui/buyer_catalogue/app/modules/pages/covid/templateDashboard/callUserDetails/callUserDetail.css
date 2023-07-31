@@ -68,7 +68,12 @@ tr.highlighted,
     overflow-y: auto;
 }
 
-.switch-wrapper{
+.switchdemoBasicUsage .inset {
+    padding-left: 25px;
+    padding-top: 25px;
+  }
+
+/* .switch-wrapper{
     display: flex;
 }
 
@@ -112,4 +117,4 @@ tr.highlighted,
 
 .switch-wrapper label:active:after {
 	width: 10px;
-}
+} */

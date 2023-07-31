@@ -26,10 +26,14 @@
                                     </select>
                               </div>
                               <div class="col-md-6">
-                                    <label>New Lead:
+                                    <!-- <label>New Lead:
                                           <input type="checkbox" ng-model="validations.addNewLead"
                                                 ng-click="addNewLead()">
-                                    </label>
+                                    </label> -->
+                                    <md-switch ng-model="validations.addNewLead" aria-label="Create Lead"
+                                          ng-change="addNewLead()">
+                                          Create Lead : {{ validations.addNewLead ? 'YES' : 'NO' }}
+                                    </md-switch>
 
                                     <!-- <input type="checkbox" id="switch" /> -->
                                     <!-- <div class="switch-wrapper">
@@ -125,8 +129,8 @@
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L4</label>
-                                                <i class="fa fa-question tool-icon" ng-mouseover="tips1=true"
-                                                      ng-mouseleave="tips1=false"></i>
+                                                <i class="fa fa-question tool-icon" style="font-size:12px;"
+                                                      ng-mouseover="tips1=true" ng-mouseleave="tips1=false"></i>
                                                 <div ng-if="tips1" class="tool-popup">
                                                       <div>{{questionList[0]['L4 question']}}</div>
                                                 </div>
@@ -143,8 +147,8 @@
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L5</label>
-                                                <i class="fa fa-question tool-icon" ng-mouseover="tips2=true"
-                                                      ng-mouseleave="tips2=false"></i>
+                                                <i class="fa fa-question tool-icon" style="font-size:12px;"
+                                                      ng-mouseover="tips2=true" ng-mouseleave="tips2=false"></i>
                                                 <div ng-if="tips2" class="tool-popup">
                                                       <div>{{questionList[0]['L5 question']}}</div>
                                                 </div>
@@ -161,8 +165,8 @@
                                     <div class="col-md-4">
                                           <div class="form-group">
                                                 <label>L6</label>
-                                                <i class="fa fa-question tool-icon" ng-mouseover="tips3=true"
-                                                      ng-mouseleave="tips3=false"></i>
+                                                <i class="fa fa-question tool-icon" style="font-size:12px;"
+                                                      ng-mouseover="tips3=true" ng-mouseleave="tips3=false"></i>
                                                 <div ng-if="tips3" class="tool-popup">
                                                       <div>{{questionList[0]['L6 question']}}</div>
                                                 </div>
