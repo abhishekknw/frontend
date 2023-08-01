@@ -20,10 +20,7 @@ export default function DateFilter(props) {
   const customCalenderDates = useRecoilValue(CalenderDatesAtom);
   const selectedDateArray = useRecoilValue(SelectedDateAtom);
   const [CalenderVaidations, setCalenderVaidations] = useRecoilState(CalenderVaidationAtom);
-  const [selectedDate, setSelectedDate] = React.useState([
-    dayjs(new Date()).$d,
-    dayjs(new Date()).$d,
-  ]);
+  const [selectedDate, setSelectedDate] = React.useState([new Date(), new Date()]);
 
   const [dateRange, setDateRange] = React.useState([new Date(), new Date()]);
   const [startDate, endDate] = dateRange;
@@ -36,7 +33,6 @@ export default function DateFilter(props) {
   const [DateArrayList, setDateArrayList] = React.useState(customCalenderDates);
   let dateArr = [];
   function handleDateChange(date) {
-    console.log(date, '2222222222222');
     setDateRange(date);
     dateArr[0] = date[0];
     dateArr[1] = date[1];
@@ -53,8 +49,11 @@ export default function DateFilter(props) {
 
   const getPreviousDate = (time) => {
     let now = dayjs();
-    dateArr[0] = now.subtract(time.count, 'day').toDate();
-    dateArr[1] = time.count === 0 ? undefined : dayjs(new Date()).$d;
+
+    let previous = new Date();
+    dateArr[0] = previous.setDate(previous.getDate() - time.count);
+    // dateArr[0] = now.subtract(time.count, 'day').toDate();
+    dateArr[1] = time.count === 0 ? undefined : new Date();
     setSelectedDate(dateArr);
     let updateTime = timeBtns.map((x) =>
       x.name === time.name ? { ...x, class: 'time-btn active-btn' } : { ...x, class: 'time-btn' }
@@ -76,7 +75,7 @@ export default function DateFilter(props) {
   }
 
   function oneDayNextDate(arr) {
-    if (dayjs(arr[0].$d).format('DD/MM/YYYY') === dayjs(new Date().$d).format('DD/MM/YYYY')) {
+    if (dayjs(arr[0]).format('DD/MM/YYYY') === dayjs(new Date()).format('DD/MM/YYYY')) {
       return 0;
     }
     let temp = CalederAction.GetOneDayNextDate(arr);
@@ -90,11 +89,10 @@ export default function DateFilter(props) {
   React.useEffect(() => {
     let temp = CalederAction.GetPreviousDates(24);
     setDateArrayList(temp);
-    CalederAction.getSelectedDateArray(dayjs(new Date()).$d);
+    CalederAction.getSelectedDateArray(new Date());
   }, []);
   props.onDateChange(selectedDate);
 
-  console.log(DateArrayList, 'DateArrayList');
   return (
     <>
       {/* <Box> */}
@@ -174,7 +172,7 @@ export default function DateFilter(props) {
                 }
                 key={index}
                 onClick={(e) => {
-                  CalederAction.getSelectedDateArray(DateArrayList[index].$d);
+                  CalederAction.getSelectedDateArray(DateArrayList[index]);
                   setCalenderVaidations({
                     ...CalenderVaidations,
                     selectDatePicker: false,

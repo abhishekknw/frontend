@@ -16,12 +16,11 @@ const CalenderActions = () => {
     }
 
     const GetOneDayPreviousDate = (arr) => {
-        let dates = { first: arr[24], last: arr[0] };
-        // let previous = dates.fisrt.subtract(1, 'day');
-        let previous = new Date();
-        previous.setDate(new Date(dates.first).getDate() - 1);
-        let filtereddate = arr.filter((item) => item !== dates.last);
+        let dates = { fisrt: arr[24], last: arr[0] };
+        let previous = dates.fisrt.subtract(1, 'day');
+        let filtereddate = arr.filter((item) => item.$d !== dates.last.$d);
         filtereddate.push(previous);
+        // filtereddate.splice(0, 0,previous);
         setCustomCalenderDates(filtereddate);
         return filtereddate;
     }
@@ -29,8 +28,9 @@ const CalenderActions = () => {
     const GetOneDayNextDate = (arr) => {
         let dates = { fisrt: arr[24], last: arr[0] };
         let next = dates.last.add(1, 'day');
-        let filtereddate = arr.filter((item) => item !== dates.fisrt);
+        let filtereddate = arr.filter((item) => item.$d !== dates.fisrt.$d);
         filtereddate.splice(0, 0, next);
+        // filtereddate.push(next);
         setCustomCalenderDates(filtereddate);
         return filtereddate;
     }
@@ -45,12 +45,9 @@ const CalenderActions = () => {
             let date1 = dayjs(dayjs(end).format('YYYY-MM-DD'));
             let date2 = dayjs(start).format('YYYY-MM-DD');
             let numDays = date1.diff(date2, 'day');
-            alert(numDays)
             for (let i = 0; i <= numDays; i++) {
-                // let d = dayjs(start).add(i, 'day');
-                let newDate = new Date();
-                newDate.setDate(start.getDate() + i);
-                selected.push(dayjs(newDate).format('DD/MM/YYYY'))
+                let d = dayjs(start).add(i, 'day');
+                selected.push(dayjs(d).format('DD/MM/YYYY'))
             }
             setSelectedDateAtom(selected);
         }
@@ -59,9 +56,7 @@ const CalenderActions = () => {
     const createFromStartDate = (start) => {
         let DateArray = [];
         for (let i = 0; i <= 24; i++) {
-            let newDate = new Date();
-            newDate.setDate(start.getDate() + i);
-            DateArray.push(newDate);
+            DateArray.push(start.add(i, 'day'))
         }
         setCustomCalenderDates(DateArray);
         return DateArray;
