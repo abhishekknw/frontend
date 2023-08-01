@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import $ from 'jquery';
 import './bookingPlan.css';
 import ReactDOM from 'react-dom';
-
+import Table from 'react-bootstrap/Table';
 import DataTable from 'datatables.net-dt';
 import { Button, Form } from 'react-bootstrap';
 import Select from 'react-select';
@@ -59,25 +59,25 @@ export default function BookingPlan() {
         <div className="status-bar">
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
-            <span className="status-lable">AAKAAK002A</span>
+            <span className="status-data">AAKAAK002A</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">Campaign Name:</span>
-            <span className="status-lable">Aakash Ghodbunder</span>
+            <span className="status-data">Aakash Ghodbunder</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">BD Owner:</span>
-            <span className="status-lable">vidhidevelopment</span>
+            <span className="status-data">vidhidevelopment</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">Campaign State:</span>
-            <span className="status-lable">Converted</span>
+            <span className="status-data">Converted</span>
           </div>
         </div>
 
         <div className="booking-plan-table">
           {/* id={tableName} ref={tableRef} */}
-          <table className="display" width="100%">
+          <Table responsive className="display booking-table" width="100%">
             <thead>
               <tr>
                 <th>{columnsList.srNo}</th>
@@ -204,7 +204,7 @@ export default function BookingPlan() {
                 <td>500</td>
                 <td>
                   <Form>
-                    <div className="mb-3">
+                    <div className="mb-3 b-form-maindiv">
                       <Form.Check type="checkbox" id={`check-api-checkbox`}>
                         <Form.Check.Input type="checkbox" isValid />
                         <Form.Check.Label>WhatsApp Group</Form.Check.Label>
@@ -230,7 +230,7 @@ export default function BookingPlan() {
                 </td>
                 <td>
                   <Form>
-                    <div className="mb-3">
+                    <div className="mb-3 b-form-maindiv">
                       <Form.Check type="checkbox" id={`check-api-checkbox`}>
                         <Form.Check.Input type="checkbox" isValid />
                         <Form.Check.Label>NFFT</Form.Check.Label>
@@ -277,7 +277,7 @@ export default function BookingPlan() {
                   <Button variant="primary">View/Add</Button>
                 </td>
                 <td>
-                  <div className="mb-3">
+                  <div className="mb-3 b-form-maindiv">
                     <Form.Check
                       inline
                       label="Completed"
@@ -302,7 +302,7 @@ export default function BookingPlan() {
                 </td>
               </tr>
             </tbody>
-          </table>
+          </Table >
         </div>
 
         {/* <div className="booking-filter">
