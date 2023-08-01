@@ -71,6 +71,9 @@
         white-space: nowrap;
         vertical-align: middle;
     }
+    tr th td{
+        line-height: 1.4;
+    }
     .b-form-maindiv{
         display: inline-flex;
         flex-wrap: wrap;
