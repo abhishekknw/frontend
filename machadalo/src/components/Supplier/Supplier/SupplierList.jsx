@@ -6,9 +6,9 @@ import Select from 'react-select';
 // import DatetimeRangePicker from 'react-datetime-range-picker';
 import ReactPaginate from 'react-paginate';
 import Box from '@mui/material/Box';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 
 const DateTypes = [
   { label: 'Created At', value: 'created_at' },
@@ -161,7 +161,7 @@ export default class List extends React.Component {
 
             {isDateRangePickerVisisble ? (
               <div className="form-control">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DateRangePicker
                     label="Advanced keyboard"
                     value={this.state.selectedDate}
@@ -174,7 +174,7 @@ export default class List extends React.Component {
                       </React.Fragment>
                     )}
                   />
-                </LocalizationProvider>
+                </LocalizationProvider> */}
                 {/* <CustomDateRangeInputs SelectedDate={{"start":this.state.startDate,"end":this.state.endDate}} handleChange={e=>this.handleDateChange(e)} /> */}
                 {/* <DatetimeRangePicker className="dateTimePicker" onChange={this.handleDateChange} /> */}
               </div>
