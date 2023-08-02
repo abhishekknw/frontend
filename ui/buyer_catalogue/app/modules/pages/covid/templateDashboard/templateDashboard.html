@@ -138,7 +138,7 @@
         <div class="al-content">
           <uib-tabset class="dashboard-tab template-tabs" active="selectTabIndex.value">
 
-            <uib-tab ng-click="templateDetail()" index="2">
+            <uib-tab ng-click="templateDetail(templateDetailsFilters)" index="2">
               <uib-tab-heading>
                 <h5>Master Template</h5>
               </uib-tab-heading>
@@ -157,26 +157,33 @@
                             <div class="input-wrapper">
                               <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
                               <input style="color:black" placeholder="Search here"
-                                ng-change="templateDetail('',templateSearch)" ng-model="templateSearch" type="text" />
+                                ng-change="templateDetail(templateDetailsFilters)" ng-model="templateDetailsFilters.search" type="text" />
                             </div>
                           </div>
                           <div>
-                            <select ng-change="templateDetail('','',selectValue,selectCampaign)" value="selectCampaign"
-                              ng-model="selectCampaign">
+                            <select ng-change="templateDetail(templateDetailsFilters)" 
+                              ng-model="templateDetailsFilters.campaign">
                               <option value="">Select Campaign</option>
                               <option value="{{value}}" ng-repeat="value in campaign_name_list">{{value}}</option>
                             </select>
                           </div>
                           <div>
-                            <select ng-change="templateDetail('','',selectValue,selectCampaign)" value="selectValue"
-                              ng-model="selectValue">
+                            <select ng-change="templateDetail(templateDetailsFilters)" value="selectValue"
+                              ng-model="templateDetailsFilters.status">
                               <option value="">Select Status</option>
                               <option value="{{value}}" ng-repeat="value in optionForTemplate">{{value}}</option>
                             </select>
                           </div>
+                          <div>
+                            <select ng-change="templateDetail(templateDetailsFilters)"
+                              ng-model="templateDetailsFilters.templateType">
+                              <option value="">Select Type</option>
+                              <option value="{{value.type}}" ng-repeat="value in template_type_sub_type">{{value.type}}</option>
+                            </select>
+                          </div>
                           <div class="add-button">
                             <button type="button" class="btn btn-info" data-toggle="modal"
-                              ng-click="addTemplateModal()">Add+</button>
+                              ng-click="addTemplateModal('add')">Add+</button>
                           </div>
                           <!-- <div style="color:#000000">
                             <textarea name="ta" id="results" cols="30" rows="10">
@@ -235,6 +242,8 @@
                                     <button type="button" class="btn btn-danger" style="align-items: center;"
                                       ng-click="sendTemplates(template,template.data,template.id,'template',template.elementName)">Send
                                       templates</button>
+                                    <button type="button" class="btn btn-danger" style="align-items: center;"
+                                      ng-click="addTemplateModal('edit',template)">Edit</button>
                                     <button type="button" class="btn btn-primary" style="align-items: center;"
                                       ng-click="deleteTemplate(template)">
                                       Delete</button>
@@ -253,11 +262,33 @@
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h4 class="modal-title">Modal Heading</h4>
+                              <h4 class="modal-title">{{editTemplateDetail ? 'Edit Template' : 'Create Template'}}</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
                               <form action="">
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label> Template Type:</label>
+                                      <select class="form-control" ng-model="templateData.template_type" ng-change="getTemplateSubType(templateData.template_type)">
+                                        <option value="">Select</option>
+                                        <option ng-repeat="obj in template_type_sub_type" value="{{obj.type}}">
+                                          {{obj.type}}</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label> Template Sub Type:</label>
+                                      <select class="form-control" ng-model="templateData.template_sub_type">
+                                        <option value="">Select</option>
+                                        <option ng-repeat="subtype in template_sub_type_list" value="{{subtype}}">
+                                          {{subtype}}</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
                                 <div class="row">
                                   <div class="col-md-6">
                                     <div class="form-group">
@@ -291,7 +322,8 @@
                                       <label>Type Of Entity:</label>
                                       <select class="form-control " ng-model="templateData.entity_type">
                                         <option value="">Select Supplier</option>
-                                        <option ng-repeat="item in supplierList" value="{{item}}">{{item}}</option>
+                                        <option ng-repeat="item in supplierList" value="{{item[0]}}">{{item[1]}}
+                                        </option>
                                       </select>
                                     </div>
                                   </div>
@@ -306,10 +338,10 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                       <label> Type of Field:</label>
-                                      <select class="form-control" ng-change="selectTemplateType(templateType)"
-                                        ng-model="templateType">
-                                        <option value="">Select Template Type</option>
-                                        <option ng-repeat="value in template_type">{{value}}</option>
+                                      <select class="form-control" ng-change="selectTemplateType(templateMessagetype)"
+                                        ng-model="templateMessagetype">
+                                        <option value="">Select Field Type</option>
+                                        <option ng-repeat="value in template_Message_type">{{value}}</option>
                                       </select>
                                       <div ng-if="checkBrowseField">
                                         <input type="file" demo-file-model="myFile" class="form-control"
@@ -329,8 +361,8 @@
                                     <div class="form-group">
                                       <label> Send Trigger (Y/N):</label>
                                       <select class="form-control" ng-model="templateData.send_triger">
-                                        <option>YES</option>
-                                        <option>NO</option>
+                                        <option value="yes">YES</option>
+                                        <option value="no">NO</option>
                                       </select>
                                     </div>
                                   </div>
@@ -345,7 +377,7 @@
                                 </div>
                                 <div class="form-group">
                                   <label> Trigger Message:</label>
-                                  <textarea class="form-control" ng-model="templateData.triger_message"></textarea>
+                                  <textarea class="form-control" ng-model="templateData.trigger_message"></textarea>
                                 </div>
                                 <ul class="list-group">
                                   <li class="list-group-item" ng-repeat="choice in choices">
@@ -354,9 +386,9 @@
                                         ng-change="multipleButtons(choice)" placeholder="Enter Button Name">
                                     </div>
                                     <button class="btn btn-danger" ng-click="removeChoice(choice.id)"
-                                      ng-if="choice.id!=index">Remove</button>
+                                      ng-if="choice.id!=index">-</button>
                                     <button class="btn btn-danger" type="button" ng-click="addNewChoice()"
-                                      ng-if="choice.id===index">Add Button</button>
+                                      ng-if="choice.id===index">+</button>
                                   </li>
                                 </ul>
                               </form>
@@ -378,7 +410,7 @@
                           <div class="modal-content">
                             <!-- Modal Header -->
                             <div class="modal-header">
-                              <h4 class="modal-title">Modal Heading</h4>
+                              <h4 class="modal-title">Details</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
@@ -1174,7 +1206,9 @@
 
             <!--Transactional template tab-->
             <!-- <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="1"> -->
-            <uib-tab ng-click="getTransactionalTemplate(search='',dateRangeModel.start_dates='',dateRangeModel.end_dates='')" index="1">
+            <uib-tab
+              ng-click="getTransactionalTemplate(search='',dateRangeModel.start_dates='',dateRangeModel.end_dates='')"
+              index="1">
               <uib-tab-heading>
                 <h5>Transactional Template</h5>
               </uib-tab-heading>
@@ -1371,10 +1405,10 @@
                       <div class="col-md-12" print-remove style="margin-top: 10px; margin-bottom: 10px;">
                         <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
                           <input type="text" style="color:#000000; margin-bottom: 0px;" class="field"
-                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="dateWiseChangeStartDate()"
-                            ng-model="dateWiseRangeModel.start_dates" is-open="isDatepickerOpen"
-                            datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
-                            alt-input-formats="altInputFormats">
+                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                            ng-change="dateWiseChangeStartDate()" ng-model="dateWiseRangeModel.start_dates"
+                            is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
+                            close-text="Close" alt-input-formats="altInputFormats">
                           <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"
                             class="pl-2 smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
                             <i class="glyphicon glyphicon-calendar"></i>
@@ -1382,9 +1416,10 @@
                         </div>
                         <div class="col-md-3 col-sm-2 d-flex mobile-p-0 mobile-m-5">
                           <input type="text" style="color:#000000; margin-bottom: 0px;" class="field"
-                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="dateWiseChangeEndDate()"
-                            ng-model="dateWiseRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="dateWisePickerOption"
-                            ng-required="true" close-text="Close" alt-input-formats="altInputFormats">
+                            uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
+                            ng-change="dateWiseChangeEndDate()" ng-model="dateWiseRangeModel.end_dates"
+                            is-open="isEndDateOpen" datepicker-options="dateWisePickerOption" ng-required="true"
+                            close-text="Close" alt-input-formats="altInputFormats">
                           <button type="button" style="margin-bottom: 0px !important ;margin-left: 15px"
                             class="pl-2 smallBtn calendar" ng-disabled="!dateWiseRangeModel.start_dates"
                             ng-click="isEndDateOpen = !isEndDateOpen">
@@ -1631,7 +1666,8 @@
                           </td>
                           <td style="text-align: center;">
                             <i class='fas fa-phone-alt' style="font-size:20px;color: #000000;"
-                              ng-click="CallTemplate(tmp)"><md-tooltip class="tool-box-header">Call,Comment &
+                              ng-click="CallTemplate(tmp);callUserDetailModal(tmp)"><md-tooltip
+                                class="tool-box-header">Call,Comment &
                                 Status</md-tooltip></i>
                             <i class='far fa-comments' style="font-size:20px;color: #000000;"
                               ng-click="showHideIntervene(tmp)"><md-tooltip
@@ -6855,6 +6891,7 @@
           </div>
         </div>
       </div>
+      <call-user-detail-temp></call-user-detail-temp>
     </div><!-- middle-section -->
   </main>
 </div>

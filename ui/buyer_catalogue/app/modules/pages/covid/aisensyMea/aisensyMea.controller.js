@@ -20,6 +20,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
     ['$scope', '$rootScope', '$window', '$sce', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
         function ($scope, $rootScope, $window, $sce, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
             // AuthService.Clear();
+            $scope.formSiteUrl = Config.mainSiteUrl;
 
             $scope.isCollapsed = true;
             $scope.$on('$routeChangeSuccess', function () {

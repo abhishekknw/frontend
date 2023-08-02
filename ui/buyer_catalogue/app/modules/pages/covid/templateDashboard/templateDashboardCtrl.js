@@ -64,6 +64,8 @@
       $scope.UserComment = {};
       $scope.CallModel = {};
       $scope.interveneDashboard = { show: false, data: '' };
+      $scope.templateDetailsFilters = { pageNumber: 0, search: '', status: '', campaign: '' ,templateType:''}
+
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
         { id: 2, name: 'High' },
@@ -666,7 +668,8 @@
         $scope.bookingPhases = [];
         $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code)
       }
-      $scope.templateDetail = function (pageNumber, search, status, campaign) {
+
+      $scope.templateDetail = function (filterObj) {
         let start_date = "";
         let next_page = "";
         let end_date = "";
@@ -682,19 +685,20 @@
         $scope.allCampaignsLeadsData = {};
         $scope.options = {};
         cfpLoadingBar.complete();
-        if (!pageNumber || pageNumber == '') {
-          pageNumber = 0;
+        if (!filterObj.pageNumber || filterObj.pageNumber == '') {
+          filterObj.pageNumber = 0;
         }
-        if (!search) {
-          search = "";
+        if (!filterObj.search) {
+          filterObj.search = "";
         }
-        if (!status) {
-          status = "";
+        if (!filterObj.status) {
+          filterObj.status = "";
         }
-        if (!campaign) {
-          campaign = "";
+        if (!filterObj.campaign) {
+          filterObj.campaign = "";
         }
-        templateDashboardService.getTemplateTabData(pageNumber, search, status, campaign)
+        if(!filterObj.templateType) filterObj.templateType = "";
+        templateDashboardService.getTemplateTabData(filterObj)
           .then(function onSuccess(response) {
             $scope.templateDetailData = response.data.data.rows;
             $scope.totalrecord = response.data.data.total_row;
@@ -702,7 +706,8 @@
             $scope.currentPage = 0;
             $scope.optionForTemplate = response.data.data.status_list;
             $scope.campaign_name_list = response.data.data.proposal_name_list;
-            $scope.template_type = response.data.data.template_type;
+            $scope.template_Message_type = response.data.data.template_Message_type;
+            $scope.template_type_sub_type = response.data.data.template_type;
 
           }).catch(function onError(response) {
             console.log(response);
@@ -6585,7 +6590,7 @@
           })
       }
 
-      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search, sortingObj) {
+      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search, sortingObj, filterObj) {
         cfpLoadingBar.start();
         $scope.viewUserSummary();
         $scope.user_view = {
@@ -6619,6 +6624,11 @@
         }
         $scope.pageCount = param.next_page;
         $scope.disableNextPagebutton = false;
+        if (!filterObj || !filterObj.callStatus) {
+          param.callStatus = "";
+        } else {
+          param.callStatus = filterObj.callStatus;
+        }
         templateDashboardService.transactionalTemplateUserDetail(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateUserData = response.data.data.users;
@@ -6651,7 +6661,6 @@
             console.log(response);
           })
       }
-
       $scope.CallTemplate = function (row) {
         $scope.CallModel = { 'destination_number': row.phone_number };
         $scope.viewComments = row;
@@ -6698,6 +6707,8 @@
       }
 
       $scope.OnQuickCall = function (data) {
+        $('#CallTemplate').modal('hide');
+        $('#onCallUserDetails').modal('show');
         templateDashboardService.postDataOnQuickCall(data)
           .then(function onSuccess(response) {
             swal("", response.data.data.message, constants.success);
@@ -6790,7 +6801,8 @@
 
       }
       $scope.pageChangedMasterTemplate = function (newPage) {
-        $scope.templateDetail(newPage);
+        $scope.templateDetailsFilters.pageNumber = newPage;
+        $scope.templateDetail($scope.templateDetailsFilters);
       };
 
 
@@ -6809,7 +6821,7 @@
       $scope.pagination = {
         current: 1
       };
-      $scope.addTemplateModal = function () {
+      $scope.addTemplateModal = function (check, rowTemplateData) {
         $scope.choices = [{ "id": 1, "type": "Button", "name": "" },];
         $scope.index = $scope.choices.length;
         $('#addTemplate').modal('show');
@@ -6825,6 +6837,13 @@
           }).catch(function onError(response) {
             console.log(response);
           })
+        if (check == 'edit') {
+          $scope.editTemplateDetail = true;
+          editTemplate(rowTemplateData);
+        } else {
+          $scope.editTemplateDetail = false;
+          $scope.templateData = {};
+        }
       }
 
       $scope.addNewChoice = function () {
@@ -6833,6 +6852,9 @@
           let newItemNo = ++$scope.index;
           $scope.choices.push({ 'id': newItemNo, "type": "Button", "name": "" });
         }
+        if ($scope.choices.length === 3) {
+          $scope.index = -1;
+        }
       };
 
       $scope.removeChoice = function (id) {
@@ -6840,7 +6862,6 @@
           alert("input cannot be less than 1");
           return;
         }
-
         var index = -1;
         var comArr = eval($scope.choices);
         for (var i = 0; i < comArr.length; i++) {
@@ -6853,6 +6874,11 @@
           alert("Something gone wrong");
         }
         $scope.choices.splice(index, 1);
+
+        if ($scope.choices.length < 3) {
+          $scope.index = $scope.choices[$scope.choices.length - 1].id
+        }
+
       };
 
       $scope.checkBrowseField = false;
@@ -6869,29 +6895,29 @@
       }
 
       $scope.templateData = {};
-      $scope.multipleButtons = function (data) {
-        if (data.id == 1) {
-          $scope.templateData.buttonOne = data.name;
-        }
-        else if (data.id == 2) {
-          $scope.templateData.buttonTwo = data.name;
-        }
-        else {
-          $scope.templateData.buttonThree = data.name;
-        }
+      $scope.multipleButtons = function () {
+        $scope.templateData.buttonOne = $scope.choices[0]['name'];
+        $scope.templateData.buttonTwo = $scope.choices[1]['name']
+        $scope.templateData.buttonThree = $scope.choices[2]['name']
       }
       $scope.createTemplate = function (data) {
         if (data.param) {
-          data.param = data.param.split(',');
+          try {
+            data.param = data.param.split(',');
+          }
+          catch {
+            data.param = data.param;
+          }
         }
         data.type_of_fields = 'TEXT';
+
         if (data.alias_name && data.elementName) {
-          templateDashboardService.createTemplate(data)
+          templateDashboardService.createTemplate(data, $scope.editTemplateDetail)
             .then(function onSuccess(response) {
               swal("Template", response.data.data, constants.success);
               $scope.templateData = {};
               $('#addTemplate').modal('hide');
-              $scope.templateDetail();
+              $scope.templateDetail($scope.templateDetailsFilters);
             }).catch(function onError(response) {
               console.log(response);
             })
@@ -7027,10 +7053,15 @@
         }
         $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id, $scope.user_view.sent_date, null, $scope.user_view.template_name, $scope.user_view.search, $scope.paramsForSorting);
       }
-      $scope.templateDetail();
+      $scope.templateDetail($scope.templateDetailsFilters);
 
       $scope.showHideIntervene = function (data) {
         $scope.interveneDashboard = { show: !$scope.interveneDashboard.show, data: data };
+      }
+
+      $scope.userDetailFilter = { 'callStatus': "" }
+      $scope.getUserDetailListByStatus = function (filtersObj) {
+        $scope.getTransactionalTemplateUserDetail($scope.user_view.template_id, $scope.user_view.sent_date, null, $scope.user_view.template_name, $scope.user_view.search, $scope.paramsForSorting, filtersObj);
       }
       // Template Dashboard end
       // const socket = new WebSocket('ws://localhost:8000/ws/livec/');
@@ -7052,6 +7083,34 @@
       //   document.querySelector("#results").value += "You: " + data + "\n";  
       //   socketService.connect();
       // }
+
+      let editTemplate = function (tempData) {
+        $scope.templateData.trigger_message = tempData.data;
+        $scope.templateData.send_triger = tempData.send_trigger;
+        $scope.templateData.alias_name = tempData.alias_name;
+        $scope.templateData.comment = tempData.comment;
+        $scope.templateData.elementName = tempData.elementName;
+        $scope.templateData.entity_type = tempData.entity_type;
+        $scope.templateData.sector = tempData.sector;
+        $scope.templateData.sub_sector = tempData.sub_sector;
+        $scope.templateData.template_sub_type = tempData.template_sub_type;
+        $scope.templateData.template_type = tempData.template_type;
+        $scope.templateData.type_of_fields = tempData.type_of_fields;
+        $scope.templateData.md_id = tempData.md_id;
+
+        $scope.choices = tempData.button.map((item, index) => {
+          item.id = index + 1;
+          $scope.index = -1;
+          return item
+        });
+
+        $scope.getTemplateSubType(tempData.template_type);
+      }
+
+      $scope.getTemplateSubType = function (tempType) {
+        $scope.template_sub_type_list = [];
+        $scope.template_sub_type_list = $scope.template_type_sub_type.find(x => x.type == tempType).sub_type;
+      }
     })
 })();
 app.factory('Excel', function ($window) {

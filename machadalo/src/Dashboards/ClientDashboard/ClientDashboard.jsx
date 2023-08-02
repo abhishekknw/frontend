@@ -48,7 +48,7 @@ const ClientDashboard = (props) => {
             className="mb-1 nav-lead-tab"
           >
             <Tab eventKey="Leads" title="LEADS">
-              <DateFilter onDateChange={getDates} />
+              {/* <DateFilter onDateChange={getDates} /> */}
               <div className="row pt-0 ">
                 <div className="col-md-7">
                   <div className="graph-chart">

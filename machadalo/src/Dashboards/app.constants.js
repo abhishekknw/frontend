@@ -21,4 +21,7 @@ export const Apis = {
   Get_Invoice_Proposals: 'v0/ui/website/proposal/invoice_proposals/',
   Get_Organisations: 'v0/ui/website/organisation/get_organisations_for_assignment/',
   Get_User_Minimal_List: 'v0/ui/website/get-users-minimal-list/',
+
+  // Booking Plan
+  Get_Header_Data: '/v0/ui/getHeaderData',
 };

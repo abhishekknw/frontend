@@ -27,7 +27,7 @@ angular.module('catalogueApp')
 
       DashboardService.transactionalTemplateUserDetail = function (param) {
         let url = "v0/ui/mca-bot/template-user-summary-list/?template_id=" + param.template_id +
-          "&date=" + param.date + "&next_page=" + param.next_page + "&search=" + param.search;
+          "&date=" + param.date + "&next_page=" + param.next_page + "&search=" + param.search + "&status=" + param.callStatus;
         if (param.buttonName !== undefined) {
           url += `&${param.buttonName}=` + param.sort;
         }
@@ -45,13 +45,20 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.getTemplateTabData = function (page, search, status, campaign) {
-        let url = "v0/ui/template/view-template/?next_page=" + page + "&search=" + search + "&status=" + status + "&campaign_id=" + campaign;
+      DashboardService.getTemplateTabData = function (filters) {
+        let url = "v0/ui/template/view-template/?next_page=" + filters.pageNumber + 
+        "&search=" + filters.search + "&status=" + filters.status + 
+        "&campaign_id=" + filters.campaign +
+        "&template_type=" + filters.templateType;
         return machadaloHttp.get(url);
       }
-      DashboardService.createTemplate = function (data) {
+      DashboardService.createTemplate = function (data, checkForUpdate) {
         let url = "v0/ui/template/";
-        return machadaloHttp.post(url, { data: data });
+        if (checkForUpdate) {
+          return machadaloHttp.put(url, { data: data });
+        } else {
+          return machadaloHttp.post(url, { data: data });
+        }
       }
 
       DashboardService.getSector = function () {
@@ -102,6 +109,21 @@ angular.module('catalogueApp')
       DashboardService.sendOptinuser = function (data) {
         let url = "v0/ui/mca-bot/optin-users/";
         return machadaloHttp.post(url, data);
+      }
+
+      DashboardService.getDropdownData = function (sector) {
+        let url = "v0/ui/b2b/dropdown-filter-by-sector/?sector=" + sector.toLowerCase();
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.getSectorByNumber = function (number) {
+        let url = "v0/ui/b2b/sector-list/?mobile_number=" + number;
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.getLeadBySector = function (data) {
+        let url = "v0/ui/b2b/sector-wise-lead-details/?mobile_number=" + data.phone_number + "&sector_id=" + data.sector.id;
+        return machadaloHttp.get(url);
       }
 
       return DashboardService;

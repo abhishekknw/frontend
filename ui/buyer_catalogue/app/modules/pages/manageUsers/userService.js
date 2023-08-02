@@ -38,7 +38,6 @@ angular.module('machadaloPages')
     }
 
     userService.updateUserDetails = function(id,data){
-      console.log(data);
       var url = url_base_user + "user/" + id + "/";
       return machadaloHttp.put(url,data);
     }
@@ -192,6 +191,11 @@ angular.module('machadaloPages')
 
     userService.getSector = function(){
       var url = url_base + "accounts/create_business/load_business_types/";
+      return machadaloHttp.get(url);
+    }
+
+    userService.getRoleByOrganisation = function(id){
+      let url = url_base_website + "role/?organisation_id=" + id;
       return machadaloHttp.get(url);
     }
 

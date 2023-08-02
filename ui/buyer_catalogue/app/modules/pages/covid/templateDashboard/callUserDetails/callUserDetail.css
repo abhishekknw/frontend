@@ -1,0 +1,120 @@
+#onCallUserDetails {
+    text-align: left;
+}
+
+#onCallUserDetails .modal-body {
+    padding: 15px;
+}
+
+#onCallUserDetails label {
+    line-height: normal;
+    font-weight: 300;
+    color: #666;
+}
+
+#onCallUserDetails table th,
+#onCallUserDetails table td {
+    text-align: left;
+    padding: 0px 2px;
+}
+
+#onCallUserDetails .table-responsive {
+    max-height: 210px;
+    min-height: 50px;
+    width: 100%;
+}
+
+#onCallUserDetails .multiselect-parent.dropdown-multiselect button,
+#onCallUserDetails .multiselect-parent.dropdown-multiselect {
+    width: 100%;
+    text-align: center;
+}
+
+.form-group span.ng-binding.ng-scope {
+    display: inline-block;
+    white-space: normal;
+    word-break: break-all;
+}
+
+tr.highlighted,
+#onCallUserDetails table .highlighted td {
+    background-color: #e3c1c1;
+}
+
+.multi-select-itm {
+    display: inline-block;
+    background-color: #eee;
+    padding: 2px 5px;
+    border-radius: 30px;
+    font-size: 11px;
+    text-align: center;
+    margin-right: 2px;
+    margin-top: 2px;
+}
+
+.sortorder:after {
+    content: '\25b2';
+}
+
+.sortorder.reverse:after {
+    content: '\25bc';
+}
+
+.sortorder {
+    display: contents !important;
+}
+.fade.in{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.switchdemoBasicUsage .inset {
+    padding-left: 25px;
+    padding-top: 25px;
+  }
+
+/* .switch-wrapper{
+    display: flex;
+}
+
+.switch-wrapper input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+.switch-wrapper label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 200px;
+	height: 100px;
+	background: grey;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+}
+
+.switch-wrapper label:after {
+	content: '';
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 90px;
+	height: 90px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+
+.switch-wrapper input:checked + label {
+	background: #bada55;
+}
+
+.switch-wrapper input:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+.switch-wrapper label:active:after {
+	width: 10px;
+} */

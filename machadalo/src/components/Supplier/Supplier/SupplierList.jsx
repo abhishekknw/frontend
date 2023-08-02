@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 // import DatetimeRangePicker from 'react-datetime-range-picker';
 import ReactPaginate from 'react-paginate';
-import Box from '@mui/material/Box';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+// import Box from '@mui/material/Box';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 
 const DateTypes = [
   { label: 'Created At', value: 'created_at' },
@@ -27,7 +27,7 @@ export default class List extends React.Component {
       selectedDateFilter: '',
       offset: 0,
       perPage: 10,
-      selectedDate:["",""],
+      selectedDate: ['', ''],
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -112,11 +112,11 @@ export default class List extends React.Component {
   }
 
   handleDateChange(date) {
-    let temp = [date[0]?.$d,date[1]?.$d];
+    let temp = [date[0]?.$d, date[1]?.$d];
     this.setState({
-      selectedDate:temp,
-      startDate: temp[0]?temp[0]:"",
-      endDate: temp[1]?temp[1]:"",
+      selectedDate: temp,
+      startDate: temp[0] ? temp[0] : '',
+      endDate: temp[1] ? temp[1] : '',
       // startDate: date.start,
       // endDate: date.end,
     });
@@ -161,7 +161,7 @@ export default class List extends React.Component {
 
             {isDateRangePickerVisisble ? (
               <div className="form-control">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DateRangePicker
                     label="Advanced keyboard"
                     value={this.state.selectedDate}
@@ -174,7 +174,7 @@ export default class List extends React.Component {
                       </React.Fragment>
                     )}
                   />
-                </LocalizationProvider>
+                </LocalizationProvider> */}
                 {/* <CustomDateRangeInputs SelectedDate={{"start":this.state.startDate,"end":this.state.endDate}} handleChange={e=>this.handleDateChange(e)} /> */}
                 {/* <DatetimeRangePicker className="dateTimePicker" onChange={this.handleDateChange} /> */}
               </div>

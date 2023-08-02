@@ -1089,7 +1089,7 @@ h6.msg-title {
   background: #fff;
   right: -101%;
   top: 80px;
-  height: 100%;
+  height: calc(100% - 80px);
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   padding: 20px;
   transition: 0.3s ease;
