@@ -35,6 +35,11 @@ export default function BookingPlan() {
     show: false,
     type: '',
   });
+  const [filterData, setFilterData] = useState({
+    pageNo: 0,
+    supplierCode: 'ALL',
+    search: '',
+  });
 
   // useEffect(() => {
   //   const table = new DataTable(`#${tableName}`, {
@@ -58,12 +63,21 @@ export default function BookingPlan() {
     setColumnList(header);
   }
 
+  async function getCampaignInventories(data) {
+    await BookingApi.getCampaignInventories(data);
+  }
+
+  const handlePageChange = (e) => {
+    let data = { ...filterData, pageNo: e.selected };
+    getCampaignInventories(data);
+    setFilterData(data);
+  };
+
   useEffect(() => {
-    BookingApi.getCampaignInventories();
+    getCampaignInventories(filterData);
     getHeaderDataList();
   }, [1]);
 
-  console.log(CampaignInventoryList, 'CampaignInventoryList');
   return (
     <>
       <div className="booking-plan-wrapper">
@@ -71,19 +85,19 @@ export default function BookingPlan() {
         <div className="status-bar mb-2">
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
-            <span className="status-data">AAKAAK002A</span>
+            <span className="status-data">{CampaignInventoryList.campaign.proposal_id}</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">Campaign Name:</span>
-            <span className="status-data">Aakash Ghodbunder</span>
+            <span className="status-data">{CampaignInventoryList.campaign.name}</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">BD Owner:</span>
-            <span className="status-data">vidhidevelopment</span>
+            <span className="status-data">{CampaignInventoryList.campaign.created_by}</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">Campaign State:</span>
-            <span className="status-data">Converted</span>
+            <span className="status-data">{CampaignInventoryList.campaign.campaign_state}</span>
           </div>
         </div>
         <div>
@@ -432,10 +446,10 @@ export default function BookingPlan() {
           </Table>
           <div className="list__footer">
             <ReactPagination
-              pageNo={1}
+              pageNo={filterData.pageNo}
               pageSize={10}
-              totalItems={100}
-              onPageChange={console.log(1111)}
+              totalItems={CampaignInventoryList.total_count}
+              onPageChange={handlePageChange}
             />
           </div>
         </div>

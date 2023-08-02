@@ -13,8 +13,8 @@ const BookinPlanActions = () => {
 
 
     const getCampaignInventories = (data) => {
-        // let params = "?next_page=" + data.pageNo + '&search=' + data.search;
-        return fetchWrapper.get(`v0/ui/website/HDFHDF0789/campaign-inventories/?page=1&supplier_type_code=ALL`).then((res) => {
+        let params = 'page=' + (data.pageNo + 1) + "&supplier_type_code=" + data.supplierCode;
+        return fetchWrapper.get(`v0/ui/website/HDFHDF0789/campaign-inventories/?${params}`).then((res) => {
             setCampaignInventory(res.data)
         });
     };
