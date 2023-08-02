@@ -5,7 +5,7 @@ import './bookingPlan.css';
 // import ReactDOM from 'react-dom';
 // import DataTable from 'datatables.net-dt';
 // import 'datatables.net-responsive';
-import { Table, Button, Form, Modal } from 'react-bootstrap';
+import { Table, Button, Form, Modal, ListGroup } from 'react-bootstrap';
 import Select from 'react-select';
 import { IoClose } from 'react-icons/io5';
 import { BsSliders2 } from 'react-icons/bs';
@@ -41,6 +41,11 @@ export default function BookingPlan() {
     search: '',
   });
 
+  const bookingPriorityOption = [
+    { label: 'Very High', value: 'VH' },
+    { label: 'High', value: 'HH' },
+  ];
+
   // useEffect(() => {
   //   const table = new DataTable(`#${tableName}`, {
   //     details: {
@@ -72,6 +77,10 @@ export default function BookingPlan() {
     getCampaignInventories(data);
     setFilterData(data);
   };
+
+  function showInventoryDetail(data) {
+    console.log(data, '2222222222222');
+  }
 
   useEffect(() => {
     getCampaignInventories(filterData);
@@ -236,14 +245,13 @@ export default function BookingPlan() {
                       <td>
                         <Select
                           className=""
-                          options={[
-                            { label: 'Very High', value: 'VH' },
-                            { label: 'High', value: 'HH' },
-                          ]}
-                          defaultValue={'HH'}
                           label="Booking Priority"
                           id="BookingPriority"
                           placeholder="Booking Priority"
+                          options={bookingPriorityOption}
+                          value={bookingPriorityOption.filter(
+                            (obj) => obj.value === data.booking_priority
+                          )}
                         />
                       </td>
                       <td>
@@ -273,15 +281,16 @@ export default function BookingPlan() {
                       <td>
                         <Select
                           className=""
-                          options={[
-                            { label: '1', id: 1 },
-                            { label: '2', id: 2 },
-                            { label: '3', id: 3 },
-                            { label: '4', id: 4 },
-                          ]}
                           label="Phase"
                           id="phase"
                           placeholder="phase"
+                          options={[
+                            { label: '1', value: 1 },
+                            { label: '2', value: 2 },
+                            { label: '3', value: 3 },
+                            { label: '4', value: 4 },
+                          ]}
+                          value={data.phase}
                         />
                       </td>
                       <td>
@@ -308,33 +317,50 @@ export default function BookingPlan() {
                         <Form.Control type="date" placeholder="Next Action Date" />
                       </td>
                       <td>
-                        <a>Poster</a>
+                        <ListGroup>
+                          {data.shortlisted_inventories &&
+                            Object.keys(data.shortlisted_inventories).map((inventory, index) => {
+                              return (
+                                <>
+                                  <ListGroup.Item
+                                    action
+                                    active={false}
+                                    onClick={(e) => {
+                                      showInventoryDetail(data.shortlisted_inventories[inventory]);
+                                    }}
+                                  >
+                                    {inventory}
+                                  </ListGroup.Item>
+                                </>
+                              );
+                            })}
+                        </ListGroup>
                       </td>
                       <td>70</td>
                       <td>input type Number</td>
                       <td>50rs</td>
                       <td></td>
-                      <td>1000</td>
-                      <td>500</td>
+                      <td>{data?.total_negotiated_price}</td>
+                      <td>{data?.cost_per_flat}</td>
                       <td>
                         <Form>
                           <div className="mb-3 b-form-maindiv">
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id="Freebies-WhatsApp">
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>WhatsApp Group</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
                             </Form.Check>
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id="Freebies-Email">
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>Email</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
                             </Form.Check>
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id="Freebies-Billing">
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>Billing</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
                             </Form.Check>
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id="Freebies-Announcement">
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>Announcement</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
