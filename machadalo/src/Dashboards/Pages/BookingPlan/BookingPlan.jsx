@@ -3,11 +3,12 @@ import { useRecoilValue } from 'recoil';
 import $ from 'jquery';
 import './bookingPlan.css';
 import ReactDOM from 'react-dom';
-
+import Table from 'react-bootstrap/Table';
 import DataTable from 'datatables.net-dt';
 import { Button, Form } from 'react-bootstrap';
 import Select from 'react-select';
 import { IoClose } from 'react-icons/io5';
+import { BsSliders2 } from "react-icons/bs";
 import 'datatables.net-responsive';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 import { CampaignInventoryAtom } from '../../_states';
@@ -56,28 +57,33 @@ export default function BookingPlan() {
     <>
       <div className="booking-plan-wrapper">
         <h2>Booking Plan</h2>
-        <div className="status-bar">
+        <div className="status-bar mb-2" >
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
-            <span className="status-lable">AAKAAK002A</span>
+            <span className="status-data">AAKAAK002A</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">Campaign Name:</span>
-            <span className="status-lable">Aakash Ghodbunder</span>
+            <span className="status-data">Aakash Ghodbunder</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">BD Owner:</span>
-            <span className="status-lable">vidhidevelopment</span>
+            <span className="status-data">vidhidevelopment</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">Campaign State:</span>
-            <span className="status-lable">Converted</span>
+            <span className="status-data">Converted</span>
           </div>
         </div>
-
+<div>
+    <span>
+      <button className='btn btn-primary me-2 filterdiv' type='button'><BsSliders2/></button>
+      <button className='btn btn-primary me-2' type='button'>Assign User</button>
+    </span>
+</div>
         <div className="booking-plan-table">
           {/* id={tableName} ref={tableRef} */}
-          <table className="display" width="100%">
+          <Table responsive className="display booking-table" width="100%">
             <thead>
               <tr>
                 <th>{columnsList.srNo}</th>
@@ -204,7 +210,7 @@ export default function BookingPlan() {
                 <td>500</td>
                 <td>
                   <Form>
-                    <div className="mb-3">
+                    <div className="mb-3 b-form-maindiv">
                       <Form.Check type="checkbox" id={`check-api-checkbox`}>
                         <Form.Check.Input type="checkbox" isValid />
                         <Form.Check.Label>WhatsApp Group</Form.Check.Label>
@@ -230,7 +236,7 @@ export default function BookingPlan() {
                 </td>
                 <td>
                   <Form>
-                    <div className="mb-3">
+                    <div className="mb-3 b-form-maindiv">
                       <Form.Check type="checkbox" id={`check-api-checkbox`}>
                         <Form.Check.Input type="checkbox" isValid />
                         <Form.Check.Label>NFFT</Form.Check.Label>
@@ -277,7 +283,7 @@ export default function BookingPlan() {
                   <Button variant="primary">View/Add</Button>
                 </td>
                 <td>
-                  <div className="mb-3">
+                  <div className="mb-3 b-form-maindiv">
                     <Form.Check
                       inline
                       label="Completed"
@@ -295,17 +301,17 @@ export default function BookingPlan() {
                   </div>
                 </td>
                 <td>
-                  <Button variant="primary">Delete</Button>
+                  <Button variant="primary" className='btn btn-danger'>Delete</Button>
                 </td>
                 <td>
-                  <Button variant="primary">Update</Button>
+                  <Button variant="primary" className='btn btn-success'>Update</Button>
                 </td>
               </tr>
             </tbody>
-          </table>
+          </Table >
         </div>
 
-        {/* <div className="booking-filter">
+        <div className="booking-filter">  {/*isko filterdiv ke click per block kerwana hai */}
           <h5>Booking Filter</h5>
           <div className="filter-close">
             <IoClose />
@@ -373,7 +379,7 @@ export default function BookingPlan() {
               </Button>
             </div>
           </Form>
-        </div> */}
+        </div>
       </div>
     </>
   );
