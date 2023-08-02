@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import $ from 'jquery';
+// import $ from 'jquery';
 import './bookingPlan.css';
-import ReactDOM from 'react-dom';
-import DataTable from 'datatables.net-dt';
-import 'datatables.net-responsive';
+// import ReactDOM from 'react-dom';
+// import DataTable from 'datatables.net-dt';
+// import 'datatables.net-responsive';
 import { Table, Button, Form, Modal } from 'react-bootstrap';
 import Select from 'react-select';
 import { IoClose } from 'react-icons/io5';
@@ -20,11 +20,14 @@ import PaymentDetailModal from './PaymentDetailModal';
 import PermissionModal from './PermissionModal';
 import ReceiptModal from './ReceiptModal';
 import ReactPagination from '../../Pagination/Pagination';
+import ViewPhaseModal from './ViewPhaseModal';
+import AddSupplierModal from './AddSupplierModal';
+import ImportSheetModal from './ImportSheetModal';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
-  const tableRef = useRef();
-  const tableName = 'bookingPlanTable';
+  // const tableRef = useRef();
+  // const tableName = 'bookingPlanTable';
   const [columnsList, setColumnList] = useState({});
   const CampaignInventoryList = useRecoilValue(CampaignInventoryAtom);
   const [filterShow, setFilterShow] = useState(false);
@@ -33,26 +36,25 @@ export default function BookingPlan() {
     type: '',
   });
 
-  useEffect(() => {
-    const table = new DataTable(`#${tableName}`, {
-      details: {
-        renderer: $.fn.dataTable.Responsive.renderer.listHiddenNodes(),
-      },
-      info: false,
-      paging: false,
-      responsive: true,
-      searching: false,
-    });
-    // Extra step to do extra clean-up.
-    // return function () {
-    //   console.log('Table destroyed');
-    //   table.destroy();
-    // };
-  }, [1]);
+  // useEffect(() => {
+  //   const table = new DataTable(`#${tableName}`, {
+  //     details: {
+  //       renderer: $.fn.dataTable.Responsive.renderer.listHiddenNodes(),
+  //     },
+  //     info: false,
+  //     paging: false,
+  //     responsive: true,
+  //     searching: false,
+  //   });
+  //   // Extra step to do extra clean-up.
+  //   // return function () {
+  //   //   console.log('Table destroyed');
+  //   //   table.destroy();
+  //   // };
+  // }, [1]);
 
   async function getHeaderDataList() {
     let header = await BookingApi.getHeaderData();
-    console.log(header);
     setColumnList(header);
   }
 
@@ -60,6 +62,8 @@ export default function BookingPlan() {
     BookingApi.getCampaignInventories();
     getHeaderDataList();
   }, [1]);
+
+  console.log(CampaignInventoryList, 'CampaignInventoryList');
   return (
     <>
       <div className="booking-plan-wrapper">
@@ -154,248 +158,276 @@ export default function BookingPlan() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>
-                  <Button
-                    variant="primary"
-                    onClick={(e) => {
-                      setShowModal({ show: true, type: 'Add-Brand' });
-                    }}
-                  >
-                    Add
-                  </Button>
-                </td>
-                <td>
-                  <a>Gurgoan One</a>(Ultra High)
-                </td>
-                <td>NDLGGNS22RSGUR</td>
-                <td>Residential Society</td>
-                <td>Medium High (Sec-22)</td>
-                <td>Sector -22</td>
-                <td>
-                  <Button
-                    variant="primary"
-                    onClick={(e) => {
-                      setShowModal({ show: true, type: 'RelationshipData' });
-                    }}
-                  >
-                    View
-                  </Button>
-                </td>
-                <td>245</td>
-                <td>8</td>
-                <td>
-                  Abhishek (9953008206){' '}
-                  <a
-                    onClick={(e) => {
-                      setShowModal({ show: true, type: 'ContactDetails' });
-                    }}
-                  >
-                    View/Add
-                  </a>
-                </td>
-                <td>
-                  <Button
-                    variant="primary"
-                    onClick={(e) => {
-                      setShowModal({ show: true, type: 'AssignUser' });
-                    }}
-                  >
-                    Assign User
-                  </Button>
-                </td>
-                <td>
-                  <Select
-                    className=""
-                    options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
-                    label="Booking Priority"
-                    id="BookingPriority"
-                    placeholder="Booking Priority"
-                  />
-                </td>
-                <td>
-                  <Select
-                    className="mb-3"
-                    options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
-                    label="Booking Status"
-                    id="BookingStatus"
-                    placeholder="Booking Status"
-                  />
-                  <Select
-                    className=""
-                    options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
-                    label="Booking Sub Status"
-                    id="BookingSubStatus"
-                    placeholder="Booking Sub Status"
-                  />
-                </td>
-                <td>
-                  <Select
-                    className=""
-                    options={[{ label: 'phase1' }, { label: 'phase2' }, { label: 'phase3' }]}
-                    label="Phase"
-                    id="phase"
-                    placeholder="phase"
-                  />
-                </td>
-                <td>
-                  <Button
-                    variant="primary"
-                    onClick={(e) => {
-                      setShowModal({ show: true, type: 'internalComments' });
-                    }}
-                  >
-                    View/Add
-                  </Button>
-                </td>
-                <td>
-                  <Button
-                    variant="primary"
-                    onClick={(e) => {
-                      setShowModal({ show: true, type: 'comments' });
-                    }}
-                  >
-                    View/Add
-                  </Button>
-                </td>
-                <td>
-                  <Form.Control type="date" placeholder="Next Action Date" />
-                </td>
-                <td>
-                  <a>Poster</a>
-                </td>
-                <td>70</td>
-                <td>input type Number</td>
-                <td>50rs</td>
-                <td></td>
-                <td>1000</td>
-                <td>500</td>
-                <td>
-                  <Form>
-                    <div className="mb-3 b-form-maindiv">
-                      <Form.Check type="checkbox" id={`check-api-checkbox`}>
-                        <Form.Check.Input type="checkbox" isValid />
-                        <Form.Check.Label>WhatsApp Group</Form.Check.Label>
-                        {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                      </Form.Check>
-                      <Form.Check type="checkbox" id={`check-api-checkbox`}>
-                        <Form.Check.Input type="checkbox" isValid />
-                        <Form.Check.Label>Email</Form.Check.Label>
-                        {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                      </Form.Check>
-                      <Form.Check type="checkbox" id={`check-api-checkbox`}>
-                        <Form.Check.Input type="checkbox" isValid />
-                        <Form.Check.Label>Billing</Form.Check.Label>
-                        {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                      </Form.Check>
-                      <Form.Check type="checkbox" id={`check-api-checkbox`}>
-                        <Form.Check.Input type="checkbox" isValid />
-                        <Form.Check.Label>Announcement</Form.Check.Label>
-                        {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                      </Form.Check>
-                    </div>
-                  </Form>
-                </td>
-                <td>
-                  <Form>
-                    <div className="mb-3 b-form-maindiv">
-                      <Form.Check type="checkbox" id={`check-api-checkbox`}>
-                        <Form.Check.Input type="checkbox" isValid />
-                        <Form.Check.Label>NFFT</Form.Check.Label>
-                        {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                      </Form.Check>
-                      <Form.Check type="checkbox" id={`check-api-checkbox`}>
-                        <Form.Check.Input type="checkbox" isValid />
-                        <Form.Check.Label>CHEQUE</Form.Check.Label>
-                        {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                      </Form.Check>
-                      <Form.Check type="checkbox" id={`check-api-checkbox`}>
-                        <Form.Check.Input type="checkbox" isValid />
-                        <Form.Check.Label>CASH</Form.Check.Label>
-                        {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                      </Form.Check>
-                    </div>
-                    <Button
-                      variant="primary"
-                      onClick={(e) => {
-                        setShowModal({ show: true, type: 'PaymentDetail' });
-                      }}
-                    >
-                      Details
-                    </Button>
-                  </Form>
-                </td>
-                <td>
-                  <Form.Control
-                    type="text"
-                    id="inputPassword5"
-                    aria-describedby="passwordHelpBlock"
-                  />
-                </td>
-                <td>
-                  <Select
-                    className=""
-                    options={[
-                      { label: 'Pay1 Status' },
-                      { label: 'Pay1 Status' },
-                      { label: 'Pay1 Status' },
-                    ]}
-                    label="Payment Status"
-                    id="PaymentStatus"
-                    placeholder="Payment Status"
-                  />
-                </td>
-                <td>
-                  <Button
-                    variant="primary"
-                    onClick={(e) => {
-                      setShowModal({ show: true, type: 'Permission' });
-                    }}
-                  >
-                    View/Add
-                  </Button>
-                </td>
-                <td>
-                  <Button
-                    variant="primary"
-                    onClick={(e) => {
-                      setShowModal({ show: true, type: 'Receipt' });
-                    }}
-                  >
-                    View/Add
-                  </Button>
-                </td>
-                <td></td>
-                <td>
-                  <div className="mb-3 b-form-maindiv">
-                    <Form.Check
-                      inline
-                      label="Completed"
-                      name="group1"
-                      type="radio"
-                      id="completed"
-                    />
-                    <Form.Check
-                      inline
-                      label="Not Completed"
-                      name="group1"
-                      type="radio"
-                      id="Notcompleted"
-                    />
-                  </div>
-                </td>
-                <td>
-                  <Button variant="primary" className="btn btn-danger">
-                    Delete
-                  </Button>
-                </td>
-                <td>
-                  <Button variant="primary" className="btn btn-success">
-                    Update
-                  </Button>
-                </td>
-              </tr>
+              {CampaignInventoryList.shortlisted_suppliers &&
+                CampaignInventoryList.shortlisted_suppliers.map((data, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <Button
+                          variant="primary"
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'Add-Brand' });
+                          }}
+                        >
+                          Add
+                        </Button>
+                      </td>
+                      <td>
+                        <a>{data.name}</a>({data.quality_rating})
+                      </td>
+                      <td>{data.supplier_id}</td>
+                      <td>{data.supplierCode}</td>
+                      <td>
+                        <span>{data.area}</span>
+                        <span>({data.subarea})</span>
+                      </td>
+                      <td>
+                        <span>{data.address1}</span>
+                        <span>{data.address2}</span>
+                      </td>
+                      <td>
+                        <Button
+                          variant="primary"
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'RelationshipData' });
+                          }}
+                        >
+                          View
+                        </Button>
+                      </td>
+                      <td>{data?.flat_count}</td>
+                      <td>{data?.tower_count}</td>
+                      <td>
+                        <span>{data?.contacts[0]?.name}</span>
+                        <span>({data?.contacts[0]?.mobile})</span>
+                        <a
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'ContactDetails' });
+                          }}
+                        >
+                          View/Add
+                        </a>
+                      </td>
+                      <td>
+                        <Button
+                          variant="primary"
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'AssignUser' });
+                          }}
+                        >
+                          Assign User
+                        </Button>
+                      </td>
+                      <td>
+                        <Select
+                          className=""
+                          options={[
+                            { label: 'Very High', id: 1 },
+                            { label: 'High', id: 2 },
+                          ]}
+                          label="Booking Priority"
+                          id="BookingPriority"
+                          placeholder="Booking Priority"
+                        />
+                      </td>
+                      <td>
+                        <Select
+                          className="mb-3"
+                          options={[
+                            { label: 'painting' },
+                            { label: 'Elevator' },
+                            { label: 'Cars' },
+                          ]}
+                          label="Booking Status"
+                          id="BookingStatus"
+                          placeholder="Booking Status"
+                        />
+                        <Select
+                          className=""
+                          options={[
+                            { label: 'painting' },
+                            { label: 'Elevator' },
+                            { label: 'Cars' },
+                          ]}
+                          label="Booking Sub Status"
+                          id="BookingSubStatus"
+                          placeholder="Booking Sub Status"
+                        />
+                      </td>
+                      <td>
+                        <Select
+                          className=""
+                          options={[
+                            { label: '1', id: 1 },
+                            { label: '2', id: 2 },
+                            { label: '3', id: 3 },
+                            { label: '4', id: 4 },
+                          ]}
+                          label="Phase"
+                          id="phase"
+                          placeholder="phase"
+                        />
+                      </td>
+                      <td>
+                        <Button
+                          variant="primary"
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'internalComments' });
+                          }}
+                        >
+                          View/Add
+                        </Button>
+                      </td>
+                      <td>
+                        <Button
+                          variant="primary"
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'comments' });
+                          }}
+                        >
+                          View/Add
+                        </Button>
+                      </td>
+                      <td>
+                        <Form.Control type="date" placeholder="Next Action Date" />
+                      </td>
+                      <td>
+                        <a>Poster</a>
+                      </td>
+                      <td>70</td>
+                      <td>input type Number</td>
+                      <td>50rs</td>
+                      <td></td>
+                      <td>1000</td>
+                      <td>500</td>
+                      <td>
+                        <Form>
+                          <div className="mb-3 b-form-maindiv">
+                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                              <Form.Check.Input type="checkbox" isValid />
+                              <Form.Check.Label>WhatsApp Group</Form.Check.Label>
+                              {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
+                            </Form.Check>
+                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                              <Form.Check.Input type="checkbox" isValid />
+                              <Form.Check.Label>Email</Form.Check.Label>
+                              {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
+                            </Form.Check>
+                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                              <Form.Check.Input type="checkbox" isValid />
+                              <Form.Check.Label>Billing</Form.Check.Label>
+                              {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
+                            </Form.Check>
+                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                              <Form.Check.Input type="checkbox" isValid />
+                              <Form.Check.Label>Announcement</Form.Check.Label>
+                              {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
+                            </Form.Check>
+                          </div>
+                        </Form>
+                      </td>
+                      <td>
+                        <Form>
+                          <div className="mb-3 b-form-maindiv">
+                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                              <Form.Check.Input type="checkbox" isValid />
+                              <Form.Check.Label>NFFT</Form.Check.Label>
+                              {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
+                            </Form.Check>
+                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                              <Form.Check.Input type="checkbox" isValid />
+                              <Form.Check.Label>CHEQUE</Form.Check.Label>
+                              {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
+                            </Form.Check>
+                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                              <Form.Check.Input type="checkbox" isValid />
+                              <Form.Check.Label>CASH</Form.Check.Label>
+                              {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
+                            </Form.Check>
+                          </div>
+                          <Button
+                            variant="primary"
+                            onClick={(e) => {
+                              setShowModal({ show: true, type: 'PaymentDetail' });
+                            }}
+                          >
+                            Details
+                          </Button>
+                        </Form>
+                      </td>
+                      <td>
+                        <Form.Control
+                          type="text"
+                          id="inputPassword5"
+                          aria-describedby="passwordHelpBlock"
+                        />
+                      </td>
+                      <td>
+                        <Select
+                          className=""
+                          options={[
+                            { label: 'Pay1 Status' },
+                            { label: 'Pay1 Status' },
+                            { label: 'Pay1 Status' },
+                          ]}
+                          label="Payment Status"
+                          id="PaymentStatus"
+                          placeholder="Payment Status"
+                        />
+                      </td>
+                      <td>
+                        <Button
+                          variant="primary"
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'Permission' });
+                          }}
+                        >
+                          View/Add
+                        </Button>
+                      </td>
+                      <td>
+                        <Button
+                          variant="primary"
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'Receipt' });
+                          }}
+                        >
+                          View/Add
+                        </Button>
+                      </td>
+                      <td></td>
+                      <td>
+                        <div className="mb-3 b-form-maindiv">
+                          <Form.Check
+                            inline
+                            label="Completed"
+                            name="group1"
+                            type="radio"
+                            id="completed"
+                          />
+                          <Form.Check
+                            inline
+                            label="Not Completed"
+                            name="group1"
+                            type="radio"
+                            id="Notcompleted"
+                          />
+                        </div>
+                      </td>
+                      <td>
+                        <Button variant="primary" className="btn btn-danger">
+                          Delete
+                        </Button>
+                      </td>
+                      <td>
+                        <Button variant="primary" className="btn btn-success">
+                          Update
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </Table>
           <div className="list__footer">
@@ -494,7 +526,7 @@ export default function BookingPlan() {
             onHide={(e) => {
               setShowModal({ show: false, type: '' });
             }}
-            className='booking-modal'
+            className="booking-modal"
           >
             <Modal.Header closeButton>
               <Modal.Title>
@@ -516,6 +548,12 @@ export default function BookingPlan() {
                   ? 'Permission Box Image Details for HDFC Distributor 3'
                   : showModal.type == 'Receipt'
                   ? 'Receipt Box Image Details for HDFC Distributor 3'
+                  : showModal.type == 'ViewPhase'
+                  ? 'View Phase'
+                  : showModal.type == 'AddSupplier'
+                  ? 'Add New Supplier'
+                  : showModal.type == 'ImportSheet'
+                  ? 'Import Sheet'
                   : 'Other'}
               </Modal.Title>
             </Modal.Header>
@@ -536,6 +574,12 @@ export default function BookingPlan() {
                 <PermissionModal />
               ) : showModal.type == 'Receipt' ? (
                 <ReceiptModal />
+              ) : showModal.type == 'ViewPhase' ? (
+                <ViewPhaseModal />
+              ) : showModal.type == 'AddSupplier' ? (
+                <AddSupplierModal />
+              ) : showModal.type == 'ImportSheet' ? (
+                <ImportSheetModal />
               ) : (
                 ''
               )}
@@ -543,13 +587,51 @@ export default function BookingPlan() {
           </Modal>
         </div>
 
-        <div className='bottom-btn-strip'>
+        <div className="bottom-btn-strip">
           <ul>
-            <li><button className='btn btn-primary' type='button'>View / Add Phase</button></li>
-            <li><button className='btn btn-primary' type='button'>Add Suppliers</button></li>
-            <li><button className='btn btn-success' type='button'>Update</button></li>
-            <li><button className='btn btn-primary' type='button'>Campaign Release and Audit Plan</button></li>
-            <li><button className='btn btn-primary' type='button'>Import Sheet</button></li>
+            <li>
+              <Button
+                className="btn btn-primary"
+                type="button"
+                onClick={(e) => {
+                  setShowModal({ show: true, type: 'ViewPhase' });
+                }}
+              >
+                View / Add Phase
+              </Button>
+            </li>
+            <li>
+              <Button
+                className="btn btn-primary"
+                type="button"
+                onClick={(e) => {
+                  setShowModal({ show: true, type: 'AddSupplier' });
+                }}
+              >
+                Add Suppliers
+              </Button>
+            </li>
+            <li>
+              <Button className="btn btn-success" type="button">
+                Update
+              </Button>
+            </li>
+            <li>
+              <Button className="btn btn-primary" type="button">
+                Campaign Release and Audit Plan
+              </Button>
+            </li>
+            <li>
+              <Button
+                className="btn btn-primary"
+                type="button"
+                onClick={(e) => {
+                  setShowModal({ show: true, type: 'ImportSheet' });
+                }}
+              >
+                Import Sheet
+              </Button>
+            </li>
           </ul>
         </div>
       </div>
