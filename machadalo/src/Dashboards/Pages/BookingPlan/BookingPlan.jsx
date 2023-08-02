@@ -75,12 +75,12 @@ export default function BookingPlan() {
             <span className="status-data">Converted</span>
           </div>
         </div>
-<div>
-    <span>
-      <button className='btn btn-primary me-2 filterdiv' type='button'><BsSliders2/></button>
-      <button className='btn btn-primary me-2' type='button'>Assign User</button>
-    </span>
-</div>
+        <div>
+            <span>
+              <button className='btn btn-primary me-2 filterdiv' type='button'><BsSliders2/></button>
+              <button className='btn btn-primary me-2' type='button'>Assign User</button>
+            </span>
+        </div>
         <div className="booking-plan-table">
           {/* id={tableName} ref={tableRef} */}
           <Table responsive className="display booking-table" width="100%">
@@ -167,7 +167,7 @@ export default function BookingPlan() {
                 </td>
                 <td>
                   <Select
-                    className=""
+                    className="mb-3"
                     options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
                     label="Booking Status"
                     id="BookingStatus"
