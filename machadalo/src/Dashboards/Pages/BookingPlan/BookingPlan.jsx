@@ -398,12 +398,14 @@ export default function BookingPlan() {
               </tr>
             </tbody>
           </Table>
-          <ReactPagination
-            pageNo={1}
-            pageSize={10}
-            totalItems={100}
-            onPageChange={console.log(1111)}
-          />
+          <div className="list__footer">
+            <ReactPagination
+              pageNo={1}
+              pageSize={10}
+              totalItems={100}
+              onPageChange={console.log(1111)}
+            />
+          </div>
         </div>
 
         <div
