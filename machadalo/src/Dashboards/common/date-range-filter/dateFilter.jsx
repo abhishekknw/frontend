@@ -105,6 +105,7 @@ export default function DateFilter(props) {
             <Col sm={6} className="w-40">
               <div className="calander d-flex ">
                 <DatePicker
+                  showIcon={true}
                   selectsRange={true}
                   startDate={startDate}
                   endDate={endDate}

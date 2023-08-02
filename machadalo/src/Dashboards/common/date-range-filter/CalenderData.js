@@ -10,8 +10,8 @@ const CalenderActions = () => {
         for (let i = 0; i <= number; i++) {
             DateArray.push(Today.subtract(i, 'day'))
         }
-        // array1.reverse()
-        setCustomCalenderDates(DateArray)
+        setCustomCalenderDates(DateArray);
+        console.log(DateArray, "111111111111111")
         return DateArray;
     }
 
@@ -56,7 +56,7 @@ const CalenderActions = () => {
     const createFromStartDate = (start) => {
         let DateArray = [];
         for (let i = 0; i <= 24; i++) {
-            DateArray.push(start.add(i, 'day'))
+            DateArray.push(dayjs(start).add(i, 'day'))
         }
         setCustomCalenderDates(DateArray);
         return DateArray;
