@@ -25,3 +25,4 @@ const Paginations = (props) => {
 };
 
 export default Paginations;
+

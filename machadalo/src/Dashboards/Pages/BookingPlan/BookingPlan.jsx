@@ -3,15 +3,23 @@ import { useRecoilValue } from 'recoil';
 import $ from 'jquery';
 import './bookingPlan.css';
 import ReactDOM from 'react-dom';
-import Table from 'react-bootstrap/Table';
 import DataTable from 'datatables.net-dt';
-import { Button, Form } from 'react-bootstrap';
+import 'datatables.net-responsive';
+import { Table, Button, Form, Modal } from 'react-bootstrap';
 import Select from 'react-select';
 import { IoClose } from 'react-icons/io5';
-import { BsSliders2 } from "react-icons/bs";
-import 'datatables.net-responsive';
+import { BsSliders2 } from 'react-icons/bs';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 import { CampaignInventoryAtom } from '../../_states';
+import AddBrandModal from './AddBrandModal';
+import RelationshipModal from './RelationshipModal';
+import AssignUserModal from './AssignUserModal';
+import ContactDetailModal from './ContactDetailModal';
+import CommentModal from './CommentModal';
+import PaymentDetailModal from './PaymentDetailModal';
+import PermissionModal from './PermissionModal';
+import ReceiptModal from './ReceiptModal';
+import ReactPagination from '../../Pagination/Pagination';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -19,6 +27,11 @@ export default function BookingPlan() {
   const tableName = 'bookingPlanTable';
   const [columnsList, setColumnList] = useState({});
   const CampaignInventoryList = useRecoilValue(CampaignInventoryAtom);
+  const [filterShow, setFilterShow] = useState(false);
+  const [showModal, setShowModal] = useState({
+    show: false,
+    type: '',
+  });
 
   useEffect(() => {
     const table = new DataTable(`#${tableName}`, {
@@ -46,18 +59,12 @@ export default function BookingPlan() {
   useEffect(() => {
     BookingApi.getCampaignInventories();
     getHeaderDataList();
-    // let headerKeys = Object.keys(header);
-    // let temp = [];
-    // headerKeys.map((i) => {
-    //   temp.push({ title: header[i] });
-    // });
-    // setColumnList(temp);
   }, [1]);
   return (
     <>
       <div className="booking-plan-wrapper">
         <h2>Booking Plan</h2>
-        <div className="status-bar mb-2" >
+        <div className="status-bar mb-2">
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
             <span className="status-data">AAKAAK002A</span>
@@ -76,10 +83,24 @@ export default function BookingPlan() {
           </div>
         </div>
         <div>
-            <span>
-              <button className='btn btn-primary me-2 filterdiv' type='button'><BsSliders2/></button>
-              <button className='btn btn-primary me-2' type='button'>Assign User</button>
-            </span>
+          <span>
+            <Button
+              variant="primary me-2"
+              onClick={(e) => {
+                setFilterShow(!filterShow);
+              }}
+            >
+              <BsSliders2 />
+            </Button>
+            <Button
+              variant="primary"
+              onClick={(e) => {
+                setShowModal({ show: true, type: 'AssignUser' });
+              }}
+            >
+              Assign User
+            </Button>
+          </span>
         </div>
         <div className="booking-plan-table">
           {/* id={tableName} ref={tableRef} */}
@@ -103,7 +124,7 @@ export default function BookingPlan() {
                 <th>{columnsList.booking_priority}</th>
                 <th>{columnsList.booking_status_and_sub_status}</th>
                 <th>{columnsList.phase}</th>
-                {/* th ng-if="canViewInternalComments">{{columnsList.internal_comments}}</th> */}
+                <th>{columnsList.internal_comments}</th>
                 <th>{columnsList.comments}</th>
                 <th>{columnsList.next_action_date}</th>
                 <th>{columnsList.inventory_type}</th>
@@ -136,7 +157,14 @@ export default function BookingPlan() {
               <tr>
                 <td>1</td>
                 <td>
-                  <Button variant="primary">Add</Button>
+                  <Button
+                    variant="primary"
+                    onClick={(e) => {
+                      setShowModal({ show: true, type: 'Add-Brand' });
+                    }}
+                  >
+                    Add
+                  </Button>
                 </td>
                 <td>
                   <a>Gurgoan One</a>(Ultra High)
@@ -146,15 +174,36 @@ export default function BookingPlan() {
                 <td>Medium High (Sec-22)</td>
                 <td>Sector -22</td>
                 <td>
-                  <Button variant="primary">View</Button>
+                  <Button
+                    variant="primary"
+                    onClick={(e) => {
+                      setShowModal({ show: true, type: 'RelationshipData' });
+                    }}
+                  >
+                    View
+                  </Button>
                 </td>
                 <td>245</td>
                 <td>8</td>
                 <td>
-                  Abhishek (9953008206) <a>View/Add</a>
+                  Abhishek (9953008206){' '}
+                  <a
+                    onClick={(e) => {
+                      setShowModal({ show: true, type: 'ContactDetails' });
+                    }}
+                  >
+                    View/Add
+                  </a>
                 </td>
                 <td>
-                  <Button variant="primary">Assign User</Button>
+                  <Button
+                    variant="primary"
+                    onClick={(e) => {
+                      setShowModal({ show: true, type: 'AssignUser' });
+                    }}
+                  >
+                    Assign User
+                  </Button>
                 </td>
                 <td>
                   <Select
@@ -191,10 +240,24 @@ export default function BookingPlan() {
                   />
                 </td>
                 <td>
-                  <Button variant="primary">View/Add</Button>
+                  <Button
+                    variant="primary"
+                    onClick={(e) => {
+                      setShowModal({ show: true, type: 'internalComments' });
+                    }}
+                  >
+                    View/Add
+                  </Button>
                 </td>
                 <td>
-                  <Button variant="primary">View/Add</Button>
+                  <Button
+                    variant="primary"
+                    onClick={(e) => {
+                      setShowModal({ show: true, type: 'comments' });
+                    }}
+                  >
+                    View/Add
+                  </Button>
                 </td>
                 <td>
                   <Form.Control type="date" placeholder="Next Action Date" />
@@ -253,7 +316,14 @@ export default function BookingPlan() {
                         {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
                       </Form.Check>
                     </div>
-                    <Button variant="primary">Details</Button>
+                    <Button
+                      variant="primary"
+                      onClick={(e) => {
+                        setShowModal({ show: true, type: 'PaymentDetail' });
+                      }}
+                    >
+                      Details
+                    </Button>
                   </Form>
                 </td>
                 <td>
@@ -277,11 +347,26 @@ export default function BookingPlan() {
                   />
                 </td>
                 <td>
-                  <Button variant="primary">View/Add</Button>
+                  <Button
+                    variant="primary"
+                    onClick={(e) => {
+                      setShowModal({ show: true, type: 'Permission' });
+                    }}
+                  >
+                    View/Add
+                  </Button>
                 </td>
                 <td>
-                  <Button variant="primary">View/Add</Button>
+                  <Button
+                    variant="primary"
+                    onClick={(e) => {
+                      setShowModal({ show: true, type: 'Receipt' });
+                    }}
+                  >
+                    View/Add
+                  </Button>
                 </td>
+                <td></td>
                 <td>
                   <div className="mb-3 b-form-maindiv">
                     <Form.Check
@@ -301,24 +386,46 @@ export default function BookingPlan() {
                   </div>
                 </td>
                 <td>
-                  <Button variant="primary" className='btn btn-danger'>Delete</Button>
+                  <Button variant="primary" className="btn btn-danger">
+                    Delete
+                  </Button>
                 </td>
                 <td>
-                  <Button variant="primary" className='btn btn-success'>Update</Button>
+                  <Button variant="primary" className="btn btn-success">
+                    Update
+                  </Button>
                 </td>
               </tr>
             </tbody>
-          </Table >
+          </Table>
+          <div className="list__footer">
+            <ReactPagination
+              pageNo={1}
+              pageSize={10}
+              totalItems={100}
+              onPageChange={console.log(1111)}
+            />
+          </div>
         </div>
 
-        <div className="booking-filter">  {/*isko filterdiv ke click per block kerwana hai */}
+        <div
+          className="booking-filter"
+          style={{
+            display: filterShow ? 'block' : 'none',
+          }}
+        >
           <h5>Booking Filter</h5>
-          <div className="filter-close">
+          <div
+            className="filter-close"
+            onClick={(e) => {
+              setFilterShow(!filterShow);
+            }}
+          >
             <IoClose />
           </div>
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Supplier Type</Form.Label>
               <Select
                 className=""
                 options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
@@ -379,6 +486,60 @@ export default function BookingPlan() {
               </Button>
             </div>
           </Form>
+        </div>
+
+        <div>
+          <Modal
+            show={showModal.show}
+            onHide={(e) => {
+              setShowModal({ show: false, type: '' });
+            }}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>
+                {showModal.type == 'Add-Brand'
+                  ? 'Add Brand'
+                  : showModal.type == 'RelationshipData'
+                  ? 'Supplier Details'
+                  : showModal.type == 'ContactDetails'
+                  ? 'Contact Detail'
+                  : showModal.type == 'AssignUser'
+                  ? 'Assign User'
+                  : showModal.type == 'internalComments'
+                  ? 'Internal Comments'
+                  : showModal.type == 'comments'
+                  ? 'Comments'
+                  : showModal.type == 'PaymentDetail'
+                  ? 'Payment Detail'
+                  : showModal.type == 'Permission'
+                  ? 'Permission Box Image Details for HDFC Distributor 3'
+                  : showModal.type == 'Receipt'
+                  ? 'Receipt Box Image Details for HDFC Distributor 3'
+                  : 'Other'}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {showModal.type == 'Add-Brand' ? (
+                <AddBrandModal />
+              ) : showModal.type == 'RelationshipData' ? (
+                <RelationshipModal />
+              ) : showModal.type == 'AssignUser' ? (
+                <AssignUserModal />
+              ) : showModal.type == 'ContactDetails' ? (
+                <ContactDetailModal />
+              ) : showModal.type == 'comments' || showModal.type == 'internalComments' ? (
+                <CommentModal />
+              ) : showModal.type == 'PaymentDetail' ? (
+                <PaymentDetailModal />
+              ) : showModal.type == 'Permission' ? (
+                <PermissionModal />
+              ) : showModal.type == 'Receipt' ? (
+                <ReceiptModal />
+              ) : (
+                ''
+              )}
+            </Modal.Body>
+          </Modal>
         </div>
       </div>
     </>
