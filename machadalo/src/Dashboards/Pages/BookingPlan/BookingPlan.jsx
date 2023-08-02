@@ -8,6 +8,7 @@ import DataTable from 'datatables.net-dt';
 import { Button, Form } from 'react-bootstrap';
 import Select from 'react-select';
 import { IoClose } from 'react-icons/io5';
+import { BsSliders2 } from "react-icons/bs";
 import 'datatables.net-responsive';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 import { CampaignInventoryAtom } from '../../_states';
@@ -56,7 +57,7 @@ export default function BookingPlan() {
     <>
       <div className="booking-plan-wrapper">
         <h2>Booking Plan</h2>
-        <div className="status-bar">
+        <div className="status-bar mb-2" >
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
             <span className="status-data">AAKAAK002A</span>
@@ -74,7 +75,12 @@ export default function BookingPlan() {
             <span className="status-data">Converted</span>
           </div>
         </div>
-
+<div>
+    <span>
+      <button className='btn btn-primary me-2 filterdiv' type='button'><BsSliders2/></button>
+      <button className='btn btn-primary me-2' type='button'>Assign User</button>
+    </span>
+</div>
         <div className="booking-plan-table">
           {/* id={tableName} ref={tableRef} */}
           <Table responsive className="display booking-table" width="100%">
@@ -295,17 +301,17 @@ export default function BookingPlan() {
                   </div>
                 </td>
                 <td>
-                  <Button variant="primary">Delete</Button>
+                  <Button variant="primary" className='btn btn-danger'>Delete</Button>
                 </td>
                 <td>
-                  <Button variant="primary">Update</Button>
+                  <Button variant="primary" className='btn btn-success'>Update</Button>
                 </td>
               </tr>
             </tbody>
           </Table >
         </div>
 
-        {/* <div className="booking-filter">
+        <div className="booking-filter">  {/*isko filterdiv ke click per block kerwana hai */}
           <h5>Booking Filter</h5>
           <div className="filter-close">
             <IoClose />
@@ -373,7 +379,7 @@ export default function BookingPlan() {
               </Button>
             </div>
           </Form>
-        </div> */}
+        </div>
       </div>
     </>
   );
