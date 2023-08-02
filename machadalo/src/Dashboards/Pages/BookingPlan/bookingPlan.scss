@@ -33,7 +33,6 @@
     height: calc(100vh - 66px);
     box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.15);
     overflow: auto;
-
     h5 {
         margin-bottom: 15px;
         padding-bottom: 10px;
@@ -56,6 +55,7 @@
         gap: 10px;
     }
 }
+
 ::-webkit-scrollbar{
     // width: 4px;
     // height: 5px;
@@ -89,7 +89,4 @@
             }
         }
     }
-}
-.booking-filter{
-    display: none;
 }
