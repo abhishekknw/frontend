@@ -494,6 +494,7 @@ export default function BookingPlan() {
             onHide={(e) => {
               setShowModal({ show: false, type: '' });
             }}
+            className='booking-modal'
           >
             <Modal.Header closeButton>
               <Modal.Title>
@@ -540,6 +541,16 @@ export default function BookingPlan() {
               )}
             </Modal.Body>
           </Modal>
+        </div>
+
+        <div className='bottom-btn-strip'>
+          <ul>
+            <li><button className='btn btn-primary' type='button'>View / Add Phase</button></li>
+            <li><button className='btn btn-primary' type='button'>Add Suppliers</button></li>
+            <li><button className='btn btn-success' type='button'>Update</button></li>
+            <li><button className='btn btn-primary' type='button'>Campaign Release and Audit Plan</button></li>
+            <li><button className='btn btn-primary' type='button'>Import Sheet</button></li>
+          </ul>
         </div>
       </div>
     </>
