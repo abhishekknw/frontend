@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table } from 'react-bootstrap';
 
 export default function RelationshipModal() {
   return (
@@ -25,6 +26,35 @@ export default function RelationshipModal() {
         <li className='relationdata'>0</li>
       </ul>
 
+
+    </div>
+    <div className='camp-box'>
+      <div>
+        <h3>
+          Recently Held Campaigns
+          <Table>
+            <tr>
+              <th>Index</th>
+              <th>Campaigns Name</th>
+              <th>Organisation Name</th>
+            </tr>
+          </Table>
+        </h3>
+      </div>
+
+      <div>
+        <h3>
+        Relationship Status
+          <Table>
+            <tr>
+              <th>Index</th>
+              <th>Name</th>
+              <th>Designation</th>
+              <th>Relationship status</th>
+            </tr>
+          </Table>
+        </h3>
+      </div>
 
     </div>
   </>

@@ -180,8 +180,27 @@
 .rdiv{
     ul{
         display: flex;
+        li{
+            padding: 5px 6px;
+            border: 1px solid #6e7495;
+            margin-bottom: 7px;
+            font-size: 14px;
+        }
         li:first-child{
-            width: 60%;
+            width: 60%;        
+            background-color: #6e7495;
+            color: #ffffff;
+            h4{                
+                font-size: 15px;
+                font-weight: 500;
+            }
+        }
+        
+        li:last-child{
+            width: 40%;
         }
     }
+}
+.camp-box{
+    
 }
