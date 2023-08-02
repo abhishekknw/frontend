@@ -85,19 +85,19 @@ export default function BookingPlan() {
         <div className="status-bar mb-2">
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
-            <span className="status-data">{CampaignInventoryList.campaign.proposal_id}</span>
+            <span className="status-data">{CampaignInventoryList.campaign?.proposal_id}</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">Campaign Name:</span>
-            <span className="status-data">{CampaignInventoryList.campaign.name}</span>
+            <span className="status-data">{CampaignInventoryList.campaign?.name}</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">BD Owner:</span>
-            <span className="status-data">{CampaignInventoryList.campaign.created_by}</span>
+            <span className="status-data">{CampaignInventoryList.campaign?.created_by}</span>
           </div>
           <div className="status-bar-item">
             <span className="status-lable">Campaign State:</span>
-            <span className="status-data">{CampaignInventoryList.campaign.campaign_state}</span>
+            <span className="status-data">{CampaignInventoryList.campaign?.campaign_state}</span>
           </div>
         </div>
         <div>
@@ -237,9 +237,10 @@ export default function BookingPlan() {
                         <Select
                           className=""
                           options={[
-                            { label: 'Very High', id: 1 },
-                            { label: 'High', id: 2 },
+                            { label: 'Very High', value: 'VH' },
+                            { label: 'High', value: 'HH' },
                           ]}
+                          defaultValue={'HH'}
                           label="Booking Priority"
                           id="BookingPriority"
                           placeholder="Booking Priority"
