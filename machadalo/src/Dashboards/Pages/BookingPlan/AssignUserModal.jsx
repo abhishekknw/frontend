@@ -9,7 +9,7 @@ export default function AssignUserModal() {
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Supplier Type</Form.Label>
           <Select
-            className=""
+            className="selectbx"
             options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
             label="Supplier Type"
             id="SupplierType"
@@ -17,13 +17,16 @@ export default function AssignUserModal() {
           />
           <Form.Label>Assigned To</Form.Label>
           <Select
-            className=""
+            className="selectbx"
             options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
             label="Supplier Type"
             id="SupplierType"
             placeholder="Supplier Type"
           />
         </Form.Group>
+        <div>
+          <button className='btn btn-primary' type='button'>Assign User</button>
+        </div>
       </Form>
     </>
   );
