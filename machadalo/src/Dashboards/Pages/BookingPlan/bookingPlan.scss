@@ -12,7 +12,8 @@
     overflow-x: auto;
     justify-content: center;
     font-size: 16px;
-    .status-lable{
+
+    .status-lable {
         font-weight: 600;
     }
 }
@@ -33,6 +34,7 @@
     height: calc(100vh - 66px);
     box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.15);
     overflow: auto;
+
     h5 {
         margin-bottom: 15px;
         padding-bottom: 10px;
@@ -56,47 +58,130 @@
     }
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
     // width: 4px;
     // height: 5px;
     background-color: #a1a8cd59;
     display: block;
 }
-.booking-table{
+::-webkit-scrollbar {
+    width: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #5f76e8; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5f76e8; 
+  }
+.booking-table {
     margin-top: 20px;
- 
-    tr th{
+
+    tr th {
         color: #ffffff !important;
         padding: 8px 17px;
         white-space: nowrap;
         vertical-align: middle;
     }
-    tr th td{
+
+    tr td {
         line-height: 1.4;
+        form{
+            text-align: left;
+        }
     }
-    .b-form-maindiv{
+
+    .b-form-maindiv {
         display: inline-flex;
         flex-wrap: wrap;
 
-        .form-check{
+        .form-check {
             width: 80%;
             text-align: left;
+
             .form-check-label {
                 white-space: nowrap;
             }
-            .form-check-input{
+
+            .form-check-input {
                 margin-top: 0px;
             }
         }
     }
 }
-.bottom-btn-strip{
-    ul{
+
+.bottom-btn-strip {
+    ul {
         display: flex;
         padding-top: 50px;
         padding-bottom: 50px;
-        li{
+
+        li {
             margin-right: 50px;
+        }
+    }
+}
+
+.list__footer {
+    padding: 30px 0px;
+    ul li.active a {
+        background-color: #0d6efd;
+    }
+
+    ul li a:hover {
+        background: #0d6efd !important;
+        color: #ffffff !important;
+    }
+}
+
+// modal
+.booking-modal {
+    .modal-header {
+        background-color: #5f76e8 !important;
+
+        .modal-title {
+            background-color: transparent;
+            color: #ffffff;
+        }
+        .btn-close{
+            background-color: #ffffff;
+            opacity: 0.9;
+            border-radius: 60%;
+            font-size: 10px;
+        }
+    }
+    form{
+        .form-label{
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .selectbx{
+            margin-bottom: 10px;
+        }        
+    }
+    .btn:hover{
+        margin-top: 0px;
+        text-transform: none;
+        font-size: 12px !important;
+        padding: 6px 12px;
+    }
+}
+.rdiv{
+    ul{
+        display: flex;
+        li:first-child{
+            width: 60%;
         }
     }
 }
