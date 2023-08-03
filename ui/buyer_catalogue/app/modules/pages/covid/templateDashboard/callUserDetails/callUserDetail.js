@@ -240,6 +240,8 @@ angular
           };
 
           $scope.callUserDetailModal = function (data) {
+            $scope.interveneDashboard = { ...$scope.interveneDashboard, data: data };
+            $('#onCallUserDetails').modal('show');
             if ($scope.validations.addNewLead) {
               $scope.addNewLead();
             } else {
@@ -248,6 +250,11 @@ angular
               getUserDetails($scope.formData.phone_number)
               getOrganisationList()
             }
+          }
+
+          $scope.showHideIntervene = function () {
+            $('#onCallUserDetails').modal('hide');
+            $scope.interveneDashboard = { ...$scope.interveneDashboard, show: !$scope.interveneDashboard.show };
           }
         }
       }
