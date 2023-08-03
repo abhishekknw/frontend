@@ -356,6 +356,11 @@ export default function SideNavBar() {
               </a>
             </li>
             <li className="nav-text">
+              <Link to="/r/pages/interveneChat">
+                <span>Intervene Chat</span>
+              </Link>
+            </li>
+            <li className="nav-text">
               <a href="/#/templateDashboard">
                 <span>Template Dashboard MCA</span>
               </a>
@@ -364,6 +369,11 @@ export default function SideNavBar() {
               <a href="/#/templateDashboardMea">
                 <span>Template Dashboard MEA</span>
               </a>
+            </li>
+            <li className="nav-text">
+              <Link to="/r/dashboard/machadalo">
+                <span>Machadalo Dashboard</span>
+              </Link>
             </li>
           </ul>
         </nav>
