@@ -12,7 +12,7 @@ import SettingContainer from './../../containers/SettingContainer';
 import LeadsContainer from './../../containers/LeadsContainer';
 import BookingContainer from './../../containers/BookingContainer';
 import OperationsDashboardContainer from '../../containers/OperationsDashboardContainer';
-import B2bContainer from '../../containers/B2bContainer';
+// import B2bContainer from '../../containers/B2bContainer';
 import './index.css';
 import DashboardRoutes from '../../Dashboards/routes/DashboardRoutes';
 import PagesRoutes from '../../Dashboards/Pages/routes/PagesRoutes';
@@ -41,7 +41,7 @@ export default class Layout extends React.Component {
           <Toastr />
           {/* <Header {...this.props} />
           <Sidebar {...this.props} /> */}
-          <div className="container ">
+          <div className="container main-header">
             <MachadaloHeader />
           </div>
           {/* <hr className="mt-0" /> */}
@@ -74,7 +74,7 @@ export default class Layout extends React.Component {
     }
     return (
       <>
-        <Route path={`${match.path}/b2b`} component={B2bContainer} />
+        {/* <Route path={`${match.path}/b2b`} component={B2bContainer} /> */}
       </>
     );
   }

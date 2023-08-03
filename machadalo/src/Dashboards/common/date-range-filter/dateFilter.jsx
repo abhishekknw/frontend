@@ -1,29 +1,30 @@
-import { Box } from '@mui/material';
+// import { Box } from '@mui/material';
 import React from 'react';
 import { BsFillCalendarDateFill, BsChevronRight, BsChevronLeft } from 'react-icons/bs';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './date-range.css';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { LocalizationProvider } from '@mui/x-date-pickers-pro';
+// import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
 // import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers-pro';
-import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import dayjs from 'dayjs';
 import { CalenderActions } from './CalenderData';
 import { CalenderDatesAtom, CalenderVaidationAtom, SelectedDateAtom } from './CalenderAtom';
 import { useRecoilState, useRecoilValue } from 'recoil';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function DateFilter(props) {
   const CalederAction = CalenderActions();
   const customCalenderDates = useRecoilValue(CalenderDatesAtom);
   const selectedDateArray = useRecoilValue(SelectedDateAtom);
   const [CalenderVaidations, setCalenderVaidations] = useRecoilState(CalenderVaidationAtom);
-  const [selectedDate, setSelectedDate] = React.useState([
-    dayjs(new Date()).$d,
-    dayjs(new Date()).$d,
-  ]);
+  const [selectedDate, setSelectedDate] = React.useState([new Date(), new Date()]);
+
+  const [dateRange, setDateRange] = React.useState([new Date(), new Date()]);
+  const [startDate, endDate] = dateRange;
+
   const [timeBtns, setTimeBtns] = React.useState([
     { name: 'Days', class: 'time-btn active-btn', count: 0 },
     { name: 'Week', class: 'time-btn', count: 7 },
@@ -32,8 +33,9 @@ export default function DateFilter(props) {
   const [DateArrayList, setDateArrayList] = React.useState(customCalenderDates);
   let dateArr = [];
   function handleDateChange(date) {
-    dateArr[0] = date[0]?.$d;
-    dateArr[1] = date[1]?.$d;
+    setDateRange(date);
+    dateArr[0] = date[0];
+    dateArr[1] = date[1];
     setSelectedDate(dateArr);
     setCalenderVaidations({
       ...CalenderVaidations,
@@ -47,8 +49,11 @@ export default function DateFilter(props) {
 
   const getPreviousDate = (time) => {
     let now = dayjs();
-    dateArr[0] = now.subtract(time.count, 'day').toDate();
-    dateArr[1] = time.count === 0 ? undefined : dayjs(new Date()).$d;
+
+    let previous = new Date();
+    dateArr[0] = previous.setDate(previous.getDate() - time.count);
+    // dateArr[0] = now.subtract(time.count, 'day').toDate();
+    dateArr[1] = time.count === 0 ? undefined : new Date();
     setSelectedDate(dateArr);
     let updateTime = timeBtns.map((x) =>
       x.name === time.name ? { ...x, class: 'time-btn active-btn' } : { ...x, class: 'time-btn' }
@@ -60,7 +65,7 @@ export default function DateFilter(props) {
       selectDateSlider: false,
     });
     let temp = CalederAction.GetPreviousDates(24);
-    setDateArrayList(temp)
+    setDateArrayList(temp);
     CalederAction.getSelectedDateArray(dateArr[0], dateArr[1]);
   };
 
@@ -70,7 +75,7 @@ export default function DateFilter(props) {
   }
 
   function oneDayNextDate(arr) {
-    if (dayjs(arr[0].$d).format('DD/MM/YYYY') === dayjs(new Date().$d).format('DD/MM/YYYY')) {
+    if (dayjs(arr[0]).format('DD/MM/YYYY') === dayjs(new Date()).format('DD/MM/YYYY')) {
       return 0;
     }
     let temp = CalederAction.GetOneDayNextDate(arr);
@@ -84,22 +89,32 @@ export default function DateFilter(props) {
   React.useEffect(() => {
     let temp = CalederAction.GetPreviousDates(24);
     setDateArrayList(temp);
-    CalederAction.getSelectedDateArray(dayjs(new Date()).$d);
+    CalederAction.getSelectedDateArray(new Date());
   }, []);
-
   props.onDateChange(selectedDate);
+
   return (
     <>
-      <Box>
-        <div className="dateFilter pt-2">
-          <h4>
-            <b>Date Filter</b>
-          </h4>
-          <div >
-            <Row className="main-content align-items-center d-flex flex-row ">
-              <Col sm={6} className='w-40'>
-                <div className="calander d-flex ">
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+      {/* <Box> */}
+      <div className="dateFilter pt-2">
+        <h4>
+          <b>Date Filter</b>
+        </h4>
+        <div>
+          <Row className="main-content align-items-center d-flex flex-row ">
+            <Col sm={6} className="w-40">
+              <div className="calander d-flex ">
+                <DatePicker
+                  showIcon={true}
+                  selectsRange={true}
+                  startDate={startDate}
+                  endDate={endDate}
+                  onChange={(update) => {
+                    handleDateChange(update);
+                  }}
+                  isClearable={false}
+                />
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateRangePicker
                       label="Advanced keyboard"
                       value={selectedDate}
@@ -114,108 +129,84 @@ export default function DateFilter(props) {
                         </React.Fragment>
                       )}
                     />
-                  </LocalizationProvider>
-                  {CalenderVaidations.selectDatePicker && (
-                    <div className="calander-date ms-3">
-                      {dayjs(selectedDate[0]).format('DD/MM/YYYY')} -{' '}
-                      {dayjs(selectedDate[1]).format('DD/MM/YYYY')}
-                    </div>
-                  )}
-                  {CalenderVaidations.selectDateSlider && (
-                    <div className="calander-date ms-3">{selectedDateArray[0]}</div>
-                  )}
-                </div>
-              </Col>
-
-              <Col sm={6} className='w-60'>
-                  <div className='date-btn-right'>
-                  {timeBtns.map((item, index) => {
-                      return (
-                    <span
-                    
-                    key={index}
-                    sm={3}
-                    className={item.class}
-                    onClick={(e) => {
-                      getPreviousDate(item);
-                    }}>
-                         <p>
-                          {item.name}
-                          </p>
-                    </span>
-                     );
-                    })}
+                  </LocalizationProvider> */}
+                {CalenderVaidations.selectDatePicker && (
+                  <div className="calander-date ms-3">
+                    {dayjs(selectedDate[0]).format('DD/MM/YYYY')} -{' '}
+                    {dayjs(selectedDate[1]).format('DD/MM/YYYY')}
                   </div>
-                  {/* <Row className="timing justifyend" >
-                    {timeBtns.map((item, index) => {
-                      return (
-                        
-                        <Col
-                        
-                          key={index}
-                          sm={3}
-                          className={item.class}
-                          onClick={(e) => {
-                            getPreviousDate(item);
-                          }}
-                        >
-                          <p>
-                          {item.name}
-                          </p>
-                        </Col>
-                      );
-                    })}
-                  </Row> */}
-              </Col>
-            </Row>
-          </div>
+                )}
+                {CalenderVaidations.selectDateSlider && (
+                  <div className="calander-date ms-3">{selectedDateArray[0]}</div>
+                )}
+              </div>
+            </Col>
+
+            <Col sm={6} className="w-60">
+              <div className="date-btn-right">
+                {timeBtns.map((item, index) => {
+                  return (
+                    <span
+                      key={index}
+                      sm={3}
+                      className={item.class}
+                      onClick={(e) => {
+                        getPreviousDate(item);
+                      }}
+                    >
+                      <p>{item.name}</p>
+                    </span>
+                  );
+                })}
+              </div>
+            </Col>
+          </Row>
         </div>
-        <div className="multi-date-calender d-flex justify-content-between">
-          <div className="innner-calender d-flex ">
-            {DateArrayList.map((item, index) => {
-              return (
-                <div
-                  className={
-                    getClassName(DateArrayList[index].$d)
-                      ? 'date-content'
-                      : 'date-content active-border'
-                  }
-                  key={index}
-                  onClick={(e) => {
-                    CalederAction.getSelectedDateArray(DateArrayList[index].$d)
-                    setCalenderVaidations({
-                      ...CalenderVaidations,
-                      selectDatePicker: false,
-                      selectDateSlider: true,
-                    });;
-                  }}
-                >
-                  {dayjs(DateArrayList[index].$d).format('ddd')}
-                  <div className="pt-2">{DateArrayList[index].$D}</div>
-                </div>
-              );
-            })}
-          </div>
-          <div className="date-content-btn ">
+      </div>
+      <div className="multi-date-calender d-flex justify-content-between">
+        <div className="innner-calender d-flex ">
+          {DateArrayList.map((item, index) => {
+            return (
+              <div
+                className={
+                  getClassName(DateArrayList[index]) ? 'date-content' : 'date-content active-border'
+                }
+                key={index}
+                onClick={(e) => {
+                  CalederAction.getSelectedDateArray(DateArrayList[index]);
+                  setCalenderVaidations({
+                    ...CalenderVaidations,
+                    selectDatePicker: false,
+                    selectDateSlider: true,
+                  });
+                }}
+              >
+                {dayjs(DateArrayList[index]).format('ddd')}
+                <div className="pt-2">{dayjs(DateArrayList[index]).format('D')}</div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="date-content-btn ">
+          <button
+            onClick={(e) => {
+              oneDayPreviousDate(DateArrayList);
+            }}
+          >
+            <BsChevronLeft />
+          </button>
+          <div className="pt-2">
             <button
-              onClick={(e) => {
-                oneDayPreviousDate(DateArrayList);
-              }}
-            >
-              <BsChevronLeft />
-            </button>
-            <div className="pt-2">
-              <button
               onClick={(e) => {
                 oneDayNextDate(DateArrayList);
               }}
-              >
-                <BsChevronRight />
-              </button>
-            </div>
+            >
+              <BsChevronRight />
+            </button>
           </div>
         </div>
-      </Box>
+      </div>
+      {/* </Box> */}
     </>
   );
 }
