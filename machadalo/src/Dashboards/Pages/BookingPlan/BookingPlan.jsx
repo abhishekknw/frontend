@@ -23,6 +23,7 @@ import ReactPagination from '../../Pagination/Pagination';
 import ViewPhaseModal from './ViewPhaseModal';
 import AddSupplierModal from './AddSupplierModal';
 import ImportSheetModal from './ImportSheetModal';
+import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -80,6 +81,10 @@ export default function BookingPlan() {
 
   function showInventoryDetail(data) {
     console.log(data, '2222222222222');
+  }
+
+  function handleSelect(e) {
+    console.log(e, '111111111111111111');
   }
 
   useEffect(() => {
@@ -253,6 +258,14 @@ export default function BookingPlan() {
                             (obj) => obj.value === data.booking_priority
                           )}
                         />
+                        {/* <SelectDropdown
+                          optionsData={bookingPriorityOption}
+                          selectedValue={data.booking_priority}
+                          placeholder="Booking Priority"
+                          label="Booking Priority"
+                          id="BookingPriority"
+                          handleSelect={handleSelect}
+                        /> */}
                       </td>
                       <td>
                         <Select

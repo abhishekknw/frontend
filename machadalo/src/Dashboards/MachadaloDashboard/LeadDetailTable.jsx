@@ -18,6 +18,7 @@ import LeadDetailModal from '../common/Modals/LeadDetailModal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import ReactPagination from '../Pagination/Pagination';
+import SearchBox from '../common/search/SearchBox';
 
 export default function ViewLeadDetailTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
@@ -73,17 +74,21 @@ export default function ViewLeadDetailTable(props) {
       key: 'Action',
     },
   ]);
+  function handleSearch(e) {
+    console.log(e, '21344234');
+  }
   return (
     <>
       <LeadDetailModal />
       <div className="row pb-2 filter-box">
-        <div className="col-md-6 d-flex ">
-          <InputGroup className="me-2">
+        <div className="col-md-6  d-flex ">
+          <SearchBox onSearch={handleSearch} />
+          {/* <InputGroup className="me-2">
             <Form.Control placeholder="Search" aria-label="Search" />
             <InputGroup.Text>
               <BsSearch />
             </InputGroup.Text>
-          </InputGroup>
+          </InputGroup> */}
           <div className="campaign-list-dropdown">
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-second">

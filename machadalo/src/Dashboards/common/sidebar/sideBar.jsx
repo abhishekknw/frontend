@@ -361,6 +361,11 @@ export default function SideNavBar() {
               </Link>
             </li>
             <li className="nav-text">
+              <Link to="/r/pages/opsdashboard">
+                <span>Ops Dashboard</span>
+              </Link>
+            </li>
+            <li className="nav-text">
               <a href="/#/templateDashboard">
                 <span>Template Dashboard MCA</span>
               </a>

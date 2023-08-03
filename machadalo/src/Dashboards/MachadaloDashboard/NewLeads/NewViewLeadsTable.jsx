@@ -17,6 +17,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { BsSortDown, BsSearch, BsSortUp, BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import DateFilter from '../../common/date-range-filter/dateFilter';
 import CommentModal from '../../common/Modals/CommentModal';
+import ReactPagination from '../../Pagination/Pagination';
 
 export default function NewViewLeadsTable({ Data }) {
   const CampaignData = Data;
