@@ -19,60 +19,6 @@ export default function SideNavBar() {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const [SidebarData, setSidebarData] = useState([
-    {
-      title: 'Dashboard',
-      path: '/',
-      cName: 'nav-text',
-      icon: <BsFillCaretRightFill />,
-    },
-    {
-      title: 'Campaign Planning',
-      path: '/',
-      icon: <BsFillCaretRightFill />,
-      cName: 'nav-text',
-    },
-    {
-      title: 'Campaign Execution',
-      path: '/',
-      icon: <BsFillCaretRightFill />,
-      cName: 'nav-text',
-    },
-    {
-      icon: <BsFillCaretRightFill />,
-      title: 'Static Form',
-      path: '/',
-      cName: 'nav-text',
-    },
-    {
-      title: 'Management',
-      path: '/',
-      cName: 'nav-text',
-    },
-    {
-      title: 'Leads Data',
-      path: '/',
-      cName: 'nav-text',
-    },
-    {
-      title: 'Intervene MCA',
-      path: '/',
-      cName: 'nav-text',
-    },
-    {
-      title: 'Dashboard',
-      path: '/',
-      cName: 'nav-text',
-    },
-  ]);
-
-  function addRemoveClass(data) {
-    let updatedData = SidebarData.map((x) =>
-      x.title === data.title ? { ...x, cName: 'nav-text nav-text-active' } : x
-    );
-    setSidebarData(updatedData);
-  }
-
   return (
     <>
       <IconContext.Provider value={{}} className="navbar-icon">
@@ -92,31 +38,7 @@ export default function SideNavBar() {
                 <AiIcons.AiOutlineClose className="main-icon" onClick={showSidebar} />
               </Link>
             </li>
-            {/* {SidebarData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName} onClick={(e) => { addRemoveClass(item) }}  >
-
-                  <Link to="#">
-
-                    <span>{item.title}</span>
-                    <i>{item.icon}</i>
-                  </Link>
-                  <div className="first-class">
-                    <ul className="first-class-ul">
-                      <li className="first-class-li">Campaign Planning</li>
-                      <li className="first-class-li">Campaign Execution</li>
-                    </ul>
-                  </div>
-                </li>
-              );
-            })} */}
-
-            <li
-              className="nav-text"
-              // onClick={(e) => {
-              //   addRemoveClass(item);
-              // }}
-            >
+            <li className="nav-text">
               <Link to="#">
                 <span>Dashboard</span>
                 <i>
@@ -126,19 +48,19 @@ export default function SideNavBar() {
               <div className="first-class">
                 <ul className="first-class-ul">
                   <li className="first-class-li">
-                    <Link to="/#/dashboard">
+                    <a href="/#/dashboard">
                       <span>Business</span>
-                    </Link>
+                    </a>
                   </li>
                   <li className="first-class-li">
-                    <Link to="/#/dashboard_Business">
+                    <a href="/#/dashboard_Business">
                       <span>Business MCA</span>
-                    </Link>
+                    </a>
                   </li>
                   <li className="first-class-li">
-                    <Link to="/#/b2b/dashboard">
+                    <a href="/#/b2b/dashboard">
                       <span>B2B Client Dashboard</span>
-                    </Link>
+                    </a>
                   </li>
                   <li className="first-class-li nav-text first-class-child-main">
                     <a>
@@ -180,16 +102,16 @@ export default function SideNavBar() {
                     </a>
                     <ul className="first-class-child first-class-ul">
                       <li className="first-class-li">
-                        <Link to="/#/campaignDecisionBoard">Campaign Decision Board</Link>
+                        <abbr href="/#/campaignDecisionBoard">Campaign Decision Board</abbr>
                       </li>
                       <li className="first-class-li">
-                        <Link to="/#/CampaignList">List Of Campaign</Link>
+                        <a href="/#/CampaignList">List Of Campaign</a>
                       </li>
                       <li className="first-class-li">
-                        <Link to="/#/HDFHDF0789/releasePlan">Booking Plan</Link>
+                        <a href="/#/HDFHDF0789/releasePlan">Booking Plan</a>
                       </li>
                       <li className="first-class-li">
-                        <Link to="/#/SuspenseLeadSheet">Suspense Lead Sheet</Link>
+                        <a href="/#/SuspenseLeadSheet">Suspense Lead Sheet</a>
                       </li>
                     </ul>
                   </li>
@@ -211,8 +133,7 @@ export default function SideNavBar() {
                         <ul className="first-class-ul second-class-child">
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                              <Link to="/r/supplier/base-type/list">Standard Templates
-                              </Link>
+                              <Link to="/r/supplier/base-type/list">Standard Templates</Link>
                             </a>
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
@@ -242,7 +163,7 @@ export default function SideNavBar() {
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                            <Link to="/r/inventory/list">Manage Inventory</Link>
+                              <Link to="/r/inventory/list">Manage Inventory</Link>
                             </a>
                           </li>
                         </ul>
@@ -262,12 +183,12 @@ export default function SideNavBar() {
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                            <Link to="/r/booking/template/list">Booking Templates</Link>
+                              <Link to="/r/booking/template/list">Booking Templates</Link>
                             </a>
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                            <Link to="/r/booking/campaigns">Manage Bookings</Link>
+                              <Link to="/r/booking/campaigns">Manage Bookings</Link>
                             </a>
                           </li>
                         </ul>
@@ -282,12 +203,12 @@ export default function SideNavBar() {
                         <ul className="first-class-ul second-class-child">
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                              <Link to="/#/HDFHDF0789/auditReleasePlan">Release and Audit Plan </Link>
+                              <a href="/#/HDFHDF0789/auditReleasePlan">Release and Audit Plan </a>
                             </a>
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
                             <a>
-                              <Link to="/#">Manage Phases</Link>
+                              <a href="/#">Manage Phases</a>
                             </a>
                           </li>
                         </ul>
@@ -298,7 +219,7 @@ export default function SideNavBar() {
               </div>
             </li>
             <li className="nav-text">
-              <Link to="/r/checklist/campaigns">
+              <Link to="">
                 Campaign Execution
                 <i>
                   <BsFillCaretRightFill />
@@ -309,6 +230,9 @@ export default function SideNavBar() {
                   <li className="first-class-li">
                     <Link to="/r/checklist/campaigns">Campaign Checklist</Link>
                   </li>
+                  <li className="first-class-li">
+                    <Link to="/r/checklist/settings/permissions/list">Settings</Link>
+                  </li>
                   <li className="first-class-li nav-text first-class-child-main">
                     <a>
                       <span>Leads</span>
@@ -318,7 +242,7 @@ export default function SideNavBar() {
                     </a>
                     <ul className="first-class-child first-class-ul">
                       <li className="first-class-li">
-                        <Link to="/#/campaignLeads">Capture Leads</Link>
+                        <a href="/#/campaignLeads">Capture Leads</a>
                       </li>
                       <li className="first-class-li">
                         <Link to="/r/leads/settings">Assign Permission</Link>
@@ -340,7 +264,7 @@ export default function SideNavBar() {
               <div className="first-class">
                 <ul className="first-class-ul">
                   <li className="first-class-li">
-                    <Link to="/#/login">Manage Supplier</Link>
+                    <a href="/#/login">Manage Supplier</a>
                   </li>
                 </ul>
               </div>
@@ -356,7 +280,7 @@ export default function SideNavBar() {
               <div className="first-class">
                 <ul className="first-class-ul">
                   <li className="first-class-li">
-                    <Link to="/#/manageMent/aboutYou">My Profile</Link>
+                    <a href="/#/manageMent/aboutYou">My Profile</a>
                   </li>
                   <li className="first-class-li nav-text first-class-child-main">
                     <a>
@@ -367,13 +291,13 @@ export default function SideNavBar() {
                     </a>
                     <ul className="first-class-child first-class-ul">
                       <li className="first-class-li">
-                        <Link to="/#/manageMent/organisationView">View</Link>
+                        <a href="/#/manageMent/organisationView">View</a>
                       </li>
                       <li className="first-class-li">
-                        <Link to="/#/manageMent/organisationOnBoard">On Boarding</Link>
+                        <a href="/#/manageMent/organisationOnBoard">On Boarding</a>
                       </li>
                       <li className="first-class-li">
-                        <Link to="/#/manageMent/mapOrganisations">Organizations Mapping</Link>
+                        <a href="/#/manageMent/mapOrganisations">Organizations Mapping</a>
                       </li>
                     </ul>
                   </li>
@@ -387,13 +311,13 @@ export default function SideNavBar() {
                     </a>
                     <ul className="first-class-child first-class-ul">
                       <li className="first-class-li">
-                        <Link to="#/manageMent/createRoles">Create</Link>
+                        <a href="#/manageMent/createRoles">Create</a>
                       </li>
                       <li className="first-class-li">
-                        <Link to="/#/manageMent/assignRole">Assign</Link>
+                        <a href="/#/manageMent/assignRole">Assign</a>
                       </li>
                       <li className="first-class-li">
-                        <Link to="/#/manageMent/viewRole">View</Link>
+                        <a href="/#/manageMent/viewRole">View</a>
                       </li>
                     </ul>
                   </li>
@@ -406,10 +330,10 @@ export default function SideNavBar() {
                     </a>
                     <ul className="first-class-child first-class-ul">
                       <li className="first-class-li">
-                        <Link to="/#/manageMent/createUser">Create User</Link>
+                        <a href="/#/manageMent/createUser">Create User</a>
                       </li>
                       <li className="first-class-li">
-                        <Link to="/#/manageMent/viewUsers">Update</Link>
+                        <a href="/#/manageMent/viewUsers">Update</a>
                       </li>
                     </ul>
                   </li>
@@ -417,29 +341,29 @@ export default function SideNavBar() {
               </div>
             </li>
             <li className="nav-text">
-              <Link to="/#/lead-data">
+              <a href="/#/lead-data">
                 <span>Leads Data</span>
-              </Link>
+              </a>
             </li>
             <li className="nav-text">
-              <Link to="/#/intervene">
+              <a href="/#/intervene">
                 <span>Intervene MCA</span>
-              </Link>
+              </a>
             </li>
             <li className="nav-text">
-              <Link to="/#/intervene/mea">
+              <a href="/#/intervene/mea">
                 <span>Intervene MEA</span>
-              </Link>
+              </a>
             </li>
             <li className="nav-text">
-              <Link to="/#/templateDashboard">
+              <a href="/#/templateDashboard">
                 <span>Template Dashboard MCA</span>
-              </Link>
+              </a>
             </li>
             <li className="nav-text">
-              <Link to="/#/templateDashboardMea">
+              <a href="/#/templateDashboardMea">
                 <span>Template Dashboard MEA</span>
-              </Link>
+              </a>
             </li>
           </ul>
         </nav>
