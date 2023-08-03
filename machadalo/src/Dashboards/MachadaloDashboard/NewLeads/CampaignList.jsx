@@ -1,36 +1,24 @@
 import React, { useEffect, useState } from 'react';
-// import Table from 'react-bootstrap/Table';
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
-import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
-import CommonTable from '../../Table/CommonTable';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import {
   AllCampaingsAtom,
   showHideTableAtom,
   NewLeadTabFilterAtom,
 } from '../../_states/Machadalo/newLeads';
 import { showHideModalAtom } from '../../_states';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
 import Button from 'react-bootstrap/Button';
 import dayjs from 'dayjs';
 
-import {
-  BsChevronDown,
-  BsChevronUp,
-  BsEnvelopeFill,
-  BsArrowDownCircle,
-  BsWhatsapp,
-  BsSearch,
-  BsSortDown,
-  BsSortUp,
-} from 'react-icons/bs';
+import { BsEnvelopeFill, BsArrowDownCircle, BsSearch, BsSortDown, BsSortUp } from 'react-icons/bs';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Paginations from '../../Pagination';
-import EmailModal from '../../common/Modals/EmailModal';
 import NewViewLeadsTable from './NewViewLeadsTable';
 import DownloadModal from '../../common/Modals/DownloadModal';
+import ReactPagination from '../../Pagination/Pagination';
 
 export default function CampaignList(props) {
   const NewLeadAction = newLeadActions();
@@ -44,9 +32,6 @@ export default function CampaignList(props) {
     startIndex: 0,
     endIndex: 9,
   });
-  // const [showHideModal, setshowHideModal] = useState({
-  //   EmailModal: false,
-  // });
   const [campaignData, setCampaignData] = useState({});
 
   const [headerData, setheaderData] = useState([
@@ -109,7 +94,8 @@ export default function CampaignList(props) {
     NewLeadAction.getAllCampaigns(filters);
   }, []);
 
-  const handlePageChange = async (event, value) => {
+  const handlePageChange = async (event) => {
+    let value = event.selected + 1;
     if (value === 1) {
       setPaginationData({
         pageNo: 1,
@@ -173,7 +159,7 @@ export default function CampaignList(props) {
       setCampaignList(sortedData);
     } else if (header.key === 'start_date') {
       let sortedData = [...CampaignList].sort((a, b) => {
-        return (header?.sortIcon?.show)
+        return header?.sortIcon?.show
           ? new Date(b.start_date) - new Date(a.start_date)
           : new Date(a.start_date) - new Date(b.start_date);
       });
@@ -335,11 +321,10 @@ export default function CampaignList(props) {
           })}
         </Tbody>
       </Table>
-
-      <Paginations
+      <ReactPagination
+        pageNo={paginationData.pageNo}
         pageSize={10}
         totalItems={CampaignList.length}
-        pageNo={paginationData.pageNo}
         onPageChange={handlePageChange}
       />
       <DownloadModal />

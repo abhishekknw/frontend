@@ -15,7 +15,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { BsSortDown, BsSearch, BsSortUp, BsChevronDown, BsChevronUp } from 'react-icons/bs';
-import Paginations from '../../Pagination';
 import DateFilter from '../../common/date-range-filter/dateFilter';
 import CommentModal from '../../common/Modals/CommentModal';
 
@@ -31,12 +30,12 @@ export default function NewViewLeadsTable({ Data }) {
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
   const [selectedId, setSelectedId] = React.useState('');
 
-  const handlePageChange = async (event, value) => {
+  const handlePageChange = async (value) => {
     setFilters({ ...filters, leadSearch: '' });
     setPaginationData({
-      pageNo: value,
+      pageNo: value.selected + 1,
     });
-    let params = { ...filters, next_page: value - 1 };
+    let params = { ...filters, next_page: value.selected + 1 };
     params.leadSearch = '';
     await NewLeadAction.getLeadByCampaignId(params);
   };
@@ -195,10 +194,16 @@ export default function NewViewLeadsTable({ Data }) {
         </tbody>
       </Table>
       {console.log(LeadsByCampaign)}
-      <Paginations
+      {/* <Paginations
         pageSize={20}
         totalItems={LeadsByCampaign.length}
         pageNo={paginationData.pageNo}
+        onPageChange={handlePageChange}
+      /> */}
+      <ReactPagination
+        pageNo={paginationData.pageNo}
+        pageSize={20}
+        totalItems={LeadsByCampaign.length}
         onPageChange={handlePageChange}
       />
       <CommentModal />

@@ -1,14 +1,10 @@
-import React, { useMemo } from 'react';
-// import Table from 'react-bootstrap/Table';
+import React from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
-// import './index.css';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import {
-  BsChevronDown,
-  BsChevronUp,
   BsEnvelopeFill,
   BsArrowDownCircle,
   BsWhatsapp,
@@ -19,21 +15,17 @@ import {
 import { useRecoilState } from 'recoil';
 import { showHideTable, showHideModalAtom } from '../_states';
 import LeadDetailModal from '../common/Modals/LeadDetailModal';
-import Paginations from '../Pagination';
-import EmailModal from '../common/Modals/EmailModal';
-import WhatsappModal from '../common/Modals/WhatsappModal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import ReactPagination from '../Pagination/Pagination';
 
 export default function ViewLeadDetailTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
-  const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
-  const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
   const [page, setPage] = React.useState(1);
-  const handlePageChange = (event, value) => {
-    setPage(value);
+  const handlePageChange = (event) => {
+    setPage(event.selected + 1);
   };
 
   const [headerData, setheaderData] = React.useState([
@@ -75,7 +67,8 @@ export default function ViewLeadDetailTable(props) {
     {
       name: 'REVENUE EARNED',
       key: 'Action',
-    },{
+    },
+    {
       name: 'ACTION	',
       key: 'Action',
     },
@@ -123,10 +116,12 @@ export default function ViewLeadDetailTable(props) {
       <Table striped bordered hover className="leads-table mobile-table">
         <Thead className="leads-tbody">
           <Tr>
-            {headerData.map((item,index)=>{
+            {headerData.map((item, index) => {
               return (
-                <Th key={index}>{item.name} <span>{item?.sortIcon?.direction}</span></Th> 
-              )
+                <Th key={index}>
+                  {item.name} <span>{item?.sortIcon?.direction}</span>
+                </Th>
+              );
             })}
           </Tr>
         </Thead>
@@ -683,7 +678,12 @@ export default function ViewLeadDetailTable(props) {
           </Tr>
         </Tbody>
       </Table>
-      <Paginations pageSize={10} totalItems={100} pageNo={page} onPageChange={handlePageChange} />
+      <ReactPagination
+        pageNo={page}
+        pageSize={10}
+        totalItems={100}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 }

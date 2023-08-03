@@ -8,7 +8,6 @@ import { useRecoilValue } from 'recoil';
 import Form from 'react-bootstrap/Form';
 import dayjs from 'dayjs';
 import SearchBox from '../../common/search/SearchBox';
-import Paginations from '../../Pagination';
 import CampaignAssignModal from './CampaignAssignModal';
 
 export default function CampaignDecisionBoard() {

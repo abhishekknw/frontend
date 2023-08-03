@@ -337,7 +337,13 @@ export default function BookingPlan() {
                         </ListGroup>
                       </td>
                       <td>70</td>
-                      <td>input type Number</td>
+                      <td>
+                        <Form.Control
+                          type="number"
+                          id="inventoryDays"
+                          aria-describedby="inventoryDays"
+                        />
+                      </td>
                       <td>50rs</td>
                       <td></td>
                       <td>{data?.total_negotiated_price}</td>
@@ -471,14 +477,12 @@ export default function BookingPlan() {
                 })}
             </tbody>
           </Table>
-          <div className="list__footer">
-            <ReactPagination
-              pageNo={filterData.pageNo}
-              pageSize={10}
-              totalItems={CampaignInventoryList.total_count}
-              onPageChange={handlePageChange}
-            />
-          </div>
+          <ReactPagination
+            pageNo={filterData.pageNo}
+            pageSize={10}
+            totalItems={CampaignInventoryList.total_count}
+            onPageChange={handlePageChange}
+          />
         </div>
 
         <div
