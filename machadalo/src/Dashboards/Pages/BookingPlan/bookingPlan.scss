@@ -147,12 +147,16 @@
 
 // modal
 .booking-modal {
+    td, th{    
+        padding: 4px 10px;
+    }
     .modal-header {
         background-color: #5f76e8 !important;
 
         .modal-title {
             background-color: transparent;
             color: #ffffff;
+            text-align: left;
         }
         .btn-close{
             background-color: #ffffff;
@@ -181,7 +185,7 @@
     ul{
         display: flex;
         li{
-            padding: 5px 6px;
+            padding: 5px 10px;
             border: 1px solid #6e7495;
             margin-bottom: 7px;
             font-size: 14px;
@@ -201,6 +205,92 @@
         }
     }
 }
+.anchor-list{
+    font-weight: 800;
+    color: #5f76e8;
+}
 .camp-box{
+    h3{
+        font-size: 20px;
+        margin-top: 20px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    th,td{    
+       border: 1px solid #ccc;
+    }
+}
+
+.table-center {
+    td, th{
+        text-align: center;
+        border: 1px solid #ccc;
+    }
     
+}
+
+.filterbx{
+    h4{
+        font-size: 20px;
+        margin-top: 20px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .form-check{
+        
+    display: inline-flex;
+    align-items: center;   
+    margin: 5px 12px;
+    width: 28%;
+    }
+    .form-check .form-check-input {
+        margin-right: 8px;
+    }
+    .form-check-label {
+        color: #000000 !important;
+        font-size: 13px;
+    }
+    .filter-select{
+        font-size: 13px !important;
+        width: 48%;
+    }
+    .filter-selectdiv{
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+   
+}
+.contact-detail-modal .modal-dialog{
+    max-width: 800px;
+}
+.modal .btn-danger.btn:hover{
+    background-color: #bb2d3b !important;
+    border: 1px solid #bb2d3b !important;
+}
+table .btn {
+    padding: 6px 12px;
+}
+.comment-box {    
+    border: none;
+    padding: 0;
+    .cboxinner{
+    border-width: 0px 0px 2px 0px;
+    border-bottom: 1px solid #ced4da;
+    padding: 5px 10px; 
+    margin-bottom: 5px; 
+    margin-top: 5px;
+    font-size: 12px;
+    border-radius: 0px;
+    }
+    .comment-author{
+        font-size: 15px;
+        font-weight: 600;
+    }
+    .comment-time{
+        font-size: 12px;
+    }
+    .comment-text{
+        font-size: 14px;
+    }
 }
