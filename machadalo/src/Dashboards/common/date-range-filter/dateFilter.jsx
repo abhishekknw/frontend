@@ -4,16 +4,11 @@ import { BsFillCalendarDateFill, BsChevronRight, BsChevronLeft } from 'react-ico
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './date-range.css';
-// import { LocalizationProvider } from '@mui/x-date-pickers-pro';
-// import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
-// import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import dayjs from 'dayjs';
 import { CalenderActions } from './CalenderData';
 import { CalenderDatesAtom, CalenderVaidationAtom, SelectedDateAtom } from './CalenderAtom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DateRangePickerCommon from '../DateRangePicker/DateRangePickerCommon';
 
 export default function DateFilter(props) {
   const CalederAction = CalenderActions();
@@ -33,6 +28,7 @@ export default function DateFilter(props) {
   const [DateArrayList, setDateArrayList] = React.useState(customCalenderDates);
   let dateArr = [];
   function handleDateChange(date) {
+    console.log(date);
     setDateRange(date);
     dateArr[0] = date[0];
     dateArr[1] = date[1];
@@ -95,7 +91,6 @@ export default function DateFilter(props) {
 
   return (
     <>
-      {/* <Box> */}
       <div className="dateFilter pt-2">
         <h4>
           <b>Date Filter</b>
@@ -104,32 +99,11 @@ export default function DateFilter(props) {
           <Row className="main-content align-items-center d-flex flex-row ">
             <Col sm={6} className="w-40">
               <div className="calander d-flex ">
-                <DatePicker
-                  showIcon={true}
-                  selectsRange={true}
+                <DateRangePickerCommon
+                  handleDateChange={handleDateChange}
                   startDate={startDate}
                   endDate={endDate}
-                  onChange={(update) => {
-                    handleDateChange(update);
-                  }}
-                  isClearable={false}
                 />
-                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateRangePicker
-                      label="Advanced keyboard"
-                      value={selectedDate}
-                      onChange={(newValue) => handleDateChange(newValue)}
-                      disableFuture
-                      renderInput={(startProps, endProps) => (
-                        <React.Fragment>
-                          <BsFillCalendarDateFill
-                            ref={startProps.inputRef}
-                            {...startProps.inputProps}
-                          />
-                        </React.Fragment>
-                      )}
-                    />
-                  </LocalizationProvider> */}
                 {CalenderVaidations.selectDatePicker && (
                   <div className="calander-date ms-3">
                     {dayjs(selectedDate[0]).format('DD/MM/YYYY')} -{' '}
@@ -206,7 +180,6 @@ export default function DateFilter(props) {
           </div>
         </div>
       </div>
-      {/* </Box> */}
     </>
   );
 }
