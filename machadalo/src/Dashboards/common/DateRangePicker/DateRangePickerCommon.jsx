@@ -26,6 +26,7 @@ export default function DateRangePickerCommon(props) {
         dateFormat="dd/MM/yyyy"
         showMonthDropdown
         showYearDropdown
+        maxDate={new Date()}
         customInput={<ExampleCustomInput />}
       />
     </>
