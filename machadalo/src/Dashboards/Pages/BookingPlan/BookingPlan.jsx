@@ -48,6 +48,64 @@ export default function BookingPlan() {
     { label: 'High', value: 'HH' },
   ];
 
+  const [RowData, setRowData] = useState([
+    {
+      id: 0,
+      name: 'test0',
+      price: '$0',
+    },
+    {
+      id: 1,
+      name: 'test1',
+      price: '$1',
+    },
+    {
+      id: 2,
+      name: 'test2',
+      price: '$2',
+    },
+    {
+      id: 3,
+      name: 'test3',
+      price: '$3',
+    },
+    {
+      id: 4,
+      name: 'test4',
+      price: '$4',
+    },
+  ]);
+
+  const [headerData, setHeaderData] = useState([
+    {
+      title: '#',
+      accessKey: 'index',
+      sort: false,
+      action: function (row, index) {
+        return index + 1;
+      },
+    },
+    { title: 'Name', accessKey: 'name', sort: true },
+    { title: 'Price', accessKey: 'price', sort: true },
+    {
+      title: 'Action',
+      accessKey: 'action',
+      sort: false,
+      action: function (row) {
+        return (
+          <Button
+            variant="primary"
+            onClick={(e) => {
+              console.log(row);
+            }}
+          >
+            Action
+          </Button>
+        );
+      },
+    },
+  ]);
+
   // useEffect(() => {
   //   const table = new DataTable(`#${tableName}`, {
   //     details: {
@@ -699,7 +757,7 @@ export default function BookingPlan() {
           </ul>
         </div>
       </div>
-      {/* <ReactBootstrapTable /> */}
+      {/* <ReactBootstrapTable headerData={headerData} rowData={RowData} /> */}
     </>
   );
 }

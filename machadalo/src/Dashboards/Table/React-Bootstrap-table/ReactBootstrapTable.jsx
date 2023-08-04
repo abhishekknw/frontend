@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import './react-bootstrap-table.css';
-import { Button } from 'react-bootstrap';
-export default function (props) {
+
+export default function ReactBootstrapTable(props) {
   const { rowData, headerData } = props;
   const [sort, setSort] = useState(null);
   const [reverse, setReverse] = useState(false);
