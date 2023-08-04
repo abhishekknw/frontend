@@ -24,6 +24,7 @@ import ViewPhaseModal from './ViewPhaseModal';
 import AddSupplierModal from './AddSupplierModal';
 import ImportSheetModal from './ImportSheetModal';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
+import ReactBootstrapTable from '../../Table/React-Bootstrap-table/ReactBootstrapTable';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -202,7 +203,8 @@ export default function BookingPlan() {
                         </Button>
                       </td>
                       <td>
-                        <a>{data.name}</a>({data.quality_rating})
+                        <a className="anchor-list">{data.name}</a>
+                        <span>({data.quality_rating})</span>
                       </td>
                       <td>{data.supplier_id}</td>
                       <td>{data.supplierCode}</td>
@@ -230,7 +232,8 @@ export default function BookingPlan() {
                         <span>{data?.contacts[0]?.name}</span>
                         <span>({data?.contacts[0]?.mobile})</span>
                         <a
-                          className='anchor-list' onClick={(e) => {
+                          className="anchor-list"
+                          onClick={(e) => {
                             setShowModal({ show: true, type: 'ContactDetails' });
                           }}
                         >
@@ -585,7 +588,9 @@ export default function BookingPlan() {
               setShowModal({ show: false, type: '' });
             }}
             // className="booking-modal"
-            className={`booking-modal ${showModal.type == 'ContactDetails' ? "contact-detail-modal" : ""}`}
+            className={`booking-modal ${
+              showModal.type == 'ContactDetails' ? 'contact-detail-modal' : ''
+            }`}
           >
             <Modal.Header closeButton>
               <Modal.Title>
@@ -694,6 +699,7 @@ export default function BookingPlan() {
           </ul>
         </div>
       </div>
+      {/* <ReactBootstrapTable /> */}
     </>
   );
 }

@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import dayjs from 'dayjs';
 import SearchBox from '../../common/search/SearchBox';
 import CampaignAssignModal from './CampaignAssignModal';
+import ReactPagination from '../../Pagination/Pagination';
 
 export default function CampaignDecisionBoard() {
   const DecisionBoard = DecisionBoardActions();
@@ -73,8 +74,8 @@ export default function CampaignDecisionBoard() {
       key: 'Action',
     },
   ]);
-  async function handlePageChange(e, page) {
-    let data = { ...filters, pageNo: page };
+  async function handlePageChange(page) {
+    let data = { ...filters, pageNo: page.selected + 1 };
     setFilters(data);
     await DecisionBoard.GetInvoiceProposals(data);
   }
@@ -199,7 +200,7 @@ export default function CampaignDecisionBoard() {
           </Tbody>
         </Table>
         {InvoiceProposalList.count > 10 && (
-          <Paginations
+          <ReactPagination
             pageSize={10}
             totalItems={InvoiceProposalList?.count}
             pageNo={InvoiceProposalList?.current_page}
