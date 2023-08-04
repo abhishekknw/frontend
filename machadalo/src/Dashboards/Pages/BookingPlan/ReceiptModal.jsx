@@ -11,7 +11,7 @@ export default function ReceiptModal() {
         <Form.Control as="textarea" placeholder='Enter comments for permission box' rows={3} />
       </Form.Group>
       <div>
-        <span><button className='btn me-3 btn-danger'>Edit</button></span>
+        <span><button className='btn me-3 btn-primary'>Edit</button></span>
       </div>
     </>
   );

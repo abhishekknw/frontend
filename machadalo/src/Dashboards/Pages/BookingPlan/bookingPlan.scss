@@ -147,6 +147,10 @@
 
 // modal
 .booking-modal {
+
+    tr td:first-child{
+        padding: 4px 10px !important;
+    }
     td, th{    
         padding: 4px 10px;
     }
