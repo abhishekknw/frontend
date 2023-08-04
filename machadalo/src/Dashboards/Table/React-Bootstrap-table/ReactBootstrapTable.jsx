@@ -1,11 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import './react-bootstrap-table.css';
+import { SortingActions } from './sorting.action';
 
 export default function ReactBootstrapTable(props) {
   const { rowData, headerData } = props;
+  const sorting = SortingActions();
+  const [tableData, setRowData] = useState(rowData);
   const [sort, setSort] = useState(null);
   const [reverse, setReverse] = useState(false);
+
+  const onSortData = (key) => {
+    setSort(key);
+    let sortData = sorting.sortTableData(tableData, key, reverse);
+    setRowData(sortData);
+  };
 
   return (
     <div>
@@ -23,7 +32,7 @@ export default function ReactBootstrapTable(props) {
                   }
                   onClick={(e) => {
                     setReverse(!reverse);
-                    setSort(header?.accessKey);
+                    onSortData(header?.accessKey);
                   }}
                 >
                   {header?.title}
@@ -33,7 +42,7 @@ export default function ReactBootstrapTable(props) {
           </tr>
         </thead>
         <tbody>
-          {rowData.map((data, index) => {
+          {tableData.map((data, index) => {
             let rowIndex = index;
             return (
               <tr key={rowIndex}>
