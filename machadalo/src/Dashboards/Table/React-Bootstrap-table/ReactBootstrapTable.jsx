@@ -7,7 +7,7 @@ export default function ReactBootstrapTable(props) {
   const { rowData, headerData } = props;
   const sorting = SortingActions();
   const [tableData, setRowData] = useState(rowData);
-  const [sort, setSort] = useState(null);
+  const [sort, setSort] = useState(false);
   const [reverse, setReverse] = useState(false);
 
   const onSortData = (key, sort) => {
@@ -16,6 +16,7 @@ export default function ReactBootstrapTable(props) {
       let sortData = sorting.sortTableData(tableData, key, reverse);
       setRowData(sortData);
     } else {
+      setSort(false);
       return 0;
     }
   };
