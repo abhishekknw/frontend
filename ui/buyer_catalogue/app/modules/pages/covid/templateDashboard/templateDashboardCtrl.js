@@ -7055,9 +7055,9 @@
       }
       $scope.templateDetail($scope.templateDetailsFilters);
 
-      $scope.showHideIntervene = function (data) {
-        $scope.interveneDashboard = { show: !$scope.interveneDashboard.show, data: data };
-      }
+      // $scope.showHideIntervene = function (data) {
+      //   $scope.interveneDashboard = { show: !$scope.interveneDashboard.show, data: data };
+      // }
 
       $scope.userDetailFilter = { 'callStatus': "" }
       $scope.getUserDetailListByStatus = function (filtersObj) {

@@ -230,7 +230,7 @@ export default function BookingPlan() {
                         <span>{data?.contacts[0]?.name}</span>
                         <span>({data?.contacts[0]?.mobile})</span>
                         <a
-                          onClick={(e) => {
+                          className='anchor-list' onClick={(e) => {
                             setShowModal({ show: true, type: 'ContactDetails' });
                           }}
                         >
@@ -584,7 +584,8 @@ export default function BookingPlan() {
             onHide={(e) => {
               setShowModal({ show: false, type: '' });
             }}
-            className="booking-modal"
+            // className="booking-modal"
+            className={`booking-modal ${showModal.type == 'ContactDetails' ? "contact-detail-modal" : ""}`}
           >
             <Modal.Header closeButton>
               <Modal.Title>

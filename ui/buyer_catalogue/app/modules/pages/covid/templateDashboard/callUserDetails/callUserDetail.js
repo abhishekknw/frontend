@@ -32,7 +32,12 @@ angular
             } else {
               $scope.showHideObj = { table: true, form: false };
             }
-            $scope.formData.sector = JSON.parse($scope.formData.sector);
+            try {
+              $scope.formData.sector = JSON.parse($scope.formData.sector);
+            }
+            catch (err) {
+              console.log(err)
+            }
             getDropdownData($scope.formData.sector.business_type);
             templateDashboardService.getLeadBySector($scope.formData)
               .then(function onSuccess(response) {
@@ -59,6 +64,7 @@ angular
           }
 
           let getDropdownData = function (sector) {
+            $scope.validations.enableUpdate = $scope.validations.addNewLead;
             templateDashboardService.getDropdownData(sector)
               .then(function onSuccess(response) {
                 $scope.partnerCompanies = response.data.data.companies_sector_wise.map(obj => ({ ...obj, label: obj.name, id: obj.organisation_id }));
@@ -240,14 +246,27 @@ angular
           };
 
           $scope.callUserDetailModal = function (data) {
-            if ($scope.validations.addNewLead) {
-              $scope.addNewLead();
-            } else {
+            $scope.interveneDashboard = { ...$scope.interveneDashboard, data: data };
+            $('#onCallUserDetails').modal('show');
+            // if ($scope.validations.addNewLead) {
+            // } else 
+            if (data.phone_number !== $scope.formData.phone_number) {
+              $scope.sectorWiseLeads = [];
+              $scope.showHideObj = { table: false, form: false };
               $scope.formData.phone_number = data.phone_number
               getSectorByNumber($scope.formData.phone_number);
               getUserDetails($scope.formData.phone_number)
-              getOrganisationList()
+              getOrganisationList();
+              $scope.addNewLead();
+
+            } else {
+              console.log('Same Number')
             }
+          }
+
+          $scope.showHideIntervene = function () {
+            $('#onCallUserDetails').modal('hide');
+            $scope.interveneDashboard = { ...$scope.interveneDashboard, show: !$scope.interveneDashboard.show };
           }
         }
       }

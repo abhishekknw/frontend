@@ -32,6 +32,7 @@ export default function RelationshipModal() {
       <div>
         <h3>
           Recently Held Campaigns
+        </h3>
           <Table>
             <tr>
               <th>Index</th>
@@ -39,12 +40,12 @@ export default function RelationshipModal() {
               <th>Organisation Name</th>
             </tr>
           </Table>
-        </h3>
       </div>
 
       <div>
         <h3>
         Relationship Status
+        </h3>
           <Table>
             <tr>
               <th>Index</th>
@@ -53,7 +54,6 @@ export default function RelationshipModal() {
               <th>Relationship status</th>
             </tr>
           </Table>
-        </h3>
       </div>
 
     </div>
