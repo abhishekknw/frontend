@@ -1,59 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import './react-bootstrap-table.css';
 import { Button } from 'react-bootstrap';
 export default function (props) {
-  const RowData = [
-    {
-      id: 0,
-      name: 'test0',
-      price: '$0',
-    },
-    {
-      id: 1,
-      name: 'test1',
-      price: '$1',
-    },
-    {
-      id: 2,
-      name: 'test2',
-      price: '$2',
-    },
-    {
-      id: 3,
-      name: 'test3',
-      price: '$3',
-    },
-    {
-      id: 4,
-      name: 'test4',
-      price: '$4',
-    },
-  ];
-
-  const headerData = [
-    { title: '#', accessKey: 'index', sort: false },
-    { title: 'Name', accessKey: 'name', sort: true },
-    { title: 'Price', accessKey: 'price', sort: true },
-    {
-      title: 'Action',
-      accessKey: 'action',
-      sort: false,
-      action: function (row) {
-        return (
-          <Button
-            variant="primary"
-            onClick={(e) => {
-              console.log(row);
-            }}
-          >
-            Action
-          </Button>
-        );
-      },
-    },
-  ];
-
+  const { rowData, headerData } = props;
   const [sort, setSort] = useState(null);
   const [reverse, setReverse] = useState(false);
 
@@ -81,7 +31,91 @@ export default function (props) {
               );
             })}
           </tr>
-          {/* <th
+        </thead>
+        <tbody>
+          {rowData.map((data, index) => {
+            let rowIndex = index;
+            return (
+              <tr key={rowIndex}>
+                {headerData.map((header, index) => {
+                  return (
+                    <td key={index + '' + rowIndex}>
+                      {header?.accessKey == 'index'
+                        ? header?.action(data, rowIndex)
+                        : header?.accessKey == 'action'
+                        ? header?.action(data)
+                        : data[header?.accessKey]}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    </div>
+  );
+}
+// const [RowData, setRowData] = useState([
+//   {
+//     id: 0,
+//     name: 'test0',
+//     price: '$0',
+//   },
+//   {
+//     id: 1,
+//     name: 'test1',
+//     price: '$1',
+//   },
+//   {
+//     id: 2,
+//     name: 'test2',
+//     price: '$2',
+//   },
+//   {
+//     id: 3,
+//     name: 'test3',
+//     price: '$3',
+//   },
+//   {
+//     id: 4,
+//     name: 'test4',
+//     price: '$4',
+//   },
+// ]);
+
+// const [headerData, setHeaderData] = useState([
+//   {
+//     title: '#',
+//     accessKey: 'index',
+//     sort: false,
+//     action: function (row, index) {
+//       return index + 1;
+//     },
+//   },
+//   { title: 'Name', accessKey: 'name', sort: true },
+//   { title: 'Price', accessKey: 'price', sort: true },
+//   {
+//     title: 'Action',
+//     accessKey: 'action',
+//     sort: false,
+//     action: function (row) {
+//       return (
+//         <Button
+//           variant="primary"
+//           onClick={(e) => {
+//             console.log(row);
+//           }}
+//         >
+//           Action
+//         </Button>
+//       );
+//     },
+//   },
+// ]);
+
+{
+  /* <th
               className={`sortable ${sort == 'id' ? `${reverse ? 'asc' : 'desc'}` : ''}`}
               onClick={(e) => {
                 setReverse(!reverse);
@@ -107,29 +141,5 @@ export default function (props) {
               }}
             >
               Price
-            </th> */}
-        </thead>
-        <tbody>
-          {RowData.map((data, index) => {
-            let rowIndex = index;
-            return (
-              <tr key={index + data.id}>
-                {headerData.map((header, index) => {
-                  return (
-                    <td key={index + header?.accessKey}>
-                      {header?.accessKey == 'index'
-                        ? rowIndex + 1
-                        : header?.accessKey == 'action'
-                        ? header?.action(data)
-                        : data[header?.accessKey]}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    </div>
-  );
+            </th> */
 }
