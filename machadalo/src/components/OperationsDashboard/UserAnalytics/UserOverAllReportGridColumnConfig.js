@@ -82,6 +82,7 @@ const getColumnConfig = () => {
       accessKey: 'name',
       title: 'Campaign',
       width: '300px',
+      sort: true
     },
     {
       accessKey: 'action',

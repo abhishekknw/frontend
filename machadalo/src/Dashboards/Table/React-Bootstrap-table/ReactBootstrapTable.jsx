@@ -10,10 +10,14 @@ export default function ReactBootstrapTable(props) {
   const [sort, setSort] = useState(null);
   const [reverse, setReverse] = useState(false);
 
-  const onSortData = (key) => {
-    setSort(key);
-    let sortData = sorting.sortTableData(tableData, key, reverse);
-    setRowData(sortData);
+  const onSortData = (key, sort) => {
+    if (sort) {
+      setSort(key);
+      let sortData = sorting.sortTableData(tableData, key, reverse);
+      setRowData(sortData);
+    } else {
+      return 0;
+    }
   };
 
   return (
@@ -32,7 +36,7 @@ export default function ReactBootstrapTable(props) {
                   }
                   onClick={(e) => {
                     setReverse(!reverse);
-                    onSortData(header?.accessKey);
+                    onSortData(header?.accessKey, header?.sort);
                   }}
                 >
                   {header?.title}
