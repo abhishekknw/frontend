@@ -19,6 +19,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import ReactPagination from '../Pagination/Pagination';
 import SearchBox from '../common/search/SearchBox';
+import SelectDropdown from '../common/SelectDropdown/SelectDropdown';
 
 export default function ViewLeadDetailTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
@@ -28,6 +29,14 @@ export default function ViewLeadDetailTable(props) {
   const handlePageChange = (event) => {
     setPage(event.selected + 1);
   };
+
+  const clientStatusList = [
+    { label: 'Lead Verified By Machadalo', value: 1 },
+    { label: 'Lead Verified By Client', value: 2 },
+    { label: 'Not a decision Maker', value: 3 },
+    { label: 'Meeting Confirmed', value: 4 },
+    { label: 'Meeting Completed', value: 5 },
+  ];
 
   const [headerData, setheaderData] = React.useState([
     {
@@ -77,12 +86,18 @@ export default function ViewLeadDetailTable(props) {
   function handleSearch(e) {
     console.log(e, '21344234');
   }
+
+  function handleSelect(e) {
+    console.log(e, '11111111111');
+  }
   return (
     <>
       <LeadDetailModal />
       <div className="row pb-2 filter-box">
         <div className="col-md-6  d-flex ">
-          <SearchBox onSearch={handleSearch} />
+          <div className="me-2">
+            <SearchBox onSearch={handleSearch} />
+          </div>
           {/* <InputGroup className="me-2">
             <Form.Control placeholder="Search" aria-label="Search" />
             <InputGroup.Text>
@@ -90,7 +105,7 @@ export default function ViewLeadDetailTable(props) {
             </InputGroup.Text>
           </InputGroup> */}
           <div className="campaign-list-dropdown">
-            <Dropdown>
+            {/* <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-second">
                 Select Status
               </Dropdown.Toggle>
@@ -102,7 +117,15 @@ export default function ViewLeadDetailTable(props) {
                 <Dropdown.Item>Meeting Confirmed</Dropdown.Item>
                 <Dropdown.Item>Meeting Completed</Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
+            <SelectDropdown
+              optionsData={clientStatusList}
+              selectedValue={1}
+              placeholder="Client Status"
+              label="Client Status"
+              id="ClientStatus"
+              handleSelect={handleSelect}
+            />
           </div>
         </div>
         <div className="col-md-6">
