@@ -213,26 +213,28 @@ export default function CampaignList(props) {
               })}
             </Dropdown.Menu>
           </Dropdown> */}
-          <SelectDropdown
-            className="me-4"
-            optionsData={dropdownOption}
-            selectedValue={filters.lead_type}
-            placeholder="Lead Type"
-            label="Lead Type"
-            id="LeadType"
-            handleSelect={handleSelect}
-          />
-          <SelectDropdown
-            className="me-4"
-            optionsData={supplierTypeCode}
-            selectedValue={
-              supplierTypeCode.find((item) => item.value === filters.supplier_type).value
-            }
-            placeholder="Supplier Type"
-            label="Supplier Type"
-            id="supplier_type"
-            handleSelect={handleSupplier}
-          />
+          <div className="me-4">
+            <SelectDropdown
+              optionsData={dropdownOption}
+              selectedValue={filters.lead_type}
+              placeholder="Lead Type"
+              label="Lead Type"
+              id="LeadType"
+              handleSelect={handleSelect}
+            />
+          </div>
+          <div className="me-4">
+            <SelectDropdown
+              optionsData={supplierTypeCode}
+              selectedValue={
+                supplierTypeCode.find((item) => item.value === filters.supplier_type).value
+              }
+              placeholder="Supplier Type"
+              label="Supplier Type"
+              id="supplier_type"
+              handleSelect={handleSupplier}
+            />
+          </div>
 
           {/* <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-second">

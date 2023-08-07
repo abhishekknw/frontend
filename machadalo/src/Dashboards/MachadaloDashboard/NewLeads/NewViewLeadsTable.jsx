@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import CommonTable from '../../Table/CommonTable';
 import {
   LeadByCampaignsAtom,
   ClientStatusAtom,
@@ -10,12 +9,8 @@ import { showHideModalAtom } from '../../_states/Constant';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
 import Button from 'react-bootstrap/Button';
-import dayjs from 'dayjs';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { BsSortDown, BsSearch, BsSortUp, BsChevronDown, BsChevronUp } from 'react-icons/bs';
-import DateFilter from '../../common/date-range-filter/dateFilter';
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import CommentModal from '../../common/Modals/CommentModal';
 import ReactPagination from '../../Pagination/Pagination';
 import SearchBox from '../../common/search/SearchBox';
@@ -197,13 +192,6 @@ export default function NewViewLeadsTable({ Data }) {
           })}
         </tbody>
       </Table>
-      {console.log(LeadsByCampaign)}
-      {/* <Paginations
-        pageSize={20}
-        totalItems={LeadsByCampaign.length}
-        pageNo={paginationData.pageNo}
-        onPageChange={handlePageChange}
-      /> */}
       <ReactPagination
         pageNo={paginationData.pageNo}
         pageSize={20}
