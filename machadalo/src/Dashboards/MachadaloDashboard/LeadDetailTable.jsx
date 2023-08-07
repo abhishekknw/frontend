@@ -163,7 +163,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -177,7 +177,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -218,7 +226,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -232,7 +240,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -273,7 +289,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -287,7 +303,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -328,7 +352,15 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -342,7 +374,7 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Td>
             <Td>20k</Td>
             <Td>
@@ -383,7 +415,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -397,7 +429,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -438,7 +478,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -452,7 +492,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -493,7 +541,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -507,7 +555,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -548,7 +604,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -562,7 +618,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -603,7 +667,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -617,7 +681,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -658,7 +730,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -672,7 +744,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
