@@ -3,7 +3,8 @@ import Select from 'react-select';
 import './selectdropdown.css';
 
 export default function SelectDropdown(props) {
-  const { optionsData, selectedValue, placeholder, label, id, handleSelect, className } = props;
+  const { optionsData, selectedValue, placeholder, label, id, handleSelect, rowData, className } =
+    props;
   return (
     <div>
       <Select
@@ -13,8 +14,12 @@ export default function SelectDropdown(props) {
         placeholder={placeholder}
         options={optionsData}
         value={optionsData.filter((obj) => obj.value === selectedValue)}
-        onChange={handleSelect}
+        onChange={(e) => {
+          handleSelect(e, rowData);
+        }}
       />
     </div>
   );
 }
+
+// rowData props use for table 

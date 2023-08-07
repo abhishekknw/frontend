@@ -14,6 +14,7 @@ import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import CommentModal from '../../common/Modals/CommentModal';
 import ReactPagination from '../../Pagination/Pagination';
 import SearchBox from '../../common/search/SearchBox';
+import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 
 export default function NewViewLeadsTable({ Data }) {
   const CampaignData = Data;
@@ -62,7 +63,7 @@ export default function NewViewLeadsTable({ Data }) {
   const handleSelect = async (status, row) => {
     let object = [
       {
-        macchadalo_client_status: status,
+        macchadalo_client_status: status.status_name,
         _id: row[0]?._id,
         requirement_id: row[0]?.requirement_id,
       },
@@ -135,7 +136,7 @@ export default function NewViewLeadsTable({ Data }) {
                 </td>
                 {row.map((data, index) => (index != 0 ? <td key={index}>{data?.value}</td> : null))}
                 <td className="lead-dropdown">
-                  <Dropdown className="table-dropdown-status">
+                  {/* <Dropdown className="table-dropdown-status">
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                       {row[0]?.macchadalo_client_status}
                     </Dropdown.Toggle>
@@ -156,7 +157,16 @@ export default function NewViewLeadsTable({ Data }) {
                           );
                         })}
                     </Dropdown.Menu>
-                  </Dropdown>
+                  </Dropdown> */}
+                  <SelectDropdown
+                    optionsData={clientStatuslist}
+                    selectedValue={row[0]?.macchadalo_client_status}
+                    placeholder="Current Status"
+                    label="Current Status"
+                    id={`CurrentStatus${row[0]?._id}`}
+                    rowData={row}
+                    handleSelect={handleSelect}
+                  />
                 </td>
                 <td>
                   <Button
