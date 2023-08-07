@@ -18,6 +18,7 @@ import { BsSortDown, BsSearch, BsSortUp, BsChevronDown, BsChevronUp } from 'reac
 import DateFilter from '../../common/date-range-filter/dateFilter';
 import CommentModal from '../../common/Modals/CommentModal';
 import ReactPagination from '../../Pagination/Pagination';
+import SearchBox from '../../common/search/SearchBox';
 
 export default function NewViewLeadsTable({ Data }) {
   const CampaignData = Data;
@@ -53,12 +54,12 @@ export default function NewViewLeadsTable({ Data }) {
     await NewLeadAction.getCommentListByIds(params);
   };
   const onSearch = async (e) => {
-    let data = { ...filters, leadSearch: e.target.value, next_page: 0 };
-    setFilters({ ...filters, leadSearch: e.target.value });
-    if (e.target.value != '' && e.target.value.length > 2) {
+    let data = { ...filters, leadSearch: e, next_page: 0 };
+    setFilters({ ...filters, leadSearch: e });
+    if (e != '' && e.length > 2) {
       await NewLeadAction.getLeadByCampaignId(data);
     }
-    if (!e.target.value || e.target.value === '') {
+    if (!e || e === '') {
       let data = { ...filters, leadSearch: '', next_page: 0 };
       await NewLeadAction.getLeadByCampaignId(data);
     }
@@ -90,8 +91,8 @@ export default function NewViewLeadsTable({ Data }) {
       </div>
       <div className="d-flex justify-content-between align-items-center">
         <div></div>
-
-        <div className="searchbox">
+        <SearchBox onSearch={onSearch} />
+        {/* <div className="searchbox">
           <InputGroup className="mb-3">
             <Form.Control
               placeholder="Search"
@@ -105,7 +106,7 @@ export default function NewViewLeadsTable({ Data }) {
               <BsSearch />
             </InputGroup.Text>
           </InputGroup>
-        </div>
+        </div> */}
       </div>
       {/* <DateFilter onDateChange={getDates} /> */}
       <Table striped bordered hover className="leads-table basic-leads">
