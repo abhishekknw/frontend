@@ -15,6 +15,7 @@ import CommentModal from '../../common/Modals/CommentModal';
 import ReactPagination from '../../Pagination/Pagination';
 import SearchBox from '../../common/search/SearchBox';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
+import TableHeader from '../../Table/TableHeader/TableHeader';
 
 export default function NewViewLeadsTable({ Data }) {
   const CampaignData = Data;
@@ -82,9 +83,7 @@ export default function NewViewLeadsTable({ Data }) {
   }
   return (
     <>
-      <div className="text-center">
-        <h4 className="table-head">{CampaignData?.name?.toUpperCase()}</h4>
-      </div>
+      <TableHeader headerValue={CampaignData?.name} />
       <div className="d-flex justify-content-between align-items-center">
         <div></div>
         <div className="mb-3">

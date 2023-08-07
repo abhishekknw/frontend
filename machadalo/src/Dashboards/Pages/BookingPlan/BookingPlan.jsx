@@ -24,7 +24,7 @@ import ViewPhaseModal from './ViewPhaseModal';
 import AddSupplierModal from './AddSupplierModal';
 import ImportSheetModal from './ImportSheetModal';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
-import ReactBootstrapTable from '../../Table/React-Bootstrap-table/ReactBootstrapTable';
+import TableHeader from '../../Table/TableHeader/TableHeader';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -36,6 +36,7 @@ export default function BookingPlan() {
   const [showModal, setShowModal] = useState({
     show: false,
     type: '',
+    rowData: '',
   });
   const [filterData, setFilterData] = useState({
     pageNo: 0,
@@ -47,65 +48,6 @@ export default function BookingPlan() {
     { label: 'Very High', value: 'VH' },
     { label: 'High', value: 'HH' },
   ];
-
-  const [RowData, setRowData] = useState([
-    {
-      id: 0,
-      name: 'test0',
-      price: '$0',
-    },
-    {
-      id: 1,
-      name: 'test1',
-      price: '$1',
-    },
-    {
-      id: 2,
-      name: 'test2',
-      price: '$2',
-    },
-    {
-      id: 3,
-      name: 'test3',
-      price: '$3',
-    },
-    {
-      id: 4,
-      name: 'test4',
-      price: '$4',
-    },
-  ]);
-
-  const [headerData, setHeaderData] = useState([
-    {
-      title: '#',
-      accessKey: 'index',
-      sort: false,
-      action: function (row, index) {
-        return index + 1;
-      },
-    },
-    { title: 'Name', accessKey: 'name', sort: true },
-    { title: 'Price', accessKey: 'price', sort: true },
-    {
-      title: 'Action',
-      accessKey: 'action',
-      sort: false,
-      action: function (row) {
-        return (
-          <Button
-            variant="primary"
-            onClick={(e) => {
-              console.log(row);
-            }}
-          >
-            Action
-          </Button>
-        );
-      },
-    },
-  ]);
-
   // useEffect(() => {
   //   const table = new DataTable(`#${tableName}`, {
   //     details: {
@@ -154,7 +96,7 @@ export default function BookingPlan() {
   return (
     <>
       <div className="booking-plan-wrapper">
-        <h2>Booking Plan</h2>
+        <TableHeader headerValue="Booking Plan" />
         <div className="status-bar mb-2">
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
@@ -278,7 +220,7 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'RelationshipData' });
+                            setShowModal({ show: true, type: 'RelationshipData', rowData: data });
                           }}
                         >
                           View
@@ -683,7 +625,7 @@ export default function BookingPlan() {
               {showModal.type == 'Add-Brand' ? (
                 <AddBrandModal />
               ) : showModal.type == 'RelationshipData' ? (
-                <RelationshipModal />
+                <RelationshipModal data={showModal.rowData} />
               ) : showModal.type == 'AssignUser' ? (
                 <AssignUserModal />
               ) : showModal.type == 'ContactDetails' ? (
@@ -757,7 +699,6 @@ export default function BookingPlan() {
           </ul>
         </div>
       </div>
-      {/* <ReactBootstrapTable headerData={headerData} rowData={RowData} /> */}
     </>
   );
 }

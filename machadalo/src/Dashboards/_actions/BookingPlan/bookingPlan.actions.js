@@ -26,7 +26,12 @@ const BookinPlanActions = () => {
             return res.data.ALL;
         });
     };
-
+    const getRelationShipData = (data) => {
+        let params = "supplier_id=" + data.object_id + "&supplier_code=" + data.supplier_code + "&campaign_id=" + data.proposal;
+        return fetchWrapper.get(`${Apis.Get_Relationship_Data}${params}`).then((res) => {
+            return res.data;
+        });
+    };
     //   const converCampaignToProposal = (data) => {
     //     return fetchWrapper.post(`v0/ui/website/${data.proposal.proposal_id}/convert-to-proposal/`, data.proposal).then((res) => {
     //       if (res.status) {
@@ -50,6 +55,7 @@ const BookinPlanActions = () => {
     return {
         getCampaignInventories,
         getHeaderData,
+        getRelationShipData,
     };
 }
 export { BookinPlanActions };

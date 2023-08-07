@@ -21,6 +21,7 @@ import DownloadModal from '../../common/Modals/DownloadModal';
 import ReactPagination from '../../Pagination/Pagination';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import SearchBox from '../../common/search/SearchBox';
+import TableHeader from '../../Table/TableHeader/TableHeader';
 
 export default function CampaignList(props) {
   const NewLeadAction = newLeadActions();
@@ -187,9 +188,7 @@ export default function CampaignList(props) {
   return (
     <>
       {/* <CommonTable headerData={headerData} bodyData={bodyData} firstColumn={true}/> */}
-      <div className="text-center">
-        <h4 className="table-head">{'Campaigns'.toUpperCase()}</h4>
-      </div>
+      <TableHeader headerValue="Campaigns" />
       <div className=" mobile-block d-flex justify-content-between align-items-center pt-2 pb-3">
         <div className="campaign-list-dropdown">
           {/* <Dropdown className="me-4">
