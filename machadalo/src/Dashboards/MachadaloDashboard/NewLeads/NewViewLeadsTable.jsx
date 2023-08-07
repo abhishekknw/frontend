@@ -91,7 +91,9 @@ export default function NewViewLeadsTable({ Data }) {
       </div>
       <div className="d-flex justify-content-between align-items-center">
         <div></div>
-        <SearchBox onSearch={onSearch} />
+        <div className="mb-3">
+          <SearchBox onSearch={onSearch} />
+        </div>
         {/* <div className="searchbox">
           <InputGroup className="mb-3">
             <Form.Control
