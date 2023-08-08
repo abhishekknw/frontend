@@ -40,7 +40,7 @@ const ClientDashboard = (props) => {
   console.log(addActiveClass);
   return (
     <>
-      <div className="container">
+      {/* <div className="container"> */}
         <div className="machadalo-deshboard client-tabs">
           <Tabs
             defaultActiveKey="NewLeads"
@@ -208,7 +208,7 @@ const ClientDashboard = (props) => {
             </Tab>
           </Tabs>
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };

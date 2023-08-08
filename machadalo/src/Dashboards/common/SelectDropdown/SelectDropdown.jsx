@@ -8,7 +8,7 @@ export default function SelectDropdown(props) {
   return (
     <div>
       <Select
-        className={'react-select-container'}
+        className={`machadalo-select-box ${className}`}
         label={label}
         id={id}
         placeholder={placeholder}

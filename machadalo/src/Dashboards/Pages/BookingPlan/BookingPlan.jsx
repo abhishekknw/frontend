@@ -135,9 +135,9 @@ export default function BookingPlan() {
             </Button>
           </span>
         </div>
-        <div className="booking-plan-table">
+        <div className="booking-plan-table book-height" >
           {/* id={tableName} ref={tableRef} */}
-          <Table responsive className="display booking-table" width="100%">
+          <Table responsive className="display booking-table " width="100%">
             <thead>
               <tr>
                 <th>{columnsList.srNo}</th>
