@@ -46,32 +46,34 @@ const BookinPlanActions = () => {
             return res.data.general;
         });
     }
-    //   const converCampaignToProposal = (data) => {
-    //     return fetchWrapper.post(`v0/ui/website/${data.proposal.proposal_id}/convert-to-proposal/`, data.proposal).then((res) => {
-    //       if (res.status) {
-    //         alertActions.success(res.data);
-    //         let newList = invoiceProposals.list.map((item, key) => {
-    //           if (item.proposal.proposal_id === data.proposal.proposal_id) {
-    //             return { ...item, proposal: { ...item.proposal, campaign_state: 'PNC' } }
-    //           }
-    //           else {
-    //             return item;
-    //           }
-    //         })
-    //         setInvoiceProposals({ ...invoiceProposals, list: newList });
-    //       }
-    //       else {
-    //         alertActions.error(res.data);
-    //       }
-    //     });
-    //   }
+    const postCommentByShortlistedId = (data) => {
+        return fetchWrapper.post(`v0/ui/website/HDFHDF0789/comment/`, data).then((res) => {
+            console.log(res, "1111111111111")
+            if (res.status) {
+                alertActions.success(res.data);
+                // let newList = invoiceProposals.list.map((item, key) => {
+                //     if (item.proposal.proposal_id === data.proposal.proposal_id) {
+                //         return { ...item, proposal: { ...item.proposal, campaign_state: 'PNC' } }
+                //     }
+                //     else {
+                //         return item;
+                //     }
+                // })
+                // setInvoiceProposals({ ...invoiceProposals, list: newList });
+            }
+            else {
+                alertActions.error(res.data);
+            }
+        });
+    }
 
     return {
         getCampaignInventories,
         getHeaderData,
         getRelationShipData,
         getContactDetailsData,
-        getCommetByShortlistedId
+        getCommetByShortlistedId,
+        postCommentByShortlistedId
     };
 }
 export { BookinPlanActions };
