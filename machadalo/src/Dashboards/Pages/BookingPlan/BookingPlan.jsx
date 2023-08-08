@@ -234,7 +234,7 @@ export default function BookingPlan() {
                         <a
                           className="anchor-list"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'ContactDetails' });
+                            setShowModal({ show: true, type: 'ContactDetails', rowData: data });
                           }}
                         >
                           View/Add
@@ -313,7 +313,7 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'internalComments' });
+                            setShowModal({ show: true, type: 'internalComments', rowData: data });
                           }}
                         >
                           View/Add
@@ -323,7 +323,7 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'comments' });
+                            setShowModal({ show: true, type: 'externalComments', rowData: data });
                           }}
                         >
                           View/Add
@@ -604,7 +604,7 @@ export default function BookingPlan() {
                   ? 'Assign User'
                   : showModal.type == 'internalComments'
                   ? 'Internal Comments'
-                  : showModal.type == 'comments'
+                  : showModal.type == 'externalComments'
                   ? 'Comments'
                   : showModal.type == 'PaymentDetail'
                   ? 'Payment Detail'
@@ -629,9 +629,9 @@ export default function BookingPlan() {
               ) : showModal.type == 'AssignUser' ? (
                 <AssignUserModal />
               ) : showModal.type == 'ContactDetails' ? (
-                <ContactDetailModal />
-              ) : showModal.type == 'comments' || showModal.type == 'internalComments' ? (
-                <CommentModal />
+                <ContactDetailModal data={showModal.rowData} />
+              ) : showModal.type == 'externalComments' || showModal.type == 'internalComments' ? (
+                <CommentModal data={showModal.rowData} commentType={showModal.type} />
               ) : showModal.type == 'PaymentDetail' ? (
                 <PaymentDetailModal />
               ) : showModal.type == 'Permission' ? (

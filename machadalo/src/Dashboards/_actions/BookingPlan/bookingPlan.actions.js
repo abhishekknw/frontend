@@ -32,6 +32,20 @@ const BookinPlanActions = () => {
             return res.data;
         });
     };
+
+    const getContactDetailsData = (data) => {
+        let params = "supplier_id=" + data?.object_id;
+        return fetchWrapper.get(`${Apis.Get_Contact_Details}${params}`).then((res) => {
+            return res.data;
+        });
+    };
+
+    const getCommetByShortlistedId = (data, type) => {
+        let params = `shortlisted_spaces_id=${data?.id}&related_to=${type === "externalComments" ? "EXTERNAL" : "INTERNAL"}`
+        return fetchWrapper.get(`v0/ui/website/HDFHDF0789/comment/?${params}`).then((res) => {
+            return res.data.general;
+        });
+    }
     //   const converCampaignToProposal = (data) => {
     //     return fetchWrapper.post(`v0/ui/website/${data.proposal.proposal_id}/convert-to-proposal/`, data.proposal).then((res) => {
     //       if (res.status) {
@@ -56,6 +70,8 @@ const BookinPlanActions = () => {
         getCampaignInventories,
         getHeaderData,
         getRelationShipData,
+        getContactDetailsData,
+        getCommetByShortlistedId
     };
 }
 export { BookinPlanActions };

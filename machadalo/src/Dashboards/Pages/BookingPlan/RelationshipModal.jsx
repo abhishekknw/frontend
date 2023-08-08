@@ -12,7 +12,7 @@ export default function RelationshipModal(props) {
       accessKey: 'index',
       sort: false,
       action: function (row, index) {
-        return index + 1;
+        return <span style={{ backgroundColor: '' }}>{index + 1}</span>;
       },
     },
     {

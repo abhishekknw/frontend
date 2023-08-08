@@ -23,7 +23,7 @@ export default function ReactBootstrapTable(props) {
 
   return (
     <div>
-      <Table responsive className="react-bootstrap-custom-table">
+      <Table responsive className="react-bootstrap-table">
         <thead>
           <tr>
             {headerData.map((header, index) => {
@@ -70,33 +70,6 @@ export default function ReactBootstrapTable(props) {
     </div>
   );
 }
-// const [RowData, setRowData] = useState([
-//   {
-//     id: 0,
-//     name: 'test0',
-//     price: '$0',
-//   },
-//   {
-//     id: 1,
-//     name: 'test1',
-//     price: '$1',
-//   },
-//   {
-//     id: 2,
-//     name: 'test2',
-//     price: '$2',
-//   },
-//   {
-//     id: 3,
-//     name: 'test3',
-//     price: '$3',
-//   },
-//   {
-//     id: 4,
-//     name: 'test4',
-//     price: '$4',
-//   },
-// ]);
 
 // const [headerData, setHeaderData] = useState([
 //   {
@@ -127,33 +100,9 @@ export default function ReactBootstrapTable(props) {
 //     },
 //   },
 // ]);
-
 {
-  /* <th
-              className={`sortable ${sort == 'id' ? `${reverse ? 'asc' : 'desc'}` : ''}`}
-              onClick={(e) => {
-                setReverse(!reverse);
-                setSort('id');
-              }}
-            >
-              #
-            </th>
-            <th
-              className={`sortable ${sort == 'name' ? `${reverse ? 'asc' : 'desc'}` : ''}`}
-              onClick={(e) => {
-                setReverse(!reverse);
-                setSort('name');
-              }}
-            >
-              Name
-            </th>
-            <th
-              className={`sortable ${sort == 'price' ? `${reverse ? 'asc' : 'desc'}` : ''}`}
-              onClick={(e) => {
-                setReverse(!reverse);
-                setSort('price');
-              }}
-            >
-              Price
-            </th> */
+  /* <ReactBootstrapTable
+headerData={headerData}
+rowData={details?.campaign_data?.campaigns}
+/> */
 }
