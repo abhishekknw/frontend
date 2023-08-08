@@ -19,7 +19,7 @@ const newLeadActions = () => {
 
   const getAllCampaigns = (data) => {
     let params = "&search=" + data.search;
-    params += "lead_type=" + data.lead_type;
+    params += "&lead_type=" + data.lead_type;
     params += '&supplier_type=' + data.supplier_type;
     return fetchWrapper.get(`${Apis.New_Leads_Campaign}${params}`).then((res) => {
       const { data } = res;
@@ -43,9 +43,9 @@ const newLeadActions = () => {
 
   const getClientStatusList = (data) => {
     return fetchWrapper.get(`${Apis.Client_Status_By_Campaign}`).then((res) => {
-      const { data } = res;
-      SetClientStatus([...data.client_status])
-      return data;
+      let status = res?.data?.client_status.map((item, index) => ({ ...item, label: item.status_name, value: item.status_name }));
+      SetClientStatus(status)
+      return status;
     });
   }
 

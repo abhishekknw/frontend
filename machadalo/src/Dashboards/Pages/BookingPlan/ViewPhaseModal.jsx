@@ -50,7 +50,7 @@ export default function ViewPhaseModal() {
           </tr>
         </Table>
       <div>
-        <span><button className='btn me-3 btn-danger'>Edit</button></span>
+        <span><button className='btn me-3 btn-primary'>Edit</button></span>
         <span><button className='btn me-3 btn-primary'>Add</button></span>
         <span><button className='btn me-3 btn-success'>Save</button></span>
       </div>

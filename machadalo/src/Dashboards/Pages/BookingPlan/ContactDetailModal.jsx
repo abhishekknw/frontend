@@ -1,12 +1,23 @@
-import React from 'react';
-import { Table, } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import { Table } from 'react-bootstrap';
 import Select from 'react-select';
+import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 
-export default function ContactDetailModal() {
+export default function ContactDetailModal(props) {
+  const { data } = props;
+  const BookingApi = BookinPlanActions();
+
+  async function getContactDetails() {
+    let res = BookingApi.getContactDetailsData(data);
+    console.log(res);
+  }
+  useEffect(() => {
+    getContactDetails();
+  }, []);
   return (
     <>
       <div>
-        <Table className='table-center' responsive>
+        <Table className="table-center" responsive>
           <tr>
             <th>Name</th>
             <th>Designation</th>
@@ -25,7 +36,9 @@ export default function ContactDetailModal() {
             <td>Comments</td>
             <td>Landline No</td>
             <td>Mobile No</td>
-            <td><button className='btn btn-primary'>Remove</button></td>
+            <td>
+              <button className="btn btn-primary">Remove</button>
+            </td>
           </tr>
           <tr>
             <td>Name</td>
@@ -35,7 +48,9 @@ export default function ContactDetailModal() {
             <td>Comments</td>
             <td>Landline No</td>
             <td>Mobile No</td>
-            <td><button className='btn btn-primary'>Remove</button></td>
+            <td>
+              <button className="btn btn-primary">Remove</button>
+            </td>
           </tr>
           <tr>
             <td>Name</td>
@@ -45,7 +60,9 @@ export default function ContactDetailModal() {
             <td>Comments</td>
             <td>Landline No</td>
             <td>Mobile No</td>
-            <td><button className='btn btn-primary'>Remove</button></td>
+            <td>
+              <button className="btn btn-primary">Remove</button>
+            </td>
           </tr>
           <tr>
             <td>Name</td>
@@ -55,7 +72,9 @@ export default function ContactDetailModal() {
             <td>Comments</td>
             <td>Landline No</td>
             <td>Mobile No</td>
-            <td><button className='btn btn-primary'>Remove</button></td>
+            <td>
+              <button className="btn btn-primary">Remove</button>
+            </td>
           </tr>
           <tr>
             <td>Name</td>
@@ -65,19 +84,27 @@ export default function ContactDetailModal() {
             <td>Comments</td>
             <td>Landline No</td>
             <td>Mobile No</td>
-            <td><button className='btn btn-primary'>Remove</button></td>
+            <td>
+              <button className="btn btn-primary">Remove</button>
+            </td>
           </tr>
         </Table>
-        <div  className='pt-4'>
-          <div className='d-flex justify-content-between'>
+        <div className="pt-4">
+          <div className="d-flex justify-content-between">
             <div>
-            <span><button className='btn me-3 btn-primary'>Add</button></span>
-            <span><button className='btn me-3 btn-success'>Save</button></span>
+              <span>
+                <button className="btn me-3 btn-primary">Add</button>
+              </span>
+              <span>
+                <button className="btn me-3 btn-success">Save</button>
+              </span>
             </div>
-            <div>                
-              <span><button className='btn me-3 btn-danger'>Edit</button></span>
+            <div>
+              <span>
+                <button className="btn me-3 btn-primary">Edit</button>
+              </span>
             </div>
-          </div>          
+          </div>
         </div>
       </div>
     </>

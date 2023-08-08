@@ -23,6 +23,8 @@ import ReactPagination from '../../Pagination/Pagination';
 import ViewPhaseModal from './ViewPhaseModal';
 import AddSupplierModal from './AddSupplierModal';
 import ImportSheetModal from './ImportSheetModal';
+import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
+import TableHeader from '../../Table/TableHeader/TableHeader';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -34,6 +36,7 @@ export default function BookingPlan() {
   const [showModal, setShowModal] = useState({
     show: false,
     type: '',
+    rowData: '',
   });
   const [filterData, setFilterData] = useState({
     pageNo: 0,
@@ -45,7 +48,6 @@ export default function BookingPlan() {
     { label: 'Very High', value: 'VH' },
     { label: 'High', value: 'HH' },
   ];
-
   // useEffect(() => {
   //   const table = new DataTable(`#${tableName}`, {
   //     details: {
@@ -82,6 +84,10 @@ export default function BookingPlan() {
     console.log(data, '2222222222222');
   }
 
+  function handleSelect(e) {
+    console.log(e, '111111111111111111');
+  }
+
   useEffect(() => {
     getCampaignInventories(filterData);
     getHeaderDataList();
@@ -89,9 +95,9 @@ export default function BookingPlan() {
 
   return (
     <>
-      <div className="booking-plan-wrapper">
-        <h2>Booking Plan</h2>
-        <div className="status-bar mb-2">
+      <div className="booking-plan-wrapper ">
+        <TableHeader headerValue="Booking Plan" />
+        <div className="status-bar mb-2 sticky-thc">
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
             <span className="status-data">{CampaignInventoryList.campaign?.proposal_id}</span>
@@ -129,9 +135,9 @@ export default function BookingPlan() {
             </Button>
           </span>
         </div>
-        <div className="booking-plan-table">
+        <div className="booking-plan-table book-height" >
           {/* id={tableName} ref={tableRef} */}
-          <Table responsive className="display booking-table" width="100%">
+          <Table responsive className="display booking-table " width="100%">
             <thead>
               <tr>
                 <th>{columnsList.srNo}</th>
@@ -197,7 +203,8 @@ export default function BookingPlan() {
                         </Button>
                       </td>
                       <td>
-                        <a>{data.name}</a>({data.quality_rating})
+                        <a className="anchor-list">{data.name}</a>
+                        <span>({data.quality_rating})</span>
                       </td>
                       <td>{data.supplier_id}</td>
                       <td>{data.supplierCode}</td>
@@ -213,7 +220,7 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'RelationshipData' });
+                            setShowModal({ show: true, type: 'RelationshipData', rowData: data });
                           }}
                         >
                           View
@@ -225,8 +232,9 @@ export default function BookingPlan() {
                         <span>{data?.contacts[0]?.name}</span>
                         <span>({data?.contacts[0]?.mobile})</span>
                         <a
-                          className='anchor-list' onClick={(e) => {
-                            setShowModal({ show: true, type: 'ContactDetails' });
+                          className="anchor-list"
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'ContactDetails', rowData: data });
                           }}
                         >
                           View/Add
@@ -253,6 +261,14 @@ export default function BookingPlan() {
                             (obj) => obj.value === data.booking_priority
                           )}
                         />
+                        {/* <SelectDropdown
+                          optionsData={bookingPriorityOption}
+                          selectedValue={data.booking_priority}
+                          placeholder="Booking Priority"
+                          label="Booking Priority"
+                          id="BookingPriority"
+                          handleSelect={handleSelect}
+                        /> */}
                       </td>
                       <td>
                         <Select
@@ -297,7 +313,7 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'internalComments' });
+                            setShowModal({ show: true, type: 'internalComments', rowData: data });
                           }}
                         >
                           View/Add
@@ -307,7 +323,7 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'comments' });
+                            setShowModal({ show: true, type: 'externalComments', rowData: data });
                           }}
                         >
                           View/Add
@@ -337,7 +353,13 @@ export default function BookingPlan() {
                         </ListGroup>
                       </td>
                       <td>70</td>
-                      <td>input type Number</td>
+                      <td>
+                        <Form.Control
+                          type="number"
+                          id="inventoryDays"
+                          aria-describedby="inventoryDays"
+                        />
+                      </td>
                       <td>50rs</td>
                       <td></td>
                       <td>{data?.total_negotiated_price}</td>
@@ -471,14 +493,12 @@ export default function BookingPlan() {
                 })}
             </tbody>
           </Table>
-          <div className="list__footer">
-            <ReactPagination
-              pageNo={filterData.pageNo}
-              pageSize={10}
-              totalItems={CampaignInventoryList.total_count}
-              onPageChange={handlePageChange}
-            />
-          </div>
+          <ReactPagination
+            pageNo={filterData.pageNo}
+            pageSize={10}
+            totalItems={CampaignInventoryList.total_count}
+            onPageChange={handlePageChange}
+          />
         </div>
 
         <div
@@ -568,7 +588,9 @@ export default function BookingPlan() {
               setShowModal({ show: false, type: '' });
             }}
             // className="booking-modal"
-            className={`booking-modal ${showModal.type == 'ContactDetails' ? "contact-detail-modal" : ""}`}
+            className={`booking-modal ${
+              showModal.type == 'ContactDetails' ? 'contact-detail-modal' : ''
+            }`}
           >
             <Modal.Header closeButton>
               <Modal.Title>
@@ -582,7 +604,7 @@ export default function BookingPlan() {
                   ? 'Assign User'
                   : showModal.type == 'internalComments'
                   ? 'Internal Comments'
-                  : showModal.type == 'comments'
+                  : showModal.type == 'externalComments'
                   ? 'Comments'
                   : showModal.type == 'PaymentDetail'
                   ? 'Payment Detail'
@@ -603,13 +625,13 @@ export default function BookingPlan() {
               {showModal.type == 'Add-Brand' ? (
                 <AddBrandModal />
               ) : showModal.type == 'RelationshipData' ? (
-                <RelationshipModal />
+                <RelationshipModal data={showModal.rowData} />
               ) : showModal.type == 'AssignUser' ? (
                 <AssignUserModal />
               ) : showModal.type == 'ContactDetails' ? (
-                <ContactDetailModal />
-              ) : showModal.type == 'comments' || showModal.type == 'internalComments' ? (
-                <CommentModal />
+                <ContactDetailModal data={showModal.rowData} />
+              ) : showModal.type == 'externalComments' || showModal.type == 'internalComments' ? (
+                <CommentModal data={showModal.rowData} commentType={showModal.type} />
               ) : showModal.type == 'PaymentDetail' ? (
                 <PaymentDetailModal />
               ) : showModal.type == 'Permission' ? (

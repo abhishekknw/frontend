@@ -17,7 +17,7 @@ export default function MachadaloDashboard(props) {
   }
   return (
     <>
-      <div className="container">
+      {/* <div className="container"> */}
         <div className="machadalo-deshboard">
           {/* tabs start */}
           <Tabs
@@ -50,7 +50,7 @@ export default function MachadaloDashboard(props) {
           </Tabs>
           {/* tabs start */}
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 }

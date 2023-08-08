@@ -14,7 +14,7 @@ export default function PermissionModal() {
       </Form.Group>
 
       <div>
-        <span><button className='btn me-3 btn-danger'>Edit</button></span>
+        <span><button className='btn me-3 btn-primary'>Edit</button></span>
       </div>
     </>
   );

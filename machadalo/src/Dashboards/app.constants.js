@@ -25,5 +25,7 @@ export const Apis = {
 
     // Booking Plan
     Get_Header_Data: '/v0/ui/getHeaderData',
+    Get_Relationship_Data: "v0/ui/website/get-relationship-and-past-campaigns-data/?",
+    Get_Contact_Details: 'v0/ui/website/inventory-contact-details/?',
 }
 
