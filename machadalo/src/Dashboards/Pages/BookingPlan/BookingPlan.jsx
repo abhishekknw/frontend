@@ -91,7 +91,7 @@ export default function BookingPlan() {
     <>
       <div className="booking-plan-wrapper">
         <h2>Booking Plan</h2>
-        <div className="status-bar mb-2">
+        <div className="status-bar mb-2 sticky-thc">
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
             <span className="status-data">{CampaignInventoryList.campaign?.proposal_id}</span>
