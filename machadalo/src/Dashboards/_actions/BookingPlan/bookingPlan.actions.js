@@ -41,25 +41,16 @@ const BookinPlanActions = () => {
     };
 
     const getCommetByShortlistedId = (data, type) => {
+        console.log(data, "11111111")
         let params = `shortlisted_spaces_id=${data?.id}&related_to=${type === "externalComments" ? "EXTERNAL" : "INTERNAL"}`
-        return fetchWrapper.get(`v0/ui/website/HDFHDF0789/comment/?${params}`).then((res) => {
+        return fetchWrapper.get(`v0/ui/website/${data?.proposal}/comment/?${params}`).then((res) => {
             return res.data.general;
         });
     }
     const postCommentByShortlistedId = (data) => {
         return fetchWrapper.post(`v0/ui/website/HDFHDF0789/comment/`, data).then((res) => {
-            console.log(res, "1111111111111")
             if (res.status) {
                 alertActions.success(res.data);
-                // let newList = invoiceProposals.list.map((item, key) => {
-                //     if (item.proposal.proposal_id === data.proposal.proposal_id) {
-                //         return { ...item, proposal: { ...item.proposal, campaign_state: 'PNC' } }
-                //     }
-                //     else {
-                //         return item;
-                //     }
-                // })
-                // setInvoiceProposals({ ...invoiceProposals, list: newList });
             }
             else {
                 alertActions.error(res.data);
