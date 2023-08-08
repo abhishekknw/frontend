@@ -91,6 +91,7 @@ export default function BookingPlan() {
   useEffect(() => {
     getCampaignInventories(filterData);
     getHeaderDataList();
+    BookingApi.getUserMinimalList();
   }, [1]);
 
   return (
@@ -196,7 +197,7 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'Add-Brand' });
+                            setShowModal({ show: true, type: 'Add-Brand', rowData: data });
                           }}
                         >
                           Add
@@ -393,17 +394,17 @@ export default function BookingPlan() {
                       <td>
                         <Form>
                           <div className="mb-3 b-form-maindiv">
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id={`check-api-NFFT`}>
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>NFFT</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
                             </Form.Check>
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id={`check-api-CHEQUE`}>
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>CHEQUE</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
                             </Form.Check>
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id={`check-api-CASH`}>
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>CASH</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
@@ -623,7 +624,7 @@ export default function BookingPlan() {
             </Modal.Header>
             <Modal.Body>
               {showModal.type == 'Add-Brand' ? (
-                <AddBrandModal />
+                <AddBrandModal data={showModal.rowData} />
               ) : showModal.type == 'RelationshipData' ? (
                 <RelationshipModal data={showModal.rowData} />
               ) : showModal.type == 'AssignUser' ? (

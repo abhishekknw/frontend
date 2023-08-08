@@ -2,7 +2,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { CampaignInventoryAtom, HeaderDataListAtom } from '../../_states';
+import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom } from '../../_states';
 import { errorAtom } from '../../_states/alert';
 
 const BookinPlanActions = () => {
@@ -10,6 +10,7 @@ const BookinPlanActions = () => {
     const alertActions = useAlertActions();
     const setCampaignInventory = useSetRecoilState(CampaignInventoryAtom);
     const setHeaderDataList = useSetRecoilState(HeaderDataListAtom);
+    const setOrganisationList = useSetRecoilState(OrganisationListAtom);
 
 
     const getCampaignInventories = (data) => {
@@ -41,7 +42,6 @@ const BookinPlanActions = () => {
     };
 
     const getCommetByShortlistedId = (data, type) => {
-        console.log(data, "11111111")
         let params = `shortlisted_spaces_id=${data?.id}&related_to=${type === "externalComments" ? "EXTERNAL" : "INTERNAL"}`
         return fetchWrapper.get(`v0/ui/website/${data?.proposal}/comment/?${params}`).then((res) => {
             return res.data.general;
@@ -58,13 +58,37 @@ const BookinPlanActions = () => {
         });
     }
 
+    const getUserMinimalList = (id) => {
+        return fetchWrapper.get(`${Apis.Get_Organisation_List}`).then((res) => {
+            if (res.status) {
+                let newList = res.data.map(item => ({ ...item, label: item?.name, value: item?.organisation_id }));
+                setOrganisationList(newList);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        });
+    }
+    const postBrandAssignment = (data) => {
+        return fetchWrapper.post(`${Apis.Post_Brand_Assignment}`, data).then((res) => {
+            if (res.status) {
+                alertActions.success("Assigned successfully");
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        });
+    }
+
     return {
         getCampaignInventories,
         getHeaderData,
         getRelationShipData,
         getContactDetailsData,
         getCommetByShortlistedId,
-        postCommentByShortlistedId
+        postCommentByShortlistedId,
+        getUserMinimalList,
+        postBrandAssignment,
     };
 }
 export { BookinPlanActions };

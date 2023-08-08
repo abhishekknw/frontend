@@ -32,7 +32,12 @@ const showHideModalAtom = atom({
     comment: { show: false, tableName: '' },
     download: { show: false, tableName: '' },
   }
+});
+
+const OrganisationListAtom = atom({
+  key: 'organisationListKey',
+  default: []
 })
 
 
-export { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom };
+export { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom, OrganisationListAtom };
