@@ -26,30 +26,54 @@ const BookinPlanActions = () => {
             return res.data.ALL;
         });
     };
+    const getRelationShipData = (data) => {
+        let params = "supplier_id=" + data.object_id + "&supplier_code=" + data.supplier_code + "&campaign_id=" + data.proposal;
+        return fetchWrapper.get(`${Apis.Get_Relationship_Data}${params}`).then((res) => {
+            return res.data;
+        });
+    };
 
-    //   const converCampaignToProposal = (data) => {
-    //     return fetchWrapper.post(`v0/ui/website/${data.proposal.proposal_id}/convert-to-proposal/`, data.proposal).then((res) => {
-    //       if (res.status) {
-    //         alertActions.success(res.data);
-    //         let newList = invoiceProposals.list.map((item, key) => {
-    //           if (item.proposal.proposal_id === data.proposal.proposal_id) {
-    //             return { ...item, proposal: { ...item.proposal, campaign_state: 'PNC' } }
-    //           }
-    //           else {
-    //             return item;
-    //           }
-    //         })
-    //         setInvoiceProposals({ ...invoiceProposals, list: newList });
-    //       }
-    //       else {
-    //         alertActions.error(res.data);
-    //       }
-    //     });
-    //   }
+    const getContactDetailsData = (data) => {
+        let params = "supplier_id=" + data?.object_id;
+        return fetchWrapper.get(`${Apis.Get_Contact_Details}${params}`).then((res) => {
+            return res.data;
+        });
+    };
+
+    const getCommetByShortlistedId = (data, type) => {
+        let params = `shortlisted_spaces_id=${data?.id}&related_to=${type === "externalComments" ? "EXTERNAL" : "INTERNAL"}`
+        return fetchWrapper.get(`v0/ui/website/HDFHDF0789/comment/?${params}`).then((res) => {
+            return res.data.general;
+        });
+    }
+    const postCommentByShortlistedId = (data) => {
+        return fetchWrapper.post(`v0/ui/website/HDFHDF0789/comment/`, data).then((res) => {
+            console.log(res, "1111111111111")
+            if (res.status) {
+                alertActions.success(res.data);
+                // let newList = invoiceProposals.list.map((item, key) => {
+                //     if (item.proposal.proposal_id === data.proposal.proposal_id) {
+                //         return { ...item, proposal: { ...item.proposal, campaign_state: 'PNC' } }
+                //     }
+                //     else {
+                //         return item;
+                //     }
+                // })
+                // setInvoiceProposals({ ...invoiceProposals, list: newList });
+            }
+            else {
+                alertActions.error(res.data);
+            }
+        });
+    }
 
     return {
         getCampaignInventories,
         getHeaderData,
+        getRelationShipData,
+        getContactDetailsData,
+        getCommetByShortlistedId,
+        postCommentByShortlistedId
     };
 }
 export { BookinPlanActions };

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import CommonTable from '../../Table/CommonTable';
 import {
   LeadByCampaignsAtom,
   ClientStatusAtom,
@@ -10,14 +9,13 @@ import { showHideModalAtom } from '../../_states/Constant';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
 import Button from 'react-bootstrap/Button';
-import dayjs from 'dayjs';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { BsSortDown, BsSearch, BsSortUp, BsChevronDown, BsChevronUp } from 'react-icons/bs';
-import Paginations from '../../Pagination';
-import DateFilter from '../../common/date-range-filter/dateFilter';
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import CommentModal from '../../common/Modals/CommentModal';
+import ReactPagination from '../../Pagination/Pagination';
+import SearchBox from '../../common/search/SearchBox';
+import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
+import TableHeader from '../../Table/TableHeader/TableHeader';
 
 export default function NewViewLeadsTable({ Data }) {
   const CampaignData = Data;
@@ -31,12 +29,12 @@ export default function NewViewLeadsTable({ Data }) {
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
   const [selectedId, setSelectedId] = React.useState('');
 
-  const handlePageChange = async (event, value) => {
+  const handlePageChange = async (value) => {
     setFilters({ ...filters, leadSearch: '' });
     setPaginationData({
-      pageNo: value,
+      pageNo: value.selected + 1,
     });
-    let params = { ...filters, next_page: value - 1 };
+    let params = { ...filters, next_page: value.selected + 1 };
     params.leadSearch = '';
     await NewLeadAction.getLeadByCampaignId(params);
   };
@@ -53,12 +51,12 @@ export default function NewViewLeadsTable({ Data }) {
     await NewLeadAction.getCommentListByIds(params);
   };
   const onSearch = async (e) => {
-    let data = { ...filters, leadSearch: e.target.value, next_page: 0 };
-    setFilters({ ...filters, leadSearch: e.target.value });
-    if (e.target.value != '' && e.target.value.length > 2) {
+    let data = { ...filters, leadSearch: e, next_page: 0 };
+    setFilters({ ...filters, leadSearch: e });
+    if (e != '' && e.length > 2) {
       await NewLeadAction.getLeadByCampaignId(data);
     }
-    if (!e.target.value || e.target.value === '') {
+    if (!e || e === '') {
       let data = { ...filters, leadSearch: '', next_page: 0 };
       await NewLeadAction.getLeadByCampaignId(data);
     }
@@ -66,7 +64,7 @@ export default function NewViewLeadsTable({ Data }) {
   const handleSelect = async (status, row) => {
     let object = [
       {
-        macchadalo_client_status: status,
+        macchadalo_client_status: status.status_name,
         _id: row[0]?._id,
         requirement_id: row[0]?.requirement_id,
       },
@@ -85,13 +83,13 @@ export default function NewViewLeadsTable({ Data }) {
   }
   return (
     <>
-      <div className="text-center">
-        <h4 className="table-head">{CampaignData?.name?.toUpperCase()}</h4>
-      </div>
+      <TableHeader headerValue={CampaignData?.name} />
       <div className="d-flex justify-content-between align-items-center">
         <div></div>
-
-        <div className="searchbox">
+        <div className="mb-3">
+          <SearchBox onSearch={onSearch} />
+        </div>
+        {/* <div className="searchbox">
           <InputGroup className="mb-3">
             <Form.Control
               placeholder="Search"
@@ -105,7 +103,7 @@ export default function NewViewLeadsTable({ Data }) {
               <BsSearch />
             </InputGroup.Text>
           </InputGroup>
-        </div>
+        </div> */}
       </div>
       {/* <DateFilter onDateChange={getDates} /> */}
       <Table striped bordered hover className="leads-table basic-leads">
@@ -137,7 +135,7 @@ export default function NewViewLeadsTable({ Data }) {
                 </td>
                 {row.map((data, index) => (index != 0 ? <td key={index}>{data?.value}</td> : null))}
                 <td className="lead-dropdown">
-                  <Dropdown className="table-dropdown-status">
+                  {/* <Dropdown className="table-dropdown-status">
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                       {row[0]?.macchadalo_client_status}
                     </Dropdown.Toggle>
@@ -158,7 +156,16 @@ export default function NewViewLeadsTable({ Data }) {
                           );
                         })}
                     </Dropdown.Menu>
-                  </Dropdown>
+                  </Dropdown> */}
+                  <SelectDropdown
+                    optionsData={clientStatuslist}
+                    selectedValue={row[0]?.macchadalo_client_status}
+                    placeholder="Current Status"
+                    label="Current Status"
+                    id={`CurrentStatus${row[0]?._id}`}
+                    rowData={row}
+                    handleSelect={handleSelect}
+                  />
                 </td>
                 <td>
                   <Button
@@ -194,11 +201,10 @@ export default function NewViewLeadsTable({ Data }) {
           })}
         </tbody>
       </Table>
-      {console.log(LeadsByCampaign)}
-      <Paginations
+      <ReactPagination
+        pageNo={paginationData.pageNo}
         pageSize={20}
         totalItems={LeadsByCampaign.length}
-        pageNo={paginationData.pageNo}
         onPageChange={handlePageChange}
       />
       <CommentModal />
