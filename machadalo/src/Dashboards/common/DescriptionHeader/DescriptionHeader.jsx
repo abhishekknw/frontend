@@ -6,19 +6,19 @@ export default function DescriptionHeader(props) {
     main: {
       position: 'sticky',
       top: 0,
-      'z-index': 9,
+      'zIndex': 9,
       background: '#5f76e8',
       padding: '10px',
       borderRadius: '0px',
       display: 'flex',
       gap: '15px',
       color: '#fff',
-      'overflow-x': 'auto',
-      'justify-content': 'center',
+      'overflowX': 'auto',
+      'justifyContent': 'center',
       fontSize: '16px',
     },
     label: {
-      'font-weight': 600,
+      'fontWeight': 600,
     },
     item: {
       display: 'flex',
