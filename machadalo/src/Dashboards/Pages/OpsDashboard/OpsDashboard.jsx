@@ -345,6 +345,7 @@ export default function OpsDashboard(props) {
   };
   return (
     <>
+    <div className='opspage'>
       <div>
         <Form className=''>
           <Form.Group    className="mb-3 group-two" controlId="formPlaintextEmail">
@@ -516,6 +517,7 @@ export default function OpsDashboard(props) {
           <RequirementEditModal />
         </Modal.Body>
       </Modal>
+      </div>
     </>
   );
 }
