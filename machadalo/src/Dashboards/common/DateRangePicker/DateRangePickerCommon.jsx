@@ -13,7 +13,7 @@ export default function DateRangePickerCommon(props) {
   return (
     <>
       <DatePicker
-        showIcon
+        // showIcon
         selectsRange={true}
         startDate={startDate}
         endDate={endDate}

@@ -1,12 +1,12 @@
 import React from 'react';
 const style = {
-  color: '#e84478',
+  color: '#3e59e3',
   padding: '10px 15px',
   marginBottom: '20px',
-  fontWeight: '700',
+  fontWeight: '800',
   fontSize: '20px',
   padding: '10px 0px',
-  borderBottom: 'solid 1px #e84478',
+  borderBottom: 'solid 1px #3e59e3',
 };
 export default function TableHeader(props) {
   return (

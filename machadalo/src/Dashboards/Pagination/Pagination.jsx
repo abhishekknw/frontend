@@ -6,7 +6,7 @@ const ReactPagination = (props) => {
   const numOfPages = Math.ceil(totalItems / pageSize);
   if (numOfPages <= 1) return null;
   return (
-    <div className="list__footer">
+    <div className="new-pagination">
       <ReactPaginate
         pageCount={numOfPages}
         initialPage={pageNo}
