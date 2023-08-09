@@ -67,7 +67,7 @@ angular
     'daterangepicker',
     'ui.select',
     'ngSanitize',
-    'btford.socket-io',
+    // 'btford.socket-io',
   
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider, cfpLoadingBarProvider) {
