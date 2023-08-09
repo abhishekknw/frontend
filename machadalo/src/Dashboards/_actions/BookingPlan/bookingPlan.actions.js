@@ -105,7 +105,7 @@ const BookinPlanActions = () => {
     const getPermissionBoxImages = (data) => {
         return fetchWrapper.get(`${Apis.Get_Permission_Box_Images}?campaign_id=${data?.campaign_id}&supplier_id=${data?.supplier_id}`).then((res) => {
             if (res.status) {
-                console.log(res)
+                return res.data;
             }
             else {
                 alertActions.error(Labels.Error);

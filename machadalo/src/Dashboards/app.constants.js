@@ -5,7 +5,7 @@ export const Labels = {
     Upload_Success: "Uploaded successfully",
     Email_Success: "Email Sent Successfully",
 }
-
+export const BaseImageUrl = 'https://androidtokyo.s3.amazonaws.com/';
 
 export const Apis = {
     New_Leads_Campaign: "v0/ui/b2b/get-basic-lead-distribution-campaign/?tabname=basic",

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
-// import Imagef from '../../../../';
+import Carousel from 'react-bootstrap/Carousel';
+import { BaseImageUrl } from '../../app.constants';
 
 export default function PermissionModal(props) {
   const { data, campaign } = props;
   const BookingApi = BookinPlanActions();
+  const [imageList, setImageList] = useState([]);
   const [uploadFileData, setUploadFileData] = useState({
     file: '',
     comment: '',
@@ -18,6 +20,7 @@ export default function PermissionModal(props) {
   });
   async function getPermissionImages(data) {
     let getData = await BookingApi.getPermissionBoxImages(data);
+    setImageList(getData);
   }
 
   function uploadImagesFile() {
@@ -40,7 +43,24 @@ export default function PermissionModal(props) {
   return (
     <>
       <Form>
-        {/* <img src={Imagef} /> */}
+        <Carousel data-bs-theme="dark">
+          {imageList &&
+            imageList.map((item, index) => {
+              return (
+                <Carousel.Item key={item?.id}>
+                  <img
+                    className="d-block w-100"
+                    src={`${BaseImageUrl}${item?.image_path}`}
+                    alt={item?.content_type}
+                  />
+                  <Carousel.Caption>
+                    <h5>{item?.hashtag}</h5>
+                    {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
+                  </Carousel.Caption>
+                </Carousel.Item>
+              );
+            })}
+        </Carousel>
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Control
             type="file"
@@ -77,10 +97,3 @@ export default function PermissionModal(props) {
     </>
   );
 }
-// file: (binary)
-// comment: 
-// object_id: MUMAECKRSHD3
-// hashtag: Permission Box
-// campaign_name: HDFC Retail Channels
-// supplier_name: HDFC Distributor 3
-// supplier_type_code: RS
