@@ -23,7 +23,7 @@ export default function ReactBootstrapTable(props) {
 
   return (
     <div>
-      <Table responsive className="react-bootstrap-table">
+      <Table responsive className="react-bootstrap-table v-middle">
         <thead>
           <tr>
             {headerData.map((header, index) => {
