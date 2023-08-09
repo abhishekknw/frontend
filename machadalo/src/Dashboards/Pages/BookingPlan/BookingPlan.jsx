@@ -26,6 +26,7 @@ import ImportSheetModal from './ImportSheetModal';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import TableHeader from '../../Table/TableHeader/TableHeader';
 import InventoryModal from './InventoryModal';
+import DescriptionHeader from '../../common/DescriptionHeader/DescriptionHeader';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -96,11 +97,31 @@ export default function BookingPlan() {
     BookingApi.getUserMinimalList();
   }, [1]);
 
+  const descriptionData = [
+    {
+      label: 'Campaign Id',
+      value: CampaignInventoryList.campaign?.proposal_id,
+    },
+    {
+      label: 'Campaign Name',
+      value: CampaignInventoryList?.campaign?.name,
+    },
+    {
+      label: 'BD Owner',
+      value: CampaignInventoryList?.campaign?.created_by,
+    },
+    {
+      label: 'Campaign State',
+      value: CampaignInventoryList?.campaign?.campaign_state,
+    },
+  ];
+
   return (
     <>
       <div className="booking-plan-wrapper ">
         <TableHeader headerValue="Booking Plan" />
-        <div className="status-bar mb-2 sticky-thc">
+        <DescriptionHeader data={descriptionData} />
+        {/* <div className="status-bar mb-2 sticky-thc">
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
             <span className="status-data">{CampaignInventoryList.campaign?.proposal_id}</span>
@@ -117,7 +138,7 @@ export default function BookingPlan() {
             <span className="status-lable">Campaign State:</span>
             <span className="status-data">{CampaignInventoryList.campaign?.campaign_state}</span>
           </div>
-        </div>
+        </div> */}
         <div>
           <span>
             <Button
