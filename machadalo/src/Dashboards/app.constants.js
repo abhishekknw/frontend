@@ -31,6 +31,8 @@ export const Apis = {
     Post_Brand_Assignment: "v0/ui/website/brand-assignment/",
     Post_Supplier_Assignment: "v0/ui/website/supplier-assignment/",
     Get_Permission_Box_Images: "v0/ui/website/hashtag-images/get_permission_box_images/",
-    Post_permission_Box_Images: "upload_permission_box_image/"
+    Post_permission_Box_Images: "upload_permission_box_image/",
+    Get_Receipt_Images: 'v0/ui/website/hashtag-images/get_receipt_images/',
+    Post_Receipt_Images: 'upload_receipt_image/',
 }
 

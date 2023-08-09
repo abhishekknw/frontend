@@ -4,9 +4,9 @@ import Form from 'react-bootstrap/Form';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 import Carousel from 'react-bootstrap/Carousel';
 import { BaseImageUrl } from '../../app.constants';
-
+// Permission Receipt
 export default function PermissionModal(props) {
-  const { data, campaign } = props;
+  const { data, campaign, modalType } = props;
   const BookingApi = BookinPlanActions();
   const [imageList, setImageList] = useState([]);
   const [uploadFileData, setUploadFileData] = useState({
@@ -18,8 +18,11 @@ export default function PermissionModal(props) {
     object_id: data?.object_id,
     supplier_name: data?.name,
   });
-  async function getPermissionImages(data) {
-    let getData = await BookingApi.getPermissionBoxImages(data);
+  async function getImagesList(data) {
+    let getData =
+      modalType === 'Permission'
+        ? await BookingApi.getPermissionBoxImages(data)
+        : await BookingApi.getReceiptImages(data);
     setImageList(getData);
   }
 
@@ -33,12 +36,15 @@ export default function PermissionModal(props) {
     formData.append('object_id', uploadFileData?.object_id);
     formData.append('supplier_name', uploadFileData?.supplier_name);
 
-    BookingApi.postPermissionBoxImages(formData);
+    modalType === 'Permission'
+      ? BookingApi.postPermissionBoxImages(formData)
+      : BookingApi.postReceiptImages(formData);
+
     setUploadFileData({ ...uploadFileData, comment: '', file: '' });
   }
   useEffect(() => {
     let param = { supplier_id: data?.object_id, campaign_id: campaign?.proposal_id };
-    getPermissionImages(param);
+    getImagesList(param);
   }, [1]);
   return (
     <>

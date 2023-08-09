@@ -28,6 +28,7 @@ import TableHeader from '../../Table/TableHeader/TableHeader';
 import InventoryModal from './InventoryModal';
 import DescriptionHeader from '../../common/DescriptionHeader/DescriptionHeader';
 import { BookingFunctions } from './BookingFunctions';
+import DataNotFound from '../../common/DataNotFound/DataNotFound';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -494,7 +495,12 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'Receipt' });
+                            setShowModal({
+                              show: true,
+                              type: 'Receipt',
+                              rowData: data,
+                              campaign: CampaignInventoryList?.campaign,
+                            });
                           }}
                         >
                           View/Add
@@ -532,6 +538,8 @@ export default function BookingPlan() {
                     </tr>
                   );
                 })}
+              {(!CampaignInventoryList.shortlisted_suppliers ||
+                CampaignInventoryList.shortlisted_suppliers.length < 0) && <DataNotFound />}
             </tbody>
           </Table>
           {CampaignInventoryList &&
@@ -654,9 +662,9 @@ export default function BookingPlan() {
                   : showModal.type == 'PaymentDetail'
                   ? 'Payment Detail'
                   : showModal.type == 'Permission'
-                  ? 'Permission Box Image Details for HDFC Distributor 3'
+                  ? 'Permission Box Image Details'
                   : showModal.type == 'Receipt'
-                  ? 'Receipt Box Image Details for HDFC Distributor 3'
+                  ? 'Receipt Box Image Details'
                   : showModal.type == 'ViewPhase'
                   ? 'View Phase'
                   : showModal.type == 'AddSupplier'
@@ -679,11 +687,15 @@ export default function BookingPlan() {
                 <CommentModal data={showModal.rowData} commentType={showModal.type} />
               ) : showModal.type == 'PaymentDetail' ? (
                 <PaymentDetailModal />
-              ) : showModal.type == 'Permission' ? (
-                <PermissionModal data={showModal.rowData} campaign={showModal.campaign} />
-              ) : showModal.type == 'Receipt' ? (
-                <ReceiptModal />
-              ) : showModal.type == 'ViewPhase' ? (
+              ) : showModal.type == 'Permission' || showModal.type == 'Receipt' ? (
+                <PermissionModal
+                  data={showModal.rowData}
+                  campaign={showModal.campaign}
+                  modalType={showModal.type}
+                />
+              ) : // ) : showModal.type == 'Receipt' ? (
+              //   <ReceiptModal />
+              showModal.type == 'ViewPhase' ? (
                 <ViewPhaseModal />
               ) : showModal.type == 'AddSupplier' ? (
                 <AddSupplierModal />
