@@ -25,6 +25,7 @@ import AddSupplierModal from './AddSupplierModal';
 import ImportSheetModal from './ImportSheetModal';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import TableHeader from '../../Table/TableHeader/TableHeader';
+import InventoryModal from './InventoryModal';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -91,6 +92,8 @@ export default function BookingPlan() {
   useEffect(() => {
     getCampaignInventories(filterData);
     getHeaderDataList();
+    BookingApi.getOrganisationList();
+    BookingApi.getUserMinimalList();
   }, [1]);
 
   return (
@@ -135,7 +138,7 @@ export default function BookingPlan() {
             </Button>
           </span>
         </div>
-        <div className="booking-plan-table book-height" >
+        <div className="booking-plan-table book-height">
           {/* id={tableName} ref={tableRef} */}
           <Table responsive className="display booking-table " width="100%">
             <thead>
@@ -196,7 +199,7 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'Add-Brand' });
+                            setShowModal({ show: true, type: 'Add-Brand', rowData: data });
                           }}
                         >
                           Add
@@ -244,7 +247,12 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'AssignUser' });
+                            setShowModal({
+                              show: true,
+                              type: 'AssignUser',
+                              rowData: data,
+                              campaign: CampaignInventoryList?.campaign,
+                            });
                           }}
                         >
                           Assign User
@@ -333,7 +341,15 @@ export default function BookingPlan() {
                         <Form.Control type="date" placeholder="Next Action Date" />
                       </td>
                       <td>
-                        <ListGroup>
+                        <Button
+                          variant="primary"
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'Inventory', rowData: data });
+                          }}
+                        >
+                          Inventory
+                        </Button>
+                        {/* <ListGroup>
                           {data.shortlisted_inventories &&
                             Object.keys(data.shortlisted_inventories).map((inventory, index) => {
                               return (
@@ -350,7 +366,7 @@ export default function BookingPlan() {
                                 </>
                               );
                             })}
-                        </ListGroup>
+                        </ListGroup> */}
                       </td>
                       <td>70</td>
                       <td>
@@ -393,17 +409,17 @@ export default function BookingPlan() {
                       <td>
                         <Form>
                           <div className="mb-3 b-form-maindiv">
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id={`check-api-NFFT`}>
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>NFFT</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
                             </Form.Check>
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id={`check-api-CHEQUE`}>
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>CHEQUE</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
                             </Form.Check>
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id={`check-api-CASH`}>
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>CASH</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
@@ -623,11 +639,11 @@ export default function BookingPlan() {
             </Modal.Header>
             <Modal.Body>
               {showModal.type == 'Add-Brand' ? (
-                <AddBrandModal />
+                <AddBrandModal data={showModal.rowData} />
               ) : showModal.type == 'RelationshipData' ? (
                 <RelationshipModal data={showModal.rowData} />
               ) : showModal.type == 'AssignUser' ? (
-                <AssignUserModal />
+                <AssignUserModal data={showModal.rowData} campaign={showModal.campaign} />
               ) : showModal.type == 'ContactDetails' ? (
                 <ContactDetailModal data={showModal.rowData} />
               ) : showModal.type == 'externalComments' || showModal.type == 'internalComments' ? (
@@ -644,6 +660,8 @@ export default function BookingPlan() {
                 <AddSupplierModal />
               ) : showModal.type == 'ImportSheet' ? (
                 <ImportSheetModal />
+              ) : showModal.type == 'Inventory' ? (
+                <InventoryModal />
               ) : (
                 ''
               )}

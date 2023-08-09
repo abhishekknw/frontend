@@ -38,3 +38,15 @@ export default function SelectDropdown(props) {
 }
 
 // rowData props use for table 
+{
+  /* <SelectDropdown
+optionsData={supplierTypeCode}
+selectedValue={
+  supplierTypeCode.find((item) => item.value === filters.supplier_type).value
+}
+placeholder="Supplier Type"
+label="Supplier Type"
+id="supplier_type"
+handleSelect={handleSupplier}
+/> */
+}

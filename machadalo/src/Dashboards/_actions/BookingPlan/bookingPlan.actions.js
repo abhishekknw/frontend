@@ -2,7 +2,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { CampaignInventoryAtom, HeaderDataListAtom } from '../../_states';
+import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom } from '../../_states';
 import { errorAtom } from '../../_states/alert';
 
 const BookinPlanActions = () => {
@@ -10,6 +10,8 @@ const BookinPlanActions = () => {
     const alertActions = useAlertActions();
     const setCampaignInventory = useSetRecoilState(CampaignInventoryAtom);
     const setHeaderDataList = useSetRecoilState(HeaderDataListAtom);
+    const setOrganisationList = useSetRecoilState(OrganisationListAtom);
+    const setUserMinimalList = useSetRecoilState(UserMinimalListAtom);
 
 
     const getCampaignInventories = (data) => {
@@ -42,27 +44,51 @@ const BookinPlanActions = () => {
 
     const getCommetByShortlistedId = (data, type) => {
         let params = `shortlisted_spaces_id=${data?.id}&related_to=${type === "externalComments" ? "EXTERNAL" : "INTERNAL"}`
-        return fetchWrapper.get(`v0/ui/website/HDFHDF0789/comment/?${params}`).then((res) => {
+        return fetchWrapper.get(`v0/ui/website/${data?.proposal}/comment/?${params}`).then((res) => {
             return res.data.general;
         });
     }
     const postCommentByShortlistedId = (data) => {
         return fetchWrapper.post(`v0/ui/website/HDFHDF0789/comment/`, data).then((res) => {
-            console.log(res, "1111111111111")
             if (res.status) {
                 alertActions.success(res.data);
-                // let newList = invoiceProposals.list.map((item, key) => {
-                //     if (item.proposal.proposal_id === data.proposal.proposal_id) {
-                //         return { ...item, proposal: { ...item.proposal, campaign_state: 'PNC' } }
-                //     }
-                //     else {
-                //         return item;
-                //     }
-                // })
-                // setInvoiceProposals({ ...invoiceProposals, list: newList });
             }
             else {
                 alertActions.error(res.data);
+            }
+        });
+    }
+
+    const getOrganisationList = (id) => {
+        return fetchWrapper.get(`${Apis.Get_Organisation_List}`).then((res) => {
+            if (res.status) {
+                let newList = res.data.map(item => ({ ...item, label: item?.name, value: item?.organisation_id }));
+                setOrganisationList(newList);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        });
+    }
+    const postBrandAssignment = (data) => {
+        return fetchWrapper.post(`${Apis.Post_Brand_Assignment}`, data).then((res) => {
+            if (res.status) {
+                alertActions.success("Assigned successfully");
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        });
+    }
+
+    const getUserMinimalList = () => {
+        return fetchWrapper.get(`${Apis.Get_User_Minimal_List}`).then((res) => {
+            if (res.status) {
+                let newList = res.data.map(item => ({ ...item, label: item?.username, value: item?.id }));
+                setUserMinimalList(newList)
+            }
+            else {
+                alertActions.error(Labels.Error);
             }
         });
     }
@@ -73,7 +99,10 @@ const BookinPlanActions = () => {
         getRelationShipData,
         getContactDetailsData,
         getCommetByShortlistedId,
-        postCommentByShortlistedId
+        postCommentByShortlistedId,
+        getOrganisationList,
+        getUserMinimalList,
+        postBrandAssignment,
     };
 }
 export { BookinPlanActions };

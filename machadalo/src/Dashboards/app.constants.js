@@ -22,10 +22,12 @@ export const Apis = {
     Get_Invoice_Proposals: "v0/ui/website/proposal/invoice_proposals/",
     Get_Organisations: 'v0/ui/website/organisation/get_organisations_for_assignment/',
     Get_User_Minimal_List: 'v0/ui/website/get-users-minimal-list/',
+    Get_Organisation_List: '/v0/ui/website/organisation/',
 
     // Booking Plan
     Get_Header_Data: '/v0/ui/getHeaderData',
     Get_Relationship_Data: "v0/ui/website/get-relationship-and-past-campaigns-data/?",
     Get_Contact_Details: 'v0/ui/website/inventory-contact-details/?',
+    Post_Brand_Assignment: "v0/ui/website/brand-assignment/",
 }
 
