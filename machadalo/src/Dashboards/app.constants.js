@@ -29,5 +29,6 @@ export const Apis = {
     Get_Relationship_Data: "v0/ui/website/get-relationship-and-past-campaigns-data/?",
     Get_Contact_Details: 'v0/ui/website/inventory-contact-details/?',
     Post_Brand_Assignment: "v0/ui/website/brand-assignment/",
+    Post_Supplier_Assignment: "v0/ui/website/supplier-assignment/",
 }
 

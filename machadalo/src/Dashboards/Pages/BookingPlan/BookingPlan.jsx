@@ -26,9 +26,12 @@ import ImportSheetModal from './ImportSheetModal';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import TableHeader from '../../Table/TableHeader/TableHeader';
 import InventoryModal from './InventoryModal';
+import DescriptionHeader from '../../common/DescriptionHeader/DescriptionHeader';
+import { BookingFunctions } from './BookingFunctions';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
+  const UpdateData = BookingFunctions();
   // const tableRef = useRef();
   // const tableName = 'bookingPlanTable';
   const [columnsList, setColumnList] = useState({});
@@ -85,10 +88,6 @@ export default function BookingPlan() {
     console.log(data, '2222222222222');
   }
 
-  function handleSelect(e) {
-    console.log(e, '111111111111111111');
-  }
-
   useEffect(() => {
     getCampaignInventories(filterData);
     getHeaderDataList();
@@ -96,11 +95,31 @@ export default function BookingPlan() {
     BookingApi.getUserMinimalList();
   }, [1]);
 
+  const descriptionData = [
+    {
+      label: 'Campaign Id',
+      value: CampaignInventoryList.campaign?.proposal_id,
+    },
+    {
+      label: 'Campaign Name',
+      value: CampaignInventoryList?.campaign?.name,
+    },
+    {
+      label: 'BD Owner',
+      value: CampaignInventoryList?.campaign?.created_by,
+    },
+    {
+      label: 'Campaign State',
+      value: CampaignInventoryList?.campaign?.campaign_state,
+    },
+  ];
+
   return (
     <>
       <div className="booking-plan-wrapper ">
         <TableHeader headerValue="Booking Plan" />
-        <div className="status-bar mb-2 sticky-thc">
+        <DescriptionHeader data={descriptionData} />
+        {/* <div className="status-bar mb-2 sticky-thc">
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
             <span className="status-data">{CampaignInventoryList.campaign?.proposal_id}</span>
@@ -117,7 +136,7 @@ export default function BookingPlan() {
             <span className="status-lable">Campaign State:</span>
             <span className="status-data">{CampaignInventoryList.campaign?.campaign_state}</span>
           </div>
-        </div>
+        </div> */}
         <div>
           <span>
             <Button
@@ -207,7 +226,7 @@ export default function BookingPlan() {
                       </td>
                       <td>
                         <a className="anchor-list">{data.name}</a>
-                        <span>({data.quality_rating})</span>
+                        {data?.quality_rating && <span>{data?.quality_rating}</span>}
                       </td>
                       <td>{data.supplier_id}</td>
                       <td>{data.supplierCode}</td>
@@ -259,7 +278,7 @@ export default function BookingPlan() {
                         </Button>
                       </td>
                       <td>
-                        <Select
+                        {/* <Select
                           className=""
                           label="Booking Priority"
                           id="BookingPriority"
@@ -268,15 +287,16 @@ export default function BookingPlan() {
                           value={bookingPriorityOption.filter(
                             (obj) => obj.value === data.booking_priority
                           )}
-                        />
-                        {/* <SelectDropdown
+                        /> */}
+                        <SelectDropdown
                           optionsData={bookingPriorityOption}
                           selectedValue={data.booking_priority}
+                          rowData={data}
                           placeholder="Booking Priority"
                           label="Booking Priority"
                           id="BookingPriority"
-                          handleSelect={handleSelect}
-                        /> */}
+                          handleSelect={UpdateData.handleSelectPriority}
+                        />
                       </td>
                       <td>
                         <Select
@@ -509,12 +529,16 @@ export default function BookingPlan() {
                 })}
             </tbody>
           </Table>
-          <ReactPagination
-            pageNo={filterData.pageNo}
-            pageSize={10}
-            totalItems={CampaignInventoryList.total_count}
-            onPageChange={handlePageChange}
-          />
+          {CampaignInventoryList &&
+            CampaignInventoryList.shortlisted_suppliers &&
+            CampaignInventoryList.total_count > 10 && (
+              <ReactPagination
+                pageNo={filterData.pageNo}
+                pageSize={10}
+                totalItems={CampaignInventoryList.total_count}
+                onPageChange={handlePageChange}
+              />
+            )}
         </div>
 
         <div

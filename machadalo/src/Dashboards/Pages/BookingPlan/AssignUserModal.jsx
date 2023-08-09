@@ -4,20 +4,22 @@ import Select from 'react-select';
 import { useRecoilValue } from 'recoil';
 import { UserMinimalListAtom } from '../../_states';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
-
+import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 export default function AssignUserModal(props) {
-  const { data } = props;
-  console.log(data, 'q222222222222222');
+  const BookingApi = BookinPlanActions();
+  const { data, campaign } = props;
   const userMinimalList = useRecoilValue(UserMinimalListAtom);
   const [postData, setPostData] = useState({
     assigned_by: '',
     assigned_to_ids: [],
-    campaign_id: '',
+    campaign_id: campaign?.proposal_id,
   });
-  console.log(postData, 'postData');
-
   function handleSelect(select) {
-    console.log(select);
+    console.log(select.value);
+    setPostData({
+      ...postData,
+      assigned_to_ids: [select.value],
+    });
   }
 
   return (
@@ -27,7 +29,7 @@ export default function AssignUserModal(props) {
           <Form.Label>Supplier Type</Form.Label>
           <SelectDropdown
             optionsData={userMinimalList}
-            selectedValue={postData.brand_organisation_id}
+            selectedValue={postData.assigned_to_ids[0]}
             placeholder="Select Organisation"
             label="Select Organisation"
             id="SelectOrganisation"
@@ -43,7 +45,13 @@ export default function AssignUserModal(props) {
           /> */}
         </Form.Group>
         <div>
-          <Button className="btn btn-primary" type="button">
+          <Button
+            className="btn btn-primary"
+            type="button"
+            onClick={(e) => {
+              BookingApi.postSupplierAssignment(postData);
+            }}
+          >
             Assign User
           </Button>
         </div>
