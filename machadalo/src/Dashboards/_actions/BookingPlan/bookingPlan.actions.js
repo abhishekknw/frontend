@@ -2,7 +2,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom } from '../../_states';
+import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom } from '../../_states';
 import { errorAtom } from '../../_states/alert';
 
 const BookinPlanActions = () => {
@@ -11,6 +11,7 @@ const BookinPlanActions = () => {
     const setCampaignInventory = useSetRecoilState(CampaignInventoryAtom);
     const setHeaderDataList = useSetRecoilState(HeaderDataListAtom);
     const setOrganisationList = useSetRecoilState(OrganisationListAtom);
+    const setUserMinimalList = useSetRecoilState(UserMinimalListAtom);
 
 
     const getCampaignInventories = (data) => {
@@ -58,7 +59,7 @@ const BookinPlanActions = () => {
         });
     }
 
-    const getUserMinimalList = (id) => {
+    const getOrganisationList = (id) => {
         return fetchWrapper.get(`${Apis.Get_Organisation_List}`).then((res) => {
             if (res.status) {
                 let newList = res.data.map(item => ({ ...item, label: item?.name, value: item?.organisation_id }));
@@ -80,6 +81,18 @@ const BookinPlanActions = () => {
         });
     }
 
+    const getUserMinimalList = () => {
+        return fetchWrapper.get(`${Apis.Get_User_Minimal_List}`).then((res) => {
+            if (res.status) {
+                let newList = res.data.map(item => ({ ...item, label: item?.username, value: item?.id }));
+                setUserMinimalList(newList)
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        });
+    }
+
     return {
         getCampaignInventories,
         getHeaderData,
@@ -87,6 +100,7 @@ const BookinPlanActions = () => {
         getContactDetailsData,
         getCommetByShortlistedId,
         postCommentByShortlistedId,
+        getOrganisationList,
         getUserMinimalList,
         postBrandAssignment,
     };

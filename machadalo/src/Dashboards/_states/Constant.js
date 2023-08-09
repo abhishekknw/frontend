@@ -39,5 +39,10 @@ const OrganisationListAtom = atom({
   default: []
 })
 
+const UserMinimalListAtom = atom({
+  key: 'UserMinimalListKey',
+  default: []
+})
 
-export { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom, OrganisationListAtom };
+
+export { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom, OrganisationListAtom, UserMinimalListAtom };

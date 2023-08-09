@@ -91,6 +91,7 @@ export default function BookingPlan() {
   useEffect(() => {
     getCampaignInventories(filterData);
     getHeaderDataList();
+    BookingApi.getOrganisationList();
     BookingApi.getUserMinimalList();
   }, [1]);
 
@@ -245,7 +246,12 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'AssignUser' });
+                            setShowModal({
+                              show: true,
+                              type: 'AssignUser',
+                              rowData: data,
+                              campaign: CampaignInventoryList?.campaign,
+                            });
                           }}
                         >
                           Assign User
@@ -628,7 +634,7 @@ export default function BookingPlan() {
               ) : showModal.type == 'RelationshipData' ? (
                 <RelationshipModal data={showModal.rowData} />
               ) : showModal.type == 'AssignUser' ? (
-                <AssignUserModal />
+                <AssignUserModal data={showModal.rowData} campaign={showModal.campaign} />
               ) : showModal.type == 'ContactDetails' ? (
                 <ContactDetailModal data={showModal.rowData} />
               ) : showModal.type == 'externalComments' || showModal.type == 'internalComments' ? (
