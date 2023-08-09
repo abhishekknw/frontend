@@ -100,9 +100,28 @@ const BookinPlanActions = () => {
             else {
                 alertActions.error(Labels.Error);
             }
+        });           
+    }
+    const getPermissionBoxImages = (data) => {
+        return fetchWrapper.get(`${Apis.Get_Permission_Box_Images}?campaign_id=${data?.campaign_id}&supplier_id=${data?.supplier_id}`).then((res) => {
+            if (res.status) {
+                console.log(res)
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
         });
     }
-
+    const postPermissionBoxImages = (file) => {
+        return fetchWrapper.post(`v0/ui/website/hashtag-images/${'HDFHDF0789'}/${Apis.Post_permission_Box_Images}`, file, true).then((res) => {
+            if (res?.status) {
+                alertActions.error(Labels.Upload_Success);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        })
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -113,7 +132,9 @@ const BookinPlanActions = () => {
         getOrganisationList,
         getUserMinimalList,
         postBrandAssignment,
-        postSupplierAssignment
+        postSupplierAssignment,
+        getPermissionBoxImages,
+        postPermissionBoxImages
     };
 }
 export { BookinPlanActions };

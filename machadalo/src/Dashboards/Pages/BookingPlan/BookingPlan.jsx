@@ -479,7 +479,12 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'Permission' });
+                            setShowModal({
+                              show: true,
+                              type: 'Permission',
+                              rowData: data,
+                              campaign: CampaignInventoryList?.campaign,
+                            });
                           }}
                         >
                           View/Add
@@ -675,7 +680,7 @@ export default function BookingPlan() {
               ) : showModal.type == 'PaymentDetail' ? (
                 <PaymentDetailModal />
               ) : showModal.type == 'Permission' ? (
-                <PermissionModal />
+                <PermissionModal data={showModal.rowData} campaign={showModal.campaign} />
               ) : showModal.type == 'Receipt' ? (
                 <ReceiptModal />
               ) : showModal.type == 'ViewPhase' ? (
