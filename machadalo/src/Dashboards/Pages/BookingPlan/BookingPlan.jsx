@@ -25,6 +25,7 @@ import AddSupplierModal from './AddSupplierModal';
 import ImportSheetModal from './ImportSheetModal';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import TableHeader from '../../Table/TableHeader/TableHeader';
+import InventoryModal from './InventoryModal';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -137,7 +138,7 @@ export default function BookingPlan() {
             </Button>
           </span>
         </div>
-        <div className="booking-plan-table book-height" >
+        <div className="booking-plan-table book-height">
           {/* id={tableName} ref={tableRef} */}
           <Table responsive className="display booking-table " width="100%">
             <thead>
@@ -340,7 +341,15 @@ export default function BookingPlan() {
                         <Form.Control type="date" placeholder="Next Action Date" />
                       </td>
                       <td>
-                        <ListGroup>
+                        <Button
+                          variant="primary"
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'Inventory', rowData: data });
+                          }}
+                        >
+                          Inventory
+                        </Button>
+                        {/* <ListGroup>
                           {data.shortlisted_inventories &&
                             Object.keys(data.shortlisted_inventories).map((inventory, index) => {
                               return (
@@ -357,7 +366,7 @@ export default function BookingPlan() {
                                 </>
                               );
                             })}
-                        </ListGroup>
+                        </ListGroup> */}
                       </td>
                       <td>70</td>
                       <td>
@@ -651,6 +660,8 @@ export default function BookingPlan() {
                 <AddSupplierModal />
               ) : showModal.type == 'ImportSheet' ? (
                 <ImportSheetModal />
+              ) : showModal.type == 'Inventory' ? (
+                <InventoryModal />
               ) : (
                 ''
               )}
