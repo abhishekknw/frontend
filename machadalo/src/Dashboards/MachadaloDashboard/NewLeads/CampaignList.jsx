@@ -214,6 +214,7 @@ export default function CampaignList(props) {
           </Dropdown> */}
           <div className="me-4">
             <SelectDropdown
+              className="testing"
               optionsData={dropdownOption}
               selectedValue={filters.lead_type}
               placeholder="Lead Type"

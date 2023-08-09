@@ -97,9 +97,9 @@ export default function BookingPlan() {
 
   return (
     <>
-      <div className="booking-plan-wrapper">
+      <div className="booking-plan-wrapper ">
         <TableHeader headerValue="Booking Plan" />
-        <div className="status-bar mb-2">
+        <div className="status-bar mb-2 sticky-thc">
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
             <span className="status-data">{CampaignInventoryList.campaign?.proposal_id}</span>
@@ -137,9 +137,9 @@ export default function BookingPlan() {
             </Button>
           </span>
         </div>
-        <div className="booking-plan-table">
+        <div className="booking-plan-table book-height" >
           {/* id={tableName} ref={tableRef} */}
-          <Table responsive className="display booking-table" width="100%">
+          <Table responsive className="display booking-table " width="100%">
             <thead>
               <tr>
                 <th>{columnsList.srNo}</th>

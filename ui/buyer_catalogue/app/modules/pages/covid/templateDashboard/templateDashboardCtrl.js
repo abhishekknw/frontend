@@ -19,7 +19,7 @@
         link: fn_link
       }
     }])
-    .controller('TemplateDashboardCtrl', function (machadaloHttp, $scope, NgMap, $rootScope, baConfig, colorHelper, AuthService, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window, socketService) {
+    .controller('TemplateDashboardCtrl', function (machadaloHttp, $scope, NgMap, $rootScope, baConfig, colorHelper, AuthService, DashboardService, templateDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
       $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
       $scope.itemsByPage = 15;
       $scope.permissions = permissions.dashboard;
