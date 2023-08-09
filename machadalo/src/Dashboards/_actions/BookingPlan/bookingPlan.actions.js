@@ -115,7 +115,7 @@ const BookinPlanActions = () => {
     const postPermissionBoxImages = (file) => {
         return fetchWrapper.post(`v0/ui/website/hashtag-images/${'HDFHDF0789'}/${Apis.Post_permission_Box_Images}`, file, true).then((res) => {
             if (res?.status) {
-                alertActions.error(Labels.Upload_Success);
+                alertActions.success(Labels.Upload_Success);
             }
             else {
                 alertActions.error(Labels.Error);

@@ -13,6 +13,8 @@ export default function PermissionModal(props) {
     hashtag: 'Permission Box',
     campaign_name: campaign?.name,
     supplier_type_code: data?.supplierCode,
+    object_id: data?.object_id,
+    supplier_name: data?.name,
   });
   async function getPermissionImages(data) {
     let getData = await BookingApi.getPermissionBoxImages(data);
@@ -25,6 +27,9 @@ export default function PermissionModal(props) {
     formData.append('hashtag', uploadFileData?.hashtag);
     formData.append('campaign_name', uploadFileData?.campaign_name);
     formData.append('supplier_type_code', uploadFileData?.supplier_type_code);
+    formData.append('object_id', uploadFileData?.object_id);
+    formData.append('supplier_name', uploadFileData?.supplier_name);
+
     BookingApi.postPermissionBoxImages(formData);
     setUploadFileData({ ...uploadFileData, comment: '', file: '' });
   }
@@ -73,7 +78,9 @@ export default function PermissionModal(props) {
   );
 }
 // file: (binary)
-// comment: test
+// comment: 
+// object_id: MUMAECKRSHD3
 // hashtag: Permission Box
 // campaign_name: HDFC Retail Channels
+// supplier_name: HDFC Distributor 3
 // supplier_type_code: RS
