@@ -207,7 +207,7 @@ export default function BookingPlan() {
                       </td>
                       <td>
                         <a className="anchor-list">{data.name}</a>
-                        <span>({data.quality_rating})</span>
+                        {data?.quality_rating && <span>{data?.quality_rating}</span>}
                       </td>
                       <td>{data.supplier_id}</td>
                       <td>{data.supplierCode}</td>

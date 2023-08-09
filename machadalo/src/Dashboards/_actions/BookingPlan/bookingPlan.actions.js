@@ -92,6 +92,16 @@ const BookinPlanActions = () => {
             }
         });
     }
+    const postSupplierAssignment = (data) => {
+        return fetchWrapper.post(`${Apis.Post_Supplier_Assignment}`, data).then((res) => {
+            if (res.status) {
+                alertActions.success("Assigned successfully");
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        });
+    }
 
     return {
         getCampaignInventories,
@@ -103,6 +113,7 @@ const BookinPlanActions = () => {
         getOrganisationList,
         getUserMinimalList,
         postBrandAssignment,
+        postSupplierAssignment
     };
 }
 export { BookinPlanActions };
