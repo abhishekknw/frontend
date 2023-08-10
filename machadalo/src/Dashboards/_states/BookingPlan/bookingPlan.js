@@ -10,4 +10,8 @@ const HeaderDataListAtom = atom({
     default: {}
 });
 
-export { CampaignInventoryAtom, HeaderDataListAtom }
+const SupplierPhaseListAtom = atom({
+    key: 'SupplierPhaseListKey',
+    default: []
+})
+export { CampaignInventoryAtom, HeaderDataListAtom, SupplierPhaseListAtom }

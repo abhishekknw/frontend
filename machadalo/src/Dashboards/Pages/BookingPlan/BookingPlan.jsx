@@ -9,7 +9,7 @@ import { Table, Button, Form, Modal, ListGroup } from 'react-bootstrap';
 import Select from 'react-select';
 import { IoClose } from 'react-icons/io5';
 import { BsSliders2 } from 'react-icons/bs';
-import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
+import { BookinPlanActions } from '../../_actions';
 import { CampaignInventoryAtom } from '../../_states';
 import AddBrandModal from './AddBrandModal';
 import RelationshipModal from './RelationshipModal';

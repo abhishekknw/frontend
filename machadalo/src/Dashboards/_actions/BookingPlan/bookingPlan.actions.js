@@ -2,7 +2,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom } from '../../_states';
+import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom, SupplierPhaseListAtom } from '../../_states';
 import { errorAtom } from '../../_states/alert';
 
 const BookinPlanActions = () => {
@@ -12,6 +12,7 @@ const BookinPlanActions = () => {
     const setHeaderDataList = useSetRecoilState(HeaderDataListAtom);
     const setOrganisationList = useSetRecoilState(OrganisationListAtom);
     const setUserMinimalList = useSetRecoilState(UserMinimalListAtom);
+    const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom)
     const CampaignProposalId = 'HDFHDF0789';
 
 
@@ -143,6 +144,16 @@ const BookinPlanActions = () => {
             }
         })
     }
+    const getSupplierPhase = () => {
+        return fetchWrapper.get(`${Apis.Get_Supplier_Phase}?campaign_id=${CampaignProposalId}`).then((res) => {
+            if (res?.status) {
+                setSupplierPhaseList(res?.data);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        })
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -157,7 +168,8 @@ const BookinPlanActions = () => {
         getPermissionBoxImages,
         postPermissionBoxImages,
         getReceiptImages,
-        postReceiptImages
+        postReceiptImages,
+        getSupplierPhase
     };
 }
 export { BookinPlanActions };
