@@ -17,14 +17,13 @@ export default function ViewPhaseModal() {
     {
       title: '#',
       accessKey: 'index',
-      sort: false,
       action: function (row, index) {
         return index + 1;
       },
     },
     {
       title: 'Phases',
-      accessKey: 'phase_no',
+      accessKey: 'id',
       sort: false,
     },
     {
@@ -53,7 +52,6 @@ export default function ViewPhaseModal() {
     },
   ];
   console.log(supplierPhaseList, 'supplierPhaseList');
-
   useEffect(() => {
     getSupplierPhase();
   }, []);
