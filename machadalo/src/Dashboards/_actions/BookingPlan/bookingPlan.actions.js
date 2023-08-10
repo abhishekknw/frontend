@@ -12,11 +12,12 @@ const BookinPlanActions = () => {
     const setHeaderDataList = useSetRecoilState(HeaderDataListAtom);
     const setOrganisationList = useSetRecoilState(OrganisationListAtom);
     const setUserMinimalList = useSetRecoilState(UserMinimalListAtom);
+    const CampaignProposalId = 'HDFHDF0789';
 
 
     const getCampaignInventories = (data) => {
         let params = 'page=' + (data.pageNo + 1) + "&supplier_type_code=" + data.supplierCode;
-        return fetchWrapper.get(`v0/ui/website/HDFHDF0789/campaign-inventories/?${params}`).then((res) => {
+        return fetchWrapper.get(`v0/ui/website/${CampaignProposalId}/campaign-inventories/?${params}`).then((res) => {
             setCampaignInventory(res.data)
         });
     };
@@ -49,7 +50,7 @@ const BookinPlanActions = () => {
         });
     }
     const postCommentByShortlistedId = (data) => {
-        return fetchWrapper.post(`v0/ui/website/HDFHDF0789/comment/`, data).then((res) => {
+        return fetchWrapper.post(`v0/ui/website/${CampaignProposalId}/comment/`, data).then((res) => {
             if (res.status) {
                 alertActions.success(res.data);
             }
@@ -113,7 +114,7 @@ const BookinPlanActions = () => {
         });
     }
     const postPermissionBoxImages = (file) => {
-        return fetchWrapper.post(`v0/ui/website/hashtag-images/${'HDFHDF0789'}/${Apis.Post_permission_Box_Images}`, file, true).then((res) => {
+        return fetchWrapper.post(`v0/ui/website/hashtag-images/${CampaignProposalId}/${Apis.Post_permission_Box_Images}`, file, true).then((res) => {
             if (res?.status) {
                 alertActions.success(Labels.Upload_Success);
             }
@@ -133,7 +134,7 @@ const BookinPlanActions = () => {
         });
     }
     const postReceiptImages = (file) => {
-        return fetchWrapper.post(`v0/ui/website/hashtag-images/${'HDFHDF0789'}/${Apis.Post_Receipt_Images}`, file, true).then((res) => {
+        return fetchWrapper.post(`v0/ui/website/hashtag-images/${CampaignProposalId}/${Apis.Post_Receipt_Images}`, file, true).then((res) => {
             if (res?.status) {
                 alertActions.success(Labels.Upload_Success);
             }

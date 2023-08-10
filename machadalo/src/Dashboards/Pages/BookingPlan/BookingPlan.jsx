@@ -99,7 +99,7 @@ export default function BookingPlan() {
   const descriptionData = [
     {
       label: 'Campaign Id',
-      value: CampaignInventoryList.campaign?.proposal_id,
+      value: CampaignInventoryList?.campaign?.proposal_id,
     },
     {
       label: 'Campaign Name',
