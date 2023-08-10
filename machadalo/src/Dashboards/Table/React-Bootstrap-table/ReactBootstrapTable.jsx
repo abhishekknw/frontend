@@ -23,7 +23,7 @@ export default function ReactBootstrapTable(props) {
 
   return (
     <div>
-      <Table responsive className="react-bootstrap-table v-middle">
+      <Table responsive className="react-bootstrap-custom-table v-middle">
         <thead>
           <tr>
             {headerData.map((header, index) => {
@@ -56,7 +56,7 @@ export default function ReactBootstrapTable(props) {
                     <td key={index + '' + rowIndex}>
                       {header?.accessKey == 'index'
                         ? header?.action(data, rowIndex)
-                        : header?.accessKey == 'action'
+                        : header?.action
                         ? header?.action(data)
                         : data[header?.accessKey]}
                     </td>
