@@ -13,7 +13,11 @@ const CampaignListActions = () => {
     const getCampaignAssignment = (data) => {
         let params = "?to=" + 339 + '&include_assigned_by=' + 0 + '&fetch_all=' + 0 + "&next_page=" + 1 + "&search=" + '';
         return fetchWrapper.get(`${Apis.Get_Campaign_Assignment}${params}`).then((res) => {
-            res?.status ? setCampaignList(res?.data) : alertActions.error(Labels.Error);
+            if (res?.status) {
+                setCampaignList(res?.data)
+            } else {
+                alertActions.error(Labels.Error);
+            }
         });
     }
     return {
