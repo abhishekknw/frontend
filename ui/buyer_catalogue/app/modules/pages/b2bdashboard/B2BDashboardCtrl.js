@@ -1032,6 +1032,7 @@
       if ($scope.clientStausListData.length == 0) {
         $scope.clientStatusList();
       }
+      user = !user ? "" : user;
       B2BDashboardService.leadDecisionPanding(value, page, user, search)
         .then(function onSuccess(response) {
           $scope.leadDecisionPandingData = response.data.data.lead;
