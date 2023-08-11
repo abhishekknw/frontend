@@ -179,6 +179,7 @@ export default function ViewLeadDetailTable(props) {
                 </Dropdown.Menu>
               </Dropdown> */}
               <SelectDropdown
+                className="table-dropdown-status"
                 optionsData={clientStatusList}
                 selectedValue={1}
                 placeholder="Client Status"

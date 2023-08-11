@@ -37,6 +37,7 @@ export const Apis = {
     Post_permission_Box_Images: "upload_permission_box_image/",
     Get_Receipt_Images: 'v0/ui/website/hashtag-images/get_receipt_images/',
     Post_Receipt_Images: 'upload_receipt_image/',
-    Get_Supplier_Phase: 'v0/ui/website/supplier-phase/'
+    Get_Supplier_Phase: 'v0/ui/website/supplier-phase/',
+    Get_Booking_Status: '/v0/ui/website/booking-status/',
 }
 

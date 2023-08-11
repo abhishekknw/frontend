@@ -94,6 +94,7 @@ export default function BookingPlan() {
     getHeaderDataList();
     BookingApi.getOrganisationList();
     BookingApi.getUserMinimalList();
+    BookingApi.getBookingStatus();
   }, [1]);
 
   const descriptionData = [
@@ -120,24 +121,6 @@ export default function BookingPlan() {
       <div className="booking-plan-wrapper ">
         <TableHeader headerValue="Booking Plan" />
         <DescriptionHeader data={descriptionData} />
-        {/* <div className="status-bar mb-2 sticky-thc">
-          <div className="status-bar-item">
-            <span className="status-lable">Campaign Id:</span>
-            <span className="status-data">{CampaignInventoryList.campaign?.proposal_id}</span>
-          </div>
-          <div className="status-bar-item">
-            <span className="status-lable">Campaign Name:</span>
-            <span className="status-data">{CampaignInventoryList.campaign?.name}</span>
-          </div>
-          <div className="status-bar-item">
-            <span className="status-lable">BD Owner:</span>
-            <span className="status-data">{CampaignInventoryList.campaign?.created_by}</span>
-          </div>
-          <div className="status-bar-item">
-            <span className="status-lable">Campaign State:</span>
-            <span className="status-data">{CampaignInventoryList.campaign?.campaign_state}</span>
-          </div>
-        </div> */}
         <div>
           <span>
             <Button
@@ -201,12 +184,6 @@ export default function BookingPlan() {
                 <th>{columnsList.completion_status}</th>
                 <th>{columnsList.delete_action}</th>
                 <th>Update</th>
-
-                {/* {columnsList &&
-                columnsList.length > 0 &&
-                columnsList.map((item, index) => {
-                  return <th key={index}>{item.title}</th>;
-                })} */}
               </tr>
             </thead>
             <tbody>

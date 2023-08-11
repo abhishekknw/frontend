@@ -14,4 +14,10 @@ const SupplierPhaseListAtom = atom({
     key: 'SupplierPhaseListKey',
     default: []
 })
-export { CampaignInventoryAtom, HeaderDataListAtom, SupplierPhaseListAtom }
+
+
+const BookingStatusAtom = atom({
+    key: 'BookingStatusKey',
+    default: []
+})
+export { CampaignInventoryAtom, HeaderDataListAtom, SupplierPhaseListAtom, BookingStatusAtom }

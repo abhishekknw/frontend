@@ -2,7 +2,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom, SupplierPhaseListAtom } from '../../_states';
+import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom, SupplierPhaseListAtom, BookingStatusAtom } from '../../_states';
 import { errorAtom } from '../../_states/alert';
 
 const BookinPlanActions = () => {
@@ -12,7 +12,8 @@ const BookinPlanActions = () => {
     const setHeaderDataList = useSetRecoilState(HeaderDataListAtom);
     const setOrganisationList = useSetRecoilState(OrganisationListAtom);
     const setUserMinimalList = useSetRecoilState(UserMinimalListAtom);
-    const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom)
+    const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom);
+    const setBookinStatus = useSetRecoilState(BookingStatusAtom);
     const CampaignProposalId = 'HDFHDF0789';
 
 
@@ -22,6 +23,16 @@ const BookinPlanActions = () => {
             setCampaignInventory(res.data)
         });
     };
+
+    const getBookingStatus = () => {
+        return fetchWrapper.get(`${Apis.Get_Booking_Status}${CampaignProposalId}`).then((res) => {
+            if (res.status) {
+                setBookinStatus(res.data)
+            } else {
+                alertActions.error(Labels.Error);
+            }
+        });
+    }
 
     const getHeaderData = (data) => {
         // let params = "?next_page=" + data.pageNo + '&search=' + data.search;
@@ -169,7 +180,8 @@ const BookinPlanActions = () => {
         postPermissionBoxImages,
         getReceiptImages,
         postReceiptImages,
-        getSupplierPhase
+        getSupplierPhase,
+        getBookingStatus,
     };
 }
 export { BookinPlanActions };
