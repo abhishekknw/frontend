@@ -523,6 +523,7 @@ angular.module('catalogueApp')
       }
 
       DashboardService.listClientStatus = function (campaign_id) {
+        campaign_id = campaign_id ? campaign_id : '';
         var url = url_root + "b2b/machadalo-client-status-list/?campaign_id=" + campaign_id;
         return machadaloHttp.get(url);
       }
