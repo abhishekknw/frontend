@@ -24,6 +24,7 @@ export default function CommentModal(props) {
   async function postComment() {
     await BookingApi.postCommentByShortlistedId(postCommentData);
     setGetAPi(!getApi);
+    setPostCommentData({ ...postCommentData, comment: '' });
   }
   useEffect(() => {
     getCommentList(data, commentType);
@@ -61,6 +62,7 @@ export default function CommentModal(props) {
                 as="textarea"
                 placeholder="Write comment here"
                 rows={3}
+                value={postCommentData?.comment}
                 onChange={(e) => {
                   setPostCommentData({ ...postCommentData, comment: e?.target?.value });
                 }}
@@ -69,7 +71,7 @@ export default function CommentModal(props) {
             <div>
               <Button
                 className="btn me-3 btn-primary"
-                disabled={!postCommentData.comment && postCommentData.comment === ''}
+                disabled={!postCommentData?.comment && postCommentData?.comment === ''}
                 onClick={(e) => postComment()}
               >
                 Add Comments

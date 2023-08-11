@@ -11,14 +11,14 @@ class UserOverAllReport extends React.Component {
   render() {
     return (
       <div className="bootstrap-iso">
-        <ReactBootstrapTable headerData={getColumnConfig()} rowData={this.props.campaignList} />
-        {/* <InnerGrid
+        {/* <ReactBootstrapTable headerData={getColumnConfig()} rowData={this.props.campaignList} /> */}
+        <InnerGrid
           columns={getColumnConfig()}
           data={this.props.campaignList}
           exportCsv={false}
           search={true}
           pagination={true}
-        /> */}
+        />
       </div>
     );
   }

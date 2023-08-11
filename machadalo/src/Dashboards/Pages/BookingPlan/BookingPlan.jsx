@@ -25,9 +25,14 @@ import AddSupplierModal from './AddSupplierModal';
 import ImportSheetModal from './ImportSheetModal';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import TableHeader from '../../Table/TableHeader/TableHeader';
+import InventoryModal from './InventoryModal';
+import DescriptionHeader from '../../common/DescriptionHeader/DescriptionHeader';
+import { BookingFunctions } from './BookingFunctions';
+import DataNotFound from '../../common/DataNotFound/DataNotFound';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
+  const UpdateData = BookingFunctions();
   // const tableRef = useRef();
   // const tableName = 'bookingPlanTable';
   const [columnsList, setColumnList] = useState({});
@@ -84,20 +89,38 @@ export default function BookingPlan() {
     console.log(data, '2222222222222');
   }
 
-  function handleSelect(e) {
-    console.log(e, '111111111111111111');
-  }
-
   useEffect(() => {
     getCampaignInventories(filterData);
     getHeaderDataList();
+    BookingApi.getOrganisationList();
+    BookingApi.getUserMinimalList();
   }, [1]);
+
+  const descriptionData = [
+    {
+      label: 'Campaign Id',
+      value: CampaignInventoryList?.campaign?.proposal_id,
+    },
+    {
+      label: 'Campaign Name',
+      value: CampaignInventoryList?.campaign?.name,
+    },
+    {
+      label: 'BD Owner',
+      value: CampaignInventoryList?.campaign?.created_by,
+    },
+    {
+      label: 'Campaign State',
+      value: CampaignInventoryList?.campaign?.campaign_state,
+    },
+  ];
 
   return (
     <>
       <div className="booking-plan-wrapper ">
         <TableHeader headerValue="Booking Plan" />
-        <div className="status-bar mb-2 sticky-thc">
+        <DescriptionHeader data={descriptionData} />
+        {/* <div className="status-bar mb-2 sticky-thc">
           <div className="status-bar-item">
             <span className="status-lable">Campaign Id:</span>
             <span className="status-data">{CampaignInventoryList.campaign?.proposal_id}</span>
@@ -114,7 +137,7 @@ export default function BookingPlan() {
             <span className="status-lable">Campaign State:</span>
             <span className="status-data">{CampaignInventoryList.campaign?.campaign_state}</span>
           </div>
-        </div>
+        </div> */}
         <div>
           <span>
             <Button
@@ -135,7 +158,7 @@ export default function BookingPlan() {
             </Button>
           </span>
         </div>
-        <div className="booking-plan-table book-height" >
+        <div className="booking-plan-table book-height">
           {/* id={tableName} ref={tableRef} */}
           <Table responsive className="display booking-table " width="100%">
             <thead>
@@ -196,7 +219,7 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'Add-Brand' });
+                            setShowModal({ show: true, type: 'Add-Brand', rowData: data });
                           }}
                         >
                           Add
@@ -204,7 +227,7 @@ export default function BookingPlan() {
                       </td>
                       <td>
                         <a className="anchor-list">{data.name}</a>
-                        <span>({data.quality_rating})</span>
+                        {data?.quality_rating && <span>{data?.quality_rating}</span>}
                       </td>
                       <td>{data.supplier_id}</td>
                       <td>{data.supplierCode}</td>
@@ -244,14 +267,19 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'AssignUser' });
+                            setShowModal({
+                              show: true,
+                              type: 'AssignUser',
+                              rowData: data,
+                              campaign: CampaignInventoryList?.campaign,
+                            });
                           }}
                         >
                           Assign User
                         </Button>
                       </td>
                       <td>
-                        <Select
+                        {/* <Select
                           className=""
                           label="Booking Priority"
                           id="BookingPriority"
@@ -260,15 +288,16 @@ export default function BookingPlan() {
                           value={bookingPriorityOption.filter(
                             (obj) => obj.value === data.booking_priority
                           )}
-                        />
-                        {/* <SelectDropdown
+                        /> */}
+                        <SelectDropdown
                           optionsData={bookingPriorityOption}
                           selectedValue={data.booking_priority}
+                          rowData={data}
                           placeholder="Booking Priority"
                           label="Booking Priority"
                           id="BookingPriority"
-                          handleSelect={handleSelect}
-                        /> */}
+                          handleSelect={UpdateData.handleSelectPriority}
+                        />
                       </td>
                       <td>
                         <Select
@@ -333,7 +362,15 @@ export default function BookingPlan() {
                         <Form.Control type="date" placeholder="Next Action Date" />
                       </td>
                       <td>
-                        <ListGroup>
+                        <Button
+                          variant="primary"
+                          onClick={(e) => {
+                            setShowModal({ show: true, type: 'Inventory', rowData: data });
+                          }}
+                        >
+                          Inventory
+                        </Button>
+                        {/* <ListGroup>
                           {data.shortlisted_inventories &&
                             Object.keys(data.shortlisted_inventories).map((inventory, index) => {
                               return (
@@ -350,7 +387,7 @@ export default function BookingPlan() {
                                 </>
                               );
                             })}
-                        </ListGroup>
+                        </ListGroup> */}
                       </td>
                       <td>70</td>
                       <td>
@@ -393,17 +430,17 @@ export default function BookingPlan() {
                       <td>
                         <Form>
                           <div className="mb-3 b-form-maindiv">
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id={`check-api-NFFT`}>
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>NFFT</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
                             </Form.Check>
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id={`check-api-CHEQUE`}>
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>CHEQUE</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
                             </Form.Check>
-                            <Form.Check type="checkbox" id={`check-api-checkbox`}>
+                            <Form.Check type="checkbox" id={`check-api-CASH`}>
                               <Form.Check.Input type="checkbox" isValid />
                               <Form.Check.Label>CASH</Form.Check.Label>
                               {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
@@ -443,7 +480,12 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'Permission' });
+                            setShowModal({
+                              show: true,
+                              type: 'Permission',
+                              rowData: data,
+                              campaign: CampaignInventoryList?.campaign,
+                            });
                           }}
                         >
                           View/Add
@@ -453,7 +495,12 @@ export default function BookingPlan() {
                         <Button
                           variant="primary"
                           onClick={(e) => {
-                            setShowModal({ show: true, type: 'Receipt' });
+                            setShowModal({
+                              show: true,
+                              type: 'Receipt',
+                              rowData: data,
+                              campaign: CampaignInventoryList?.campaign,
+                            });
                           }}
                         >
                           View/Add
@@ -491,14 +538,20 @@ export default function BookingPlan() {
                     </tr>
                   );
                 })}
+              {(!CampaignInventoryList.shortlisted_suppliers ||
+                CampaignInventoryList.shortlisted_suppliers.length < 0) && <DataNotFound />}
             </tbody>
           </Table>
-          <ReactPagination
-            pageNo={filterData.pageNo}
-            pageSize={10}
-            totalItems={CampaignInventoryList.total_count}
-            onPageChange={handlePageChange}
-          />
+          {CampaignInventoryList &&
+            CampaignInventoryList.shortlisted_suppliers &&
+            CampaignInventoryList.total_count > 10 && (
+              <ReactPagination
+                pageNo={filterData.pageNo}
+                pageSize={10}
+                totalItems={CampaignInventoryList.total_count}
+                onPageChange={handlePageChange}
+              />
+            )}
         </div>
 
         <div
@@ -609,9 +662,9 @@ export default function BookingPlan() {
                   : showModal.type == 'PaymentDetail'
                   ? 'Payment Detail'
                   : showModal.type == 'Permission'
-                  ? 'Permission Box Image Details for HDFC Distributor 3'
+                  ? 'Permission Box Image Details'
                   : showModal.type == 'Receipt'
-                  ? 'Receipt Box Image Details for HDFC Distributor 3'
+                  ? 'Receipt Box Image Details'
                   : showModal.type == 'ViewPhase'
                   ? 'View Phase'
                   : showModal.type == 'AddSupplier'
@@ -623,27 +676,33 @@ export default function BookingPlan() {
             </Modal.Header>
             <Modal.Body>
               {showModal.type == 'Add-Brand' ? (
-                <AddBrandModal />
+                <AddBrandModal data={showModal.rowData} />
               ) : showModal.type == 'RelationshipData' ? (
                 <RelationshipModal data={showModal.rowData} />
               ) : showModal.type == 'AssignUser' ? (
-                <AssignUserModal />
+                <AssignUserModal data={showModal.rowData} campaign={showModal.campaign} />
               ) : showModal.type == 'ContactDetails' ? (
                 <ContactDetailModal data={showModal.rowData} />
               ) : showModal.type == 'externalComments' || showModal.type == 'internalComments' ? (
                 <CommentModal data={showModal.rowData} commentType={showModal.type} />
               ) : showModal.type == 'PaymentDetail' ? (
                 <PaymentDetailModal />
-              ) : showModal.type == 'Permission' ? (
-                <PermissionModal />
-              ) : showModal.type == 'Receipt' ? (
-                <ReceiptModal />
-              ) : showModal.type == 'ViewPhase' ? (
+              ) : showModal.type == 'Permission' || showModal.type == 'Receipt' ? (
+                <PermissionModal
+                  data={showModal.rowData}
+                  campaign={showModal.campaign}
+                  modalType={showModal.type}
+                />
+              ) : // ) : showModal.type == 'Receipt' ? (
+              //   <ReceiptModal />
+              showModal.type == 'ViewPhase' ? (
                 <ViewPhaseModal />
               ) : showModal.type == 'AddSupplier' ? (
                 <AddSupplierModal />
               ) : showModal.type == 'ImportSheet' ? (
                 <ImportSheetModal />
+              ) : showModal.type == 'Inventory' ? (
+                <InventoryModal />
               ) : (
                 ''
               )}

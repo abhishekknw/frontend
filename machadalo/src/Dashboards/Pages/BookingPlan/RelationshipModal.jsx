@@ -116,7 +116,7 @@ export default function RelationshipModal(props) {
 
         <div>
           <h3>Relationship Status</h3>
-          <Table className="text-center " responsive>
+          <Table className="text-center v-middle" responsive>
             <tr>
               <th>Index</th>
               <th>Name</th>

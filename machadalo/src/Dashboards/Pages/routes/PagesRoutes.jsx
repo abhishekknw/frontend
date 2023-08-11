@@ -9,27 +9,29 @@ import { useRecoilValue } from 'recoil';
 import InterveneChat from '../InterveneChat/InterveneChat';
 import OpsDashboard from '../OpsDashboard/OpsDashboard';
 import BookingPlan from '../BookingPlan/BookingPlan';
- export default function PagesRoutes(props) {
+import CampaignList from '../CampaignList/CampaignList';
+export default function PagesRoutes(props) {
   const { match } = props;
   const open = useRecoilValue(alertAtom);
 
   return (
     <>
-      {/* <div className="container "> */}
-        {/* <MachadaloHeader /> */}
-        {/* <hr className="mt-0" /> */}
-        <Switch>
-          <SnackbarProvider
-            autoHideDuration={2000}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={open}
-          >
-            <Route path={match.path + ROUTESNAME.CAMPAIGN_DECISION_BOARD} component={CampaignDecisionBoard}/>
-            <Route path={match.path + ROUTESNAME.INTERVENE_CHAT} component={InterveneChat} />
-            <Route path={match.path + ROUTESNAME.OPS_DASHBOARD} component={OpsDashboard} />
-            <Route path={match.path + ROUTESNAME.BOOKING_PLAN} component={BookingPlan} />
-          </SnackbarProvider>
-        </Switch>
+      <Switch>
+        <SnackbarProvider
+          autoHideDuration={2000}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={open}
+        >
+          <Route
+            path={match.path + ROUTESNAME.CAMPAIGN_DECISION_BOARD}
+            component={CampaignDecisionBoard}
+          />
+          <Route path={match.path + ROUTESNAME.INTERVENE_CHAT} component={InterveneChat} />
+          <Route path={match.path + ROUTESNAME.OPS_DASHBOARD} component={OpsDashboard} />
+          <Route path={match.path + ROUTESNAME.BOOKING_PLAN} component={BookingPlan} />
+          <Route path={match.path + ROUTESNAME.CAMPAIGN_LIST} component={CampaignList} />
+        </SnackbarProvider>
+      </Switch>
       {/* </div> */}
     </>
   );

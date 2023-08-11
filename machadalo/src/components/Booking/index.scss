@@ -137,32 +137,26 @@
 
     ul {
       border-radius: 5px;
-      // border: 1px solid #ccc;
+      border: 1px solid #ccc;
       padding: 0;
       display: flex;
 
       li {
-        // border-right: 1px solid #ccc;
+        border-right: 1px solid #ccc;
         min-width: 40px;
 
         &.active {
           color: #ffffff;
-          // background: #c9302c;
+          background: #c9302c;
         }
         &:last-child {
           border-right: 0;
         }
 
-        a {          
+        a {
           display: flex;
           padding: 10px;
           justify-content: center;
-          margin: 0px 10px;
-          border-radius: 100%;
-          width: 36px;
-          height: 36px;
-          border: 1px solid #ccc;
-          background-color: #EAEAEA;
           &:hover {
             color: #ffffff;
             cursor: pointer;

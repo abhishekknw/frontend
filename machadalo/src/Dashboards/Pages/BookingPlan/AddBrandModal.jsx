@@ -1,24 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import Select from 'react-select';
+import { useRecoilValue } from 'recoil';
+import { OrganisationListAtom } from '../../_states';
+import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
+import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 
-export default function AddBrandModal() {
+export default function AddBrandModal(props) {
+  const { data } = props;
+  const BookingApi = BookinPlanActions();
+  const organisationList = useRecoilValue(OrganisationListAtom);
+  const [postData, setPostData] = useState({
+    brand_organisation_id: null,
+    id: data?.id,
+  });
+  function handleSelect(selected) {
+    setPostData({ ...postData, brand_organisation_id: selected?.value });
+  }
+  async function postAddBrand() {
+    await BookingApi.postBrandAssignment(postData);
+  }
+
   return (
     <>
-       <Form>
+      <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Add Brand </Form.Label>
-          <Select
-            className="selectbx"
-            options={[{ label: ' 0-2 Years' }, { label: 'org in organisation' }, { label: 'Cooling' }]}
-            label="Select organization"
-            id="Select organization"
-            placeholder="Select organization"
+          <SelectDropdown
+            optionsData={organisationList}
+            selectedValue={postData.brand_organisation_id}
+            placeholder="Select Organisation"
+            label="Select Organisation"
+            id="SelectOrganisation"
+            handleSelect={handleSelect}
           />
-         
         </Form.Group>
         <div>
-          <button className='btn btn-primary' type='button'>Add Brand</button>
+          <Button
+            className="btn btn-primary"
+            type="button"
+            disabled={!postData.brand_organisation_id}
+            onClick={(e) => {
+              postAddBrand();
+            }}
+          >
+            Add Brand
+          </Button>
         </div>
       </Form>
     </>

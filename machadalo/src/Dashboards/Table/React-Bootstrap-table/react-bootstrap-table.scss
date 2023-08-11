@@ -26,3 +26,13 @@
         color: #fff;
     }
 }
+
+.v-middle{
+    th{
+    vertical-align: middle;
+    // added
+        background: #5f76e8;
+        background: linear-gradient(0deg, #3e59e3 35%, #5f76e8 100%);
+        color: #ffffff !important;
+    }
+}

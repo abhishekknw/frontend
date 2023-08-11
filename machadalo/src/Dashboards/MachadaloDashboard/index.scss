@@ -420,6 +420,7 @@ table .btn{
   
   .wpModal .modal-header .modal-title {
     background-color: #3e59e3;
+    color: #ffffff;
   }
   
   .wpModal .wp-form label {
@@ -860,4 +861,17 @@ html body .w-60{
     width: 100% !important;
     height: 100% !important;
 }
+}
+
+// datepicker
+.main-content .calander .react-datepicker__month-container  span {
+    padding-left: 5px;
+    padding-top: 7px;
+    top:6px;
+    display: inline-block;
+}
+.react-datepicker__month-container .react-datepicker__month-read-view--down-arrow, .react-datepicker__year-read-view--down-arrow{
+    border-color: #3e59e3;
+    border-width: 2px 2px 0 0;
+    height: 7px;
 }
