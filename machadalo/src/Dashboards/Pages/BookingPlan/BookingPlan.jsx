@@ -422,6 +422,7 @@ export default function BookingPlan() {
                           type="text"
                           id="inputPassword5"
                           aria-describedby="passwordHelpBlock"
+                          disabled
                           value={data?.transaction_or_check_number}
                         />
                       </td>
@@ -472,16 +473,18 @@ export default function BookingPlan() {
                           <Form.Check
                             inline
                             label="Completed"
-                            name="group1"
+                            name={`completed${data?.id}`}
                             type="radio"
                             id="completed"
+                            checked={data?.is_completed === true ? true : false}
                           />
                           <Form.Check
                             inline
                             label="Not Completed"
-                            name="group1"
+                            name={`completed${data?.id}`}
                             type="radio"
                             id="Notcompleted"
+                            checked={data?.is_completed === false ? true : false}
                           />
                         </div>
                       </td>
