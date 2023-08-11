@@ -63,6 +63,20 @@ export default function BookingPlan() {
     { label: 'Rejected', value: 'PR' },
   ];
 
+  const PaymentMethod = [
+    {
+      label: 'NEFT',
+      checked: false,
+    },
+    {
+      label: 'CHEQUE',
+      checked: false,
+    },
+    {
+      label: 'CASH',
+      checked: false,
+    },
+  ];
   // useEffect(() => {
   //   const table = new DataTable(`#${tableName}`, {
   //     details: {
@@ -99,15 +113,6 @@ export default function BookingPlan() {
     console.log(data, '2222222222222');
   }
 
-  useEffect(() => {
-    getCampaignInventories(filterData);
-    getHeaderDataList();
-    BookingApi.getOrganisationList();
-    BookingApi.getUserMinimalList();
-    BookingApi.getBookingStatus();
-    BookingApi.getSupplierPhase();
-  }, [1]);
-
   const descriptionData = [
     {
       label: 'Campaign Id',
@@ -127,6 +132,14 @@ export default function BookingPlan() {
     },
   ];
 
+  useEffect(() => {
+    getCampaignInventories(filterData);
+    getHeaderDataList();
+    BookingApi.getOrganisationList();
+    BookingApi.getUserMinimalList();
+    BookingApi.getBookingStatus();
+    BookingApi.getSupplierPhase();
+  }, [1]);
   return (
     <>
       <div className="booking-plan-wrapper ">
@@ -391,21 +404,25 @@ export default function BookingPlan() {
                       <td>
                         <Form>
                           <div className="mb-3 b-form-maindiv">
-                            <Form.Check type="checkbox" id={`check-api-NFFT`}>
-                              <Form.Check.Input type="checkbox" isValid />
-                              <Form.Check.Label>NFFT</Form.Check.Label>
-                              {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                            </Form.Check>
-                            <Form.Check type="checkbox" id={`check-api-CHEQUE`}>
-                              <Form.Check.Input type="checkbox" isValid />
-                              <Form.Check.Label>CHEQUE</Form.Check.Label>
-                              {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                            </Form.Check>
-                            <Form.Check type="checkbox" id={`check-api-CASH`}>
-                              <Form.Check.Input type="checkbox" isValid />
-                              <Form.Check.Label>CASH</Form.Check.Label>
-                              {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                            </Form.Check>
+                            {PaymentMethod.map((method, index) => {
+                              return (
+                                <>
+                                  <Form.Check
+                                    key={method?.label}
+                                    inline
+                                    label={method.label}
+                                    name={`payment_method${data?.id}`}
+                                    type="radio"
+                                    id={`payment_method${method.label}`}
+                                    defaultChecked={data?.payment_method == method.label}
+                                    value={method.label}
+                                    onChange={(e) => {
+                                      UpdateData.handlePaymentmethod(method.label, data);
+                                    }}
+                                  />
+                                </>
+                              );
+                            })}
                           </div>
                           <Button
                             variant="primary"
@@ -470,13 +487,43 @@ export default function BookingPlan() {
                       <td></td>
                       <td>
                         <div className="mb-3 b-form-maindiv">
-                          <Form.Check
+                          {[
+                            { label: 'Completed', checked: true },
+                            { label: ' Not Completed', checked: false },
+                          ].map((item, index) => {
+                            return (
+                              <>
+                                <Form.Check
+                                  inline
+                                  key={index + item.label}
+                                  label={item.label}
+                                  name={`completed${data?.id}`}
+                                  type="radio"
+                                  id="completed"
+                                  defaultChecked={
+                                    item.label === 'Completed'
+                                      ? data?.is_completed === true
+                                        ? true
+                                        : false
+                                      : data?.is_completed === false
+                                      ? true
+                                      : false
+                                  }
+                                  value={item.label}
+                                  onChange={(e) => {
+                                    UpdateData.handleCompletionStatus(item.checked, data);
+                                  }}
+                                />
+                              </>
+                            );
+                          })}
+                          {/* <Form.Check
                             inline
                             label="Completed"
                             name={`completed${data?.id}`}
                             type="radio"
                             id="completed"
-                            checked={data?.is_completed === true ? true : false}
+                            defaultChecked={data?.is_completed === true ? true : false}
                           />
                           <Form.Check
                             inline
@@ -484,8 +531,8 @@ export default function BookingPlan() {
                             name={`completed${data?.id}`}
                             type="radio"
                             id="Notcompleted"
-                            checked={data?.is_completed === false ? true : false}
-                          />
+                            defaultChecked={data?.is_completed === false ? true : false}
+                          /> */}
                         </div>
                       </td>
                       <td>

@@ -39,12 +39,31 @@ const BookingFunctions = () => {
         );
         setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
     }
+    const handlePaymentmethod = (method, row) => {
+        let newList = campaignInventory.shortlisted_suppliers.map(item =>
+            item?.id === row?.id
+                ? { ...item, payment_method: method }
+                : item
+        );
+        setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
+    }
+    const handleCompletionStatus = (check, row) => {
+        let newList = campaignInventory.shortlisted_suppliers.map(item =>
+            item?.id === row?.id
+                ? { ...item, is_completed: check }
+                : item
+        );
+        setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
+    }
 
     return {
         handleSelectPriority,
         handleSelectPhase,
         handleNextActionDate,
-        handlePaymentStatus
+        handlePaymentStatus,
+        handlePaymentmethod,
+        handlePaymentmethod,
+        handleCompletionStatus,
     }
 }
 export { BookingFunctions };
