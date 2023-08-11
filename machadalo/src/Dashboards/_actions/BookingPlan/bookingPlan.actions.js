@@ -166,6 +166,16 @@ const BookinPlanActions = () => {
             }
         })
     }
+    const updateCampaignInventories = (data) => {
+        return fetchWrapper.put(`/v0/ui/website/${CampaignProposalId}/campaign-inventories/`, data).then((res) => {
+            if (res?.status) {
+                alertActions.success(res.data);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        })
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -183,6 +193,7 @@ const BookinPlanActions = () => {
         postReceiptImages,
         getSupplierPhase,
         getBookingStatus,
+        updateCampaignInventories
     };
 }
 export { BookinPlanActions };

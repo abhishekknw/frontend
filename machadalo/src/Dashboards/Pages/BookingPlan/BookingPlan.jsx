@@ -541,7 +541,15 @@ export default function BookingPlan() {
                         </Button>
                       </td>
                       <td>
-                        <Button variant="primary" className="btn btn-success">
+                        <Button
+                          variant="primary"
+                          className="btn btn-success"
+                          onClick={(e) => {
+                            BookingApi.updateCampaignInventories(
+                              CampaignInventoryList.shortlisted_suppliers
+                            );
+                          }}
+                        >
                           Update
                         </Button>
                       </td>
