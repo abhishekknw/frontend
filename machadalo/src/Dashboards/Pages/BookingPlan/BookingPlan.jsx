@@ -10,7 +10,7 @@ import Select from 'react-select';
 import { IoClose } from 'react-icons/io5';
 import { BsSliders2 } from 'react-icons/bs';
 import { BookinPlanActions } from '../../_actions';
-import { CampaignInventoryAtom } from '../../_states';
+import { CampaignInventoryAtom, SupplierPhaseListAtom } from '../../_states';
 import AddBrandModal from './AddBrandModal';
 import RelationshipModal from './RelationshipModal';
 import AssignUserModal from './AssignUserModal';
@@ -37,6 +37,8 @@ export default function BookingPlan() {
   // const tableName = 'bookingPlanTable';
   const [columnsList, setColumnList] = useState({});
   const CampaignInventoryList = useRecoilValue(CampaignInventoryAtom);
+  const supplierPhaseList = useRecoilValue(SupplierPhaseListAtom);
+
   const [filterShow, setFilterShow] = useState(false);
   const [showModal, setShowModal] = useState({
     show: false,
@@ -95,6 +97,7 @@ export default function BookingPlan() {
     BookingApi.getOrganisationList();
     BookingApi.getUserMinimalList();
     BookingApi.getBookingStatus();
+    BookingApi.getSupplierPhase();
   }, [1]);
 
   const descriptionData = [
@@ -301,7 +304,7 @@ export default function BookingPlan() {
                         />
                       </td>
                       <td>
-                        <Select
+                        {/* <Select
                           className=""
                           label="Phase"
                           id="phase"
@@ -313,6 +316,15 @@ export default function BookingPlan() {
                             { label: '4', value: 4 },
                           ]}
                           value={data.phase}
+                        /> */}
+                        <SelectDropdown
+                          optionsData={supplierPhaseList}
+                          selectedValue={data?.phase_no}
+                          rowData={data}
+                          placeholder="Select Phase"
+                          label="Select Phase"
+                          id="SelectPhase"
+                          handleSelect={UpdateData.handleSelectPhase}
                         />
                       </td>
                       <td>
@@ -347,24 +359,6 @@ export default function BookingPlan() {
                         >
                           Inventory
                         </Button>
-                        {/* <ListGroup>
-                          {data.shortlisted_inventories &&
-                            Object.keys(data.shortlisted_inventories).map((inventory, index) => {
-                              return (
-                                <>
-                                  <ListGroup.Item
-                                    action
-                                    active={false}
-                                    onClick={(e) => {
-                                      showInventoryDetail(data.shortlisted_inventories[inventory]);
-                                    }}
-                                  >
-                                    {inventory}
-                                  </ListGroup.Item>
-                                </>
-                              );
-                            })}
-                        </ListGroup> */}
                       </td>
                       <td>70</td>
                       <td>

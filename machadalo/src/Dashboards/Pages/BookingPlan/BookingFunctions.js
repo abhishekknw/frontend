@@ -14,8 +14,17 @@ const BookingFunctions = () => {
         );
         setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
     }
+
+    const handleSelectPhase = (select, row) => {
+        let newList = campaignInventory.shortlisted_suppliers.map(item =>
+            item?.id === row?.id
+                ? { ...item, booking_priority: select?.value }
+                : item
+        );
+    }
     return {
         handleSelectPriority,
+        handleSelectPhase
     }
 }
 export { BookingFunctions };

@@ -158,7 +158,8 @@ const BookinPlanActions = () => {
     const getSupplierPhase = () => {
         return fetchWrapper.get(`${Apis.Get_Supplier_Phase}?campaign_id=${CampaignProposalId}`).then((res) => {
             if (res?.status) {
-                setSupplierPhaseList(res?.data);
+                let newList = res.data.map(item => ({ ...item, label: item?.phase_no, value: item?.id }));
+                setSupplierPhaseList(newList);
             }
             else {
                 alertActions.error(Labels.Error);
