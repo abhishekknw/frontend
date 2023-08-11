@@ -24,10 +24,17 @@ const BookingFunctions = () => {
         setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
     }
     const handleNextActionDate = (event, row) => {
-        console.log(event, "eventeventevent")
         let newList = campaignInventory.shortlisted_suppliers.map(item =>
             item?.id === row?.id
                 ? { ...item, next_action_date: event?.target?.value }
+                : item
+        );
+        setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
+    }
+    const handlePaymentStatus = (select, row) => {
+        let newList = campaignInventory.shortlisted_suppliers.map(item =>
+            item?.id === row?.id
+                ? { ...item, payment_status: select?.value }
                 : item
         );
         setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
@@ -36,7 +43,8 @@ const BookingFunctions = () => {
     return {
         handleSelectPriority,
         handleSelectPhase,
-        handleNextActionDate
+        handleNextActionDate,
+        handlePaymentStatus
     }
 }
 export { BookingFunctions };

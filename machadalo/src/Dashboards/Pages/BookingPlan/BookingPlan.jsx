@@ -38,7 +38,6 @@ export default function BookingPlan() {
   const [columnsList, setColumnList] = useState({});
   const CampaignInventoryList = useRecoilValue(CampaignInventoryAtom);
   const supplierPhaseList = useRecoilValue(SupplierPhaseListAtom);
-  const [date, setDate] = useState(new Date());
 
   const [filterShow, setFilterShow] = useState(false);
   const [showModal, setShowModal] = useState({
@@ -56,6 +55,14 @@ export default function BookingPlan() {
     { label: 'Very High', value: 'VH' },
     { label: 'High', value: 'HH' },
   ];
+  const payment_status = [
+    { label: 'Not Initiated', value: 'PNI' },
+    { label: 'Pending', value: 'PP' },
+    { label: 'Cheque Released', value: 'PCR' },
+    { label: 'Paid', value: 'PD' },
+    { label: 'Rejected', value: 'PR' },
+  ];
+
   // useEffect(() => {
   //   const table = new DataTable(`#${tableName}`, {
   //     details: {
@@ -260,16 +267,6 @@ export default function BookingPlan() {
                         </Button>
                       </td>
                       <td>
-                        {/* <Select
-                          className=""
-                          label="Booking Priority"
-                          id="BookingPriority"
-                          placeholder="Booking Priority"
-                          options={bookingPriorityOption}
-                          value={bookingPriorityOption.filter(
-                            (obj) => obj.value === data.booking_priority
-                          )}
-                        /> */}
                         <SelectDropdown
                           optionsData={bookingPriorityOption}
                           selectedValue={data.booking_priority}
@@ -425,19 +422,18 @@ export default function BookingPlan() {
                           type="text"
                           id="inputPassword5"
                           aria-describedby="passwordHelpBlock"
+                          value={data?.transaction_or_check_number}
                         />
                       </td>
                       <td>
-                        <Select
-                          className=""
-                          options={[
-                            { label: 'Pay1 Status' },
-                            { label: 'Pay1 Status' },
-                            { label: 'Pay1 Status' },
-                          ]}
+                        <SelectDropdown
+                          optionsData={payment_status}
+                          selectedValue={data?.payment_status}
+                          rowData={data}
+                          placeholder="Payment Status"
                           label="Payment Status"
                           id="PaymentStatus"
-                          placeholder="Payment Status"
+                          handleSelect={UpdateData.handlePaymentStatus}
                         />
                       </td>
                       <td>
