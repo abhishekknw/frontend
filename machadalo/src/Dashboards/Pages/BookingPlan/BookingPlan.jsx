@@ -38,6 +38,7 @@ export default function BookingPlan() {
   const [columnsList, setColumnList] = useState({});
   const CampaignInventoryList = useRecoilValue(CampaignInventoryAtom);
   const supplierPhaseList = useRecoilValue(SupplierPhaseListAtom);
+  const [date, setDate] = useState(new Date());
 
   const [filterShow, setFilterShow] = useState(false);
   const [showModal, setShowModal] = useState({
@@ -304,19 +305,6 @@ export default function BookingPlan() {
                         />
                       </td>
                       <td>
-                        {/* <Select
-                          className=""
-                          label="Phase"
-                          id="phase"
-                          placeholder="phase"
-                          options={[
-                            { label: '1', value: 1 },
-                            { label: '2', value: 2 },
-                            { label: '3', value: 3 },
-                            { label: '4', value: 4 },
-                          ]}
-                          value={data.phase}
-                        /> */}
                         <SelectDropdown
                           optionsData={supplierPhaseList}
                           selectedValue={data?.phase_no}
@@ -348,7 +336,12 @@ export default function BookingPlan() {
                         </Button>
                       </td>
                       <td>
-                        <Form.Control type="date" placeholder="Next Action Date" />
+                        <Form.Control
+                          type="date"
+                          value={data?.next_action_date}
+                          onChange={(e) => UpdateData.handleNextActionDate(e, data)}
+                          placeholder="Next Action Date"
+                        />
                       </td>
                       <td>
                         <Button
