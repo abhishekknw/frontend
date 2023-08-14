@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 import { ContactListAtom } from '../../_states';
 import { TestingData } from '../../_actions/testingJsonData';
 import ReactBootstrapTable from '../../Table/React-Bootstrap-table/ReactBootstrapTable';
+import { BsTrash3, BsPencilSquare } from 'react-icons/bs';
 
 export default function ContactDetailModal(props) {
   const { data } = props;
@@ -66,14 +67,27 @@ export default function ContactDetailModal(props) {
       // },
     },
     {
-      title: 'REMOVE',
+      title: 'MOBILE',
+      accessKey: 'mobile',
+      sort: false,
+      // action: function (row, index) {
+      //   return <Button className="btn btn-primary">Remove</Button>;
+      // },
+    },
+    {
+      title: 'ACTION',
       accessKey: 'index',
       sort: false,
       action: function (row, index) {
         return (
-          <>
-            <Button className="btn btn-primary">Remove</Button>
-          </>
+          <div>
+            <span className="btn btn-primary">
+              <BsTrash3 />
+            </span>
+            <span className="btn btn-primary">
+              <BsPencilSquare />
+            </span>
+          </div>
         );
       },
     },
@@ -84,78 +98,6 @@ export default function ContactDetailModal(props) {
         {contactList && (
           <ReactBootstrapTable headerData={contactListHeader} rowData={contactList} />
         )}
-        {/* <Table className="table-center" responsive>
-          <tr>
-            <th>Name</th>
-            <th>Designation</th>
-            <th>Email</th>
-            <th>Relationship Status</th>
-            <th>Comments</th>
-            <th>Landline No</th>
-            <th>Mobile No</th>
-            <th>Remove</th>
-          </tr>
-          <tr>
-            <td>Name</td>
-            <td>Designation</td>
-            <td>Email</td>
-            <td>Status</td>
-            <td>Comments</td>
-            <td>Landline No</td>
-            <td>Mobile No</td>
-            <td>
-              <button className="btn btn-primary">Remove</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Name</td>
-            <td>Designation</td>
-            <td>Email</td>
-            <td>Status</td>
-            <td>Comments</td>
-            <td>Landline No</td>
-            <td>Mobile No</td>
-            <td>
-              <button className="btn btn-primary">Remove</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Name</td>
-            <td>Designation</td>
-            <td>Email</td>
-            <td>Status</td>
-            <td>Comments</td>
-            <td>Landline No</td>
-            <td>Mobile No</td>
-            <td>
-              <button className="btn btn-primary">Remove</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Name</td>
-            <td>Designation</td>
-            <td>Email</td>
-            <td>Status</td>
-            <td>Comments</td>
-            <td>Landline No</td>
-            <td>Mobile No</td>
-            <td>
-              <button className="btn btn-primary">Remove</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Name</td>
-            <td>Designation</td>
-            <td>Email</td>
-            <td>Status</td>
-            <td>Comments</td>
-            <td>Landline No</td>
-            <td>Mobile No</td>
-            <td>
-              <button className="btn btn-primary">Remove</button>
-            </td>
-          </tr>
-        </Table> */}
         <div className="pt-4">
           <div className="d-flex justify-content-between">
             <div>

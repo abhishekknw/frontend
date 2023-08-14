@@ -696,6 +696,8 @@ export default function BookingPlan() {
                   ? 'Add New Supplier'
                   : showModal.type == 'ImportSheet'
                   ? 'Import Sheet'
+                  : showModal.type == 'Inventory'
+                  ? 'Inventories'
                   : 'Other'}
               </Modal.Title>
             </Modal.Header>
