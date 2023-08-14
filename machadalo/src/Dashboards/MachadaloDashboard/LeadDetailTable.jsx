@@ -163,7 +163,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              {/* <Dropdown className="table-dropdown-status">
+              <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -177,7 +177,7 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown> */}
+              </Dropdown>
               <SelectDropdown
                 className="table-dropdown-status"
                 optionsData={clientStatusList}

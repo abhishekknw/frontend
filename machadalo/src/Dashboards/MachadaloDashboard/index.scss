@@ -156,6 +156,9 @@ body{
     position: absolute;
     top: 14px;
 }
+table.leads-table .action-icon {
+    display: flex;
+}
 
 @media only screen and (max-width: 600px) and (min-width: 992px) {
     .dx {

@@ -8,7 +8,7 @@ export default function SelectDropdown(props) {
   return (
     <div>
       <Select
-        className={`machadalo-select-box ${className}`}
+        className={`machadalo-select-box`}
         label={label}
         id={id}
         placeholder={placeholder}

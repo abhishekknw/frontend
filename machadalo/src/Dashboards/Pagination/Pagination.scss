@@ -1,4 +1,5 @@
 .new-pagination {
+  text-align: right;
     padding-top: 30px;
     ul li.active a {
         background-color: #0d6efd;
@@ -9,14 +10,18 @@
         color: #ffffff !important;
     }
     ul {
-        border-radius: 5px;
+      border-radius: 5px;
         border: 1px solid #ccc;
         padding: 0;
-        display: flex;
+      display: inline-flex;
+        justify-content: flex-end;
+        margin-left: auto;
+        margin-right: 0;
   
         li {
           border-right: 1px solid #ccc;
           min-width: 40px;
+          font-size: 12px;
   
           &.active {
             color: #ffffff;
@@ -28,7 +33,9 @@
   
           a {
             display: flex;
-            padding: 10px;
+            padding: 4px 6px;
+            
+              text-decoration: none;
             justify-content: center;
             &:hover {
               color: #ffffff;
