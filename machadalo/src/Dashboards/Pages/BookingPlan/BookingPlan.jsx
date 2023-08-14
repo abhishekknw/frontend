@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 // import $ from 'jquery';
 import './bookingPlan.css';
@@ -8,7 +8,7 @@ import './bookingPlan.css';
 import { Table, Button, Form, Modal, ListGroup } from 'react-bootstrap';
 import Select from 'react-select';
 import { IoClose } from 'react-icons/io5';
-import { BsSliders2 } from 'react-icons/bs';
+import { BsFillCalendarDateFill, BsSliders2 } from 'react-icons/bs';
 import { BookinPlanActions } from '../../_actions';
 import { CampaignInventoryAtom, SupplierPhaseListAtom } from '../../_states';
 import AddBrandModal from './AddBrandModal';
@@ -32,6 +32,7 @@ import DataNotFound from '../../common/DataNotFound/DataNotFound';
 import { errorAtom } from '../../_states';
 import LoadingWrapper from '../../common/LoadingWrapper';
 import SingleDatePicker from '../../common/DateRangePicker/SingleDatePicker';
+import DatePicker from 'react-datepicker';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -81,6 +82,12 @@ export default function BookingPlan() {
       checked: false,
     },
   ];
+  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+    <div className="example-custom-input btn btn-primary" onClick={onClick} ref={ref}>
+      <span>{value ? value : ''}</span>
+      <BsFillCalendarDateFill sx={{ marginLeft: '5px' }} />
+    </div>
+  ));
   // useEffect(() => {
   //   const table = new DataTable(`#${tableName}`, {
   //     details: {
@@ -355,10 +362,18 @@ export default function BookingPlan() {
                             onChange={(e) => UpdateData.handleNextActionDate(e, data)}
                             placeholder="Next Action Date"
                           /> */}
-                          <SingleDatePicker
-                            selectDate={data?.next_action_date}
-                            onDateChange={UpdateData.handleNextActionDate}
+                          <DatePicker
+                            selected={
+                              data?.next_action_date ? new Date(data?.next_action_date) : ''
+                            }
+                            onChange={(date) => UpdateData.handleNextActionDate(date, data)}
+                            customInput={<ExampleCustomInput />}
                           />
+                          {/* <SingleDatePicker
+                            selectDate={data?.next_action_date}
+                            rowData={data}
+                            onDateChange={UpdateData.handleNextActionDate}
+                          /> */}
                         </td>
                         <td>
                           <Button
@@ -543,13 +558,13 @@ export default function BookingPlan() {
                           </div>
                         </td>
                         <td>
-                          <Button variant="primary" className="btn btn-danger">
+                          <Button variant="danger" className="btn btn-danger">
                             Delete
                           </Button>
                         </td>
                         <td>
                           <Button
-                            variant="primary"
+                            variant="success"
                             className="btn btn-success"
                             onClick={(e) => {
                               BookingApi.updateCampaignInventories(
