@@ -7,6 +7,7 @@ import { errorAtom } from '../../_states/alert';
 const BookinPlanActions = () => {
     const fetchWrapper = useFetchWrapper();
     const alertActions = useAlertActions();
+    const setErrorAtom = useSetRecoilState(errorAtom);
     const setCampaignInventory = useSetRecoilState(CampaignInventoryAtom);
     const setHeaderDataList = useSetRecoilState(HeaderDataListAtom);
     const setOrganisationList = useSetRecoilState(OrganisationListAtom);
@@ -18,8 +19,14 @@ const BookinPlanActions = () => {
 
     const getCampaignInventories = (data) => {
         let params = 'page=' + (data.pageNo + 1) + "&supplier_type_code=" + data.supplierCode;
+        setErrorAtom(true);
         return fetchWrapper.get(`v0/ui/website/${CampaignProposalId}/campaign-inventories/?${params}`).then((res) => {
-            setCampaignInventory(res.data)
+            if (res?.status) {
+                setCampaignInventory(res.data);
+            } else {
+                alertActions.error(Labels.Error);
+            }
+            setErrorAtom(false);
         });
     };
 
