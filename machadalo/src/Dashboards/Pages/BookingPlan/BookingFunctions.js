@@ -1,10 +1,11 @@
 import React from 'react'
-import { useRecoilState } from 'recoil';
-import { CampaignInventoryAtom } from '../../_states';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { CampaignInventoryAtom, BookingStatusAtom } from '../../_states';
 
 
 const BookingFunctions = () => {
     const [campaignInventory, setCampaignInventory] = useRecoilState(CampaignInventoryAtom);
+    const bookingStatus = useRecoilValue(BookingStatusAtom);
 
     const handleSelectPriority = (select, row) => {
         let newList = campaignInventory.shortlisted_suppliers.map(item =>
@@ -29,7 +30,6 @@ const BookingFunctions = () => {
                 ? { ...item, next_action_date: new Date(date) }
                 : item
         );
-        console.log(newList, "21")
         setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
     }
     const handlePaymentStatus = (select, row) => {
@@ -57,6 +57,31 @@ const BookingFunctions = () => {
         setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
     }
 
+    const handleSelectBookingStatus = (status, row) => {
+        let newList = campaignInventory.shortlisted_suppliers.map(item =>
+            item?.id === row?.id
+                ? { ...item, booking_status: status?.value }
+                : item
+        );
+        setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
+    }
+    const handleBookingSubStatus = (status, row) => {
+        console.log(status, "data")
+        let newList = campaignInventory.shortlisted_suppliers.map(item =>
+            item?.id === row?.id
+                ? { ...item, booking_sub_status: status?.value }
+                : item
+        );
+        setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
+    }
+
+    const getBookingSubStatusList = (id) => {
+        let data = bookingStatus.filter((obj) => obj.value === id);
+        let response = data[0]?.booking_substatus?.map(item => ({ ...item, label: item?.name, value: item?.code }));
+        console.log(response, "response");
+        return response;
+    }
+
     return {
         handleSelectPriority,
         handleSelectPhase,
@@ -65,6 +90,9 @@ const BookingFunctions = () => {
         handlePaymentmethod,
         handlePaymentmethod,
         handleCompletionStatus,
+        handleSelectBookingStatus,
+        handleBookingSubStatus,
+        getBookingSubStatusList
     }
 }
 export { BookingFunctions };

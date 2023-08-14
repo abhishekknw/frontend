@@ -10,7 +10,12 @@ import Select from 'react-select';
 import { IoClose } from 'react-icons/io5';
 import { BsFillCalendarDateFill, BsSliders2 } from 'react-icons/bs';
 import { BookinPlanActions } from '../../_actions';
-import { CampaignInventoryAtom, SupplierPhaseListAtom } from '../../_states';
+import {
+  CampaignInventoryAtom,
+  SupplierPhaseListAtom,
+  errorAtom,
+  BookingStatusAtom,
+} from '../../_states';
 import AddBrandModal from './AddBrandModal';
 import RelationshipModal from './RelationshipModal';
 import AssignUserModal from './AssignUserModal';
@@ -29,7 +34,6 @@ import InventoryModal from './InventoryModal';
 import DescriptionHeader from '../../common/DescriptionHeader/DescriptionHeader';
 import { BookingFunctions } from './BookingFunctions';
 import DataNotFound from '../../common/DataNotFound/DataNotFound';
-import { errorAtom } from '../../_states';
 import LoadingWrapper from '../../common/LoadingWrapper';
 import SingleDatePicker from '../../common/DateRangePicker/SingleDatePicker';
 import DatePicker from 'react-datepicker';
@@ -43,6 +47,7 @@ export default function BookingPlan() {
   const [columnsList, setColumnList] = useState({});
   const CampaignInventoryList = useRecoilValue(CampaignInventoryAtom);
   const supplierPhaseList = useRecoilValue(SupplierPhaseListAtom);
+  const bookingStatus = useRecoilValue(BookingStatusAtom);
 
   const [filterShow, setFilterShow] = useState(false);
   const [showModal, setShowModal] = useState({
@@ -147,6 +152,7 @@ export default function BookingPlan() {
     BookingApi.getBookingStatus();
     BookingApi.getSupplierPhase();
   }, [1]);
+  console.log(bookingStatus, 'bookingStatusbookingStatus');
   return (
     <>
       <div className="booking-plan-wrapper ">
@@ -301,7 +307,16 @@ export default function BookingPlan() {
                           />
                         </td>
                         <td>
-                          <Select
+                          <SelectDropdown
+                            optionsData={bookingStatus}
+                            selectedValue={data?.booking_status}
+                            rowData={data}
+                            placeholder="Booking Status"
+                            label="Booking Status"
+                            id="BookingStatus"
+                            handleSelect={UpdateData.handleSelectBookingStatus}
+                          />
+                          {/* <Select
                             className="mb-3"
                             options={[
                               { label: 'painting' },
@@ -311,17 +326,28 @@ export default function BookingPlan() {
                             label="Booking Status"
                             id="BookingStatus"
                             placeholder="Booking Status"
-                          />
+                          /> */}
+                          {/* <SelectDropdown
+                            optionsData={UpdateData.getBookingSubStatusList(data?.booking_status)}
+                            selectedValue={data?.booking_sub_status}
+                            rowData={data}
+                            placeholder="Booking Sub Status"
+                            label="Booking Sub Status"
+                            id="BookingSubStatus"
+                            handleSelect={UpdateData.handleBookingSubStatus}
+                          /> */}
                           <Select
                             className=""
-                            options={[
-                              { label: 'painting' },
-                              { label: 'Elevator' },
-                              { label: 'Cars' },
-                            ]}
+                            options={UpdateData.getBookingSubStatusList(data?.booking_status)}
+                            value={UpdateData.getBookingSubStatusList(data?.booking_status).filter(
+                              (obj) => obj.value === data?.booking_sub_status
+                            )}
                             label="Booking Sub Status"
                             id="BookingSubStatus"
                             placeholder="Booking Sub Status"
+                            onChange={(e) => {
+                              UpdateData.handleBookingSubStatus(e, data);
+                            }}
                           />
                         </td>
                         <td>
@@ -539,22 +565,6 @@ export default function BookingPlan() {
                                 </>
                               );
                             })}
-                            {/* <Form.Check
-                            inline
-                            label="Completed"
-                            name={`completed${data?.id}`}
-                            type="radio"
-                            id="completed"
-                            defaultChecked={data?.is_completed === true ? true : false}
-                          />
-                          <Form.Check
-                            inline
-                            label="Not Completed"
-                            name={`completed${data?.id}`}
-                            type="radio"
-                            id="Notcompleted"
-                            defaultChecked={data?.is_completed === false ? true : false}
-                          /> */}
                           </div>
                         </td>
                         <td>

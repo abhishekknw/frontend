@@ -33,7 +33,8 @@ const BookinPlanActions = () => {
     const getBookingStatus = () => {
         return fetchWrapper.get(`${Apis.Get_Booking_Status}${CampaignProposalId}`).then((res) => {
             if (res.status) {
-                setBookinStatus(res.data)
+                let newList = res.data.map(item => ({ ...item, label: item?.name, value: item?.code }));
+                setBookinStatus(newList);
             } else {
                 alertActions.error(Labels.Error);
             }
@@ -186,6 +187,17 @@ const BookinPlanActions = () => {
             }
         })
     }
+
+    const uploadBookingPlan = (file) => {
+        return fetchWrapper.post(``, file, true).then((res) => {
+            if (res?.status) {
+                alertActions.success(Labels.Upload_Success);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        })
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -203,7 +215,8 @@ const BookinPlanActions = () => {
         postReceiptImages,
         getSupplierPhase,
         getBookingStatus,
-        updateCampaignInventories
+        updateCampaignInventories,
+        uploadBookingPlan
     };
 }
 export { BookinPlanActions };
