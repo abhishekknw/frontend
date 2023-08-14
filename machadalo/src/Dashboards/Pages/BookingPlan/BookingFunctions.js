@@ -24,6 +24,7 @@ const BookingFunctions = () => {
         setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
     }
     const handleNextActionDate = (event, row) => {
+        console.log(event.target.value, row)
         let newList = campaignInventory.shortlisted_suppliers.map(item =>
             item?.id === row?.id
                 ? { ...item, next_action_date: event?.target?.value }

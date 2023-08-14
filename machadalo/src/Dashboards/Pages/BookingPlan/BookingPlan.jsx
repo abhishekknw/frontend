@@ -31,6 +31,7 @@ import { BookingFunctions } from './BookingFunctions';
 import DataNotFound from '../../common/DataNotFound/DataNotFound';
 import { errorAtom } from '../../_states';
 import LoadingWrapper from '../../common/LoadingWrapper';
+import SingleDatePicker from '../../common/DateRangePicker/SingleDatePicker';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -348,11 +349,15 @@ export default function BookingPlan() {
                           </Button>
                         </td>
                         <td>
-                          <Form.Control
+                          {/* <Form.Control
                             type="date"
                             value={data?.next_action_date}
                             onChange={(e) => UpdateData.handleNextActionDate(e, data)}
                             placeholder="Next Action Date"
+                          /> */}
+                          <SingleDatePicker
+                            selectDate={data?.next_action_date}
+                            onDateChange={UpdateData.handleNextActionDate}
                           />
                         </td>
                         <td>
