@@ -4,7 +4,6 @@ import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
 import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom, SupplierPhaseListAtom, BookingStatusAtom } from '../../_states';
 import { errorAtom } from '../../_states/alert';
-
 const BookinPlanActions = () => {
     const fetchWrapper = useFetchWrapper();
     const alertActions = useAlertActions();
@@ -51,7 +50,11 @@ const BookinPlanActions = () => {
     const getContactDetailsData = (data) => {
         let params = "supplier_id=" + data?.object_id;
         return fetchWrapper.get(`${Apis.Get_Contact_Details}${params}`).then((res) => {
-            return res.data;
+            if (res?.status) {
+                return res?.data;
+            } else {
+                alertActions.error(Labels.Error);
+            }
         });
     };
 
