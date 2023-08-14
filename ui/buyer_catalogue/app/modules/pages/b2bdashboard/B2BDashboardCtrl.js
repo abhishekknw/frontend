@@ -666,7 +666,8 @@
       }
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = false;
-      B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code)
+      let user_type = "", tabName = "";
+      B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code, user_type, tabName)
         .then(function onSuccess(response) {
           if (response.data.data) {
             $scope.leadsDataCampaigns = response.data.data;
@@ -1032,6 +1033,7 @@
       if ($scope.clientStausListData.length == 0) {
         $scope.clientStatusList();
       }
+      user = !user ? "" : user;
       B2BDashboardService.leadDecisionPanding(value, page, user, search)
         .then(function onSuccess(response) {
           $scope.leadDecisionPandingData = response.data.data.lead;
