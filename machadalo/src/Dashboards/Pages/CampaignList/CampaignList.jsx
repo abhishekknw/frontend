@@ -163,7 +163,7 @@ export default function CampaignList() {
       <TableHeader headerValue="Campaign List" />
       <SearchBox />
       {CampaignList && CampaignList?.list && (
-        <ReactBootstrapTable rowData={CampaignList?.list} headerData={CampaignHeader} />
+        <ReactBootstrapTable className='campain-table' rowData={CampaignList?.list} headerData={CampaignHeader} />
       )}
     </>
   );

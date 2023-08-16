@@ -10,7 +10,7 @@ const style = {
 };
 export default function TableHeader(props) {
   return (
-    <div className="text-center" style={style}>
+    <div className={`text-center`} style={style}>
       <h4>{props?.headerValue?.toUpperCase()}</h4>
     </div>
   );
