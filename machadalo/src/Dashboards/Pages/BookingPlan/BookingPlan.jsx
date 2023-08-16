@@ -244,8 +244,13 @@ export default function BookingPlan() {
                           </Button>
                         </td>
                         <td>
-                          <a className="anchor-list">{data.name}</a>
-                          {data?.quality_rating && <span>{data?.quality_rating}</span>}
+                          <a
+                            className="anchor-list"
+                            href={`https://www.google.com/maps/?q=${data?.address_supplier?.latitude}${data?.address_supplier?.longitude}`}
+                          >
+                            {data.name}
+                          </a>
+                          {data?.quality_rating && <span>({data?.quality_rating})</span>}
                         </td>
                         <td>{data.supplier_id}</td>
                         <td>{data.supplierCode}</td>
@@ -317,17 +322,6 @@ export default function BookingPlan() {
                             id="BookingStatus"
                             handleSelect={UpdateData.handleSelectBookingStatus}
                           />
-                          {/* <Select
-                            className="mb-3"
-                            options={[
-                              { label: 'painting' },
-                              { label: 'Elevator' },
-                              { label: 'Cars' },
-                            ]}
-                            label="Booking Status"
-                            id="BookingStatus"
-                            placeholder="Booking Status"
-                          /> */}
                           <SelectDropdown
                             optionsData={UpdateData.getBookingSubStatusList(data?.booking_status)}
                             selectedValue={data?.booking_sub_status}
