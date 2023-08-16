@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { BookinPlanActions } from '../../_actions';
 import { SupplierPhaseListAtom } from '../../_states';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import ReactBootstrapTable from '../../Table/React-Bootstrap-table/ReactBootstrapTable';
 import dayjs from 'dayjs';
 import { BsFillTrashFill, BsFillCalendarDateFill } from 'react-icons/bs';
@@ -10,7 +10,7 @@ import DatePicker from 'react-datepicker';
 
 export default function ViewPhaseModal() {
   const BookingApi = BookinPlanActions();
-  const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom);
+  const supplierPhaseList = useRecoilValue(SupplierPhaseListAtom);
   const addNewPhase = { phase_no: '', start_date: '', end_date: '' };
 
   function getSupplierPhase() {
@@ -36,7 +36,7 @@ export default function ViewPhaseModal() {
       },
     },
     {
-      title: 'Phases',
+      title: 'PHASE',
       accessKey: 'phase_no',
       sort: false,
       action: function (row, index) {
@@ -54,7 +54,7 @@ export default function ViewPhaseModal() {
       },
     },
     {
-      title: 'Start Date',
+      title: 'START DATE',
       accessKey: 'start_date',
       sort: false,
       action: function (row, index) {
@@ -72,7 +72,7 @@ export default function ViewPhaseModal() {
       },
     },
     {
-      title: 'End Date',
+      title: 'END DATE',
       accessKey: 'end_date',
       sort: false,
       action: function (row, index) {
@@ -83,6 +83,7 @@ export default function ViewPhaseModal() {
               dateFormat="dd/MM/yyyy"
               selected={row?.end_date ? new Date(row?.end_date) : ''}
               onChange={(date) => handleSelectDate(date, row)}
+              minDate={new Date(row?.start_date)}
               customInput={<ExampleCustomInput />}
             />
           </div>
@@ -90,7 +91,7 @@ export default function ViewPhaseModal() {
       },
     },
     {
-      title: 'Remove',
+      title: 'REMOVE',
       accessKey: 'index',
       sort: false,
       action: function (row, index) {
@@ -108,7 +109,6 @@ export default function ViewPhaseModal() {
       },
     },
   ];
-  console.log(supplierPhaseList, 'supplierPhaseList');
   useEffect(() => {
     getSupplierPhase();
   }, []);

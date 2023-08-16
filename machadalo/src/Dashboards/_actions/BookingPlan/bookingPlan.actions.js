@@ -166,17 +166,7 @@ const BookinPlanActions = () => {
             }
         })
     }
-    const getSupplierPhase = () => {
-        return fetchWrapper.get(`${Apis.Get_Supplier_Phase}?campaign_id=${CampaignProposalId}`).then((res) => {
-            if (res?.status) {
-                let newList = res.data.map(item => ({ ...item, label: item?.phase_no, value: item?.id }));
-                setSupplierPhaseList(newList);
-            }
-            else {
-                alertActions.error(Labels.Error);
-            }
-        })
-    }
+
     const updateCampaignInventories = (data) => {
         return fetchWrapper.put(`/v0/ui/website/${CampaignProposalId}/campaign-inventories/`, data).then((res) => {
             if (res?.status) {
@@ -209,10 +199,23 @@ const BookinPlanActions = () => {
             }
         })
     }
+    const getSupplierPhase = () => {
+        return fetchWrapper.get(`${Apis.Get_Supplier_Phase}?campaign_id=${CampaignProposalId}`).then((res) => {
+            if (res?.status) {
+                let newList = res.data.map(item => ({ ...item, label: item?.phase_no, value: item?.id }));
+                setSupplierPhaseList(newList);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        })
+    }
     const deletSupplierPhase = (id) => {
         return fetchWrapper.delete(`${Apis.Delete_Supplier_Phase}${id}/`).then((res) => {
             if (res.status) {
                 alertActions.success(Labels.Delete_Success);
+                let newList = supplierPhaseList.filter(item => item.id !== id);
+                setSupplierPhaseList(newList);
             }
             else {
                 alertActions.error(Labels.Error);
