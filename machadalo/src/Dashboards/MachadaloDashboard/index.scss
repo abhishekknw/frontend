@@ -156,6 +156,9 @@ body{
     position: absolute;
     top: 14px;
 }
+table.leads-table .action-icon {
+    display: flex;
+}
 
 @media only screen and (max-width: 600px) and (min-width: 992px) {
     .dx {
@@ -277,7 +280,7 @@ table.basic-leads tbody tr th{
     max-width: 100px;
     white-space: normal !important;
 
-    overflow: hidden;
+    // overflow: hidden;
 } 
 
 table tr th{
@@ -420,6 +423,7 @@ table .btn{
   
   .wpModal .modal-header .modal-title {
     background-color: #3e59e3;
+    color: #ffffff;
   }
   
   .wpModal .wp-form label {
@@ -592,11 +596,11 @@ table .btn{
 .wpModal .btn-close:before{
     content: "+";
 }
-.table-head{
-    font-weight: 700;
-    font-size: 20px;
-    padding: 10px 0px;
-}
+// .table-head{
+//     font-weight: 700;
+//     font-size: 20px;
+//     padding: 10px 0px;
+// }
 .table-dropdown-status .btn-success,.table-dropdown-status .btn-success:hover{
     background-color: #3e59e3;
     font-size: 12px;
@@ -860,4 +864,17 @@ html body .w-60{
     width: 100% !important;
     height: 100% !important;
 }
+}
+
+// datepicker
+.main-content .calander .react-datepicker__month-container  span {
+    padding-left: 5px;
+    padding-top: 7px;
+    top:6px;
+    display: inline-block;
+}
+.react-datepicker__month-container .react-datepicker__month-read-view--down-arrow, .react-datepicker__year-read-view--down-arrow{
+    border-color: #3e59e3;
+    border-width: 2px 2px 0 0;
+    height: 7px;
 }

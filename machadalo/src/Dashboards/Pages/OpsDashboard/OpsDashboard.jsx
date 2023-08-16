@@ -345,91 +345,92 @@ export default function OpsDashboard(props) {
   };
   return (
     <>
-      <div>
-        <Form className="">
-          <Form.Group className="mb-3 group-two" controlId="formPlaintextEmail">
-            <Form.Group>
-              <Select
-                className="mb-3 me-2 input-div"
-                options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
-                // onChange={handleTypeSelect}
-                // value={organisationOptions.filter(function (option) {
-                //   return option.value === selectedOption;
-                // })}
-                label="Sector"
-                id="Sector"
-                placeholder="Select Sector"
-              />
-            </Form.Group>
+      <div className="opspage">
+        <div>
+          <Form className="">
+            <Form.Group className="mb-3 group-two" controlId="formPlaintextEmail">
+              <Form.Group>
+                <Select
+                  className="mb-3 me-2 input-div"
+                  options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
+                  // onChange={handleTypeSelect}
+                  // value={organisationOptions.filter(function (option) {
+                  //   return option.value === selectedOption;
+                  // })}
+                  label="Sector"
+                  id="Sector"
+                  placeholder="Select Sector"
+                />
+              </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formPlaintext">
-              <Select
-                className="mb-3 me-2 input-div"
-                options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
-                // onChange={handleTypeSelect}
-                // value={organisationOptions.filter(function (option) {
-                //   return option.value === selectedOption;
-                // })}
-                label="Sector"
-                id="Sector"
-                placeholder="Select Sector"
-              />
-            </Form.Group>
+              <Form.Group className="mb-3" controlId="formPlaintext">
+                <Select
+                  className="mb-3 me-2 input-div"
+                  options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
+                  // onChange={handleTypeSelect}
+                  // value={organisationOptions.filter(function (option) {
+                  //   return option.value === selectedOption;
+                  // })}
+                  label="Sector"
+                  id="Sector"
+                  placeholder="Select Sector"
+                />
+              </Form.Group>
 
-            <Form.Group className="mb-3 me-2 input-div" controlId="formPlaintext">
-              <Button className="btn btn-theme">Add Row</Button>
+              <Form.Group className="mb-3 me-2 input-div" controlId="formPlaintext">
+                <Button className="btn btn-theme">Add Row</Button>
+              </Form.Group>
             </Form.Group>
-          </Form.Group>
-        </Form>
-      </div>
-      <div>
-        <table className="display" width="100%" id={tableName} ref={tableRef}>
-          <thead>
-            <tr>
-              {columnsList.map((item, index) => {
-                return <th key={index}>{item.title}</th>;
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>JSW Paints Private Limited</td>
-              <td>NA Reason:not given test</td>
-              <td>
-                <span>Asian Paints Ltd </span>
-                <br />
-                <span>JSW Paints Private Limited</span>
-              </td>
-              <td>6-9 months</td>
-              <td>More Than % years</td>
-              <td>as soon as possible</td>
-              <td>Raw Lead</td>
-              <td>
-                <BsFillChatDotsFill size={20} className="icons" />
-              </td>
-              <td>
-                <BsFillChatDotsFill size={20} className="icons" />
-              </td>
-              <td className="text-left">
-                <b>Name:</b> shahid <br />
-                <b>Number:</b> 7006501835
-              </td>
-              <td>Bharti AXA Life Insurence company</td>
-              <td>Bharat ViKas Group User</td>
-              <td>No Requirement + Feedback + Subcription</td>
-              <td>5000</td>
-              <td className="span-box">
-                {' '}
-                <span className="span-tag">
-                  <span>Submitted: Jun 23, 2022 11:31:31 AM </span>
-                  <br></br>
-                  <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
-                  <br></br>
-                  <span> Ops Verify Name:AMAN PATIDAR </span>
-                </span>
-              </td>
-              <td>
-                {/* <span>
+          </Form>
+        </div>
+        <div>
+          <table className="display" width="100%" id={tableName} ref={tableRef}>
+            <thead>
+              <tr>
+                {columnsList.map((item, index) => {
+                  return <th key={index}>{item.title}</th>;
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>JSW Paints Private Limited</td>
+                <td>NA Reason:not given test</td>
+                <td>
+                  <span>Asian Paints Ltd </span>
+                  <br />
+                  <span>JSW Paints Private Limited</span>
+                </td>
+                <td>6-9 months</td>
+                <td>More Than % years</td>
+                <td>as soon as possible</td>
+                <td>Raw Lead</td>
+                <td>
+                  <BsFillChatDotsFill size={20} className="icons" />
+                </td>
+                <td>
+                  <BsFillChatDotsFill size={20} className="icons" />
+                </td>
+                <td className="text-left">
+                  <b>Name:</b> shahid <br />
+                  <b>Number:</b> 7006501835
+                </td>
+                <td>Bharti AXA Life Insurence company</td>
+                <td>Bharat ViKas Group User</td>
+                <td>No Requirement + Feedback + Subcription</td>
+                <td>5000</td>
+                <td className="span-box">
+                  {' '}
+                  <span className="span-tag">
+                    <span>Submitted: Jun 23, 2022 11:31:31 AM </span>
+                    <br></br>
+                    <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
+                    <br></br>
+                    <span> Ops Verify Name:AMAN PATIDAR </span>
+                  </span>
+                </td>
+                <td>
+                  {/* <span>
                   <BsCheckLg size={20} className="icons" />
                 </span>
                 <span>
@@ -445,42 +446,42 @@ export default function OpsDashboard(props) {
                 <span>
                   <BsFillXCircleFill className="icons" size={20} />
                 </span> */}
-              </td>
-            </tr>
-            <tr>
-              <td>JSW Paints Private Limited</td>
-              <td>NA Reason:not given</td>
-              <td>
-                <span>Asian Paints Ltd</span>
-                <br></br>
-                <span>JSW Paints Private Limited</span>
-              </td>
-              <td>6-9 months</td>
-              <td>More Than % years</td>
-              <td>as soon as possible</td>
-              <td>Raw Lead</td>
-              <td>
-                <BsFillChatDotsFill className="icons" size={20} />
-              </td>
-              <td>
-                <BsFillChatDotsFill className="icons" size={20} />
-              </td>
-              <td>Name: shahid Number: 7006501835</td>
-              <td>Bharti AXA Life Insurence company</td>
-              <td>Bharat ViKas Group User</td>
-              <td>No Requirement + Feedback + Subcription</td>
-              <td>5000</td>
-              <td>
-                <span className="span-tag">
-                  <span>Submitted: Jun 23, 2022 11:31:31 AM6854654 </span>
+                </td>
+              </tr>
+              <tr>
+                <td>JSW Paints Private Limited</td>
+                <td>NA Reason:not given</td>
+                <td>
+                  <span>Asian Paints Ltd</span>
                   <br></br>
-                  <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
-                  <br></br>
-                  <span> Ops Verify Name:AMAN PATIDAR</span>
-                </span>
-              </td>
-              <td>
-                {/* <span>
+                  <span>JSW Paints Private Limited</span>
+                </td>
+                <td>6-9 months</td>
+                <td>More Than % years</td>
+                <td>as soon as possible</td>
+                <td>Raw Lead</td>
+                <td>
+                  <BsFillChatDotsFill className="icons" size={20} />
+                </td>
+                <td>
+                  <BsFillChatDotsFill className="icons" size={20} />
+                </td>
+                <td>Name: shahid Number: 7006501835</td>
+                <td>Bharti AXA Life Insurence company</td>
+                <td>Bharat ViKas Group User</td>
+                <td>No Requirement + Feedback + Subcription</td>
+                <td>5000</td>
+                <td>
+                  <span className="span-tag">
+                    <span>Submitted: Jun 23, 2022 11:31:31 AM6854654 </span>
+                    <br></br>
+                    <span>Ops Verify: Jun 23, 2022 11:31:31 AM </span>
+                    <br></br>
+                    <span> Ops Verify Name:AMAN PATIDAR</span>
+                  </span>
+                </td>
+                <td>
+                  {/* <span>
                   <BsCheckLg className="icons" size={20} />
                 </span>
                 <span>
@@ -496,26 +497,27 @@ export default function OpsDashboard(props) {
                 <span>
                   <BsFillXCircleFill className="icons" size={20} />
                 </span> */}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <Modal
-        show={requirementModal.show}
-        onHide={(e) => {
-          setRequirementModal({ show: false });
-        }}
-        className="ops-edit-modal modify-modal"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Edit</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <RequirementEditModal />
-        </Modal.Body>
-      </Modal>
+        <Modal
+          show={requirementModal.show}
+          onHide={(e) => {
+            setRequirementModal({ show: false });
+          }}
+          className="ops-edit-modal modify-modal"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Edit</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <RequirementEditModal />
+          </Modal.Body>
+        </Modal>
+      </div>
     </>
   );
 }

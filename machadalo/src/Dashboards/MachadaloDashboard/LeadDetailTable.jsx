@@ -1,14 +1,10 @@
-import React, { useMemo } from 'react';
-// import Table from 'react-bootstrap/Table';
+import React from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
-// import './index.css';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import {
-  BsChevronDown,
-  BsChevronUp,
   BsEnvelopeFill,
   BsArrowDownCircle,
   BsWhatsapp,
@@ -19,22 +15,28 @@ import {
 import { useRecoilState } from 'recoil';
 import { showHideTable, showHideModalAtom } from '../_states';
 import LeadDetailModal from '../common/Modals/LeadDetailModal';
-import Paginations from '../Pagination';
-import EmailModal from '../common/Modals/EmailModal';
-import WhatsappModal from '../common/Modals/WhatsappModal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import ReactPagination from '../Pagination/Pagination';
+import SearchBox from '../common/search/SearchBox';
+import SelectDropdown from '../common/SelectDropdown/SelectDropdown';
 
 export default function ViewLeadDetailTable(props) {
   const [isExpandRow, setIsExpandRow] = React.useState({ b2b: false, b2c: false });
-  const [showTable, setshowTable] = React.useState({ first: false, b2c: false });
-  const [showHideTableObj, setshowHideTableObj] = useRecoilState(showHideTable);
   const [showHideModal, setshowHideModal] = useRecoilState(showHideModalAtom);
 
   const [page, setPage] = React.useState(1);
-  const handlePageChange = (event, value) => {
-    setPage(value);
+  const handlePageChange = (event) => {
+    setPage(event.selected + 1);
   };
+
+  const clientStatusList = [
+    { label: 'Lead Verified By Machadalo', value: 1 },
+    { label: 'Lead Verified By Client', value: 2 },
+    { label: 'Not a decision Maker', value: 3 },
+    { label: 'Meeting Confirmed', value: 4 },
+    { label: 'Meeting Completed', value: 5 },
+  ];
 
   const [headerData, setheaderData] = React.useState([
     {
@@ -81,19 +83,29 @@ export default function ViewLeadDetailTable(props) {
       key: 'Action',
     },
   ]);
+  function handleSearch(e) {
+    console.log(e, '21344234');
+  }
+
+  function handleSelect(e) {
+    console.log(e, '11111111111');
+  }
   return (
     <>
       <LeadDetailModal />
       <div className="row pb-2 filter-box">
-        <div className="col-md-6 d-flex ">
-          <InputGroup className="me-2">
+        <div className="col-md-6  d-flex ">
+          <div className="me-2">
+            <SearchBox onSearch={handleSearch} />
+          </div>
+          {/* <InputGroup className="me-2">
             <Form.Control placeholder="Search" aria-label="Search" />
             <InputGroup.Text>
               <BsSearch />
             </InputGroup.Text>
-          </InputGroup>
+          </InputGroup> */}
           <div className="campaign-list-dropdown">
-            <Dropdown>
+            {/* <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-second">
                 Select Status
               </Dropdown.Toggle>
@@ -105,7 +117,15 @@ export default function ViewLeadDetailTable(props) {
                 <Dropdown.Item>Meeting Confirmed</Dropdown.Item>
                 <Dropdown.Item>Meeting Completed</Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
+            <SelectDropdown
+              optionsData={clientStatusList}
+              selectedValue={1}
+              placeholder="Client Status"
+              label="Client Status"
+              id="ClientStatus"
+              handleSelect={handleSelect}
+            />
           </div>
         </div>
         <div className="col-md-6">
@@ -158,6 +178,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
+              <SelectDropdown
+                className="table-dropdown-status"
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -198,7 +227,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -212,7 +241,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -253,7 +290,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -267,7 +304,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -308,7 +353,15 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -322,7 +375,7 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Td>
             <Td>20k</Td>
             <Td>
@@ -363,7 +416,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -377,7 +430,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -418,7 +479,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -432,7 +493,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -473,7 +542,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -487,7 +556,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -528,7 +605,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -542,7 +619,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -583,7 +668,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -597,7 +682,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -638,7 +731,7 @@ export default function ViewLeadDetailTable(props) {
             <Td>Machadalo</Td>
             <Td>2023-02-01 13:57:15</Td>
             <Td>
-              <Dropdown className="table-dropdown-status">
+              {/* <Dropdown className="table-dropdown-status">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Leads Verified by Machadalo
                 </Dropdown.Toggle>
@@ -652,7 +745,15 @@ export default function ViewLeadDetailTable(props) {
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                   <Dropdown.Item href="#">Decision pending</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <SelectDropdown
+                optionsData={clientStatusList}
+                selectedValue={1}
+                placeholder="Client Status"
+                label="Client Status"
+                id="ClientStatus"
+                handleSelect={handleSelect}
+              />
             </Td>
             <Td>20k</Td>
             <Td>
@@ -686,7 +787,12 @@ export default function ViewLeadDetailTable(props) {
           </Tr>
         </Tbody>
       </Table>
-      <Paginations pageSize={10} totalItems={100} pageNo={page} onPageChange={handlePageChange} />
+      <ReactPagination
+        pageNo={page}
+        pageSize={10}
+        totalItems={100}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 }

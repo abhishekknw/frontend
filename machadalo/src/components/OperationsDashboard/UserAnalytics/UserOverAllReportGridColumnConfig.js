@@ -73,6 +73,77 @@ const getColumnConfig = () => {
       sort: false,
     },
   ];
+  // return [
+  //   {
+  //     accessKey: 'campaign_id',
+  //     title: 'Campaign Id',
+  //   },
+  //   {
+  //     accessKey: 'name',
+  //     title: 'Campaign',
+  //     width: '300px',
+  //     sort: true
+  //   },
+  //   {
+  //     accessKey: 'action',
+  //     title: 'Status',
+  //     action: function (row) {
+  //       let status = get(row, 'campaign_status');
+  //       let variant = status === 'completed' ? 'success' : status === 'ongoing' ? 'info' : 'danger';
+  //       return <CampaignBadge variant={variant}>{status}</CampaignBadge>;
+  //     },
+  //   },
+  //   {
+  //     accessKey: 'suppliers_assigned_count',
+  //     title: 'Suppliers Assigned',
+  //     sort: false,
+  //   },
+  //   {
+  //     accessKey: 'confirmed_booked_count',
+  //     title: 'Confirmed Booked',
+  //     sort: false,
+  //   },
+  //   {
+  //     accessKey: 'rejected_count',
+  //     title: 'Rejected',
+  //     sort: false,
+  //   },
+  //   {
+  //     accessKey: 'decision_pending_count',
+  //     title: 'Decision Pending',
+  //     sort: false,
+  //   },
+  //   {
+  //     accessKey: 'visit_booked_count',
+  //     title: 'Visit Booked',
+  //     sort: false,
+  //   },
+  //   {
+  //     accessKey: 'visit_required_count',
+  //     title: 'Visit Required',
+  //     sort: false,
+  //   },
+  //   {
+  //     accessKey: 'new_entity_count',
+  //     title: 'New Entity',
+  //     sort: false,
+  //   },
+  //   {
+  //     accessKey: 'completed_count',
+  //     title: 'Completed',
+  //     sort: false,
+  //   },
+  //   {
+  //     accessKey: 'not_initiated_count',
+  //     title: 'Not Initiated',
+  //     sort: false,
+  //   },
+  //   {
+  //     accessKey: 'not_booked_count',
+  //     title: 'Not Booked',
+  //     sort: false,
+  //   },
+  // ];
 };
 
 export default getColumnConfig;

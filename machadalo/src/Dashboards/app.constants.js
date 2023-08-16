@@ -4,7 +4,9 @@ export const Labels = {
   Login_Success: 'Login successfully',
   Upload_Success: 'Uploaded successfully',
   Email_Success: 'Email Sent Successfully',
+  Save_Success: 'Save Successfully',
 };
+export const BaseImageUrl = 'https://androidtokyo.s3.amazonaws.com/';
 
 export const Apis = {
   New_Leads_Campaign: 'v0/ui/b2b/get-basic-lead-distribution-campaign/?tabname=basic',
@@ -21,7 +23,22 @@ export const Apis = {
   Get_Invoice_Proposals: 'v0/ui/website/proposal/invoice_proposals/',
   Get_Organisations: 'v0/ui/website/organisation/get_organisations_for_assignment/',
   Get_User_Minimal_List: 'v0/ui/website/get-users-minimal-list/',
+  Get_Organisation_List: 'v0/ui/website/organisation/',
+
+  // Campaign List
+  Get_Campaign_Assignment: 'v0/ui/website/campaign-assignment/',
 
   // Booking Plan
-  Get_Header_Data: '/v0/ui/getHeaderData',
+  Get_Header_Data: 'v0/ui/getHeaderData',
+  Get_Relationship_Data: 'v0/ui/website/get-relationship-and-past-campaigns-data/?',
+  Get_Contact_Details: 'v0/ui/website/inventory-contact-details/?',
+  Post_Brand_Assignment: 'v0/ui/website/brand-assignment/',
+  Post_Supplier_Assignment: 'v0/ui/website/supplier-assignment/',
+  Get_Permission_Box_Images: 'v0/ui/website/hashtag-images/get_permission_box_images/',
+  Post_permission_Box_Images: 'upload_permission_box_image/',
+  Get_Receipt_Images: 'v0/ui/website/hashtag-images/get_receipt_images/',
+  Post_Receipt_Images: 'upload_receipt_image/',
+  Get_Supplier_Phase: 'v0/ui/website/supplier-phase/',
+  Get_Booking_Status: '/v0/ui/website/booking-status/',
+  Post_Supplier_Phase: 'v0/ui/website/supplier-phase/',
 };

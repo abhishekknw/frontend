@@ -1,8 +1,15 @@
-import { useRecoilState, useSetRecoilState,useRecoilValue } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { AllCampaingsAtom, LeadByCampaignsAtom, showViewLeadsTableAtom, ClientStatusAtom, CommentListAtom,NewLeadTabFilterAtom } from '../../_states/Machadalo/newLeads';
+import {
+  AllCampaingsAtom,
+  LeadByCampaignsAtom,
+  showViewLeadsTableAtom,
+  ClientStatusAtom,
+  CommentListAtom,
+  NewLeadTabFilterAtom,
+} from '../../_states/Machadalo/newLeads';
 import { errorAtom } from '../../_states/alert';
 import dayjs from 'dayjs';
 import API_URL from '../../../config';
@@ -15,15 +22,15 @@ const newLeadActions = () => {
   const SetClientStatus = useSetRecoilState(ClientStatusAtom);
   const SetCommentListAtom = useSetRecoilState(CommentListAtom);
   const [LeadsByCampaign, setLeadsByCampaign] = useRecoilState(LeadByCampaignsAtom);
-  const filters = useRecoilValue(NewLeadTabFilterAtom)
+  const filters = useRecoilValue(NewLeadTabFilterAtom);
 
   const getAllCampaigns = (data) => {
-    let params = "&search=" + data.search;
-    params += "lead_type=" + data.lead_type;
+    let params = '&search=' + data.search;
+    params += '&lead_type=' + data.lead_type;
     params += '&supplier_type=' + data.supplier_type;
     return fetchWrapper.get(`${Apis.New_Leads_Campaign}${params}`).then((res) => {
       const { data } = res;
-      AllCampaignList([...data])
+      AllCampaignList([...data]);
     });
   };
   const getLeadByCampaignId = (data) => {
@@ -37,17 +44,21 @@ const newLeadActions = () => {
     params += '&startDate=&endDate=';
     return fetchWrapper.get(`${Apis.Lead_By_Campaign}${params}`).then((res) => {
       const { data } = res;
-      setLeadsByCampaign({ ...data })
+      setLeadsByCampaign({ ...data });
     });
-  }
+  };
 
   const getClientStatusList = (data) => {
     return fetchWrapper.get(`${Apis.Client_Status_By_Campaign}`).then((res) => {
-      const { data } = res;
-      SetClientStatus([...data.client_status])
-      return data;
+      let status = res?.data?.client_status.map((item, index) => ({
+        ...item,
+        label: item.status_name,
+        value: item.status_name,
+      }));
+      SetClientStatus(status);
+      return status;
     });
-  }
+  };
 
   const updateClientStatus = (data) => {
     let update = data;
@@ -79,40 +90,45 @@ const newLeadActions = () => {
         alertActions.error(res.data);
       }
     });
-  }
+  };
 
   const SendEmailsByCampaign = (data) => {
     let params = '?campaign_id=' + data.campaign_id;
     params += '&supplier_type=all';
     params += '&lead_type=Leads';
     params += '&emails=' + data.emails;
-    params += "&Client_Status=" + data.emailType;
-    params += "&tabname=" + '';
+    params += '&Client_Status=' + data.emailType;
+    params += '&tabname=' + '';
     //  "v0/ui/b2b/email-leads-summary/?lead_type=Leads&supplier_code=all&campaign_id=KRIKRI4EF8&emails=undefined&tabname=&Client_Status=Lead%20verified%20by%20Machadalo",
     return fetchWrapper.get(`${Apis.SendEmail_By_Campaign}${params}`).then((res) => {
       alertActions.success(Labels.Email_Success);
       setError(false);
     });
-  }
+  };
 
   const getCommentListByIds = (data) => {
-    let params = '?requirement_id=' + data.requirement_id + '&_id=' + data._id + "&comment_type=" + data.comment_type;
+    let params =
+      '?requirement_id=' +
+      data.requirement_id +
+      '&_id=' +
+      data._id +
+      '&comment_type=' +
+      data.comment_type;
     return fetchWrapper.get(`${Apis.Get_Comment_List}${params}`).then((res) => {
-      SetCommentListAtom([...res.data])
+      SetCommentListAtom([...res.data]);
     });
-  }
+  };
 
   const postCommentById = (data) => {
     return fetchWrapper.post(`${Apis.Get_Comment_List}`, { data: data }).then((res) => {
       if (res.status) {
         alertActions.success(res.data);
-        getCommentListByIds({ ...data[0], comment_type: 'all' })
-      }
-      else {
+        getCommentListByIds({ ...data[0], comment_type: 'all' });
+      } else {
         alertActions.error(Labels.Error);
       }
     });
-  }
+  };
 
   const acceptDeclineLeads = (data) => {
     let update = data;
@@ -123,8 +139,7 @@ const newLeadActions = () => {
         if (update[0].client_status == 'Accept') {
           let newList = LeadsByCampaign.values.filter((data) => data[0]._id !== update[0]?._id);
           setLeadsByCampaign({ ...LeadsByCampaign, values: newList });
-        }
-        else {
+        } else {
           let newList = [];
           let tempData = LeadsByCampaign['values'];
           for (let i in tempData) {
@@ -205,9 +220,9 @@ const newLeadActions = () => {
   };
   const getSupplierLeadsById = (id) => {
     return fetchWrapper.get(`${Apis.Get_Leads_By_Supplier}${id}`).then((res) => {
-      SetCommentListAtom([...res.data])
+      SetCommentListAtom([...res.data]);
     });
-  }
+  };
 
   return {
     getAllCampaigns,
@@ -220,7 +235,7 @@ const newLeadActions = () => {
     acceptDeclineLeads,
     downloadLeadsSummary,
     uploadCommentFile,
-    getSupplierLeadsById
+    getSupplierLeadsById,
   };
-}
+};
 export { newLeadActions };

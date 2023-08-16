@@ -1,36 +1,27 @@
 import React, { useEffect, useState } from 'react';
-// import Table from 'react-bootstrap/Table';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
-import CommonTable from '../../Table/CommonTable';
 import {
   AllCampaingsAtom,
   showHideTableAtom,
   NewLeadTabFilterAtom,
 } from '../../_states/Machadalo/newLeads';
 import { showHideModalAtom } from '../../_states';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { newLeadActions } from '../../_actions/Machadalo/newLead.actions';
 import Button from 'react-bootstrap/Button';
 import dayjs from 'dayjs';
 
-import {
-  BsChevronDown,
-  BsChevronUp,
-  BsEnvelopeFill,
-  BsArrowDownCircle,
-  BsWhatsapp,
-  BsSearch,
-  BsSortDown,
-  BsSortUp,
-} from 'react-icons/bs';
+import { BsEnvelopeFill, BsArrowDownCircle, BsSearch, BsSortDown, BsSortUp } from 'react-icons/bs';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Paginations from '../../Pagination';
-import EmailModal from '../../common/Modals/EmailModal';
 import NewViewLeadsTable from './NewViewLeadsTable';
 import DownloadModal from '../../common/Modals/DownloadModal';
+import ReactPagination from '../../Pagination/Pagination';
+import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
+import SearchBox from '../../common/search/SearchBox';
+import TableHeader from '../../Table/TableHeader/TableHeader';
 
 export default function CampaignList(props) {
   const NewLeadAction = newLeadActions();
@@ -44,9 +35,6 @@ export default function CampaignList(props) {
     startIndex: 0,
     endIndex: 9,
   });
-  // const [showHideModal, setshowHideModal] = useState({
-  //   EmailModal: false,
-  // });
   const [campaignData, setCampaignData] = useState({});
 
   const [headerData, setheaderData] = useState([
@@ -79,37 +67,38 @@ export default function CampaignList(props) {
     },
   ]);
   const dropdownOption = [
-    { name: 'All', value: 'All' },
-    { name: 'Leads', value: 'Leads' },
-    { name: 'Survey', value: 'Survey' },
-    { name: 'Feedback', value: 'Feedback' },
-    { name: 'Survey Leads', value: 'Survey Leads' },
+    { label: 'All', value: 'All' },
+    { label: 'Leads', value: 'Leads' },
+    { label: 'Survey', value: 'Survey' },
+    { label: 'Feedback', value: 'Feedback' },
+    { label: 'Survey Leads', value: 'Survey Leads' },
   ];
   const supplierTypeCode = [
-    { name: 'ALL', value: 'all' },
-    { name: 'Residential Society', value: 'RS' },
-    { name: 'Corporate Park', value: 'CP' },
-    { name: 'Bus Shelter', value: 'BS' },
-    { name: 'Gym', value: 'GY' },
-    { name: 'Saloon', value: 'SA' },
-    { name: 'Retail Store', value: 'RE' },
-    { name: 'Bus', value: 'BU' },
-    { name: 'Corporates', value: 'CO' },
-    { name: 'Educational Institute', value: 'EI' },
-    { name: 'Gantry', value: 'GN' },
-    { name: 'Hospital', value: 'HL' },
-    { name: 'Hording', value: 'HO' },
-    { name: 'In-shop Retail', value: 'IR' },
-    { name: 'Radio Channel', value: 'RC' },
-    { name: 'TV Channel', value: 'TV' },
-    { name: 'Mix', value: 'mix' },
+    { label: 'ALL', value: 'all' },
+    { label: 'Residential Society', value: 'RS' },
+    { label: 'Corporate Park', value: 'CP' },
+    { label: 'Bus Shelter', value: 'BS' },
+    { label: 'Gym', value: 'GY' },
+    { label: 'Saloon', value: 'SA' },
+    { label: 'Retail Store', value: 'RE' },
+    { label: 'Bus', value: 'BU' },
+    { label: 'Corporates', value: 'CO' },
+    { label: 'Educational Institute', value: 'EI' },
+    { label: 'Gantry', value: 'GN' },
+    { label: 'Hospital', value: 'HL' },
+    { label: 'Hording', value: 'HO' },
+    { label: 'In-shop Retail', value: 'IR' },
+    { label: 'Radio Channel', value: 'RC' },
+    { label: 'TV Channel', value: 'TV' },
+    { label: 'Mix', value: 'mix' },
   ];
 
   useEffect(() => {
     NewLeadAction.getAllCampaigns(filters);
   }, []);
 
-  const handlePageChange = async (event, value) => {
+  const handlePageChange = async (event) => {
+    let value = event.selected + 1;
     if (value === 1) {
       setPaginationData({
         pageNo: 1,
@@ -156,9 +145,9 @@ export default function CampaignList(props) {
   };
 
   const onSearch = (e) => {
-    let data = { ...filters, search: e.target.value };
-    setFilters({ ...filters, search: e.target.value });
-    if (e.target.value != '' && e.target.value.length > 2) {
+    let data = { ...filters, search: e };
+    setFilters({ ...filters, search: e });
+    if (e != '' && e.length > 2) {
       NewLeadAction.getAllCampaigns(data);
     }
   };
@@ -199,12 +188,10 @@ export default function CampaignList(props) {
   return (
     <>
       {/* <CommonTable headerData={headerData} bodyData={bodyData} firstColumn={true}/> */}
-      <div className="text-center">
-        <h4 className="table-head">{'Campaigns'.toUpperCase()}</h4>
-      </div>
+      <TableHeader headerValue="Campaigns" />
       <div className=" mobile-block d-flex justify-content-between align-items-center pt-2 pb-3">
         <div className="campaign-list-dropdown">
-          <Dropdown className="me-4">
+          {/* <Dropdown className="me-4">
             <Dropdown.Toggle variant="success" id="dropdown-basic">
               {filters.lead_type}
             </Dropdown.Toggle>
@@ -224,9 +211,32 @@ export default function CampaignList(props) {
                 );
               })}
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
+          <div className="me-4">
+            <SelectDropdown
+              className="testing"
+              optionsData={dropdownOption}
+              selectedValue={filters.lead_type}
+              placeholder="Lead Type"
+              label="Lead Type"
+              id="LeadType"
+              handleSelect={handleSelect}
+            />
+          </div>
+          <div className="me-4">
+            <SelectDropdown
+              optionsData={supplierTypeCode}
+              selectedValue={
+                supplierTypeCode.find((item) => item.value === filters.supplier_type).value
+              }
+              placeholder="Supplier Type"
+              label="Supplier Type"
+              id="supplier_type"
+              handleSelect={handleSupplier}
+            />
+          </div>
 
-          <Dropdown>
+          {/* <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-second">
               {supplierTypeCode.find((item) => item.value === filters.supplier_type).name}
             </Dropdown.Toggle>
@@ -247,10 +257,11 @@ export default function CampaignList(props) {
               })}
               <Dropdown.Item>All</Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
         </div>
+        <SearchBox onSearch={onSearch} />
 
-        <div className="searchbox">
+        {/* <div className="searchbox">
           <InputGroup className="">
             <Form.Control
               placeholder="Search"
@@ -264,7 +275,7 @@ export default function CampaignList(props) {
               <BsSearch />
             </InputGroup.Text>
           </InputGroup>
-        </div>
+        </div> */}
       </div>
       <Table striped bordered hover className="leads-table  mobile-t-padding">
         <Thead className="leads-tbody">
@@ -335,11 +346,10 @@ export default function CampaignList(props) {
           })}
         </Tbody>
       </Table>
-
-      <Paginations
+      <ReactPagination
+        pageNo={paginationData.pageNo}
         pageSize={10}
         totalItems={CampaignList.length}
-        pageNo={paginationData.pageNo}
         onPageChange={handlePageChange}
       />
       <DownloadModal />
