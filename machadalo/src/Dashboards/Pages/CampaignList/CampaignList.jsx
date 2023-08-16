@@ -6,6 +6,8 @@ import { CampaignListAtom } from '../../_states';
 import { useRecoilValue } from 'recoil';
 import ReactBootstrapTable from '../../Table/React-Bootstrap-table/ReactBootstrapTable';
 import { Button } from 'react-bootstrap';
+import './campaignList.css';
+
 export default function CampaignList() {
   const CampaignListApi = CampaignListActions();
   const CampaignList = useRecoilValue(CampaignListAtom);
