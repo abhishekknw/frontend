@@ -8,14 +8,10 @@ import dayjs from 'dayjs';
 import { BsFillTrashFill, BsFillCalendarDateFill } from 'react-icons/bs';
 import DatePicker from 'react-datepicker';
 
-export default function ViewPhaseModal() {
+export default function ViewPhaseModal(props) {
   const BookingApi = BookinPlanActions();
-  const supplierPhaseList = useRecoilValue(SupplierPhaseListAtom);
+  const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom);
   const addNewPhase = { phase_no: '', start_date: '', end_date: '' };
-
-  function getSupplierPhase() {
-    BookingApi.getSupplierPhase();
-  }
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
     <div className="example-custom-input btn btn-primary" onClick={onClick} ref={ref}>
@@ -23,8 +19,24 @@ export default function ViewPhaseModal() {
       <BsFillCalendarDateFill sx={{ marginLeft: '5px' }} />
     </div>
   ));
-  const handleSelectDate = (date, row) => {
-    console.log(date, row);
+  const handleSelectStartDate = (date, row) => {
+    let newList = supplierPhaseList.map((item) =>
+      item?.id === row?.id ? { ...item, start_date: date } : item
+    );
+    setTimeout(() => setSupplierPhaseList(newList), 1000);
+  };
+  const handleSelectEndDate = (date, row) => {
+    let newList = supplierPhaseList.map((item) =>
+      item?.id === row?.id ? { ...item, end_date: date } : item
+    );
+    setTimeout(() => setSupplierPhaseList(newList), 1000);
+  };
+
+  const onPhaseChange = (e, row) => {
+    let newList = supplierPhaseList.map((item) =>
+      item?.id === row?.id ? { ...item, phase_no: e?.target?.value } : item
+    );
+    setTimeout(() => setSupplierPhaseList(newList), 1000);
   };
 
   const phaseHeader = [
@@ -48,6 +60,9 @@ export default function ViewPhaseModal() {
               id="phase_no"
               aria-describedby="phase_no"
               value={row?.phase_no}
+              onChange={(e) => {
+                onPhaseChange(e, row);
+              }}
             />
           </div>
         );
@@ -64,7 +79,7 @@ export default function ViewPhaseModal() {
             <DatePicker
               dateFormat="dd/MM/yyyy"
               selected={row?.start_date ? new Date(row?.start_date) : ''}
-              onChange={(date) => handleSelectDate(date, row)}
+              onChange={(date) => handleSelectStartDate(date, row, 'start_date')}
               customInput={<ExampleCustomInput />}
             />
           </div>
@@ -82,7 +97,7 @@ export default function ViewPhaseModal() {
             <DatePicker
               dateFormat="dd/MM/yyyy"
               selected={row?.end_date ? new Date(row?.end_date) : ''}
-              onChange={(date) => handleSelectDate(date, row)}
+              onChange={(date) => handleSelectEndDate(date, row, 'end_date')}
               minDate={new Date(row?.start_date)}
               customInput={<ExampleCustomInput />}
             />
@@ -100,7 +115,7 @@ export default function ViewPhaseModal() {
             <span>
               <BsFillTrashFill
                 onClick={(e) => {
-                  BookingApi.deletSupplierPhase(row?.id);
+                  BookingApi.deletSupplierPhase(row, index);
                 }}
               />
             </span>
@@ -109,9 +124,6 @@ export default function ViewPhaseModal() {
       },
     },
   ];
-  useEffect(() => {
-    getSupplierPhase();
-  }, []);
   return (
     <>
       <div>
@@ -123,7 +135,14 @@ export default function ViewPhaseModal() {
             <Button className="btn me-3 btn-primary">Edit</Button>
           </span>
           <span>
-            <Button className="btn me-3 btn-primary">Add</Button>
+            <Button
+              className="btn me-3 btn-primary"
+              onClick={(e) => {
+                setSupplierPhaseList([...supplierPhaseList, addNewPhase]);
+              }}
+            >
+              Add
+            </Button>
           </span>
           <span>
             <Button

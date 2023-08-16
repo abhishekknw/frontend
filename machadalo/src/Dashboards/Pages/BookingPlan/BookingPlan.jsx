@@ -151,7 +151,7 @@ export default function BookingPlan() {
     BookingApi.getBookingStatus();
     BookingApi.getSupplierPhase();
   }, [1]);
-  console.log(bookingStatus, 'bookingStatusbookingStatus');
+  // console.log(bookingStatus, 'bookingStatusbookingStatus');
   return (
     <>
       <div className="booking-plan-wrapper ">

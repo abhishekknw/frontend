@@ -210,8 +210,8 @@ const BookinPlanActions = () => {
             }
         })
     }
-    const deletSupplierPhase = (id) => {
-        return fetchWrapper.delete(`${Apis.Delete_Supplier_Phase}${id}/`).then((res) => {
+    const deletSupplierPhase = (row, index) => {
+        return fetchWrapper.delete(`${Apis.Delete_Supplier_Phase}${row?.id}/`).then((res) => {
             if (res.status) {
                 alertActions.success(Labels.Delete_Success);
                 let newList = supplierPhaseList.filter(item => item.id !== id);
