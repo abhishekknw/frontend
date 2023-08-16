@@ -154,10 +154,11 @@ export default function BookingPlan() {
   console.log(bookingStatus, 'bookingStatusbookingStatus');
   return (
     <>
-      <div className="booking-plan-wrapper ">
-        <TableHeader headerValue="Booking Plan" />
+      <div className="booking-plan-wrapper">
+        <div className='sticky-div'>
+        <TableHeader  headerValue="Booking Plan" />
         <DescriptionHeader data={descriptionData} />
-        <div>
+        <div className='booking-duobtn'>
           <span>
             <Button
               variant="primary me-2"
@@ -176,6 +177,7 @@ export default function BookingPlan() {
               Assign User
             </Button>
           </span>
+        </div>
         </div>
         {useErrorAtom ? (
           <LoadingWrapper />
