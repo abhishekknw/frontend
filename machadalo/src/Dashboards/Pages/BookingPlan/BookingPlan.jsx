@@ -23,7 +23,7 @@ import ContactDetailModal from './ContactDetailModal';
 import CommentModal from './CommentModal';
 import PaymentDetailModal from './PaymentDetailModal';
 import PermissionModal from './PermissionModal';
-import ReceiptModal from './ReceiptModal';
+import PaymentTypeModal from './PaymentTypeModal';
 import ReactPagination from '../../Pagination/Pagination';
 import ViewPhaseModal from './ViewPhaseModal';
 import AddSupplierModal from './AddSupplierModal';
@@ -465,6 +465,11 @@ export default function BookingPlan() {
                                       value={method.label}
                                       onChange={(e) => {
                                         UpdateData.handlePaymentmethod(method.label, data);
+                                        setShowModal({
+                                          show: true,
+                                          type: 'PaymentType',
+                                          rowData: data,
+                                        });
                                       }}
                                     />
                                   </>
@@ -722,6 +727,8 @@ export default function BookingPlan() {
                   ? 'Import Sheet'
                   : showModal.type == 'Inventory'
                   ? 'Inventories'
+                  : showModal.type == 'PaymentType'
+                  ? 'Cheque And NEFT'
                   : 'Other'}
               </Modal.Title>
             </Modal.Header>
@@ -744,9 +751,7 @@ export default function BookingPlan() {
                   campaign={showModal.campaign}
                   modalType={showModal.type}
                 />
-              ) : // ) : showModal.type == 'Receipt' ? (
-              //   <ReceiptModal />
-              showModal.type == 'ViewPhase' ? (
+              ) : showModal.type == 'ViewPhase' ? (
                 <ViewPhaseModal />
               ) : showModal.type == 'AddSupplier' ? (
                 <AddSupplierModal />
@@ -754,6 +759,8 @@ export default function BookingPlan() {
                 <ImportSheetModal />
               ) : showModal.type == 'Inventory' ? (
                 <InventoryModal />
+              ) : showModal.type == 'PaymentType' ? (
+                <PaymentTypeModal />
               ) : (
                 ''
               )}

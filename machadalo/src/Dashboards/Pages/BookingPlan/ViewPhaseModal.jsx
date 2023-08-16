@@ -119,7 +119,14 @@ export default function ViewPhaseModal() {
             <Button className="btn me-3 btn-primary">Edit</Button>
           </span>
           <span>
-            <Button className="btn me-3 btn-primary">Add</Button>
+            <Button
+              className="btn me-3 btn-primary"
+              onClick={(e) => {
+                setSupplierPhaseList([...supplierPhaseList, addNewPhase]);
+              }}
+            >
+              Add
+            </Button>
           </span>
           <span>
             <Button
