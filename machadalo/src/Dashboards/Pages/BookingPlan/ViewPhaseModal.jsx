@@ -12,6 +12,8 @@ export default function ViewPhaseModal(props) {
   const BookingApi = BookinPlanActions();
   const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom);
   const addNewPhase = { phase_no: '', start_date: '', end_date: '' };
+  const [validated, setValidated] = useState(false);
+  const [editEnable, setEditEnable] = useState(true);
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
     <div className="example-custom-input btn btn-primary" onClick={onClick} ref={ref}>
@@ -38,6 +40,33 @@ export default function ViewPhaseModal(props) {
     );
     setSupplierPhaseList(newList);
   };
+
+  const deleteSupplierPhaseObj = async (row, index) => {
+    if (!row?.id) {
+      let newList = [];
+      for (let i in supplierPhaseList) {
+        if (i != index) {
+          newList.push(supplierPhaseList[i]);
+        }
+      }
+      setSupplierPhaseList(newList);
+    } else {
+      await BookingApi.deletSupplierPhase(row, index);
+    }
+  };
+
+  const OnSavePhase = (event) => {
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // } else {
+    //   setValidated(true);
+    // }
+    // if (validated) {
+    BookingApi.saveSupplierPhaseList(supplierPhaseList);
+    // }
+  };
   const phaseHeader = [
     {
       title: '#',
@@ -54,6 +83,7 @@ export default function ViewPhaseModal(props) {
         return (
           <div>
             {/* <span>{row?.phase_no}</span>{' '} */}
+            {/* <Form noValidate validated={validated}> */}
             <Form.Control
               type="text"
               id="phase_no"
@@ -62,7 +92,11 @@ export default function ViewPhaseModal(props) {
               onChange={(e) => {
                 onPhaseChange(e, row);
               }}
+              required
+              disabled={editEnable}
             />
+            {/* <Form.Control.Feedback type="invalid">Please Enter Phase</Form.Control.Feedback>
+            </Form> */}
           </div>
         );
       },
@@ -74,13 +108,16 @@ export default function ViewPhaseModal(props) {
       action: function (row, index) {
         return (
           <div>
-            {/* <span> {dayjs(row?.start_date).format('DD-MM-YYYY')}</span> */}
-            <DatePicker
-              dateFormat="dd/MM/yyyy"
-              selected={row?.start_date ? new Date(row?.start_date) : ''}
-              onChange={(date) => handleSelectStartDate(date, row, 'start_date')}
-              customInput={<ExampleCustomInput />}
-            />
+            <Form noValidate validated={validated}>
+              <DatePicker
+                dateFormat="dd/MM/yyyy"
+                selected={row?.start_date ? new Date(row?.start_date) : ''}
+                onChange={(date) => handleSelectStartDate(date, row, 'start_date')}
+                customInput={<ExampleCustomInput />}
+                required
+                disabled={editEnable}
+              />
+            </Form>
           </div>
         );
       },
@@ -99,6 +136,7 @@ export default function ViewPhaseModal(props) {
               onChange={(date) => handleSelectEndDate(date, row, 'end_date')}
               minDate={new Date(row?.start_date)}
               customInput={<ExampleCustomInput />}
+              disabled={editEnable}
             />
           </div>
         );
@@ -114,7 +152,7 @@ export default function ViewPhaseModal(props) {
             <span>
               <BsFillTrashFill
                 onClick={(e) => {
-                  BookingApi.deletSupplierPhase(row, index);
+                  deleteSupplierPhaseObj(row, index);
                 }}
               />
             </span>
@@ -131,8 +169,16 @@ export default function ViewPhaseModal(props) {
         )}
         <div>
           <span>
-            <Button className="btn me-3 btn-primary">Edit</Button>
+            <Button
+              className="btn me-3 btn-primary"
+              onClick={(e) => {
+                setEditEnable(!editEnable);
+              }}
+            >
+              Edit
+            </Button>
           </span>
+
           <span>
             <Button
               className="btn me-3 btn-primary"
@@ -148,7 +194,7 @@ export default function ViewPhaseModal(props) {
               className="btn btn-success"
               variant="success"
               onClick={(e) => {
-                BookingApi.saveSupplierPhaseList(supplierPhaseList);
+                OnSavePhase(e);
               }}
             >
               Save

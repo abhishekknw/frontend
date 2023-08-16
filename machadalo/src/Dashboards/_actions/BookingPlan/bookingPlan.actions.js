@@ -211,7 +211,7 @@ const BookinPlanActions = () => {
             }
         })
     }
-    const deletSupplierPhase = (row, index) => {
+    const deletSupplierPhase = (row) => {
         return fetchWrapper.delete(`${Apis.Delete_Supplier_Phase}${row?.id}/`).then((res) => {
             if (res.status) {
                 alertActions.success(Labels.Delete_Success);
