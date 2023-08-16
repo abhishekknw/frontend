@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { BookinPlanActions } from '../../_actions';
 import { SupplierPhaseListAtom } from '../../_states';
@@ -97,7 +97,11 @@ export default function ViewPhaseModal() {
         return (
           <div className="action-icon">
             <span>
-              <BsFillTrashFill />
+              <BsFillTrashFill
+                onClick={(e) => {
+                  BookingApi.deletSupplierPhase(row?.id);
+                }}
+              />
             </span>
           </div>
         );
@@ -119,14 +123,7 @@ export default function ViewPhaseModal() {
             <Button className="btn me-3 btn-primary">Edit</Button>
           </span>
           <span>
-            <Button
-              className="btn me-3 btn-primary"
-              onClick={(e) => {
-                setSupplierPhaseList([...supplierPhaseList, addNewPhase]);
-              }}
-            >
-              Add
-            </Button>
+            <Button className="btn me-3 btn-primary">Add</Button>
           </span>
           <span>
             <Button

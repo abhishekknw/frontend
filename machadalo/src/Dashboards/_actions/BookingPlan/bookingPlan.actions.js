@@ -209,6 +209,16 @@ const BookinPlanActions = () => {
             }
         })
     }
+    const deletSupplierPhase = (id) => {
+        return fetchWrapper.delete(`${Apis.Delete_Supplier_Phase}${id}/`).then((res) => {
+            if (res.status) {
+                alertActions.success(Labels.Delete_Success);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        });
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -228,7 +238,8 @@ const BookinPlanActions = () => {
         getBookingStatus,
         updateCampaignInventories,
         uploadBookingPlan,
-        saveSupplierPhaseList
+        saveSupplierPhaseList,
+        deletSupplierPhase
     };
 }
 export { BookinPlanActions };
