@@ -161,7 +161,12 @@ export default function CampaignList() {
   return (
     <>
       <TableHeader headerValue="Campaign List" />
-      <SearchBox />
+        <div className='d-inline-flex search-block'>
+          <SearchBox />
+          <div>
+            <button className='btn btn-primary'>Suspence Lead</button>
+          </div>
+        </div>
       {CampaignList && CampaignList?.list && (
         <ReactBootstrapTable className='campain-table' rowData={CampaignList?.list} headerData={CampaignHeader} />
       )}
