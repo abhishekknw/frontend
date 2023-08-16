@@ -66,7 +66,6 @@ const BookingFunctions = () => {
         setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
     }
     const handleBookingSubStatus = (status, row) => {
-        console.log(status, "data")
         let newList = campaignInventory.shortlisted_suppliers.map(item =>
             item?.id === row?.id
                 ? { ...item, booking_sub_status: status?.value }
@@ -78,7 +77,6 @@ const BookingFunctions = () => {
     const getBookingSubStatusList = (id) => {
         let data = bookingStatus.filter((obj) => obj.value === id);
         let response = data[0]?.booking_substatus?.map(item => ({ ...item, label: item?.name, value: item?.code }));
-        console.log(response, "response");
         return response;
     }
 

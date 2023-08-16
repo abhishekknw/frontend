@@ -75,18 +75,18 @@ export default function ContactDetailModal(props) {
       // },
     },
     {
-      title: 'ACTION',
+      title: 'REMOVE',
       accessKey: 'index',
       sort: false,
       action: function (row, index) {
         return (
-          <div>
-            <span className="btn btn-primary">
+          <div className="action-icon">
+            <span>
               <BsTrash3 />
             </span>
-            <span className="btn btn-primary">
+            {/* <span>
               <BsPencilSquare />
-            </span>
+            </span> */}
           </div>
         );
       },

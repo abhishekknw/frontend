@@ -198,6 +198,17 @@ const BookinPlanActions = () => {
             }
         })
     }
+
+    const saveSupplierPhaseList = (data) => {
+        return fetchWrapper.post(`${Apis.Post_Supplier_Phase}?campaign_id=${CampaignProposalId}`, data).then((res) => {
+            if (res?.status) {
+                alertActions.success(Labels.Save_Success);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        })
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -216,7 +227,8 @@ const BookinPlanActions = () => {
         getSupplierPhase,
         getBookingStatus,
         updateCampaignInventories,
-        uploadBookingPlan
+        uploadBookingPlan,
+        saveSupplierPhaseList
     };
 }
 export { BookinPlanActions };

@@ -4,6 +4,7 @@ export const Labels = {
     Login_Success: "Login successfully",
     Upload_Success: "Uploaded successfully",
     Email_Success: "Email Sent Successfully",
+    Save_Success: 'Save Successfully'
 }
 export const BaseImageUrl = 'https://androidtokyo.s3.amazonaws.com/';
 
@@ -39,5 +40,6 @@ export const Apis = {
     Post_Receipt_Images: 'upload_receipt_image/',
     Get_Supplier_Phase: 'v0/ui/website/supplier-phase/',
     Get_Booking_Status: '/v0/ui/website/booking-status/',
+    Post_Supplier_Phase: 'v0/ui/website/supplier-phase/'
 }
 

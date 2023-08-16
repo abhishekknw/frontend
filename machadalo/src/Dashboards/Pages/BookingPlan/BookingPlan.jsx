@@ -35,7 +35,6 @@ import DescriptionHeader from '../../common/DescriptionHeader/DescriptionHeader'
 import { BookingFunctions } from './BookingFunctions';
 import DataNotFound from '../../common/DataNotFound/DataNotFound';
 import LoadingWrapper from '../../common/LoadingWrapper';
-import SingleDatePicker from '../../common/DateRangePicker/SingleDatePicker';
 import DatePicker from 'react-datepicker';
 
 export default function BookingPlan() {
@@ -592,18 +591,18 @@ export default function BookingPlan() {
               {(!CampaignInventoryList.shortlisted_suppliers ||
                 CampaignInventoryList.shortlisted_suppliers.length < 0) && <DataNotFound />}
             </Table>
-            {CampaignInventoryList &&
-              CampaignInventoryList.shortlisted_suppliers &&
-              CampaignInventoryList.total_count > 10 && (
-                <ReactPagination
-                  pageNo={filterData.pageNo}
-                  pageSize={10}
-                  totalItems={CampaignInventoryList.total_count}
-                  onPageChange={handlePageChange}
-                />
-              )}
           </div>
         )}
+        {CampaignInventoryList &&
+          CampaignInventoryList.shortlisted_suppliers &&
+          CampaignInventoryList.total_count > 10 && (
+            <ReactPagination
+              pageNo={filterData.pageNo}
+              pageSize={10}
+              totalItems={CampaignInventoryList.total_count}
+              onPageChange={handlePageChange}
+            />
+          )}
         <div
           className="booking-filter"
           style={{
