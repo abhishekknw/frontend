@@ -1,10 +1,11 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-export default function PaymentDetailModal() {
-  return(
+export default function PaymentDetailModal(props) {
+  console.log(props, '111111111111111');
+  return (
     <>
-    <div>
-    <Table className='table-center' responsive>
+      <div>
+        <Table className="table-center" responsive>
           <tr>
             <th>Name On Cheque</th>
             <th>Bank Name</th>
@@ -21,7 +22,7 @@ export default function PaymentDetailModal() {
             <td>2</td>
             <td>2</td>
             <td>01-11-2018</td>
-            <td>02-11-2018	</td>
+            <td>02-11-2018 </td>
           </tr>
           <tr>
             <td>3</td>
@@ -43,10 +44,11 @@ export default function PaymentDetailModal() {
           </tr>
         </Table>
         <div>
-        <span><button className='btn me-3 btn-primary'>Edit</button></span>
+          <span>
+            <button className="btn me-3 btn-primary">Edit</button>
+          </span>
+        </div>
       </div>
-    </div>
-    
     </>
-    );
+  );
 }

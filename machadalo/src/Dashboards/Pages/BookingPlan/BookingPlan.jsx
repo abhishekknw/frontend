@@ -326,7 +326,7 @@ export default function BookingPlan() {
                             id="BookingStatus"
                             placeholder="Booking Status"
                           /> */}
-                          {/* <SelectDropdown
+                          <SelectDropdown
                             optionsData={UpdateData.getBookingSubStatusList(data?.booking_status)}
                             selectedValue={data?.booking_sub_status}
                             rowData={data}
@@ -334,8 +334,8 @@ export default function BookingPlan() {
                             label="Booking Sub Status"
                             id="BookingSubStatus"
                             handleSelect={UpdateData.handleBookingSubStatus}
-                          /> */}
-                          <Select
+                          />
+                          {/* <Select
                             className=""
                             options={UpdateData.getBookingSubStatusList(data?.booking_status)}
                             value={UpdateData.getBookingSubStatusList(data?.booking_status).filter(
@@ -347,7 +347,7 @@ export default function BookingPlan() {
                             onChange={(e) => {
                               UpdateData.handleBookingSubStatus(e, data);
                             }}
-                          />
+                          /> */}
                         </td>
                         <td>
                           <SelectDropdown
@@ -479,7 +479,7 @@ export default function BookingPlan() {
                             <Button
                               variant="primary"
                               onClick={(e) => {
-                                setShowModal({ show: true, type: 'PaymentDetail' });
+                                setShowModal({ show: true, type: 'PaymentDetail', rowData: data });
                               }}
                             >
                               Details
@@ -744,7 +744,7 @@ export default function BookingPlan() {
               ) : showModal.type == 'externalComments' || showModal.type == 'internalComments' ? (
                 <CommentModal data={showModal.rowData} commentType={showModal.type} />
               ) : showModal.type == 'PaymentDetail' ? (
-                <PaymentDetailModal />
+                <PaymentDetailModal data={showModal.rowData} />
               ) : showModal.type == 'Permission' || showModal.type == 'Receipt' ? (
                 <PermissionModal
                   data={showModal.rowData}
