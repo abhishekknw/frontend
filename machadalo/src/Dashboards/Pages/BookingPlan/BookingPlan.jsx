@@ -155,29 +155,29 @@ export default function BookingPlan() {
   return (
     <>
       <div className="booking-plan-wrapper">
-        <div className='sticky-div'>
-        <TableHeader  headerValue="Booking Plan" />
-        <DescriptionHeader data={descriptionData} />
-        <div className='booking-duobtn'>
-          <span>
-            <Button
-              variant="primary me-2"
-              onClick={(e) => {
-                setFilterShow(!filterShow);
-              }}
-            >
-              <BsSliders2 />
-            </Button>
-            <Button
-              variant="primary"
-              onClick={(e) => {
-                setShowModal({ show: true, type: 'AssignUser' });
-              }}
-            >
-              Assign User
-            </Button>
-          </span>
-        </div>
+        <div className="sticky-div">
+          <TableHeader headerValue="Booking Plan" />
+          <DescriptionHeader data={descriptionData} />
+          <div className="booking-duobtn">
+            <span>
+              <Button
+                variant="primary me-2"
+                onClick={(e) => {
+                  setFilterShow(!filterShow);
+                }}
+              >
+                <BsSliders2 />
+              </Button>
+              <Button
+                variant="primary"
+                onClick={(e) => {
+                  setShowModal({ show: true, type: 'AssignUser' });
+                }}
+              >
+                Assign User
+              </Button>
+            </span>
+          </div>
         </div>
         {useErrorAtom ? (
           <LoadingWrapper />
@@ -469,7 +469,7 @@ export default function BookingPlan() {
                                         UpdateData.handlePaymentmethod(method.label, data);
                                         setShowModal({
                                           show: true,
-                                          type: 'PaymentType',
+                                          type: method.label,
                                           rowData: data,
                                         });
                                       }}
@@ -729,8 +729,10 @@ export default function BookingPlan() {
                   ? 'Import Sheet'
                   : showModal.type == 'Inventory'
                   ? 'Inventories'
-                  : showModal.type == 'PaymentType'
-                  ? 'Cheque And NEFT'
+                  : showModal.type == 'NEFT'
+                  ? `NEFT Details For ${showModal.rowData?.name}`
+                  : showModal.type == 'CHEQUE'
+                  ? `Cheque Details For ${showModal.rowData?.name}`
                   : 'Other'}
               </Modal.Title>
             </Modal.Header>
@@ -761,8 +763,8 @@ export default function BookingPlan() {
                 <ImportSheetModal />
               ) : showModal.type == 'Inventory' ? (
                 <InventoryModal />
-              ) : showModal.type == 'PaymentType' ? (
-                <PaymentTypeModal />
+              ) : showModal.type == 'NEFT' || showModal.type == 'CHEQUE' ? (
+                <PaymentTypeModal data={showModal.rowData} modalType={showModal.type} />
               ) : (
                 ''
               )}

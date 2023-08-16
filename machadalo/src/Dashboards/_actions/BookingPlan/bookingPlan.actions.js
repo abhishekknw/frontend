@@ -223,6 +223,17 @@ const BookinPlanActions = () => {
             }
         });
     }
+
+    const postEmailPaymentDetail = (data) => {
+        return fetchWrapper.post(`${Apis.Send_Email_Payment_Detail}`, data).then((res) => {
+            if (res?.status) {
+                alertActions.success(Labels.Email_Success);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        })
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -243,7 +254,8 @@ const BookinPlanActions = () => {
         updateCampaignInventories,
         uploadBookingPlan,
         saveSupplierPhaseList,
-        deletSupplierPhase
+        deletSupplierPhase,
+        postEmailPaymentDetail
     };
 }
 export { BookinPlanActions };
