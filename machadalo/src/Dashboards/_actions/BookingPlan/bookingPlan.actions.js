@@ -193,6 +193,7 @@ const BookinPlanActions = () => {
         return fetchWrapper.post(`${Apis.Post_Supplier_Phase}?campaign_id=${CampaignProposalId}`, data).then((res) => {
             if (res?.status) {
                 alertActions.success(Labels.Save_Success);
+                getSupplierPhase();
             }
             else {
                 alertActions.error(Labels.Error);
@@ -214,7 +215,7 @@ const BookinPlanActions = () => {
         return fetchWrapper.delete(`${Apis.Delete_Supplier_Phase}${row?.id}/`).then((res) => {
             if (res.status) {
                 alertActions.success(Labels.Delete_Success);
-                let newList = supplierPhaseList.filter(item => item.id !== id);
+                let newList = supplierPhaseList.filter(item => item.id !== row?.id);
                 setSupplierPhaseList(newList);
             }
             else {

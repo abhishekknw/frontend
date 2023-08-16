@@ -23,22 +23,21 @@ export default function ViewPhaseModal(props) {
     let newList = supplierPhaseList.map((item) =>
       item?.id === row?.id ? { ...item, start_date: date } : item
     );
-    setTimeout(() => setSupplierPhaseList(newList), 1000);
+    setSupplierPhaseList(newList);
   };
   const handleSelectEndDate = (date, row) => {
     let newList = supplierPhaseList.map((item) =>
       item?.id === row?.id ? { ...item, end_date: date } : item
     );
-    setTimeout(() => setSupplierPhaseList(newList), 1000);
+    setSupplierPhaseList(newList);
   };
 
   const onPhaseChange = (e, row) => {
     let newList = supplierPhaseList.map((item) =>
       item?.id === row?.id ? { ...item, phase_no: e?.target?.value } : item
     );
-    setTimeout(() => setSupplierPhaseList(newList), 1000);
+    setSupplierPhaseList(newList);
   };
-
   const phaseHeader = [
     {
       title: '#',
