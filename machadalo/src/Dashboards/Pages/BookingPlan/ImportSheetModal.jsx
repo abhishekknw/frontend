@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { BookinPlanActions } from '../../_actions';
-
 export default function ImportSheetModal() {
   const BookingApi = BookinPlanActions();
 
@@ -11,10 +10,10 @@ export default function ImportSheetModal() {
   });
 
   async function uploadFile() {
-    await BookingApi.uploadBookingPlan(postFileData);
+    const formData = new FormData();
+    formData.append('file', postFileData?.file);
+    await BookingApi.uploadBookingPlan(formData);
   }
-
-  useEffect(() => {}, []);
   return (
     <>
       <div>
@@ -33,7 +32,14 @@ export default function ImportSheetModal() {
             Sample Sheet
           </a>
           <div className="mt-4">
-            <Button className="btn btn-primary">Submit</Button>
+            <Button
+              className="btn btn-primary"
+              onClick={(e) => {
+                uploadFile();
+              }}
+            >
+              Submit
+            </Button>
           </div>
         </Form>
       </div>

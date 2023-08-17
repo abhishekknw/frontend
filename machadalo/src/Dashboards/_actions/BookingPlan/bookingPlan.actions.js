@@ -5,6 +5,7 @@ import { useAlertActions } from '../alert.actions';
 import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom, SupplierPhaseListAtom, BookingStatusAtom } from '../../_states';
 import { errorAtom } from '../../_states/alert';
 import dayjs from 'dayjs';
+import API_URL from '../../../config';
 
 const BookinPlanActions = () => {
     const fetchWrapper = useFetchWrapper();
@@ -16,7 +17,8 @@ const BookinPlanActions = () => {
     const setUserMinimalList = useSetRecoilState(UserMinimalListAtom);
     const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom);
     const setBookinStatus = useSetRecoilState(BookingStatusAtom);
-    const CampaignProposalId = 'HDFHDF0789';
+    const CampaignProposalId = 'TESTESBD56';
+    // 'HDFHDF0789';
 
     const getCampaignInventories = (data) => {
         let params = 'page=' + (data.pageNo + 1) + "&supplier_type_code=" + data.supplier_type_code;
@@ -186,7 +188,7 @@ const BookinPlanActions = () => {
     }
 
     const uploadBookingPlan = (file) => {
-        return fetchWrapper.post(``, file, true).then((res) => {
+        return fetchWrapper.post(`v0/ui/website/import-sheet-in-existing-campaign/`, file, true).then((res) => {
             if (res?.status) {
                 alertActions.success(Labels.Upload_Success);
             }
@@ -195,7 +197,6 @@ const BookinPlanActions = () => {
             }
         })
     }
-
     const saveSupplierPhaseList = (data) => {
         return fetchWrapper.post(`${Apis.Post_Supplier_Phase}?campaign_id=${CampaignProposalId}`, data).then((res) => {
             if (res?.status) {

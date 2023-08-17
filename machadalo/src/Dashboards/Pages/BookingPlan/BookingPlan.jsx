@@ -92,6 +92,13 @@ export default function BookingPlan() {
       checked: false,
     },
   ];
+  const freebies = [
+    { label: 'WhatsApp Group', checked: false },
+    { label: 'Email', checked: false },
+    { label: 'Billing', checked: false },
+    { label: 'Announcements', checked: false },
+  ];
+
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
     <div className="example-custom-input btn btn-primary" onClick={onClick} ref={ref}>
       <span>{value ? value : ''}</span>
@@ -241,6 +248,7 @@ export default function BookingPlan() {
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>
+                          <span>{data?.brand_organisation_data?.name}</span>
                           <Button
                             variant="primary"
                             onClick={(e) => {
@@ -279,8 +287,8 @@ export default function BookingPlan() {
                             View
                           </Button>
                         </td>
-                        <td>{data?.flat_count}</td>
-                        <td>{data?.tower_count}</td>
+                        <td>{data?.unit_primary_count}</td>
+                        <td>{data?.unit_secondary_count}</td>
                         <td>
                           <span>{data?.contacts[0]?.name}</span>
                           <span>({data?.contacts[0]?.mobile})</span>
@@ -428,26 +436,24 @@ export default function BookingPlan() {
                         <td>
                           <Form>
                             <div className="mb-3 b-form-maindiv">
-                              <Form.Check type="checkbox" id="Freebies-WhatsApp">
-                                <Form.Check.Input type="checkbox" isValid />
-                                <Form.Check.Label>WhatsApp Group</Form.Check.Label>
-                                {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                              </Form.Check>
-                              <Form.Check type="checkbox" id="Freebies-Email">
-                                <Form.Check.Input type="checkbox" isValid />
-                                <Form.Check.Label>Email</Form.Check.Label>
-                                {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                              </Form.Check>
-                              <Form.Check type="checkbox" id="Freebies-Billing">
-                                <Form.Check.Input type="checkbox" isValid />
-                                <Form.Check.Label>Billing</Form.Check.Label>
-                                {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                              </Form.Check>
-                              <Form.Check type="checkbox" id="Freebies-Announcement">
-                                <Form.Check.Input type="checkbox" isValid />
-                                <Form.Check.Label>Announcement</Form.Check.Label>
-                                {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                              </Form.Check>
+                              {freebies.map((check, index) => {
+                                return (
+                                  <Form.Check
+                                    type="checkbox"
+                                    id={`Freebies-WhatsApp${index}`}
+                                    key={index}
+                                  >
+                                    <Form.Check.Input
+                                      type="checkbox"
+                                      isValid
+                                      checked={data?.freebies?.includes(check?.label)}
+                                      value={check.label}
+                                      onChange={(e) => UpdateData.handleCheckFreebies(e, data)}
+                                    />
+                                    <Form.Check.Label>{check.label}</Form.Check.Label>
+                                  </Form.Check>
+                                );
+                              })}
                             </div>
                           </Form>
                         </td>
@@ -584,9 +590,7 @@ export default function BookingPlan() {
                             variant="success"
                             className="btn btn-success"
                             onClick={(e) => {
-                              BookingApi.updateCampaignInventories(
-                                CampaignInventoryList.shortlisted_suppliers
-                              );
+                              BookingApi.updateCampaignInventories([data]);
                             }}
                           >
                             Update
@@ -595,9 +599,9 @@ export default function BookingPlan() {
                       </tr>
                     );
                   })}
+                {(!CampaignInventoryList.shortlisted_suppliers ||
+                  CampaignInventoryList.shortlisted_suppliers.length < 0) && <DataNotFound />}
               </tbody>
-              {(!CampaignInventoryList.shortlisted_suppliers ||
-                CampaignInventoryList.shortlisted_suppliers.length < 0) && <DataNotFound />}
             </Table>
           </div>
         )}
@@ -851,7 +855,7 @@ export default function BookingPlan() {
               </Button>
             </li>
             <li>
-              <Button className="btn btn-success" type="button">
+              <Button className="btn btn-success" type="button" variant="success">
                 Update
               </Button>
             </li>
