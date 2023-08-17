@@ -63,7 +63,7 @@ export default function SideNavBar() {
                     </a>
                   </li>
                   <li className="first-class-li nav-text first-class-child-main">
-                    <a>
+                    <a href="">
                       <span>Operational</span>
                       <i>
                         <BsFillCaretRightFill />
@@ -94,7 +94,7 @@ export default function SideNavBar() {
               <div className="first-class">
                 <ul className="first-class-ul">
                   <li className="first-class-li nav-text first-class-child-main">
-                    <a>
+                    <a href="">
                       <span>Static</span>
                       <i>
                         <BsFillCaretRightFill />
@@ -116,7 +116,7 @@ export default function SideNavBar() {
                     </ul>
                   </li>
                   <li className="first-class-li nav-text first-class-child-main">
-                    <a>
+                    <a href="">
                       <span>Dynamic</span>
                       <i>
                         <BsFillCaretRightFill />
@@ -124,7 +124,7 @@ export default function SideNavBar() {
                     </a>
                     <ul className="first-class-child first-class-ul">
                       <li className="first-class-li nav-text second-class-child-li">
-                        <a>
+                        <a href="">
                           <span>Supplier</span>
                           <i>
                             <BsFillCaretRightFill />
@@ -132,19 +132,19 @@ export default function SideNavBar() {
                         </a>
                         <ul className="first-class-ul second-class-child">
                           <li className="first-class-li nav-text first-class-child-main">
-                            <a>
-                              <Link to="/r/supplier/base-type/list">Standard Templates</Link>
-                            </a>
+                            {/* <a> */}
+                            <Link to="/r/supplier/base-type/list">Standard Templates</Link>
+                            {/* </a> */}
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
-                            <a>
-                              <Link to="/r/supplier/type/list">Manage Supplier Type</Link>
-                            </a>
+                            {/* <a> */}
+                            <Link to="/r/supplier/type/list">Manage Supplier Type</Link>
+                            {/* </a> */}
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
-                            <a>
-                              <Link to="/r/supplier/list">Manage Supplier</Link>
-                            </a>
+                            {/* <a> */}
+                            <Link to="/r/supplier/list">Manage Supplier</Link>
+                            {/* </a> */}
                           </li>
                         </ul>
                       </li>
@@ -157,14 +157,14 @@ export default function SideNavBar() {
                         </a>
                         <ul className="first-class-ul second-class-child">
                           <li className="first-class-li nav-text first-class-child-main">
-                            <a>
-                              <Link to="/r/inventory/base/list">Standard Template</Link>
-                            </a>
+                            {/* <a> */}
+                            <Link to="/r/inventory/base/list">Standard Template</Link>
+                            {/* </a> */}
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
-                            <a>
-                              <Link to="/r/inventory/list">Manage Inventory</Link>
-                            </a>
+                            {/* <a> */}
+                            <Link to="/r/inventory/list">Manage Inventory</Link>
+                            {/* </a> */}
                           </li>
                         </ul>
                       </li>
@@ -177,19 +177,19 @@ export default function SideNavBar() {
                         </a>
                         <ul className="first-class-ul second-class-child">
                           <li className="first-class-li nav-text first-class-child-main">
-                            <a>
-                              <Link to="/r/booking/base/list">Standard Templates</Link>
-                            </a>
+                            {/* <a> */}
+                            <Link to="/r/booking/base/list">Standard Templates</Link>
+                            {/* </a> */}
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
-                            <a>
-                              <Link to="/r/booking/template/list">Booking Templates</Link>
-                            </a>
+                            {/* <a> */}
+                            <Link to="/r/booking/template/list">Booking Templates</Link>
+                            {/* </a> */}
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
-                            <a>
-                              <Link to="/r/booking/campaigns">Manage Bookings</Link>
-                            </a>
+                            {/* <a> */}
+                            <Link to="/r/booking/campaigns">Manage Bookings</Link>
+                            {/* </a> */}
                           </li>
                         </ul>
                       </li>
@@ -202,14 +202,14 @@ export default function SideNavBar() {
                         </a>
                         <ul className="first-class-ul second-class-child">
                           <li className="first-class-li nav-text first-class-child-main">
-                            <a>
-                              <a href="/#/HDFHDF0789/auditReleasePlan">Release and Audit Plan </a>
-                            </a>
+                            {/* <a> */}
+                            <a href="/#/HDFHDF0789/auditReleasePlan">Release and Audit Plan </a>
+                            {/* </a> */}
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
-                            <a>
-                              <a href="/#">Manage Phases</a>
-                            </a>
+                            {/* <a> */}
+                            <a href="/#">Manage Phases</a>
+                            {/* </a> */}
                           </li>
                         </ul>
                       </li>
