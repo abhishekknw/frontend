@@ -49,24 +49,26 @@ export default function PermissionModal(props) {
   return (
     <>
       <Form>
-        <Carousel data-bs-theme="dark">
-          {imageList &&
-            imageList.map((item, index) => {
-              return (
-                <Carousel.Item key={item?.id}>
-                  <img
-                    className="d-block w-100"
-                    src={`${BaseImageUrl}${item?.image_path}`}
-                    alt={item?.content_type}
-                  />
-                  <Carousel.Caption>
-                    <h5>{item?.hashtag}</h5>
-                    {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-                  </Carousel.Caption>
-                </Carousel.Item>
-              );
-            })}
-        </Carousel>
+        {imageList.length > 0 && (
+          <Carousel data-bs-theme="dark">
+            {imageList &&
+              imageList.map((item, index) => {
+                return (
+                  <Carousel.Item key={item?.id}>
+                    <img
+                      className="d-block w-100"
+                      src={`${BaseImageUrl}${item?.image_path}`}
+                      alt={item?.content_type}
+                    />
+                    <Carousel.Caption>
+                      <h5>{item?.hashtag}</h5>
+                      {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                );
+              })}
+          </Carousel>
+        )}
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Control
             type="file"
