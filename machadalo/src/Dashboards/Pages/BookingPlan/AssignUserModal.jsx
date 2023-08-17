@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import Select from 'react-select';
 import { useRecoilValue } from 'recoil';
-import { UserMinimalListAtom } from '../../_states';
+import { UserMinimalListAtom, userInformationAtom } from '../../_states';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 export default function AssignUserModal(props) {
   const BookingApi = BookinPlanActions();
   const { data, campaign } = props;
   const userMinimalList = useRecoilValue(UserMinimalListAtom);
+  const userInfo = useRecoilValue(userInformationAtom);
   const [postData, setPostData] = useState({
-    assigned_by: '',
+    assigned_by: userInfo?.id,
     assigned_to_ids: [],
     campaign_id: campaign?.proposal_id,
+    supplier_id: data?.supplier_id,
+    supplierName: data?.name,
   });
   function handleSelect(select) {
     console.log(select.value);
