@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 export default function PaymentDetailModal(props) {
-  console.log(props, '111111111111111');
+  const { data } = props;
   return (
     <>
       <div>
@@ -13,34 +13,10 @@ export default function PaymentDetailModal(props) {
             <th>Account Number</th>
           </tr>
           <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>31-10-2018</td>
-            <td>01-11-2018</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>2</td>
-            <td>01-11-2018</td>
-            <td>02-11-2018 </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>3</td>
-            <td>06-05-2019</td>
-            <td>11-05-2019</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>4</td>
-            <td>22-05-2019</td>
-            <td>26-05-2019</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>5</td>
-            <td>24-04-2020</td>
-            <td>10-05-2020</td>
+            <td>{data?.beneficiary_name}</td>
+            <td>{data?.bank_name}</td>
+            <td>{data?.ifsc_code}</td>
+            <td>{data?.account_number}</td>
           </tr>
         </Table>
         <div>
