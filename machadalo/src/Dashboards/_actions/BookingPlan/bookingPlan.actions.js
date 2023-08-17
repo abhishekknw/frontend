@@ -4,6 +4,8 @@ import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
 import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom, SupplierPhaseListAtom, BookingStatusAtom } from '../../_states';
 import { errorAtom } from '../../_states/alert';
+import dayjs from 'dayjs';
+
 const BookinPlanActions = () => {
     const fetchWrapper = useFetchWrapper();
     const alertActions = useAlertActions();
@@ -16,21 +18,14 @@ const BookinPlanActions = () => {
     const setBookinStatus = useSetRecoilState(BookingStatusAtom);
     const CampaignProposalId = 'HDFHDF0789';
 
-
     const getCampaignInventories = (data) => {
-        //     pageNo: 0,
-        // supplier_type_code: 'ALL',
-        // search: '',
-        // booking_status_code: '',
-        // phase_id: '',
-        // assigned: '',
-        // start_date: new Date(),
-        // end_date: new Date(),
         let params = 'page=' + (data.pageNo + 1) + "&supplier_type_code=" + data.supplier_type_code;
-        params += '&booking_status_code=' + data?.booking_status_code;
-        params += "&phase_id=" + data?.phase_id;
-        params += "&start_date=" + data?.start_date + "&end_date=" + data?.end_date;
-        params += + "&assigned=" + data?.assigned;
+        if (data?.booking_status_code) params += '&booking_status_code=' + data?.booking_status_code;
+        if (data?.phase_id) params += "&phase_id=" + data?.phase_id;
+        if (data?.assigned) params += "&assigned=" + data?.assigned;
+        if (data?.start_date && data?.end_date) {
+            params += "&start_date=" + dayjs(data.start_date).format('YYYY-MM-DD') + "&end_date=" + dayjs(data.start_date).format('YYYY-MM-DD');
+        }
         setErrorAtom(true);
         return fetchWrapper.get(`v0/ui/website/${CampaignProposalId}/campaign-inventories/?${params}`).then((res) => {
             if (res?.status) {
