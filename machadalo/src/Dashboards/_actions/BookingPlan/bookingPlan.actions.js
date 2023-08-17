@@ -18,7 +18,19 @@ const BookinPlanActions = () => {
 
 
     const getCampaignInventories = (data) => {
+        //     pageNo: 0,
+        // supplier_type_code: 'ALL',
+        // search: '',
+        // booking_status_code: '',
+        // phase_id: '',
+        // assigned: '',
+        // start_date: new Date(),
+        // end_date: new Date(),
         let params = 'page=' + (data.pageNo + 1) + "&supplier_type_code=" + data.supplier_type_code;
+        params += '&booking_status_code=' + data?.booking_status_code;
+        params += "&phase_id=" + data?.phase_id;
+        params += "&start_date=" + data?.start_date + "&end_date=" + data?.end_date;
+        params += + "&assigned=" + data?.assigned;
         setErrorAtom(true);
         return fetchWrapper.get(`v0/ui/website/${CampaignProposalId}/campaign-inventories/?${params}`).then((res) => {
             if (res?.status) {

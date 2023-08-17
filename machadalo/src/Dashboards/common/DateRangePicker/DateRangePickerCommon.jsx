@@ -6,9 +6,9 @@ import { BsFillCalendarDateFill } from 'react-icons/bs';
 export default function DateRangePickerCommon(props) {
   const { handleDateChange, startDate, endDate } = props;
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-    <span className="example-custom-input" onClick={onClick} ref={ref}>
+    <span className="example-custom-input btn btn-primary" onClick={onClick} ref={ref}>
       <span>{value}</span>
-      <BsFillCalendarDateFill />
+      <BsFillCalendarDateFill sx={{ marginLeft: '5px' }} />
     </span>
   ));
   return (

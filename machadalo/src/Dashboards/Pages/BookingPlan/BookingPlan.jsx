@@ -62,8 +62,8 @@ export default function BookingPlan() {
     booking_status_code: '',
     phase_id: '',
     assigned: '',
-    start_date: new Date(),
-    end_date: new Date(),
+    start_date: '',
+    end_date: '',
   });
 
   const bookingPriorityOption = [
@@ -130,7 +130,6 @@ export default function BookingPlan() {
     setFilterData(data);
   };
   const handleDateChange = (dates) => {
-    console.log(dates);
     setFilterData({ ...filterData, start_date: dates[0], end_date: dates[1] });
   };
   const descriptionData = [
@@ -695,22 +694,50 @@ export default function BookingPlan() {
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>Next Action Date</Form.Label>
               {/* <Form.Control type="date" placeholder="Enter email" /> */}
-
               <DateRangePickerCommon
-                handleDateChange={handleDateChange}
+                handleDateChange={(dates) => {
+                  setFilterData({ ...filterData, start_date: dates[0], end_date: dates[1] });
+                }}
                 startDate={filterData?.start_date}
                 endDate={filterData?.end_date}
               />
             </Form.Group>
             <div className="filter-action-wrapper">
-              <Button variant="secondary" type="button">
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={(e) => {
+                  setFilterShow(!filterShow);
+                }}
+              >
                 Back
               </Button>
 
-              <Button variant="info" type="button">
+              <Button
+                variant="info"
+                type="button"
+                onClick={(e) => {
+                  setFilterData({
+                    pageNo: 0,
+                    supplier_type_code: 'ALL',
+                    search: '',
+                    booking_status_code: '',
+                    phase_id: '',
+                    assigned: '',
+                    start_date: '',
+                    end_date: '',
+                  });
+                }}
+              >
                 Clear
               </Button>
-              <Button variant="primary" type="button">
+              <Button
+                variant="primary"
+                type="button"
+                onClick={(e) => {
+                  getCampaignInventories(filterData);
+                }}
+              >
                 Apply
               </Button>
             </div>
