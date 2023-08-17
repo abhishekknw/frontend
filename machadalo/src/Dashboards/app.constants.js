@@ -43,6 +43,7 @@ export const Apis = {
     Get_Booking_Status: '/v0/ui/website/booking-status/',
     Post_Supplier_Phase: 'v0/ui/website/supplier-phase/',
     Delete_Supplier_Phase: 'v0/ui/website/supplier-phase/',
-    Send_Email_Payment_Detail: 'v0/ui/website/mail/'
+    Send_Email_Payment_Detail: 'v0/ui/website/mail/',
+    Get_Proposal_Centre_Mapping: 'v0/ui/website/proposal-center-mapping/',
 }
 

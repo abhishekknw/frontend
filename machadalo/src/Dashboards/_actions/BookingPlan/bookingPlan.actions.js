@@ -186,6 +186,17 @@ const BookinPlanActions = () => {
             }
         })
     }
+    // ?proposal_id=TESTESBD56
+    const getProposalMapping = () => {
+        return fetchWrapper.get(`${Apis.Get_Proposal_Centre_Mapping}?proposal_id=${CampaignProposalId}`).then((res) => {
+            if (res.status) {
+                return res.data;
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        });
+    }
 
     const uploadBookingPlan = (file) => {
         return fetchWrapper.post(`v0/ui/website/import-sheet-in-existing-campaign/`, file, true).then((res) => {
@@ -263,7 +274,8 @@ const BookinPlanActions = () => {
         uploadBookingPlan,
         saveSupplierPhaseList,
         deletSupplierPhase,
-        postEmailPaymentDetail
+        postEmailPaymentDetail,
+        getProposalMapping
     };
 }
 export { BookinPlanActions };
