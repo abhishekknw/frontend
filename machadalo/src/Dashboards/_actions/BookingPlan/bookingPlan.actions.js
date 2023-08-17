@@ -18,7 +18,7 @@ const BookinPlanActions = () => {
 
 
     const getCampaignInventories = (data) => {
-        let params = 'page=' + (data.pageNo + 1) + "&supplier_type_code=" + data.supplierCode;
+        let params = 'page=' + (data.pageNo + 1) + "&supplier_type_code=" + data.supplier_type_code;
         setErrorAtom(true);
         return fetchWrapper.get(`v0/ui/website/${CampaignProposalId}/campaign-inventories/?${params}`).then((res) => {
             if (res?.status) {

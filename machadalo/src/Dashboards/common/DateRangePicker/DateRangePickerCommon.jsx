@@ -7,6 +7,7 @@ export default function DateRangePickerCommon(props) {
   const { handleDateChange, startDate, endDate } = props;
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
     <span className="example-custom-input" onClick={onClick} ref={ref}>
+      <span>{value}</span>
       <BsFillCalendarDateFill />
     </span>
   ));

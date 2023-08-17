@@ -36,6 +36,7 @@ import { BookingFunctions } from './BookingFunctions';
 import DataNotFound from '../../common/DataNotFound/DataNotFound';
 import LoadingWrapper from '../../common/LoadingWrapper';
 import DatePicker from 'react-datepicker';
+import DateRangePickerCommon from '../../common/DateRangePicker/DateRangePickerCommon';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -56,8 +57,13 @@ export default function BookingPlan() {
   });
   const [filterData, setFilterData] = useState({
     pageNo: 0,
-    supplierCode: 'ALL',
+    supplier_type_code: 'ALL',
     search: '',
+    booking_status_code: '',
+    phase_id: '',
+    assigned: '',
+    start_date: new Date(),
+    end_date: new Date(),
   });
 
   const bookingPriorityOption = [
@@ -123,7 +129,10 @@ export default function BookingPlan() {
     getCampaignInventories(data);
     setFilterData(data);
   };
-
+  const handleDateChange = (dates) => {
+    console.log(dates);
+    setFilterData({ ...filterData, start_date: dates[0], end_date: dates[1] });
+  };
   const descriptionData = [
     {
       label: 'Campaign Id',
@@ -151,11 +160,10 @@ export default function BookingPlan() {
     BookingApi.getBookingStatus();
     BookingApi.getSupplierPhase();
   }, [1]);
-  // console.log(bookingStatus, 'bookingStatusbookingStatus');
   return (
     <>
       <div className="booking-plan-wrapper">
-        <div className="sticky-div">
+        <div className="sticky-div" style={{ backgroundColor: '#fff' }}>
           <TableHeader headerValue="Booking Plan" />
           <DescriptionHeader data={descriptionData} />
           <div className="booking-duobtn">
@@ -622,62 +630,87 @@ export default function BookingPlan() {
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Supplier Type</Form.Label>
-              <Select
-                className=""
-                options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
+              <SelectDropdown
+                optionsData={[{ label: 'All', value: 'ALL' }]}
+                selectedValue={filterData?.supplier_type_code}
+                placeholder="Supplier Type"
                 label="Supplier Type"
                 id="SupplierType"
-                placeholder="Supplier Type"
+                handleSelect={(e) => {
+                  setFilterData({
+                    ...filterData,
+                    supplier_type_code: e?.value,
+                  });
+                }}
               />
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Booking Status</Form.Label>
-              <Select
-                className=""
-                options={[
-                  { label: 'Booking Status 1' },
-                  { label: 'Booking Status 2' },
-                  { label: 'Booking Status 3' },
-                ]}
+              <SelectDropdown
+                optionsData={bookingStatus}
+                selectedValue={filterData?.booking_status_code}
+                placeholder="Booking Status"
                 label="Booking Status"
                 id="BookingStatus"
-                placeholder="Booking Status"
+                handleSelect={(e) =>
+                  setFilterData({ ...filterData, booking_status_code: e?.value })
+                }
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>Phases</Form.Label>
-              <Select
-                className=""
-                options={[{ label: '1' }, { label: '2' }, { label: '3' }]}
-                label="Phases"
-                id="Phases"
-                placeholder="Phases"
+              <SelectDropdown
+                optionsData={supplierPhaseList}
+                selectedValue={filterData?.phase_id}
+                placeholder="Select Phase"
+                label="Select Phase"
+                id="SelectPhase"
+                handleSelect={(e) => {
+                  setFilterData({
+                    ...filterData,
+                    phase_id: e?.value,
+                  });
+                }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>User</Form.Label>
-              <Select
-                className=""
-                options={[{ label: '1' }, { label: '2' }, { label: '3' }]}
-                label="User"
-                id="User"
-                placeholder="User"
+              <SelectDropdown
+                optionsData={[
+                  { label: 'user1', value: 1 },
+                  { label: 'User2', value: 2 },
+                ]}
+                selectedValue={filterData?.assigned}
+                placeholder="Select User"
+                label="Select User"
+                id="SelectUser"
+                handleSelect={(e) => {
+                  setFilterData({
+                    ...filterData,
+                    assigned: e?.value,
+                  });
+                }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>Next Action Date</Form.Label>
-              <Form.Control type="date" placeholder="Enter email" />
+              {/* <Form.Control type="date" placeholder="Enter email" /> */}
+
+              <DateRangePickerCommon
+                handleDateChange={handleDateChange}
+                startDate={filterData?.start_date}
+                endDate={filterData?.end_date}
+              />
             </Form.Group>
             <div className="filter-action-wrapper">
-              <Button variant="secondary" type="submit">
+              <Button variant="secondary" type="button">
                 Back
               </Button>
 
-              <Button variant="info" type="submit">
+              <Button variant="info" type="button">
                 Clear
               </Button>
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="button">
                 Apply
               </Button>
             </div>
