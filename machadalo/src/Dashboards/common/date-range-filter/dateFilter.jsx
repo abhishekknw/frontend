@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { BsFillCalendarDateFill, BsChevronRight, BsChevronLeft } from 'react-icons/bs';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,7 +8,13 @@ import { CalenderActions } from './CalenderData';
 import { CalenderDatesAtom, CalenderVaidationAtom, SelectedDateAtom } from './CalenderAtom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import DateRangePickerCommon from '../DateRangePicker/DateRangePickerCommon';
-
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+  <span className="example-custom-input" onClick={onClick} ref={ref}>
+    <BsFillCalendarDateFill />
+  </span>
+));
 export default function DateFilter(props) {
   const CalederAction = CalenderActions();
   const customCalenderDates = useRecoilValue(CalenderDatesAtom);
@@ -86,6 +92,7 @@ export default function DateFilter(props) {
     setDateArrayList(temp);
     CalederAction.getSelectedDateArray(new Date());
   }, []);
+
   props.onDateChange(selectedDate);
 
   return (
@@ -98,10 +105,25 @@ export default function DateFilter(props) {
           <Row className="main-content align-items-center d-flex flex-row ">
             <Col sm={6} className="w-40">
               <div className="calander d-flex ">
-                <DateRangePickerCommon
+                {/* <DateRangePickerCommon
                   handleDateChange={handleDateChange}
                   startDate={startDate}
                   endDate={endDate}
+                /> */}
+                <DatePicker
+                  // showIcon
+                  selectsRange={true}
+                  startDate={startDate}
+                  endDate={endDate}
+                  onChange={(update) => {
+                    handleDateChange(update);
+                  }}
+                  isClearable={false}
+                  dateFormat="dd/MM/yyyy"
+                  showMonthDropdown
+                  showYearDropdown
+                  maxDate={new Date()}
+                  customInput={<ExampleCustomInput />}
                 />
                 {CalenderVaidations.selectDatePicker && (
                   <div className="calander-date ms-3">
