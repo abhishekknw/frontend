@@ -39,7 +39,7 @@ import DatePicker from 'react-datepicker';
 import DateRangePickerCommon from '../../common/DateRangePicker/DateRangePickerCommon';
 
 export default function BookingPlan() {
-  const BookingApi = BookinPlanActions(props);
+  const BookingApi = BookinPlanActions();
   const UpdateData = BookingFunctions();
   const useErrorAtom = useRecoilValue(errorAtom);
   // const tableRef = useRef();
