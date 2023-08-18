@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import TableHeader from '../../Table/TableHeader/TableHeader';
 import { CampaignListActions } from '../../_actions/CampaignPlanning/campaignList.action';
 import SearchBox from '../../common/search/SearchBox';
-import { CampaignListAtom } from '../../_states';
+import { CampaignListAtom, userInformationAtom } from '../../_states';
 import { useRecoilValue } from 'recoil';
 import ReactBootstrapTable from '../../Table/React-Bootstrap-table/ReactBootstrapTable';
 import { Button } from 'react-bootstrap';
@@ -14,8 +14,9 @@ import dayjs from 'dayjs';
 export default function CampaignList() {
   const CampaignListApi = CampaignListActions();
   const CampaignList = useRecoilValue(CampaignListAtom);
+  const userInfo = useRecoilValue(userInformationAtom);
   const [filterData, setFilterData] = useState({
-    to: 339,
+    to: userInfo?.id,
     include_assigned_by: 0,
     fetch_all: 0,
     next_page: 1,
