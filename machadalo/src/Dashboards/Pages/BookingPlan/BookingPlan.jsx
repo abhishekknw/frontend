@@ -213,6 +213,10 @@ export default function BookingPlan() {
                   <th>{columnsList.unit_secondary_count}</th>
                   <th>{columnsList.contacts_details}</th>
                   <th>{columnsList.assign_user}</th>
+                  {CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
+                    'b_to_b_r_g' ||
+                    (CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
+                      'b_to_b_l_d' && <th>{columnsList.requirement_given}</th>)}
                   {/* <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' || releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'">
               {{columnsList.requirement_given}}</th> */}
                   <th>{columnsList.booking_priority}</th>
@@ -316,6 +320,15 @@ export default function BookingPlan() {
                             Assign User
                           </Button>
                         </td>
+                        {CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
+                          'b_to_b_r_g' ||
+                          (CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
+                            'b_to_b_l_d' && (
+                            <td>
+                              <Button>Requirement</Button>
+                            </td>
+                          ))}
+
                         <td>
                           <SelectDropdown
                             optionsData={bookingPriorityOption}
