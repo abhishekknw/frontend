@@ -2933,6 +2933,16 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             });
         }
 
+        $scope.newCityListByState = function (state_id) {
+          AuthService.getCityListByStateId(state_id)
+            .then(function onSuccess(response) {
+              $scope.Cities = response.data.cities;
+              // $scope.supplierTypes = response.data.supplier_types;
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+
         $scope.newSelectArea = function () {
           $scope.suppliersName = [];
           $scope.newSelectedSupplierName = [];
@@ -3002,9 +3012,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               }
               if (response.data.data.state == null) {
                 $scope.NewsupplierAddUpdateData.state_name = "";
+                $scope.NewsupplierAddUpdateData.state_id = '';
+
               }
               else {
                 $scope.NewsupplierAddUpdateData.state_name = response.data.data.state.state_name;
+                $scope.NewsupplierAddUpdateData.state_id = response.data.data.state.id;
               }
 
               $scope.NewsupplierAddUpdateData.supplier_id = $scope.supplierData[0][0].supplier_id;

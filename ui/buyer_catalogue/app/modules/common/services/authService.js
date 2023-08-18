@@ -844,6 +844,10 @@ angular.module('Authentication')
                var url = "v0/ui/create_supplier/load_initial_data/";
                return machadaloHttp.get(url);
             };
+            authService.getCityListByStateId = function (id) {
+               var url = "v0/ui/create_supplier/load_initial_data/?id=" + id;
+               return machadaloHttp.get(url);
+            }
             authService.getSupplierNameList = function (data) {
                var url = "v0/ui/b2b/suspense-to-supplier/?city=" + data.city + '&area=' + data.area + '&supplier_type=' + data.supplier_type;
                return machadaloHttp.get(url);

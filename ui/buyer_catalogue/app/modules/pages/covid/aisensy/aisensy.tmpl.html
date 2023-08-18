@@ -5342,9 +5342,10 @@
                 <label> State *: </label>
               </div>
               <div class="col-md-8" style="margin-top: 10px">
-                <select class="form-control" name="state" id="state_id" ng-model="NewsupplierAddUpdateData.state_name"
+                <select class="form-control" name="state" id="state_id" ng-model="NewsupplierAddUpdateData.state_id"
                   ng-required="true"
-                  ng-options="state.state_name as state.state_name for state in StateList | orderBy: 'state_name'">
+                  ng-change="newCityListByState(NewsupplierAddUpdateData.state_id)"
+                  ng-options="state.id as state.state_name for state in StateList | orderBy: 'state_name'">
                   <option value="" disabled>Select State</option>
                 </select>
                 <span ng-show="myForm.state.$dirty && myForm.state.$invalid" class="error">Select a State</span>
