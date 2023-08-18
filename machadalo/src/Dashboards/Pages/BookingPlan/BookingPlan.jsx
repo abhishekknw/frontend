@@ -38,8 +38,7 @@ import LoadingWrapper from '../../common/LoadingWrapper';
 import DatePicker from 'react-datepicker';
 import DateRangePickerCommon from '../../common/DateRangePicker/DateRangePickerCommon';
 
-export default function BookingPlan(props) {
-  // console.log(props, '111111111111111111111111');
+export default function BookingPlan() {
   const BookingApi = BookinPlanActions(props);
   const UpdateData = BookingFunctions();
   const useErrorAtom = useRecoilValue(errorAtom);

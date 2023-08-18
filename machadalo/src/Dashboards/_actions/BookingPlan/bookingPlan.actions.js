@@ -7,13 +7,8 @@ import { errorAtom } from '../../_states/alert';
 import dayjs from 'dayjs';
 import API_URL from '../../../config';
 
-const BookinPlanActions = (props) => {
+const BookinPlanActions = () => {
     const queryParameters = new URLSearchParams(window.location.search)
-    console.log(queryParameters, "queryParameters")
-    const type = queryParameters.get("campaignId")
-    console.log(type)
-
-
     const fetchWrapper = useFetchWrapper();
     const alertActions = useAlertActions();
     const setErrorAtom = useSetRecoilState(errorAtom);
@@ -23,8 +18,9 @@ const BookinPlanActions = (props) => {
     const setUserMinimalList = useSetRecoilState(UserMinimalListAtom);
     const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom);
     const setBookinStatus = useSetRecoilState(BookingStatusAtom);
-    const CampaignProposalId = 'TESTESBD56';
+    const CampaignProposalId = queryParameters.get("campaignId");
     // 'HDFHDF0789';
+    // 'TESTESBD56'
 
     const getCampaignInventories = (data) => {
         let params = 'page=' + (data.pageNo + 1) + "&supplier_type_code=" + data.supplier_type_code;
