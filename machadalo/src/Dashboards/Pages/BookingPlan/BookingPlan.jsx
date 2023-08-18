@@ -187,7 +187,7 @@ export default function BookingPlan() {
               <Button
                 variant="primary"
                 onClick={(e) => {
-                  setShowModal({ show: true, type: 'AssignUser' });
+                  setShowModal({ show: true, type: 'AssignUserWithQuality' });
                 }}
               >
                 Assign User
@@ -782,7 +782,7 @@ export default function BookingPlan() {
                   ? 'Supplier Details'
                   : showModal.type == 'ContactDetails'
                   ? 'Contact Detail'
-                  : showModal.type == 'AssignUser'
+                  : showModal.type == 'AssignUser' || showModal.type == 'AssignUserWithQuality'
                   ? 'Assign User'
                   : showModal.type == 'internalComments'
                   ? 'Internal Comments'
@@ -814,8 +814,12 @@ export default function BookingPlan() {
                 <AddBrandModal data={showModal.rowData} />
               ) : showModal.type == 'RelationshipData' ? (
                 <RelationshipModal data={showModal.rowData} />
-              ) : showModal.type == 'AssignUser' ? (
-                <AssignUserModal data={showModal.rowData} campaign={showModal.campaign} />
+              ) : showModal.type == 'AssignUser' || showModal.type == 'AssignUserWithQuality' ? (
+                <AssignUserModal
+                  data={showModal.rowData}
+                  campaign={showModal.campaign}
+                  modalType={showModal.type}
+                />
               ) : showModal.type == 'ContactDetails' ? (
                 <ContactDetailModal data={showModal.rowData} />
               ) : showModal.type == 'externalComments' || showModal.type == 'internalComments' ? (

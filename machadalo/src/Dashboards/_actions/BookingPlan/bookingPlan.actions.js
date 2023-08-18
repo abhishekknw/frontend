@@ -265,6 +265,16 @@ const BookinPlanActions = () => {
             }
         })
     }
+
+    const putAssignSupplierUser = (data) => {
+        return fetchWrapper.put(`${Apis.Put_Assign_Supplier_User}`, data).then((res) => {
+            if (res?.status) {
+                alertActions.success(Labels.Update_Success)
+            } else {
+                alertActions.error(Labels.Error)
+            }
+        })
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -288,7 +298,8 @@ const BookinPlanActions = () => {
         deletSupplierPhase,
         postEmailPaymentDetail,
         getProposalMapping,
-        updateChequeDetail
+        updateChequeDetail,
+        putAssignSupplierUser
     };
 }
 export { BookinPlanActions };

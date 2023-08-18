@@ -6,7 +6,7 @@ import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 export default function AssignUserModal(props) {
   const BookingApi = BookinPlanActions();
-  const { data, campaign } = props;
+  const { data, campaign, modalType } = props;
   const userMinimalList = useRecoilValue(UserMinimalListAtom);
   const userInfo = useRecoilValue(userInformationAtom);
   const [postData, setPostData] = useState({
@@ -15,15 +15,33 @@ export default function AssignUserModal(props) {
     campaign_id: campaign?.proposal_id,
     supplier_id: data?.supplier_id,
     supplierName: data?.name,
+    quality_rating: '',
   });
+
+  const categorylist = [
+    { label: 'Ultra High', value: 'Ultra High' },
+    { label: 'High', value: 'High' },
+    { label: 'Medium High', value: 'Medium High' },
+    { label: 'Medium', value: 'Medium' },
+    { label: 'Standard', value: 'Standard' },
+    { label: 'Small', value: 'Small' },
+    { label: 'Large', value: 'Large' },
+    { label: 'Very Large', value: 'Very Large' },
+    { label: 'Super', value: 'Super' },
+  ];
+
   function handleSelect(select) {
-    console.log(select.value);
     setPostData({
       ...postData,
       assigned_to_ids: [select.value],
     });
   }
-
+  const handleSelectQuality = (select) => {
+    setPostData({
+      ...postData,
+      quality_rating: select.value,
+    });
+  };
   return (
     <>
       <Form>
@@ -37,21 +55,28 @@ export default function AssignUserModal(props) {
             id="SelectOrganisation"
             handleSelect={handleSelect}
           />
-          {/* <Form.Label>Assigned To</Form.Label>
-          <Select
-            className="selectbx"
-            options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
-            label="Supplier Type"
-            id="SupplierType"
-            placeholder="Supplier Type"
-          /> */}
+          {modalType === 'AssignUserWithQuality' && (
+            <>
+              <Form.Label>Assigned To</Form.Label>
+              <SelectDropdown
+                optionsData={categorylist}
+                selectedValue={postData.quality_rating}
+                placeholder="Select Quality"
+                label="Select Quality"
+                id="SelectQuality"
+                handleSelect={handleSelectQuality}
+              />
+            </>
+          )}
         </Form.Group>
         <div>
           <Button
             className="btn btn-primary"
             type="button"
             onClick={(e) => {
-              BookingApi.postSupplierAssignment(postData);
+              modalType === 'AssignUserWithQuality'
+                ? BookingApi.putAssignSupplierUser(postData)
+                : BookingApi.postSupplierAssignment(postData);
             }}
           >
             Assign User
