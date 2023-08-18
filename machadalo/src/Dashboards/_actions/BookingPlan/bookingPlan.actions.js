@@ -7,7 +7,13 @@ import { errorAtom } from '../../_states/alert';
 import dayjs from 'dayjs';
 import API_URL from '../../../config';
 
-const BookinPlanActions = () => {
+const BookinPlanActions = (props) => {
+    const queryParameters = new URLSearchParams(window.location.search)
+    console.log(queryParameters, "queryParameters")
+    const type = queryParameters.get("campaignId")
+    console.log(type)
+
+
     const fetchWrapper = useFetchWrapper();
     const alertActions = useAlertActions();
     const setErrorAtom = useSetRecoilState(errorAtom);
