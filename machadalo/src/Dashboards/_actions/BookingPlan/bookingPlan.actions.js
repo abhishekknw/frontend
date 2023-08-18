@@ -255,6 +255,16 @@ const BookinPlanActions = () => {
             }
         })
     }
+    const updateChequeDetail = (data) => {
+        return fetchWrapper.post(`${Apis.Update_Cheque_Detail}`, data).then((res) => {
+            if (res) {
+                alertActions.success(Labels.Save_Success);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        })
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -277,7 +287,8 @@ const BookinPlanActions = () => {
         saveSupplierPhaseList,
         deletSupplierPhase,
         postEmailPaymentDetail,
-        getProposalMapping
+        getProposalMapping,
+        updateChequeDetail
     };
 }
 export { BookinPlanActions };

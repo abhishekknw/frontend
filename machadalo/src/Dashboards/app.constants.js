@@ -45,5 +45,6 @@ export const Apis = {
     Delete_Supplier_Phase: 'v0/ui/website/supplier-phase/',
     Send_Email_Payment_Detail: 'v0/ui/website/mail/',
     Get_Proposal_Centre_Mapping: 'v0/ui/website/proposal-center-mapping/',
+    Update_Cheque_Detail: 'v0/ui/society/',
 }
 
