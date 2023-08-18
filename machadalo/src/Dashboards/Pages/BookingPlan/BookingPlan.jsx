@@ -1,4 +1,5 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 // import $ from 'jquery';
 import './bookingPlan.css';
@@ -37,6 +38,7 @@ import DataNotFound from '../../common/DataNotFound/DataNotFound';
 import LoadingWrapper from '../../common/LoadingWrapper';
 import DatePicker from 'react-datepicker';
 import DateRangePickerCommon from '../../common/DateRangePicker/DateRangePickerCommon';
+import { ROUTESNAME } from '../../../constants/routes.constants';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -325,7 +327,7 @@ export default function BookingPlan() {
                           (CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
                             'b_to_b_l_d' && (
                             <td>
-                              <Button>Requirement</Button>
+                              <Link to={`opsdashboard`}>Requirement</Link>
                             </td>
                           ))}
 

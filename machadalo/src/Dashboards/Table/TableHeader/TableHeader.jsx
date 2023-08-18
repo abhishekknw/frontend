@@ -7,6 +7,7 @@ const style = {
   fontSize: '20px',
   padding: '10px 0px',
   borderBottom: 'solid 1px #3e59e3',
+  backgroundColor: '#fff',
 };
 export default function TableHeader(props) {
   return (
