@@ -327,7 +327,7 @@ export default function BookingPlan() {
                           (CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
                             'b_to_b_l_d' && (
                             <td>
-                              <Link to={`${ROUTESNAME.OPS_DASHBOARD}`}>Requirement</Link>
+                              <Link to="opsDashboard">Requirement</Link>
                             </td>
                           ))}
 

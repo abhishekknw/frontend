@@ -14,7 +14,7 @@ export default function ContactDetailModal(props) {
   const [selectedRow, setSelectedRow] = useState();
 
   async function getContactDetails() {
-    // let res = BookingApi.getContactDetailsData(data);
+    let res = BookingApi.getContactDetailsData(data);
     setContactList(TestingData?.data);
   }
   useEffect(() => {
