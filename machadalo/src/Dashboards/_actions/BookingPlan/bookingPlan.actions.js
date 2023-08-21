@@ -2,11 +2,10 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom, SupplierPhaseListAtom, BookingStatusAtom } from '../../_states';
+import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom, SupplierPhaseListAtom, BookingStatusAtom, supplierSearchListAtom } from '../../_states';
 import { errorAtom } from '../../_states/alert';
 import dayjs from 'dayjs';
 import API_URL from '../../../config';
-import { Api } from '@mui/icons-material';
 
 const BookinPlanActions = () => {
     const queryParameters = new URLSearchParams(window.location.search)
@@ -19,6 +18,7 @@ const BookinPlanActions = () => {
     const setUserMinimalList = useSetRecoilState(UserMinimalListAtom);
     const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom);
     const setBookinStatus = useSetRecoilState(BookingStatusAtom);
+    const setSupplierSearch = useSetRecoilState(supplierSearchListAtom)
     const CampaignProposalId = queryParameters.get("campaignId");
     // 'HDFHDF0789';
     // 'TESTESBD56'
@@ -292,6 +292,7 @@ const BookinPlanActions = () => {
         })
     }
     const SupplierSearch = (data) => {
+        console.log(data, "11111111111111111datatata")
         let params = "supplier_type_code=" + data?.supplier_type_code;
         params += "&supplier_center=" + data?.supplier_center;
         params += "&supplier_area=" + data?.supplier_area;
@@ -299,7 +300,11 @@ const BookinPlanActions = () => {
         params += "&supplier_area_subarea=" + data?.supplier_area_subarea;
         params += "&proposal_id=" + data?.proposal_id
         return fetchWrapper.get(`${Apis.Supplier_Search}?${params}`).then((res) => {
-            console.log(res, "!11111111111111111111111")
+            if (res?.status) {
+                setSupplierSearch(res?.data)
+            } else {
+                alertActions.error(Labels.Error)
+            }
         })
     }
     return {

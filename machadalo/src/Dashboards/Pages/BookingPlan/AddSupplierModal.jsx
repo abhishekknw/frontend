@@ -4,9 +4,13 @@ import Select from 'react-select';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 import SearchBox from '../../common/search/SearchBox';
+import SupplierSearchList from './SupplierSearchList';
+import { supplierSearchListAtom } from '../../_states';
+import { useResetRecoilState } from 'recoil';
 export default function AddSupplierModal(props) {
   const { campaign } = props;
   const BookinApi = BookinPlanActions();
+  const resetSupplierList = useResetRecoilState(supplierSearchListAtom);
   const [filtersCheckbox, setFiltersCheckbox] = useState([
     { label: 'Poster(PO)', value: 'PO', checked: false },
     { label: 'Standee(ST)', value: 'ST', checked: false },
@@ -31,49 +35,16 @@ export default function AddSupplierModal(props) {
     search: '',
     proposal_id: campaign?.proposal_id,
   });
-  // else {
-  // for (let i in campaign?.centerSuppliers) {
-  //   if (campaign?.centerSuppliers[i].supplier_type_code == 'RS') {
-  //     $scope.supplier_names.push({ name: 'Residential Society', code: 'RS' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'CP') {
-  //     $scope.supplier_names.push({ name: 'Corporate Parks', code: 'CP' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'BS') {
-  //     $scope.supplier_names.push({ name: 'Bus Shelter', code: 'BS' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'GY') {
-  //     $scope.supplier_names.push({ name: 'Gym', code: 'GY' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'SA') {
-  //     $scope.supplier_names.push({ name: 'Saloon', code: 'SA' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'RE') {
-  //     $scope.supplier_names.push({ name: 'Retail Store', code: 'RE' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'BU') {
-  //     $scope.supplier_names.push({ name: 'Bus', code: 'BU' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'CO') {
-  //     $scope.supplier_names.push({ name: 'Corporates', code: 'CO' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'EI') {
-  //     $scope.supplier_names.push({ name: 'Educational Institute', code: 'EI' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'GN') {
-  //     $scope.supplier_names.push({ name: 'Gantry', code: 'GN' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'HL') {
-  //     $scope.supplier_names.push({ name: 'Hospital', code: 'HL' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'HO') {
-  //     $scope.supplier_names.push({ name: 'Hording', code: 'HO' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'IR') {
-  //     $scope.supplier_names.push({ name: 'In-shop Retail', code: 'IR' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'RC') {
-  //     $scope.supplier_names.push({ name: 'Radio Channel', code: 'RC' });
-  //   } else if (campaign?.centerSuppliers[i].supplier_type_code == 'TV') {
-  //     $scope.supplier_names.push({ name: 'TV Channel', code: 'TV' });
-  //   }
-  // }
-  // }
-
-  // if (centerSuppliers.length == 0) {
-  //   $scope.supplier_names.push({ name: 'ALL', code: 'ALL' });
-  // }
   const handleSelectCentre = async (event) => {
     setSupplierFilters({
       ...supplierFilters,
       supplier_center_id: event?.value,
+      supplier_center: event?.label,
+      supplier_area: '',
+      supplier_area_id: '',
+      supplier_area_subarea: '',
+      supplier_sub_area_code: '',
+      search: '',
     });
     let response = await BookinApi.getAreaBycity(event?.label);
     let areaList = response?.map((item) => ({
@@ -81,12 +52,16 @@ export default function AddSupplierModal(props) {
       value: item?.id,
     }));
     setAreaList(areaList);
+    resetSupplierList();
   };
 
   const handleSelectArea = async (event) => {
     setSupplierFilters({
       ...supplierFilters,
       supplier_area_id: event?.value,
+      supplier_area: event?.label,
+      supplier_area_subarea: '',
+      supplier_sub_area_code: '',
     });
     let response = await BookinApi.getSubAreaByArea(event?.value);
     let newList = response?.map((item) => ({
@@ -100,6 +75,7 @@ export default function AddSupplierModal(props) {
   const handleSearch = async (event) => {
     let data = { ...supplierFilters, search: event };
     let response = await BookinApi.SupplierSearch(data);
+    console.log(response, 'responseresponseresponseresponse');
     setSupplierFilters(data);
   };
 
@@ -164,6 +140,13 @@ export default function AddSupplierModal(props) {
               setSupplierFilters({
                 ...supplierFilters,
                 supplier_type_code: e?.value,
+                supplier_center: '',
+                supplier_center_id: '',
+                supplier_area: '',
+                supplier_area_id: '',
+                supplier_area_subarea: '',
+                supplier_sub_area_code: '',
+                search: '',
               });
             }}
           />
@@ -194,14 +177,28 @@ export default function AddSupplierModal(props) {
             label="Select Sub Area"
             id="SelectSubArea"
             handleSelect={(e) => {
-              setSupplierFilters({ ...supplierFilters, supplier_sub_area_code: e?.value });
+              setSupplierFilters({
+                ...supplierFilters,
+                supplier_sub_area_code: e?.value,
+                supplier_area_subarea: e?.label,
+              });
             }}
           />
         </div>
-        <Button className="btn btn-primary mb-2 mt-2">Search</Button>
+        <Button
+          className="btn btn-primary mb-2 mt-2"
+          onClick={(e) => {
+            BookinApi.SupplierSearch(supplierFilters);
+          }}
+        >
+          Search
+        </Button>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <SearchBox onSearch={handleSearch} />
         </Form.Group>
+      </div>
+      <div>
+        <SupplierSearchList />
       </div>
     </>
   );
