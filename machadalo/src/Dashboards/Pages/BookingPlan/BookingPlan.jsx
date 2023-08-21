@@ -835,7 +835,7 @@ export default function BookingPlan() {
               ) : showModal.type == 'ViewPhase' ? (
                 <ViewPhaseModal />
               ) : showModal.type == 'AddSupplier' ? (
-                <AddSupplierModal />
+                <AddSupplierModal campaign={CampaignInventoryList?.campaign} />
               ) : showModal.type == 'ImportSheet' ? (
                 <ImportSheetModal />
               ) : showModal.type == 'Inventory' ? (

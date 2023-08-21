@@ -46,7 +46,7 @@ export default function AssignUserModal(props) {
     <>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Supplier Type</Form.Label>
+          <Form.Label>Assigned To</Form.Label>
           <SelectDropdown
             optionsData={userMinimalList}
             selectedValue={postData.assigned_to_ids[0]}
@@ -57,7 +57,7 @@ export default function AssignUserModal(props) {
           />
           {modalType === 'AssignUserWithQuality' && (
             <>
-              <Form.Label>Assigned To</Form.Label>
+              <Form.Label>Select Quality Rating</Form.Label>
               <SelectDropdown
                 optionsData={categorylist}
                 selectedValue={postData.quality_rating}

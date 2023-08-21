@@ -6,6 +6,7 @@ import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMi
 import { errorAtom } from '../../_states/alert';
 import dayjs from 'dayjs';
 import API_URL from '../../../config';
+import { Api } from '@mui/icons-material';
 
 const BookinPlanActions = () => {
     const queryParameters = new URLSearchParams(window.location.search)
@@ -275,6 +276,22 @@ const BookinPlanActions = () => {
             }
         })
     }
+
+    const getAreaBycity = (city) => {
+        return fetchWrapper.get(`${Apis.Get_Area_By_city}${city}`).then((res) => {
+            if (res?.status) {
+                return res?.data
+            } else {
+                alertActions.error(Labels.Error)
+            }
+        })
+    }
+    const getSubAreaByArea = (area) => {
+        return fetchWrapper.get(`${Apis.Get_Sub_Area}${area}/?type=sub_areas`).then((res) => {
+            return res;
+            // alertActions.error(Labels.Error)
+        })
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -299,7 +316,9 @@ const BookinPlanActions = () => {
         postEmailPaymentDetail,
         getProposalMapping,
         updateChequeDetail,
-        putAssignSupplierUser
+        putAssignSupplierUser,
+        getAreaBycity,
+        getSubAreaByArea
     };
 }
 export { BookinPlanActions };

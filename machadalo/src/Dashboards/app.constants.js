@@ -47,6 +47,8 @@ export const Apis = {
     Send_Email_Payment_Detail: 'v0/ui/website/mail/',
     Get_Proposal_Centre_Mapping: 'v0/ui/website/proposal-center-mapping/',
     Update_Cheque_Detail: 'v0/ui/society/',
-    Put_Assign_Supplier_User: 'v0/ui/website/assign-supplier-users/'
+    Put_Assign_Supplier_User: 'v0/ui/website/assign-supplier-users/',
+    Get_Area_By_city: '/v0/ui/getCityArea?search=',
+    Get_Sub_Area: 'v0/ui/locations/'
 }
 
