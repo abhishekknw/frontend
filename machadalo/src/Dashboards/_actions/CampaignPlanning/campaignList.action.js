@@ -13,15 +13,15 @@ const CampaignListActions = () => {
   const getCampaignAssignment = (data) => {
     let params =
       '?to=' +
-      339 +
+      data?.to +
       '&include_assigned_by=' +
-      0 +
+      data?.include_assigned_by +
       '&fetch_all=' +
-      0 +
+      data?.fetch_all +
       '&next_page=' +
-      1 +
+      data?.next_page +
       '&search=' +
-      '';
+      data?.search;
     return fetchWrapper.get(`${Apis.Get_Campaign_Assignment}${params}`).then((res) => {
       if (res?.status) {
         setCampaignList(res?.data);

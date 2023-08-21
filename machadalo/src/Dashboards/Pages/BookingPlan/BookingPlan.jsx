@@ -1,4 +1,5 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 // import $ from 'jquery';
 import './bookingPlan.css';
@@ -36,6 +37,8 @@ import { BookingFunctions } from './BookingFunctions';
 import DataNotFound from '../../common/DataNotFound/DataNotFound';
 import LoadingWrapper from '../../common/LoadingWrapper';
 import DatePicker from 'react-datepicker';
+import DateRangePickerCommon from '../../common/DateRangePicker/DateRangePickerCommon';
+import { ROUTESNAME } from '../../../constants/routes.constants';
 
 export default function BookingPlan() {
   const BookingApi = BookinPlanActions();
@@ -56,8 +59,13 @@ export default function BookingPlan() {
   });
   const [filterData, setFilterData] = useState({
     pageNo: 0,
-    supplierCode: 'ALL',
+    supplier_type_code: 'ALL',
     search: '',
+    booking_status_code: '',
+    phase_id: '',
+    assigned: '',
+    start_date: '',
+    end_date: '',
   });
 
   const bookingPriorityOption = [
@@ -86,6 +94,13 @@ export default function BookingPlan() {
       checked: false,
     },
   ];
+  const freebies = [
+    { label: 'WhatsApp Group', checked: false },
+    { label: 'Email', checked: false },
+    { label: 'Billing', checked: false },
+    { label: 'Announcements', checked: false },
+  ];
+
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
     <div className="example-custom-input btn btn-primary" onClick={onClick} ref={ref}>
       <span>{value ? value : ''}</span>
@@ -123,7 +138,9 @@ export default function BookingPlan() {
     getCampaignInventories(data);
     setFilterData(data);
   };
-
+  const handleDateChange = (dates) => {
+    setFilterData({ ...filterData, start_date: dates[0], end_date: dates[1] });
+  };
   const descriptionData = [
     {
       label: 'Campaign Id',
@@ -151,31 +168,32 @@ export default function BookingPlan() {
     BookingApi.getBookingStatus();
     BookingApi.getSupplierPhase();
   }, [1]);
-  console.log(bookingStatus, 'bookingStatusbookingStatus');
   return (
     <>
-      <div className="booking-plan-wrapper ">
-        <TableHeader headerValue="Booking Plan" />
-        <DescriptionHeader data={descriptionData} />
-        <div>
-          <span>
-            <Button
-              variant="primary me-2"
-              onClick={(e) => {
-                setFilterShow(!filterShow);
-              }}
-            >
-              <BsSliders2 />
-            </Button>
-            <Button
-              variant="primary"
-              onClick={(e) => {
-                setShowModal({ show: true, type: 'AssignUser' });
-              }}
-            >
-              Assign User
-            </Button>
-          </span>
+      <div className="booking-plan-wrapper">
+        <div className="sticky-div" style={{ backgroundColor: '#fff' }}>
+          <TableHeader headerValue="Booking Plan" />
+          <DescriptionHeader data={descriptionData} />
+          <div className="booking-duobtn">
+            <span>
+              <Button
+                variant="primary me-2"
+                onClick={(e) => {
+                  setFilterShow(!filterShow);
+                }}
+              >
+                <BsSliders2 />
+              </Button>
+              <Button
+                variant="primary"
+                onClick={(e) => {
+                  setShowModal({ show: true, type: 'AssignUser' });
+                }}
+              >
+                Assign User
+              </Button>
+            </span>
+          </div>
         </div>
         {useErrorAtom ? (
           <LoadingWrapper />
@@ -197,6 +215,10 @@ export default function BookingPlan() {
                   <th>{columnsList.unit_secondary_count}</th>
                   <th>{columnsList.contacts_details}</th>
                   <th>{columnsList.assign_user}</th>
+                  {CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
+                    'b_to_b_r_g' ||
+                    (CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
+                      'b_to_b_l_d' && <th>{columnsList.requirement_given}</th>)}
                   {/* <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' || releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'">
               {{columnsList.requirement_given}}</th> */}
                   <th>{columnsList.booking_priority}</th>
@@ -232,6 +254,7 @@ export default function BookingPlan() {
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>
+                          <span>{data?.brand_organisation_data?.name}</span>
                           <Button
                             variant="primary"
                             onClick={(e) => {
@@ -242,8 +265,13 @@ export default function BookingPlan() {
                           </Button>
                         </td>
                         <td>
-                          <a className="anchor-list">{data.name}</a>
-                          {data?.quality_rating && <span>{data?.quality_rating}</span>}
+                          <a
+                            className="anchor-list"
+                            href={`https://www.google.com/maps/?q=${data?.address_supplier?.latitude}${data?.address_supplier?.longitude}`}
+                          >
+                            {data.name}
+                          </a>
+                          {data?.quality_rating && <span>({data?.quality_rating})</span>}
                         </td>
                         <td>{data.supplier_id}</td>
                         <td>{data.supplierCode}</td>
@@ -265,8 +293,8 @@ export default function BookingPlan() {
                             View
                           </Button>
                         </td>
-                        <td>{data?.flat_count}</td>
-                        <td>{data?.tower_count}</td>
+                        <td>{data?.unit_primary_count}</td>
+                        <td>{data?.unit_secondary_count}</td>
                         <td>
                           <span>{data?.contacts[0]?.name}</span>
                           <span>({data?.contacts[0]?.mobile})</span>
@@ -294,6 +322,15 @@ export default function BookingPlan() {
                             Assign User
                           </Button>
                         </td>
+                        {CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
+                          'b_to_b_r_g' ||
+                          (CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
+                            'b_to_b_l_d' && (
+                            <td>
+                              <Link to="opsDashboard">Requirement</Link>
+                            </td>
+                          ))}
+
                         <td>
                           <SelectDropdown
                             optionsData={bookingPriorityOption}
@@ -315,18 +352,7 @@ export default function BookingPlan() {
                             id="BookingStatus"
                             handleSelect={UpdateData.handleSelectBookingStatus}
                           />
-                          {/* <Select
-                            className="mb-3"
-                            options={[
-                              { label: 'painting' },
-                              { label: 'Elevator' },
-                              { label: 'Cars' },
-                            ]}
-                            label="Booking Status"
-                            id="BookingStatus"
-                            placeholder="Booking Status"
-                          /> */}
-                          {/* <SelectDropdown
+                          <SelectDropdown
                             optionsData={UpdateData.getBookingSubStatusList(data?.booking_status)}
                             selectedValue={data?.booking_sub_status}
                             rowData={data}
@@ -334,8 +360,8 @@ export default function BookingPlan() {
                             label="Booking Sub Status"
                             id="BookingSubStatus"
                             handleSelect={UpdateData.handleBookingSubStatus}
-                          /> */}
-                          <Select
+                          />
+                          {/* <Select
                             className=""
                             options={UpdateData.getBookingSubStatusList(data?.booking_status)}
                             value={UpdateData.getBookingSubStatusList(data?.booking_status).filter(
@@ -347,7 +373,7 @@ export default function BookingPlan() {
                             onChange={(e) => {
                               UpdateData.handleBookingSubStatus(e, data);
                             }}
-                          />
+                          /> */}
                         </td>
                         <td>
                           <SelectDropdown
@@ -425,26 +451,24 @@ export default function BookingPlan() {
                         <td>
                           <Form>
                             <div className="mb-3 b-form-maindiv">
-                              <Form.Check type="checkbox" id="Freebies-WhatsApp">
-                                <Form.Check.Input type="checkbox" isValid />
-                                <Form.Check.Label>WhatsApp Group</Form.Check.Label>
-                                {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                              </Form.Check>
-                              <Form.Check type="checkbox" id="Freebies-Email">
-                                <Form.Check.Input type="checkbox" isValid />
-                                <Form.Check.Label>Email</Form.Check.Label>
-                                {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                              </Form.Check>
-                              <Form.Check type="checkbox" id="Freebies-Billing">
-                                <Form.Check.Input type="checkbox" isValid />
-                                <Form.Check.Label>Billing</Form.Check.Label>
-                                {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                              </Form.Check>
-                              <Form.Check type="checkbox" id="Freebies-Announcement">
-                                <Form.Check.Input type="checkbox" isValid />
-                                <Form.Check.Label>Announcement</Form.Check.Label>
-                                {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
-                              </Form.Check>
+                              {freebies.map((check, index) => {
+                                return (
+                                  <Form.Check
+                                    type="checkbox"
+                                    id={`Freebies-WhatsApp${index}`}
+                                    key={index}
+                                  >
+                                    <Form.Check.Input
+                                      type="checkbox"
+                                      isValid
+                                      checked={data?.freebies?.includes(check?.label)}
+                                      value={check.label}
+                                      onChange={(e) => UpdateData.handleCheckFreebies(e, data)}
+                                    />
+                                    <Form.Check.Label>{check.label}</Form.Check.Label>
+                                  </Form.Check>
+                                );
+                              })}
                             </div>
                           </Form>
                         </td>
@@ -467,7 +491,7 @@ export default function BookingPlan() {
                                         UpdateData.handlePaymentmethod(method.label, data);
                                         setShowModal({
                                           show: true,
-                                          type: 'PaymentType',
+                                          type: method.label,
                                           rowData: data,
                                         });
                                       }}
@@ -479,7 +503,7 @@ export default function BookingPlan() {
                             <Button
                               variant="primary"
                               onClick={(e) => {
-                                setShowModal({ show: true, type: 'PaymentDetail' });
+                                setShowModal({ show: true, type: 'PaymentDetail', rowData: data });
                               }}
                             >
                               Details
@@ -581,9 +605,7 @@ export default function BookingPlan() {
                             variant="success"
                             className="btn btn-success"
                             onClick={(e) => {
-                              BookingApi.updateCampaignInventories(
-                                CampaignInventoryList.shortlisted_suppliers
-                              );
+                              BookingApi.updateCampaignInventories([data]);
                             }}
                           >
                             Update
@@ -592,9 +614,9 @@ export default function BookingPlan() {
                       </tr>
                     );
                   })}
+                {(!CampaignInventoryList.shortlisted_suppliers ||
+                  CampaignInventoryList.shortlisted_suppliers.length < 0) && <DataNotFound />}
               </tbody>
-              {(!CampaignInventoryList.shortlisted_suppliers ||
-                CampaignInventoryList.shortlisted_suppliers.length < 0) && <DataNotFound />}
             </Table>
           </div>
         )}
@@ -626,62 +648,115 @@ export default function BookingPlan() {
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Supplier Type</Form.Label>
-              <Select
-                className=""
-                options={[{ label: 'painting' }, { label: 'Elevator' }, { label: 'Cars' }]}
+              <SelectDropdown
+                optionsData={[{ label: 'All', value: 'ALL' }]}
+                selectedValue={filterData?.supplier_type_code}
+                placeholder="Supplier Type"
                 label="Supplier Type"
                 id="SupplierType"
-                placeholder="Supplier Type"
+                handleSelect={(e) => {
+                  setFilterData({
+                    ...filterData,
+                    supplier_type_code: e?.value,
+                  });
+                }}
               />
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Booking Status</Form.Label>
-              <Select
-                className=""
-                options={[
-                  { label: 'Booking Status 1' },
-                  { label: 'Booking Status 2' },
-                  { label: 'Booking Status 3' },
-                ]}
+              <SelectDropdown
+                optionsData={bookingStatus}
+                selectedValue={filterData?.booking_status_code}
+                placeholder="Booking Status"
                 label="Booking Status"
                 id="BookingStatus"
-                placeholder="Booking Status"
+                handleSelect={(e) =>
+                  setFilterData({ ...filterData, booking_status_code: e?.value })
+                }
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>Phases</Form.Label>
-              <Select
-                className=""
-                options={[{ label: '1' }, { label: '2' }, { label: '3' }]}
-                label="Phases"
-                id="Phases"
-                placeholder="Phases"
+              <SelectDropdown
+                optionsData={supplierPhaseList}
+                selectedValue={filterData?.phase_id}
+                placeholder="Select Phase"
+                label="Select Phase"
+                id="SelectPhase"
+                handleSelect={(e) => {
+                  setFilterData({
+                    ...filterData,
+                    phase_id: e?.value,
+                  });
+                }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>User</Form.Label>
-              <Select
-                className=""
-                options={[{ label: '1' }, { label: '2' }, { label: '3' }]}
-                label="User"
-                id="User"
-                placeholder="User"
+              <SelectDropdown
+                optionsData={[
+                  { label: 'user1', value: 1 },
+                  { label: 'User2', value: 2 },
+                ]}
+                selectedValue={filterData?.assigned}
+                placeholder="Select User"
+                label="Select User"
+                id="SelectUser"
+                handleSelect={(e) => {
+                  setFilterData({
+                    ...filterData,
+                    assigned: e?.value,
+                  });
+                }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>Next Action Date</Form.Label>
-              <Form.Control type="date" placeholder="Enter email" />
+              {/* <Form.Control type="date" placeholder="Enter email" /> */}
+              <DateRangePickerCommon
+                handleDateChange={(dates) => {
+                  setFilterData({ ...filterData, start_date: dates[0], end_date: dates[1] });
+                }}
+                startDate={filterData?.start_date}
+                endDate={filterData?.end_date}
+              />
             </Form.Group>
             <div className="filter-action-wrapper">
-              <Button variant="secondary" type="submit">
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={(e) => {
+                  setFilterShow(!filterShow);
+                }}
+              >
                 Back
               </Button>
 
-              <Button variant="info" type="submit">
+              <Button
+                variant="info"
+                type="button"
+                onClick={(e) => {
+                  setFilterData({
+                    pageNo: 0,
+                    supplier_type_code: 'ALL',
+                    search: '',
+                    booking_status_code: '',
+                    phase_id: '',
+                    assigned: '',
+                    start_date: '',
+                    end_date: '',
+                  });
+                }}
+              >
                 Clear
               </Button>
-              <Button variant="primary" type="submit">
+              <Button
+                variant="primary"
+                type="button"
+                onClick={(e) => {
+                  getCampaignInventories(filterData);
+                }}
+              >
                 Apply
               </Button>
             </div>
@@ -727,8 +802,10 @@ export default function BookingPlan() {
                   ? 'Import Sheet'
                   : showModal.type == 'Inventory'
                   ? 'Inventories'
-                  : showModal.type == 'PaymentType'
-                  ? 'Cheque And NEFT'
+                  : showModal.type == 'NEFT'
+                  ? `NEFT Details For ${showModal.rowData?.name}`
+                  : showModal.type == 'CHEQUE'
+                  ? `Cheque Details For ${showModal.rowData?.name}`
                   : 'Other'}
               </Modal.Title>
             </Modal.Header>
@@ -744,7 +821,7 @@ export default function BookingPlan() {
               ) : showModal.type == 'externalComments' || showModal.type == 'internalComments' ? (
                 <CommentModal data={showModal.rowData} commentType={showModal.type} />
               ) : showModal.type == 'PaymentDetail' ? (
-                <PaymentDetailModal />
+                <PaymentDetailModal data={showModal.rowData} />
               ) : showModal.type == 'Permission' || showModal.type == 'Receipt' ? (
                 <PermissionModal
                   data={showModal.rowData}
@@ -759,8 +836,8 @@ export default function BookingPlan() {
                 <ImportSheetModal />
               ) : showModal.type == 'Inventory' ? (
                 <InventoryModal />
-              ) : showModal.type == 'PaymentType' ? (
-                <PaymentTypeModal />
+              ) : showModal.type == 'NEFT' || showModal.type == 'CHEQUE' ? (
+                <PaymentTypeModal data={showModal.rowData} modalType={showModal.type} />
               ) : (
                 ''
               )}
@@ -793,7 +870,7 @@ export default function BookingPlan() {
               </Button>
             </li>
             <li>
-              <Button className="btn btn-success" type="button">
+              <Button className="btn btn-success" type="button" variant="success">
                 Update
               </Button>
             </li>

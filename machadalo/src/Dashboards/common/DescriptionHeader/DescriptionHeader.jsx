@@ -4,9 +4,6 @@ export default function DescriptionHeader(props) {
   const { data } = props;
   const styles = {
     main: {
-      position: 'sticky',
-      top: 0,
-      zIndex: 9,
       background: '#5f76e8',
       padding: '10px',
       borderRadius: '0px',

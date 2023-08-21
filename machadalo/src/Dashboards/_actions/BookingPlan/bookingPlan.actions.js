@@ -11,7 +11,11 @@ import {
   BookingStatusAtom,
 } from '../../_states';
 import { errorAtom } from '../../_states/alert';
+import dayjs from 'dayjs';
+import API_URL from '../../../config';
+
 const BookinPlanActions = () => {
+  const queryParameters = new URLSearchParams(window.location.search);
   const fetchWrapper = useFetchWrapper();
   const alertActions = useAlertActions();
   const setErrorAtom = useSetRecoilState(errorAtom);
@@ -21,10 +25,22 @@ const BookinPlanActions = () => {
   const setUserMinimalList = useSetRecoilState(UserMinimalListAtom);
   const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom);
   const setBookinStatus = useSetRecoilState(BookingStatusAtom);
-  const CampaignProposalId = 'HDFHDF0789';
+  const CampaignProposalId = queryParameters.get('campaignId');
+  // 'HDFHDF0789';
+  // 'TESTESBD56'
 
   const getCampaignInventories = (data) => {
-    let params = 'page=' + (data.pageNo + 1) + '&supplier_type_code=' + data.supplierCode;
+    let params = 'page=' + (data.pageNo + 1) + '&supplier_type_code=' + data.supplier_type_code;
+    if (data?.booking_status_code) params += '&booking_status_code=' + data?.booking_status_code;
+    if (data?.phase_id) params += '&phase_id=' + data?.phase_id;
+    if (data?.assigned) params += '&assigned=' + data?.assigned;
+    if (data?.start_date && data?.end_date) {
+      params +=
+        '&start_date=' +
+        dayjs(data.start_date).format('YYYY-MM-DD') +
+        '&end_date=' +
+        dayjs(data.start_date).format('YYYY-MM-DD');
+    }
     setErrorAtom(true);
     return fetchWrapper
       .get(`v0/ui/website/${CampaignProposalId}/campaign-inventories/?${params}`)
@@ -197,6 +213,54 @@ const BookinPlanActions = () => {
         }
       });
   };
+
+  const updateCampaignInventories = (data) => {
+    return fetchWrapper
+      .put(`/v0/ui/website/${CampaignProposalId}/campaign-inventories/`, data)
+      .then((res) => {
+        if (res?.status) {
+          alertActions.success(res.data);
+        } else {
+          alertActions.error(Labels.Error);
+        }
+      });
+  };
+  // ?proposal_id=TESTESBD56
+  const getProposalMapping = () => {
+    return fetchWrapper
+      .get(`${Apis.Get_Proposal_Centre_Mapping}?proposal_id=${CampaignProposalId}`)
+      .then((res) => {
+        if (res.status) {
+          return res.data;
+        } else {
+          alertActions.error(Labels.Error);
+        }
+      });
+  };
+
+  const uploadBookingPlan = (file) => {
+    return fetchWrapper
+      .post(`v0/ui/website/import-sheet-in-existing-campaign/`, file, true)
+      .then((res) => {
+        if (res?.status) {
+          alertActions.success(Labels.Upload_Success);
+        } else {
+          alertActions.error(Labels.Error);
+        }
+      });
+  };
+  const saveSupplierPhaseList = (data) => {
+    return fetchWrapper
+      .post(`${Apis.Post_Supplier_Phase}?campaign_id=${CampaignProposalId}`, data)
+      .then((res) => {
+        if (res?.status) {
+          alertActions.success(Labels.Save_Success);
+          getSupplierPhase();
+        } else {
+          alertActions.error(Labels.Error);
+        }
+      });
+  };
   const getSupplierPhase = () => {
     return fetchWrapper
       .get(`${Apis.Get_Supplier_Phase}?campaign_id=${CampaignProposalId}`)
@@ -213,38 +277,45 @@ const BookinPlanActions = () => {
         }
       });
   };
-  const updateCampaignInventories = (data) => {
-    return fetchWrapper
-      .put(`/v0/ui/website/${CampaignProposalId}/campaign-inventories/`, data)
-      .then((res) => {
-        if (res?.status) {
-          alertActions.success(res.data);
-        } else {
-          alertActions.error(Labels.Error);
-        }
-      });
-  };
-
-  const uploadBookingPlan = (file) => {
-    return fetchWrapper.post(``, file, true).then((res) => {
-      if (res?.status) {
-        alertActions.success(Labels.Upload_Success);
+  const deletSupplierPhase = (row) => {
+    return fetchWrapper.delete(`${Apis.Delete_Supplier_Phase}${row?.id}/`).then((res) => {
+      if (res.status) {
+        alertActions.success(Labels.Delete_Success);
+        let newList = supplierPhaseList.filter((item) => item.id !== row?.id);
+        setSupplierPhaseList(newList);
       } else {
         alertActions.error(Labels.Error);
       }
     });
   };
 
-  const saveSupplierPhaseList = (data) => {
-    return fetchWrapper
-      .post(`${Apis.Post_Supplier_Phase}?campaign_id=${CampaignProposalId}`, data)
-      .then((res) => {
-        if (res?.status) {
-          alertActions.success(Labels.Save_Success);
-        } else {
-          alertActions.error(Labels.Error);
-        }
-      });
+  const postEmailPaymentDetail = (data) => {
+    return fetchWrapper.post(`${Apis.Send_Email_Payment_Detail}`, data).then((res) => {
+      if (res?.status) {
+        alertActions.success(Labels.Email_Success);
+      } else {
+        alertActions.error(Labels.Error);
+      }
+    });
+  };
+  const updateChequeDetail = (data) => {
+    return fetchWrapper.post(`${Apis.Update_Cheque_Detail}`, data).then((res) => {
+      if (res) {
+        alertActions.success(Labels.Save_Success);
+      } else {
+        alertActions.error(Labels.Error);
+      }
+    });
+  };
+
+  const putAssignSupplierUser = (data) => {
+    return fetchWrapper.put(`${Apis.Put_Assign_Supplier_User}`, data).then((res) => {
+      if (res?.status) {
+        alertActions.success(Labels.Update_Success);
+      } else {
+        alertActions.error(Labels.Error);
+      }
+    });
   };
   return {
     getCampaignInventories,
@@ -266,6 +337,11 @@ const BookinPlanActions = () => {
     updateCampaignInventories,
     uploadBookingPlan,
     saveSupplierPhaseList,
+    deletSupplierPhase,
+    postEmailPaymentDetail,
+    getProposalMapping,
+    updateChequeDetail,
+    putAssignSupplierUser,
   };
 };
 export { BookinPlanActions };

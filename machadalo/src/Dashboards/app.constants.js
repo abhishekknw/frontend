@@ -5,6 +5,7 @@ export const Labels = {
   Upload_Success: 'Uploaded successfully',
   Email_Success: 'Email Sent Successfully',
   Save_Success: 'Save Successfully',
+  Delete_Success: 'Delete Successfully',
 };
 export const BaseImageUrl = 'https://androidtokyo.s3.amazonaws.com/';
 
@@ -41,4 +42,7 @@ export const Apis = {
   Get_Supplier_Phase: 'v0/ui/website/supplier-phase/',
   Get_Booking_Status: '/v0/ui/website/booking-status/',
   Post_Supplier_Phase: 'v0/ui/website/supplier-phase/',
+  Delete_Supplier_Phase: 'v0/ui/website/supplier-phase/',
+  Send_Email_Payment_Detail: 'v0/ui/website/mail/',
+  Get_Proposal_Centre_Mapping: 'v0/ui/website/proposal-center-mapping/',
 };

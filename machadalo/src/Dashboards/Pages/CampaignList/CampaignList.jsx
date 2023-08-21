@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import TableHeader from '../../Table/TableHeader/TableHeader';
 import { CampaignListActions } from '../../_actions/CampaignPlanning/campaignList.action';
 import SearchBox from '../../common/search/SearchBox';
-import { CampaignListAtom } from '../../_states';
+import { CampaignListAtom, userInformationAtom } from '../../_states';
 import { useRecoilValue } from 'recoil';
 import ReactBootstrapTable from '../../Table/React-Bootstrap-table/ReactBootstrapTable';
 import { Button } from 'react-bootstrap';
+import './campaignList.css';
+import ReactPagination from '../../Pagination/Pagination';
+import dayjs from 'dayjs';
 export default function CampaignList() {
   const CampaignListApi = CampaignListActions();
   const CampaignList = useRecoilValue(CampaignListAtom);
-  const [dataList, setDataList] = useState([]);
+  const userInfo = useRecoilValue(userInformationAtom);
+  const [filterData, setFilterData] = useState({
+    to: userInfo?.id,
+    include_assigned_by: 0,
+    fetch_all: 0,
+    next_page: 1,
+    search: '',
+  });
   const CampaignHeader = [
     {
       title: '#',
@@ -52,7 +64,7 @@ export default function CampaignList() {
     {
       title: 'Assigned To',
       accessKey: 'assigned_to',
-      sort: true,
+      sort: false,
       action: function (row, index) {
         return <div>{row?.assigned[0]?.assigned_to}</div>;
       },
@@ -70,7 +82,7 @@ export default function CampaignList() {
       accessKey: 'created_at',
       sort: false,
       action: function (row, index) {
-        return <div>{row?.created_at}</div>;
+        return <div>{dayjs(row?.created_at).format('DD-MM-YYYY')}</div>;
       },
     },
     {
@@ -78,7 +90,7 @@ export default function CampaignList() {
       accessKey: 'campaign.tentative_start_date',
       sort: false,
       action: function (row, index) {
-        return <div>{row?.campaign?.tentative_start_date}</div>;
+        return <div>{dayjs(row?.campaign?.tentative_start_date).format('DD-MM-YYYY')}</div>;
       },
     },
     {
@@ -86,7 +98,7 @@ export default function CampaignList() {
       accessKey: 'campaign.tentative_end_date',
       sort: false,
       action: function (row, index) {
-        return <div>{row?.campaign?.tentative_end_date}</div>;
+        return <div>{dayjs(row?.campaign?.tentative_end_date).format('DD-MM-YYYY')}</div>;
       },
     },
     {
@@ -110,7 +122,7 @@ export default function CampaignList() {
       accessKey: 'Details',
       sort: false,
       action: function (row, index) {
-        return <a>Details</a>;
+        return <Link to={`booking-plan?campaignId=${row?.campaign?.proposal_id}`}>Details</Link>;
       },
     },
     {
@@ -147,21 +159,41 @@ export default function CampaignList() {
     },
   ];
 
-  async function getCampaignList() {
-    let res = await CampaignListApi.getCampaignAssignment();
-    setDataList(res);
-  }
+  const getCampaignList = async (filters) => {
+    await CampaignListApi.getCampaignAssignment(filters);
+  };
+  const handlePageChange = (page) => {
+    let filter = { ...filterData, next_page: page?.selected + 1 };
+    getCampaignList(filter);
+    setFilterData(filter);
+  };
 
   useEffect(() => {
-    getCampaignList();
+    getCampaignList(filterData);
   }, []);
-  console.log(CampaignList, '1111111111');
   return (
     <>
       <TableHeader headerValue="Campaign List" />
-      <SearchBox />
+      <div className="d-inline-flex search-block">
+        <SearchBox />
+        <div>
+          <button className="btn btn-primary">Suspence Lead</button>
+        </div>
+      </div>
       {CampaignList && CampaignList?.list && (
-        <ReactBootstrapTable rowData={CampaignList?.list} headerData={CampaignHeader} />
+        <ReactBootstrapTable
+          className="campain-table"
+          rowData={CampaignList?.list}
+          headerData={CampaignHeader}
+        />
+      )}
+      {CampaignList && CampaignList.list && CampaignList.count > 10 && (
+        <ReactPagination
+          pageNo={1}
+          pageSize={10}
+          totalItems={CampaignList.count}
+          onPageChange={handlePageChange}
+        />
       )}
     </>
   );

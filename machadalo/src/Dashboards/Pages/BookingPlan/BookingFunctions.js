@@ -67,6 +67,23 @@ const BookingFunctions = () => {
     return response;
   };
 
+  const handleCheckFreebies = (event, row) => {
+    let newList = campaignInventory.shortlisted_suppliers.map((item, index) => {
+      if (item?.id == row?.id) {
+        let freebiesArr = [];
+        if (event.target.checked) {
+          freebiesArr = [...item?.freebies, event.target.value];
+        } else {
+          freebiesArr = item?.freebies.filter((a) => a !== event.target.value);
+        }
+        return { ...item, freebies: freebiesArr };
+      } else {
+        return item;
+      }
+    });
+    setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList });
+  };
+
   return {
     handleSelectPriority,
     handleSelectPhase,
@@ -78,6 +95,7 @@ const BookingFunctions = () => {
     handleSelectBookingStatus,
     handleBookingSubStatus,
     getBookingSubStatusList,
+    handleCheckFreebies,
   };
 };
 export { BookingFunctions };

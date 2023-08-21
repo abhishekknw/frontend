@@ -13,7 +13,7 @@ export default function SelectDropdown(props) {
         id={id}
         placeholder={placeholder}
         options={optionsData}
-        value={optionsData.filter((obj) => obj.value === selectedValue)}
+        value={optionsData?.filter((obj) => obj.value === selectedValue)}
         onChange={(e) => {
           handleSelect(e, rowData);
         }}

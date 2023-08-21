@@ -91,8 +91,15 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #424242d0; 
   }
+.booking-duobtn{
+    margin-bottom: 20px;
+}
+.sticky-div{
+    position: sticky;
+    top: 0;
+    z-index: 9;
+}
 .booking-table {
-    margin-top: 20px;
 
     tr th {
         color: #ffffff !important;

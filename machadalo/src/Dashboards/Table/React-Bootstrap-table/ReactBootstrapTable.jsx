@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import './react-bootstrap-table.css';
 import { SortingActions } from './sorting.action';
@@ -20,10 +20,13 @@ export default function ReactBootstrapTable(props) {
       return 0;
     }
   };
+  useEffect(() => {
+    setRowData(props?.rowData);
+  }, [props]);
 
   return (
     <div>
-      <Table responsive className="react-bootstrap-custom-table v-middle">
+      <Table responsive className={`react-bootstrap-custom-table v-middle ${props?.className} `}>
         <thead>
           <tr>
             {headerData.map((header, index) => {

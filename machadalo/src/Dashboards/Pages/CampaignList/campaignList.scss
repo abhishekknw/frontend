@@ -1,0 +1,19 @@
+
+.campain-table{
+    tr, th, td{
+        white-space: nowrap;
+    }
+
+    a{
+        cursor: pointer;
+        color: #3e59e3 !important;
+        font-weight: 700;
+    }
+}
+.search-block{
+    margin-bottom: 20px;
+    .searchbox {        
+        margin-right: 20px;
+    }
+    
+}
