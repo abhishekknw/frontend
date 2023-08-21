@@ -101,7 +101,7 @@ export default function SupplierSearchList() {
         {finalSupplierList.length > 0 ? (
           <ReactBootstrapTable headerData={Header} rowData={finalSupplierList} />
         ) : (
-          <DataNotFound message="No Finalise Supplier Found" />
+          <DataNotFound message="No Supplier Found" />
         )}
       </div>
     );

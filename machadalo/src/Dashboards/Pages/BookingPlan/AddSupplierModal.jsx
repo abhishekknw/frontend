@@ -205,18 +205,21 @@ export default function AddSupplierModal() {
             />
           </div>
         )}
-
-        <Button
-          className="btn btn-primary mb-2 mt-2"
-          onClick={(e) => {
-            BookinApi.SupplierSearch(supplierFilters);
-          }}
-        >
-          Search
-        </Button>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-          <SearchBox onSearch={handleSearch} />
-        </Form.Group>
+        {showFinalizedList && (
+          <div>
+            <Button
+              className="btn btn-primary mb-2 mt-2"
+              onClick={(e) => {
+                BookinApi.SupplierSearch(supplierFilters);
+              }}
+            >
+              Search
+            </Button>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <SearchBox onSearch={handleSearch} />
+            </Form.Group>
+          </div>
+        )}
       </div>
       <div>
         <SupplierSearchList />
