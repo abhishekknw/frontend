@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import Select from 'react-select';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
+import SearchBox from '../../common/search/SearchBox';
 export default function AddSupplierModal(props) {
   const { campaign } = props;
   const BookinApi = BookinPlanActions();
@@ -28,10 +29,8 @@ export default function AddSupplierModal(props) {
     supplier_area_subarea: '',
     supplier_sub_area_code: '',
     search: '',
-    proposal_id: '',
+    proposal_id: campaign?.proposal_id,
   });
-  console.log(campaign, '11111111111111111111111');
-
   // else {
   // for (let i in campaign?.centerSuppliers) {
   //   if (campaign?.centerSuppliers[i].supplier_type_code == 'RS') {
@@ -96,6 +95,12 @@ export default function AddSupplierModal(props) {
       value: item?.id,
     }));
     setSubAreaList(newList);
+  };
+
+  const handleSearch = async (event) => {
+    let data = { ...supplierFilters, search: event };
+    let response = await BookinApi.SupplierSearch(data);
+    setSupplierFilters(data);
   };
 
   useEffect(() => {
@@ -193,13 +198,10 @@ export default function AddSupplierModal(props) {
             }}
           />
         </div>
-
-        <button className="btn btn-primary mb-2 mt-2">Search</button>
-        <Form>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Control as="textarea" placeholder="Enter Text" rows={3} />
-          </Form.Group>
-        </Form>
+        <Button className="btn btn-primary mb-2 mt-2">Search</Button>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+          <SearchBox onSearch={handleSearch} />
+        </Form.Group>
       </div>
     </>
   );

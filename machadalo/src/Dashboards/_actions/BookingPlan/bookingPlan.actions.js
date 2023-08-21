@@ -289,7 +289,17 @@ const BookinPlanActions = () => {
     const getSubAreaByArea = (area) => {
         return fetchWrapper.get(`${Apis.Get_Sub_Area}${area}/?type=sub_areas`).then((res) => {
             return res;
-            // alertActions.error(Labels.Error)
+        })
+    }
+    const SupplierSearch = (data) => {
+        let params = "supplier_type_code=" + data?.supplier_type_code;
+        params += "&supplier_center=" + data?.supplier_center;
+        params += "&supplier_area=" + data?.supplier_area;
+        params += "&search=" + data?.search;
+        params += "&supplier_area_subarea=" + data?.supplier_area_subarea;
+        params += "&proposal_id=" + data?.proposal_id
+        return fetchWrapper.get(`${Apis.Supplier_Search}?${params}`).then((res) => {
+            console.log(res, "!11111111111111111111111")
         })
     }
     return {
@@ -318,7 +328,8 @@ const BookinPlanActions = () => {
         updateChequeDetail,
         putAssignSupplierUser,
         getAreaBycity,
-        getSubAreaByArea
+        getSubAreaByArea,
+        SupplierSearch
     };
 }
 export { BookinPlanActions };
