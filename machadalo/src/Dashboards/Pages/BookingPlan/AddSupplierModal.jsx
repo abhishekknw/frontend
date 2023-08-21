@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import Select from 'react-select';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 import SearchBox from '../../common/search/SearchBox';
 import SupplierSearchList from './SupplierSearchList';
-import { supplierSearchListAtom } from '../../_states';
-import { useResetRecoilState } from 'recoil';
-export default function AddSupplierModal(props) {
-  const { campaign } = props;
+import {
+  CampaignInventoryAtom,
+  showFinalizedListAtom,
+  supplierSearchListAtom,
+} from '../../_states';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+export default function AddSupplierModal() {
+  const CampaignInventory = useRecoilValue(CampaignInventoryAtom);
   const BookinApi = BookinPlanActions();
   const resetSupplierList = useResetRecoilState(supplierSearchListAtom);
+  const [showFinalizedList, setShowFinalizedList] = useRecoilState(showFinalizedListAtom);
   const [filtersCheckbox, setFiltersCheckbox] = useState([
     { label: 'Poster(PO)', value: 'PO', checked: false },
     { label: 'Standee(ST)', value: 'ST', checked: false },
@@ -33,7 +37,7 @@ export default function AddSupplierModal(props) {
     supplier_area_subarea: '',
     supplier_sub_area_code: '',
     search: '',
-    proposal_id: campaign?.proposal_id,
+    proposal_id: CampaignInventory?.campaign?.proposal_id,
   });
   const handleSelectCentre = async (event) => {
     setSupplierFilters({
@@ -75,15 +79,14 @@ export default function AddSupplierModal(props) {
   const handleSearch = async (event) => {
     let data = { ...supplierFilters, search: event };
     let response = await BookinApi.SupplierSearch(data);
-    console.log(response, 'responseresponseresponseresponse');
     setSupplierFilters(data);
   };
 
   useEffect(() => {
-    if (campaign?.centerSuppliers) {
+    if (CampaignInventory?.campaign?.centerSuppliers) {
       if (
-        campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' ||
-        campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'
+        CampaignInventory?.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' ||
+        CampaignInventory?.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'
       ) {
         setSupplierNames([
           { label: 'Residential Society', value: 'RS' },
@@ -93,10 +96,10 @@ export default function AddSupplierModal(props) {
         ]);
       }
     }
-    if (campaign?.centerSuppliers?.length == 0) {
+    if (CampaignInventory?.campaign?.centerSuppliers?.length == 0) {
       setSupplierNames([{ label: 'ALL', value: 'ALL' }]);
     }
-    let centreList = campaign?.centerData?.map((item) => ({
+    let centreList = CampaignInventory?.campaign?.centerData?.map((item) => ({
       ...item,
       label: item?.city,
       value: item?.id,
@@ -107,12 +110,27 @@ export default function AddSupplierModal(props) {
     <>
       <div className="text-end">
         <span>
-          <Button className="btn me-3 btn-warning" variant="warning">
+          <Button
+            className="btn me-3 btn-warning"
+            variant="warning"
+            disabled={showFinalizedList}
+            onClick={(e) => {
+              setShowFinalizedList(true);
+            }}
+          >
             Search and Finalize
           </Button>
         </span>
         <span>
-          <Button className="btn btn-primary">Finalize List</Button>
+          <Button
+            className="btn btn-primary"
+            disabled={!showFinalizedList}
+            onClick={(e) => {
+              setShowFinalizedList(false);
+            }}
+          >
+            Finalize List
+          </Button>
         </span>
       </div>
       <div className="filterbx">
@@ -129,62 +147,65 @@ export default function AddSupplierModal(props) {
             })}
           </div>
         </Form>
-        <div className="filter-selectdiv">
-          <SelectDropdown
-            optionsData={supplierNames}
-            selectedValue={supplierFilters?.supplier_type_code}
-            placeholder="Select Supplier"
-            label="Select Supplier"
-            id="SelectSupplier"
-            handleSelect={(e) => {
-              setSupplierFilters({
-                ...supplierFilters,
-                supplier_type_code: e?.value,
-                supplier_center: '',
-                supplier_center_id: '',
-                supplier_area: '',
-                supplier_area_id: '',
-                supplier_area_subarea: '',
-                supplier_sub_area_code: '',
-                search: '',
-              });
-            }}
-          />
-          <SelectDropdown
-            optionsData={centreList}
-            selectedValue={supplierFilters?.supplier_center_id}
-            placeholder="Select Center"
-            label="Select Center"
-            id="SelectCenter"
-            handleSelect={(e) => {
-              handleSelectCentre(e);
-            }}
-          />
-          <SelectDropdown
-            optionsData={areaList}
-            selectedValue={supplierFilters?.supplier_area_id}
-            placeholder="Select Area"
-            label="Select Area"
-            id="SelectArea"
-            handleSelect={(e) => {
-              handleSelectArea(e);
-            }}
-          />
-          <SelectDropdown
-            optionsData={subAreaList}
-            selectedValue={supplierFilters?.supplier_sub_area_code}
-            placeholder="Select Sub Area"
-            label="Select Sub Area"
-            id="SelectSubArea"
-            handleSelect={(e) => {
-              setSupplierFilters({
-                ...supplierFilters,
-                supplier_sub_area_code: e?.value,
-                supplier_area_subarea: e?.label,
-              });
-            }}
-          />
-        </div>
+        {showFinalizedList && (
+          <div className="filter-selectdiv">
+            <SelectDropdown
+              optionsData={supplierNames}
+              selectedValue={supplierFilters?.supplier_type_code}
+              placeholder="Select Supplier"
+              label="Select Supplier"
+              id="SelectSupplier"
+              handleSelect={(e) => {
+                setSupplierFilters({
+                  ...supplierFilters,
+                  supplier_type_code: e?.value,
+                  supplier_center: '',
+                  supplier_center_id: '',
+                  supplier_area: '',
+                  supplier_area_id: '',
+                  supplier_area_subarea: '',
+                  supplier_sub_area_code: '',
+                  search: '',
+                });
+              }}
+            />
+            <SelectDropdown
+              optionsData={centreList}
+              selectedValue={supplierFilters?.supplier_center_id}
+              placeholder="Select Center"
+              label="Select Center"
+              id="SelectCenter"
+              handleSelect={(e) => {
+                handleSelectCentre(e);
+              }}
+            />
+            <SelectDropdown
+              optionsData={areaList}
+              selectedValue={supplierFilters?.supplier_area_id}
+              placeholder="Select Area"
+              label="Select Area"
+              id="SelectArea"
+              handleSelect={(e) => {
+                handleSelectArea(e);
+              }}
+            />
+            <SelectDropdown
+              optionsData={subAreaList}
+              selectedValue={supplierFilters?.supplier_sub_area_code}
+              placeholder="Select Sub Area"
+              label="Select Sub Area"
+              id="SelectSubArea"
+              handleSelect={(e) => {
+                setSupplierFilters({
+                  ...supplierFilters,
+                  supplier_sub_area_code: e?.value,
+                  supplier_area_subarea: e?.label,
+                });
+              }}
+            />
+          </div>
+        )}
+
         <Button
           className="btn btn-primary mb-2 mt-2"
           onClick={(e) => {

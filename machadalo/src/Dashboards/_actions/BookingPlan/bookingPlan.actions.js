@@ -292,7 +292,6 @@ const BookinPlanActions = () => {
         })
     }
     const SupplierSearch = (data) => {
-        console.log(data, "11111111111111111datatata")
         let params = "supplier_type_code=" + data?.supplier_type_code;
         params += "&supplier_center=" + data?.supplier_center;
         params += "&supplier_area=" + data?.supplier_area;
