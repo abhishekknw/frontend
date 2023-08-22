@@ -52,6 +52,7 @@ export const Apis = {
     Get_Sub_Area: 'v0/ui/locations/',
     Supplier_Search: 'v0/ui/website/supplier-search/',
     Post_Supplier_List: 'v0/ui/website/add-suppliers-direct-to-campaign/',
-    Delete_Inventory: 'v0/ui/website/delete-shortlisted-spaces/',
+    Delete_Camapign_Inventory: 'v0/ui/website/delete-shortlisted-spaces/',
+    Get_Inventory_List: 'v0/ui/website/short-listed-inventories/',
 }
 

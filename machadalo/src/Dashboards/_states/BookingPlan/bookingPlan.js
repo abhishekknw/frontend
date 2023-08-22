@@ -26,6 +26,11 @@ const ContactListAtom = atom({
     default: []
 })
 
+const InventoryListAtom = atom({
+    key: 'InventoryListKey',
+    default: []
+})
+
 const supplierSearchListAtom = atom({
     key: 'supplierSearchListkey',
     default: []
@@ -61,5 +66,5 @@ export {
     supplierSearchListAtom,
     showFinalizedListAtom,
     finalSupplierListAtom,
-    filtersCheckBoxAtom
+    filtersCheckBoxAtom, InventoryListAtom
 }

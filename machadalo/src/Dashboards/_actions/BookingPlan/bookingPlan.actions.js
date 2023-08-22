@@ -11,7 +11,9 @@ import {
     BookingStatusAtom,
     supplierSearchListAtom,
     filtersCheckBoxAtom,
-    finalSupplierListAtom
+    finalSupplierListAtom,
+    ContactListAtom,
+    InventoryListAtom
 } from '../../_states';
 import { errorAtom } from '../../_states/alert';
 import dayjs from 'dayjs';
@@ -31,6 +33,8 @@ const BookinPlanActions = () => {
     const setSupplierSearch = useSetRecoilState(supplierSearchListAtom)
     const filtersCheckbox = useRecoilValue(filtersCheckBoxAtom);
     const finalSupplierList = useRecoilValue(finalSupplierListAtom);
+    const [contactList, setContactList] = useRecoilState(ContactListAtom);
+    const setInventoryList = useSetRecoilState(InventoryListAtom)
 
     const CampaignProposalId = queryParameters.get("campaignId");
     // 'HDFHDF0789';
@@ -84,7 +88,7 @@ const BookinPlanActions = () => {
         let params = "supplier_id=" + data?.object_id;
         return fetchWrapper.get(`${Apis.Get_Contact_Details}${params}`).then((res) => {
             if (res?.status) {
-                return res?.data;
+                setContactList(res?.data);
             } else {
                 alertActions.error(Labels.Error);
             }
@@ -306,7 +310,7 @@ const BookinPlanActions = () => {
     }
     const deletInventory = (id) => {
         let data = [id];
-        return fetchWrapper.post(`${Apis.Delete_Inventory}`, data).then((res) => {
+        return fetchWrapper.post(`${Apis.Delete_Camapign_Inventory}`, data).then((res) => {
             if (res?.status) {
                 alertActions.success(Labels.Delete_Success)
                 let newList = campaignInventory.shortlisted_suppliers.filter((item) => item.id !== id);
@@ -379,6 +383,16 @@ const BookinPlanActions = () => {
             }
         });
     }
+
+    const getInvetoryList = (id) => {
+        return fetchWrapper.get(`${Apis.Get_Inventory_List}?shortlisted_spaces_id=${id}`).then((res) => {
+            if (res?.status) {
+                setInventoryList(res?.data);
+            } else {
+                alertActions.error(Labels.Error)
+            }
+        })
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -409,6 +423,7 @@ const BookinPlanActions = () => {
         SupplierSearch,
         submitSupplierList,
         deletInventory,
+        getInvetoryList
     };
 }
 export { BookinPlanActions };

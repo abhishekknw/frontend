@@ -845,7 +845,7 @@ export default function BookingPlan() {
               ) : showModal.type == 'ImportSheet' ? (
                 <ImportSheetModal />
               ) : showModal.type == 'Inventory' ? (
-                <InventoryModal />
+                <InventoryModal data={showModal.rowData} />
               ) : showModal.type == 'NEFT' || showModal.type == 'CHEQUE' ? (
                 <PaymentTypeModal data={showModal.rowData} modalType={showModal.type} />
               ) : (
