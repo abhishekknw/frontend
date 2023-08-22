@@ -22,7 +22,7 @@ const BookinPlanActions = () => {
     const fetchWrapper = useFetchWrapper();
     const alertActions = useAlertActions();
     const setErrorAtom = useSetRecoilState(errorAtom);
-    const setCampaignInventory = useSetRecoilState(CampaignInventoryAtom);
+    const [campaignInventory, setCampaignInventory] = useRecoilState(CampaignInventoryAtom);
     const setHeaderDataList = useSetRecoilState(HeaderDataListAtom);
     const setOrganisationList = useSetRecoilState(OrganisationListAtom);
     const setUserMinimalList = useSetRecoilState(UserMinimalListAtom);
@@ -304,6 +304,20 @@ const BookinPlanActions = () => {
             return res;
         })
     }
+    const deletInventory = (id) => {
+        let data = [id];
+        return fetchWrapper.post(`${Apis.Delete_Inventory}`, data).then((res) => {
+            if (res?.status) {
+                alertActions.success(Labels.Delete_Success)
+                let newList = campaignInventory.shortlisted_suppliers.filter((item) => item.id !== id);
+                setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
+
+            } else {
+                alertActions.error(Labels.Error)
+            }
+            return res;
+        })
+    }
     const SupplierSearch = (data) => {
         let params = "supplier_type_code=" + data?.supplier_type_code;
         params += "&supplier_center=" + data?.supplier_center;
@@ -361,10 +375,9 @@ const BookinPlanActions = () => {
                     }
                 })
             } else {
-                alert("Atleast One Supplier and One Filter is required to Continue")
+                alertActions.error("Atleast One Supplier and One Filter is required to Continue")
             }
         });
-
     }
     return {
         getCampaignInventories,
@@ -395,6 +408,7 @@ const BookinPlanActions = () => {
         getSubAreaByArea,
         SupplierSearch,
         submitSupplierList,
+        deletInventory,
     };
 }
 export { BookinPlanActions };

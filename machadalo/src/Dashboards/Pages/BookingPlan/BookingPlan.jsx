@@ -596,7 +596,13 @@ export default function BookingPlan() {
                           </div>
                         </td>
                         <td>
-                          <Button variant="danger" className="btn btn-danger">
+                          <Button
+                            variant="danger"
+                            className="btn btn-danger"
+                            onClick={(e) => {
+                              BookingApi.deletInventory(data?.id);
+                            }}
+                          >
                             Delete
                           </Button>
                         </td>

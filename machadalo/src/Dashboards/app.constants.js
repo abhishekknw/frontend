@@ -51,6 +51,7 @@ export const Apis = {
     Get_Area_By_city: 'v0/ui/getCityArea?search=',
     Get_Sub_Area: 'v0/ui/locations/',
     Supplier_Search: 'v0/ui/website/supplier-search/',
-    Post_Supplier_List: 'v0/ui/website/add-suppliers-direct-to-campaign/'
+    Post_Supplier_List: 'v0/ui/website/add-suppliers-direct-to-campaign/',
+    Delete_Inventory: 'v0/ui/website/delete-shortlisted-spaces/',
 }
 
