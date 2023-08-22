@@ -35,7 +35,7 @@ export default function ContactDetailModal(props) {
       }
       setContactList(newList);
     } else {
-      await BookingApi.deletContact(row, index);
+      // await BookingApi.deletContact(row, index);
     }
   };
 

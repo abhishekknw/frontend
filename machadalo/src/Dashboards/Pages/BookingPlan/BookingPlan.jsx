@@ -885,9 +885,11 @@ export default function BookingPlan() {
               </Button>
             </li>
             <li>
-              <Button className="btn btn-primary" type="button">
-                Campaign Release and Audit Plan
-              </Button>
+              <a href={`/#/TESTESBD56/auditReleasePlan`}>
+                <Button className="btn btn-primary" type="button">
+                  Campaign Release and Audit Plan
+                </Button>
+              </a>
             </li>
             <li>
               <Button

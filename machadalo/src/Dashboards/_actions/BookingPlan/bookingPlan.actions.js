@@ -95,6 +95,17 @@ const BookinPlanActions = () => {
         });
     };
 
+    const deletContact = (data) => {
+        console.log(data, "TESTESBD56")
+        return fetchWrapper.get(`${Apis.Get_Contact_Details}`).then((res) => {
+            if (res?.status) {
+                alertActions.success(Labels.Success);
+            } else {
+                alertActions.error(Labels.Error);
+            }
+        });
+    }
+
     const getCommetByShortlistedId = (data, type) => {
         let params = `shortlisted_spaces_id=${data?.id}&related_to=${type === "externalComments" ? "EXTERNAL" : "INTERNAL"}`
         return fetchWrapper.get(`v0/ui/website/${data?.proposal}/comment/?${params}`).then((res) => {
@@ -423,7 +434,8 @@ const BookinPlanActions = () => {
         SupplierSearch,
         submitSupplierList,
         deletInventory,
-        getInvetoryList
+        getInvetoryList,
+        deletContact
     };
 }
 export { BookinPlanActions };

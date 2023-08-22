@@ -355,9 +355,14 @@ export default function SideNavBar() {
                 <span>Intervene MEA</span>
               </a>
             </li>
-            <li className="nav-text">
+            {/* <li className="nav-text">
               <Link to="/r/pages/interveneChat">
                 <span>Intervene Chat</span>
+              </Link>
+            </li> */}
+            <li className="nav-text">
+              <Link to="/r/pages/campaign-list">
+                <span>Campaign List</span>
               </Link>
             </li>
             <li className="nav-text">
