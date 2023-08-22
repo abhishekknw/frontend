@@ -118,7 +118,7 @@ export default function SocietyHome() {
                     </div>
                   );
                 })}
-              {/* <p ng-if="societies.length<=0"><center><h1>{noData}</h1></center></p> */}
+              {/* <p ng-if="societies.length<=0"><center><h1>No Data Available</h1></center></p> */}
             </div>
           </div>
           {/* <div className="pageBox">

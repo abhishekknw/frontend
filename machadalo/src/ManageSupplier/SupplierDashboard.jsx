@@ -4,19 +4,27 @@ import './styles/main.css';
 import './styles/login.css';
 import './styles/style.css';
 import './styles/machadalo.css';
+import './bootstrap/css/bootstrap.css';
 import { supplierRepository } from './repository';
-import { CORPORATE_HOME, CREATE_SUPPLIER, SOCIETY_HOME } from '../constants/routes.constants';
+import {
+  CORPORATE_HOME,
+  CREATE_SUPPLIER,
+  MANAGE_SUPPLIER,
+  SOCIETY_HOME,
+} from '../constants/routes.constants';
 import { useHistory } from 'react-router';
 import { dashboardRepository } from './repository/dashboard.repo';
 import { useFetchWrapper } from '../Dashboards/_helpers/fetch-wrapper';
 import { ANG_APIS } from './api.constants';
+import { useRecoilState } from 'recoil';
+import { SupplierTypeAtom } from './supplier.atom';
 
 export default function SupplierDashboard() {
   const history = useHistory();
-  const token = localStorage.getItem('JWT');
   const [state, setState] = useState([]);
   const [value, setValue] = useState();
   const fetchWrapper = useFetchWrapper();
+  const [supplierType, setSupplierType] = useRecoilState(SupplierTypeAtom);
 
   const getState = () => {
     fetchWrapper
@@ -44,6 +52,11 @@ export default function SupplierDashboard() {
     getState();
     getCounts();
   }, []);
+
+  const handleViewAllClick = (type_short, type_full) => {
+    setSupplierType(type_short);
+    history.push(MANAGE_SUPPLIER + type_full + '/home');
+  };
 
   return (
     <>
@@ -130,10 +143,10 @@ export default function SupplierDashboard() {
               </td>
               <td>
                 <input
-                  onClick={() => history.push(CORPORATE_HOME)}
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('CP',corporate.state_name.value)"
+                  onClick={() => handleViewAllClick('CP', 'corporate')}
                   value="View All"
                 />
               </td>
@@ -190,6 +203,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('GY',gym.state_name.value)"
+                  onClick={() => handleViewAllClick('GY', 'gym')}
                   value="View All"
                 />
               </td>
@@ -246,6 +260,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('SA',salon.state_name.value)"
+                  onClick={() => handleViewAllClick('SA', 'salon')}
                   value="View All"
                 />
               </td>
@@ -301,6 +316,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('BS',busshelter.state_name.value)"
+                  onClick={() => handleViewAllClick('BS', 'busshelter')}
                   value="View All"
                 />
               </td>
@@ -358,6 +374,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('RE',retailshop.state_name.value)"
+                  onClick={() => handleViewAllClick('RE', 'retailshop')}
                   value="View All"
                 />
               </td>
@@ -414,6 +431,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('EI',educationinsti.state_name.value)"
+                  onClick={() => handleViewAllClick('EI', 'education-institute')}
                   value="View All"
                 />
               </td>
@@ -462,6 +480,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('HO',hording.state_name.value)"
+                  onClick={() => handleViewAllClick('HO', 'hording')}
                   value="View All"
                 />
               </td>
@@ -518,6 +537,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('BU',bus.state_name.value)"
+                  onClick={() => handleViewAllClick('BU', 'bus')}
                   value="View All"
                 />
               </td>
@@ -574,6 +594,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('GN',gantry.state_name.value)"
+                  onClick={() => handleViewAllClick('GN', 'gantry')}
                   value="View All"
                 />
               </td>
@@ -630,6 +651,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('RC',radionChannel.state_name.value)"
+                  onClick={() => handleViewAllClick('RC', 'radio-channel')}
                   value="View All"
                 />
               </td>
@@ -686,6 +708,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('TV',radionChannel.state_name.value)"
+                  onClick={() => handleViewAllClick('TV', 'tv-channel')}
                   value="View All"
                 />
               </td>
@@ -726,7 +749,6 @@ export default function SupplierDashboard() {
                 </select>
               </td>
             </tr>
-
             <tr>
               <td>Corporates</td>
               <td>{value?.CO.count}</td>
@@ -743,6 +765,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('CO',radionChannel.state_name.value)"
+                  onClick={() => handleViewAllClick('CO', 'corporates')}
                   value="View All"
                 />
               </td>
@@ -783,7 +806,6 @@ export default function SupplierDashboard() {
                 </select>
               </td>
             </tr>
-
             <tr>
               <td>Hospital</td>
               <td>{value?.HL.count}</td>
@@ -800,6 +822,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotohome('HL',radionChannel.state_name.value)"
+                  onClick={() => handleViewAllClick('HL', 'hospital')}
                   value="View All"
                 />
               </td>

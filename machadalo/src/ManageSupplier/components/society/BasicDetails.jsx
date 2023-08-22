@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useFetchWrapper } from '../../../Dashboards/_helpers/fetch-wrapper';
 import { ANG_APIS } from '../../api.constants';
 import { useParams } from 'react-router';
-import FormInput from './FormInput';
 import '../../bootstrap/css/bootstrap.css';
+import FormInput from '../../FormInput';
 
 export default function BasicDetails() {
   const fetchWrapper = useFetchWrapper();

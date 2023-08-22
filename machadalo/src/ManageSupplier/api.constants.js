@@ -12,6 +12,8 @@ export const BaseImageUrl = 'https://androidtokyo.s3.amazonaws.com/';
 export const ANG_APIS = {
   GETSTATE: 'v0/ui/state/',
   GET_SUPPLIER_META: 'v0/ui/suppliers-meta/',
+  GET_LIST: 'v0/ui/supplier-generic/?supplier_type_code=',
+
   GET_SOCIETY_DETAILS: 'v0/ui/society/',
   GET_SUPPLIER_RELATIONSHIP:
     'v0/ui/website/society-supplier-relationship/?supplier_type=RE&society_id=GCBLPDLCHTB&type=INPREMISES',
