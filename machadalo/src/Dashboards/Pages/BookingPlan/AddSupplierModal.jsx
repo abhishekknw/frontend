@@ -8,22 +8,17 @@ import {
   CampaignInventoryAtom,
   showFinalizedListAtom,
   supplierSearchListAtom,
+  filtersCheckBoxAtom,
 } from '../../_states';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { BookingFunctions } from './BookingFunctions';
 export default function AddSupplierModal() {
   const CampaignInventory = useRecoilValue(CampaignInventoryAtom);
   const BookinApi = BookinPlanActions();
+  const UpdateData = BookingFunctions();
   const resetSupplierList = useResetRecoilState(supplierSearchListAtom);
   const [showFinalizedList, setShowFinalizedList] = useRecoilState(showFinalizedListAtom);
-  const [filtersCheckbox, setFiltersCheckbox] = useState([
-    { label: 'Poster(PO)', value: 'PO', checked: false },
-    { label: 'Standee(ST)', value: 'ST', checked: false },
-    { label: 'Stall(SL)', value: 'SL', checked: false },
-    { label: 'Flyer(FL)', value: 'FL', checked: false },
-    { label: 'Banner(BA)', value: 'BA', checked: false },
-    { label: 'Gateway Arch', value: 'GA', checked: false },
-    { label: 'SunBoard(SB)', value: 'SB', checked: false },
-  ]);
+  const filtersCheckbox = useRecoilValue(filtersCheckBoxAtom);
   const [supplierNames, setSupplierNames] = useState([]);
   const [centreList, setCentreList] = useState([]);
   const [areaList, setAreaList] = useState([]);
@@ -140,7 +135,14 @@ export default function AddSupplierModal() {
             {filtersCheckbox.map((item, index) => {
               return (
                 <Form.Check type="checkbox" id={`filters${item?.label}`} key={index}>
-                  <Form.Check.Input type="checkbox" isValid />
+                  <Form.Check.Input
+                    type="checkbox"
+                    isValid
+                    checked={item.checked}
+                    onChange={(e) => {
+                      UpdateData.handleCheckFilters(e, item);
+                    }}
+                  />
                   <Form.Check.Label>{item?.label}</Form.Check.Label>
                 </Form.Check>
               );

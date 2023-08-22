@@ -50,6 +50,7 @@ export const Apis = {
     Put_Assign_Supplier_User: 'v0/ui/website/assign-supplier-users/',
     Get_Area_By_city: 'v0/ui/getCityArea?search=',
     Get_Sub_Area: 'v0/ui/locations/',
-    Supplier_Search: '/v0/ui/website/supplier-search/'
+    Supplier_Search: 'v0/ui/website/supplier-search/',
+    Post_Supplier_List: 'v0/ui/website/add-suppliers-direct-to-campaign/'
 }
 

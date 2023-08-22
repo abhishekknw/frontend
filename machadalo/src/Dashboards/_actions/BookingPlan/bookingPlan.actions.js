@@ -2,7 +2,17 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom, SupplierPhaseListAtom, BookingStatusAtom, supplierSearchListAtom } from '../../_states';
+import {
+    CampaignInventoryAtom,
+    HeaderDataListAtom,
+    OrganisationListAtom,
+    UserMinimalListAtom,
+    SupplierPhaseListAtom,
+    BookingStatusAtom,
+    supplierSearchListAtom,
+    filtersCheckBoxAtom,
+    finalSupplierListAtom
+} from '../../_states';
 import { errorAtom } from '../../_states/alert';
 import dayjs from 'dayjs';
 import API_URL from '../../../config';
@@ -19,6 +29,9 @@ const BookinPlanActions = () => {
     const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom);
     const setBookinStatus = useSetRecoilState(BookingStatusAtom);
     const setSupplierSearch = useSetRecoilState(supplierSearchListAtom)
+    const filtersCheckbox = useRecoilValue(filtersCheckBoxAtom);
+    const finalSupplierList = useRecoilValue(finalSupplierListAtom);
+
     const CampaignProposalId = queryParameters.get("campaignId");
     // 'HDFHDF0789';
     // 'TESTESBD56'
@@ -306,6 +319,53 @@ const BookinPlanActions = () => {
             }
         })
     }
+
+    const submitSupplierList = () => {
+        let filters = [];
+        let center_data = {};
+        let data = {};
+        filtersCheckbox.map((item, index) => {
+            if (item?.checked) {
+                filters.push({ id: item?.value });
+            }
+        });
+        finalSupplierList.map((supplier, index) => {
+            let code = '';
+            if (supplier.supplier_code) {
+                code = supplier.supplier_code;
+            }
+            if (supplier.supplier_type) {
+                code = supplier.supplier_type;
+            }
+            let supplierKeyValueData = {
+                id: supplier.supplier_id,
+                status: 'F',
+            };
+            if (!center_data[code]) {
+                center_data[code] = {};
+                center_data[code]['supplier_data'] = [];
+                center_data[code]['filter_codes'] = filters;
+            }
+            if (code != null) center_data[code]['supplier_data'].push(supplierKeyValueData);
+            data = {
+                campaign_id: CampaignProposalId,
+                center_data: center_data,
+            };
+
+            if (filters.length) {
+                return fetchWrapper.post(`${Apis.Post_Supplier_List}`, data).then((res) => {
+                    if (res?.status) {
+                        alertActions.success(Labels.Success)
+                    } else {
+                        alertActions.error(Labels.Error)
+                    }
+                })
+            } else {
+                alert("Atleast One Supplier and One Filter is required to Continue")
+            }
+        });
+
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -333,7 +393,8 @@ const BookinPlanActions = () => {
         putAssignSupplierUser,
         getAreaBycity,
         getSubAreaByArea,
-        SupplierSearch
+        SupplierSearch,
+        submitSupplierList,
     };
 }
 export { BookinPlanActions };
