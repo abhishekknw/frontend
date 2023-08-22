@@ -1,10 +1,17 @@
 import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { CampaignInventoryAtom, BookingStatusAtom } from '../../_states';
+import {
+  CampaignInventoryAtom,
+  BookingStatusAtom,
+  filtersCheckBoxAtom,
+  finalSupplierListAtom,
+} from '../../_states';
 
 const BookingFunctions = () => {
   const [campaignInventory, setCampaignInventory] = useRecoilState(CampaignInventoryAtom);
   const bookingStatus = useRecoilValue(BookingStatusAtom);
+  const [filtersCheckbox, setFiltersCheckbox] = useRecoilState(filtersCheckBoxAtom);
+  const [finalSupplierList, setFinalSupplierList] = useRecoilState(finalSupplierListAtom);
 
   const handleSelectPriority = (select, row) => {
     let newList = campaignInventory.shortlisted_suppliers.map((item) =>
@@ -83,19 +90,49 @@ const BookingFunctions = () => {
     });
     setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList });
   };
-
-  return {
-    handleSelectPriority,
-    handleSelectPhase,
-    handleNextActionDate,
-    handlePaymentStatus,
-    handlePaymentmethod,
-    handlePaymentmethod,
-    handleCompletionStatus,
-    handleSelectBookingStatus,
-    handleBookingSubStatus,
-    getBookingSubStatusList,
-    handleCheckFreebies,
-  };
 };
+
+const handleCheckFilters = (event, item) => {
+  let newCheckBox = filtersCheckbox.map((check) =>
+    check?.value === item?.value ? { ...check, checked: event?.target?.checked } : check
+  );
+  setFiltersCheckbox(newCheckBox);
+};
+
+const addSupplierList = (row) => {
+  let check = finalSupplierList.some((item) => item.supplier_id === row?.supplier_id);
+  if (!check) {
+    setFinalSupplierList([...finalSupplierList, row]);
+  } else {
+    alert('Supplier Already In List');
+  }
+};
+
+const removeSupplierList = (row) => {
+  let newList = finalSupplierList.filter((item) => item.supplier_id !== row?.supplier_id);
+  setFinalSupplierList([...newList]);
+};
+
+// const handleSubmitSupplier = () => {
+
+// }
+
+return {
+  handleSelectPriority,
+  handleSelectPhase,
+  handleNextActionDate,
+  handlePaymentStatus,
+  handlePaymentmethod,
+  handlePaymentmethod,
+  handleCompletionStatus,
+  handleSelectBookingStatus,
+  handleBookingSubStatus,
+  getBookingSubStatusList,
+  handleCheckFreebies,
+  handleCheckFilters,
+  addSupplierList,
+  removeSupplierList,
+  // handleSubmitSupplier
+};
+
 export { BookingFunctions };

@@ -187,7 +187,7 @@ export default function BookingPlan() {
               <Button
                 variant="primary"
                 onClick={(e) => {
-                  setShowModal({ show: true, type: 'AssignUser' });
+                  setShowModal({ show: true, type: 'AssignUserWithQuality' });
                 }}
               >
                 Assign User
@@ -596,7 +596,13 @@ export default function BookingPlan() {
                           </div>
                         </td>
                         <td>
-                          <Button variant="danger" className="btn btn-danger">
+                          <Button
+                            variant="danger"
+                            className="btn btn-danger"
+                            onClick={(e) => {
+                              BookingApi.deletInventory(data?.id);
+                            }}
+                          >
                             Delete
                           </Button>
                         </td>
@@ -782,7 +788,7 @@ export default function BookingPlan() {
                   ? 'Supplier Details'
                   : showModal.type == 'ContactDetails'
                   ? 'Contact Detail'
-                  : showModal.type == 'AssignUser'
+                  : showModal.type == 'AssignUser' || showModal.type == 'AssignUserWithQuality'
                   ? 'Assign User'
                   : showModal.type == 'internalComments'
                   ? 'Internal Comments'
@@ -814,8 +820,12 @@ export default function BookingPlan() {
                 <AddBrandModal data={showModal.rowData} />
               ) : showModal.type == 'RelationshipData' ? (
                 <RelationshipModal data={showModal.rowData} />
-              ) : showModal.type == 'AssignUser' ? (
-                <AssignUserModal data={showModal.rowData} campaign={showModal.campaign} />
+              ) : showModal.type == 'AssignUser' || showModal.type == 'AssignUserWithQuality' ? (
+                <AssignUserModal
+                  data={showModal.rowData}
+                  campaign={showModal.campaign}
+                  modalType={showModal.type}
+                />
               ) : showModal.type == 'ContactDetails' ? (
                 <ContactDetailModal data={showModal.rowData} />
               ) : showModal.type == 'externalComments' || showModal.type == 'internalComments' ? (
@@ -831,11 +841,11 @@ export default function BookingPlan() {
               ) : showModal.type == 'ViewPhase' ? (
                 <ViewPhaseModal />
               ) : showModal.type == 'AddSupplier' ? (
-                <AddSupplierModal />
+                <AddSupplierModal campaign={CampaignInventoryList?.campaign} />
               ) : showModal.type == 'ImportSheet' ? (
                 <ImportSheetModal />
               ) : showModal.type == 'Inventory' ? (
-                <InventoryModal />
+                <InventoryModal data={showModal.rowData} />
               ) : showModal.type == 'NEFT' || showModal.type == 'CHEQUE' ? (
                 <PaymentTypeModal data={showModal.rowData} modalType={showModal.type} />
               ) : (
@@ -875,9 +885,11 @@ export default function BookingPlan() {
               </Button>
             </li>
             <li>
-              <Button className="btn btn-primary" type="button">
-                Campaign Release and Audit Plan
-              </Button>
+              <a href={`/#/TESTESBD56/auditReleasePlan`}>
+                <Button className="btn btn-primary" type="button">
+                  Campaign Release and Audit Plan
+                </Button>
+              </a>
             </li>
             <li>
               <Button
