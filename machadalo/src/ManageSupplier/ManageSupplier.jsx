@@ -30,7 +30,6 @@ export default function ManageSupplier() {
       <Switch>
         <Route exact path={DASHBOARD_SUPPLIER} component={SupplierDashboard} />
         <Route exact path={CREATE_SUPPLIER} component={CreateSupplier} />
-        <Route exact path={SUPPLIER_LOGIN} component={Login} />
         <Route exact path={SOCIETY_HOME} component={SocietyHome} />
         <Route exact path={SOCIETY_SINGLE} component={Society} />
         <Route exact path={CORPORATE_HOME} component={CorporateHome} />
