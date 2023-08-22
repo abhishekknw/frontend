@@ -90,49 +90,49 @@ const BookingFunctions = () => {
     });
     setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList });
   };
-};
 
-const handleCheckFilters = (event, item) => {
-  let newCheckBox = filtersCheckbox.map((check) =>
-    check?.value === item?.value ? { ...check, checked: event?.target?.checked } : check
-  );
-  setFiltersCheckbox(newCheckBox);
-};
+  const handleCheckFilters = (event, item) => {
+    let newCheckBox = filtersCheckbox.map((check) =>
+      check?.value === item?.value ? { ...check, checked: event?.target?.checked } : check
+    );
+    setFiltersCheckbox(newCheckBox);
+  };
 
-const addSupplierList = (row) => {
-  let check = finalSupplierList.some((item) => item.supplier_id === row?.supplier_id);
-  if (!check) {
-    setFinalSupplierList([...finalSupplierList, row]);
-  } else {
-    alert('Supplier Already In List');
-  }
-};
+  const addSupplierList = (row) => {
+    let check = finalSupplierList.some((item) => item.supplier_id === row?.supplier_id);
+    if (!check) {
+      setFinalSupplierList([...finalSupplierList, row]);
+    } else {
+      alert('Supplier Already In List');
+    }
+  };
 
-const removeSupplierList = (row) => {
-  let newList = finalSupplierList.filter((item) => item.supplier_id !== row?.supplier_id);
-  setFinalSupplierList([...newList]);
-};
+  const removeSupplierList = (row) => {
+    let newList = finalSupplierList.filter((item) => item.supplier_id !== row?.supplier_id);
+    setFinalSupplierList([...newList]);
+  };
 
-// const handleSubmitSupplier = () => {
+  // const handleSubmitSupplier = () => {
 
-// }
+  // }
 
-return {
-  handleSelectPriority,
-  handleSelectPhase,
-  handleNextActionDate,
-  handlePaymentStatus,
-  handlePaymentmethod,
-  handlePaymentmethod,
-  handleCompletionStatus,
-  handleSelectBookingStatus,
-  handleBookingSubStatus,
-  getBookingSubStatusList,
-  handleCheckFreebies,
-  handleCheckFilters,
-  addSupplierList,
-  removeSupplierList,
-  // handleSubmitSupplier
+  return {
+    handleSelectPriority,
+    handleSelectPhase,
+    handleNextActionDate,
+    handlePaymentStatus,
+    handlePaymentmethod,
+    handlePaymentmethod,
+    handleCompletionStatus,
+    handleSelectBookingStatus,
+    handleBookingSubStatus,
+    getBookingSubStatusList,
+    handleCheckFreebies,
+    handleCheckFilters,
+    addSupplierList,
+    removeSupplierList,
+    // handleSubmitSupplier
+  };
 };
 
 export { BookingFunctions };
