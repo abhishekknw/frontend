@@ -78,13 +78,19 @@ export default function SupplierSearchList() {
   ];
 
   const addTofinalSupplierList = (row) => {
-    setFinalSupplierList([...finalSupplierList, row]);
-    console.log(finalSupplierList, 'finalSupplierListfinalSupplierList');
+    let check = finalSupplierList.some((item) => item.supplier_id === row?.supplier_id);
+    if (!check) {
+      setFinalSupplierList([...finalSupplierList, row]);
+    } else {
+      alert('Supplier Already In List');
+    }
   };
 
   const removeSupplier = (row) => {
-    console.log(row, 'rowrowrow');
+    let newList = finalSupplierList.filter((item) => item.supplier_id !== row?.supplier_id);
+    setFinalSupplierList([...newList]);
   };
+
   if (showFinalizedList) {
     return (
       <div>
@@ -101,7 +107,7 @@ export default function SupplierSearchList() {
         {finalSupplierList.length > 0 ? (
           <ReactBootstrapTable headerData={Header} rowData={finalSupplierList} />
         ) : (
-          <DataNotFound message="No Supplier Found" />
+          <DataNotFound message="No Data Found" />
         )}
       </div>
     );
