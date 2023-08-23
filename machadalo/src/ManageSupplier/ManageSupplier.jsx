@@ -35,8 +35,8 @@ export default function ManageSupplier() {
         <Route exact path={SOCIETY_HOME} component={SocietyHome} />
         <Route exact path={SOCIETY_HOME_SEARCH} component={SocietyHome} />
         <Route exact path={SOCIETY_SINGLE} component={Society} />
-        {/* <Route exact path={CORPORATE_SINGLE} component={Corporate} /> */}
         <Route exact path={COMMON_HOME} component={CommonHome} />
+        <Route exact path={CORPORATE_SINGLE} component={Corporate} />
         <Route exact path={COMMON_HOME_SEARCH} component={CommonHome} />
       </Switch>
     </>

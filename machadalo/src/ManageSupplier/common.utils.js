@@ -64,4 +64,39 @@ const getSupplierType = (type) => {
   }
 };
 
-export { getTypeCode, getSupplierType };
+const getSupplierTypeName = (type) => {
+  switch (type) {
+    case 'RS':
+      return 'Residential';
+    case 'CP':
+      return 'Corporate Parks';
+    case 'GY':
+      return 'Gym';
+    case 'SA':
+      return 'Salon';
+    case 'BS':
+      return 'Bus Shelter';
+    case 'RE':
+      return 'Retail Shop';
+    case 'EI':
+      return 'Education Institute';
+    case 'HO':
+      return 'Hording';
+    case 'BU':
+      return 'Bus';
+    case 'GN':
+      return 'Gantry';
+    case 'RC':
+      return 'Radio Channel';
+    case 'TV':
+      return 'Tv Channel';
+    case 'CO':
+      return 'Corporates';
+    case 'HL':
+      return 'Hospital';
+    default:
+      return '';
+  }
+};
+
+export { getTypeCode, getSupplierType, getSupplierTypeName };

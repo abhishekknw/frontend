@@ -80,10 +80,10 @@ export default function SocietyHome() {
     <>
       <div className="middle-section">
         <h2 className="heading">Society Count: {list?.count}</h2>
-        <div class="navbar-collapse tabBox" ng-controller="HeaderCtrl">
+        <div className="navbar-collapse tabBox" ng-controller="HeaderCtrl">
           <button
             type="button"
-            class="smallBtn backbtn back_btn_list"
+            className="smallBtn backbtn back_btn_list"
             onClick={() => history.goBack()}
           >
             Back

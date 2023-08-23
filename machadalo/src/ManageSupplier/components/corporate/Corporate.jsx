@@ -45,7 +45,7 @@ export default function Corporate({ corporateCount }) {
   return (
     <>
       <div class="middle-section">
-        <div class="collapse navbar-collapse tabBox divpadding" ng-controller="HeaderCtrl">
+        <div class="navbar-collapse tabBox" ng-controller="HeaderCtrl">
           <ul class="nav nav-pills" ng-if="isSupplierSelected()">
             <li
               className={`${isTabActive('basic') && 'active'}`}

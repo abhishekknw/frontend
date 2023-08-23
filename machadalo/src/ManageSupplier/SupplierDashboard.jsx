@@ -85,6 +85,10 @@ export default function SupplierDashboard() {
     }
   };
 
+  const handleCreateClick = (type) => {
+    history.push(MANAGE_SUPPLIER + 'create/' + type);
+  };
+
   return (
     <>
       <div className="middle-section">
@@ -109,6 +113,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('RS')"
+                  onClick={() => handleCreateClick('RS')}
                   value="Create"
                 />
               </td>
@@ -166,6 +171,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('CP')"
+                  onClick={() => handleCreateClick('CP')}
                   value="Create"
                 />
               </td>
@@ -224,6 +230,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('GY')"
+                  onClick={() => handleCreateClick('GY')}
                   value="Create"
                 />
               </td>
@@ -282,6 +289,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('SA')"
+                  onClick={() => handleCreateClick('SA')}
                   value="Create"
                 />
               </td>
@@ -339,6 +347,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('BS')"
+                  onClick={() => handleCreateClick('BS')}
                   value="Create"
                 />
               </td>
@@ -398,6 +407,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('RE')"
+                  onClick={() => handleCreateClick('RE')}
                   value="Create"
                 />
               </td>
@@ -456,6 +466,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('EI')"
+                  onClick={() => handleCreateClick('EI')}
                   value="Create"
                 />
               </td>
@@ -514,6 +525,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('HO')"
+                  onClick={() => handleCreateClick('HO')}
                   value="Create"
                 />
               </td>
@@ -572,6 +584,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('BU')"
+                  onClick={() => handleCreateClick('BU')}
                   value="Create"
                 />
               </td>
@@ -630,6 +643,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('GN')"
+                  onClick={() => handleCreateClick('GN')}
                   value="Create"
                 />
               </td>
@@ -688,6 +702,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('RC')"
+                  onClick={() => handleCreateClick('RC')}
                   value="Create"
                 />
               </td>
@@ -746,6 +761,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('TV')"
+                  onClick={() => handleCreateClick('TV')}
                   value="Create"
                 />
               </td>
@@ -804,6 +820,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('CO')"
+                  onClick={() => handleCreateClick('CO')}
                   value="Create"
                 />
               </td>
@@ -862,6 +879,7 @@ export default function SupplierDashboard() {
                   type="button"
                   className="linkBtn"
                   ng-click="gotocreate('HL')"
+                  onClick={() => handleCreateClick('HL')}
                   value="Create"
                 />
               </td>

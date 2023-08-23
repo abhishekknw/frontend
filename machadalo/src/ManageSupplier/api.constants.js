@@ -13,6 +13,10 @@ export const ANG_APIS = {
   GETSTATE: 'v0/ui/state/',
   GET_SUPPLIER_META: 'v0/ui/suppliers-meta/',
   GET_LIST: 'v0/ui/supplier-generic/?supplier_type_code=',
+  GET_LIST_GENERIC: 'v0/ui/supplier-generic/',
+  GET_CITIES: 'v0/ui/create_supplier/load_initial_data/',
+  GET_AREA: 'v0/ui/locations/',
+  CREATE_SUPPLIER: 'v0/ui/supplier/generate_id/',
 
   GET_SOCIETY_DETAILS: 'v0/ui/society/',
   GET_SUPPLIER_RELATIONSHIP:
