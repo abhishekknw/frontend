@@ -17,7 +17,7 @@ export const ANG_APIS = {
   GET_SOCIETY_DETAILS: 'v0/ui/society/',
   GET_SUPPLIER_RELATIONSHIP:
     'v0/ui/website/society-supplier-relationship/?supplier_type=RE&society_id=GCBLPDLCHTB&type=INPREMISES',
-  GET_SOCIETY_LIST: 'v0/ui/society/list/?page=',
+  GET_SOCIETY_LIST: 'v0/ui/society/list/',
   GET_ORGANIZATIONS: 'v0/ui/website/organisation/?category=SUPPLIER_AGENCY',
   GET_CORPORATE_LIST: 'supplier-generic/?supplier_type_code=CP&page=',
   GET_INVENTORY_SUMMARY: 'v0/ui/society/GCBLPDLCHTB/inventory_summary/?supplierTypeCode=RS',

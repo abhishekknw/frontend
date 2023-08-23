@@ -21,9 +21,10 @@ import { SupplierTypeAtom } from './supplier.atom';
 
 export default function SupplierDashboard() {
   const history = useHistory();
+  const fetchWrapper = useFetchWrapper();
   const [state, setState] = useState([]);
   const [value, setValue] = useState();
-  const fetchWrapper = useFetchWrapper();
+  const [searchState, setSearchState] = useState([]);
   const [supplierType, setSupplierType] = useRecoilState(SupplierTypeAtom);
 
   const getState = () => {
@@ -55,7 +56,33 @@ export default function SupplierDashboard() {
 
   const handleViewAllClick = (type_short, type_full) => {
     setSupplierType(type_short);
-    history.push(MANAGE_SUPPLIER + type_full + '/home');
+    const existingIndex = searchState.findIndex((item) => item.supplier_type === type_short);
+    if (existingIndex !== -1) {
+      history.push(MANAGE_SUPPLIER + type_full + '/home/' + searchState[existingIndex].state_name);
+    } else {
+      history.push(MANAGE_SUPPLIER + type_full + '/home');
+    }
+  };
+
+  const handleSocietyClick = () => {
+    const existingIndex = searchState.findIndex((item) => item.supplier_type === 'RS');
+    if (existingIndex !== -1) {
+      history.push(SOCIETY_HOME + '/' + searchState[existingIndex].state_name);
+    } else {
+      history.push(SOCIETY_HOME);
+    }
+  };
+
+  const handleSelectState = (event, supplier_type) => {
+    const existingIndex = searchState.findIndex((item) => item.supplier_type === supplierType);
+    let state_name = event.target.value;
+    if (existingIndex !== -1) {
+      const newData = [...searchState];
+      newData[existingIndex] = { ...newData[existingIndex], state_name };
+      setSearchState(newData);
+    } else {
+      setSearchState((prevData) => [...prevData, { supplier_type, state_name }]);
+    }
   };
 
   return (
@@ -89,7 +116,7 @@ export default function SupplierDashboard() {
                 <input
                   type="button"
                   className="linkBtn"
-                  onClick={() => history.push(SOCIETY_HOME)}
+                  onClick={handleSocietyClick}
                   value="View All"
                 />
               </td>
@@ -117,12 +144,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="society.state_name"
                   ng-change="stateChange('RS',society.state_name)"
+                  onChange={(event) => handleSelectState(event, 'RS')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -174,12 +202,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="corporate.state_name"
                   ng-change="stateChange('CP',corporate.state_name)"
+                  onChange={(event) => handleSelectState(event, 'CP')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -231,12 +260,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="gym.state_name"
                   ng-change="stateChange('GY',gym.state_name)"
+                  onChange={(event) => handleSelectState(event, 'GY')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -287,12 +317,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="salon.state_name"
                   ng-change="stateChange('SA',salon.state_name)"
+                  onChange={(event) => handleSelectState(event, 'SA')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -344,12 +375,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="busshelter.state_name"
                   ng-change="stateChange('BS',busshelter.state_name)"
+                  onChange={(event) => handleSelectState(event, 'BS')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -402,12 +434,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="retailshop.state_name"
                   ng-change="stateChange('RE',retailshop.state_name)"
+                  onChange={(event) => handleSelectState(event, 'RE')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -459,8 +492,17 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="educationinsti.state_name"
                   ng-change="stateChange('EI',educationinsti.state_name)"
+                  onChange={(event) => handleSelectState(event, 'EI')}
                 >
                   <option value="">All</option>
+                  {state.length > 0 &&
+                    state.map((item, key) => {
+                      return (
+                        <option key={key} value={item.state_code}>
+                          {item.state_name}
+                        </option>
+                      );
+                    })}
                 </select>
               </td>
             </tr>
@@ -508,12 +550,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="hording.state_name"
                   ng-change="stateChange('HO',hording.state_name)"
+                  onChange={(event) => handleSelectState(event, 'HO')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -565,12 +608,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="bus.state_name"
                   ng-change="stateChange('BU',bus.state_name)"
+                  onChange={(event) => handleSelectState(event, 'BU')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -622,12 +666,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="gantry.state_name"
                   ng-change="stateChange('GN',gantry.state_name)"
+                  onChange={(event) => handleSelectState(event, 'GN')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -679,12 +724,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="radionChannel.state_name"
                   ng-change="stateChange('RC',radionChannel.state_name)"
+                  onChange={(event) => handleSelectState(event, 'RC')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -736,12 +782,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="tvChannel.state_name"
                   ng-change="stateChange('TV',tvChannel.state_name)"
+                  onChange={(event) => handleSelectState(event, 'TV')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -793,12 +840,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="corporates.state_name"
                   ng-change="stateChange('CO',corporates.state_name)"
+                  onChange={(event) => handleSelectState(event, 'CO')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
@@ -850,12 +898,13 @@ export default function SupplierDashboard() {
                   ng-options="state.label for state in state_names"
                   ng-model="hospital.state_name"
                   ng-change="stateChange('HL',hospital.state_name)"
+                  onChange={(event) => handleSelectState(event, 'HL')}
                 >
                   <option value="">All</option>
                   {state.length > 0 &&
                     state.map((item, key) => {
                       return (
-                        <option key={key} value={item.state_name}>
+                        <option key={key} value={item.state_code}>
                           {item.state_name}
                         </option>
                       );
