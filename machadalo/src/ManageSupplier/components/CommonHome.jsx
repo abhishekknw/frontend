@@ -35,7 +35,7 @@ export default function CommonHome() {
       <h2 className="heading" ng-hide="gymCount==null">
         {getSupplierType(type)} Count: {list?.count}
       </h2>
-      <div className="collapse navbar-collapse tabBox divpadding" ng-controller="HeaderCtrl">
+      <div className="navbar-collapse tabBox" ng-controller="HeaderCtrl">
         <button
           onClick={() => history.goBack()}
           type="button"
