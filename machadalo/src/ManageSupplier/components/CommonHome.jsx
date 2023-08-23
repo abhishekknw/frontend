@@ -7,6 +7,7 @@ import { ANG_APIS } from '../api.constants';
 import { useHistory, useParams } from 'react-router';
 import { getSupplierType, getTypeCode } from '../common.utils';
 import { MANAGE_SUPPLIER } from '../../constants/routes.constants';
+import Pagination from '../../components/Pagination';
 
 export default function CommonHome() {
   const { type } = useParams();
@@ -24,10 +25,14 @@ export default function CommonHome() {
 
   useEffect(() => {
     if (type) getList();
-  }, []);
+  }, [pageNumber]);
 
   const handleGoToClick = (id) => {
     history.push(MANAGE_SUPPLIER + type + '/' + id);
+  };
+
+  const handlePageChange = (page) => {
+    setPageNumber(page.selected + 1);
   };
 
   return (
@@ -121,13 +126,8 @@ export default function CommonHome() {
           </div>
         </div>
       </div>
-      <div className="pageBox">
-        <dir-pagination-controls
-          max-size="7"
-          direction-links="true"
-          boundary-links="true"
-          on-page-change="pageChangeHandler(newPageNumber)"
-        ></dir-pagination-controls>
+      <div className="list__footer">
+        <Pagination pageSize={10} totalItems={list?.count} handlePageClick={handlePageChange} />
       </div>
     </div>
   );

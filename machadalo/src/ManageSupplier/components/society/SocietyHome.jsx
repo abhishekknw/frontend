@@ -1,36 +1,38 @@
 import { useEffect, useState } from 'react';
-import { societyRepository } from '../../repository/society.repo';
 import { SOCIETY } from '../../../constants/routes.constants';
 import { useHistory } from 'react-router';
 import { useFetchWrapper } from '../../../Dashboards/_helpers/fetch-wrapper';
 import { ANG_APIS } from '../../api.constants';
+import Pagination from '../../../components/Pagination';
 
 export default function SocietyHome() {
   const history = useHistory();
   const fetchWrapper = useFetchWrapper();
   const [pageNumber, setPageNumber] = useState(1);
   const [list, setList] = useState();
-  const [societyCount, setSocietyCount] = useState();
 
   const getList = () => {
     fetchWrapper.get(ANG_APIS.GET_SOCIETY_LIST + pageNumber).then((res) => {
       setList(res.data);
-      setSocietyCount(res.data.count);
     });
   };
 
   useEffect(() => {
     getList();
-  }, []);
+  }, [pageNumber]);
 
   const handleSupplierClick = (id) => {
     history.push(`${SOCIETY}/${id}`);
   };
 
+  const handlePageChange = (page) => {
+    setPageNumber(page.selected + 1);
+  };
+
   return (
     <>
       <div className="middle-section">
-        <h2 className="heading">Society Count: {societyCount}</h2>
+        <h2 className="heading">Society Count: {list?.count}</h2>
         <div class="navbar-collapse tabBox" ng-controller="HeaderCtrl">
           <button
             type="button"
@@ -121,9 +123,9 @@ export default function SocietyHome() {
               {/* <p ng-if="societies.length<=0"><center><h1>No Data Available</h1></center></p> */}
             </div>
           </div>
-          {/* <div className="pageBox">
-                <dir-pagination-controls max-size="11" direction-links="true" on-page-change="pageChangeHandler(newPageNumber)" boundary-links="true" ></dir-pagination-controls>
-            </div> */}
+          <div className="list__footer">
+            <Pagination pageSize={10} totalItems={list?.count} handlePageClick={handlePageChange} />
+          </div>
         </div>
       </div>
     </>
