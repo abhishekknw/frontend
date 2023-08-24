@@ -65,12 +65,13 @@ class EntityCitywiseCount extends React.Component {
   }
   render() {
     return (
-      <div className="bootstrap-iso">
+      // <div className="bootstrap-iso">
+      <div>
         <TableHeader headerValue={this.state.headerValue} />
 
         {this.state.isDataFetched ? (
           <div>
-            {/* <button
+            <button
               type="button"
               className="btn btn-danger"
               onClick={() => this.props.history.push(`/r/operations-dashboard/entity`)}
@@ -78,7 +79,7 @@ class EntityCitywiseCount extends React.Component {
             >
               <i className="fa fa-arrow-left" aria-hidden="true" />
               &nbsp; Back
-            </button> */}
+            </button>
             {/* <InnerGrid
               columns={getEntityCitywiseCount()}
               data={this.state.entityData}
@@ -90,7 +91,8 @@ class EntityCitywiseCount extends React.Component {
             /> */}
             <Table responsive className={`react-bootstrap-custom-table v-middle`}>
               <thead>
-                <tr>
+                '{' '}
+                <tr style={({ padding: '8px 14px' }, { whiteSpace: 'nowrap' })}>
                   <th
                     rowSpan="2"
                     className={`sortable ${
@@ -153,7 +155,7 @@ class EntityCitywiseCount extends React.Component {
                             0
                           )}
                         </td>
-                        <td colSpan={13}>Comming Soon</td>
+                        <td colSpan={10}>Comming Soon</td>
                         {/* <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
