@@ -63,11 +63,11 @@ class EntityCount extends React.Component {
             <Table responsive className={`react-bootstrap-custom-table v-middle`}>
               <thead>
                 <tr>
-                  <th rowspan="2">Entity Type</th>
-                  <th rowspan="2">Entity Count</th>
-                  <th rowspan="2">Company</th>
-                  <th colspan="3">Contact Name</th>
-                  <th colspan="3">Contact Number</th>
+                  <th rowSpan="2">Entity Type</th>
+                  <th rowSpan="2">Entity Count</th>
+                  <th rowSpan="2">Company</th>
+                  <th colSpan="3">Contact Name</th>
+                  <th colSpan="3">Contact Number</th>
                 </tr>
                 <tr>
                   <th>Filled(Unique)</th>
@@ -90,7 +90,7 @@ class EntityCount extends React.Component {
                               pathname: `city/${item?.supplier_type}/`,
                               state: {
                                 supplier_type: item?.supplier_type,
-                                // name,
+                                name: item?.supplier_type,
                               },
                             }}
                           >
@@ -103,12 +103,12 @@ class EntityCount extends React.Component {
                       </td>
                       <td>{item.count}</td>
                       <td>{item.company}</td>
+                      <td colSpan={6}>Comming Soon</td>
+                      {/* <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
-                      <td>Comming Soon</td>
-                      <td>Comming Soon</td>
-                      <td>Comming Soon</td>
+                      <td>Comming Soon</td> */}
                     </tr>
                   );
                 })}

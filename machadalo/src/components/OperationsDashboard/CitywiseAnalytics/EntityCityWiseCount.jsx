@@ -6,6 +6,7 @@ import LoadingWrapper from '../../Error/LoadingWrapper';
 import getEntityCitywiseCount from './EntityCitywiseCountGridConfig';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
+import TableHeader from '../../../Dashboards/Table/TableHeader/TableHeader';
 
 class EntityCitywiseCount extends React.Component {
   constructor(props) {
@@ -52,6 +53,8 @@ class EntityCitywiseCount extends React.Component {
   render() {
     return (
       <div className="bootstrap-iso">
+        <TableHeader headerValue={this.state.headerValue} />
+
         {this.state.isDataFetched ? (
           <div>
             <button
@@ -75,12 +78,12 @@ class EntityCitywiseCount extends React.Component {
             <Table responsive className={`react-bootstrap-custom-table v-middle`}>
               <thead>
                 <tr>
-                  <th rowspan="2">City</th>
-                  <th rowspan="2">Count</th>
-                  <th colspan="3">Contact Name</th>
-                  <th colspan="3">Contact Number</th>
-                  <th colspan="3">Contact Number(Decision Maker)</th>
-                  <th colspan="4">Entity Count</th>
+                  <th rowSpan="2">City</th>
+                  <th rowSpan="2">Count</th>
+                  <th colSpan="3">Contact Name</th>
+                  <th colSpan="3">Contact Number</th>
+                  <th colSpan="3">Contact Number(Decision Maker)</th>
+                  <th colSpan="4">Entity Count</th>
                 </tr>
                 <tr>
                   <th>Filled(Unique)</th>
@@ -121,6 +124,8 @@ class EntityCitywiseCount extends React.Component {
                           0
                         )}
                       </td>
+                      <td colSpan={13}>Comming Soon</td>
+                      {/* <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
@@ -131,9 +136,7 @@ class EntityCitywiseCount extends React.Component {
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
-                      <td>Comming Soon</td>
-                      <td>Comming Soon</td>
-                      <td>Comming Soon</td>
+                      <td>Comming Soon</td> */}
                     </tr>
                   );
                 })}
