@@ -13,11 +13,11 @@ import {
 import SupplierDashboard from './SupplierDashboard';
 import CreateSupplier from './CreateSupplier';
 import MachadaloHeader from '../Dashboards/common/header/Header';
-import './styles/main.css';
-import './styles/login.css';
-import './styles/style.css';
-import './styles/machadalo.css';
-import './bootstrap/css/bootstrap.css';
+import './styles/main.scss';
+import './styles/login.scss';
+import './styles/style.scss';
+import './styles/machadalo.scss';
+import './bootstrap/css/bootstrap.scss';
 import Society from './components/society/Society';
 import SocietyHome from './components/society/SocietyHome';
 import Corporate from './components/corporate/Corporate';

@@ -1,17 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import MachadaloHeader from '../Dashboards/common/header/Header';
-import './styles/main.css';
-import './styles/login.css';
-import './styles/style.css';
-import './styles/machadalo.css';
-import './bootstrap/css/bootstrap.css';
-import { supplierRepository } from './repository';
-import {
-  CORPORATE_HOME,
-  CREATE_SUPPLIER,
-  MANAGE_SUPPLIER,
-  SOCIETY_HOME,
-} from '../constants/routes.constants';
+import { MANAGE_SUPPLIER, SOCIETY_HOME } from '../constants/routes.constants';
 import { useHistory } from 'react-router';
 import { dashboardRepository } from './repository/dashboard.repo';
 import { useFetchWrapper } from '../Dashboards/_helpers/fetch-wrapper';
