@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 const SectorListByNumberAtom = atom({
       key: 'SectorListByNumberKey',
-      default: []
+      default: {}
 })
 
 export { SectorListByNumberAtom }

@@ -15,34 +15,34 @@ class EntityCount extends React.Component {
     super(props);
     this.state = {
       entityData: [],
-      isDataFetched: false,
+      isDataFetched: true,
       isError: false,
     };
   }
 
   componentDidMount() {
     const { token } = this.props;
-    request
-      .get(`${config.API_URL}/v0/ui/ops/supplier-summary/`)
-      .set('Authorization', `JWT ${token}`)
-      .then((resp) => {
-        const { status, data } = resp.body;
-        if (status) {
-          const entityData = Object.keys(data).map((key, index) => ({
-            ...data[key],
-            type: key,
-            key: index,
-          }));
-          this.setState({
-            entityData,
-            isDataFetched: true,
-          });
-        }
-      })
-      .catch((ex) => {
-        console.log('Failed to get data');
-        this.setState({ isError: true, isDataFetched: true });
-      });
+    // request
+    //   .get(`${config.API_URL}/v0/ui/ops/supplier-summary/`)
+    //   .set('Authorization', `JWT ${token}`)
+    //   .then((resp) => {
+    //     const { status, data } = resp.body;
+    //     if (status) {
+    //       const entityData = Object.keys(data).map((key, index) => ({
+    //         ...data[key],
+    //         type: key,
+    //         key: index,
+    //       }));
+    //       this.setState({
+    //         entityData,
+    //         isDataFetched: true,
+    //       });
+    //     }
+    //   })
+    //   .catch((ex) => {
+    //     console.log('Failed to get data');
+    //     this.setState({ isError: true, isDataFetched: true });
+    //   });
   }
 
   render() {
