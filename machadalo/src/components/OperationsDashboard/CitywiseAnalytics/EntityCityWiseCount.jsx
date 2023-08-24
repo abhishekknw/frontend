@@ -7,6 +7,7 @@ import getEntityCitywiseCount from './EntityCitywiseCountGridConfig';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import TableHeader from '../../../Dashboards/Table/TableHeader/TableHeader';
+import ReactPagination from '../../../Dashboards/Pagination/Pagination';
 
 class EntityCitywiseCount extends React.Component {
   constructor(props) {
@@ -16,7 +17,11 @@ class EntityCitywiseCount extends React.Component {
       headerValue: '',
       isDataFetched: false,
       isError: false,
+      sortingKey: 'city',
+      sortReverse: false,
+      pagination: { page: 1, startIndex: 0, endIndex: 10 },
     };
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   componentDidMount() {
@@ -49,7 +54,15 @@ class EntityCitywiseCount extends React.Component {
         this.setState({ isError: true, isDataFetched: true });
       });
   }
-
+  handlePageChange(event) {
+    let page = event.selected;
+    let start = page * 10;
+    let end = start + 10;
+    let obj = { page: page, startIndex: start, endIndex: end };
+    this.setState((prevState) => ({
+      pagination: obj,
+    }));
+  }
   render() {
     return (
       <div className="bootstrap-iso">
@@ -57,7 +70,7 @@ class EntityCitywiseCount extends React.Component {
 
         {this.state.isDataFetched ? (
           <div>
-            <button
+            {/* <button
               type="button"
               className="btn btn-danger"
               onClick={() => this.props.history.push(`/r/operations-dashboard/entity`)}
@@ -65,7 +78,7 @@ class EntityCitywiseCount extends React.Component {
             >
               <i className="fa fa-arrow-left" aria-hidden="true" />
               &nbsp; Back
-            </button>
+            </button> */}
             {/* <InnerGrid
               columns={getEntityCitywiseCount()}
               data={this.state.entityData}
@@ -78,7 +91,21 @@ class EntityCitywiseCount extends React.Component {
             <Table responsive className={`react-bootstrap-custom-table v-middle`}>
               <thead>
                 <tr>
-                  <th rowSpan="2">City</th>
+                  <th
+                    rowSpan="2"
+                    className={`sortable ${
+                      this.state.sortingKey == 'city'
+                        ? `${this.state.sortReverse ? 'asc' : 'desc'}`
+                        : ''
+                    }`}
+                    onClick={(e) => {
+                      this.setState((prevState) => ({
+                        sortReverse: !this.state.sortReverse,
+                      }));
+                    }}
+                  >
+                    City
+                  </th>
                   <th rowSpan="2">Count</th>
                   <th colSpan="3">Contact Name</th>
                   <th colSpan="3">Contact Number</th>
@@ -102,30 +129,32 @@ class EntityCitywiseCount extends React.Component {
                 </tr>
               </thead>
               <tbody id="rows">
-                {this.state.entityData?.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{item?.city}</td>
-                      <td>
-                        {item?.count && item?.count > 0 ? (
-                          <Link
-                            style={{ color: '#3e59e3' }}
-                            to={{
-                              pathname: `?city=${item?.city}`,
-                              state: {
-                                supplier_type: item?.supplier_type,
-                                // city,
-                              },
-                            }}
-                          >
-                            {item?.count}
-                          </Link>
-                        ) : (
-                          0
-                        )}
-                      </td>
-                      <td colSpan={13}>Comming Soon</td>
-                      {/* <td>Comming Soon</td>
+                {this.state.entityData
+                  ?.slice(this.state.pagination.startIndex, this.state.pagination.endIndex)
+                  .map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{item?.city}</td>
+                        <td>
+                          {item?.count && item?.count > 0 ? (
+                            <Link
+                              style={{ color: '#3e59e3' }}
+                              to={{
+                                pathname: `?city=${item?.city}`,
+                                state: {
+                                  supplier_type: item?.supplier_type,
+                                  // city,
+                                },
+                              }}
+                            >
+                              {item?.count}
+                            </Link>
+                          ) : (
+                            0
+                          )}
+                        </td>
+                        <td colSpan={13}>Comming Soon</td>
+                        {/* <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
@@ -137,11 +166,17 @@ class EntityCitywiseCount extends React.Component {
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td> */}
-                    </tr>
-                  );
-                })}
+                      </tr>
+                    );
+                  })}
               </tbody>
             </Table>
+            <ReactPagination
+              pageNo={this.state.pagination.page - 1}
+              pageSize={10}
+              totalItems={this.state.entityData.length}
+              onPageChange={this.handlePageChange}
+            />
           </div>
         ) : (
           <LoadingWrapper />
