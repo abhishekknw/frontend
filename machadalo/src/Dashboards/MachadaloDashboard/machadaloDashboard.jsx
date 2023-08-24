@@ -11,45 +11,44 @@ import Table from 'react-bootstrap/Table';
 import CampaignList from './NewLeads/CampaignList';
 import NewLeadsTab from './NewLeads/NewLeads';
 export default function MachadaloDashboard(props) {
-  
   function getDates(date) {
     // console.log(date)
   }
   return (
     <>
       {/* <div className="container"> */}
-        <div className="machadalo-deshboard">
-          {/* tabs start */}
-          <Tabs
-            defaultActiveKey="NewLeads"
-            id="uncontrolled-tab-example"
-            className="mb-1 nav-lead-tab"
-          >
-            <Tab eventKey="NewLeads" title="New Leads">
-              <NewLeadsTab />
-            </Tab>
-            <Tab eventKey="LeadDetail" title="Lead Detail">
-              <DateFilter onDateChange={getDates} />
-              <div className="row pt-0 ">
-                <div className="col-md-7">
-                  <div className="graph-chart">
-                    <GraphChart />
-                  </div>
-                </div>
-                <div className="col-md-5">
-                  <div className="piechart">
-                    <PieChart />
-                  </div>
+      <div className="machadalo-deshboard">
+        {/* tabs start */}
+        <Tabs
+          defaultActiveKey="NewLeads"
+          id="uncontrolled-tab-example"
+          className="mb-1 nav-lead-tab"
+        >
+          <Tab eventKey="NewLeads" title="New Leads">
+            <NewLeadsTab />
+          </Tab>
+          <Tab eventKey="LeadDetail" title="Lead Detail">
+            <DateFilter onDateChange={getDates} />
+            <div className="row pt-0 ">
+              <div className="col-md-7">
+                <div className="graph-chart">
+                  <GraphChart />
                 </div>
               </div>
+              <div className="col-md-5">
+                <div className="piechart">
+                  <PieChart />
+                </div>
+              </div>
+            </div>
 
-              <div className="pb-5">
-                <LeadsTable />
-              </div>
-            </Tab>
-          </Tabs>
-          {/* tabs start */}
-        </div>
+            <div className="pb-5">
+              <LeadsTable />
+            </div>
+          </Tab>
+        </Tabs>
+        {/* tabs start */}
+      </div>
       {/* </div> */}
     </>
   );

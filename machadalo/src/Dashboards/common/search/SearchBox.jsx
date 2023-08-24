@@ -21,4 +21,3 @@ export default function SearchBox(props) {
   );
 }
 //<SearchBox onSearch={function name} /> call like this from other components
-

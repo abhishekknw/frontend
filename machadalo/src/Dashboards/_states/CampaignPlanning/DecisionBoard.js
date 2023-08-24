@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 
 const InvoiceProposalsAtom = atom({
-    key: 'InvoiceProposalsKey',
-    default: {}
+  key: 'InvoiceProposalsKey',
+  default: {},
 });
 
-export { InvoiceProposalsAtom }
+export { InvoiceProposalsAtom };

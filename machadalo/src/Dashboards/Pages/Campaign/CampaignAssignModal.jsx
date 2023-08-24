@@ -71,7 +71,11 @@ export default function CampaignAssignModal(props) {
                 <Col sm="10">
                   <ListGroup>
                     {proposalData?.assignment_detail?.map((item, index) => {
-                      return <ListGroupItem key={index}>{item.assigned_to.assigned_to_name},({item.assigned_to.organisation_name})</ListGroupItem>;
+                      return (
+                        <ListGroupItem key={index}>
+                          {item.assigned_to.assigned_to_name},({item.assigned_to.organisation_name})
+                        </ListGroupItem>
+                      );
                     })}
                   </ListGroup>
                 </Col>

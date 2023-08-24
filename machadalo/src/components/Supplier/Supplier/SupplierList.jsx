@@ -27,7 +27,7 @@ export default class List extends React.Component {
       selectedDateFilter: '',
       offset: 0,
       perPage: 10,
-      selectedDate:["",""],
+      selectedDate: ['', ''],
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -112,11 +112,11 @@ export default class List extends React.Component {
   }
 
   handleDateChange(date) {
-    let temp = [date[0]?.$d,date[1]?.$d];
+    let temp = [date[0]?.$d, date[1]?.$d];
     this.setState({
-      selectedDate:temp,
-      startDate: temp[0]?temp[0]:"",
-      endDate: temp[1]?temp[1]:"",
+      selectedDate: temp,
+      startDate: temp[0] ? temp[0] : '',
+      endDate: temp[1] ? temp[1] : '',
       // startDate: date.start,
       // endDate: date.end,
     });

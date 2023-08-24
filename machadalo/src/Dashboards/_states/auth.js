@@ -11,4 +11,4 @@ const userInformationAtom = atom({
   // get initial state from local storage to enable user to stay logged in
   default: JSON.parse(localStorage.getItem('userInfo')),
 });
-export { authAtom ,userInformationAtom};
+export { authAtom, userInformationAtom };
