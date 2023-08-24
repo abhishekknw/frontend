@@ -8,6 +8,7 @@ import TableHeader from '../../../Dashboards/Table/TableHeader/TableHeader';
 import Table from 'react-bootstrap/Table';
 import '../../../Dashboards/Table/React-Bootstrap-table/react-bootstrap-table.css';
 import { Link } from 'react-router-dom';
+import ReactPagination from '../../../Dashboards/Pagination/Pagination';
 
 class EntityCount extends React.Component {
   constructor(props) {
@@ -16,7 +17,9 @@ class EntityCount extends React.Component {
       entityData: [],
       isDataFetched: false,
       isError: false,
+      pagination: { page: 1, startIndex: 0, endIndex: 10 },
     };
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +46,15 @@ class EntityCount extends React.Component {
         console.log('Failed to get data');
         this.setState({ isError: true, isDataFetched: true });
       });
+  }
+  handlePageChange(event) {
+    let page = event.selected;
+    let start = page * 10;
+    let end = start + 10;
+    let obj = { page: page, startIndex: start, endIndex: end };
+    this.setState((prevState) => ({
+      pagination: obj,
+    }));
   }
 
   render() {
@@ -79,41 +91,49 @@ class EntityCount extends React.Component {
                 </tr>
               </thead>
               <tbody id="rows">
-                {this.state.entityData?.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>
-                        {item.count > 0 ? (
-                          <Link
-                            style={{ color: '#3e59e3' }}
-                            to={{
-                              pathname: `city/${item?.supplier_type}/`,
-                              state: {
-                                supplier_type: item?.supplier_type,
-                                name: item?.supplier_type,
-                              },
-                            }}
-                          >
-                            {' '}
-                            {item.supplier_type}
-                          </Link>
-                        ) : (
-                          item.supplier_type
-                        )}
-                      </td>
-                      <td>{item.count}</td>
-                      <td>{item.company}</td>
-                      <td colSpan={6}>Comming Soon</td>
-                      {/* <td>Comming Soon</td>
+                {this.state.entityData
+                  ?.slice(this.state.pagination.startIndex, this.state.pagination.endIndex)
+                  .map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>
+                          {item.count > 0 ? (
+                            <Link
+                              style={{ color: '#3e59e3' }}
+                              to={{
+                                pathname: `city/${item?.supplier_type}/`,
+                                state: {
+                                  supplier_type: item?.supplier_type,
+                                  name: item?.supplier_type,
+                                },
+                              }}
+                            >
+                              {' '}
+                              {item.supplier_type}
+                            </Link>
+                          ) : (
+                            item.supplier_type
+                          )}
+                        </td>
+                        <td>{item.count}</td>
+                        <td>{item.company}</td>
+                        <td colSpan={6}>Comming Soon</td>
+                        {/* <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td> */}
-                    </tr>
-                  );
-                })}
+                      </tr>
+                    );
+                  })}
               </tbody>
             </Table>
+            <ReactPagination
+              pageNo={this.state.pagination.page - 1}
+              pageSize={10}
+              totalItems={this.state.entityData.length}
+              onPageChange={this.handlePageChange}
+            />
           </>
         ) : (
           <LoadingWrapper />
