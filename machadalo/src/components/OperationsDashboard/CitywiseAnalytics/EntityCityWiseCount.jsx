@@ -8,7 +8,6 @@ import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import TableHeader from '../../../Dashboards/Table/TableHeader/TableHeader';
 import ReactPagination from '../../../Dashboards/Pagination/Pagination';
-
 class EntityCitywiseCount extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +21,7 @@ class EntityCitywiseCount extends React.Component {
       pagination: { page: 1, startIndex: 0, endIndex: 10 },
     };
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.sortingData = this.sortingData.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +63,32 @@ class EntityCitywiseCount extends React.Component {
       pagination: obj,
     }));
   }
+  sortingData(tableData, accessKey, reverse) {
+    let newList = [];
+    this.setState((prevState) => ({
+      sortReverse: !this.state.sortReverse,
+    }));
+    if (!reverse) {
+      newList = tableData.sort((a, b) => {
+        return a.city - b.city;
+      });
+      this.setState((prevState) => ({
+        entityData: newList,
+      }));
+      console.log(newList, '111');
+      return newList;
+    } else {
+      newList = tableData.sort((a, b) => {
+        return b.city - a.city;
+      });
+      this.setState((prevState) => ({
+        entityData: newList,
+      }));
+      console.log(newList, '11222');
+      return newList;
+    }
+  }
+
   render() {
     return (
       // <div className="bootstrap-iso">
@@ -71,7 +97,7 @@ class EntityCitywiseCount extends React.Component {
 
         {this.state.isDataFetched ? (
           <div>
-            <button
+            {/* <button
               type="button"
               className="btn btn-danger"
               onClick={() => this.props.history.push(`/r/operations-dashboard/entity`)}
@@ -79,7 +105,7 @@ class EntityCitywiseCount extends React.Component {
             >
               <i className="fa fa-arrow-left" aria-hidden="true" />
               &nbsp; Back
-            </button>
+            </button> */}
             {/* <InnerGrid
               columns={getEntityCitywiseCount()}
               data={this.state.entityData}
@@ -101,9 +127,7 @@ class EntityCitywiseCount extends React.Component {
                         : ''
                     }`}
                     onClick={(e) => {
-                      this.setState((prevState) => ({
-                        sortReverse: !this.state.sortReverse,
-                      }));
+                      this.sortingData(this.state.entityData, 'city', this.state.sortReverse);
                     }}
                   >
                     City
@@ -145,7 +169,7 @@ class EntityCitywiseCount extends React.Component {
                                 pathname: `?city=${item?.city}`,
                                 state: {
                                   supplier_type: item?.supplier_type,
-                                  // city,
+                                  city: item?.city,
                                 },
                               }}
                             >
@@ -155,7 +179,7 @@ class EntityCitywiseCount extends React.Component {
                             0
                           )}
                         </td>
-                        <td colSpan={10}>Comming Soon</td>
+                        <td colSpan={13}>Comming Soon</td>
                         {/* <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
