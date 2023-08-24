@@ -365,11 +365,11 @@ export default function SideNavBar() {
                 <span>Campaign List</span>
               </Link>
             </li>
-            <li className="nav-text">
+            {/* <li className="nav-text">
               <Link to="/r/pages/opsdashboard">
                 <span>Ops Dashboard</span>
               </Link>
-            </li>
+            </li> */}
             <li className="nav-text">
               <a href="/#/templateDashboard">
                 <span>Template Dashboard MCA</span>
@@ -380,11 +380,11 @@ export default function SideNavBar() {
                 <span>Template Dashboard MEA</span>
               </a>
             </li>
-            <li className="nav-text">
+            {/* <li className="nav-text">
               <Link to="/r/dashboard/machadalo">
                 <span>Machadalo Dashboard</span>
               </Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
       </IconContext.Provider>
