@@ -4,6 +4,8 @@ import config from '../../../config';
 import InnerGrid from '../../InnerGrid';
 import LoadingWrapper from '../../Error/LoadingWrapper';
 import getEntityCitywiseCount from './EntityCitywiseCountGridConfig';
+import Table from 'react-bootstrap/Table';
+import { Link } from 'react-router-dom';
 
 class EntityCitywiseCount extends React.Component {
   constructor(props) {
@@ -22,14 +24,17 @@ class EntityCitywiseCount extends React.Component {
     const headerValue = `Citywise Report - ${name}`;
     this.setState({ headerValue });
     request
-      .get(`${config.API_URL}/v0/ui/ops/supplier-count/${supplier_type}/`)
+      // .get(`${config.API_URL}/v0/ui/ops/supplier-count/${supplier_type}/`)
+      .get(
+        `${config.API_URL}/v0/ui/ops/get-supplier-summary-city-wise/?supplier_type=${supplier_type}`
+      )
       .set('Authorization', `JWT ${token}`)
       .then((resp) => {
         const { status, data } = resp.body;
         if (status) {
           const entityData = Object.keys(data).map((key, index) => ({
             ...data[key],
-            city: key,
+            // city: key,
             key: index,
           }));
           this.setState({
@@ -58,7 +63,7 @@ class EntityCitywiseCount extends React.Component {
               <i className="fa fa-arrow-left" aria-hidden="true" />
               &nbsp; Back
             </button>
-            <InnerGrid
+            {/* <InnerGrid
               columns={getEntityCitywiseCount()}
               data={this.state.entityData}
               exportCsv={false}
@@ -66,7 +71,74 @@ class EntityCitywiseCount extends React.Component {
               pagination={true}
               headerValue={this.state.headerValue}
               backgroundColor="#c7c7c7c9"
-            />
+            /> */}
+            <Table responsive className={`react-bootstrap-custom-table v-middle`}>
+              <thead>
+                <tr>
+                  <th rowspan="2">City</th>
+                  <th rowspan="2">Count</th>
+                  <th colspan="3">Contact Name</th>
+                  <th colspan="3">Contact Number</th>
+                  <th colspan="3">Contact Number(Decision Maker)</th>
+                  <th colspan="4">Entity Count</th>
+                </tr>
+                <tr>
+                  <th>Filled(Unique)</th>
+                  <th>Total Filled</th>
+                  <th>Not Filled</th>
+                  <th>Filled(Unique)</th>
+                  <th>Total Filled</th>
+                  <th>Not Filled</th>
+                  <th>Filled(Unique)</th>
+                  <th>Total Filled</th>
+                  <th>Not Filled</th>
+                  <th>Today's Count(% inc from yesterday)</th>
+                  <th>This Week Count(% inc from last week)</th>
+                  <th>This Month Count(% inc from last month)</th>
+                  <th>Last 3 Months Count</th>
+                </tr>
+              </thead>
+              <tbody id="rows">
+                {this.state.entityData?.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{item?.city}</td>
+                      <td>
+                        {item?.count && item?.count > 0 ? (
+                          <Link
+                            style={{ color: '#3e59e3' }}
+                            to={{
+                              pathname: `?city=${item?.city}`,
+                              state: {
+                                supplier_type: item?.supplier_type,
+                                // city,
+                              },
+                            }}
+                          >
+                            {item?.count}
+                          </Link>
+                        ) : (
+                          0
+                        )}
+                      </td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                      <td>Comming Soon</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
           </div>
         ) : (
           <LoadingWrapper />

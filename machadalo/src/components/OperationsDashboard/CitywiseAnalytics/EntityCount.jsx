@@ -4,7 +4,6 @@ import config from '../../../config';
 import InnerGrid from '../../InnerGrid';
 import getEntityCount from './EntityCountGridConfig';
 import LoadingWrapper from '../../Error/LoadingWrapper';
-import { SupplierListData } from '../../../Dashboards/_actions/testingJsonData';
 import TableHeader from '../../../Dashboards/Table/TableHeader/TableHeader';
 import Table from 'react-bootstrap/Table';
 import '../../../Dashboards/Table/React-Bootstrap-table/react-bootstrap-table.css';
@@ -15,34 +14,35 @@ class EntityCount extends React.Component {
     super(props);
     this.state = {
       entityData: [],
-      isDataFetched: true,
+      isDataFetched: false,
       isError: false,
     };
   }
 
   componentDidMount() {
     const { token } = this.props;
-    // request
-    //   .get(`${config.API_URL}/v0/ui/ops/supplier-summary/`)
-    //   .set('Authorization', `JWT ${token}`)
-    //   .then((resp) => {
-    //     const { status, data } = resp.body;
-    //     if (status) {
-    //       const entityData = Object.keys(data).map((key, index) => ({
-    //         ...data[key],
-    //         type: key,
-    //         key: index,
-    //       }));
-    //       this.setState({
-    //         entityData,
-    //         isDataFetched: true,
-    //       });
-    //     }
-    //   })
-    //   .catch((ex) => {
-    //     console.log('Failed to get data');
-    //     this.setState({ isError: true, isDataFetched: true });
-    //   });
+    request
+      // .get(`${config.API_URL}/v0/ui/ops/supplier-summary/`)
+      .get(`${config.API_URL}/v0/ui/ops/get-supplier-summary-agencywise/`)
+      .set('Authorization', `JWT ${token}`)
+      .then((resp) => {
+        const { status, data } = resp.body;
+        if (status) {
+          const entityData = Object.keys(data).map((key, index) => ({
+            ...data[key],
+            type: key,
+            key: index,
+          }));
+          this.setState({
+            entityData,
+            isDataFetched: true,
+          });
+        }
+      })
+      .catch((ex) => {
+        console.log('Failed to get data');
+        this.setState({ isError: true, isDataFetched: true });
+      });
   }
 
   render() {
@@ -79,7 +79,7 @@ class EntityCount extends React.Component {
                 </tr>
               </thead>
               <tbody id="rows">
-                {SupplierListData?.map((item, index) => {
+                {this.state.entityData?.map((item, index) => {
                   return (
                     <tr key={index}>
                       <td>
