@@ -9,4 +9,5 @@ export const ROUTESNAME = {
     OPS_DASHBOARD : '/opsdashboard',
     CAMPAIGN_LIST: '/campaign-list',
     BOOKING_PLAN: '/booking-plan',
+    REQUIRE_DASH: '/requirement-dash'
 }

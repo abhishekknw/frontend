@@ -54,5 +54,8 @@ export const Apis = {
     Post_Supplier_List: 'v0/ui/website/add-suppliers-direct-to-campaign/',
     Delete_Camapign_Inventory: 'v0/ui/website/delete-shortlisted-spaces/',
     Get_Inventory_List: 'v0/ui/website/short-listed-inventories/',
+
+    // Requirement
+    Get_Sector_List: "v0/ui/b2b/sector-list/"
 }
 

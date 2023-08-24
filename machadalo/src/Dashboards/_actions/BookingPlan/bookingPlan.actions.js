@@ -96,7 +96,6 @@ const BookinPlanActions = () => {
     };
 
     const deletContact = (data) => {
-        console.log(data, "TESTESBD56")
         return fetchWrapper.get(`${Apis.Get_Contact_Details}`).then((res) => {
             if (res?.status) {
                 alertActions.success(Labels.Success);
@@ -217,7 +216,7 @@ const BookinPlanActions = () => {
             }
         })
     }
-    // ?proposal_id=TESTESBD56
+
     const getProposalMapping = () => {
         return fetchWrapper.get(`${Apis.Get_Proposal_Centre_Mapping}?proposal_id=${CampaignProposalId}`).then((res) => {
             if (res.status) {
