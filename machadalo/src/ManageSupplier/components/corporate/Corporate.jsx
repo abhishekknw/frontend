@@ -5,6 +5,7 @@ import InventorySummary from './InventorySummary';
 import BasicPricingDetails from './BasicPricingDetails';
 import EventDetailsPage from './EventDetailsPage';
 import AmmentiesDetails from './AmmentiesDetails';
+import CommonImages from '../CommonImages';
 
 export default function Corporate({ corporateCount }) {
   const { id } = useParams();
@@ -32,7 +33,7 @@ export default function Corporate({ corporateCount }) {
       case 'ammenties':
         return <AmmentiesDetails />;
       case 'images':
-        return <Images />;
+        return <CommonImages type={'Corporate'} />;
       default:
         return <BasicDetailsCorporate />;
     }
@@ -96,7 +97,12 @@ export default function Corporate({ corporateCount }) {
               </a>
             </li>
           </ul>
-          <button type="button" class="smallBtn backbtn back_btn_list" ng-click="back_to()">
+          <button
+            onClick={() => history.goBack()}
+            type="button"
+            class="smallBtn backbtn back_btn_list"
+            ng-click="back_to()"
+          >
             Back
           </button>
         </div>

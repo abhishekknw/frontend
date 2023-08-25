@@ -1116,8 +1116,14 @@ angular.module('machadaloPages')
         }
 
         let getRoleNameById = function (id){
-          let roleObj = $scope.rolesList.find(x => x.id === Number(id)).name;
-          return roleObj;
+          try {
+            let roleObj = $scope.rolesList?.find(x => x.id === Number(id))?.name;
+            return roleObj;
+          }
+          catch (err) {
+            console.log(err);
+            return ""
+          }
         }
 
         let pathName = $location.path()
