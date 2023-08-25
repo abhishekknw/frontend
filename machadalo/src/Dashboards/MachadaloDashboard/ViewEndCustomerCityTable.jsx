@@ -16,7 +16,7 @@ import EmailModal from '../common/Modals/EmailModal';
 import WhatsappModal from '../common/Modals/WhatsappModal';
 import CommonTable from '../Table/CommonTable';
 import FosRmTable from './FosRmTable';
-import {Tr, Td} from 'react-super-responsive-table';
+import { Tr, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 export default function ViewEndCustomerCityTable(props) {

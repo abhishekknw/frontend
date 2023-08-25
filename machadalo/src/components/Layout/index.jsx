@@ -74,10 +74,6 @@ export default class Layout extends React.Component {
         </main>
       );
     }
-    return (
-      <>
-        {/* <Route path={`${match.path}/b2b`} component={B2bContainer} /> */}
-      </>
-    );
+    return <>{/* <Route path={`${match.path}/b2b`} component={B2bContainer} /> */}</>;
   }
 }

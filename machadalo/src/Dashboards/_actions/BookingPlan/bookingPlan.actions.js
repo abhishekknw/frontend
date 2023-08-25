@@ -2,7 +2,19 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useFetchWrapper } from '../../_helpers/fetch-wrapper';
 import { Apis, Labels } from '../../app.constants';
 import { useAlertActions } from '../alert.actions';
-import { CampaignInventoryAtom, HeaderDataListAtom, OrganisationListAtom, UserMinimalListAtom, SupplierPhaseListAtom, BookingStatusAtom } from '../../_states';
+import {
+    CampaignInventoryAtom,
+    HeaderDataListAtom,
+    OrganisationListAtom,
+    UserMinimalListAtom,
+    SupplierPhaseListAtom,
+    BookingStatusAtom,
+    supplierSearchListAtom,
+    filtersCheckBoxAtom,
+    finalSupplierListAtom,
+    ContactListAtom,
+    InventoryListAtom
+} from '../../_states';
 import { errorAtom } from '../../_states/alert';
 import dayjs from 'dayjs';
 import API_URL from '../../../config';
@@ -12,12 +24,18 @@ const BookinPlanActions = () => {
     const fetchWrapper = useFetchWrapper();
     const alertActions = useAlertActions();
     const setErrorAtom = useSetRecoilState(errorAtom);
-    const setCampaignInventory = useSetRecoilState(CampaignInventoryAtom);
+    const [campaignInventory, setCampaignInventory] = useRecoilState(CampaignInventoryAtom);
     const setHeaderDataList = useSetRecoilState(HeaderDataListAtom);
     const setOrganisationList = useSetRecoilState(OrganisationListAtom);
     const setUserMinimalList = useSetRecoilState(UserMinimalListAtom);
     const [supplierPhaseList, setSupplierPhaseList] = useRecoilState(SupplierPhaseListAtom);
     const setBookinStatus = useSetRecoilState(BookingStatusAtom);
+    const setSupplierSearch = useSetRecoilState(supplierSearchListAtom)
+    const filtersCheckbox = useRecoilValue(filtersCheckBoxAtom);
+    const finalSupplierList = useRecoilValue(finalSupplierListAtom);
+    const [contactList, setContactList] = useRecoilState(ContactListAtom);
+    const setInventoryList = useSetRecoilState(InventoryListAtom)
+
     const CampaignProposalId = queryParameters.get("campaignId");
     // 'HDFHDF0789';
     // 'TESTESBD56'
@@ -70,12 +88,22 @@ const BookinPlanActions = () => {
         let params = "supplier_id=" + data?.object_id;
         return fetchWrapper.get(`${Apis.Get_Contact_Details}${params}`).then((res) => {
             if (res?.status) {
-                return res?.data;
+                setContactList(res?.data);
             } else {
                 alertActions.error(Labels.Error);
             }
         });
     };
+
+    const deletContact = (data) => {
+        return fetchWrapper.get(`${Apis.Get_Contact_Details}`).then((res) => {
+            if (res?.status) {
+                alertActions.success(Labels.Success);
+            } else {
+                alertActions.error(Labels.Error);
+            }
+        });
+    }
 
     const getCommetByShortlistedId = (data, type) => {
         let params = `shortlisted_spaces_id=${data?.id}&related_to=${type === "externalComments" ? "EXTERNAL" : "INTERNAL"}`
@@ -188,7 +216,7 @@ const BookinPlanActions = () => {
             }
         })
     }
-    // ?proposal_id=TESTESBD56
+
     const getProposalMapping = () => {
         return fetchWrapper.get(`${Apis.Get_Proposal_Centre_Mapping}?proposal_id=${CampaignProposalId}`).then((res) => {
             if (res.status) {
@@ -255,6 +283,126 @@ const BookinPlanActions = () => {
             }
         })
     }
+    const updateChequeDetail = (data) => {
+        return fetchWrapper.post(`${Apis.Update_Cheque_Detail}`, data).then((res) => {
+            if (res) {
+                alertActions.success(Labels.Save_Success);
+            }
+            else {
+                alertActions.error(Labels.Error);
+            }
+        })
+    }
+
+    const putAssignSupplierUser = (data) => {
+        return fetchWrapper.put(`${Apis.Put_Assign_Supplier_User}`, data).then((res) => {
+            if (res?.status) {
+                alertActions.success(Labels.Update_Success)
+            } else {
+                alertActions.error(Labels.Error)
+            }
+        })
+    }
+
+    const getAreaBycity = (city) => {
+        return fetchWrapper.get(`${Apis.Get_Area_By_city}${city}`).then((res) => {
+            if (res?.status) {
+                return res?.data
+            } else {
+                alertActions.error(Labels.Error)
+            }
+        })
+    }
+    const getSubAreaByArea = (area) => {
+        return fetchWrapper.get(`${Apis.Get_Sub_Area}${area}/?type=sub_areas`).then((res) => {
+            return res;
+        })
+    }
+    const deletInventory = (id) => {
+        let data = [id];
+        return fetchWrapper.post(`${Apis.Delete_Camapign_Inventory}`, data).then((res) => {
+            if (res?.status) {
+                alertActions.success(Labels.Delete_Success)
+                let newList = campaignInventory.shortlisted_suppliers.filter((item) => item.id !== id);
+                setCampaignInventory({ ...campaignInventory, shortlisted_suppliers: newList })
+
+            } else {
+                alertActions.error(Labels.Error)
+            }
+            return res;
+        })
+    }
+    const SupplierSearch = (data) => {
+        let params = "supplier_type_code=" + data?.supplier_type_code;
+        params += "&supplier_center=" + data?.supplier_center;
+        params += "&supplier_area=" + data?.supplier_area;
+        params += "&search=" + data?.search;
+        params += "&supplier_area_subarea=" + data?.supplier_area_subarea;
+        params += "&proposal_id=" + data?.proposal_id
+        return fetchWrapper.get(`${Apis.Supplier_Search}?${params}`).then((res) => {
+            if (res?.status) {
+                setSupplierSearch(res?.data)
+            } else {
+                alertActions.error(Labels.Error)
+            }
+        })
+    }
+
+    const submitSupplierList = () => {
+        let filters = [];
+        let center_data = {};
+        let data = {};
+        filtersCheckbox.map((item, index) => {
+            if (item?.checked) {
+                filters.push({ id: item?.value });
+            }
+        });
+        finalSupplierList.map((supplier, index) => {
+            let code = '';
+            if (supplier.supplier_code) {
+                code = supplier.supplier_code;
+            }
+            if (supplier.supplier_type) {
+                code = supplier.supplier_type;
+            }
+            let supplierKeyValueData = {
+                id: supplier.supplier_id,
+                status: 'F',
+            };
+            if (!center_data[code]) {
+                center_data[code] = {};
+                center_data[code]['supplier_data'] = [];
+                center_data[code]['filter_codes'] = filters;
+            }
+            if (code != null) center_data[code]['supplier_data'].push(supplierKeyValueData);
+            data = {
+                campaign_id: CampaignProposalId,
+                center_data: center_data,
+            };
+
+            if (filters.length) {
+                return fetchWrapper.post(`${Apis.Post_Supplier_List}`, data).then((res) => {
+                    if (res?.status) {
+                        alertActions.success(Labels.Success)
+                    } else {
+                        alertActions.error(Labels.Error)
+                    }
+                })
+            } else {
+                alertActions.error("Atleast One Supplier and One Filter is required to Continue")
+            }
+        });
+    }
+
+    const getInvetoryList = (id) => {
+        return fetchWrapper.get(`${Apis.Get_Inventory_List}?shortlisted_spaces_id=${id}`).then((res) => {
+            if (res?.status) {
+                setInventoryList(res?.data);
+            } else {
+                alertActions.error(Labels.Error)
+            }
+        })
+    }
     return {
         getCampaignInventories,
         getHeaderData,
@@ -277,7 +425,16 @@ const BookinPlanActions = () => {
         saveSupplierPhaseList,
         deletSupplierPhase,
         postEmailPaymentDetail,
-        getProposalMapping
+        getProposalMapping,
+        updateChequeDetail,
+        putAssignSupplierUser,
+        getAreaBycity,
+        getSubAreaByArea,
+        SupplierSearch,
+        submitSupplierList,
+        deletInventory,
+        getInvetoryList,
+        deletContact
     };
 }
 export { BookinPlanActions };

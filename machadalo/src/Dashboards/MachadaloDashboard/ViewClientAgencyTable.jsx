@@ -211,7 +211,7 @@ export default function ViewClientAgencyTable(props) {
             <Td
               className="sn-table"
               onClick={(e) => {
-                setSelectedId(selectedId === ele.sno?"":ele.sno);
+                setSelectedId(selectedId === ele.sno ? '' : ele.sno);
               }}
             >
               {selectedId === ele.sno ? <BsChevronUp /> : <BsChevronDown />}
@@ -228,7 +228,7 @@ export default function ViewClientAgencyTable(props) {
             <Td>{ele.campaignWise}</Td>
             <Td>{ele.action}</Td>
           </Tr>
-          {selectedId === ele.sno && <FosRmTable styles={{colSpan:12}}/>}
+          {selectedId === ele.sno && <FosRmTable styles={{ colSpan: 12 }} />}
         </>
       );
     });

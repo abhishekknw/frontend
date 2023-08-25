@@ -104,14 +104,14 @@ export default function ViewCampaignTable(props) {
             View End Customer
           </Button>
         ),
-        city:(
+        city: (
           <Button
-                variant="outline-dark"
-                className="lead-btn"
-                onClick={() => onClickCustomerCity('View City')}
-              >
-                View City
-              </Button>
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCustomerCity('View City')}
+          >
+            View City
+          </Button>
         ),
         action: (
           <div className="action-icon">
@@ -154,14 +154,14 @@ export default function ViewCampaignTable(props) {
             View End Customer
           </Button>
         ),
-        city:(
+        city: (
           <Button
-                variant="outline-dark"
-                className="lead-btn"
-                onClick={() => onClickCustomerCity('View City')}
-              >
-                View City
-              </Button>
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCustomerCity('View City')}
+          >
+            View City
+          </Button>
         ),
         action: (
           <div className="action-icon">
@@ -204,14 +204,14 @@ export default function ViewCampaignTable(props) {
             View End Customer
           </Button>
         ),
-        city:(
+        city: (
           <Button
-                variant="outline-dark"
-                className="lead-btn"
-                onClick={() => onClickCustomerCity('View City')}
-              >
-                View City
-              </Button>
+            variant="outline-dark"
+            className="lead-btn"
+            onClick={() => onClickCustomerCity('View City')}
+          >
+            View City
+          </Button>
         ),
         action: (
           <div className="action-icon">

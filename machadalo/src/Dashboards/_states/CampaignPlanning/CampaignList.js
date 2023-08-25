@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 
 const CampaignListAtom = atom({
-    key: 'CampaignListKey',
-    default: {}
+  key: 'CampaignListKey',
+  default: {},
 });
 
-export { CampaignListAtom }
+export { CampaignListAtom };

@@ -37,7 +37,7 @@ export default function SelectDropdown(props) {
   );
 }
 
-// rowData props use for table 
+// rowData props use for table
 {
   /* <SelectDropdown
 optionsData={supplierTypeCode}
