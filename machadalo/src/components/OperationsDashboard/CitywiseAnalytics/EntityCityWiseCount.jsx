@@ -68,25 +68,21 @@ class EntityCitywiseCount extends React.Component {
     this.setState((prevState) => ({
       sortReverse: !this.state.sortReverse,
     }));
-    if (!reverse) {
-      newList = tableData.sort((a, b) => {
-        return a.city - b.city;
-      });
-      this.setState((prevState) => ({
-        entityData: newList,
-      }));
-      console.log(newList, '111');
-      return newList;
-    } else {
-      newList = tableData.sort((a, b) => {
-        return b.city - a.city;
-      });
-      this.setState((prevState) => ({
-        entityData: newList,
-      }));
-      console.log(newList, '11222');
-      return newList;
-    }
+    newList = tableData.sort((a, b) => {
+      let fa = a[accessKey]?.toLowerCase(),
+        fb = b[accessKey]?.toLowerCase();
+
+      if (fa < fb) {
+        return reverse ? -1 : 1;
+      }
+      if (fa > fb) {
+        return reverse ? 1 : -1;
+      }
+      return 0;
+    });
+    this.setState((prevState) => ({
+      entityData: newList,
+    }));
   }
 
   render() {

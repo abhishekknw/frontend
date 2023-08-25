@@ -14,7 +14,7 @@ export default function ReactBootstrapTable(props) {
     if (sort) {
       setSort(key);
       let sortData = sorting.sortTableData(tableData, key, reverse);
-      setRowData(sortData);
+            setRowData(sortData);
     } else {
       setSort(false);
       return 0;
