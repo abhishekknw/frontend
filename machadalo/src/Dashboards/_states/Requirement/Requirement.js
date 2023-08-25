@@ -4,5 +4,9 @@ const SectorListByNumberAtom = atom({
       key: 'SectorListByNumberKey',
       default: {}
 })
+const LeadsBySectorAtom = atom({
+      key: 'LeadsBySectorKey',
+      default: []
+})
 
-export { SectorListByNumberAtom }
+export { SectorListByNumberAtom, LeadsBySectorAtom }

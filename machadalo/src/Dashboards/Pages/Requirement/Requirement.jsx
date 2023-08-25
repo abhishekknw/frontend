@@ -2,19 +2,23 @@ import React, { useEffect } from 'react';
 import { RequirementActions } from '../../_actions/Requirement/Requirement.actions';
 import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
 import { useRecoilValue } from 'recoil';
-import { SectorListByNumberAtom } from '../../_states';
-
+import { LeadsBySectorAtom, SectorListByNumberAtom } from '../../_states';
+import getRequirementHeader from './RequirementListConfig';
+import ReactBootstrapTable from '../../Table/React-Bootstrap-table/ReactBootstrapTable';
 export default function RequirementDash() {
   const RequirementApi = RequirementActions();
   const sectorList = useRecoilValue(SectorListByNumberAtom);
+  const LeadsData = useRecoilValue(LeadsBySectorAtom);
 
   const handleSector = (event) => {
     console.log(event);
+    RequirementApi.getLeadsBySector(event);
   };
 
   useEffect(() => {
     RequirementApi.getSectorByNumber();
   }, []);
+  console.log(getRequirementHeader(), 'getRequirementHeader');
   return (
     <>
       <SelectDropdown
@@ -25,6 +29,9 @@ export default function RequirementDash() {
         id="Sector"
         handleSelect={handleSector}
       />
+      {LeadsData && LeadsData.length > 0 && (
+        <ReactBootstrapTable headerData={getRequirementHeader} rowData={LeadsData} />
+      )}
     </>
   );
 }

@@ -57,5 +57,6 @@ export const Apis = {
 
     // REQUIREMENTS
     Get_Sector_List: 'v0/ui/b2b/sector-list/',
+    Get_Leads_By_Sector: 'v0/ui/b2b/sector-wise-lead-details/'
 }
 
