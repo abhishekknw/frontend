@@ -4,19 +4,18 @@ export default function DescriptionHeader(props) {
   const { data } = props;
   const styles = {
     main: {
-  
       background: '#5f76e8',
       padding: '10px',
       borderRadius: '0px',
       display: 'flex',
       gap: '15px',
       color: '#fff',
-      'overflowX': 'auto',
-      'justifyContent': 'center',
+      overflowX: 'auto',
+      justifyContent: 'center',
       fontSize: '16px',
     },
     label: {
-      'fontWeight': 600,
+      fontWeight: 600,
     },
     item: {
       display: 'flex',

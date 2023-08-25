@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 // import Table from 'react-bootstrap/Table';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
-import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import './index.css';
 import Button from 'react-bootstrap/Button';
 import {
@@ -228,7 +228,7 @@ export default function LeadsTable(props) {
             <Td>{ele.agencyWise}</Td>
             <Td>{ele.action}</Td>
           </Tr>
-          {selectedId === ele.type && <FosRmTable styles={{colSpan:9}}/>}
+          {selectedId === ele.type && <FosRmTable styles={{ colSpan: 9 }} />}
           {/* {ele.type=='B2C' && isExpandRow.b2b && <FosRmTable />} */}
         </>
       );

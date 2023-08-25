@@ -1,0 +1,124 @@
+.form_page {
+}
+.form-signin {
+  max-width:350px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin .errorMessages {
+  margin-bottom: 20px;
+  color: red;
+}
+.panel-margin{
+  margin-top: 50px;
+  margin-right: 70px;
+  margin-left: 70px;
+
+}
+.checkbox{
+	margin-bottom: 10px;
+	display: block;
+}
+.help-block{
+	margin-bottom: 10px;
+	display: block;
+}
+.vCheckboxLabel{
+	font-weight: normal !important;
+  color: #666;
+  font-size: 14px;
+  display: inline-block;
+  margin-top: 13px;
+
+}
+.vTextLabel{
+	font-weight: normal !important;
+  color: #666;
+  font-size: 15px;
+  display: inline-block;
+}
+
+.label{
+	font-weight: normal !important;
+  color: #666;
+
+}
+.selector-multiple, .selector-chosen{
+	width: 30%;
+	float: left;
+  margin-bottom: 5px;
+}
+.space-left{
+	margin-left: 100px
+}
+
+.selector > .selector-multiple > h2, .selector > .selector-chosen > h2 {
+    text-align: left;
+    background: rgba(211, 211, 211, 0.2);
+    color: #777;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    font-size: 100%;
+    font-weight: 600;
+    margin: 0px;
+    padding: 10px 0px 6px 10px;
+    height: 36px;
+    border-radius: 4px 4px 0px 0px;
+}
+.selector > .selector-multiple > select, .selector > .selector-chosen > select {
+		width: 100% !important;
+    font-size: 12px;
+    color: #666;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0px 0px 4px 4px;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.selector > .selector-multiple > select > option, .selector > .selector-chosen > select > option {
+	padding: 6px;
+  border-bottom-width: 1px;
+  border-bottom-color: rgba(211, 211, 211, 0.35);
+  border-bottom-style: solid;
+  font-size: 7px;
+  color: #777;
+
+}
+
+.clear-left{
+	clear: left;
+}
+
+#content-navbar-collapse .btn-primary {
+    color: #fff;
+    padding: 6px 12px;
+    margin-top: 8px;
+}
+.content-main{
+	margin-left: 25%;
+  text-align: center;
+}
+#content-main1{
+  margin-left: 17%;
+  text-align: center;
+}
+.mul-select{
+	background-image: linear-gradient(to bottom,#e8e8e8 0,#f5f5f5 100%);
+	display: inline-block;
+	text-align: left;
+	padding-left: 20px;
+	height: 150px;
+	width: 100%;
+	overflow: auto;
+	border: 1px solid #ccc;
+  border-radius: 0px 0px 4px 4px;
+}
+.mul-select > label{
+	display: block;
+	text-align: left;
+}
+.del-btn{
+	margin-top: -10px;
+	margin-bottom: 20px;
+	padding-left: 30px;
+}

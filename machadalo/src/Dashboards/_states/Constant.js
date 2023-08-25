@@ -12,15 +12,14 @@ const showHideTable = atom({
   },
 });
 
-
 const showHideBreadcrumbsAtom = atom({
   key: 'showHideBreadcrumbsAtom',
   default: {
-    first: { show: false, tableName: "" },
-    second: { show: false, tableName: "" },
-    third: { show: false, tableName: "" },
-    fourth: { show: false, tableName: "" },
-  }
+    first: { show: false, tableName: '' },
+    second: { show: false, tableName: '' },
+    third: { show: false, tableName: '' },
+    fourth: { show: false, tableName: '' },
+  },
 });
 
 const showHideModalAtom = atom({
@@ -31,18 +30,23 @@ const showHideModalAtom = atom({
     leadDetail: { show: false, tableName: '' },
     comment: { show: false, tableName: '' },
     download: { show: false, tableName: '' },
-  }
+  },
 });
 
 const OrganisationListAtom = atom({
   key: 'organisationListKey',
-  default: []
-})
+  default: [],
+});
 
 const UserMinimalListAtom = atom({
   key: 'UserMinimalListKey',
-  default: []
-})
+  default: [],
+});
 
-
-export { showHideTable, showHideBreadcrumbsAtom, showHideModalAtom, OrganisationListAtom, UserMinimalListAtom };
+export {
+  showHideTable,
+  showHideBreadcrumbsAtom,
+  showHideModalAtom,
+  OrganisationListAtom,
+  UserMinimalListAtom,
+};

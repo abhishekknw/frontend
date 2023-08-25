@@ -10,6 +10,7 @@ import InterveneChat from '../InterveneChat/InterveneChat';
 import OpsDashboard from '../OpsDashboard/OpsDashboard';
 import BookingPlan from '../BookingPlan/BookingPlan';
 import CampaignList from '../CampaignList/CampaignList';
+import RequirementDash from '../Requirement/Requirement';
 export default function PagesRoutes(props) {
   const { match } = props;
   const open = useRecoilValue(alertAtom);
@@ -30,6 +31,7 @@ export default function PagesRoutes(props) {
           <Route path={match.path + ROUTESNAME.OPS_DASHBOARD} component={OpsDashboard} />
           <Route path={match.path + ROUTESNAME.BOOKING_PLAN} component={BookingPlan} />
           <Route path={match.path + ROUTESNAME.CAMPAIGN_LIST} component={CampaignList} />
+          <Route path={match.path + ROUTESNAME.REQUIRE_DASH} component={RequirementDash} />
         </SnackbarProvider>
       </Switch>
       {/* </div> */}

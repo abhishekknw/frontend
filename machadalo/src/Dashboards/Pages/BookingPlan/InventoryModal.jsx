@@ -4,17 +4,21 @@ import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import ListGroup from 'react-bootstrap/ListGroup';
-
 import { InventoryList } from '../../_actions/testingJsonData';
-export default function InventoryModal() {
-  const inventoryData = InventoryList.data;
+import { BookinPlanActions } from '../../_actions';
+import { InventoryListAtom } from '../../_states';
+import { useRecoilValue } from 'recoil';
+export default function InventoryModal(props) {
+  // const inventoryData = InventoryList.data;
+  const inventoryData = useRecoilValue(InventoryListAtom);
+  const BookingApi = BookinPlanActions();
   const [inventory, setInventory] = useState([]);
   const [inventoryIds, setInventoryIds] = useState([]);
   const [selectedId, setSelected] = useState('first');
   const [inventoryById, setInventoryById] = useState([]);
 
   function filterInventoryData() {
-    inventoryData.map((item, index) => {
+    inventoryData?.map((item, index) => {
       let check = inventoryIds.includes(item?.inventory_type?.id);
       if (!check) {
         setInventoryIds([...inventoryIds, item?.inventory_type?.id]);
@@ -25,18 +29,23 @@ export default function InventoryModal() {
 
   function getInventoryIds(e) {
     let newList = [];
-    inventoryData.map((item, index) => {
+    inventoryData?.map((item, index) => {
       if (Number(item?.inventory_type?.id) === Number(e)) {
         newList.push(item);
       }
     });
     setInventoryById(newList);
-    console.log('getInventoryIds', inventoryById);
   }
+  const getInventoryList = async () => {
+    await BookingApi.getInvetoryList(props?.data?.id);
+  };
 
   useEffect(() => {
+    getInventoryList();
+  }, [props?.data?.id]);
+  useEffect(() => {
     filterInventoryData();
-  });
+  }, [inventoryData]);
 
   return (
     <Tab.Container id="left-tabs-example" defaultActiveKey={selectedId}>
@@ -49,15 +58,16 @@ export default function InventoryModal() {
               getInventoryIds(e);
             }}
           >
-            {inventory.map((inventory, index) => {
-              return (
-                <Nav.Item key={index}>
-                  <Nav.Link eventKey={inventory?.inventory_type?.id}>
-                    {inventory?.inventory_type?.adinventory_name}
-                  </Nav.Link>
-                </Nav.Item>
-              );
-            })}
+            {inventory &&
+              inventory.map((inventory, index) => {
+                return (
+                  <Nav.Item key={index}>
+                    <Nav.Link eventKey={inventory?.inventory_type?.id}>
+                      {inventory?.inventory_type?.adinventory_name}
+                    </Nav.Link>
+                  </Nav.Item>
+                );
+              })}
           </Nav>
         </Col>
         <Col xs={12} sm={8} md={8}>

@@ -6,3 +6,4 @@ export * from './Machadalo/newLeads';
 export * from './CampaignPlanning/DecisionBoard';
 export * from './CampaignPlanning/CampaignList';
 export * from './BookingPlan/bookingPlan';
+export * from './Requirement/Requirement';

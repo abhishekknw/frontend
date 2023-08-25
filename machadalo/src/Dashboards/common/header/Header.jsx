@@ -44,10 +44,13 @@ export default function MachadaloHeader(props) {
 
                   <Dropdown.Menu>
                     <Dropdown.Item>
-                      <a to="#">Change Password</a>
+                      <a href="/#/loginLogs">View Logs</a>
                     </Dropdown.Item>
                     <Dropdown.Item>
-                      <a to="/#/logout/">Logout</a>
+                      <a href="/#/changePassword">Change Password</a>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <a href="/#/logout">Logout</a>
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
