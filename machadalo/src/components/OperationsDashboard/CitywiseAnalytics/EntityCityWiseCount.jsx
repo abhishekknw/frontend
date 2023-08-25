@@ -97,15 +97,17 @@ class EntityCitywiseCount extends React.Component {
 
         {this.state.isDataFetched ? (
           <div>
-            {/* <button
-              type="button"
-              className="btn btn-danger"
-              onClick={() => this.props.history.push(`/r/operations-dashboard/entity`)}
-              style={{ marginTop: '10px', float: 'right', backgroundColor: 'rgb(232, 68, 120)' }}
-            >
-              <i className="fa fa-arrow-left" aria-hidden="true" />
-              &nbsp; Back
-            </button> */}
+            <div style={{ width: '100%' }}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => this.props.history.push(`/r/operations-dashboard/entity`)}
+                style={{ marginTop: '10px' }}
+              >
+                <i className="fa fa-arrow-left" aria-hidden="true" />
+                &nbsp; Back
+              </button>
+            </div>
             {/* <InnerGrid
               columns={getEntityCitywiseCount()}
               data={this.state.entityData}
@@ -179,7 +181,11 @@ class EntityCitywiseCount extends React.Component {
                             0
                           )}
                         </td>
-                        <td colSpan={13}>Comming Soon</td>
+                        {index == 0 && (
+                          <td colSpan={13} rowSpan={10} style={{ background: '#eee' }}>
+                            Comming Soon
+                          </td>
+                        )}
                         {/* <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>
