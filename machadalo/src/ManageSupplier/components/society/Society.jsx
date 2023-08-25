@@ -15,6 +15,7 @@ import SocietyAdditionalDetails from './SocietyAdditionalDetails';
 import EventDetailsPage from './EventDetailsPage';
 import AmmentiesDetails from './AmmentiesDetails';
 import Images from './Images';
+import CommonImages from '../CommonImages';
 
 export default function Society() {
   const { id } = useParams();
@@ -58,7 +59,7 @@ export default function Society() {
       case 'ammenties':
         return <AmmentiesDetails />;
       case 'images':
-        return <Images />;
+        return <CommonImages type={'Society'} code={'RS'} />;
       default:
         return <BasicDetails />;
     }
