@@ -8,6 +8,7 @@ import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import TableHeader from '../../../Dashboards/Table/TableHeader/TableHeader';
 import ReactPagination from '../../../Dashboards/Pagination/Pagination';
+import { sortingTableData } from '../../../Dashboards/_actions/sorting.action';
 class EntityCitywiseCount extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +22,6 @@ class EntityCitywiseCount extends React.Component {
       pagination: { page: 1, startIndex: 0, endIndex: 10 },
     };
     this.handlePageChange = this.handlePageChange.bind(this);
-    this.sortingData = this.sortingData.bind(this);
   }
 
   componentDidMount() {
@@ -64,22 +64,10 @@ class EntityCitywiseCount extends React.Component {
     }));
   }
   sortingData(tableData, accessKey, reverse) {
-    let newList = [];
+    let newList = sortingTableData(tableData, accessKey, reverse);
     this.setState((prevState) => ({
       sortReverse: !this.state.sortReverse,
     }));
-    newList = tableData.sort((a, b) => {
-      let fa = a[accessKey]?.toLowerCase(),
-        fb = b[accessKey]?.toLowerCase();
-
-      if (fa < fb) {
-        return reverse ? -1 : 1;
-      }
-      if (fa > fb) {
-        return reverse ? 1 : -1;
-      }
-      return 0;
-    });
     this.setState((prevState) => ({
       entityData: newList,
     }));
