@@ -47,12 +47,12 @@ export default function SideNavBar() {
               </Link>
               <div className="first-class">
                 <ul className="first-class-ul">
-                  <li className="first-class-li">
+                  <li className="first-class-li" onClick={showSidebar}>
                     <a href="/#/dashboard">
                       <span>Business</span>
                     </a>
                   </li>
-                  <li className="first-class-li">
+                  <li className="first-class-li" onClick={showSidebar}>
                     <a href="/#/dashboard_Business">
                       <span>Business MCA</span>
                     </a>
@@ -70,13 +70,13 @@ export default function SideNavBar() {
                       </i>
                     </a>
                     <ul className="first-class-child first-class-ul">
-                      <li className="first-class-li">
+                      <li className="first-class-li" onClick={showSidebar}>
                         <Link to="/r/operations-dashboard">Campaign Report</Link>
                       </li>
-                      <li className="first-class-li">
+                      <li className="first-class-li" onClick={showSidebar}>
                         <Link to="/r/operations-dashboard/entity">Entity Report</Link>
                       </li>
-                      <li className="first-class-li">
+                      <li className="first-class-li" onClick={showSidebar}>
                         <Link to="/r/operations-dashboard/user">User Performance</Link>
                       </li>
                     </ul>
@@ -131,17 +131,26 @@ export default function SideNavBar() {
                           </i>
                         </a>
                         <ul className="first-class-ul second-class-child">
-                          <li className="first-class-li nav-text first-class-child-main">
+                          <li
+                            className="first-class-li nav-text first-class-child-main"
+                            onClick={showSidebar}
+                          >
                             {/* <a> */}
                             <Link to="/r/supplier/base-type/list">Standard Templates</Link>
                             {/* </a> */}
                           </li>
-                          <li className="first-class-li nav-text first-class-child-main">
+                          <li
+                            className="first-class-li nav-text first-class-child-main"
+                            onClick={showSidebar}
+                          >
                             {/* <a> */}
                             <Link to="/r/supplier/type/list">Manage Supplier Type</Link>
                             {/* </a> */}
                           </li>
-                          <li className="first-class-li nav-text first-class-child-main">
+                          <li
+                            className="first-class-li nav-text first-class-child-main"
+                            onClick={showSidebar}
+                          >
                             {/* <a> */}
                             <Link to="/r/supplier/list">Manage Supplier</Link>
                             {/* </a> */}
@@ -156,12 +165,18 @@ export default function SideNavBar() {
                           </i>
                         </a>
                         <ul className="first-class-ul second-class-child">
-                          <li className="first-class-li nav-text first-class-child-main">
+                          <li
+                            className="first-class-li nav-text first-class-child-main"
+                            onClick={showSidebar}
+                          >
                             {/* <a> */}
                             <Link to="/r/inventory/base/list">Standard Template</Link>
                             {/* </a> */}
                           </li>
-                          <li className="first-class-li nav-text first-class-child-main">
+                          <li
+                            className="first-class-li nav-text first-class-child-main"
+                            onClick={showSidebar}
+                          >
                             {/* <a> */}
                             <Link to="/r/inventory/list">Manage Inventory</Link>
                             {/* </a> */}
@@ -176,20 +191,25 @@ export default function SideNavBar() {
                           </i>
                         </a>
                         <ul className="first-class-ul second-class-child">
-                          <li className="first-class-li nav-text first-class-child-main">
+                          <li
+                            className="first-class-li nav-text first-class-child-main"
+                            onClick={showSidebar}
+                          >
                             {/* <a> */}
                             <Link to="/r/booking/base/list">Standard Templates</Link>
                             {/* </a> */}
                           </li>
-                          <li className="first-class-li nav-text first-class-child-main">
-                            {/* <a> */}
+                          <li
+                            className="first-class-li nav-text first-class-child-main"
+                            onClick={showSidebar}
+                          >
                             <Link to="/r/booking/template/list">Booking Templates</Link>
-                            {/* </a> */}
                           </li>
-                          <li className="first-class-li nav-text first-class-child-main">
-                            {/* <a> */}
+                          <li
+                            className="first-class-li nav-text first-class-child-main"
+                            onClick={showSidebar}
+                          >
                             <Link to="/r/booking/campaigns">Manage Bookings</Link>
-                            {/* </a> */}
                           </li>
                         </ul>
                       </li>
@@ -202,14 +222,10 @@ export default function SideNavBar() {
                         </a>
                         <ul className="first-class-ul second-class-child">
                           <li className="first-class-li nav-text first-class-child-main">
-                            {/* <a> */}
                             <a href="/#/HDFHDF0789/auditReleasePlan">Release and Audit Plan </a>
-                            {/* </a> */}
                           </li>
                           <li className="first-class-li nav-text first-class-child-main">
-                            {/* <a> */}
                             <a href="/#">Manage Phases</a>
-                            {/* </a> */}
                           </li>
                         </ul>
                       </li>
@@ -227,10 +243,10 @@ export default function SideNavBar() {
               </Link>
               <div className="first-class">
                 <ul className="first-class-ul">
-                  <li className="first-class-li">
+                  <li className="first-class-li" onClick={showSidebar}>
                     <Link to="/r/checklist/campaigns">Campaign Checklist</Link>
                   </li>
-                  <li className="first-class-li">
+                  <li className="first-class-li" onClick={showSidebar}>
                     <Link to="/r/checklist/settings/permissions/list">Settings</Link>
                   </li>
                   <li className="first-class-li nav-text first-class-child-main">
@@ -244,7 +260,7 @@ export default function SideNavBar() {
                       <li className="first-class-li">
                         <a href="/#/campaignLeads">Capture Leads</a>
                       </li>
-                      <li className="first-class-li">
+                      <li className="first-class-li" onClick={showSidebar}>
                         <Link to="/r/leads/settings">Assign Permission</Link>
                       </li>
                     </ul>
@@ -311,7 +327,7 @@ export default function SideNavBar() {
                     </a>
                     <ul className="first-class-child first-class-ul">
                       <li className="first-class-li">
-                        <a href="#/manageMent/createRoles">Create</a>
+                        <a href="/#/manageMent/createRoles">Create</a>
                       </li>
                       <li className="first-class-li">
                         <a href="/#/manageMent/assignRole">Assign</a>
@@ -360,7 +376,7 @@ export default function SideNavBar() {
                 <span>Intervene Chat</span>
               </Link>
             </li> */}
-            <li className="nav-text">
+            <li className="nav-text" onClick={showSidebar}>
               <Link to="/r/pages/campaign-list">
                 <span>Campaign List</span>
               </Link>
