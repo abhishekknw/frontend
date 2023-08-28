@@ -13,7 +13,7 @@ import StallDetails from './StallDetails';
 import SocietyAdditionalDetails from './SocietyAdditionalDetails';
 import EventDetailsPage from './EventDetailsPage';
 import AmmentiesDetails from './AmmentiesDetails';
-import CommonImages from '../CommonImages';
+// import CommonImages from '../CommonImages';
 
 export default function Society() {
   const { id } = useParams();
