@@ -17,6 +17,7 @@ export const ANG_APIS = {
   GET_CITIES: 'v0/ui/create_supplier/load_initial_data/',
   GET_AREA: 'v0/ui/locations/',
   CREATE_SUPPLIER: 'v0/ui/supplier/generate_id/',
+  GET_IMAGE_MAPPING: 'v0/ui/image-mapping/?supplier_id=',
 
   GET_SOCIETY_DETAILS: 'v0/ui/society/',
   GET_SUPPLIER_RELATIONSHIP:
@@ -35,5 +36,4 @@ export const ANG_APIS = {
   GET_OTHER: 'v0/ui/society/GCBLPDLCHTB/other_inventory/',
   GET_EVENT: 'v0/ui/event/?supplier_id=GCBLPDLCHTB&supplier_type_code=RS',
   GET_AMMENITY: 'v0/ui/website/amenity-list/?type=RS',
-  GET_IMAGE_MAPPING: 'v0/ui/image-mapping/?supplier_id=GCBLPDLCHTB&supplier_type_code=RS',
 };

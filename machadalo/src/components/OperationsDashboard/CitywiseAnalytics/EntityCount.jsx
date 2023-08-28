@@ -6,7 +6,7 @@ import getEntityCount from './EntityCountGridConfig';
 import LoadingWrapper from '../../Error/LoadingWrapper';
 import TableHeader from '../../../Dashboards/Table/TableHeader/TableHeader';
 import Table from 'react-bootstrap/Table';
-import '../../../Dashboards/Table/React-Bootstrap-table/react-bootstrap-table.css';
+// import '../../../Dashboards/Table/React-Bootstrap-table/react-bootstrap-table.css';
 import { Link } from 'react-router-dom';
 import ReactPagination from '../../../Dashboards/Pagination/Pagination';
 
@@ -117,7 +117,12 @@ class EntityCount extends React.Component {
                         </td>
                         <td>{item.count}</td>
                         <td>{item.company}</td>
-                        <td colSpan={6}>Comming Soon</td>
+                        {index == 0 && (
+                          <td colSpan={6} rowSpan={10} style={{ background: '#eee' }}>
+                            Comming Soon
+                          </td>
+                        )}
+
                         {/* <td>Comming Soon</td>
                       <td>Comming Soon</td>
                       <td>Comming Soon</td>

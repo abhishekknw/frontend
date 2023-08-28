@@ -1,6 +1,9 @@
 /* Table sort indicators */
 .react-bootstrap-custom-table {
-
+    th {
+            font-weight: 500 !important;
+            font-size: 13px !important;
+        }
     th.sortable {
         position: relative;
         cursor: pointer;
