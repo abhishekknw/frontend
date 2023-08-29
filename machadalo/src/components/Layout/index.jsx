@@ -17,6 +17,7 @@ import './index.css';
 import DashboardRoutes from '../../Dashboards/routes/DashboardRoutes';
 import PagesRoutes from '../../Dashboards/Pages/routes/PagesRoutes';
 import MachadaloHeader from '../../Dashboards/common/header/Header';
+import ManageSupplier from '../../ManageSupplier/ManageSupplier';
 
 export default class Layout extends React.Component {
   componentWillMount() {
@@ -67,6 +68,7 @@ export default class Layout extends React.Component {
                   {/* <Route path={`${match.path}/b2b`} component={B2bContainer} /> */}
                   <Route path={`${match.path}/dashboard`} component={DashboardRoutes} />
                   <Route path={`${match.path}/pages`} component={PagesRoutes} />
+                  <Route path={`${match.path}/manageSupplier`} component={ManageSupplier} />
                 </Switch>
               </div>
             </div>

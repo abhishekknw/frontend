@@ -24,7 +24,6 @@ import {
 } from '../constants/routes.constants';
 import SupplierDashboard from './SupplierDashboard';
 import CreateSupplier from './CreateSupplier';
-import MachadaloHeader from '../Dashboards/common/header/Header';
 import './styles/main.css';
 import './styles/login.css';
 import './styles/style.css';
@@ -47,33 +46,36 @@ import TvChannel from './components/tv_channel/TvChannel';
 import Corporates from './components/corporates/Corporates';
 import Hospital from './components/hospital/Hospital';
 
-export default function ManageSupplier() {
+export default function ManageSupplier(props) {
+  const { match } = props;
+
   return (
     <>
-      <div className="container ">
-        <MachadaloHeader />
-      </div>
       <Switch>
-        <Route exact path={DASHBOARD_SUPPLIER} component={SupplierDashboard} />
-        <Route exact path={CREATE_SUPPLIER} component={CreateSupplier} />
-        <Route exact path={SOCIETY_HOME} component={SocietyHome} />
-        <Route exact path={SOCIETY_HOME_SEARCH} component={SocietyHome} />
-        <Route exact path={SOCIETY_SINGLE} component={Society} />
-        <Route exact path={COMMON_HOME} component={CommonHome} />
-        <Route exact path={CORPORATE_SINGLE} component={Corporate} />
-        <Route exact path={GYM_SINGLE} component={Gym} />
-        <Route exact path={SALON_SINGLE} component={Salon} />
-        <Route exact path={BUSSHELTER_SINGLE} component={BusShelter} />
-        <Route exact path={RETAILSHOP_SINGLE} component={RetailShop} />
-        <Route exact path={EDUCATION_INSTITUTE_SINGLE} component={EducationInstitute} />
-        <Route exact path={HORDING_SINGLE} component={Hording} />
-        <Route exact path={BUS_SINGLE} component={Bus} />
-        <Route exact path={GANTRY_SINGLE} component={Gantry} />
-        <Route exact path={RADIO_CHANNEL_SINGLE} component={RadioChannel} />
-        <Route exact path={TV_CHANNEL_SINGLE} component={TvChannel} />
-        <Route exact path={CORPORATES_SINGLE} component={Corporates} />
-        <Route exact path={HOSPITAL_SINGLE} component={Hospital} />
-        <Route exact path={COMMON_HOME_SEARCH} component={CommonHome} />
+        <Route exact path={match.path + DASHBOARD_SUPPLIER} component={SupplierDashboard} />
+        <Route exact path={match.path + CREATE_SUPPLIER} component={CreateSupplier} />
+        <Route exact path={match.path + SOCIETY_HOME} component={SocietyHome} />
+        <Route exact path={match.path + SOCIETY_HOME_SEARCH} component={SocietyHome} />
+        <Route exact path={match.path + SOCIETY_SINGLE} component={Society} />
+        <Route exact path={match.path + COMMON_HOME} component={CommonHome} />
+        <Route exact path={match.path + CORPORATE_SINGLE} component={Corporate} />
+        <Route exact path={match.path + GYM_SINGLE} component={Gym} />
+        <Route exact path={match.path + SALON_SINGLE} component={Salon} />
+        <Route exact path={match.path + BUSSHELTER_SINGLE} component={BusShelter} />
+        <Route exact path={match.path + RETAILSHOP_SINGLE} component={RetailShop} />
+        <Route
+          exact
+          path={match.path + EDUCATION_INSTITUTE_SINGLE}
+          component={EducationInstitute}
+        />
+        <Route exact path={match.path + HORDING_SINGLE} component={Hording} />
+        <Route exact path={match.path + BUS_SINGLE} component={Bus} />
+        <Route exact path={match.path + GANTRY_SINGLE} component={Gantry} />
+        <Route exact path={match.path + RADIO_CHANNEL_SINGLE} component={RadioChannel} />
+        <Route exact path={match.path + TV_CHANNEL_SINGLE} component={TvChannel} />
+        <Route exact path={match.path + CORPORATES_SINGLE} component={Corporates} />
+        <Route exact path={match.path + HOSPITAL_SINGLE} component={Hospital} />
+        <Route exact path={match.path + COMMON_HOME_SEARCH} component={CommonHome} />
       </Switch>
     </>
   );

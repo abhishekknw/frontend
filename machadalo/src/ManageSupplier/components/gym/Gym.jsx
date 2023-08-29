@@ -1,9 +1,9 @@
 import { useHistory, useParams } from 'react-router';
-import BasicDetailsGym from './BasicDetailsGym';
-import BasicPricingDetails from './BasicPricingDetails';
-import InventorySummary from './InventorySummary';
+// import BasicDetailsGym from './BasicDetailsGym';
+// import BasicPricingDetails from './BasicPricingDetails';
+// import InventorySummary from './InventorySummary';
 import { useState } from 'react';
-import CommonImages from '../CommonImages';
+// import CommonImages from '../CommonImages';
 
 export default function Gym() {
   const { id } = useParams();

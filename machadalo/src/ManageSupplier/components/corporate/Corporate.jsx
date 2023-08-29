@@ -5,7 +5,7 @@ import InventorySummary from './InventorySummary';
 import BasicPricingDetails from './BasicPricingDetails';
 import EventDetailsPage from './EventDetailsPage';
 import AmmentiesDetails from './AmmentiesDetails';
-import CommonImages from '../CommonImages';
+// import CommonImages from '../CommonImages';
 
 export default function Corporate({ corporateCount }) {
   const { id } = useParams();

@@ -3081,6 +3081,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           }
           $scope.NewsupplierAddUpdateData.poc = poc;
           let data = {};
+          $scope.NewsupplierAddUpdateData.unit_primary_count = $scope.NewsupplierAddUpdateData.unit_primary_count?.toString();
+          $scope.NewsupplierAddUpdateData.unit_secondary_count = $scope.NewsupplierAddUpdateData.unit_secondary_count?.toString();
           data.data = $scope.NewsupplierAddUpdateData;
           AuthService.newAddUpdateSupplierSubmit(data)
             .then(function onSuccess(response) {
