@@ -58,9 +58,11 @@ function useFetchWrapper() {
       if (!response.ok) {
         if ([401, 403].includes(response.status) && auth[0]?.token) {
           // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
+          alert('Signature has expired')
           localStorage.removeItem('user');
           setAuth(null);
-          history.push('/account/login');
+          // history.push('/account/login');
+          window.location.href = '/#/logout';
         }
         if ([500].includes(response.status) && auth[0]?.token) {
           alertActions.error('500 Internal Server Error');

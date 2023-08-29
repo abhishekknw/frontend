@@ -102,7 +102,7 @@ export default function SideNavBar() {
                     </a>
                     <ul className="first-class-child first-class-ul">
                       <li className="first-class-li">
-                        <abbr href="/#/campaignDecisionBoard">Campaign Decision Board</abbr>
+                        <a href="/#/campaignDecisionBoard">Campaign Decision Board</a>
                       </li>
                       <li className="first-class-li">
                         <a href="/#/CampaignList">List Of Campaign</a>

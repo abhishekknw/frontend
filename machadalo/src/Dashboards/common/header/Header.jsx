@@ -11,9 +11,16 @@ import { useRecoilValue } from 'recoil';
 
 export default function MachadaloHeader(props) {
   const userInfo = useRecoilValue(userInformationAtom);
+  const settingDrop = [
+    { lable: 'View Logs', value: '/#/loginLogs' },
+    { lable: 'Change Password', value: '/#/changePassword' },
+    { lable: 'Logout', value: '/#/logout' },
+  ];
+  function redirect(page) {
+    window.location.href = `${page}`;
+  }
   return (
     <>
-      {/* <Box className="pt-1"> */}
       <Row>
         <Col sm={3}>
           <div className="d-flex align-items-center mobile-con-between">
@@ -26,11 +33,11 @@ export default function MachadaloHeader(props) {
           </div>
         </Col>
 
-        <Col sm={9} className="right-heder-content ">
+        <Col sm={9} className="right-heder-content">
           <div className="d-flex justify-content-end align-items-center mobile-con-between">
             <ul className="d-flex justify-content-end align-items-center mb-0 mobile-start">
               <li>
-                <a to="/#/manageCampaign/create">
+                <a href="/#/manageCampaign/create">
                   <span>
                     <BsFillHouseDoorFill />
                   </span>
@@ -41,17 +48,20 @@ export default function MachadaloHeader(props) {
                   <Dropdown.Toggle variant="success" id="setting-dropdown">
                     <BsGearFill />
                   </Dropdown.Toggle>
-
                   <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <a href="/#/loginLogs">View Logs</a>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <a href="/#/changePassword">Change Password</a>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <a href="/#/logout">Logout</a>
-                    </Dropdown.Item>
+                    {settingDrop.map((item, index) => {
+                      return (
+                        <Dropdown.Item
+                          key={index}
+                          eventKey={item?.value}
+                          onClick={(e) => {
+                            redirect(item?.value);
+                          }}
+                        >
+                          {item?.lable}
+                        </Dropdown.Item>
+                      );
+                    })}
                   </Dropdown.Menu>
                 </Dropdown>
               </li>
@@ -66,12 +76,11 @@ export default function MachadaloHeader(props) {
               <span>
                 <BsFillPersonFill />
               </span>
-              {userInfo?.first_name.toUpperCase() + ' ' + userInfo?.last_name.toUpperCase()}
+              {userInfo?.first_name?.toUpperCase() + ' ' + userInfo?.last_name?.toUpperCase()}
             </div>{' '}
           </div>
         </Col>
       </Row>
-      {/* </Box> */}
     </>
   );
 }
