@@ -27,9 +27,9 @@ export default function Gym() {
       case 'pricing':
         return <BasicPricingDetails />;
       case 'images':
-        return <CommonImages type={'Gym'} />;
+        return <CommonImages type={'Gym'} code={'GY'} />;
       default:
-        return <BasicDetailsCorporate />;
+        return <BasicDetailsGym />;
     }
   };
 
