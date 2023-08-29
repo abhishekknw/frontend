@@ -4,7 +4,7 @@ export const MACHADALO_DASHBOARD_ROUTE = '/r/dashboard/machadalo';
 export const CLIENT_DASHBOARD_ROUTE = '/r/dashboard/client';
 
 //Manage Supplier
-export const MANAGE_SUPPLIER = '/';
+export const MANAGE_SUPPLIER = '/r/manageSupplier/';
 export const DASHBOARD_SUPPLIER = '/dashboard';
 export const CREATE_SUPPLIER = '/create/:type';
 export const SUPPLIER_LOGIN = '/login';
