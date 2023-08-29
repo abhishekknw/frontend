@@ -13,7 +13,6 @@ import {
 } from '../constants/routes.constants';
 import SupplierDashboard from './SupplierDashboard';
 import CreateSupplier from './CreateSupplier';
-import MachadaloHeader from '../Dashboards/common/header/Header';
 import './styles/main.css';
 import './styles/login.css';
 import './styles/style.css';
@@ -25,22 +24,21 @@ import Corporate from './components/corporate/Corporate';
 import CommonHome from './components/CommonHome';
 import Gym from './components/gym/Gym';
 
-export default function ManageSupplier() {
+export default function ManageSupplier(props) {
+  const { match } = props;
+
   return (
     <>
-      <div className="container ">
-        <MachadaloHeader />
-      </div>
       <Switch>
-        <Route exact path={DASHBOARD_SUPPLIER} component={SupplierDashboard} />
-        <Route exact path={CREATE_SUPPLIER} component={CreateSupplier} />
-        <Route exact path={SOCIETY_HOME} component={SocietyHome} />
-        <Route exact path={SOCIETY_HOME_SEARCH} component={SocietyHome} />
-        <Route exact path={SOCIETY_SINGLE} component={Society} />
-        <Route exact path={COMMON_HOME} component={CommonHome} />
-        <Route exact path={CORPORATE_SINGLE} component={Corporate} />
-        <Route exact path={GYM_SINGLE} component={Gym} />
-        <Route exact path={COMMON_HOME_SEARCH} component={CommonHome} />
+        <Route exact path={match.path + DASHBOARD_SUPPLIER} component={SupplierDashboard} />
+        <Route exact path={match.path + CREATE_SUPPLIER} component={CreateSupplier} />
+        <Route exact path={match.path + SOCIETY_HOME} component={SocietyHome} />
+        <Route exact path={match.path + SOCIETY_HOME_SEARCH} component={SocietyHome} />
+        <Route exact path={match.path + SOCIETY_SINGLE} component={Society} />
+        <Route exact path={match.path + COMMON_HOME} component={CommonHome} />
+        <Route exact path={match.path + CORPORATE_SINGLE} component={Corporate} />
+        <Route exact path={match.path + GYM_SINGLE} component={Gym} />
+        <Route exact path={match.path + COMMON_HOME_SEARCH} component={CommonHome} />
       </Switch>
     </>
   );
