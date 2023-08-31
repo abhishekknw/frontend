@@ -88,7 +88,7 @@ class EntityCitywiseCount extends React.Component {
                 type="button"
                 className="btn btn-primary"
                 onClick={() => this.props.history.push(`/r/operations-dashboard/entity`)}
-                style={{ marginTop: '10px' }}
+                // style={{ marginTop: '0px' }}
               >
                 <i className="fa fa-arrow-left" aria-hidden="true" />
                 &nbsp; Back
