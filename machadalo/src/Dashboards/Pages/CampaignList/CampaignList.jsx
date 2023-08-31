@@ -82,6 +82,7 @@ export default function CampaignList() {
       title: 'Assigned Date',
       accessKey: 'created_at',
       sort: true,
+      thClassName: '123456',
       type: 'Date',
       action: function (row, index) {
         return <div>{dayjs(row?.created_at).format('DD-MM-YYYY')}</div>;

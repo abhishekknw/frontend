@@ -35,13 +35,13 @@ export default function ReactBootstrapTable(props) {
               return (
                 <th
                   key={index + header?.title}
-                  className={
+                  className={`${
                     header?.sort
                       ? `sortable ${
                           sorted == header?.accessKey ? `${reverse ? 'asc' : 'desc'}` : ''
                         }`
                       : ''
-                  }
+                  } ${header?.thClassName !== undefined ? header?.thClassName : ''}`}
                   onClick={(e) => {
                     setReverse(!reverse);
                     onSortData(header?.accessKey, header?.sort, header?.type);
