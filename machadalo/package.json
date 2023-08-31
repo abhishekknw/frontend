@@ -15,7 +15,6 @@
     "datatables.net-responsive": "^2.5.0",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.9",
-    "form-data": "^4.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "mapsort": "^1.0.8",
