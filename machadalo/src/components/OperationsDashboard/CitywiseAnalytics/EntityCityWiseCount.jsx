@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import TableHeader from '../../../Dashboards/Table/TableHeader/TableHeader';
 import ReactPagination from '../../../Dashboards/Pagination/Pagination';
 import { sortingTableData } from '../../../Dashboards/_actions/sorting.action';
+import { Integer } from 'read-excel-file';
 class EntityCitywiseCount extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +18,7 @@ class EntityCitywiseCount extends React.Component {
       headerValue: '',
       isDataFetched: false,
       isError: false,
-      sortingKey: 'city',
+      sortingKey: '',
       sortReverse: false,
       pagination: { page: 1, startIndex: 0, endIndex: 10 },
     };
@@ -63,10 +64,11 @@ class EntityCitywiseCount extends React.Component {
       pagination: obj,
     }));
   }
-  sortingData(tableData, accessKey, reverse) {
-    let newList = sortingTableData(tableData, accessKey, reverse);
+  sortingData(tableData, accessKey, reverse, type) {
+    let newList = sortingTableData(tableData, accessKey, reverse, type);
     this.setState((prevState) => ({
       sortReverse: !this.state.sortReverse,
+      sortingKey: accessKey,
     }));
     this.setState((prevState) => ({
       entityData: newList,
@@ -118,7 +120,24 @@ class EntityCitywiseCount extends React.Component {
                   >
                     City
                   </th>
-                  <th rowSpan="2">Count</th>
+                  <th
+                    rowSpan="2"
+                    className={`sortable ${
+                      this.state.sortingKey == 'count'
+                        ? `${this.state.sortReverse ? 'asc' : 'desc'}`
+                        : ''
+                    }`}
+                    onClick={(e) => {
+                      this.sortingData(
+                        this.state.entityData,
+                        'count',
+                        this.state.sortReverse,
+                        'Number'
+                      );
+                    }}
+                  >
+                    Count
+                  </th>
                   <th colSpan="3">Contact Name</th>
                   <th colSpan="3">Contact Number</th>
                   <th colSpan="3">Contact Number(Decision Maker)</th>
