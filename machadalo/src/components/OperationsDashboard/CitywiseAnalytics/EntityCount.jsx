@@ -26,10 +26,15 @@ class EntityCount extends React.Component {
   }
 
   componentDidMount() {
+   this.getEntityData()
+  }
+  getEntityData (){
     const { token } = this.props;
     request
       // .get(`${config.API_URL}/v0/ui/ops/supplier-summary/`)
-      .get(`${config.API_URL}/v0/ui/ops/get-supplier-summary-agencywise/`)
+      .get(
+        `${config.API_URL}/v0/ui/ops/get-supplier-summary-agencywise/?page=${this.state.pagination.page}`
+      )
       .set('Authorization', `JWT ${token}`)
       .then((resp) => {
         const { status, data } = resp.body;
@@ -58,6 +63,7 @@ class EntityCount extends React.Component {
     this.setState((prevState) => ({
       pagination: obj,
     }));
+    this.getEntityData();
   }
   sortingData(tableData, accessKey, reverse, type) {
     let newList = sortingTableData(tableData, accessKey, reverse, type);
