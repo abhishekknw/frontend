@@ -9,6 +9,7 @@ import Table from 'react-bootstrap/Table';
 // import '../../../Dashboards/Table/React-Bootstrap-table/react-bootstrap-table.css';
 import { Link } from 'react-router-dom';
 import ReactPagination from '../../../Dashboards/Pagination/Pagination';
+import { sortingTableData } from '../../../Dashboards/_actions/sorting.action';
 
 class EntityCount extends React.Component {
   constructor(props) {
@@ -17,6 +18,8 @@ class EntityCount extends React.Component {
       entityData: [],
       isDataFetched: false,
       isError: false,
+      sortingKey: '',
+      sortReverse: false,
       pagination: { page: 1, startIndex: 0, endIndex: 10 },
     };
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -56,6 +59,16 @@ class EntityCount extends React.Component {
       pagination: obj,
     }));
   }
+  sortingData(tableData, accessKey, reverse, type) {
+    let newList = sortingTableData(tableData, accessKey, reverse, type);
+    this.setState((prevState) => ({
+      sortReverse: !this.state.sortReverse,
+      sortingKey: accessKey,
+    }));
+    this.setState((prevState) => ({
+      entityData: newList,
+    }));
+  }
 
   render() {
     return (
@@ -75,8 +88,41 @@ class EntityCount extends React.Component {
             <Table responsive className={`react-bootstrap-custom-table v-middle`}>
               <thead>
                 <tr>
-                  <th rowSpan="2">Entity Type</th>
-                  <th rowSpan="2">Entity Count</th>
+                  <th
+                    rowSpan="2"
+                    className={`sortable ${
+                      this.state.sortingKey == 'supplier_type'
+                        ? `${this.state.sortReverse ? 'asc' : 'desc'}`
+                        : ''
+                    }`}
+                    onClick={(e) => {
+                      this.sortingData(
+                        this.state.entityData,
+                        'supplier_type',
+                        this.state.sortReverse
+                      );
+                    }}
+                  >
+                    Entity Type
+                  </th>
+                  <th
+                    rowSpan="2"
+                    className={`sortable ${
+                      this.state.sortingKey == 'count'
+                        ? `${this.state.sortReverse ? 'asc' : 'desc'}`
+                        : ''
+                    }`}
+                    onClick={(e) => {
+                      this.sortingData(
+                        this.state.entityData,
+                        'count',
+                        this.state.sortReverse,
+                        'Number'
+                      );
+                    }}
+                  >
+                    Entity Count
+                  </th>
                   <th rowSpan="2">Company</th>
                   <th colSpan="3">Contact Name</th>
                   <th colSpan="3">Contact Number</th>
