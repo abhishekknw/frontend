@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import './react-bootstrap-table.css';
-// import { SortingActions } from './sorting.action';
+import { sortingTableData } from '../../_actions/sorting.action';
 
 export default function ReactBootstrapTable(props) {
-  const { rowData, headerData } = props;
-  // const sorting = SortingActions();
+  const { rowData, headerData, sortingData } = props;
   const [tableData, setRowData] = useState(rowData);
-  const [sort, setSort] = useState(false);
+  const [sorted, setSort] = useState(false);
   const [reverse, setReverse] = useState(false);
 
-  const onSortData = (key, sort) => {
+  const onSortData = (key, sort, type) => {
     if (sort) {
       setSort(key);
-      // let sortData = sorting.sortTableData(tableData, key, reverse);
-      //       setRowData(sortData);
+      let newList = sortingTableData(tableData, key, reverse);
+      setRowData(newList);
+      if (sortingData) {
+        sortingData(key, reverse, type);
+      }
     } else {
       setSort(false);
       return 0;
@@ -35,12 +37,14 @@ export default function ReactBootstrapTable(props) {
                   key={index + header?.title}
                   className={
                     header?.sort
-                      ? `sortable ${sort == header?.accessKey ? `${reverse ? 'asc' : 'desc'}` : ''}`
+                      ? `sortable ${
+                          sorted == header?.accessKey ? `${reverse ? 'asc' : 'desc'}` : ''
+                        }`
                       : ''
                   }
                   onClick={(e) => {
                     setReverse(!reverse);
-                    onSortData(header?.accessKey, header?.sort);
+                    onSortData(header?.accessKey, header?.sort, header?.type);
                   }}
                 >
                   {header?.title}

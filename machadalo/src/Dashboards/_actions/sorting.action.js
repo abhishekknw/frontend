@@ -1,7 +1,8 @@
 
 const sortingTableData = (tableData, accessKey, reverse) => {
       let newList = [];
-      newList = tableData.sort((a, b) => {
+      let dataStep1 = tableData?.map((a) => ({ ...a }));
+      newList = dataStep1?.sort((a, b) => {
             let fa = a[accessKey]?.toLowerCase(),
                   fb = b[accessKey]?.toLowerCase();
 

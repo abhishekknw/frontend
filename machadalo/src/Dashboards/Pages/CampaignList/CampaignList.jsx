@@ -5,15 +5,16 @@ import TableHeader from '../../Table/TableHeader/TableHeader';
 import { CampaignListActions } from '../../_actions/CampaignPlanning/campaignList.action';
 import SearchBox from '../../common/search/SearchBox';
 import { CampaignListAtom, userInformationAtom } from '../../_states';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import ReactBootstrapTable from '../../Table/React-Bootstrap-table/ReactBootstrapTable';
 import { Button } from 'react-bootstrap';
 import './campaignList.css';
 import ReactPagination from '../../Pagination/Pagination';
 import dayjs from 'dayjs';
+import { sortingTableData } from '../../_actions/sorting.action';
 export default function CampaignList() {
   const CampaignListApi = CampaignListActions();
-  const CampaignList = useRecoilValue(CampaignListAtom);
+  const [CampaignList, setCampaignList] = useRecoilState(CampaignListAtom);
   const userInfo = useRecoilValue(userInformationAtom);
   const [filterData, setFilterData] = useState({
     to: userInfo?.id,
@@ -34,7 +35,7 @@ export default function CampaignList() {
     {
       title: 'Organisation/Account',
       accessKey: 'accountName',
-      sort: false,
+      sort: true,
       action: function (row, index) {
         return (
           <div>
@@ -80,7 +81,8 @@ export default function CampaignList() {
     {
       title: 'Assigned Date',
       accessKey: 'created_at',
-      sort: false,
+      sort: true,
+      type: 'Date',
       action: function (row, index) {
         return <div>{dayjs(row?.created_at).format('DD-MM-YYYY')}</div>;
       },
@@ -168,6 +170,12 @@ export default function CampaignList() {
     setFilterData(filter);
   };
 
+  const sortingData = (key, reverse, type) => {
+    console.log(key, reverse, type);
+    let newList = sortingTableData(CampaignList?.list, key, reverse);
+    setCampaignList({ ...CampaignList, list: newList });
+  };
+
   useEffect(() => {
     getCampaignList(filterData);
   }, []);
@@ -185,6 +193,7 @@ export default function CampaignList() {
           className="campain-table"
           rowData={CampaignList?.list}
           headerData={CampaignHeader}
+          sortingData={sortingData}
         />
       )}
       {CampaignList && CampaignList.list && CampaignList.count > 10 && (
