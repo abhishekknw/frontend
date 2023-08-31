@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import TableHeader from '../../../Dashboards/Table/TableHeader/TableHeader';
 import ReactPagination from '../../../Dashboards/Pagination/Pagination';
 import { sortingTableData } from '../../../Dashboards/_actions/sorting.action';
-import { Integer } from 'read-excel-file';
 class EntityCitywiseCount extends React.Component {
   constructor(props) {
     super(props);
