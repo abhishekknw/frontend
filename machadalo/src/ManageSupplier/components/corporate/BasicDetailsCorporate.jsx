@@ -7,6 +7,7 @@ export default function BasicDetailsCorporate() {
   const { id } = useParams();
   const fetchWrapper = useFetchWrapper();
   const [vendors, setVendors] = useState();
+  const [details, setDetails] = useState();
 
   const getOrganizations = () => {
     fetchWrapper.get(ANG_APIS.GET_ORGANIZATIONS).then((res) => {
@@ -16,7 +17,7 @@ export default function BasicDetailsCorporate() {
 
   const getDetails = () => {
     fetchWrapper.get(ANG_APIS.GET_LIST_GENERIC + id + `/?supplier_type_code=CP`).then((res) => {
-      console.log(res);
+      setDetails(res.data);
     });
   };
 
@@ -53,6 +54,8 @@ export default function BasicDetailsCorporate() {
             id="supplier_id"
             ng-model="corporateId"
             placeholder="Corporate ID"
+            value={details?.supplier_id}
+            disabled
             readonly
           />
         </div>
