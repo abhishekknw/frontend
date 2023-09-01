@@ -1,11 +1,11 @@
 import { useHistory, useParams } from 'react-router';
-import BasicDetailsGym from './BasicDetailsGym';
 import InventorySummary from './InventorySummary';
 import { useState } from 'react';
+import BasicDetailsSalon from './BasicDetailsSalon';
 import CommonImages from '../CommonImages';
 import CommonPricingDetails from '../CommonPricingDetails';
 
-export default function Gym() {
+export default function Salon() {
   const { id } = useParams();
   const history = useHistory();
   const [activeTab, setActiveTab] = useState('basic');
@@ -21,15 +21,15 @@ export default function Gym() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'basic':
-        return <BasicDetailsGym />;
+        return <BasicDetailsSalon />;
       case 'inventory':
         return <InventorySummary />;
       case 'pricing':
-        return <CommonPricingDetails code={'GY'} />;
+        return <CommonPricingDetails code={'SA'} />;
       case 'images':
-        return <CommonImages type={'Gym'} code={'GY'} />;
+        return <CommonImages type={'Salon'} code={'SA'} />;
       default:
-        return <BasicDetailsGym />;
+        return <BasicDetailsSalon />;
     }
   };
 

@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-import BasicDetailsCorporate from './BasicDetailsCorporate';
 import InventorySummary from './InventorySummary';
-import EventDetailsPage from './EventDetailsPage';
-import AmmentiesDetails from './AmmentiesDetails';
 import CommonImages from '../CommonImages';
+import BasicDetails from './BasicDetails';
 import CommonPricingDetails from '../CommonPricingDetails';
 
-export default function Corporate({ corporateCount }) {
+export default function Bus() {
   const { id } = useParams();
   const history = useHistory();
   const [activeTab, setActiveTab] = useState('basic');
@@ -23,19 +21,15 @@ export default function Corporate({ corporateCount }) {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'basic':
-        return <BasicDetailsCorporate />;
+        return <BasicDetails />;
       case 'inventory':
         return <InventorySummary />;
       case 'pricing':
-        return <CommonPricingDetails code={'CP'} />;
-      case 'events':
-        return <EventDetailsPage />;
-      case 'ammenties':
-        return <AmmentiesDetails />;
+        return <CommonPricingDetails code={'BU'} />;
       case 'images':
-        return <CommonImages type={'Corporate'} code={'CP'} />;
+        return <CommonImages type={'Bus'} code={'BU'} />;
       default:
-        return <BasicDetailsCorporate />;
+        return <BasicDetails />;
     }
   };
 
@@ -45,9 +39,9 @@ export default function Corporate({ corporateCount }) {
 
   return (
     <>
-      <div className="middle-section">
-        <div className="navbar-collapse tabBox" ng-controller="HeaderCtrl">
-          <ul className="nav nav-pills" ng-if="isSupplierSelected()">
+      <div class="middle-section">
+        <div class="navbar-collapse tabBox" ng-controller="HeaderCtrl">
+          <ul class="nav nav-pills" ng-if="isSupplierSelected()">
             <li
               className={`${isTabActive('basic') && 'active'}`}
               onClick={() => handleTabChange('basic')}
@@ -73,22 +67,6 @@ export default function Corporate({ corporateCount }) {
               </a>
             </li>
             <li
-              className={`${isTabActive('events') && 'active'}`}
-              onClick={() => handleTabChange('events')}
-            >
-              <a role="button" className="lipadding">
-                Events
-              </a>
-            </li>
-            <li
-              className={`${isTabActive('ammenties') && 'active'}`}
-              onClick={() => handleTabChange('ammenties')}
-            >
-              <a role="button" className="lipadding">
-                Ammenties
-              </a>
-            </li>
-            <li
               className={`${isTabActive('images') && 'active'}`}
               onClick={() => handleTabChange('images')}
             >
@@ -100,19 +78,20 @@ export default function Corporate({ corporateCount }) {
           <button
             onClick={() => history.goBack()}
             type="button"
-            className="smallBtn backbtn back_btn_list"
+            class="smallBtn backbtn back_btn_list"
             ng-click="back_to()"
           >
             Back
           </button>
         </div>
-        {/* <div className="error1">
-                <div className="error">{errorMsg}</div>
+        {/* <div class="error1">
+                <div class="error">{errorMsg}</div>
             </div> */}
-        <div className="dataShowBox" ui-view="">
+        <div class="dataShowBox" ui-view="">
           {renderTabContent()}
         </div>
       </div>
     </>
   );
 }
+Bus;
