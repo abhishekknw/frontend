@@ -6663,7 +6663,7 @@
       }
       $scope.CallTemplate = function (row) {
         $scope.CallModel = { 'destination_number': row.phone_number };
-        $scope.viewComments = row;
+        $scope.rowDataComments = row;
         $('#CallTemplate').modal('show');
       }
 
@@ -6684,9 +6684,9 @@
 
       $scope.AddUserComment = function (comment) {
         let addComment = {
-          "template_id": $scope.viewComments.template_id,
-          "phone_number": $scope.viewComments.phone_number,
-          "template_date": $scope.viewComments.template_date,
+          "template_id": $scope.rowDataComments.template_id,
+          "phone_number": $scope.rowDataComments.phone_number,
+          "template_date": $scope.rowDataComments.template_date,
           "comment": $scope.UserComment.comment,
           'sent_date': $scope.user_view.sent_date
         }
@@ -6701,7 +6701,7 @@
         $timeout(function () {
           let tempObj = $scope.transactionalTemplateUserData.map(obj =>
             obj.phone_number === addComment.phone_number ? obj : null);
-          $scope.viewComments = tempObj[0];
+          $scope.rowDataComments = tempObj[0];
           $scope.UserComment = {};
         }, 1000);
       }
