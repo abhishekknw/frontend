@@ -7,6 +7,49 @@ export default function BasicDetailsGym() {
   const { id } = useParams();
   const fetchWrapper = useFetchWrapper();
   const [vendors, setVendors] = useState();
+  const [details, setDetails] = useState();
+  const contactTypeOptions = [
+    {
+      value: 'owner',
+      label: 'Owner',
+      value: 'manager',
+      label: 'Manager',
+      value: 'ad_manager',
+      label: 'Advertising Manager',
+      value: 'br_manager',
+      label: 'Branding Manager',
+      value: 'other',
+      label: 'Other',
+    },
+  ];
+
+  const countryCodeOptions = [
+    {
+      value: '+91',
+      label: '+91',
+      value: '+10',
+      label: '+10',
+      value: '+92',
+      label: '+92',
+      value: '+11',
+      label: '+11',
+    },
+  ];
+
+  const relationshipOptions = [
+    {
+      value: 'deep',
+      label: 'Deep',
+      value: 'very deep',
+      label: 'Very Deep',
+      value: 'limited',
+      label: 'Limited',
+      value: 'acquaintance',
+      label: 'Acquaintance',
+      value: 'none',
+      label: 'None',
+    },
+  ];
 
   const getOrganizations = () => {
     fetchWrapper.get(ANG_APIS.GET_ORGANIZATIONS).then((res) => {
@@ -16,7 +59,7 @@ export default function BasicDetailsGym() {
 
   const getDetails = () => {
     fetchWrapper.get(ANG_APIS.GET_LIST_GENERIC + id + `/?supplier_type_code=GY`).then((res) => {
-      console.log(res);
+      setDetails(res.data);
     });
   };
 
@@ -49,14 +92,15 @@ export default function BasicDetailsGym() {
         <br />
         <form className="form-inline" role="form" name="gym_form" ng-submit="updateDetails()">
           <div className="form-group col-md-3" style={{ marginBottom: '20px' }}>
-            <label for="supplier_id">Corporate ID</label>
+            <label for="supplier_id">Gym ID</label>
             <br />
             <input
               type="text"
               className="form-control"
               id="supplier_id"
-              ng-model="corporateId"
-              placeholder="Corporate ID"
+              placeholder="Gym ID"
+              value={details?.supplier_id}
+              disabled
               readonly
             />
           </div>
@@ -107,6 +151,7 @@ export default function BasicDetailsGym() {
               id="locality"
               value={details?.master_data.address_supplier.area}
               placeholder="Locality"
+              disabled
               readonly
             />
           </div>
@@ -119,6 +164,7 @@ export default function BasicDetailsGym() {
               id="subarea"
               value={details?.master_data.address_supplier.subarea}
               placeholder="Sub Area"
+              disabled
               readonly
             />
           </div>
@@ -144,6 +190,7 @@ export default function BasicDetailsGym() {
               id="state"
               value={details?.master_data.address_supplier.state}
               placeholder="State"
+              disabled
               readonly
             />
           </div>
@@ -203,24 +250,30 @@ export default function BasicDetailsGym() {
             </label>
             <br />
 
-            <select className="form-control" ng-model="model.gym_type" required>
+            <select className="form-control" required>
               <option value="" disabled>
                 Select Gym Type
               </option>
-              <option ng-repeat="gym_type in gymtypelist" value="{{gym_type}}">
-                {/* {{ gym_type }} */}
+              <option ng-repeat="gym_type in gymtypelist" value="gym">
+                Gym
+              </option>
+              <option ng-repeat="gym_type in gymtypelist" value="club">
+                Club
               </option>
             </select>
           </div>
           <div className="form-group col-md-3" style={{ marginBottom: '20px' }}>
             <label>Chain/Individual</label>
             <br />
-            <select className="form-control" ng-model="model.gym_type_chain">
+            <select className="form-control">
               <option value="" disabled>
                 Select Chain/Individual{' '}
               </option>
-              <option ng-repeat="item1 in chainlist" value="{{item1}}">
-                {/* {{ item1 }} */}
+              <option ng-repeat="item1 in chainlist" value="chain">
+                Chain
+              </option>
+              <option ng-repeat="item1 in chainlist" value="individual">
+                Individual
               </option>
             </select>
           </div>
@@ -233,7 +286,7 @@ export default function BasicDetailsGym() {
               placeholder="Chain Origin"
               className="form-control"
               id="origin"
-              ng-model="model.chain_origin"
+              value={details?.chain_origin}
             />
           </div>
 
@@ -254,7 +307,7 @@ export default function BasicDetailsGym() {
               className="form-control"
               placeholder="Weekday Daily Footfall Count"
               id="footfall_day"
-              ng-model="model.master_data.unit_secondary_count"
+              value={details?.master_data.unit_secondary_count}
               onkeydown="javascript: return event.keyCode == 69 ? false : true"
             />
           </div>
@@ -266,7 +319,7 @@ export default function BasicDetailsGym() {
               className="form-control"
               placeholder="Weekend Daily Footfall Count"
               id="footfall_weekend"
-              ng-model="model.master_data.unit_primary_count"
+              value={details?.master_data.unit_primary_count}
               onkeydown="javascript: return event.keyCode == 69 ? false : true"
             />
           </div>
@@ -278,14 +331,14 @@ export default function BasicDetailsGym() {
               className="form-control"
               id="membership_count"
               placeholder="Membership Count"
-              ng-model="model.master_data.unit_tertiary_count"
+              value={details?.master_data.unit_tertiary_count}
               onkeydown="javascript: return event.keyCode == 69 ? false : true"
             />
           </div>
           <div className="form-group col-md-3" style={{ marginBottom: '20px' }}>
             <label>Gym Rating</label>
             <br />
-            <select className="form-control" ng-model="model.category">
+            <select className="form-control" value={details?.category}>
               <option value="" disabled>
                 Select Gym Rating{' '}
               </option>
@@ -297,7 +350,7 @@ export default function BasicDetailsGym() {
           <div className="form-group col-md-3" style={{ marginBottom: '20px' }}>
             <label>Locality Rating</label>
             <br />
-            <select className="form-control" ng-model="model.locality_rating">
+            <select className="form-control">
               <option value="" disabled>
                 Select Locality Rating{' '}
               </option>
@@ -314,7 +367,7 @@ export default function BasicDetailsGym() {
               placeholder="Machadalo Index"
               className="form-control"
               id="mdindex"
-              ng-model="model.machadalo_index"
+              value={details?.machadalo_index}
               onkeydown="javascript: return event.keyCode == 69 ? false : true"
               disabled
             />
@@ -336,7 +389,7 @@ export default function BasicDetailsGym() {
               type="text"
               placeholder="Current Advertising Media"
               className="form-control"
-              ng-model="model.advertising_media"
+              value={details?.advertising_media}
             />
           </div>
           <div className="form-group col-md-3" style={{ marginBottom: '20px' }}>
@@ -346,7 +399,7 @@ export default function BasicDetailsGym() {
               type="number"
               placeholder="Diet Chart"
               className="form-control"
-              ng-model="model.dietchart_price"
+              value={details?.dietchart_price}
               onkeydown="javascript: return event.keyCode == 69 ? false : true"
             />
           </div>
@@ -358,7 +411,7 @@ export default function BasicDetailsGym() {
               placeholder="Total Membership/Annum"
               className="form-control"
               id="membership"
-              ng-model="model.totalmembership_perannum"
+              value={details?.totalmembership_perannum}
               onkeydown="javascript: return event.keyCode == 69 ? false : true"
             />
           </div>
@@ -438,9 +491,13 @@ export default function BasicDetailsGym() {
                     <option value="" disabled="true">
                       Select Option
                     </option>
-                    <option ng-repeat="ctype in typelist" value="{{ctype}}">
-                      {/* {{ ctype }} */}
-                    </option>
+                    {contactTypeOptions.map((item, key) => {
+                      return (
+                        <option ng-repeat="ctype in typelist" value={item.value} key={key}>
+                          {item.label}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
                 <div className="form-group col-md-2" style={{ marginBottom: '20px' }}>
@@ -457,8 +514,11 @@ export default function BasicDetailsGym() {
                     <option value="" disabled="true">
                       Select Option
                     </option>
-                    <option ng-repeat="sal in salutationlist" value="{{sal}}">
-                      {/* {{ sal }} */}
+                    <option ng-repeat="sal in salutationlist" value="Mr.">
+                      Mr.
+                    </option>
+                    <option ng-repeat="sal in salutationlist" value="Ms.">
+                      Ms.
                     </option>
                   </select>
                 </div>
@@ -523,9 +583,13 @@ export default function BasicDetailsGym() {
                     <option value="" disabled="true">
                       Select Option
                     </option>
-                    <option ng-repeat="ccode in countrycodelist" value="{{ccode}}">
-                      {/* {{ ccode }} */}
-                    </option>
+                    {countryCodeOptions.map((item, key) => {
+                      return (
+                        <option ng-repeat="ccode in countrycodelist" value={item.value} key={key}>
+                          {item.label}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
                 <div className="form-group col-md-2" style={{ marginBottom: '20px' }}>
@@ -582,12 +646,17 @@ export default function BasicDetailsGym() {
                     <option value="" disabled="true">
                       Select Option
                     </option>
-                    <option
-                      ng-repeat="relationStatus in relationStatusOption"
-                      value="{{relationStatus}}"
-                    >
-                      {/* {{ relationStatus }} */}
-                    </option>
+                    {relationshipOptions.map((item, key) => {
+                      return (
+                        <option
+                          ng-repeat="relationStatus in relationStatusOption"
+                          value={item.value}
+                          key={key}
+                        >
+                          {item.label}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
                 <div className="form-group col-md-3" style={{ marginBottom: '20px' }}>

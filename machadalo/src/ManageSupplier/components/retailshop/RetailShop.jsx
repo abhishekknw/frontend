@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-import InventorySummary from './InventorySummary';
 import CommonImages from '../CommonImages';
 import BasicDetailsRetailshop from './BasicDetailsRetailshop';
 import CommonPricingDetails from '../CommonPricingDetails';
@@ -23,7 +22,7 @@ export default function RetailShop() {
       case 'basic':
         return <BasicDetailsRetailshop />;
       case 'inventory':
-        return <InventorySummary />;
+        return <CommonInventorySummary code={'RE'} />;
       case 'pricing':
         return <CommonPricingDetails code={'RE'} />;
       case 'images':

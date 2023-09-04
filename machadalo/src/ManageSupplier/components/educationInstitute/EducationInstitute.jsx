@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-import InventorySummary from './InventorySummary';
 import CommonImages from '../CommonImages';
 import BasicDetailsEducationInstitute from './BasicDetailsEducationInstitute';
 import CommonPricingDetails from '../CommonPricingDetails';
+import CommonInventorySummary from '../CommonInventory';
 
 export default function EducationInstitute() {
   const { id } = useParams();
@@ -23,7 +23,7 @@ export default function EducationInstitute() {
       case 'basic':
         return <BasicDetailsEducationInstitute />;
       case 'inventory':
-        return <InventorySummary />;
+        return <CommonInventorySummary code={'EI'} />;
       case 'pricing':
         return <CommonPricingDetails code={'EI'} />;
       case 'images':

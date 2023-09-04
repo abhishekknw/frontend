@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import BasicDetailsCorporate from './BasicDetailsCorporate';
-import InventorySummary from './InventorySummary';
 import EventDetailsPage from './EventDetailsPage';
 import AmmentiesDetails from './AmmentiesDetails';
 import CommonImages from '../CommonImages';
 import CommonPricingDetails from '../CommonPricingDetails';
+import CommonInventorySummary from '../CommonInventory';
 
 export default function Corporate({ corporateCount }) {
   const { id } = useParams();
@@ -25,7 +25,7 @@ export default function Corporate({ corporateCount }) {
       case 'basic':
         return <BasicDetailsCorporate />;
       case 'inventory':
-        return <InventorySummary />;
+        return <CommonInventorySummary code={'CP'} />;
       case 'pricing':
         return <CommonPricingDetails code={'CP'} />;
       case 'events':

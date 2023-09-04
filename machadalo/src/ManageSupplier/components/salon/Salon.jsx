@@ -1,9 +1,9 @@
 import { useHistory, useParams } from 'react-router';
-import InventorySummary from './InventorySummary';
 import { useState } from 'react';
 import BasicDetailsSalon from './BasicDetailsSalon';
 import CommonImages from '../CommonImages';
 import CommonPricingDetails from '../CommonPricingDetails';
+import CommonInventorySummary from '../CommonInventory';
 
 export default function Salon() {
   const { id } = useParams();
@@ -23,7 +23,7 @@ export default function Salon() {
       case 'basic':
         return <BasicDetailsSalon />;
       case 'inventory':
-        return <InventorySummary />;
+        return <CommonInventorySummary code={'SA'} />;
       case 'pricing':
         return <CommonPricingDetails code={'SA'} />;
       case 'images':

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-import InventorySummary from './InventorySummary';
 import CommonImages from '../CommonImages';
 import BasicDetailsHording from './BasicDetailsHording';
 import CommonPricingDetails from '../CommonPricingDetails';
+import CommonInventorySummary from '../CommonInventory';
 
 export default function Hording() {
   const { id } = useParams();
@@ -23,7 +23,7 @@ export default function Hording() {
       case 'basic':
         return <BasicDetailsHording />;
       case 'inventory':
-        return <InventorySummary />;
+        return <CommonInventorySummary code={'HO'} />;
       case 'pricing':
         return <CommonPricingDetails code={'HO'} />;
       case 'images':

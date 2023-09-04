@@ -1,9 +1,9 @@
 import { useHistory, useParams } from 'react-router';
 import BasicDetailsGym from './BasicDetailsGym';
-import InventorySummary from './InventorySummary';
 import { useState } from 'react';
 import CommonImages from '../CommonImages';
 import CommonPricingDetails from '../CommonPricingDetails';
+import CommonInventorySummary from '../CommonInventory';
 
 export default function Gym() {
   const { id } = useParams();
@@ -23,7 +23,7 @@ export default function Gym() {
       case 'basic':
         return <BasicDetailsGym />;
       case 'inventory':
-        return <InventorySummary />;
+        return <CommonInventorySummary code={'GY'} />;
       case 'pricing':
         return <CommonPricingDetails code={'GY'} />;
       case 'images':

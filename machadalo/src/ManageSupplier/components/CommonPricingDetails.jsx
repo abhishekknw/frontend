@@ -55,14 +55,14 @@ export default function CommonPricingDetails({ code }) {
                     <input
                       type="text"
                       ng-change="auto_change(row)"
-                      ng-model="row.suggested_supplier_price"
+                      value={row?.suggested_supplier_price}
                     />
                   </td>
                   <td>
                     <input
                       type="text"
                       ng-change="auto_change(row)"
-                      ng-model="row.actual_supplier_price"
+                      value={row?.actual_supplier_price}
                     />
                   </td>
                 </tr>

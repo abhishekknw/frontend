@@ -1,9 +1,9 @@
 import { useHistory, useParams } from 'react-router';
-import InventorySummary from './InventorySummary';
 import { useState } from 'react';
 import BasicDetailsBusshelter from './BasicDetailsBusshelter';
 import CommonPricingDetails from '../CommonPricingDetails';
 import CommonImages from '../CommonImages';
+import CommonInventorySummary from '../CommonInventory';
 
 export default function BusShelter() {
   const { id } = useParams();
@@ -23,7 +23,7 @@ export default function BusShelter() {
       case 'basic':
         return <BasicDetailsBusshelter />;
       case 'inventory':
-        return <InventorySummary />;
+        return <CommonInventorySummary code={'BS'} />;
       case 'pricing':
         return <CommonPricingDetails code={'BS'} />;
       case 'images':
