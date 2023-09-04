@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-import BasicDetailsCorporate from './BasicDetailsCorporate';
-import EventDetailsPage from './EventDetailsPage';
-import AmmentiesDetails from './AmmentiesDetails';
 import CommonImages from '../CommonImages';
+import BasicDetails from './BasicDetails';
 import CommonPricingDetails from '../CommonPricingDetails';
 import CommonInventorySummary from '../CommonInventory';
 
-export default function Corporate({ corporateCount }) {
+export default function Hospital() {
   const { id } = useParams();
   const history = useHistory();
   const [activeTab, setActiveTab] = useState('basic');
@@ -23,19 +21,15 @@ export default function Corporate({ corporateCount }) {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'basic':
-        return <BasicDetailsCorporate />;
+        return <BasicDetails />;
       case 'inventory':
-        return <CommonInventorySummary code={'CP'} />;
+        return <CommonInventorySummary code={'HL'} />;
       case 'pricing':
-        return <CommonPricingDetails code={'CP'} />;
-      case 'events':
-        return <EventDetailsPage />;
-      case 'ammenties':
-        return <AmmentiesDetails />;
+        return <CommonPricingDetails code={'HL'} />;
       case 'images':
-        return <CommonImages type={'Corporate'} code={'CP'} />;
+        return <CommonImages type={'Hospital'} code={'HL'} />;
       default:
-        return <BasicDetailsCorporate />;
+        return <BasicDetails />;
     }
   };
 
@@ -70,22 +64,6 @@ export default function Corporate({ corporateCount }) {
             >
               <a role="button" className="lipadding">
                 Pricing
-              </a>
-            </li>
-            <li
-              className={`${isTabActive('events') && 'active'}`}
-              onClick={() => handleTabChange('events')}
-            >
-              <a role="button" className="lipadding">
-                Events
-              </a>
-            </li>
-            <li
-              className={`${isTabActive('ammenties') && 'active'}`}
-              onClick={() => handleTabChange('ammenties')}
-            >
-              <a role="button" className="lipadding">
-                Ammenties
               </a>
             </li>
             <li

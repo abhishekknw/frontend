@@ -55,9 +55,9 @@ export default function SupplierDashboard() {
   const handleSocietyClick = () => {
     const existingIndex = searchState.findIndex((item) => item.supplier_type === 'RS');
     if (existingIndex !== -1) {
-      history.push(SOCIETY_HOME + '/' + searchState[existingIndex].state_name);
+      history.push(MANAGE_SUPPLIER + 'society/home/' + searchState[existingIndex].state_name);
     } else {
-      history.push(SOCIETY_HOME);
+      history.push(MANAGE_SUPPLIER + 'society/home');
     }
   };
 

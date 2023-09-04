@@ -1,11 +1,11 @@
 import { useHistory, useParams } from 'react-router';
-import BasicDetailsGym from './BasicDetailsGym';
 import { useState } from 'react';
-import CommonImages from '../CommonImages';
+import BasicDetailsBusshelter from './BasicDetailsBusshelter';
 import CommonPricingDetails from '../CommonPricingDetails';
+import CommonImages from '../CommonImages';
 import CommonInventorySummary from '../CommonInventory';
 
-export default function Gym() {
+export default function BusShelter() {
   const { id } = useParams();
   const history = useHistory();
   const [activeTab, setActiveTab] = useState('basic');
@@ -21,15 +21,15 @@ export default function Gym() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'basic':
-        return <BasicDetailsGym />;
+        return <BasicDetailsBusshelter />;
       case 'inventory':
-        return <CommonInventorySummary code={'GY'} />;
+        return <CommonInventorySummary code={'BS'} />;
       case 'pricing':
-        return <CommonPricingDetails code={'GY'} />;
+        return <CommonPricingDetails code={'BS'} />;
       case 'images':
-        return <CommonImages type={'Gym'} code={'GY'} />;
+        return <CommonImages type={'Bus Shelter'} code={'BS'} />;
       default:
-        return <BasicDetailsGym />;
+        return <BasicDetailsBusshelter />;
     }
   };
 
@@ -38,9 +38,9 @@ export default function Gym() {
   };
 
   return (
-    <div className="middle-section">
-      <div className="navbar-collapse tabBox" ng-controller="HeaderCtrl">
-        <ul className="nav nav-pills" ng-if="isSupplierSelected()">
+    <div class="middle-section">
+      <div class="navbar-collapse tabBox" ng-controller="HeaderCtrl">
+        <ul class="nav nav-pills" ng-if="isSupplierSelected()">
           <li
             className={`${isTabActive('basic') && 'active'}`}
             onClick={() => handleTabChange('basic')}
@@ -77,14 +77,14 @@ export default function Gym() {
         <button
           onClick={() => history.goBack()}
           type="button"
-          className="smallBtn backbtn back_btn_list"
+          class="smallBtn backbtn back_btn_list"
           ng-click="back_to()"
         >
           Back
         </button>
       </div>
-      <div className="error1">{/* <div className="error">{{ errorMsg }}</div> */}</div>
-      <div className="dataShowBox" ui-view="">
+      <div class="error1">{/* <div class="error">{{ errorMsg }}</div> */}</div>
+      <div class="dataShowBox" ui-view="">
         {renderTabContent()}
       </div>
     </div>

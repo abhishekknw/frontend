@@ -45,10 +45,10 @@ const SortingActions = () => {
       }
       return 0;
     });
-  }
+  };
   return {
     sortTableData,
-    sortingData
+    sortingData,
   };
 };
 

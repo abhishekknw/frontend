@@ -1,4 +1,25 @@
-export default function InventorySummary() {
+import { useParams } from 'react-router';
+import { useFetchWrapper } from '../../Dashboards/_helpers/fetch-wrapper';
+import { useEffect, useState } from 'react';
+import { ANG_APIS } from '../api.constants';
+
+export default function CommonInventorySummary({ code }) {
+  const { id } = useParams();
+  const fetchWrapper = useFetchWrapper();
+  const [data, setData] = useState([]);
+
+  const getPricing = () => {
+    fetchWrapper
+      .get(ANG_APIS.GET_SOCIETY_DETAILS + id + `/inventory_summary/?supplierTypeCode=` + code)
+      .then((res) => {
+        setData(res.inventory);
+      });
+  };
+
+  useEffect(() => {
+    getPricing();
+  }, []);
+
   return (
     <div class="tabContentBox">
       <form name="isForm" ng-submit="create()" role="form">
@@ -9,16 +30,14 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="a4"
-              value="A4"
-              ng-model="model.nb_A4_allowed"
+              value={data?.nb_A4_allowed}
               ng-disabled="oldInventory.nb_A4_allowed==true"
             />{' '}
             A4 Poster Allowed
             <input
               type="checkbox"
               name="a3"
-              value="A3"
-              ng-model="model.nb_A3_allowed"
+              value={data?.nb_A3_allowed}
               ng-disabled="oldInventory.nb_A3_allowed==true"
             />{' '}
             A3 Poster Allowed
@@ -29,16 +48,14 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="a4"
-              value="A4"
-              ng-model="model.poster_allowed_lift_A4"
+              value={data?.poster_allowed_lift_A4}
               ng-disabled="oldInventory.poster_allowed_lift_A4==true"
             />{' '}
             A4 Poster Allowed
             <input
               type="checkbox"
               name="a3"
-              value="A3"
-              ng-model="model.poster_allowed_lift_A3"
+              value={data?.poster_allowed_lift_A3}
               ng-disabled="oldInventory.poster_allowed_lift_A3==true"
             />{' '}
             A3 Poster Allowed
@@ -50,24 +67,21 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="small"
-              value="Small"
-              ng-model="model.standee_small"
+              value={data?.standee_small}
               ng-disabled="oldInventory.standee_small==true"
             />{' '}
             Small
             <input
               type="checkbox"
               name="medium"
-              value="Medium"
-              ng-model="model.standee_medium"
+              value={data?.standee_medium}
               ng-disabled="oldInventory.standee_medium==true"
             />{' '}
             Medium
             <input
               type="checkbox"
               name="large"
-              value="large"
-              ng-model="model.standee_large"
+              value={data?.standee_large}
               ng-disabled="oldInventory.standee_large==true"
             />{' '}
             Large
@@ -79,32 +93,28 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="stall_canopy"
-              value="true"
-              ng-model="model.stall_canopy"
+              value={data?.stall_canopy}
               ng-disabled="oldInventory.stall_canopy==true"
             />{' '}
             Canopy
             <input
               type="checkbox"
               name="stall_small"
-              value="true"
-              ng-model="model.stall_small"
+              value={data?.stall_small}
               ng-disabled="oldInventory.stall_small==true"
             />{' '}
             Small
             <input
               type="checkbox"
               name="stall_large"
-              value="true"
-              ng-model="model.stall_large"
+              value={data?.stall_large}
               ng-disabled="oldInventory.stall_large==true"
             />{' '}
             Large
             <input
               type="checkbox"
               name="stall_customize"
-              value="true"
-              ng-model="model.stall_customize"
+              value={data?.stall_customize}
               ng-disabled="oldInventory.stall_customize==true"
             />{' '}
             Customize
@@ -115,16 +125,14 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="cd_standard"
-              value="true"
-              ng-model="model.cd_standard"
+              value={data?.cd_standard}
               ng-disabled="oldInventory.cd_standard==true"
             />
             Standard
             <input
               type="checkbox"
               name="cd_premium"
-              value="true"
-              ng-model="model.cd_premium"
+              value={data?.cd_premium}
               ng-disabled="oldInventory.cd_premium==true"
             />
             Premium
@@ -135,24 +143,21 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="medium"
-              value="true"
-              ng-model="model.mailbox_allowed"
+              value={data?.mailbox_allowed}
               ng-disabled="oldInventory.mailbox_allowed==true"
             />{' '}
             Mailbox Allowed
             <input
               type="checkbox"
               name="d2d"
-              value="true"
-              ng-model="model.d2d_allowed"
+              value={data?.d2d_allowed}
               ng-disabled="oldInventory.d2d_allowed==true"
             />{' '}
             Door-to-Door Allowed
             <input
               type="checkbox"
               name="small"
-              value="true"
-              ng-model="model.flier_lobby_allowed"
+              value={data?.flier_lobby_allowed}
               ng-disabled="oldInventory.flier_lobby_allowed==true"
             />{' '}
             At Lobby(Through Watchman) Allowed
@@ -164,32 +169,28 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="bus_back"
-              value="true"
-              ng-model="model.bus_back"
+              value={data?.bus_back}
               ng-disabled="oldInventory.bus_back==true"
             />{' '}
             Bus Back
             <input
               type="checkbox"
               name="bus_left"
-              value="true"
-              ng-model="model.bus_left"
+              value={data?.bus_left}
               ng-disabled="oldInventory.bus_left==true"
             />{' '}
             Bus Right
             <input
               type="checkbox"
               name="bus_right"
-              value="true"
-              ng-model="model.bus_right"
+              value={data?.bus_right}
               ng-disabled="oldInventory.bus_right==true"
             />{' '}
             Bus Left
             <input
               type="checkbox"
               name="bus_wrap"
-              value="true"
-              ng-model="model.bus_wrap"
+              value={data?.bus_wrap}
               ng-disabled="oldInventory.bus_wrap==true"
             />{' '}
             Bus Wrap
@@ -201,16 +202,14 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="bus_shelter"
-              value="true"
-              ng-model="model.bus_shelter"
+              value={data?.bus_shelter}
               ng-disabled="oldInventory.bus_wrap==true"
             />{' '}
             Bus Shelter Standard
             <input
               type="checkbox"
               name="bus_shelter_lit"
-              value="true"
-              ng-model="model.bus_shelter_lit"
+              value={data?.bus_shelter_lit}
               ng-disabled="oldInventory.bus_wrap==true"
             />{' '}
             Bus Shelter Lit Standard
@@ -222,16 +221,14 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="hoarding"
-              value="true"
-              ng-model="model.hoarding"
+              value={data?.hoarding}
               ng-disabled="oldInventory.hoarding==true"
             />{' '}
             Hoarding
             <input
               type="checkbox"
               name="hoarding_lit"
-              value="true"
-              ng-model="model.hoarding_lit"
+              value={data?.hoarding_lit}
               ng-disabled="oldInventory.hoarding_lit==true"
             />{' '}
             Hoarding Lit
@@ -243,24 +240,21 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="banner_small"
-              value="true"
-              ng-model="model.banner_small"
+              value={data?.banner_small}
               ng-disabled="oldInventory.banner_small==true"
             />{' '}
             Banner Small
             <input
               type="checkbox"
               name="banner_medium"
-              value="true"
-              ng-model="model.banner_medium"
+              value={data?.banner_medium}
               ng-disabled="oldInventory.banner_medium==true"
             />{' '}
             Banner Medium
             <input
               type="checkbox"
               name="banner_large"
-              value="true"
-              ng-model="model.banner_large"
+              value={data?.banner_large}
               ng-disabled="oldInventory.banner_large==true"
             />{' '}
             Banner Large
@@ -272,8 +266,7 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="sun_board_allowed"
-              value="true"
-              ng-model="model.sun_board_allowed"
+              value={data?.sun_board_allowed}
               ng-disabled="oldInventory.sun_board_allowed==true"
             />{' '}
             Normal
@@ -285,8 +278,7 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="floor_inventory"
-              value="true"
-              ng-model="model.floor_inventory"
+              value={data?.floor_inventory}
               ng-disabled="oldInventory.floor_inventory==true"
             />{' '}
             Standard
@@ -299,8 +291,7 @@ export default function InventorySummary() {
               type="checkbox"
               name="wall_inventory"
               checked="model.wall_inventory"
-              value="true"
-              ng-model="model.wall_inventory"
+              value={data?.wall_inventory}
               ng-disabled="oldInventory.wall_inventory==true"
             />{' '}
             Standard
@@ -312,8 +303,7 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="table_inventory"
-              value="true"
-              ng-model="model.table_inventory"
+              value={data?.table_inventory}
               ng-disabled="oldInventory.table_inventory==true"
             />{' '}
             Standard
@@ -325,8 +315,7 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="tent_card"
-              value="true"
-              ng-model="model.tent_card"
+              value={data?.tent_card}
               ng-disabled="oldInventory.tent_card==true"
             />{' '}
             Standard
@@ -338,8 +327,7 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="ceiling_inventory"
-              value="true"
-              ng-model="model.ceiling_inventory"
+              value={data?.ceiling_inventory}
               ng-disabled="oldInventory.ceiling_inventory==true"
             />{' '}
             Standard
@@ -351,8 +339,7 @@ export default function InventorySummary() {
             <input
               type="checkbox"
               name="billing_inventory"
-              value="true"
-              ng-model="model.billing_inventory"
+              value={data?.billing_inventory}
               ng-disabled="oldInventory.billing_inventory==true"
             />{' '}
             Standard
@@ -363,7 +350,7 @@ export default function InventorySummary() {
             <input
               type="radio"
               name="gateway_arch"
-              ng-model="model.lit"
+              value={data?.lit}
               ng-value="true"
               ng-click="checkGateWayArchStatus('lit')"
             />{' '}
@@ -371,7 +358,7 @@ export default function InventorySummary() {
             <input
               type="radio"
               name="gateway_arch"
-              ng-model="model.non_lit"
+              value={data?.non_lit}
               ng-value="true"
               ng-click="checkGateWayArchStatus('non_lit')"
             />{' '}
