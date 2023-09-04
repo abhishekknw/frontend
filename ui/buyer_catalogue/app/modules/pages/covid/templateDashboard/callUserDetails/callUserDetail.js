@@ -264,9 +264,9 @@ angular
             }
           }
 
-          $scope.showHideIntervene = function () {
+          $scope.showHideIntervene = function (data) {
             $('#onCallUserDetails').modal('hide');
-            $scope.interveneDashboard = { ...$scope.interveneDashboard, show: !$scope.interveneDashboard.show };
+            $scope.interveneDashboard = { ...$scope.interveneDashboard, show: !$scope.interveneDashboard.show, data: data };
           }
         }
       }
