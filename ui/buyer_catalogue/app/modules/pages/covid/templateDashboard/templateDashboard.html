@@ -179,10 +179,16 @@
                             </select>
                           </div>
                           <div>
-                            <select ng-change="templateDetail(templateDetailsFilters)"
+                            <select ng-change="onSelectTemplateType(templateDetailsFilters)"
                               ng-model="templateDetailsFilters.templateType">
                               <option value="">Select Type</option>
                               <option value="{{value.type}}" ng-repeat="value in template_type_sub_type">{{value.type}}</option>
+                            </select>
+                          </div>
+                          <div>
+                            <select ng-change="templateDetail(templateDetailsFilters)" ng-model="templateDetailsFilters.templateSubType">
+                              <option value="">Select Sub Type</option>
+                              <option value="{{value}}" ng-repeat="value in template_sub_type_list">{{value}}</option>
                             </select>
                           </div>
                           <div class="add-button">

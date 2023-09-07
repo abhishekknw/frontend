@@ -64,7 +64,7 @@
       $scope.UserComment = {};
       $scope.CallModel = {};
       $scope.interveneDashboard = { show: false, data: '' };
-      $scope.templateDetailsFilters = { pageNumber: 0, search: '', status: '', campaign: '' ,templateType:''}
+      $scope.templateDetailsFilters = { pageNumber: 0, search: '', status: '', campaign: '', templateType: '', templateSubType: '' }
 
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
@@ -698,6 +698,7 @@
           filterObj.campaign = "";
         }
         if(!filterObj.templateType) filterObj.templateType = "";
+        if (!filterObj.templateSubType) filterObj.templateSubType = "";
         templateDashboardService.getTemplateTabData(filterObj)
           .then(function onSuccess(response) {
             $scope.templateDetailData = response.data.data.rows;
@@ -7109,8 +7110,19 @@
 
       $scope.getTemplateSubType = function (tempType) {
         $scope.template_sub_type_list = [];
-        $scope.template_sub_type_list = $scope.template_type_sub_type.find(x => x.type == tempType).sub_type;
+        try {
+          $scope.template_sub_type_list = $scope.template_type_sub_type.find(x => x.type == tempType).sub_type;
+        } catch {
+          $scope.template_sub_type_list = [];
+        }
+
       }
+      $scope.onSelectTemplateType = function (templateDetailsFilters) {
+        $scope.templateDetailsFilters.templateSubType = "";
+        $scope.getTemplateSubType(templateDetailsFilters.templateType);
+        $scope.templateDetail(templateDetailsFilters)
+      }
+
     })
 })();
 app.factory('Excel', function ($window) {
