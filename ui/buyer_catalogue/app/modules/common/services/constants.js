@@ -360,7 +360,7 @@ hotnessLead:{
 clientStatus:{'Accepted':'Accepted',
 'Decision Pending':'Decision Pending',
 'Decline':'Decline'},
-designation_bus_shelter : ["Store Manager","Floor Manager","Category Manager","Other Employees","Accounts","Purchase Manager","Operations Manager","Inventory Manager","Admin-Desk"],
+designation_bus_shelter : ["Store Manager","Floor Manager","Category Manager","Other Employees","Accounts","Purchase Manager","Operations Manager","Inventory Manager","Admin-Desk",'Owner','Founder','CEO','Director'],
 designation_gantry:["Principal", "Vice – Principal", "Admin", "Vice-chancellor", "Chancellor", "Director", "HOD", "Dean student affairs", "Cultural - Department", "Sports Department", "Placement Officer", "CEO", "Training Department", "Vice-chancellors Office", "CEO Office", "HR-Manager", "HR-Head", "Registrar", "Registrar-Office", "Center Coordinator", "Center Head", "Trainers/Teachers"], 
 designation_saloon : ["Owner","Manager","Advertising Manager","Branding Manager"],
 designation_corporate : ["Owner","Manager","Advertising Manager","Branding Manager","Admin","Supervisor","Superintendent","Hr-Manager","Hr-Head","Security Manager"],

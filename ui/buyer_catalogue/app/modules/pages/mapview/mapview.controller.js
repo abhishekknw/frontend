@@ -2653,7 +2653,8 @@ angular.module('catalogueApp')
     $scope.society_ids = {}
     mapViewService.getSocietyIds()
       .then(function onSuccess(response, status) {
-        $scope.society_ids = response.data.society_ids;
+        // $scope.society_ids = response.data.society_ids;
+        $scope.society_ids = response.data.supplier_ids
         $scope.minlength = 0;
         $scope.maxlength = $scope.society_ids.length - 1;
         for (var i = 0; i <= $scope.maxlength; i++) {

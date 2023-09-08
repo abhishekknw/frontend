@@ -264,9 +264,10 @@ angular
             }
           }
 
-          $scope.showHideIntervene = function () {
+          $scope.showHideIntervene = function (data) {
+            data = data ? data : { 'phone_number': $scope.formData.phone_number };
             $('#onCallUserDetails').modal('hide');
-            $scope.interveneDashboard = { ...$scope.interveneDashboard, show: !$scope.interveneDashboard.show };
+            $scope.interveneDashboard = { ...$scope.interveneDashboard, show: !$scope.interveneDashboard.show, data: data };
           }
         }
       }

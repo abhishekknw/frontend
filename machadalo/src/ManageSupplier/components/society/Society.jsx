@@ -3,7 +3,6 @@ import { useHistory, useParams } from 'react-router';
 import BasicDetails from './BasicDetails';
 import SupplierRelationship from './SupplierRelationship';
 import InventorySummary from './InventorySummary';
-import BasicPricingDetails from './BasicPricingDetails';
 import FlatDetails from './FlatDetails';
 import SocietyInventoryDetails from './SocietyInventoryDetails';
 import PosterDetails from './PosterDetails';
@@ -13,7 +12,8 @@ import StallDetails from './StallDetails';
 import SocietyAdditionalDetails from './SocietyAdditionalDetails';
 import EventDetailsPage from './EventDetailsPage';
 import AmmentiesDetails from './AmmentiesDetails';
-// import CommonImages from '../CommonImages';
+import CommonImages from '../CommonImages';
+import CommonPricingDetails from '../CommonPricingDetails';
 
 export default function Society() {
   const { id } = useParams();
@@ -37,7 +37,7 @@ export default function Society() {
       case 'inventory':
         return <InventorySummary />;
       case 'pricing':
-        return <BasicPricingDetails />;
+        return <CommonPricingDetails code={'RS'} />;
       case 'flats':
         return <FlatDetails />;
       case 'towers':

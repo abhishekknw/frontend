@@ -49,7 +49,8 @@ angular.module('catalogueApp')
         let url = "v0/ui/template/view-template/?next_page=" + filters.pageNumber + 
         "&search=" + filters.search + "&status=" + filters.status + 
         "&campaign_id=" + filters.campaign +
-        "&template_type=" + filters.templateType;
+          "&template_type=" + filters.templateType +
+          "&template_sub_type=" + filters.templateSubType;
         return machadaloHttp.get(url);
       }
       DashboardService.createTemplate = function (data, checkForUpdate) {

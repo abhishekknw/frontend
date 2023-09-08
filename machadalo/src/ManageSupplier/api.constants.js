@@ -18,6 +18,9 @@ export const ANG_APIS = {
   GET_AREA: 'v0/ui/locations/',
   CREATE_SUPPLIER: 'v0/ui/supplier/generate_id/',
   GET_IMAGE_MAPPING: 'v0/ui/image-mapping/?supplier_id=',
+  GET_PRICING: 'v0/ui/society/',
+  UPDATE_PRICING: 'v0/ui/society/',
+  GET_CORPORATE_AMMENITY: 'v0/ui/website/supplier-amenity/?supplier_id=',
 
   GET_SOCIETY_DETAILS: 'v0/ui/society/',
   GET_SUPPLIER_RELATIONSHIP:

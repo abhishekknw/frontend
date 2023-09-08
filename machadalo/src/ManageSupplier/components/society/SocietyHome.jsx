@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SOCIETY } from '../../../constants/routes.constants';
+import { MANAGE_SUPPLIER, SOCIETY } from '../../../constants/routes.constants';
 import { useHistory, useParams } from 'react-router';
 import { useFetchWrapper } from '../../../Dashboards/_helpers/fetch-wrapper';
 import { ANG_APIS } from '../../api.constants';
@@ -65,7 +65,7 @@ export default function SocietyHome() {
   }, [pageNumber]);
 
   const handleSupplierClick = (id) => {
-    history.push(`${SOCIETY}/${id}`);
+    history.push(`${MANAGE_SUPPLIER}society/${id}`);
   };
 
   const handlePageChange = (page) => {
