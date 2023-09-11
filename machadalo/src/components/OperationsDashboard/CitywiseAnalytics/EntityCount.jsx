@@ -1,151 +1,144 @@
-import React from 'react';
-import request from 'superagent';
-import config from '../../../config';
-import InnerGrid from '../../InnerGrid';
-import getEntityCount from './EntityCountGridConfig';
+// import React from 'react';
+import React, { useEffect, useState } from 'react';
 import LoadingWrapper from '../../Error/LoadingWrapper';
 import TableHeader from '../../../Dashboards/Table/TableHeader/TableHeader';
 import Table from 'react-bootstrap/Table';
-// import '../../../Dashboards/Table/React-Bootstrap-table/react-bootstrap-table.css';
 import { Link } from 'react-router-dom';
 import ReactPagination from '../../../Dashboards/Pagination/Pagination';
+import { sortingTableData } from '../../../Dashboards/_actions/sorting.action';
+import { useFetchWrapper } from '../../../Dashboards/_helpers/fetch-wrapper';
 
-class EntityCount extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      entityData: [],
-      isDataFetched: false,
-      isError: false,
-      pagination: { page: 1, startIndex: 0, endIndex: 10 },
-    };
-    this.handlePageChange = this.handlePageChange.bind(this);
-  }
+export default function EntityCount() {
+  const fetchWrapper = useFetchWrapper();
+  const [entityData, setEntityData] = useState([]);
+  const [isDataFetched, setIsDataFetched] = useState(false);
+  const [paginationData, setPagination] = useState({
+    page: 0,
+    total_count: 0,
+  });
+  const [sorting, setSorting] = useState({ sortingKey: '', sortReverse: false });
 
-  componentDidMount() {
-    const { token } = this.props;
-    request
-      // .get(`${config.API_URL}/v0/ui/ops/supplier-summary/`)
-      .get(`${config.API_URL}/v0/ui/ops/get-supplier-summary-agencywise/`)
-      .set('Authorization', `JWT ${token}`)
-      .then((resp) => {
-        const { status, data } = resp.body;
-        if (status) {
-          const entityData = Object.keys(data).map((key, index) => ({
-            ...data[key],
-            type: key,
-            key: index,
-          }));
-          this.setState({
-            entityData,
-            isDataFetched: true,
-          });
+  const getEntityData = async (filters) => {
+    await fetchWrapper
+      .get(`v0/ui/ops/get-supplier-summary-agencywise/?next_page=${filters?.page + 1}`)
+      .then((res) => {
+        if (res.status) {
+          setEntityData(res?.data?.list);
+          setPagination({ page: filters?.page, total_count: res?.data?.total_count });
+          setIsDataFetched(true);
         }
       })
       .catch((ex) => {
         console.log('Failed to get data');
-        this.setState({ isError: true, isDataFetched: true });
+        setIsDataFetched(true);
       });
-  }
-  handlePageChange(event) {
-    let page = event.selected;
-    let start = page * 10;
-    let end = start + 10;
-    let obj = { page: page, startIndex: start, endIndex: end };
-    this.setState((prevState) => ({
-      pagination: obj,
-    }));
-  }
+  };
 
-  render() {
-    return (
-      <div style={{ marginTop: '1em' }}>
-        <TableHeader headerValue="Entity Report" />
-        {this.state.isDataFetched ? (
-          <>
-            {/* <InnerGrid
-              columns={getEntityCount()}
-              data={this.state.entityData}
-              exportCsv={false}
-              search={false}
-              pagination={false}
-              headerValue="Entity Report"
-              backgroundColor="#c7c7c7c9"
-            /> */}
-            <Table responsive className={`react-bootstrap-custom-table v-middle`}>
-              <thead>
-                <tr>
-                  <th rowSpan="2">Entity Type</th>
-                  <th rowSpan="2">Entity Count</th>
-                  <th rowSpan="2">Company</th>
-                  <th colSpan="3">Contact Name</th>
-                  <th colSpan="3">Contact Number</th>
-                </tr>
-                <tr>
-                  <th>Filled(Unique)</th>
-                  <th>Total Filled</th>
-                  <th>Not Filled</th>
-                  <th>Filled(Unique)</th>
-                  <th>Total Filled</th>
-                  <th>Not Filled</th>
-                </tr>
-              </thead>
-              <tbody id="rows">
-                {this.state.entityData
-                  ?.slice(this.state.pagination.startIndex, this.state.pagination.endIndex)
-                  .map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>
-                          {item.count > 0 ? (
-                            <Link
-                              style={{ color: '#3e59e3' }}
-                              to={{
-                                pathname: `city/${item?.supplier_type}/`,
-                                state: {
-                                  supplier_type: item?.supplier_type,
-                                  name: item?.supplier_type,
-                                },
-                              }}
-                            >
-                              {' '}
-                              {item.supplier_type}
-                            </Link>
-                          ) : (
-                            item.supplier_type
-                          )}
-                        </td>
-                        <td>{item.count}</td>
-                        <td>{item.company}</td>
-                        {index == 0 && (
-                          <td colSpan={6} rowSpan={10} style={{ background: '#eee' }}>
-                            Comming Soon
-                          </td>
-                        )}
+  const handlePageChange = (event) => {
+    setIsDataFetched(false);
+    let obj = { ...paginationData, page: event.selected };
+    getEntityData(obj);
+  };
+  const sortingData = (tableData, accessKey, reverse, type) => {
+    let newList = sortingTableData(tableData, accessKey, reverse, type);
+    setSorting({ sortReverse: !sorting.sortReverse, sortingKey: accessKey });
+    setEntityData(newList);
+  };
 
-                        {/* <td>Comming Soon</td>
-                      <td>Comming Soon</td>
-                      <td>Comming Soon</td>
-                      <td>Comming Soon</td>
-                      <td>Comming Soon</td> */}
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </Table>
-            <ReactPagination
-              pageNo={this.state.pagination.page - 1}
-              pageSize={10}
-              totalItems={this.state.entityData.length}
-              onPageChange={this.handlePageChange}
-            />
-          </>
-        ) : (
-          <LoadingWrapper />
-        )}
-      </div>
-    );
-  }
+  useEffect(() => {
+    getEntityData(paginationData);
+  }, []);
+
+  return (
+    <div style={{ marginTop: '1em' }}>
+      <TableHeader headerValue="Entity Report" />
+      {isDataFetched ? (
+        <>
+          <Table responsive className={`react-bootstrap-custom-table v-middle`}>
+            <thead>
+              <tr>
+                <th
+                  rowSpan="2"
+                  className={`sortable ${
+                    sorting.sortingKey == 'supplier_type'
+                      ? `${sorting.sortReverse ? 'asc' : 'desc'}`
+                      : ''
+                  }`}
+                  onClick={(e) => {
+                    sortingData(entityData, 'supplier_type', sorting.sortReverse);
+                  }}
+                >
+                  Entity Type
+                </th>
+                <th
+                  rowSpan="2"
+                  className={`sortable ${
+                    sorting.sortingKey == 'count' ? `${sorting.sortReverse ? 'asc' : 'desc'}` : ''
+                  }`}
+                  onClick={(e) => {
+                    sortingData(entityData, 'count', sorting.sortReverse, 'Number');
+                  }}
+                >
+                  Entity Count
+                </th>
+                <th rowSpan="2">Company</th>
+                <th colSpan="3">Contact Name</th>
+                <th colSpan="3">Contact Number</th>
+              </tr>
+              <tr>
+                <th>Filled(Unique)</th>
+                <th>Total Filled</th>
+                <th>Not Filled</th>
+                <th>Filled(Unique)</th>
+                <th>Total Filled</th>
+                <th>Not Filled</th>
+              </tr>
+            </thead>
+            <tbody id="rows">
+              {entityData?.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>
+                      {item.count > 0 ? (
+                        <Link
+                          style={{ color: '#3e59e3' }}
+                          to={{
+                            pathname: `city/${item?.supplier_type}/`,
+                            state: {
+                              supplier_type: item?.supplier_type,
+                              name: item?.supplier_type,
+                            },
+                          }}
+                        >
+                          {' '}
+                          {item.supplier_type}
+                        </Link>
+                      ) : (
+                        item.supplier_type
+                      )}
+                    </td>
+                    <td>{item.count}</td>
+                    <td>{item.company}</td>
+                    {index == 0 && (
+                      <td colSpan={6} rowSpan={10} style={{ background: '#eee' }}>
+                        Comming Soon
+                      </td>
+                    )}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+          <ReactPagination
+            pageNo={paginationData?.page}
+            pageSize={10}
+            totalItems={paginationData?.total_count}
+            onPageChange={handlePageChange}
+          />
+        </>
+      ) : (
+        <LoadingWrapper />
+      )}
+    </div>
+  );
 }
-
-export default EntityCount;

@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import { DatetimePickerTrigger } from 'rc-datetime-picker';
 import Select from 'react-select';
 import moment from 'moment';
-import FormData from 'form-data';
+// import FormData from 'form-data';
 import { toastr } from 'react-redux-toastr';
 
 import './index.css';

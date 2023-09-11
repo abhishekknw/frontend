@@ -1,7 +1,7 @@
 import React from 'react';
 import { get } from 'lodash';
 import CampaignBadge from '../../CampaignBadge';
-
+import config from '../../../config';
 const linkStyle = {
   'a:link': { color: '#000' },
 };
@@ -46,7 +46,8 @@ const getSupplierColumnContactDetails = () => {
           default:
             supplier_type = 'society';
         }
-        const supplierFormUrl = `https://forms.machadalo.com/#/${supplier_type}/${supplier_id}`;
+        const supplierFormUrl = `${config.mainSiteUrl}/#/${supplier_type}/${supplier_id}`;
+        // const supplierFormUrl = `https://forms.machadalo.com/#/${supplier_type}/${supplier_id}`;
         return (
           <a href={supplierFormUrl} style={{ color: '#e8578d' }} target="_blank">
             {name}
