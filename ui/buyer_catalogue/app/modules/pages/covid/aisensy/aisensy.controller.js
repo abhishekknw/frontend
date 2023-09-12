@@ -3238,7 +3238,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
           if (link) {
             window.open(link, '_blank');
           } else {
-            swal(constants?.error, constants?.emptyResponse, "error")
+            swal('', constants?.emptyResponse, constants?.warning)
           }
         }
         $scope.getTemplateDataParams = { 'page': 0, 'search': '' };
