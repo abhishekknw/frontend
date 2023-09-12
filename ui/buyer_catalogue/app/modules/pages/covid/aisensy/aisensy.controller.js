@@ -3235,7 +3235,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
 
         $scope.visitmap = function (link) {
-          window.open(link, '_blank');
+          if (link) {
+            window.open(link, '_blank');
+          } else {
+            swal(constants?.error, constants?.emptyResponse, "error")
+          }
         }
         $scope.getTemplateDataParams = { 'page': 0, 'search': '' };
         $scope.getTemplateData = function () {
