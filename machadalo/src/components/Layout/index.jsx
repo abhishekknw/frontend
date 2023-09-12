@@ -48,29 +48,27 @@ export default class Layout extends React.Component {
           {/* <hr className="mt-0" /> */}
           <div className="wrapper mt-2">
             <div className="container">
-              <div className="container">
-                <Switch>
-                  <Route path={`${match.path}/checklist`} component={ChecklistContainer} />
+              <Switch>
+                <Route path={`${match.path}/checklist`} component={ChecklistContainer} />
 
-                  <Route path={`${match.path}/supplier`} component={SupplierContainer} />
-                  <Route path={`${match.path}/inventory`} component={InventoryContainer} />
+                <Route path={`${match.path}/supplier`} component={SupplierContainer} />
+                <Route path={`${match.path}/inventory`} component={InventoryContainer} />
 
-                  <Route path={`${match.path}/settings`} component={SettingContainer} />
+                <Route path={`${match.path}/settings`} component={SettingContainer} />
 
-                  <Route path={`${match.path}/leads`} component={LeadsContainer} />
+                <Route path={`${match.path}/leads`} component={LeadsContainer} />
 
-                  <Route path={`${match.path}/booking`} component={BookingContainer} />
+                <Route path={`${match.path}/booking`} component={BookingContainer} />
 
-                  <Route
-                    path={`${match.path}/operations-dashboard`}
-                    component={OperationsDashboardContainer}
-                  />
-                  {/* <Route path={`${match.path}/b2b`} component={B2bContainer} /> */}
-                  <Route path={`${match.path}/dashboard`} component={DashboardRoutes} />
-                  <Route path={`${match.path}/pages`} component={PagesRoutes} />
-                  <Route path={`${match.path}/manageSupplier`} component={ManageSupplier} />
-                </Switch>
-              </div>
+                <Route
+                  path={`${match.path}/operations-dashboard`}
+                  component={OperationsDashboardContainer}
+                />
+                {/* <Route path={`${match.path}/b2b`} component={B2bContainer} /> */}
+                <Route path={`${match.path}/dashboard`} component={DashboardRoutes} />
+                <Route path={`${match.path}/manageSupplier`} component={ManageSupplier} />
+                <Route path={`${match.path}/pages`} component={PagesRoutes} />
+              </Switch>
             </div>
           </div>
         </main>
