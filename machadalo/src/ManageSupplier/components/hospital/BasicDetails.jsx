@@ -82,7 +82,7 @@ export default function BasicDetails() {
                 className="field"
                 placeholder="Address1"
                 id="address1"
-                value={details?.master_data.address_supplier.address1}
+                value={details?.master_data?.address_supplier?.address1}
                 required
               />
             </div>
@@ -93,7 +93,7 @@ export default function BasicDetails() {
                 className="field"
                 placeholder="Address2"
                 id="address2"
-                value={details?.master_data.address_supplier.address2}
+                value={details?.master_data?.address_supplier?.address2}
               />
             </div>
             <div className="item">
@@ -104,7 +104,7 @@ export default function BasicDetails() {
                 placeholder="Nearest LandMark"
                 className="field"
                 id="landmark_bus_shelter"
-                value={details?.master_data.landmark}
+                value={details?.master_data?.landmark}
                 ng-pattern="/^[a-z0-9A-Z\s]*$/"
               />
               <div ng-show="hording_form.nearest_landmark.$error.pattern" className="error">
@@ -118,7 +118,7 @@ export default function BasicDetails() {
                 className="field"
                 id="city"
                 placeholder="City"
-                value={details?.master_data.address_supplier.city}
+                value={details?.master_data?.address_supplier?.city}
                 disabled
                 readonly
               />
@@ -130,7 +130,7 @@ export default function BasicDetails() {
                 className="field"
                 id="state"
                 placeholder="State"
-                value={details?.master_data.address_supplier.state}
+                value={details?.master_data?.address_supplier?.state}
                 readonly
               />
             </div>
@@ -141,7 +141,7 @@ export default function BasicDetails() {
                 className="field"
                 id="area"
                 placeholder="Area"
-                value={details?.master_data.address_supplier.area}
+                value={details?.master_data?.address_supplier?.area}
                 readonly
               />
             </div>
@@ -152,7 +152,7 @@ export default function BasicDetails() {
                 className="field"
                 placeholder="Sub Area"
                 id="subarea"
-                value={details?.master_data.address_supplier.subarea}
+                value={details?.master_data?.address_supplier?.subarea}
                 readonly
               />
             </div>
@@ -165,7 +165,7 @@ export default function BasicDetails() {
                 placeholder="Zip Code"
                 className="field"
                 id="zipcode"
-                value={details?.master_data.address_supplier.zipcode}
+                value={details?.master_data?.address_supplier?.zipcode}
                 ng-pattern="/^[0-9]{6}$/"
               />
               <div ng-show="hording_form.zip_code.$error.pattern" className="error">
@@ -180,7 +180,7 @@ export default function BasicDetails() {
                 step="any"
                 className="field"
                 id="latitude"
-                value={details?.master_data.address_supplier.latitude}
+                value={details?.master_data?.address_supplier?.latitude}
               />
             </div>
             <div className="item">
@@ -191,7 +191,7 @@ export default function BasicDetails() {
                 step="any"
                 className="field"
                 id="longitude"
-                value={details?.master_data.address_supplier.longitude}
+                value={details?.master_data?.address_supplier?.longitude}
               />
             </div>
             <div className="item">
@@ -211,7 +211,7 @@ export default function BasicDetails() {
                 placeholder="Weekday Listnership Count"
                 className="field"
                 id="eyeball_count"
-                value={details?.master_data.unit_primary_count}
+                value={details?.master_data?.unit_primary_count}
               />
             </div>
             <div className="item">
@@ -221,7 +221,7 @@ export default function BasicDetails() {
                 placeholder="Weekend Listnership Count"
                 className="field"
                 id="traffic_count"
-                value={details?.master_data.unit_secondary_count}
+                value={details?.master_data?.unit_secondary_count}
               />
             </div>
             <div className="item">
@@ -231,7 +231,7 @@ export default function BasicDetails() {
                 placeholder="Average Listnership Time"
                 className="field"
                 id="pedestrian_count"
-                value={details?.master_data.unit_tertiary_count}
+                value={details?.master_data?.unit_tertiary_count}
               />
             </div>
             <div className="item">
@@ -243,7 +243,7 @@ export default function BasicDetails() {
                 id="feedback_id"
                 name="feedback"
                 placeholder="How many buildings, classes, sections, etc."
-                value={details?.master_data.feedback}
+                value={details?.master_data?.feedback}
               ></textarea>
             </div>
             <h2 className="heading">Payment Details</h2>

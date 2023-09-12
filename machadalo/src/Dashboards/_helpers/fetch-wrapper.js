@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 // import { history } from '../_helpers';
 import { authAtom } from '../_states/auth';
 import { useAlertActions } from '../_actions/alert.actions';
-import API_URL from '../../config';
+import config from '../../config';
 export { useFetchWrapper };
 
 function useFetchWrapper() {
@@ -19,7 +19,7 @@ function useFetchWrapper() {
 
   function request(method) {
     return (url, body, file = false) => {
-      const baseUrl = API_URL.API_URL;
+      const baseUrl = config.API_URL;
       url = `${baseUrl}/${url}`;
       const requestOptions = {
         method,
@@ -41,7 +41,7 @@ function useFetchWrapper() {
     // return auth header with jwt if user is logged in and request is to the api url
     const token = auth[0]?.token;
     const isLoggedIn = !!token;
-    const isApiUrl = url.startsWith(API_URL.API_URL);
+    const isApiUrl = url.startsWith(config.API_URL);
     if (isLoggedIn && isApiUrl) {
       return { Authorization: `JWT ${token}` };
     } else {

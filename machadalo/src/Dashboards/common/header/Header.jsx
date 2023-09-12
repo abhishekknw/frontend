@@ -26,7 +26,12 @@ export default function MachadaloHeader(props) {
           <div className="d-flex align-items-center mobile-con-between">
             <SideNavBar />
             <span>
-              <div className="header-content">
+              <div
+                className="header-content"
+                onClick={(e) => {
+                  redirect('/#/manageCampaign/create');
+                }}
+              >
                 <img src={Logo} />
               </div>
             </span>

@@ -254,6 +254,26 @@ export default function BasicDetails() {
           />
           <FormInput
             divClass="schema-form-text col-md-4"
+            label="Society Sub-Area"
+            type="text"
+            name="society_subarea"
+            value={formData.society_subarea}
+            onChange={handleInputChange}
+            error={errors.society_subarea}
+            readOnly={true}
+          />
+          <FormInput
+            divClass="schema-form-text col-md-4"
+            label="Society Locality"
+            type="text"
+            name="society_locality"
+            value={formData.society_locality}
+            onChange={handleInputChange}
+            error={errors.society_locality}
+            readOnly={true}
+          />
+          <FormInput
+            divClass="schema-form-text col-md-4"
             label="City*"
             type="text"
             name="society_city"
@@ -285,7 +305,7 @@ export default function BasicDetails() {
           />
           <FormInput
             divClass="schema-form-text col-md-4"
-            label="Society Id"
+            label="Society Latitude"
             type="number"
             name="Society Latitude*"
             value={formData.society_latitude}
@@ -324,6 +344,7 @@ export default function BasicDetails() {
           <FormInput
             divClass="schema-form-text col-md-4"
             label="Comment"
+            placeholder="How many Society, Flats, etc."
             type="text"
             name="comments"
             value={formData.comments}
@@ -333,6 +354,7 @@ export default function BasicDetails() {
           <FormInput
             divClass="schema-form-text col-md-4"
             label="Machadalo Rating"
+            placeholder="Machadalo Rating"
             type="text"
             name="rating"
             value={formData.rating}
@@ -347,26 +369,6 @@ export default function BasicDetails() {
             value={formData.feedback}
             onChange={handleInputChange}
             error={errors.feedback}
-          />
-          <FormInput
-            divClass="schema-form-text col-md-4"
-            label="Society Locality"
-            type="text"
-            name="society_locality"
-            value={formData.society_locality}
-            onChange={handleInputChange}
-            error={errors.society_locality}
-            readOnly={true}
-          />
-          <FormInput
-            divClass="schema-form-text col-md-4"
-            label="Society Sub-Area"
-            type="text"
-            name="society_subarea"
-            value={formData.society_subarea}
-            onChange={handleInputChange}
-            error={errors.society_subarea}
-            readOnly={true}
           />
 
           <div class="checkbox schema-form-checkbox col-md-12 form control2 has-success">
@@ -523,6 +525,7 @@ export default function BasicDetails() {
             value={formData.society_type_quantity}
             onChange={handleInputChange}
             error={errors.society_type_quantity}
+            readOnly
           />
           <FormInput
             divClass="schema-form-number col-md-4"
@@ -532,6 +535,7 @@ export default function BasicDetails() {
             value={formData.machadalo_index}
             onChange={handleInputChange}
             error={errors.machadalo_index}
+            readOnly
           />
 
           <div class="checkbox schema-form-checkbox col-md-12 form control2 has-success">
@@ -701,6 +705,56 @@ export default function BasicDetails() {
             onChange={handleInputChange}
             error={errors.past_details}
           />
+
+          <div class="checkbox schema-form-checkbox col-md-12 form control2 has-success">
+            <label class="size">
+              <span ng-bind-html="form.title" class="ng-binding">
+                Society Preferences
+              </span>
+            </label>
+          </div>
+
+          <FormInput
+            divClass="schema-form-number col-md-4"
+            label="Prefered Business Type"
+            type="dropdown"
+            name="preferred_business_type"
+            value={formData.preferred_business_type}
+            onChange={handleInputChange}
+            error={errors.preferred_business_type}
+          />
+          <FormInput
+            divClass="schema-form-number col-md-4"
+            label="Prefered Business Name"
+            type="dropdown"
+            name="preferred_business_id"
+            value={formData.preferred_business_id}
+            onChange={handleInputChange}
+            error={errors.preferred_business_id}
+          />
+          <FormInput
+            divClass="schema-form-number col-md-4"
+            label="Restricted Business Type"
+            type="dropdown"
+            name="business_type_not_allowed"
+            value={formData.business_type_not_allowed}
+            onChange={handleInputChange}
+            error={errors.business_type_not_allowed}
+          />
+          <FormInput
+            divClass="schema-form-number col-md-4"
+            label="Restricted Business Name"
+            type="dropdown"
+            name="business_id_not_allowed"
+            value={formData.business_id_not_allowed}
+            onChange={handleInputChange}
+            error={errors.business_id_not_allowed}
+          />
+          <div className="bottomButtonBox">
+            <button type="submit" className="smallBtn">
+              Update Society
+            </button>
+          </div>
         </fieldset>
       </form>
     </div>

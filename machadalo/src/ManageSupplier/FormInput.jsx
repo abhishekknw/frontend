@@ -15,6 +15,7 @@ const FormInput = ({
   error,
   readOnly = false,
   required = false,
+  placeholder,
 }) => (
   <div className={`form-group form-control2 has-success ${divClass}`}>
     <label class="control-label">{label}</label>
@@ -26,6 +27,7 @@ const FormInput = ({
       required={required}
       disabled={readOnly}
       className="form-control ng-valid-invalid-id ng-valid-schema-form"
+      placeholder={placeholder}
     />
     {error && <p className="error">{error}</p>}
   </div>

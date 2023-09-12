@@ -109,138 +109,140 @@ export default function CampaignDecisionBoard() {
 
   return (
     <>
-      <div className="text-center">
-        <h4 className="table-head">{'Campaign Decision Board'.toUpperCase()}</h4>
-      </div>
-      <div>
-        <SearchBox onSearch={handleSearch} />
-        <br></br>
-        <Table className="leads-table ">
-          <Thead className="leads-tbody">
-            <Tr>
-              {headerData.map((item, index) => {
+      <div className="container">
+        <div className="text-center">
+          <h4 className="table-head">{'Campaign Decision Board'.toUpperCase()}</h4>
+        </div>
+        <div>
+          <SearchBox onSearch={handleSearch} />
+          <br></br>
+          <Table className="leads-table ">
+            <Thead className="leads-tbody">
+              <Tr>
+                {headerData.map((item, index) => {
+                  return (
+                    <Th key={index}>
+                      {item.name} <span>{item?.sortIcon?.direction}</span>
+                    </Th>
+                  );
+                })}
+              </Tr>
+            </Thead>
+            <Tbody>
+              {InvoiceProposalList?.list?.map((data, index) => {
                 return (
-                  <Th key={index}>
-                    {item.name} <span>{item?.sortIcon?.direction}</span>
-                  </Th>
+                  <Tr key={index}>
+                    <Td>{index + 1}</Td>
+                    <Td>
+                      <a className="link">{data.proposal.proposal_id}</a>
+                    </Td>
+                    <Td>{data.proposal.name}</Td>
+                    <Td>{data.proposal.account}</Td>
+                    <Td>{data.proposal.created_by}</Td>
+                    <Td>{data.proposal.invoice_number}</Td>
+                    <Td>{dayjs(data.proposal.tentative_start_date).format('DD-MM-YYYY')}</Td>
+                    <Td>{dayjs(data.proposal.tentative_end_date).format('DD-MM-YYYY')}</Td>
+                    <Td>
+                      <Form>
+                        <Form.Check
+                          label="Accept"
+                          checked={data.proposal.campaign_state === 'PTC'}
+                          type="radio"
+                          onChange={(e) => {
+                            convertProposalToCampaign(data);
+                          }}
+                        />
+                        <Form.Check
+                          label="Decline"
+                          checked={data.proposal.campaign_state === 'PNC'}
+                          type="radio"
+                          onChange={(e) => {
+                            convertCampaignToProposal(data);
+                          }}
+                        />
+                        <Form.Check
+                          type="radio"
+                          label="OnHold"
+                          checked={data.proposal.campaign_state === 'POH'}
+                          onChange={(e) => {
+                            convertCampaignOnHold(data);
+                          }}
+                        />
+                      </Form>
+                    </Td>
+                    <Td>
+                      {data.proposal.campaign_state === 'PTC' &&
+                        data.assignment_detail.assigned_to != 'Nobody' &&
+                        data?.assignment_detail.map((assign, index) => {
+                          return (
+                            <>
+                              <span key={index}>{assign.assigned_to.assigned_to_name}</span>
+                              <br></br>
+                            </>
+                          );
+                        })}
+                      {(data.proposal.campaign_state !== 'PTC' ||
+                        data.assignment_detail.assigned_to == 'Nobody') && <span>NA</span>}
+                    </Td>
+                    <Td>
+                      {data.proposal.type_of_end_customer_name
+                        ? data.proposal.type_of_end_customer_name
+                        : 'NA'}
+                    </Td>
+                    <Td>
+                      <a className="link">Edit Details</a>
+                    </Td>
+                    <Td>
+                      <a className="link">View/Add</a>
+                    </Td>
+                  </Tr>
                 );
               })}
-            </Tr>
-          </Thead>
-          <Tbody>
-            {InvoiceProposalList?.list?.map((data, index) => {
-              return (
-                <Tr key={index}>
-                  <Td>{index + 1}</Td>
-                  <Td>
-                    <a className="link">{data.proposal.proposal_id}</a>
-                  </Td>
-                  <Td>{data.proposal.name}</Td>
-                  <Td>{data.proposal.account}</Td>
-                  <Td>{data.proposal.created_by}</Td>
-                  <Td>{data.proposal.invoice_number}</Td>
-                  <Td>{dayjs(data.proposal.tentative_start_date).format('DD-MM-YYYY')}</Td>
-                  <Td>{dayjs(data.proposal.tentative_end_date).format('DD-MM-YYYY')}</Td>
-                  <Td>
-                    <Form>
-                      <Form.Check
-                        label="Accept"
-                        checked={data.proposal.campaign_state === 'PTC'}
-                        type="radio"
-                        onChange={(e) => {
-                          convertProposalToCampaign(data);
-                        }}
-                      />
-                      <Form.Check
-                        label="Decline"
-                        checked={data.proposal.campaign_state === 'PNC'}
-                        type="radio"
-                        onChange={(e) => {
-                          convertCampaignToProposal(data);
-                        }}
-                      />
-                      <Form.Check
-                        type="radio"
-                        label="OnHold"
-                        checked={data.proposal.campaign_state === 'POH'}
-                        onChange={(e) => {
-                          convertCampaignOnHold(data);
-                        }}
-                      />
-                    </Form>
-                  </Td>
-                  <Td>
-                    {data.proposal.campaign_state === 'PTC' &&
-                      data.assignment_detail.assigned_to != 'Nobody' &&
-                      data?.assignment_detail.map((assign, index) => {
-                        return (
-                          <>
-                            <span key={index}>{assign.assigned_to.assigned_to_name}</span>
-                            <br></br>
-                          </>
-                        );
-                      })}
-                    {(data.proposal.campaign_state !== 'PTC' ||
-                      data.assignment_detail.assigned_to == 'Nobody') && <span>NA</span>}
-                  </Td>
-                  <Td>
-                    {data.proposal.type_of_end_customer_name
-                      ? data.proposal.type_of_end_customer_name
-                      : 'NA'}
-                  </Td>
-                  <Td>
-                    <a className="link">Edit Details</a>
-                  </Td>
-                  <Td>
-                    <a className="link">View/Add</a>
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
-        {InvoiceProposalList.count > 10 && (
-          <ReactPagination
-            pageSize={10}
-            totalItems={InvoiceProposalList?.count}
-            pageNo={InvoiceProposalList?.current_page}
-            onPageChange={handlePageChange}
-          />
-        )}
-      </div>
-      <CampaignAssignModal
-        show={showHide}
-        close={() => setShowHide(false)}
-        proposalData={proposalData}
-      />
+            </Tbody>
+          </Table>
+          {InvoiceProposalList.count > 10 && (
+            <ReactPagination
+              pageSize={10}
+              totalItems={InvoiceProposalList?.count}
+              pageNo={InvoiceProposalList?.current_page}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </div>
+        <CampaignAssignModal
+          show={showHide}
+          close={() => setShowHide(false)}
+          proposalData={proposalData}
+        />
 
-      <Modal
-        show={declineHoldModal.show}
-        onHide={(e) => {
-          setDeclineHoldModal({ show: false, type: '' });
-        }}
-        className="wpModal"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Specify Reason</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="Comment_Box">
-              <Form.Label>
-                {declineHoldModal.type === 'Decline'
-                  ? `Please enter the reason in below box why this proposal can't be converted to
+        <Modal
+          show={declineHoldModal.show}
+          onHide={(e) => {
+            setDeclineHoldModal({ show: false, type: '' });
+          }}
+          className="wpModal"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Specify Reason</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3" controlId="Comment_Box">
+                <Form.Label>
+                  {declineHoldModal.type === 'Decline'
+                    ? `Please enter the reason in below box why this proposal can't be converted to
                 campaign.`
-                  : 'Please enter the reason in below box why this proposal is on hold.'}
-              </Form.Label>
-              <Form.Control as="textarea" rows={3} />
-            </Form.Group>
-          </Form>
-          <Button type="button" className="btn btn-primary submit-btn">
-            Notify
-          </Button>
-        </Modal.Body>
-      </Modal>
+                    : 'Please enter the reason in below box why this proposal is on hold.'}
+                </Form.Label>
+                <Form.Control as="textarea" rows={3} />
+              </Form.Group>
+            </Form>
+            <Button type="button" className="btn btn-primary submit-btn">
+              Notify
+            </Button>
+          </Modal.Body>
+        </Modal>
+      </div>
     </>
   );
 }

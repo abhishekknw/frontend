@@ -1,6 +1,6 @@
 import React from 'react';
 import CampaignBadge from '../../CampaignBadge';
-
+import config from '../../../config';
 const getEntityList = (entityDetails) => {
   let isSociety = false;
   let unit_count = 'Unit Count';
@@ -51,7 +51,8 @@ const getEntityList = (entityDetails) => {
           default:
             supplier_type = 'society';
         }
-        const supplierFormUrl = `https://forms.machadalo.com/#/${supplier_type}/${supplier_id}`;
+        const supplierFormUrl = `${config.mainSiteUrl}/#/${supplier_type}/${supplier_id}`;
+        // const supplierFormUrl = `https://forms.machadalo.com/#/${supplier_type}/${supplier_id}`;
         return (
           <a href={supplierFormUrl} style={{ color: '#e8578d' }} target="_blank">
             {name}
