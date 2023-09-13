@@ -4,10 +4,14 @@ import {
     BsSearch,
     BsFillGeoAltFill,
     BsMessenger,
-    BsCameraVideo,
+    BsShare,
     BsTelephone,
     BsThreeDots,
 } from 'react-icons/bs';
+import { AiOutlinePlus } from 'react-icons/ai';
+
+import { Dropdown, Form } from 'react-bootstrap';
+import { FiMapPin } from 'react-icons/fi';
 import Avatar from '../InterveneChat/avatar.jpg';
 
 const ChatAreaCenter = () => {
@@ -26,14 +30,26 @@ const ChatAreaCenter = () => {
                 <div className="current-user-actions">
                     <div className="con-icons">
                         <span>
-                            <BsCameraVideo />
+                            <BsShare />
                         </span>{' '}
                         <span>
                             <BsTelephone />
                         </span>
                         <span>
-                            <BsThreeDots />
+                            <FiMapPin />
                         </span>
+                        <span>
+                            <Dropdown>
+                                <Dropdown.Toggle id="dropdown-basic">
+                                    <BsThreeDots />
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item href="#/action-1">Suspence Sheet</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">Ops Verified</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </span>
+
                     </div>
                 </div>
             </div>
@@ -169,6 +185,31 @@ const ChatAreaCenter = () => {
                 </div>
                 <form class="msger-inputarea">
                     <input type="text" class="msger-input" placeholder="Type message..." />
+                    <Dropdown>
+                        <Dropdown.Toggle id="dropdown-basic" className='btn-attachment'>
+                            <AiOutlinePlus />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item href="#/action-1">
+                                <Form.Group controlId="formFile" className="mb-3">
+                                    {/* <Form.Label>Default file input example</Form.Label> */}
+                                    <Form.Control type="file" />
+                                </Form.Group>
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#/action-2">
+                                <Form.Group controlId="formFile" className="mb-3">
+                                    {/* <Form.Label>Default file input example</Form.Label> */}
+                                    <Form.Control type="file" />
+                                </Form.Group>
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#/action-2">
+                                <Form.Group controlId="formFile" className="mb-3">
+                                    {/* <Form.Label>Default file input example</Form.Label> */}
+                                    <Form.Control type="file" />
+                                </Form.Group>
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
                     <button type="submit" class="msger-send-btn">
                         Send
                     </button>
