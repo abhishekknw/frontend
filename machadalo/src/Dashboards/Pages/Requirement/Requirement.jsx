@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { RequirementActions } from '../../_actions/Requirement/Requirement.actions';
-import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
+import SelectDropdown from '../../../components/Shared/SelectDropdown';
 import { useRecoilValue } from 'recoil';
 import { LeadsBySectorAtom, SectorListByNumberAtom } from '../../_states';
 import getRequirementHeader from './RequirementListConfig';
 import ReactBootstrapTable from '../../Table/React-Bootstrap-table/ReactBootstrapTable';
-export default function RequirementDash() {
+export default function RequirementData() {
   const RequirementApi = RequirementActions();
   const sectorList = useRecoilValue(SectorListByNumberAtom);
   const LeadsData = useRecoilValue(LeadsBySectorAtom);

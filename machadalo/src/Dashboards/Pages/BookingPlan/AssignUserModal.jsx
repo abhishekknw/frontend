@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useRecoilValue } from 'recoil';
 import { UserMinimalListAtom, userInformationAtom } from '../../_states';
-import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
+import SelectDropdown from '../../../components/Shared/SelectDropdown';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 export default function AssignUserModal(props) {
   const BookingApi = BookinPlanActions();

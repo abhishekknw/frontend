@@ -6,11 +6,12 @@ import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 
 import reducer from './reducers';
-import Routes from './routes';
 import registerServiceWorker from './registerServiceWorker';
 import { RecoilRoot } from 'recoil';
 
 import './index.css';
+import './assets/scss/partials/custom.css';
+import App from './routes';
 
 function configureStore(initialState) {
   const middlewares = [thunkMiddleware];
@@ -30,7 +31,7 @@ ReactDOM.render(
   <RecoilRoot>
     <Suspense fallback={true}>
       <Provider store={store}>
-        <Routes />
+        <App />
       </Provider>
     </Suspense>
   </RecoilRoot>,

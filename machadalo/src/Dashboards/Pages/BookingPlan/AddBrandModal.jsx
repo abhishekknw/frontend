@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import Select from 'react-select';
 import { useRecoilValue } from 'recoil';
 import { OrganisationListAtom } from '../../_states';
-import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
+import SelectDropdown from '../../../components/Shared/SelectDropdown';
 import { BookinPlanActions } from '../../_actions/BookingPlan/bookingPlan.actions';
 
 export default function AddBrandModal(props) {

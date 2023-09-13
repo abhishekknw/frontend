@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 
 import LayoutContainer from './../containers/LayoutContainer';
 
-export default function Routes() {
+export default function App() {
   // let userInfo = JSON.parse(localStorage.getItem('userInfo'))
   let userInfo = 'BUSINESS';
   return (

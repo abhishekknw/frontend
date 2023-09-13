@@ -29,7 +29,7 @@ import ReactPagination from '../../Pagination/Pagination';
 import ViewPhaseModal from './ViewPhaseModal';
 import AddSupplierModal from './AddSupplierModal';
 import ImportSheetModal from './ImportSheetModal';
-import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
+import SelectDropdown from '../../../components/Shared/SelectDropdown';
 import TableHeader from '../../Table/TableHeader/TableHeader';
 import InventoryModal from './InventoryModal';
 import DescriptionHeader from '../../common/DescriptionHeader/DescriptionHeader';
@@ -326,10 +326,10 @@ export default function BookingPlan() {
                           'b_to_b_r_g' ||
                           (CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
                             'b_to_b_l_d' && (
-                              <td>
-                                <Link to="requirement-dash">Requirement</Link>
-                              </td>
-                            ))}
+                            <td>
+                              <Link to="requirement-dash">Requirement</Link>
+                            </td>
+                          ))}
 
                         <td>
                           <SelectDropdown
@@ -582,8 +582,8 @@ export default function BookingPlan() {
                                           ? true
                                           : false
                                         : data?.is_completed === false
-                                          ? true
-                                          : false
+                                        ? true
+                                        : false
                                     }
                                     value={item.label}
                                     onChange={(e) => {
@@ -776,42 +776,43 @@ export default function BookingPlan() {
               setShowModal({ show: false, type: '' });
             }}
             // className="booking-modal"
-            className={`booking-modal ${showModal.type == 'ContactDetails' ? 'contact-detail-modal' : ''
-              }`}
+            className={`booking-modal ${
+              showModal.type == 'ContactDetails' ? 'contact-detail-modal' : ''
+            }`}
           >
             <Modal.Header closeButton>
               <Modal.Title>
                 {showModal.type == 'Add-Brand'
                   ? 'Add Brand'
                   : showModal.type == 'RelationshipData'
-                    ? 'Supplier Details'
-                    : showModal.type == 'ContactDetails'
-                      ? 'Contact Detail'
-                      : showModal.type == 'AssignUser' || showModal.type == 'AssignUserWithQuality'
-                        ? 'Assign User'
-                        : showModal.type == 'internalComments'
-                          ? 'Internal Comments'
-                          : showModal.type == 'externalComments'
-                            ? 'Comments'
-                            : showModal.type == 'PaymentDetail'
-                              ? 'Payment Detail'
-                              : showModal.type == 'Permission'
-                                ? 'Permission Box Image Details'
-                                : showModal.type == 'Receipt'
-                                  ? 'Receipt Box Image Details'
-                                  : showModal.type == 'ViewPhase'
-                                    ? 'View Phase'
-                                    : showModal.type == 'AddSupplier'
-                                      ? 'Add New Supplier'
-                                      : showModal.type == 'ImportSheet'
-                                        ? 'Import Sheet'
-                                        : showModal.type == 'Inventory'
-                                          ? 'Inventories'
-                                          : showModal.type == 'NEFT'
-                                            ? `NEFT Details For ${showModal.rowData?.name}`
-                                            : showModal.type == 'CHEQUE'
-                                              ? `Cheque Details For ${showModal.rowData?.name}`
-                                              : 'Other'}
+                  ? 'Supplier Details'
+                  : showModal.type == 'ContactDetails'
+                  ? 'Contact Detail'
+                  : showModal.type == 'AssignUser' || showModal.type == 'AssignUserWithQuality'
+                  ? 'Assign User'
+                  : showModal.type == 'internalComments'
+                  ? 'Internal Comments'
+                  : showModal.type == 'externalComments'
+                  ? 'Comments'
+                  : showModal.type == 'PaymentDetail'
+                  ? 'Payment Detail'
+                  : showModal.type == 'Permission'
+                  ? 'Permission Box Image Details'
+                  : showModal.type == 'Receipt'
+                  ? 'Receipt Box Image Details'
+                  : showModal.type == 'ViewPhase'
+                  ? 'View Phase'
+                  : showModal.type == 'AddSupplier'
+                  ? 'Add New Supplier'
+                  : showModal.type == 'ImportSheet'
+                  ? 'Import Sheet'
+                  : showModal.type == 'Inventory'
+                  ? 'Inventories'
+                  : showModal.type == 'NEFT'
+                  ? `NEFT Details For ${showModal.rowData?.name}`
+                  : showModal.type == 'CHEQUE'
+                  ? `Cheque Details For ${showModal.rowData?.name}`
+                  : 'Other'}
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
