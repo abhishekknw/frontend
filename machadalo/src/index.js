@@ -10,6 +10,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { RecoilRoot } from 'recoil';
 
 import './index.css';
+import './assets/scss/partials/custom.css';
 import App from './routes';
 
 function configureStore(initialState) {
