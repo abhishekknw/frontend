@@ -9,6 +9,8 @@ export default function BasicDetails() {
   const fetchWrapper = useFetchWrapper();
   const [vendors, setVendors] = useState();
   const { id } = useParams();
+  const [contactList, setContactList] = useState([]);
+  const [showContact, setShowContact] = useState(false);
   const [formData, setFormData] = useState({
     supplier_id: id,
     society_name: '',
@@ -181,6 +183,13 @@ export default function BasicDetails() {
     }
   };
 
+  const handleContactAdd = () => {
+    let data = {
+      id: '',
+    };
+    setContactList([...contactList, data]);
+  };
+
   return (
     <div class="tabContentBox">
       <div class="top">
@@ -254,6 +263,26 @@ export default function BasicDetails() {
           />
           <FormInput
             divClass="schema-form-text col-md-4"
+            label="Society Sub-Area"
+            type="text"
+            name="society_subarea"
+            value={formData.society_subarea}
+            onChange={handleInputChange}
+            error={errors.society_subarea}
+            readOnly={true}
+          />
+          <FormInput
+            divClass="schema-form-text col-md-4"
+            label="Society Locality"
+            type="text"
+            name="society_locality"
+            value={formData.society_locality}
+            onChange={handleInputChange}
+            error={errors.society_locality}
+            readOnly={true}
+          />
+          <FormInput
+            divClass="schema-form-text col-md-4"
             label="City*"
             type="text"
             name="society_city"
@@ -285,7 +314,7 @@ export default function BasicDetails() {
           />
           <FormInput
             divClass="schema-form-text col-md-4"
-            label="Society Id"
+            label="Society Latitude"
             type="number"
             name="Society Latitude*"
             value={formData.society_latitude}
@@ -324,6 +353,7 @@ export default function BasicDetails() {
           <FormInput
             divClass="schema-form-text col-md-4"
             label="Comment"
+            placeholder="How many Society, Flats, etc."
             type="text"
             name="comments"
             value={formData.comments}
@@ -333,6 +363,7 @@ export default function BasicDetails() {
           <FormInput
             divClass="schema-form-text col-md-4"
             label="Machadalo Rating"
+            placeholder="Machadalo Rating"
             type="text"
             name="rating"
             value={formData.rating}
@@ -347,26 +378,6 @@ export default function BasicDetails() {
             value={formData.feedback}
             onChange={handleInputChange}
             error={errors.feedback}
-          />
-          <FormInput
-            divClass="schema-form-text col-md-4"
-            label="Society Locality"
-            type="text"
-            name="society_locality"
-            value={formData.society_locality}
-            onChange={handleInputChange}
-            error={errors.society_locality}
-            readOnly={true}
-          />
-          <FormInput
-            divClass="schema-form-text col-md-4"
-            label="Society Sub-Area"
-            type="text"
-            name="society_subarea"
-            value={formData.society_subarea}
-            onChange={handleInputChange}
-            error={errors.society_subarea}
-            readOnly={true}
           />
 
           <div class="checkbox schema-form-checkbox col-md-12 form control2 has-success">
@@ -523,6 +534,7 @@ export default function BasicDetails() {
             value={formData.society_type_quantity}
             onChange={handleInputChange}
             error={errors.society_type_quantity}
+            readOnly
           />
           <FormInput
             divClass="schema-form-number col-md-4"
@@ -532,6 +544,7 @@ export default function BasicDetails() {
             value={formData.machadalo_index}
             onChange={handleInputChange}
             error={errors.machadalo_index}
+            readOnly
           />
 
           <div class="checkbox schema-form-checkbox col-md-12 form control2 has-success">
@@ -701,6 +714,348 @@ export default function BasicDetails() {
             onChange={handleInputChange}
             error={errors.past_details}
           />
+
+          <div class="checkbox schema-form-checkbox col-md-12 form control2 has-success">
+            <label class="size">
+              <span ng-bind-html="form.title" class="ng-binding">
+                Society Preferences
+              </span>
+            </label>
+          </div>
+
+          <FormInput
+            divClass="schema-form-number col-md-4"
+            label="Prefered Business Type"
+            type="dropdown"
+            name="preferred_business_type"
+            value={formData.preferred_business_type}
+            onChange={handleInputChange}
+            error={errors.preferred_business_type}
+          />
+          <FormInput
+            divClass="schema-form-number col-md-4"
+            label="Prefered Business Name"
+            type="dropdown"
+            name="preferred_business_id"
+            value={formData.preferred_business_id}
+            onChange={handleInputChange}
+            error={errors.preferred_business_id}
+          />
+          <FormInput
+            divClass="schema-form-number col-md-4"
+            label="Restricted Business Type"
+            type="dropdown"
+            name="business_type_not_allowed"
+            value={formData.business_type_not_allowed}
+            onChange={handleInputChange}
+            error={errors.business_type_not_allowed}
+          />
+          <FormInput
+            divClass="schema-form-number col-md-4"
+            label="Restricted Business Name"
+            type="dropdown"
+            name="business_id_not_allowed"
+            value={formData.business_id_not_allowed}
+            onChange={handleInputChange}
+            error={errors.business_id_not_allowed}
+          />
+
+          <div
+            onClick={() => setShowContact(!showContact)}
+            class="checkbox schema-form-checkbox col-md-12 form control2 has-success"
+          >
+            <label class="size">
+              <span ng-bind-html="form.title" class="ng-binding">
+                Add Contact for Society
+              </span>
+            </label>
+          </div>
+          {showContact && (
+            <div
+              class="schema-form-array col-xs-7"
+              sf-field-model="sf-new-array"
+              sf-new-array="model['basic_contacts']"
+              sf-field="148"
+              ng-if='evalExpr(schemaForm.form[0].items[47].condition,{ model: model, "arrayIndex": $index, "modelValue": model[&apos;basic_contacts&apos;]})'
+            >
+              <label class="control-label ng-binding">Add Basic Contacts</label>
+
+              <ol class="list-group ng-pristine ng-untouched ng-valid">
+                {contactList.length > 0 &&
+                  contactList.map((item, key) => {
+                    return (
+                      <li class="list-group-item" key={key}>
+                        <button
+                          onClick={() => setContactList(contactList.splice(key, 1))}
+                          style={{ position: 'relative', zIndex: '20' }}
+                          type="button"
+                          class="close pull-right"
+                        >
+                          <span aria-hidden="true">×</span>
+                          <span class="sr-only">Close</span>
+                        </button>
+                        <div class="form-group  schema-form-select has-feedback">
+                          <label class="control-label">Contact Type*</label>
+                          <select
+                            sf-field-model=""
+                            ng-disabled="form.readonly"
+                            class="form-control  ng-valid-schema-form"
+                            schema-validate="form"
+                            name="contact_type"
+                          >
+                            <option value="?" selected="selected"></option>
+                            <option label="Null" value="string:Null">
+                              Null
+                            </option>
+                            <option label="Chairman" value="string:Chairman">
+                              Chairman
+                            </option>
+                            <option label="Secretary" value="string:Secretary">
+                              Secretary
+                            </option>
+                            <option label="Treasurer" value="string:Treasurer">
+                              Treasurer
+                            </option>
+                            <option label="Manager" value="string:Manager">
+                              Manager
+                            </option>
+                            <option label="Supervisor" value="string:Supervisor">
+                              Supervisor
+                            </option>
+                            <option label="Committe Member" value="string:Committe Member">
+                              Committe Member
+                            </option>
+                            <option
+                              label="Decision maker No RWA"
+                              value="string:Decision maker No RWA"
+                            >
+                              Decision maker No RWA
+                            </option>
+                            <option label="Other" value="string:Other">
+                              Other
+                            </option>
+                          </select>
+                          <div class="help-block" sf-message="form.description"></div>
+                        </div>
+                        <div class="form-group schema-form-text col-xs-4">
+                          <label class="control-label " for="salutation">
+                            Salutation
+                          </label>
+                          <input
+                            type="text"
+                            step="any"
+                            placeholder=""
+                            class="form-control ng-valid-invalid-name ng-valid-schema-form"
+                            id="salutation"
+                            name="salutation"
+                            aria-describedby="salutationStatus"
+                          />
+                          <div class="help-block" sf-message="form.description"></div>
+                        </div>
+                        <div class="form-group schema-form-text col-xs-8">
+                          <label class="control-label " for="name">
+                            Name*
+                          </label>
+                          <input
+                            type="text"
+                            step="any"
+                            sf-changed="form"
+                            placeholder=""
+                            class="form-control  ng-valid-invalid-name ng-valid-schema-form"
+                            id="name"
+                            sf-field-model=""
+                            ng-disabled="form.readonly"
+                            schema-validate="form"
+                            name="name"
+                            aria-describedby="nameStatus"
+                          />
+                          <div class="help-block"></div>
+                        </div>
+                        <div class="form-group schema-form-text col-xs-4">
+                          <label class="control-label" for="std_code">
+                            STD Code
+                          </label>
+                          <input
+                            type="text"
+                            step="any"
+                            sf-changed="form"
+                            placeholder=""
+                            class="form-control ng-valid-invalid-std ng-valid-schema-form"
+                            id="std_code"
+                            schema-validate="form"
+                            name="std_code"
+                            aria-describedby="std_codeStatus"
+                          />
+                          <div class="help-block" sf-message="form.description"></div>
+                        </div>
+                        <div class="form-group schema-form-number col-xs-8">
+                          <label class="control-label" for="landline">
+                            Phone
+                          </label>
+                          <input
+                            type="number"
+                            step="any"
+                            sf-changed="form"
+                            placeholder=""
+                            class="form-control  ng-valid-invalid-name ng-valid-schema-form"
+                            id="landline"
+                            sf-field-model=""
+                            ng-disabled="form.readonly"
+                            schema-validate="form"
+                            name="landline"
+                            aria-describedby="landlineStatus"
+                            ng-model="item['landline']"
+                          />
+                          <div class="help-block" sf-message="form.description"></div>
+                        </div>
+                        <div class="form-group schema-form-text col-xs-4">
+                          <label class="control-label " for="country_code">
+                            Country Code
+                          </label>
+                          <input
+                            type="text"
+                            step="any"
+                            sf-changed="form"
+                            placeholder=""
+                            class="form-control  ng-valid-invalid-code ng-valid-schema-form"
+                            id="country_code"
+                            sf-field-model=""
+                            ng-disabled="form.readonly"
+                            schema-validate="form"
+                            name="country_code"
+                            aria-describedby="country_codeStatus"
+                            ng-model="item['country_code']"
+                          />
+                          <div class="help-block" sf-message="form.description"></div>
+                        </div>
+                        <div class="form-group schema-form-number col-xs-8">
+                          <label class="control-label" for="mobile">
+                            Mobile
+                          </label>
+                          <input
+                            type="number"
+                            step="any"
+                            sf-changed="form"
+                            placeholder=""
+                            class="form-control  ng-valid-invalid-mobile ng-valid-schema-form"
+                            id="mobile"
+                            sf-field-model=""
+                            ng-disabled="form.readonly"
+                            schema-validate="form"
+                            name="mobile"
+                            aria-describedby="mobileStatus"
+                            ng-model="item['mobile']"
+                          />
+                          <div class="help-block" sf-message="form.description"></div>
+                        </div>
+                        <div class="form-group schema-form-text  has-feedback">
+                          <label class="control-label" for="email">
+                            Email
+                          </label>
+                          <input
+                            type="text"
+                            step="any"
+                            sf-changed="form"
+                            placeholder=""
+                            class="form-control  ng-valid-invalidemail ng-valid-schema-form"
+                            id="email"
+                            sf-field-model=""
+                            ng-disabled="form.readonly"
+                            schema-validate="form"
+                            name="email"
+                            aria-describedby="emailStatus"
+                            ng-model="item['email']"
+                          />
+                          <span
+                            class="form-control-feedback ng-scope glyphicon"
+                            aria-hidden="true"
+                          ></span>
+                          <div class="help-block" sf-message="form.description"></div>
+                        </div>
+                        <div class="form-group  schema-form-select has-feedback">
+                          <label class="control-label ">Relationship Status</label>
+                          <select
+                            sf-changed="form"
+                            class="form-control ng-valid-schema-form"
+                            schema-validate="form"
+                            name="relationship_status"
+                            ng-model="item['relationship_status']"
+                          >
+                            <option value="?" selected="selected"></option>
+                            <option label="Deep" value="string:Deep">
+                              Deep
+                            </option>
+                            <option label="Very Deep" value="string:Very Deep">
+                              Very Deep
+                            </option>
+                            <option label="Limited" value="string:Limited">
+                              Limited
+                            </option>
+                            <option label="Acquaintance" value="string:Acquaintance">
+                              Acquaintance
+                            </option>
+                            <option label="None" value="string:None">
+                              None
+                            </option>
+                          </select>
+                          <div class="help-block" sf-message="form.description"></div>
+                        </div>
+                        <div class="form-group schema-form-text  has-feedback">
+                          <label class="control-label" for="comments">
+                            Comments
+                          </label>
+                          <input
+                            type="text"
+                            step="any"
+                            sf-changed="form"
+                            placeholder=""
+                            class="form-control ng-valid-schema-form"
+                            id="comments"
+                            sf-field-model=""
+                            ng-disabled="form.readonly"
+                            schema-validate="form"
+                            name="comments"
+                            aria-describedby="commentsStatus"
+                            ng-model="item['comments']"
+                          />
+                          <span
+                            class="form-control-feedback ng-scope glyphicon"
+                            aria-hidden="true"
+                          ></span>
+                          <div class="help-block" sf-message="form.description"></div>
+                        </div>
+                      </li>
+                    );
+                  })}
+              </ol>
+
+              <div
+                class="clearfix ng-untouched ng-valid ng-valid-schema-form ng-dirty"
+                style={{ padding: '15px' }}
+                ng-model="modelArray"
+                schema-validate="form"
+              >
+                <div
+                  class="help-block ng-binding ng-hide"
+                  ng-show="(hasError() &amp;&amp; errorMessage(schemaError())) || form.description"
+                  ng-bind-html="(hasError() &amp;&amp; errorMessage(schemaError())) || form.description"
+                ></div>
+                <button
+                  onClick={handleContactAdd}
+                  ng-hide="form.readonly || form.add === null"
+                  ng-click="appendToArray()"
+                  ng-disabled="form.schema.maxItems <= modelArray.length"
+                  type="button"
+                  class="btn btn-primary pull-right"
+                >
+                  <i class="glyphicon glyphicon-plus"></i> Add
+                </button>
+              </div>
+            </div>
+          )}
+          <div class="form-group schema-form-submit col-md-12">
+            <input type="submit" class="btn btn-primary " value="Update Society" />
+          </div>
         </fieldset>
       </form>
     </div>

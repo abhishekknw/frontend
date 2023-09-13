@@ -17,14 +17,24 @@ export default function CommonPricingDetails({ code }) {
       });
   };
 
+  const postPricing = () => {
+    fetchWrapper
+      .post(ANG_APIS.GET_PRICING + id + `/basic_pricing/`, pricingData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     getPricing();
   }, []);
 
-  const handleSubmit = () => {
-    fetchWrapper.post(ANG_APIS.UPDATE_PRICING + id + '/basic_pricing/').then((res) => {
-      console.log(res);
-    });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    postPricing();
   };
 
   return (
@@ -70,7 +80,7 @@ export default function CommonPricingDetails({ code }) {
             })}
         </tbody>
       </table>
-      <input type="button" class="smallBtn" ng-click="onSubmit()" value="Update" />
+      <input type="button" class="smallBtn" onClick={handleSubmit} value="Update" />
     </div>
   );
 }
