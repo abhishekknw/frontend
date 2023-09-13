@@ -47,5 +47,5 @@ export const ROUTESNAME = {
   opsDashboard: '/opsdashboard',
   campaignList: '/campaign-list',
   bookingPlan: '/booking-plan',
-  requirements: '/requirement-dash',
+  requirements: '/requirement',
 };

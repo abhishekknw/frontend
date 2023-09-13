@@ -25,6 +25,8 @@ const UserInfo = () => {
         }}
         modalBody={AddUpdateSupplierModal()}
         modalHeader={'Add Update SUppler'}
+        modalId={'addUpdateSupplier'}
+        modalClass={''}
       />
       <div className="user-info-wrapper">
         <div className="user-info-inner">

@@ -326,10 +326,10 @@ export default function BookingPlan() {
                           'b_to_b_r_g' ||
                           (CampaignInventoryList?.campaign?.type_of_end_customer_formatted_name ==
                             'b_to_b_l_d' && (
-                              <td>
-                                <Link to="requirement-dash">Requirement</Link>
-                              </td>
-                            ))}
+                            <td>
+                              <Link to="requirement">Requirement</Link>
+                            </td>
+                          ))}
 
                         <td>
                           <SelectDropdown
@@ -582,8 +582,8 @@ export default function BookingPlan() {
                                           ? true
                                           : false
                                         : data?.is_completed === false
-                                          ? true
-                                          : false
+                                        ? true
+                                        : false
                                     }
                                     value={item.label}
                                     onChange={(e) => {

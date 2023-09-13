@@ -18,6 +18,8 @@ const ChatUsers = () => {
         }}
         modalBody={FilterModal()}
         modalHeader={'Filters'}
+        modalId={'filters'}
+        modalClass={'wpModal'}
       />
       <div className="search-area">
         <div className="search-area-form">
