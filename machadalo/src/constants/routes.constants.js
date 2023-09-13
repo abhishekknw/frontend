@@ -42,10 +42,10 @@ export const HOSPITAL = '/hospital';
 export const HOSPITAL_SINGLE = '/hospital/:id';
 
 export const ROUTESNAME = {
-  CAMPAIGN_DECISION_BOARD: '/campaignDecisionBoard',
-  INTERVENE_CHAT: '/intervenechat',
-  OPS_DASHBOARD: '/opsdashboard',
-  CAMPAIGN_LIST: '/campaign-list',
-  BOOKING_PLAN: '/booking-plan',
-  REQUIRE_DASH: '/requirement-dash',
+  campaignDecisionBoard: '/campaignDecisionBoard',
+  interveneChat: '/intervenechat',
+  opsDashboard: '/opsdashboard',
+  campaignList: '/campaign-list',
+  bookingPlan: '/booking-plan',
+  requirements: '/requirement-dash',
 };
