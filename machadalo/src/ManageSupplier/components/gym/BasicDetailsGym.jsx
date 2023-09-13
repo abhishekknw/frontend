@@ -8,6 +8,7 @@ export default function BasicDetailsGym() {
   const fetchWrapper = useFetchWrapper();
   const [vendors, setVendors] = useState();
   const [details, setDetails] = useState();
+  const [formData, setFormData] = useState();
   const contactTypeOptions = [
     {
       value: 'owner',
@@ -60,6 +61,7 @@ export default function BasicDetailsGym() {
   const getDetails = () => {
     fetchWrapper.get(ANG_APIS.GET_LIST_GENERIC + id + `/?supplier_type_code=GY`).then((res) => {
       setDetails(res.data);
+      setFormData(res.data);
     });
   };
 
@@ -67,6 +69,19 @@ export default function BasicDetailsGym() {
     getOrganizations();
     getDetails();
   }, []);
+
+  const handleChange = (e) => {
+    console.log(e.target);
+    const { name, value } = e.target;
+    let data = { ...formData };
+    data[name] = value;
+    setFormData(data);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
 
   return (
     <>
@@ -90,7 +105,7 @@ export default function BasicDetailsGym() {
             })}
         </select>
         <br />
-        <form className="form-inline" role="form" name="gym_form" ng-submit="updateDetails()">
+        <form className="form-inline" role="form" name="gym_form" onSubmit={handleSubmit}>
           <div className="form-group col-md-3" style={{ marginBottom: '20px' }}>
             <label for="supplier_id">Gym ID</label>
             <br />
@@ -125,7 +140,9 @@ export default function BasicDetailsGym() {
               type="text"
               className="form-control"
               id="address1"
-              value={details?.master_data.address_supplier.address1}
+              name="master_data.address_supplier.address1"
+              value={formData?.master_data?.address_supplier?.address1}
+              onChange={handleChange}
               placeholder="Address1"
               required
             />

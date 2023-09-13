@@ -7,6 +7,8 @@ export default function BasicDetailsSalon() {
   const { id } = useParams();
   const fetchWrapper = useFetchWrapper();
   const [vendors, setVendors] = useState();
+  const [details, setDetails] = useState();
+  const [formData, setFormData] = useState();
 
   const getOrganizations = () => {
     fetchWrapper.get(ANG_APIS.GET_ORGANIZATIONS).then((res) => {
@@ -16,7 +18,8 @@ export default function BasicDetailsSalon() {
 
   const getDetails = () => {
     fetchWrapper.get(ANG_APIS.GET_LIST_GENERIC + id + `/?supplier_type_code=SA`).then((res) => {
-      console.log(res);
+      setDetails(res.data);
+      setFormData(res.data);
     });
   };
 
