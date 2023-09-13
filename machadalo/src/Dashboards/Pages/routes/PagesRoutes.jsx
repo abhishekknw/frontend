@@ -11,6 +11,7 @@ import OpsDashboard from '../OpsDashboard/OpsDashboard';
 import BookingPlan from '../BookingPlan/BookingPlan';
 import CampaignList from '../CampaignList/CampaignList';
 import RequirementData from '../Requirement/Requirement';
+import SuspenseSheet from '../Suspense';
 export default function PagesRoutes(props) {
   const { match } = props;
   const open = useRecoilValue(alertAtom);
@@ -32,6 +33,7 @@ export default function PagesRoutes(props) {
           <Route path={match.path + ROUTESNAME.bookingPlan} component={BookingPlan} />
           <Route path={match.path + ROUTESNAME.campaignList} component={CampaignList} />
           <Route path={match.path + ROUTESNAME.requirements} component={RequirementData} />
+          <Route path={match.path + ROUTESNAME.suspenseSheet} component={SuspenseSheet} />
         </SnackbarProvider>
       </Switch>
       {/* </div> */}

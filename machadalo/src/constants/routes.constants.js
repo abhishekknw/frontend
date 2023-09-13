@@ -48,4 +48,5 @@ export const ROUTESNAME = {
   campaignList: '/campaign-list',
   bookingPlan: '/booking-plan',
   requirements: '/requirement',
+  suspenseSheet: '/suspenseSheet'
 };
