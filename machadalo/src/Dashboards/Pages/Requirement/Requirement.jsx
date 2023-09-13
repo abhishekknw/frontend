@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { RequirementActions } from '../../_actions/Requirement/Requirement.actions';
-import SelectDropdown from '../../common/SelectDropdown/SelectDropdown';
+import SelectDropdown from '../../../components/Shared/SelectDropdown';
 import { useRecoilValue } from 'recoil';
 import { LeadsBySectorAtom, SectorListByNumberAtom } from '../../_states';
 import getRequirementHeader from './RequirementListConfig';
