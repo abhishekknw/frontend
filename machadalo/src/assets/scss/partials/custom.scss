@@ -47,10 +47,6 @@
     transition: none;
     box-shadow: none;
 
-    &:hover {
-      // border: none;
-    }
-
     .css-1dimb5e-singleValue {
       color: #fff;
     }
@@ -83,4 +79,13 @@
 
 .css-1kh0o5-menu {
   width: 150px;
+}
+/* common  table css*/
+.v-middle {
+  th {
+    vertical-align: middle;
+    background: #5f76e8;
+    background: linear-gradient(0deg, #3e59e3 35%, #5f76e8 100%);
+    color: #ffffff !important;
+  }
 }
