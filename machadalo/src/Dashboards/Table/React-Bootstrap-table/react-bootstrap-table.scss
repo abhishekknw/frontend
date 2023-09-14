@@ -4,12 +4,12 @@
             font-weight: 500 !important;
             font-size: 13px !important;
         }
-    th.sortable {
+        th.sortable-custom {
         position: relative;
         cursor: pointer;
     }
 
-    th.sortable::after {
+        th.sortable-custom::after {
         font-family: FontAwesome;
         content: "\f0dc";
         position: absolute;
@@ -17,15 +17,15 @@
         color: #999;
     }
 
-    th.sortable.asc::after {
+        th.sortable-custom.asc::after {
         content: "\f0d8";
     }
 
-    th.sortable.desc::after {
+        th.sortable-custom.desc::after {
         content: "\f0d7";
     }
 
-    th.sortable:hover::after {
+        th.sortable-custom:hover::after {
         color: #fff;
     }
 }

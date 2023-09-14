@@ -59,7 +59,7 @@ export default function EntityCount() {
               <tr>
                 <th
                   rowSpan="2"
-                  className={`sortable ${
+                  className={`sortable-custom ${
                     sorting.sortingKey == 'supplier_type'
                       ? `${sorting.sortReverse ? 'asc' : 'desc'}`
                       : ''
@@ -72,7 +72,7 @@ export default function EntityCount() {
                 </th>
                 <th
                   rowSpan="2"
-                  className={`sortable ${
+                  className={`sortable-custom ${
                     sorting.sortingKey == 'count' ? `${sorting.sortReverse ? 'asc' : 'desc'}` : ''
                   }`}
                   onClick={(e) => {

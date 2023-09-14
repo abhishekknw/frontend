@@ -37,7 +37,7 @@ export default function ReactBootstrapTable(props) {
                   key={index + header?.title}
                   className={`${
                     header?.sort
-                      ? `sortable ${
+                      ? `sortable-custom ${
                           sorted == header?.accessKey ? `${reverse ? 'asc' : 'desc'}` : ''
                         }`
                       : ''

@@ -76,7 +76,7 @@ export default function EntityCitywiseCount(props) {
               <tr style={({ padding: '8px 14px' }, { whiteSpace: 'nowrap' })}>
                 <th
                   rowSpan="2"
-                  className={`sortable ${
+                  className={`sortable-custom ${
                     sorting.sortingKey == 'city' ? `${sorting.sortReverse ? 'asc' : 'desc'}` : ''
                   }`}
                   onClick={(e) => {
@@ -87,7 +87,7 @@ export default function EntityCitywiseCount(props) {
                 </th>
                 <th
                   rowSpan="2"
-                  className={`sortable ${
+                  className={`sortable-custom ${
                     sorting.sortingKey == 'count' ? `${sorting.sortReverse ? 'asc' : 'desc'}` : ''
                   }`}
                   onClick={(e) => {
