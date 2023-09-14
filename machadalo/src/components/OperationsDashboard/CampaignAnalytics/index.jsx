@@ -6,7 +6,8 @@ import config from '../../../config';
 import getCampaignColumn from './CampaignGridColumnConfig';
 import Grid from '../../Grid';
 import SupplierAnalytics from '../SupplierAnalytics';
-import LoadingWrapper from '../../Error/LoadingWrapper';
+import LoadingWrapper from '../../Shared/LoadingWrapper';
+
 import readXlsxFile from 'read-excel-file';
 
 class CampaignAnalytics extends React.Component {

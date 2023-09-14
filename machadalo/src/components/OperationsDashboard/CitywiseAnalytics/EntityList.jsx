@@ -3,7 +3,7 @@ import request from 'superagent';
 import config from '../../../config';
 import InnerGrid from '../../InnerGrid';
 import getEntityList from './EntityListGridConfig';
-import LoadingWrapper from '../../Error/LoadingWrapper';
+import LoadingWrapper from '../../Shared/LoadingWrapper';
 import { useFetchWrapper } from '../../../Dashboards/_helpers/fetch-wrapper';
 import CommonTable from '../../Shared/Tables';
 import ReactPagination from '../../../Dashboards/Pagination/Pagination';

@@ -1,6 +1,6 @@
 // import React from 'react';
 import React, { useEffect, useState } from 'react';
-import LoadingWrapper from '../../Error/LoadingWrapper';
+import LoadingWrapper from '../../Shared/LoadingWrapper';
 import TableHeader from '../../../Dashboards/Table/TableHeader/TableHeader';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';

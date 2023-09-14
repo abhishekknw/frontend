@@ -35,7 +35,7 @@ import InventoryModal from './InventoryModal';
 import DescriptionHeader from '../../common/DescriptionHeader/DescriptionHeader';
 import { BookingFunctions } from './BookingFunctions';
 import DataNotFound from '../../common/DataNotFound/DataNotFound';
-import LoadingWrapper from '../../common/LoadingWrapper';
+import LoadingWrapper from '../../../components/Shared/LoadingWrapper';
 import DatePicker from 'react-datepicker';
 import DateRangePickerCommon from '../../common/DateRangePicker/DateRangePickerCommon';
 import { ROUTESNAME } from '../../../constants/routes.constants';
