@@ -1,0 +1,21 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - DevOps  # Adjust this to match your branch name
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run deployment script
+        run: |
+          ssh -i ${{ secrets.EC2_SSH_KEY }} ubuntu@your-ec2-ip 'bash -s' < automate.sh
+        env:
+          LOCAL_MACHINE_SSH_KEY: ${{ secrets.LOCAL_MACHINE_SSH_KEY }} # Add your SSH key as a GitHub secret
+
