@@ -12,15 +12,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-      - name: Debug SSH Directory
-        run: |
-          ls -la ~/.ssh
-
-      - name: Print Current Working Directory
-        run: |
-          pwd
-
+        
       - name: Set up SSH Key
         run: |
           mkdir -p ~/.ssh
