@@ -22,4 +22,3 @@ jobs:
       - name: Execute SSH Command
         run: |
           ssh ubuntu@192.168.1.13 "cd /home/ubuntu/project_world/machadalo && ./autoscript.sh"
-
