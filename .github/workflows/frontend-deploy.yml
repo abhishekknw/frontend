@@ -1,21 +1,25 @@
-name: Deploy to EC2
+name: SSH to Remote Server
 
 on:
   push:
     branches:
-      - DevOps  # Adjust this to match your branch name
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Run deployment script
+      - name: Set up SSH Key
         run: |
-          ssh -i ${{ secrets.EC2_SSH_KEY }} ubuntu@your-ec2-ip 'bash -s' < automate.sh
-        env:
-          LOCAL_MACHINE_SSH_KEY: ${{ secrets.LOCAL_MACHINE_SSH_KEY }} # Add your SSH key as a GitHub secret
+          echo "${{ secrets.localpc-st }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa 192.168.1.13 >> ~/.ssh/known_hosts
+
+      - name: Execute SSH Command
+        run: |
+          ssh ubuntu@192.168.1.13 "cd /home/ubuntu/project_world/machadalo && ./autoscript.sh"
 
