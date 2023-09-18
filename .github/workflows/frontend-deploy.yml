@@ -12,12 +12,18 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-        
-      - name: Create SSH Directory
-        run: mkdir -p ~/.ssh
+
+      - name: Debug SSH Directory
+        run: |
+          ls -la ~/.ssh
+
+      - name: Print Current Working Directory
+        run: |
+          pwd
 
       - name: Set up SSH Key
         run: |
+          mkdir -p ~/.ssh
           echo "${{ secrets.localpc-st }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa 192.168.1.13 >> ~/.ssh/known_hosts
@@ -25,3 +31,4 @@ jobs:
       - name: Execute SSH Command
         run: |
           ssh ubuntu@192.168.1.13 "cd /home/ubuntu/project_world/machadalo && ./autoscript.sh"
+
