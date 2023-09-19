@@ -26,7 +26,7 @@ jobs:
           ls -al ~
       - name: Create SSH Directory
         run: |
-          mkdir -p ~/.ssh
+          cd ~/.ssh
           echo "${{ secrets.localpc-st }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa 192.168.1.13 >> ~/.ssh/known_hosts
