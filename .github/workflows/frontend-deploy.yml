@@ -21,10 +21,16 @@ jobs:
         run: mkdir -p ~/.ssh
       
       - name: Debug
-        run: ls -al ~
+        run: |
+          whoami
+          ls -al ~
+      - name: Create SSH Directory
+        run: |
+          mkdir -p ~/.ssh
           echo "${{ secrets.localpc-st }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa 192.168.1.13 >> ~/.ssh/known_hosts
+
 
       - name: Execute SSH Command
         run: |
