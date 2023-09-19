@@ -13,9 +13,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
         
-      - name: Set up SSH Key
+      - name: Debug
         run: |
-          mkdir -p ~/.ssh
+          whoami
+          ls -al ~
+      - name: Create SSH Directory
+        run: mkdir -p ~/.ssh
+      
+      - name: Debug
+        run: ls -al ~
           echo "${{ secrets.localpc-st }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa 192.168.1.13 >> ~/.ssh/known_hosts
