@@ -17,27 +17,19 @@ jobs:
         run: |
           whoami
           ls -al ~
-      - name: Create SSH Directory
-        run: mkdir -p ~/.ssh
+          
+      - name: Create SSH Directory if Not Exists
+        run: |
+          if [ ! -d ~/.ssh ]; then
+            mkdir -p ~/.ssh
+          fi
       
-      - name: Debug
+      - name: Set Up SSH Key
         run: |
-          whoami
-          ls -al ~
-          - name: Create SSH Directory if Not Exists
-            run: |
-              if [ ! -d ~/.ssh ]; then
-                mkdir -p ~/.ssh
-              fi
-
-      - name: Create SSH Directory
-        run: |
-           echo "${{ secrets.localpc-st }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.localpc-st }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa 192.168.1.13 >> ~/.ssh/known_hosts
-
 
       - name: Execute SSH Command
         run: |
           ssh ubuntu@192.168.1.13 "cd /home/ubuntu/project_world/machadalo && ./autoscript.sh"
-
